@@ -6,8 +6,9 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = favicon_link_tag
   body
-    #header = render "application/header"
-    #navigation
-      ul = render "application/navigation"
-    #main = yield
-    #footer = render "application/footer"
+    #main
+      #header = render "application/header"
+      #navigation
+        ul = render "application/navigation"
+      #content = yield
+      #footer = render "application/footer"
