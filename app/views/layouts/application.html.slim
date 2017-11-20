@@ -4,8 +4,9 @@ html
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = favicon_link_tag
   body
-    h1 Birmingham Power Squadron
-    .notice = notice
-    .alert = alert
-    = yield
+    #header = render "application/header"
+    #navigation = render "application/navigation"
+    #main = yield
+    #footer = render "application/footer"
