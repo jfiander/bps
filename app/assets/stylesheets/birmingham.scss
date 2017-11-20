@@ -4,10 +4,6 @@
 @import "global/mixins";
 @import "global/buttons";
 
-@import "navigation";
-@import "public";
-@import "members";
-
 body {
   font-family: Arial;
   color: $old-glory-blue;
@@ -152,3 +148,8 @@ div#flashes {
     font-style: italic;
   }
 }
+
+@import "navigation";
+@import "public";
+@import "members";
+@import "devise";
