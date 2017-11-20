@@ -2,16 +2,22 @@ module NavigationHelper
   def link(title = nil, permit: nil, path: nil, show_when: :always)
     return nil unless show_menu?(title: title, permit: permit, show_when: show_when, path: path)
 
-    html_output = if title == :login_or_logout
-      content_tag(:li) do
-        user_signed_in? ? link_to("Logout", destroy_user_session_path, {method: :delete, class: "red"}) : link_to("Member Login", new_user_session_path)
-      end
-    else
-      title = title.to_s.titleize if title.is_a?(Symbol)
-      link_to(content_tag(:li, title, class: permit.to_s).html_safe, path, {class: permit.to_s})
+    options = {class: permit.to_s}
+
+    if title == :login_or_logout && user_signed_in?
+      title = "Logout"
+      path = destroy_user_session_path
+      options = {method: :delete, class: "red"}
+    elsif title == :login_or_logout
+      title = "Member Login"
+      path = new_user_session_path
+      options = {class: "members"}
+    elsif title.in? [:members_area, :admin]
+      options = {class: "members"}
     end
 
-    html_output.to_s.html_safe
+    title = title.to_s.titleize if title.is_a?(Symbol)
+    link_to(content_tag(:li, title, class: permit.to_s).html_safe, path, options)
   end
 
   private
