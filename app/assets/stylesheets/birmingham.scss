@@ -30,6 +30,16 @@ sup {
   font-size: 60%;
 }
 
+br.clear-left {
+  clear: left;
+  line-height: 0;
+}
+
+br.clear-right {
+  clear: right;
+  line-height: 0;
+}
+
 div#main {
   background-color: darken(#C5D1E1, 5%);
   @include shadow-box(4);
@@ -38,36 +48,49 @@ div#main {
   margin-top: 0.5em;
   border: thin solid $old-glory-blue-faded;
 
-  div#header {
-    margin: 0;
-    text-align: center;
-
-    div#header-left {
-      float: left;
-      width: 20%;
-    }
-
-    div#header-right {
-      float: left;
-      width: 80%;
-    }
-  }
-
-  div#navigation {
+  div#main-left {
     width: 20%;
     margin: 0;
-    padding: 1em 0.25em;
+    padding: 0;
     float: left;
+
+    div#navigation {
+      margin: 0;
+      padding: 1em 0.25em;
+      float: left;
+    }
+
+    div#nav-header {
+        text-align: center;
+
+        svg {
+          width: 45%;
+          height: auto;
+        }
+      }
   }
 
-  div#content {
-    width: 75%;
+  div#main-right {
+    width: 79.5%;
     margin: 0;
-    padding: 0 2%;
+    padding: 0;
     float: right;
-    text-align: center;
-    background-color: white;
-    min-height: 65%;
+
+    div#header {
+      width: 100%;
+      margin: 0;
+      text-align: center;
+    }
+
+    div#content {
+      width: 96%;
+      margin: 0;
+      padding: 0 2%;
+      float: right;
+      text-align: center;
+      background-color: white;
+      min-height: 65%;
+    }
   }
 
   div#footer {

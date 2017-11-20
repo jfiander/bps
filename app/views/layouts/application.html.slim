@@ -7,8 +7,13 @@ html
     = favicon_link_tag
   body
     #main
-      #header = render "application/header"
-      #navigation
-        ul = render "application/navigation"
-      #content = yield
+      #main-left
+        #nav-header = render "application/nav_header"
+        #navigation
+          ul = render "application/navigation"
+        br.clear-right
+      #main-right
+        #header = render "application/header"
+        #content = yield
+        br.clear-left
       #footer = render "application/footer"
