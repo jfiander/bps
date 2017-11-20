@@ -12,6 +12,7 @@
 
 #navigation ul li {
   @include border-radius(0.5em);
+  @include shadow-box(1);
   float: left;
   list-style: none;
   text-align: center;
