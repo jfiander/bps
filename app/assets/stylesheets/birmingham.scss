@@ -1,7 +1,24 @@
 // Place all general styles here.
 
+@import "global/colors";
+@import "global/mixins";
+@import "global/buttons";
+
+@import "navigation";
+@import "public";
+@import "members";
+
 body {
   font-family: Arial;
+}
+
+a {
+  text-decoration: none;
+  color: $birmingham-blue;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 div#flashes {

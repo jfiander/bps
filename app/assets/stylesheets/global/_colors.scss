@@ -1,0 +1,25 @@
+$birmingham-blue: #1086FF;
+$old-glory-blue: #041E42;
+$old-glory-red: #BF0D3E;
+
+.birmingham-blue {
+  color: $birmingham-blue;
+}
+
+.blue {
+  color: $old-glory-blue;
+}
+
+.red {
+  color: $old-glory-red;
+}
+
+.notice {
+  color: green;
+  background-color: lighten(green, 40%);
+}
+
+.alert {
+  color: $old-glory-red;
+  background-color: lighten($old-glory-red, 40%);
+}
