@@ -1,0 +1,26 @@
+// Main Menu
+
+#navigation a {
+  color: white;
+}
+
+#navigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#navigation ul li {
+  @include border-radius(0.5em);
+  float: left;
+  list-style: none;
+  text-align: center;
+  background-color: $birmingham-blue;
+  margin: 0.2em 0;
+  line-height: 2em;
+  width: 100%;
+}
+
+#navigation ul li:hover {
+  background-color: darken($birmingham-blue, 20%);
+}
