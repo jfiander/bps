@@ -41,7 +41,7 @@ br.clear-right {
 }
 
 div#main {
-  background-color: darken(#C5D1E1, 5%);
+  background-color: darken($background-blue, 5%);
   @include shadow-box(4);
   @include border-radius(5px);
   padding-top: 0.25em;
