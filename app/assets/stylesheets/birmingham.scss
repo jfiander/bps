@@ -14,7 +14,7 @@ body {
   margin: 0 22%;
   padding: 0;
 
-  background-color: lighten($birmingham-blue, 40%);
+  background-color: #C5D1E1;
 }
 
 a {
@@ -23,30 +23,51 @@ a {
 }
 
 a:hover {
-  text-decoration: underline;
+  color: darken($birmingham-blue, 20%);
+}
+
+sup {
+  font-size: 60%;
 }
 
 div#main {
-  background-color: #CCC;
+  background-color: darken(#C5D1E1, 5%);
+  @include shadow-box(4);
+  @include border-radius(5px);
+  padding-top: 0.25em;
+  margin-top: 0.5em;
+  border: thin solid $old-glory-blue-faded;
 
   div#header {
     margin: 0;
     text-align: center;
+
+    div#header-left {
+      float: left;
+      width: 20%;
+    }
+
+    div#header-right {
+      float: left;
+      width: 80%;
+    }
   }
 
   div#navigation {
     width: 20%;
     margin: 0;
-    padding: 1em 0;
+    padding: 1em 0.25em;
     float: left;
   }
 
   div#content {
-    width: 76%;
+    width: 75%;
     margin: 0;
     padding: 0 2%;
-    float: left;
+    float: right;
     text-align: center;
+    background-color: white;
+    min-height: 65%;
   }
 
   div#footer {
