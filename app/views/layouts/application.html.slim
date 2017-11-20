@@ -14,6 +14,8 @@ html
         br.clear-right
       #main-right
         #header = render "application/header"
-        #content = yield
+        #content
+          #wave = File.read("#{Rails.root}/app/assets/images/wave.svg").html_safe
+          #page-content = yield
         br.clear-left
       #footer = render "application/footer"
