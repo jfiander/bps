@@ -23,3 +23,7 @@
   display:    inline-block;
   font-size:  14px;
 }
+
+@mixin shadow-box($size) {
+  box-shadow: 0 2px*$size 8px*$size rgba(0, 0, 0, 0.5), 0 0 40px*$size rgba(0, 0, 0, 0.1) inset;
+}
