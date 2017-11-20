@@ -10,6 +10,11 @@
 
 body {
   font-family: Arial;
+
+  margin: 0 22%;
+  padding: 0;
+
+  background-color: lighten($birmingham-blue, 40%);
 }
 
 a {
@@ -21,12 +26,53 @@ a:hover {
   text-decoration: underline;
 }
 
+div#main {
+  background-color: #CCC;
+
+  div#header {
+    margin: 0;
+    text-align: center;
+  }
+
+  div#navigation {
+    width: 20%;
+    margin: 0;
+    padding: 1em 0;
+    float: left;
+  }
+
+  div#content {
+    width: 76%;
+    margin: 0;
+    padding: 0 2%;
+    float: left;
+    text-align: center;
+  }
+
+  div#footer {
+    margin: 0;
+    padding: 1em 0;
+    border-top: thin solid gray;
+    clear: both;
+    text-align: center;
+
+    div.copyright {
+      margin-top: 1em;
+    }
+  }
+}
+
 div#flashes {
+  min-height: 1.25em;
+
   div.notice {
-    color: green;
+    color: $birmingham-blue;
+    background-color: inherit;
   }
 
   div.alert {
-    color: red;
+    color: $old-glory-red;
+    background-color: lighten($old-glory-red, 40%);
+    background-color: inherit;
   }
 }
