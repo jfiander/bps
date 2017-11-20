@@ -16,6 +16,7 @@ gem 'turbolinks',         '~> 5'
 gem 'jbuilder',           '~> 2.5'
 
 gem 'devise',             '~> 4.2.0'
+gem 'devise_invitable',   '~> 1.7.2'
 
 gem 'slim',               '~> 3.0.6'
 gem 'aws-sdk-rails',      '~> 1.0.1'
