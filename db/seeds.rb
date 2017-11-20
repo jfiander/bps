@@ -5,3 +5,18 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Role.create!(name: "admin")
+
+education = Role.create!(name: "education")
+events = Role.create!(name: "events")
+
+Role.create!([
+  {name: "course", parent: education},
+  {name: "seminar", parent: education},
+  {name: "calendar", parent: events},
+  {name: "vsc", parent: events},
+  {name: "store"},
+  {name: "photos"},
+  {name: "newsletter"}
+])
