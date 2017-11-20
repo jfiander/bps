@@ -12,7 +12,7 @@
 = link :newsletter,          path: newsletter_path
 = link "Ship's Store",       path: store_path
 = link "Links of Interest",  path: links_path
-= link :members_area,        path: members_path,                show_when: :logged_in
-= link :manage_your_profile, path: edit_user_registration_path, show_when: :logged_in
-= link :admin,               path: admin_path,                  show_when: :logged_in, permit: :admin
+= link :members_area,        path: members_path, show_when: :logged_in
+= link :manage_your_profile, path: profile_path, show_when: :logged_in
+= link :admin,               path: admin_path,   show_when: :logged_in, permit: :admin
 = link :login_or_logout

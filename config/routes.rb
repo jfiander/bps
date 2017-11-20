@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   devise_for :users, path: '', path_names: {sign_in: 'login', sign_out: 'logout'}
   as :user do
-    get   '/users/edit', to: 'devise/registrations#edit',       as: 'edit_user_registration'
-    patch '/users',      to: 'devise/registrations#update',     as: 'user_registration'
+    get   '/profile',    to: 'devise/registrations#edit'
+    patch '/profile',    to: 'devise/registrations#update'
     get   '/reset',      to: 'devise/passwords#new'
   end
 
