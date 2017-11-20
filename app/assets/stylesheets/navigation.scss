@@ -26,6 +26,10 @@
   background-color: darken($birmingham-blue, 20%);
 }
 
+#navigation ul li:active {
+  background-color: darken($birmingham-blue, 30%);
+}
+
 #navigation ul a.red li {
   background-color: $old-glory-red;
 }
@@ -34,10 +38,18 @@
   background-color: darken($old-glory-red, 10%);
 }
 
+#navigation ul a.red:active li {
+  background-color: darken($old-glory-red, 20%);
+}
+
 #navigation ul a.members li {
-  background-color: lighten($old-glory-blue, 10%);
+  background-color: lighten($old-glory-blue, 20%);
 }
 
 #navigation ul a.members:hover li {
+  background-color: lighten($old-glory-blue, 10%);
+}
+
+#navigation ul a.members:active li {
   background-color: $old-glory-blue;
 }
