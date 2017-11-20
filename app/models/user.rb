@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  devise :invitable, :registerable, :database_authenticatable, :recoverable, :trackable, :validatable, :timeoutable, :lockable
+  devise :invitable, :database_authenticatable, :recoverable, :trackable, :validatable, :timeoutable, :lockable
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
 
