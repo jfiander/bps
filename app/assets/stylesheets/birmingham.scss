@@ -44,8 +44,7 @@ div#main {
   background-color: darken($background-blue, 5%);
   @include shadow-box(4);
   @include border-radius(5px);
-  padding-top: 0.25em;
-  margin-top: 0.5em;
+  margin: 0.5em 0 1em 0;
   border: thin solid $old-glory-blue-faded;
 
   div#main-left {
@@ -53,6 +52,7 @@ div#main {
     margin: 0;
     padding: 0;
     float: left;
+    padding-top: 0.25em;
 
     div#navigation {
       margin: 0;
@@ -64,8 +64,13 @@ div#main {
         text-align: center;
 
         svg {
-          width: 45%;
+          width: 80%;
           height: auto;
+        }
+
+        h2 {
+          color: white;
+          text-shadow: 3px 3px $old-glory-blue-faded;
         }
       }
   }
@@ -80,6 +85,20 @@ div#main {
       width: 100%;
       margin: 0;
       text-align: center;
+      position: relative;
+
+      img {
+        width: 100%;
+      }
+
+      h1 {
+        position: absolute;
+        top: -5%;
+        right: 40%;
+        color: white;
+        text-shadow: 3px 3px $old-glory-blue-faded;
+        font-size: 2.5em;
+      }
     }
 
     div#content {
