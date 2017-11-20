@@ -1,0 +1,15 @@
+// Place all general styles here.
+
+body {
+  font-family: Arial;
+}
+
+div#flashes {
+  div.notice {
+    color: green;
+  }
+
+  div.alert {
+    color: red;
+  }
+}
