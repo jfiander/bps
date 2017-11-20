@@ -1,3 +1,5 @@
 h2 Public Area
 
+= link_to "Admin Area", admin_path if current_user&.permitted?(:admin)
 = link_to "Members Area", members_path
+= link_to "Logout", destroy_user_session_path, method: :delete if user_signed_in?

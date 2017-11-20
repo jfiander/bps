@@ -5,5 +5,7 @@ Rails.application.routes.draw do
 
   get '/members', to: 'main#members'
 
+  get '/admin', to: 'main#admin'
+
   get '/*path',   to: redirect('/') unless Rails.env.development?
 end
