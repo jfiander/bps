@@ -1,9 +1,15 @@
-= image_tag("USCG.jpg")
-h1
-  | America's Boating Club
-  sup &reg;
-h4 Come for the boating education... Stay for the friends.℠
+#header-left
+  = File.read("lib/svg/WHEEL.svg").html_safe
+  h2
+    | Birmingham
+    br
+    | Power
+    br
+    | Squadron
 
-#flashes
-  .notice = notice
-  .alert = alert
+#header-right
+  = image_tag("USCG.jpg")
+  h1
+    | America's Boating Club
+    sup &reg;
+  h4 Come for the boating education... Stay for the friends.℠

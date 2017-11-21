@@ -2,6 +2,7 @@
 
 #navigation a {
   color: white;
+  width: 11.4em;
 }
 
 #navigation ul {
@@ -19,7 +20,8 @@
   background-color: $birmingham-blue;
   margin: 0.2em 0;
   line-height: 2em;
-  width: 100%;
+  width: 11em;
+  clear: both;
 }
 
 #navigation ul li:hover {

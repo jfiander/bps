@@ -6,17 +6,16 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = favicon_link_tag
   body
-    #main
-      #header
-        #nav-header = render "application/nav_header"
+    #main.flex
+      header
+        #small-header = render "application/small_header"
         #main-header = render "application/header"
-        / #wave = File.read("#{Rails.root}/app/assets/images/wave.svg").html_safe
-        br.clear-right
-      #body
-        #navigation
-          ul = render "application/navigation"
-        #content
-          = render "application/admin_menu" if @admin_menu
-          = yield
-        br.clear-left
-      #footer = render "application/footer"
+      #navigation
+        ul = render "application/navigation"
+      #content
+        #flashes
+          .notice = notice
+          .alert = alert
+        = render "application/admin_menu" if @admin_menu
+        = yield
+      footer = render "application/footer"

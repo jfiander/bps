@@ -1,0 +1,69 @@
+// Flex Layout
+.flex {
+    display: -webkit-flex;
+    display: flex;  
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    text-align: center;
+}
+
+.flex > * {
+    -webkit-flex: 1 100%;
+    flex: 1 100%;
+}
+
+
+// Responsive Scaling
+body {
+  min-width: 450px;
+}
+
+@media all and (min-width: 1250px) {
+  #navigation {max-width: 11.4em;text-align:left;-webkit-flex: 1 auto;flex:1 auto;-webkit-order:1;order:1;}
+  #content {-webkit-flex:5 0px;flex:5 0px;-webkit-order:2;order:2;}
+  footer {-webkit-order:3;order:3;}
+
+  header #small-header {
+    display: none;
+  }
+}
+
+@media all and (max-width: 1250px) {
+  header #main-header {
+    display: none;
+  }
+
+  #navigation {
+    border-bottom: thin solid $old-glory-blue-faded;
+
+    div#flashes {
+      min-height: 1.25em;
+    }
+  }
+
+  #navigation ul {
+    text-align: center;
+  }
+
+  #navigation ul a {
+    display: inline-block;
+    max-width: 32%;
+  }
+
+  #navigation ul li {
+    display: inline-block;
+    clear: none;
+    width: 90%;
+    line-height: 1.5em;
+    margin: 0.5em 5%;
+    padding: 0;
+    font-size: smaller;
+  }
+}
+
+@media all and (max-width: 850px) {
+  #navigation ul li {
+    line-height: 1.75em;
+    font-size: x-small;
+  }
+}
