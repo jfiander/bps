@@ -1,6 +1,6 @@
 <svg viewbox="0 0 100 10">
-  <g transform="translate(0, 4) scale(0.4448,-0.25)" >
-    <path fill="#b4c4d8" opacity="0.6" d="M0 30 V15 Q30 3 60 15 V30z" transform="translate(0,1)" />
-    <path fill="#b4c4d8" d="M0 30 V12 Q30 17 55 12 T100 11 V30z" />
+  <g transform="translate(0, 4) scale(0.5594,-0.25)" >
+    <path fill="#9BABBF" opacity="0.6" d="M0 30 V15 Q30 3 60 15 V30z" transform="translate(0,1)" />
+    <path fill="#9BABBF" d="M0 30 V12 Q30 17 55 12 T100 11 V30z" />
   </g>
 </svg>
