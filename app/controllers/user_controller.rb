@@ -9,7 +9,7 @@ class UserController < ApplicationController
   end
 
   def show
-    redirect_to user_path(current_user.id) and return unless clean_params[:id].to_i == current_user.id or current_user.permitted?(:admin)
+    redirect_to user_path(current_user.id) and return unless clean_params[:id].to_i == current_user.id || current_user.permitted?(:admin)
 
     @user = User.find(clean_params[:id])
 
