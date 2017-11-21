@@ -99,13 +99,14 @@ div#main {
     div#wave {
       width: 100%;
       position: absolute;
+      top: 26.75%;
       z-index: 10;
     }
   }
 
   div#body {
     div#navigation {
-      margin: 0;
+      margin: 0 0 0 0.5em;
       padding: 1em 0.25em;
       float: left;
       width: 20%;
@@ -115,7 +116,7 @@ div#main {
       width: 74%;
       float: right;
       margin: 0;
-      padding: 0.75em 2% 0 2%;
+      padding: 0 2%;
       position: relative;
       text-align: center;
       background-color: white;
@@ -138,6 +139,7 @@ div#main {
 
 div#flashes {
   min-height: 1.25em;
+  background-color: white;
 
   div.notice {
     color: $birmingham-blue;
