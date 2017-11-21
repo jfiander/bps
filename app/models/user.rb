@@ -20,10 +20,12 @@ class User < ApplicationRecord
   def permit!(role)
     role = Role.find_by(name: role.to_s)
     UserRole.find_or_create(user: self, role: role)
+    self.update(invitation_limit: nil) if role == Role.find_by(name: "admin")
   end
 
   def unpermit!(role)
     UserRole.where(user: self).destroy_all and return true if role == :all
     UserRole.where(user: self, role: Role.find_by(name: role.to_s)).destroy_all.present?
+    self.update(invitation_limit: 0) if role == Role.find_by(name: "admin")
   end
 end
