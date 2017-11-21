@@ -1,8 +1,8 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
-  before_action { require_permission(:admin) }
-  before_action :get_users, only: [:list]
-  before_action :display_admin_menu
+  before_action                      except: [:current, :show] { require_permission(:admin) }
+  before_action :display_admin_menu, except: [:current, :show]
+  before_action :get_users,            only: [:list]
 
   def current
     redirect_to user_path(id: current_user.id)
