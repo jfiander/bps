@@ -40,7 +40,7 @@ br.clear-right {
 div#main {
   background-color: darken($background-blue, 5%);
   @include shadow-box(4);
-  @include border-radius(5px);
+  @include border-radius(10px);
   margin: 0.5em 0 1em 0;
   border: thin solid $old-glory-blue-faded;
 
@@ -74,6 +74,7 @@ div#main {
 
       img {
         width: 100%;
+        border-top-right-radius: 10px;
       }
 
       h1 {
