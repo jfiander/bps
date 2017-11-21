@@ -50,6 +50,7 @@ GEM
       aws-sdk-core (= 2.10.86)
     aws-sigv4 (1.0.2)
     bcrypt (3.1.11)
+    bugsnag (6.1.0)
     builder (3.2.3)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -229,6 +230,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   aws-sdk-rails (~> 1.0.1)
+  bugsnag (~> 6.1.0)
   coffee-rails (~> 4.2)
   devise (~> 4.2.0)
   devise_invitable (~> 1.7.2)
