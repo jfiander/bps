@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root                             'public#index'
 
-  devise_for :users, path: '', path_names: {sign_in: 'login', sign_out: 'logout'}
+  devise_for :users, path: '', path_names: {sign_in: 'login', sign_out: 'logout'}, controllers: {invitations: 'users/invitations'}
   as :user do
     get   '/profile',          to: 'devise/registrations#edit'
     patch '/profile',          to: 'devise/registrations#update'

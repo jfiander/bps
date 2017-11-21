@@ -7,6 +7,6 @@ class MembersController < ApplicationController
   end
 
   def admin
-    #
+    @admin_menu = true
   end
 end
