@@ -22,6 +22,7 @@ gem 'devise_invitable',   '~> 1.7.2'
 
 gem 'slim',               '~> 3.0.6'
 gem 'aws-sdk-rails',      '~> 1.0.1'
+gem 'inline_svg',         '~> 1.3.0'
 
 gem 'usps_flags',         '~> 0.3.15'
 gem 'usps_flags-burgees', '~> 0.0.14'
