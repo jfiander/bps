@@ -12,7 +12,7 @@ module NavigationHelper
       title = "Member Login"
       path = new_user_session_path
       options = {class: "members"}
-    elsif title.in? [:members_area, :manage_your_profile, :admin]
+    elsif title.in? [:members_area, :your_profile, :admin]
       options = {class: "members"}
     end
 

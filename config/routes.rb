@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   devise_for :users, path: '', path_names: {sign_in: 'login', sign_out: 'logout'}, controllers: {invitations: 'users/invitations'}
   as :user do
-    get   '/profile',          to: 'devise/registrations#edit'
-    patch '/profile',          to: 'devise/registrations#update'
+    get   '/profile/edit',     to: 'devise/registrations#edit',   as: 'edit_user'
+    patch '/profile/edit',     to: 'devise/registrations#update'
     get   '/reset',            to: 'devise/passwords#new'
   end
 
@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get     '/admin',            to: 'members#admin'
 
   get     '/users',            to: 'user#list'
+  get     '/users/current',    to: 'user#current',                 as: 'current_user'
   get     '/users/:id',        to: 'user#show',                    as: 'user'
   patch   '/users/:id/lock',   to: 'user#lock',                    as: 'lock_user'
   patch   '/users/:id/unlock', to: 'user#unlock',                  as: 'unlock_user'

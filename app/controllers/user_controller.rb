@@ -4,6 +4,10 @@ class UserController < ApplicationController
   before_action :get_users, only: [:list]
   before_action :display_admin_menu
 
+  def current
+    redirect_to user_path(id: current_user.id)
+  end
+
   def show
     redirect_to user_path(current_user.id) and return unless clean_params[:id].to_i == current_user.id or current_user.permitted?(:admin)
 
