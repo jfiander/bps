@@ -242,5 +242,8 @@ DEPENDENCIES
   usps_flags-burgees (~> 0.0.14)
   usps_flags-grades (~> 0.0.1)
 
+RUBY VERSION
+   ruby 2.4.2p198
+
 BUNDLED WITH
    1.16.0
