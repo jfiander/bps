@@ -1,0 +1,16 @@
+h2 = "#{@profile_title} user"
+
+#profile
+  .profile-left Name
+  .profile-right
+    = @user.full_name
+    = t('admin_suffix') if @user.permitted?(:admin)
+  br.clear
+  .profile-left Email
+  .profile-right = @user.email
+  br.clear
+  .profile-left Last login
+  .profile-right = @user.last_sign_in_at.blank? ? "Never logged in" : "#{@user.last_sign_in_at} from #{@user.last_sign_in_ip}"
+  hr.clear
+  - if current_user.id == @user.id
+    .center = link_to "Update your information", edit_user_registration_path

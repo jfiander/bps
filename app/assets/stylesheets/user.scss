@@ -1,0 +1,86 @@
+// Place all the styles related to the user controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// Profile
+#profile {
+  width:     40%;
+  margin:    0 auto;
+}
+
+  #profile .profile-left {
+    float:       left;
+    font-weight: bold;
+  }
+
+  #profile .profile-right {
+    float: right;
+  }
+
+  #profile div.password-box {
+    border: thin solid $old-glory-red;
+  }
+
+  #profile .field {
+    margin-bottom: 1.5em;
+  }
+
+// Users List
+table#users {
+  margin: 0 auto;
+}
+
+  table#users td  {
+    height:        3em;
+    padding-left:  0.25em;
+    padding-right: 0.25em;
+  }
+
+  table#users .narrow {
+    width: 5em;
+  }
+
+  table#users .medium {
+    width: 10em;
+  }
+
+  table#users .wide {
+    width: 15em;
+  }
+
+  table#users .locked {
+    background-color: lighten($old-glory-red,   45%);
+    color:            lighten(black, 30%);
+  }
+
+    table#users .locked a {
+      color: $old-glory-red;
+    }
+
+  table#users td.assigned span {
+    margin: 0 0.5em;
+  }
+
+  table#users tr.unassigned td {
+    border-top: thin solid black;
+  }
+
+// Permissions
+#add-permission {
+  margin:     0 auto;
+  text-align: center;
+}
+
+  form#add-permission select.add-permission {
+    width:  20em;
+    margin: 1em;
+  }
+
+table#permissions {
+  margin: 0 auto;
+  width:  40%;
+}
+
+table#permissions th {
+  text-align: left;
+}

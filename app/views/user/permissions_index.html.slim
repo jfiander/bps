@@ -1,0 +1,25 @@
+h2#profile-title = t('grant_permission')
+
+/ Add a new role assignment
+#add-permissions
+  = form_tag "/permit", id: "add-permission", name: "add-permission"
+    = select_tag "user_id", options_for_select(@users), class: "add-permission", include_blank: true, required: true, prompt: "Please select a user"
+    = select_tag "role", options_for_select(@roles), class: "add-permission", include_blank: true, required: true, prompt: "Please select a permission"
+    br
+    .spacer
+    = submit_tag "Grant permission", {class: "invite-button"}
+
+.spacer
+
+h2#profile-title = "Current Permissions"
+
+table#permissions
+  tr
+    th = "User"
+    th = "Permission"
+    th
+  - UserRole.all.order(:user_id).each do |p|
+    tr
+      td = display_name = p.user.full_name || p.user.email
+      td = p.role.name
+      td = link_to "✖", permit_path(permit_id: p.id), method: :delete, class: "red", data: { confirm: "Are you sure you want to remove the #{p.role.name} permission from #{display_name}?" } if current_user.permitted?(:admin) && p.role.name != "admin"

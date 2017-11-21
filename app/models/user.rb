@@ -5,6 +5,10 @@ class User < ApplicationRecord
 
   validates_inclusion_of :grade, in: %w( S P AP JN N SN ), message: "must be one of [S, P, AP, JN, N, SN]"
 
+  def full_name
+    "#{self.first_name} #{self.last_name}"
+  end
+
   def permitted?(role)
     role = Role.find_by(name: role.to_s)
     return false if role.blank?
@@ -27,5 +31,17 @@ class User < ApplicationRecord
     UserRole.where(user: self).destroy_all and return true if role == :all
     UserRole.where(user: self, role: Role.find_by(name: role.to_s)).destroy_all.present?
     self.update(invitation_limit: 0) if role == Role.find_by(name: "admin")
+  end
+
+  def locked?
+    self.locked_at.present?
+  end
+
+  def lock
+    self.update(locked_at: Time.now)
+  end
+
+  def unlock
+    self.update(locked_at: nil)
   end
 end
