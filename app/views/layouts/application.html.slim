@@ -7,15 +7,14 @@ html
     = favicon_link_tag
   body
     #main
-      #main-left
+      #header
         #nav-header = render "application/nav_header"
+        #main-header = render "application/header"
+        br.clear-right
+        / #wave = File.read("#{Rails.root}/app/assets/images/wave.svg").html_safe
+      #body
         #navigation
           ul = render "application/navigation"
-        br.clear-right
-      #main-right
-        #header = render "application/header"
-        #content
-          #wave = File.read("#{Rails.root}/app/assets/images/wave.svg").html_safe
-          #page-content = yield
+        #content = yield
         br.clear-left
       #footer = render "application/footer"

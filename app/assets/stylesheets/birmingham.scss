@@ -44,45 +44,33 @@ div#main {
   margin: 0.5em 0 1em 0;
   border: thin solid $old-glory-blue-faded;
 
-  div#main-left {
-    width: 20%;
+  div#header {
+    width: 100%;
     margin: 0;
-    padding: 0;
-    float: left;
-    padding-top: 0.25em;
-
-    div#navigation {
-      margin: 0;
-      padding: 1em 0.25em;
-      float: left;
-    }
+    height: auto;
 
     div#nav-header {
-        text-align: center;
+      text-align: center;
+      float: left;
+      width: 20%;
 
-        svg {
-          width: 80%;
-          height: auto;
-        }
-
-        h2 {
-          color: white;
-          text-shadow: 3px 3px $old-glory-blue-faded;
-        }
+      svg {
+        width: 10em;
+        height: auto;
+        margin-top: 1em;
       }
-  }
 
-  div#main-right {
-    width: 79.5%;
-    margin: 0;
-    padding: 0;
-    float: right;
+      h2 {
+        color: white;
+        text-shadow: 3px 3px $old-glory-blue-faded;
+      }
+    }
 
-    div#header {
-      width: 100%;
+    div#main-header {
+      width: 78%;
       margin: 0;
       text-align: center;
-      position: relative;
+      float: right;
 
       img {
         width: 100%;
@@ -90,30 +78,47 @@ div#main {
 
       h1 {
         position: absolute;
-        top: -5%;
+        top: 0;
         right: 40%;
         color: white;
         text-shadow: 3px 3px $old-glory-blue-faded;
         font-size: 2.5em;
       }
+
+      h4 {
+        position: absolute;
+        top: 22%;
+        right: 23%;
+        color: white;
+        text-shadow: 2px 2px $old-glory-blue-faded;
+        font-style: italic;
+      }
+    }
+
+    div#wave {
+      width: 100%;
+      position: absolute;
+      z-index: 10;
+    }
+  }
+
+  div#body {
+    div#navigation {
+      margin: 0;
+      padding: 1em 0.25em;
+      float: left;
+      width: 20%;
     }
 
     div#content {
-      div#wave {
-        width: 100%;
-        position: absolute;
-        z-index: 10;
-      }
-
-      div#page-content {
-        width: 96%;
-        margin: 0;
-        padding: 0.75em 2% 0 2%;
-        position: relative;
-        text-align: center;
-        background-color: white;
-        min-height: 65%;
-      }
+      width: 74%;
+      float: right;
+      margin: 0;
+      padding: 0.75em 2% 0 2%;
+      position: relative;
+      text-align: center;
+      background-color: white;
+      min-height: 55%;
     }
   }
 
