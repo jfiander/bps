@@ -13,7 +13,7 @@ class UserController < ApplicationController
 
     @user = User.find(clean_params[:id])
 
-    @profile_title = @user.id == current_user.id ? I18n.t('current') : I18n.t('selected')
+    @profile_title = @user.id == current_user.id ? "Current" : "Selected"
 
     respond_to do |format|
         format.html
