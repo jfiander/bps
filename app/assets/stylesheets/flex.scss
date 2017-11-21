@@ -35,6 +35,7 @@ body {
 
   #navigation {
     border-bottom: thin solid $old-glory-blue-faded;
+    background-color: lighten($background-blue, 0.5%);
 
     div#flashes {
       min-height: 1.25em;
@@ -43,6 +44,7 @@ body {
 
   #navigation ul {
     text-align: center;
+    padding: 0;
   }
 
   #navigation ul a {
