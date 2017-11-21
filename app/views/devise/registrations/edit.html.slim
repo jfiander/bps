@@ -3,7 +3,7 @@ h2 Edit Profile
 = form_for(resource, as: resource_name, url: edit_user_path(resource_name), html: { method: :put }) do |f|
   = devise_error_messages!
 
-  div.field
+  .field
     = f.label :email
     br
     = f.email_field :email, autofocus: true
@@ -13,7 +13,8 @@ h2 Edit Profile
       | Currently waiting confirmation for:
       = resource.unconfirmed_email
 
-  div.field
+  .password_box
+  .field
     small Leave these blank unless you would like to change your password.
     br
     = f.label :password, "New Password"
@@ -25,18 +26,18 @@ h2 Edit Profile
           = @minimum_password_length
           |  characters minimum
 
-  div.field
+  .field
     = f.label :password_confirmation, "Confirm New Password"
     br
     = f.password_field :password_confirmation, autocomplete: "off"
 
-  div.field
+  .field
     br
     = f.label :current_password, "Please enter your current password to confirm changes."
     br
     = f.password_field :current_password, autocomplete: "off"
 
-  div.actions
+  .actions
     = f.submit "Update"
 
 = link_to "Back", :back
