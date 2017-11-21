@@ -4,4 +4,9 @@ This is the 2018 version of the squadron website.
 
 ## Location
 
-This site will eventually be hosted at [bpsd9.org](http://bpsd9.org).
+| Environment | URL                                  |
+|-------------|--------------------------------------|
+| Production  | https://bpsd9.herokuapp.com          |
+| Staging     | https://bpsd9-staging.herokuapp.com  |
+
+* This site will eventually be hosted at [bpsd9.org](http://bpsd9.org).
