@@ -16,17 +16,17 @@ table#bilge
   - @years.sort { |a,b| b <=> a }.each do |year|
     tr
       th = year
-      td = @bilge_links.has_key?("#{year}/1") ? link_to("January", @bilge_links["#{year}/1"]) : "-"
-      td = @bilge_links.has_key?("#{year}/2") ? link_to("February", @bilge_links["#{year}/2"]) : "-"
-      td = @bilge_links.has_key?("#{year}/3") ? link_to("March", @bilge_links["#{year}/3"]) : "-"
-      td = @bilge_links.has_key?("#{year}/4") ? link_to("April", @bilge_links["#{year}/4"]) : "-"
+      td = @bilge_links.has_key?("#{year}/1") ? link_to("Jan", @bilge_links["#{year}/1"]) : "-"
+      td = @bilge_links.has_key?("#{year}/2") ? link_to("Feb", @bilge_links["#{year}/2"]) : "-"
+      td = @bilge_links.has_key?("#{year}/3") ? link_to("Mar", @bilge_links["#{year}/3"]) : "-"
+      td = @bilge_links.has_key?("#{year}/4") ? link_to("Apr", @bilge_links["#{year}/4"]) : "-"
       td = @bilge_links.has_key?("#{year}/5") ? link_to("May", @bilge_links["#{year}/5"]) : "-"
-      td = @bilge_links.has_key?("#{year}/6") ? link_to("June", @bilge_links["#{year}/6"]) : "-"
+      td = @bilge_links.has_key?("#{year}/6") ? link_to("Jun", @bilge_links["#{year}/6"]) : "-"
       td = @bilge_links.has_key?("#{year}/s") ? link_to("Summer", @bilge_links["#{year}/s"]) : "-"
-      td = @bilge_links.has_key?("#{year}/9") ? link_to("September", @bilge_links["#{year}/9"]) : "-"
-      td = @bilge_links.has_key?("#{year}/10") ? link_to("October", @bilge_links["#{year}/10"]) : "-"
-      td = @bilge_links.has_key?("#{year}/11") ? link_to("November", @bilge_links["#{year}/11"]) : "-"
-      td = @bilge_links.has_key?("#{year}/12") ? link_to("December", @bilge_links["#{year}/12"]) : "-"
+      td = @bilge_links.has_key?("#{year}/9") ? link_to("Sep", @bilge_links["#{year}/9"]) : "-"
+      td = @bilge_links.has_key?("#{year}/10") ? link_to("Oct", @bilge_links["#{year}/10"]) : "-"
+      td = @bilge_links.has_key?("#{year}/11") ? link_to("Nov", @bilge_links["#{year}/11"]) : "-"
+      td = @bilge_links.has_key?("#{year}/12") ? link_to("Dec", @bilge_links["#{year}/12"]) : "-"
 
 hr
 = link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag "acrobat_reader.png" }
