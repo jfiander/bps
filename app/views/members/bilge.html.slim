@@ -12,19 +12,6 @@ small Uploading to an issue that has already been uploaded will overwrite the pr
 hr
 
 table#bilge
-  tr
-    th Year
-    th January
-    th February
-    th March
-    th April
-    th May
-    th June
-    th Summer
-    th September
-    th October
-    th November
-    th December
   - @years.sort { |a,b| b <=> a }.each do |year|
     tr
       th = year
