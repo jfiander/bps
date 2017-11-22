@@ -1,5 +1,5 @@
 module NavigationHelper
-  def link(title = nil, permit: nil, path: nil, show_when: :always)
+  def link(title = nil, permit: nil, path: nil, show_when: :always, suffix: "")
     return nil unless show_menu?(title: title, permit: permit, show_when: show_when, path: path)
 
     options = {class: permit.to_s}
@@ -17,7 +17,7 @@ module NavigationHelper
     end
 
     title = title.to_s.titleize if title.is_a?(Symbol)
-    link_to(content_tag(:li, title, class: permit.to_s).html_safe, path, options)
+    link_to(content_tag(:li, title, class: permit.to_s).html_safe, path, options) + suffix
   end
 
   private
