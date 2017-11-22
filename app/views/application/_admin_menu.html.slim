@@ -3,7 +3,3 @@ ul#admin-menu
     = link "Show All Users",       path: users_path,               permit: :admin, suffix: " | "
     = link "Invite New User",      path: new_user_invitation_path, permit: :admin, suffix: " | "
     = link "Manage Permissions",   path: permit_path,              permit: :admin
-    br
-  = current_user.permitted?(:newsletter) do
-    = link "Manage Bilge Chatter", path: bilge_path,               permit: :newsletter
-    br
