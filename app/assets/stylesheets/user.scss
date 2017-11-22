@@ -28,59 +28,58 @@
 // Users List
 table#users {
   margin: 0 auto;
-}
 
-  table#users td  {
-    height:        3em;
-    padding-left:  0.25em;
-    padding-right: 0.25em;
+  tr.gray {
+    background-color: $background-blue;
   }
 
-  table#users .narrow {
+  td  {
+    height:  3em;
+    padding: 0.25em;
+  }
+
+  .narrow {
     width: 5em;
   }
 
-  table#users .medium {
+  .medium {
     width: 10em;
   }
 
-  table#users .wide {
+  .wide {
     width: 15em;
   }
 
-  table#users .locked {
-    background-color: lighten($old-glory-red,   45%);
-    color:            lighten(black, 30%);
-  }
+  .locked {
+    background-color: lighten($old-glory-red, 50%);
+    color:            gray;
 
-    table#users .locked a {
+    a {
       color: $old-glory-red;
     }
-
-  table#users td.assigned span {
-    margin: 0 0.5em;
   }
 
-  table#users tr.unassigned td {
-    border-top: thin solid black;
+  input {
+    float: right;
   }
+}
 
 // Permissions
 #add-permission {
   margin:     0 auto;
   text-align: center;
-}
 
-  form#add-permission select.add-permission {
+  select.add-permission {
     width:  20em;
     margin: 1em;
   }
+}
 
 table#permissions {
   margin: 0 auto;
   width:  40%;
-}
 
-table#permissions th {
-  text-align: left;
+  th {
+    text-align: left;
+  }
 }
