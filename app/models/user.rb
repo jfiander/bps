@@ -11,6 +11,10 @@ class User < ApplicationRecord
     "#{self.first_name} #{self.last_name}"
   end
 
+  def photo
+    BpsS3.link(bucket: :files, key: "profile_photos/#{self.certificate}.png")
+  end
+
   def permitted?(role, &block)
     role = Role.find_by(name: role.to_s)
     return false if role.blank?
