@@ -12,46 +12,23 @@
 }
 
 #navigation ul li {
-  @include border-radius(0.5em);
-  @include shadow-box(1);
+  @include blue-button(0.5em);
   float: left;
   list-style: none;
   text-align: center;
-  background-color: $birmingham-blue;
   margin: 0.2em 0;
+  padding: 0;
   line-height: 2em;
   width: 11em;
   clear: both;
 }
 
-#navigation ul li:hover {
-  background-color: darken($birmingham-blue, 20%);
-}
-
-#navigation ul li:active {
-  background-color: darken($birmingham-blue, 30%);
-}
-
 #navigation ul a.red li {
-  background-color: $old-glory-red;
-}
-
-#navigation ul a.red:hover li {
-  background-color: darken($old-glory-red, 10%);
-}
-
-#navigation ul a.red:active li {
-  background-color: darken($old-glory-red, 20%);
+  @include blue-button(0.5em, $old-glory-red);
+  padding: 0;
 }
 
 #navigation ul a.members li {
-  background-color: lighten($old-glory-blue, 20%);
-}
-
-#navigation ul a.members:hover li {
-  background-color: lighten($old-glory-blue, 10%);
-}
-
-#navigation ul a.members:active li {
-  background-color: $old-glory-blue;
+  @include blue-button(0.5em, lighten($old-glory-blue, 20%));
+  padding: 0;
 }

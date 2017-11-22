@@ -1,29 +1,17 @@
-@mixin button-style($button-width: 15em) {
-  @include          border-radius(25px);
-  background-color: $birmingham-blue;
-  color:            white;
-  border:           0;
-  margin:           1.5em 0 0.5em 0;
-  font-size:        1.25em;
-  width:            $button-width;
-}
-
-@mixin small-button($button-color) {
-  @include          button-style(5em);
-  color:            $button-color;
-  background-color: white;
-  border:           thin solid black;
-  line-height:      0.75em;
-  height:           1.5em;
-  font-size:        0.5em;
-  margin:           0;
-}
-
-@mixin medium-button($button-color) {
-  @include          small-button($button-color);
+@mixin blue-button($corner: 0.5em, $button-color: $birmingham-blue, $step: 10%) {
+  @include border-radius($corner);
+  @include shadow-box(1);
   background-color: $button-color;
-  color:            white;
-  font-size:        0.75em;
-  margin:           0;
-  border:           0;
+  color: white;
+  padding: 0.2em 0.4em;
+
+  &:hover {
+    background-color: darken($button-color, $step);
+    @include shadow-box(0.75);
+  }
+
+  &:active {
+    background-color: darken($button-color, $step*2);
+    @include shadow-box(0.5);
+  }
 }
