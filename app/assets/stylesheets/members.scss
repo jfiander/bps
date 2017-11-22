@@ -8,8 +8,4 @@ ul#admin-menu {
   li {
     display: inline;
   }
-
-  li + li::before {
-    content: " | ";
-  }
 }
