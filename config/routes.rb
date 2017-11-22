@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   get     '/members',            to: 'members#index'
   post    '/bilge',              to: 'members#upload_bilge'
+  get     '/flags',              to: 'members#download_flags'
 
   get     '/users',              to: 'user#list'
   get     '/users/current',      to: 'user#current',                 as: 'current_user'

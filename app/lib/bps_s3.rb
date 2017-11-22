@@ -26,6 +26,17 @@ module BpsS3
     get_object(bucket: bucket, key: key).get.body.string
   end
 
+  def self.download_with_prefix(bucket:, prefix:, to:)
+    in_bucket(bucket).objects({prefix: prefix}).each do |obj|
+      outfile = "#{to}/#{obj.key}".sub(prefix, '')
+      next if File.directory?(outfile)
+      outdir = outfile.dup.split("/")
+      outdir.pop
+      FileUtils.mkdir_p(outdir.join("/"))
+      obj.get(response_target: outfile)
+    end
+  end
+
   def self.list(bucket:, prefix: "")
     in_bucket(bucket).objects({prefix: prefix})
   end

@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   before_action :authenticate_user!
-  before_action                   only: [:admin] { require_permission(:admin) }
+  before_action                   only: [:admin, :download_flags] { require_permission(:admin) }
   before_action                   only: [:upload_bilge] { require_permission(:newsletter) }
   before_action :get_bilge_issue, only: [:upload_bilge, :remove_bilge]
 
@@ -14,6 +14,11 @@ class MembersController < ApplicationController
 
     BpsS3.upload(clean_params[:bilge_upload_file], bucket: :bilge, key: @key)
     redirect_to newsletter_path, notice: "Bilge Chatter uploaded successfully."
+  end
+
+  def download_flags
+    BpsS3.download_with_prefix(bucket: :files, prefix: "flags/", to: USPSFlags.configuration.flags_dir)
+    redirect_to members_path, notice: "Successfully downloaded flags images."
   end
 
   private
