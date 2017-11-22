@@ -9,12 +9,15 @@ class User < ApplicationRecord
     "#{self.first_name} #{self.last_name}"
   end
 
-  def permitted?(role)
+  def permitted?(role, &block)
     role = Role.find_by(name: role.to_s)
     return false if role.blank?
 
     # True if user's roles include the specified role or any parent role
-    role.in?(self.roles) || role.parents.any? { |r| r.in? self.roles }
+    permitted = role.in?(self.roles) || role.parents.any? { |r| r.in? self.roles }
+
+    yield and return if block_given?
+    permitted
   end
 
   def permitted_roles
