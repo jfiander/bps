@@ -11,11 +11,7 @@ table#bridge
       td
         = bridge.user.full_name
         br
-        - if bridge.user.photo_link.present?
-          / photo
-        - else
-          img width=125 height=150
-          / placeholder
+        = image_tag bridge.user.photo, width:125
       td
         table#committees
           tr
