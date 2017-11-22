@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   get     '/members',          to: 'members#index'
   get     '/admin',            to: 'members#admin'
-  get     '/bilge',            to: 'members#bilge'
+  get     '/bilge',            to: 'public#newsletter'
   post    '/bilge',            to: 'members#upload_bilge'
 
   get     '/users',            to: 'user#list'

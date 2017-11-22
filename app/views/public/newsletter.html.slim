@@ -1,1 +1,30 @@
 h2 Squadron Newsletter
+h3 The Bilge Chatter
+
+- current_user&.permitted?(:newsletter) do
+  = form_tag "/bilge", multipart: true
+    = file_field_tag :bilge_upload_file, accept: 'application/pdf'
+    = date_select(:issue, :date, start_year: 2015, use_month_numbers: true, discard_day: true)
+    = submit_tag "Upload Bilge Chatter"
+  br
+  small Note: Uploads for either July or August will be treated as the Summer issue for that year.
+  br
+  small Uploading to an issue that has already been uploaded will overwrite the previous version.
+
+  hr
+
+table#bilge
+  - @years.sort { |a,b| b <=> a }.each do |year|
+    tr
+      th = year
+      td = @bilge_links.has_key?("#{year}/1") ? link_to("January", @bilge_links["#{year}/1"]) : "-"
+      td = @bilge_links.has_key?("#{year}/2") ? link_to("February", @bilge_links["#{year}/2"]) : "-"
+      td = @bilge_links.has_key?("#{year}/3") ? link_to("March", @bilge_links["#{year}/3"]) : "-"
+      td = @bilge_links.has_key?("#{year}/4") ? link_to("April", @bilge_links["#{year}/4"]) : "-"
+      td = @bilge_links.has_key?("#{year}/5") ? link_to("May", @bilge_links["#{year}/5"]) : "-"
+      td = @bilge_links.has_key?("#{year}/6") ? link_to("June", @bilge_links["#{year}/6"]) : "-"
+      td = @bilge_links.has_key?("#{year}/s") ? link_to("Summer", @bilge_links["#{year}/s"]) : "-"
+      td = @bilge_links.has_key?("#{year}/9") ? link_to("September", @bilge_links["#{year}/9"]) : "-"
+      td = @bilge_links.has_key?("#{year}/10") ? link_to("October", @bilge_links["#{year}/10"]) : "-"
+      td = @bilge_links.has_key?("#{year}/11") ? link_to("November", @bilge_links["#{year}/11"]) : "-"
+      td = @bilge_links.has_key?("#{year}/12") ? link_to("December", @bilge_links["#{year}/12"]) : "-"

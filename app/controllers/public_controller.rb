@@ -1,4 +1,6 @@
 class PublicController < ApplicationController
+  before_action :display_admin_menu, if: :current_user_is_admin?
+
   def index
     #
   end
@@ -44,7 +46,15 @@ class PublicController < ApplicationController
   end
 
   def newsletter
-    #
+    bilges = BpsS3.list(bucket: :bilge)
+
+    @years = bilges.map(&:key).map { |b| b.delete('.pdf').gsub(/\/(s|\d+)/, '') }.uniq
+
+    @bilge_links = bilges.map do |b|
+      key = b.key.dup
+      issue_date = b.key.delete(".pdf")
+      { issue_date => BpsS3.link(bucket: :bilge, key: key) }
+    end.reduce({}, :merge)
   end
 
   def store
@@ -56,6 +66,10 @@ class PublicController < ApplicationController
   end
 
   private
+  def display_admin_menu
+    @admin_menu = true
+  end
+
   def clean_params
     params.permit()
   end

@@ -1,7 +1,8 @@
 class MembersController < ApplicationController
   before_action :authenticate_user!
   before_action only: [:admin] { require_permission(:admin) }
-  before_action :display_admin_menu, only: [:admin, :bilge]
+  before_action only: [:upload_bilge] { require_permission(:newsletter) }
+  before_action :display_admin_menu, only: [:admin]
 
   def index
     #
@@ -9,18 +10,6 @@ class MembersController < ApplicationController
 
   def admin
     #
-  end
-
-  def bilge
-    bilges = BpsS3.list(bucket: :bilge)
-
-    @years = bilges.map(&:key).map { |b| b.delete('.pdf').gsub(/\/(s|\d+)/, '') }.uniq
-
-    @bilge_links = bilges.map do |b|
-      key = b.key.dup
-      issue_date = b.key.delete(".pdf")
-      { issue_date => BpsS3.link(bucket: :bilge, key: key) }
-    end.reduce({}, :merge)
   end
 
   def upload_bilge
