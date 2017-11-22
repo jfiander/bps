@@ -3,6 +3,7 @@ education = Role.create!(name: "education", parent: admin)
 events = Role.create!(name: "events", parent: admin)
 
 Role.create!([
+  {name: "users", parent: admin},
   {name: "store", parent: admin},
   {name: "photos", parent: admin},
   {name: "newsletter", parent: admin},

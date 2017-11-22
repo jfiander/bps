@@ -1,6 +1,7 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
-  before_action                      except: [:current, :show] { require_permission(:admin) }
+  before_action                      except: [:current, :show, :permissions_index, :permissions_add, :permissions_remove] { require_permission(:admin) }
+  before_action                        only: [                 :permissions_index, :permissions_add, :permissions_remove] { require_permission(:users) }
   before_action :display_admin_menu, except: [:current, :show]
   before_action :get_users,            only: [:list]
 
