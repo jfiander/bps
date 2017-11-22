@@ -6,6 +6,14 @@ table#bilge {
   text-align: center;
 
   tr {
-    height: 2em;
+    height: 3em;
+  }
+
+  td {
+    max-width: 3em;
+  }
+
+  a {
+    @include blue-button(0.25em);
   }
 }
