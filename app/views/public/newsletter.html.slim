@@ -10,7 +10,6 @@ h3 The Bilge Chatter
   small Note: Uploads for either July or August will be treated as the Summer issue for that year.
   br
   small Uploading to an issue that has already been uploaded will overwrite the previous version.
-
   hr
 
 table#bilge
@@ -28,3 +27,6 @@ table#bilge
       td = @bilge_links.has_key?("#{year}/10") ? link_to("October", @bilge_links["#{year}/10"]) : "-"
       td = @bilge_links.has_key?("#{year}/11") ? link_to("November", @bilge_links["#{year}/11"]) : "-"
       td = @bilge_links.has_key?("#{year}/12") ? link_to("December", @bilge_links["#{year}/12"]) : "-"
+
+hr
+= link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag "acrobat_reader.png" }
