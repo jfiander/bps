@@ -19,7 +19,7 @@ module BpsS3
   end
 
   def self.link(bucket:, key:)
-    get_object(bucket: bucket, key: key).presigned_url(:get, expires_in: 20.minutes).to_s
+    get_object(bucket: bucket, key: key).presigned_url(:get, expires_in: 20.minutes, response_content_disposition: "attachment;filename=Bilge_Chatter_#{key.gsub('/', '-')}").to_s
   end
 
   def self.download(bucket:, key:)
