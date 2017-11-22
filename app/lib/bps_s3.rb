@@ -29,4 +29,8 @@ module BpsS3
   def self.list(bucket:, prefix: "")
     in_bucket(bucket).objects({prefix: prefix})
   end
+
+  def self.remove_object(bucket:, key:)
+    in_bucket(bucket).object(key).delete
+  end
 end
