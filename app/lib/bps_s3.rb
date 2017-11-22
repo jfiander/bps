@@ -14,7 +14,19 @@ module BpsS3
     in_bucket(bucket).object(key).upload_file(file.path) #, acl: 'public-read'
   end
 
+  def self.get_object(bucket:, key:)
+    in_bucket(bucket).object(key)
+  end
+
+  def self.link(bucket:, key:)
+    get_object(bucket: bucket, key: key).presigned_url(:get, expires_in: 20.minutes).to_s
+  end
+
   def self.download(bucket:, key:)
-    in_bucket(bucket).objects({prefix: key}).first.get.body.string
+    get_object(bucket: bucket, key: key).get.body.string
+  end
+
+  def self.list(bucket:, prefix: "")
+    in_bucket(bucket).objects({prefix: prefix})
   end
 end
