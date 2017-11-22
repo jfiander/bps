@@ -7,10 +7,6 @@ class MembersController < ApplicationController
     #
   end
 
-  def admin
-    #
-  end
-
   def upload_bilge
     year = clean_params[:issue]['date(1i)']
     month = clean_params[:issue]['date(2i)']

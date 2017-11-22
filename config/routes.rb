@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   get     '/links',            to: 'public#links'
 
   get     '/members',          to: 'members#index'
-  get     '/admin',            to: 'members#admin'
   get     '/bilge',            to: 'public#newsletter'
   post    '/bilge',            to: 'members#upload_bilge'
 
