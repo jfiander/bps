@@ -1,11 +1,25 @@
 // Place all the styles related to the members controller here.
 
-ul#admin-menu {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+#admin-menu {
+  width: 100%;
+  background-color: lighten($old-glory-blue, 75%);
+  padding: 0.25em 0;
 
-  li {
-    display: inline;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline;
+    }
+  }
+
+  a {
+    color: darken($birmingham-blue, 15%);
+  }
+
+  a:hover {
+    color: darken($birmingham-blue, 5%);
   }
 }

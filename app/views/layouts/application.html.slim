@@ -13,9 +13,11 @@ html
       #navigation
         ul = render "application/navigation"
       #content
+        - current_user&.permitted?(:admin) do
+          #admin-menu
+            ul = render "application/admin_menu"
         #flashes
           .notice = notice
           .alert = alert
-        = render "application/admin_menu" if @admin_menu
         = yield
       footer = render "application/footer"
