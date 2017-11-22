@@ -3,9 +3,11 @@ h3 The Bilge Chatter
 
 - current_user&.permitted?(:newsletter) do
   = form_tag "/bilge", multipart: true
-    = file_field_tag :bilge_upload_file, accept: 'application/pdf'
-    = date_select(:issue, :date, start_year: 2015, use_month_numbers: true, discard_day: true)
+    = file_field_tag :bilge_upload_file, accept: 'application/pdf', required: true
+    = date_select(:issue, :date, start_year: 2015, use_month_numbers: true, discard_day: true, required: true)
     = submit_tag "Upload Bilge Chatter"
+    = check_box_tag :bilge_remove
+    = label_tag :bilge_remove, "Remove Issue"
   br
   small Note: Uploads for either July or August will be treated as the Summer issue for that year.
   br
