@@ -93,7 +93,7 @@ class PublicController < ApplicationController
       "1LT"
     end
 
-    USPSFlags::Generate.svg(rank)
+    BpsS3.get_object(bucket: :files, key: "flags/SVG/#{rank}.svg").get.body.read
   end
   helper_method :officer_flag
 
