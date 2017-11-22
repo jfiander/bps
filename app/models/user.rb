@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
 
-  validates_inclusion_of :grade, in: %w( S P AP JN N SN ), message: "must be one of [S, P, AP, JN, N, SN]"
+  validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be one of [S, P, AP, JN, N, SN]"
 
   def full_name
     "#{self.first_name} #{self.last_name}"
