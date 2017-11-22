@@ -1,1 +1,11 @@
 // Place all the styles related to the public controller here.
+
+table#bilge {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+
+  tr {
+    height: 2em;
+  }
+}
