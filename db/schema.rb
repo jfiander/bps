@@ -10,7 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171121165046) do
+ActiveRecord::Schema.define(version: 20171122201827) do
+
+  create_table "course_includes", force: :cascade do |t|
+    t.integer  "course_id"
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "course_topics", force: :cascade do |t|
+    t.integer  "course_id"
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "event_categories", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "event_types", force: :cascade do |t|
+    t.integer  "event_category_id"
+    t.string   "title"
+    t.string   "image_link"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "course_type_id"
+    t.integer  "cost"
+    t.text     "description"
+    t.string   "requirements"
+    t.string   "location"
+    t.string   "map_link"
+    t.datetime "start_at"
+    t.integer  "length"
+    t.integer  "sessions"
+    t.string   "flyer_link"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
