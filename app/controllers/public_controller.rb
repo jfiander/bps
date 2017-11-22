@@ -1,4 +1,6 @@
 class PublicController < ApplicationController
+  before_action :list_bilges, only: [:newsletter, :get_bilge]
+
   def index
     #
   end
@@ -44,15 +46,31 @@ class PublicController < ApplicationController
   end
 
   def newsletter
-    bilges = BpsS3.list(bucket: :bilge)
+    @years = @bilges.map(&:key).map { |b| b.delete('.pdf').gsub(/\/(s|\d+)/, '') }.uniq
 
-    @years = bilges.map(&:key).map { |b| b.delete('.pdf').gsub(/\/(s|\d+)/, '') }.uniq
+    @issues = @bilge_links.keys
 
-    @bilge_links = bilges.map do |b|
-      key = b.key.dup
-      issue_date = b.key.delete(".pdf")
-      { issue_date => BpsS3.link(bucket: :bilge, key: key) }
-    end.reduce({}, :merge)
+    @available_issues = {
+      1   => "Jan",
+      2   => "Feb",
+      3   => "Mar",
+      4   => "Apr",
+      5   => "May",
+      6   => "Jun",
+      "s" => "Summer",
+      9   => "Sep",
+      10  => "Oct",
+      11  => "Nov",
+      12  => "Dec"
+    }
+  end
+
+  def get_bilge
+    key = "#{clean_params[:year]}/#{clean_params[:month]}"
+    issue_link = @bilge_links[key]
+    issue_title = key.gsub("/", "-")
+
+    send_data open(issue_link).read, filename: "Bilge Chatter #{issue_title}.pdf", type: "application/pdf", disposition: 'inline', stream: 'true', buffer_size: '4096'
   end
 
   def store
@@ -65,6 +83,16 @@ class PublicController < ApplicationController
 
   private
   def clean_params
-    params.permit()
+    params.permit(:year, :month)
+  end
+
+  def list_bilges
+    @bilges = BpsS3.list(bucket: :bilge)
+
+    @bilge_links = @bilges.map do |b|
+      key = b.key.dup
+      issue_date = b.key.delete(".pdf")
+      { issue_date => BpsS3.link(bucket: :bilge, key: key) }
+    end.reduce({}, :merge)
   end
 end
