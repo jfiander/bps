@@ -1,0 +1,6 @@
+h2 The Bilge Chatter
+
+= form_tag "/bilge", multipart: true
+  = file_field_tag :bilge_upload_file, accept: 'application/pdf'
+  = date_select(:issue, :date, start_year: 2015, use_month_numbers: true, discard_day: true)
+  = submit_tag "Upload Bilge Chatter"

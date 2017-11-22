@@ -1,4 +1,9 @@
 ul#admin-menu
-  li = link_to "Show All Users", users_path
-  li = link_to "Invite New User", new_user_invitation_path
-  li = link_to "Manage Permissions", permit_path
+  = current_user.permitted?(:admin) do
+    = link "Show All Users",       path: users_path,               permit: :admin, suffix: " | "
+    = link "Invite New User",      path: new_user_invitation_path, permit: :admin, suffix: " | "
+    = link "Manage Permissions",   path: permit_path,              permit: :admin
+    br
+  = current_user.permitted?(:newsletter) do
+    = link "Manage Bilge Chatter", path: bilge_path,               permit: :newsletter
+    br
