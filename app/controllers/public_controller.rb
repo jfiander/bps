@@ -1,6 +1,4 @@
 class PublicController < ApplicationController
-  before_action :display_admin_menu, if: :current_user_is_admin?
-
   def index
     #
   end
@@ -66,10 +64,6 @@ class PublicController < ApplicationController
   end
 
   private
-  def display_admin_menu
-    @admin_menu = true
-  end
-
   def clean_params
     params.permit()
   end

@@ -2,9 +2,15 @@ class ApplicationController < ActionController::Base
   force_ssl if: :ssl_configured?
   protect_from_forgery with: :exception
 
+  before_action :display_admin_menu, if: :current_user_is_admin?
+
   private
   def ssl_configured?
     Rails.env.production? || Rails.env.staging?
+  end
+
+  def display_admin_menu
+    @admin_menu = true
   end
 
   def require_permission(role)

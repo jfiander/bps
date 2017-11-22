@@ -2,7 +2,6 @@ class MembersController < ApplicationController
   before_action :authenticate_user!
   before_action only: [:admin] { require_permission(:admin) }
   before_action only: [:upload_bilge] { require_permission(:newsletter) }
-  before_action :display_admin_menu, only: [:admin]
 
   def index
     #
@@ -21,10 +20,6 @@ class MembersController < ApplicationController
   end
 
   private
-  def display_admin_menu
-    @admin_menu = true
-  end
-
   def clean_params
     params.permit(:bilge_upload_file, issue: ['date(1i)', 'date(2i)'])
   end
