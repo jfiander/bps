@@ -14,8 +14,7 @@ html
         ul = render "application/navigation"
       #content
         - current_user&.permitted?(:admin) do
-          #admin-menu
-            ul = render "application/admin_menu"
+          ul#admin-menu = render "application/admin_menu"
         #flashes
           .notice = notice
           .alert = alert
