@@ -17,3 +17,44 @@ table#bilge {
     @include blue-button(0.25em);
   }
 }
+
+table#bridge {
+  width: 90%;
+  margin: 0 auto;
+  text-align: left;
+
+  td, th {
+    vertical-align: top;
+    padding: 0.25em;
+  }
+
+  td.flag {
+    width: 10%;
+  }
+
+  th.department {
+    width: 25%;
+  }
+
+  td.committee {
+    width: 25%;
+  }
+
+  td.committee-chair {
+    width: 40%;
+  }
+
+  td.spacer {
+    height: 2em;
+  }
+
+  table#committees {
+    width: 100%;
+    text-align: left;
+  }
+
+  svg {
+    width: 150px;
+    height: 100px;
+  }
+}

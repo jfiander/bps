@@ -38,7 +38,9 @@ class PublicController < ApplicationController
   end
 
   def bridge
-    #
+    @bridge_officers = BridgeOffice.heads.ordered
+
+    @committees = Committee.all.group_by { |c| c.department }
   end
 
   def history
@@ -80,6 +82,20 @@ class PublicController < ApplicationController
   def links
     #
   end
+
+  def officer_flag(office)
+    rank = case office
+    when "commander"
+      "CDR"
+    when "executive", "educational", "administrative", "secretary", "treasurer"
+      "LTC"
+    when "asst_educational", "asst_secretary"
+      "1LT"
+    end
+
+    USPSFlags::Generate.svg(rank)
+  end
+  helper_method :officer_flag
 
   private
   def clean_params

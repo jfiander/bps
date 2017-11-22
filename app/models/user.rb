@@ -2,6 +2,8 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :recoverable, :trackable, :validatable, :timeoutable, :lockable
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
+  has_one  :bridge_office
+  has_many :committees
 
   validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be one of [S, P, AP, JN, N, SN]"
 
