@@ -1,7 +1,7 @@
 class BridgeOffice < ApplicationRecord
   belongs_to :user
 
-  before_validation { self.update(office: self.office.to_s) }
+  before_validation { self.office = self.office.to_s }
 
   validates :office,  uniqueness: true
   validates :user_id, uniqueness: true
