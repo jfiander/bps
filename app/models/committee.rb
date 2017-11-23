@@ -1,5 +1,5 @@
 class Committee < ApplicationRecord
-  belongs_to :chair, class_name: "User"
+  belongs_to :chair, class_name: "User", optional: true
 
   validates :department, inclusion: { in: %w[commander executive educational
     administrative secretary treasurer asst_educational asst_secretary],
