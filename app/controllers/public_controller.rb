@@ -59,7 +59,7 @@ class PublicController < ApplicationController
       4   => "Apr",
       5   => "May",
       6   => "Jun",
-      "s" => "Summer",
+      "s" => "Sum",
       9   => "Sep",
       10  => "Oct",
       11  => "Nov",
