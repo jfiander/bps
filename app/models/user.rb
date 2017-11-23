@@ -5,41 +5,44 @@ class User < ApplicationRecord
   has_one  :bridge_office
   has_many :committees
 
-  validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be one of [S, P, AP, JN, N, SN]"
+  validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be nil or one of [S, P, AP, JN, N, SN]"
 
   def full_name
-    "#{self.first_name} #{self.last_name}"
+    "#{first_name} #{last_name}"
   end
 
   def photo
-    BpsS3.link(bucket: :files, key: "profile_photos/#{self.certificate}.png")
+    BpsS3.link(bucket: :files, key: "profile_photos/#{certificate}.png")
   end
 
   def permitted?(role, &block)
     role = Role.find_by(name: role.to_s)
     return false if role.blank?
 
-    # True if user's roles include the specified role or any parent role
-    permitted = role.in?(self.roles) || role.parents.any? { |r| r.in? self.roles }
+    permitted = role.name.in?(permitted_roles.map(&:to_s))
 
-    yield and return if block_given?
+    yield if permitted && block_given?
     permitted
   end
 
   def permitted_roles
-    self.roles.map(&:children).flatten.map(&:name).map(&:to_sym)
+    [
+      roles.map(&:name).map(&:to_sym),
+      roles.map(&:children).flatten.map(&:name).map(&:to_sym),
+      permitted_roles_from_bridge_office
+    ].flatten.uniq.reject { |r| r.nil? }
   end
 
   def permit!(role)
     role = Role.find_by(name: role.to_s)
     UserRole.find_or_create(user: self, role: role)
-    self.update(invitation_limit: nil) if role == Role.find_by(name: "admin")
+    update_invitation_limit
   end
 
   def unpermit!(role)
     UserRole.where(user: self).destroy_all and return true if role == :all
     UserRole.where(user: self, role: Role.find_by(name: role.to_s)).destroy_all.present?
-    self.update(invitation_limit: 0) if role == Role.find_by(name: "admin")
+    update_invitation_limit
   end
 
   def locked?
@@ -52,5 +55,23 @@ class User < ApplicationRecord
 
   def unlock
     self.update(locked_at: nil)
+  end
+
+  private
+  def permitted_roles_from_bridge_office
+    {
+      "commander" => [:admin],
+      "executive" => [:admin],
+      "administrative" => [:users],
+      "educational" => [:education],
+      "secretary" => [:admin, :newsletter],
+      "treasurer" => [:property],
+      "asst_educational" => [:education],
+      "asst_secretary" => [:newsletter]
+    }[bridge_office.office]
+  end
+
+  def update_invitation_limit
+    self.update invitation_limit: (self.permitted?(:admin) ? nil : 0)
   end
 end
