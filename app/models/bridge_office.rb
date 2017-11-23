@@ -1,6 +1,8 @@
 class BridgeOffice < ApplicationRecord
   belongs_to :user
 
+  before_validation { self.update(office: self.office.to_s) }
+
   validates :office,  uniqueness: true
   validates :user_id, uniqueness: true
   validates :office, inclusion: { in: %w[commander executive educational
