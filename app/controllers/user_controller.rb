@@ -116,8 +116,4 @@ class UserController < ApplicationController
   def clean_params
     params.permit(:id, :user_id, :role, :permit_id)
   end
-
-  def display_admin_menu
-    @admin_menu = true
-  end
 end
