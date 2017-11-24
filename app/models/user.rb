@@ -73,11 +73,11 @@ class User < ApplicationRecord
       "treasurer" => [:property],
       "asst_educational" => [:education],
       "asst_secretary" => [:newsletter]
-    }[bridge_office.office]
+    }[bridge_office&.office]
   end
 
   def auto_rank
-    case bridge_office.office
+    case bridge_office&.office
     when "commander"
       "Cdr"
     when "executive", "administrative", "educational", "secretary", "treasurer"
