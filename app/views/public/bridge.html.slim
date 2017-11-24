@@ -2,12 +2,14 @@ h2 Bridge Officers
 
 table#bridge
   - @bridge_officers.each do |bridge|
+    - name = bridge.user&.full_name || "TBD"
+    - photo = bridge.user&.photo || User.no_photo
     tr
       th.flag = bridge.title
-      td colspan=2 = bridge.user.full_name
+      td colspan=2 = name
     tr
       th = officer_flag(bridge.office).html_safe
-      td = image_tag bridge.user.photo, width:125
+      td = image_tag photo, width:125
       td
         table#committees
           tr
@@ -17,7 +19,7 @@ table#bridge
           - if assistant.present?
             tr
               td = assistant.title
-              td = assistant.user.full_name
+              td = assistant.user&.full_name || "TBD"
           - @committees[bridge.office]&.each do |committee|
             tr
               td = committee.name.titleize
