@@ -29,16 +29,7 @@ class BridgeOffice < ApplicationRecord
   }
 
   def title
-    t = case self.office
-    when "commander", "secretary", "treasurer"
-      self.office.titleize
-    when "executive", "educational", "administrative"
-      self.office.titleize
-    when "asst_educational", "asst_secretary"
-      self.office.gsub("asst_", "Assistant ").titleize
-    end
-    t += " Officer" if %w[Executive Educational Administrative].any? { |o| o.in? t }
-
-    t
+    t = self.office.gsub("asst_", "Assistant ").titleize
+    %w[Executive Educational Administrative].any? { |o| o.in? t } ? "#{t} Officer" : t
   end
 end
