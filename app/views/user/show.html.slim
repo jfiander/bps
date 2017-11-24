@@ -18,4 +18,4 @@ h2 = "#{@profile_title} user"
   .profile-right = @user.last_sign_in_at.blank? ? "" : @user.last_sign_in_ip
   hr.clear
   - if current_user.id == @user.id
-    .center = link_to "Update your information", edit_user_path
+    .center = link_to "Update your information", profile_edit_path
