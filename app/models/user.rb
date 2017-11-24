@@ -14,7 +14,10 @@ class User < ApplicationRecord
   end
 
   def photo
-    BpsS3.link(bucket: :files, key: "profile_photos/#{certificate}.png")
+    s3_link = BpsS3.link(bucket: :files, key: "profile_photos/#{certificate}.png")
+    no_profile_image = ActionController::Base.helpers.image_path("no_profile.png")
+
+    s3_link.present? ? s3_link : no_profile_image
   end
 
   def permitted?(role, &block)
