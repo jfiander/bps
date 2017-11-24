@@ -17,6 +17,8 @@ gem 'jquery-ui-rails',    '~> 6.0.1'
 gem 'turbolinks',         '~> 5'
 gem 'jbuilder',           '~> 2.5'
 
+gem 'sendgrid-ruby',      '~> 5.2.0'
+
 gem 'devise',             '~> 4.2.0'
 gem 'devise_invitable',   '~> 1.7.2'
 
