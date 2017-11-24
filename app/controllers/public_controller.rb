@@ -39,8 +39,14 @@ class PublicController < ApplicationController
 
   def bridge
     @bridge_officers = BridgeOffice.heads.ordered
-
     @committees = Committee.all.group_by { |c| c.department }
+
+    @users = User.all.to_a.map! do |user|
+      return [user.email, user.id] if user.full_name.blank?
+      [user.full_name, user.id]
+    end
+
+    @bridge_offices = BridgeOffice.all.map(&:office)
   end
 
   def history

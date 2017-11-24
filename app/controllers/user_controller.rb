@@ -1,9 +1,9 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
-  before_action                      except: [:current, :show, :permissions_index, :permissions_add, :permissions_remove] { require_permission(:admin) }
-  before_action                        only: [                 :permissions_index, :permissions_add, :permissions_remove] { require_permission(:users) }
-  before_action :display_admin_menu, except: [:current, :show]
+  before_action                      except: [:current, :show, :permissions_index, :permissions_add, :permissions_remove, :assign_bridge, :assign_committee, :remove_committee] { require_permission(:admin) }
+  before_action                        only: [                 :permissions_index, :permissions_add, :permissions_remove, :assign_bridge, :assign_committee, :remove_committee] { require_permission(:users) }
   before_action :get_users,            only: [:list]
+  before_action :get_users_for_select, only: [:permissions_imdex, :assign_bridge, :assign_committee]
 
   def current
     redirect_to user_path(id: current_user.id)
@@ -40,11 +40,6 @@ class UserController < ApplicationController
   end
 
   def permissions_index
-    @users = User.all.to_a.map! do |user|
-      return [user.email, user.id] if user.full_name.blank?
-      [user.full_name, user.id]
-    end
-
     @roles = Role.all.map(&:name)
     @roles.delete("admin")
 
@@ -76,6 +71,31 @@ class UserController < ApplicationController
     user_role.destroy
 
     redirect_to permit_path
+  end
+
+  def assign_bridge
+    bridge_office = BridgeOffice.find_by(office: clean_params[:bridge_office]) || BridgeOffice.create(office: clean_params[:bridge_office])
+    if bridge_office.update(user_id: clean_params[:user_id])
+      redirect_to bridge_path, notice: "Successfully assigned committee."
+    else
+      redirect_to bridge_path, alert: "Unable to assign committee."
+    end
+  end
+
+  def assign_committee
+    if Committee.create(user_id: clean_params[:user_id], name: clean_params[:committee])
+      redirect_to bridge_path, notice: "Successfully assigned committee."
+    else
+      redirect_to bridge_path, alert: "Unable to assign committee."
+    end
+  end
+
+  def remove_committee
+    if Committee.find_by(clean_params[:committee])&.destroy
+      redirect_to bridge_path, notice: "Successfully removed committee."
+    else
+      redirect_to bridge_path, alert: "Unable to remove committee."
+    end
   end
 
   def lock
@@ -113,7 +133,14 @@ class UserController < ApplicationController
     }
   end
 
+  def get_users_for_select
+    @users = User.all.to_a.map! do |user|
+      return [user.email, user.id] if user.full_name.blank?
+      [user.full_name, user.id]
+    end
+  end
+
   def clean_params
-    params.permit(:id, :user_id, :role, :permit_id)
+    params.permit(:id, :user_id, :role, :permit_id, :committee, :bridge_office)
   end
 end

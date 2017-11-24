@@ -1,9 +1,34 @@
 h2 Bridge Officers
 
+- current_user&.permitted?(:users) do
+  h3#profile-title Assign Bridge Office
+
+  #add-permissions
+    = form_tag "/assign_bridge", id: "assign-bridge", name: "assign-bridge"
+      = select_tag "user_id", options_for_select(@users), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a user"
+      = select_tag "bridge_office", options_for_select(@bridge_offices), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a bridge office"
+      br
+      .spacer
+      = submit_tag "Assign bridge office"
+
+  hr
+
+  h3#profile-title Assign Committee
+
+  #add-permissions
+    = form_tag "/assign_committee", id: "assign-committee", name: "assign-committee"
+      = select_tag "user_id", options_for_select(@users), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
+      = text_field_tag "committee", class: "assign-committee", required: true, prompt: "Please enter a committee name"
+      br
+      .spacer
+      = submit_tag "Assign committee"
+
+hr
+
 table#bridge
   - @bridge_officers.each do |bridge|
     - name = bridge.user&.full_name || "TBD"
-    - photo = bridge.user&.photo || User.no_photo
+    - photo = bridge.user&.profile_photo
     tr
       th.flag = bridge.title
       td colspan=2 = name
@@ -23,6 +48,10 @@ table#bridge
           - @committees[bridge.office]&.each do |committee|
             tr
               td = committee.name.titleize
-              td = committee.chair.full_name
+              td
+                = committee.chair.full_name
+                - if current_user&.permitted?(:users)
+                  | &nbsp;
+                  - link_to "X", remove_committee_path(committee_name), method: :delete
     tr
       td.spacer colspan=3
