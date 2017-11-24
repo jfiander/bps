@@ -3,15 +3,11 @@ h2 Bridge Officers
 table#bridge
   - @bridge_officers.each do |bridge|
     tr
-      td.flag
-      th.department = bridge.title
-      td
+      th.flag = bridge.title
+      td colspan=2 = bridge.user.full_name
     tr
-      td = officer_flag(bridge.office).html_safe
-      td
-        = bridge.user.full_name
-        br
-        = image_tag bridge.user.photo, width:125
+      th = officer_flag(bridge.office).html_safe
+      td = image_tag bridge.user.photo, width:125
       td
         table#committees
           tr
@@ -27,4 +23,4 @@ table#bridge
               td = committee.name.titleize
               td = committee.chair.full_name
     tr
-      td.spacer colspan=4
+      td.spacer colspan=3
