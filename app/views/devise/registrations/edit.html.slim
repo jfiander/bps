@@ -1,6 +1,6 @@
 h2 Edit Profile
 
-= form_for(resource, as: resource_name, url: profile_edit_path(resource_name), html: { method: :put }, multipart: true) do |f|
+= form_for(resource, as: resource_name, url: profile_edit_path(resource_name).sub(/\.[\w]*\z/, ''), html: { method: :put }, multipart: true) do |f|
   = devise_error_messages!
 
   .field
