@@ -13,7 +13,10 @@ h2 = "#{@profile_title} user"
   .profile-right = @user.email
   br.clear
   .profile-left Last login
-  .profile-right = @user.last_sign_in_at.blank? ? "Never logged in" : "#{@user.last_sign_in_at} from #{@user.last_sign_in_ip}"
+  .profile-right = @user.last_sign_in_at.blank? ? "Never logged in" : @user.last_sign_in_at
+  br.clear
+  .profile-left From
+  .profile-right = @user.last_sign_in_at.blank? ? "" : @user.last_sign_in_ip
   hr.clear
   - if current_user.id == @user.id
     .center = link_to "Update your information", edit_user_path
