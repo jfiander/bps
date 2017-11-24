@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171122222100) do
+ActiveRecord::Schema.define(version: 20171124032123) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 20171122222100) do
     t.string   "department"
     t.string   "name"
     t.integer  "chair_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "course_completions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "course_key"
+    t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -53,6 +61,7 @@ ActiveRecord::Schema.define(version: 20171122222100) do
     t.string   "image_link"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "course_key"
   end
 
   create_table "events", force: :cascade do |t|
@@ -112,6 +121,7 @@ ActiveRecord::Schema.define(version: 20171122222100) do
     t.string   "invited_by_type"
     t.integer  "invited_by_id"
     t.integer  "invitations_count",      default: 0
+    t.string   "rank"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"

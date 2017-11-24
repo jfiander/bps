@@ -9,7 +9,6 @@ table#bridge
     tr
       td = officer_flag(bridge.office).html_safe
       td
-        = bridge.office == "commander" ? "Cdr " : "Lt/C "
         = bridge.user.full_name
         br
         = image_tag bridge.user.photo, width:125

@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be nil or one of [S, P, AP, JN, N, SN]"
 
   def full_name
-    ["#{first_name} #{last_name}", grade].reject { |n| n.blank? }.join(", ")
+    [(auto_rank || rank), "#{first_name} #{last_name}", grade].reject { |n| n.blank? }.join(", ")
   end
 
   def photo
@@ -74,6 +74,17 @@ class User < ApplicationRecord
       "asst_educational" => [:education],
       "asst_secretary" => [:newsletter]
     }[bridge_office.office]
+  end
+
+  def auto_rank
+    case bridge_office.office
+    when "commander"
+      "Cdr"
+    when "executive", "administrative", "educational", "secretary", "treasurer"
+      "Lt/C"
+    when "asst_educational", "asst_secretary"
+      "1/Lt"
+    end
   end
 
   def update_invitation_limit
