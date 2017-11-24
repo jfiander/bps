@@ -1,9 +1,4 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  def update
-    BpsS3.upload(update_params["user[profile_photo]"], bucket: :files, key: "profile_photos/#{self.resource.certificate}.jpg") if update_params["user[profile_photo]"].present?
-    super
-  end
-
   def after_update_path_for(resource)
     current_user_path
   end
