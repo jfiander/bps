@@ -3,7 +3,7 @@ h2 = "#{@profile_title} user"
 #profile
   .profile-left Profile Photo
   .profile-right = image_tag @user.photo, width: 125
-  br.clear
+  hr.clear
   .profile-left Name
   .profile-right
     = @user.full_name
