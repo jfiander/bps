@@ -50,7 +50,7 @@ table#bridge
             tr
               td = committee.name.titleize
               td
-                = committee.chair.full_name
+                = committee.chair&.full_name || "TBD"
                 - if current_user&.permitted?(:users)
                   | &nbsp;
                   = link_to "X", remove_committee_path(committee.name), class: "red", method: :delete
