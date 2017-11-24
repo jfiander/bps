@@ -18,6 +18,7 @@ h2 Bridge Officers
   #add-permissions
     = form_tag "/assign_committee", id: "assign-committee", name: "assign-committee"
       = select_tag "user_id", options_for_select(@users), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
+      = select_tag "department", options_for_select(@departments), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a department"
       = text_field_tag "committee", "", required: true
       = label_tag "committee"
       br
