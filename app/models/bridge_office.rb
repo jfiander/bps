@@ -6,9 +6,8 @@ class BridgeOffice < ApplicationRecord
     BridgeOffice.where.not(office: self.office).where(user: self.user).update_all(user_id: nil)
   end
 
-  validates :office,  uniqueness: true
   validates :user_id, uniqueness: true, allow_nil: true
-  validates :office, inclusion: { in: %w[commander executive educational
+  validates :office,  uniqueness: true, inclusion: { in: %w[commander executive educational
     administrative secretary treasurer asst_educational asst_secretary],
     message: "%{value} is not a valid office" }
 
