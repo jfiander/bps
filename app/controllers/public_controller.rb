@@ -39,7 +39,7 @@ class PublicController < ApplicationController
 
   def bridge
     @bridge_officers = BridgeOffice.heads.ordered
-    @committees = Committee.all.group_by { |c| c.department }
+    @committees = Committee.all.order(:name).group_by { |c| c.department }
 
     @users = User.all.to_a.map! do |user|
       return [user.email, user.id] if user.full_name.blank?
