@@ -37,7 +37,8 @@ class User < ApplicationRecord
     [
       roles.map(&:name).map(&:to_sym),
       roles.map(&:children).flatten.map(&:name).map(&:to_sym),
-      permitted_roles_from_bridge_office
+      permitted_roles_from_bridge_office,
+      permitted_roles_from_committee
     ].flatten.uniq.reject { |r| r.nil? }
   end
 
@@ -77,6 +78,13 @@ class User < ApplicationRecord
       "asst_educational" => [:education],
       "asst_secretary" => [:newsletter]
     }[bridge_office&.office]
+  end
+
+  def permitted_roles_from_committee
+    {
+      "seminars" => [:seminar],
+      "vsc" => [:vsc]
+    }.select { |k,_| k.in? committees.map(&:name) }.values
   end
 
   def auto_rank
