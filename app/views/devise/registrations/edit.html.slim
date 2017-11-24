@@ -1,7 +1,14 @@
 h2 Edit Profile
 
-= form_for(resource, as: resource_name, url: edit_user_path(resource_name), html: { method: :put }) do |f|
+= form_for(resource, as: resource_name, url: edit_user_path(resource_name), html: { method: :put }, multipart: true) do |f|
   = devise_error_messages!
+
+  .field
+    = image_tag resource.photo, width: 125
+    br
+    = f.label :profile_photo
+    br
+    = f.file_field :profile_photo
 
   .field
     = f.label :rank, "Preferred Rank"
