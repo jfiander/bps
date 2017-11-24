@@ -83,7 +83,7 @@ class UserController < ApplicationController
   end
 
   def assign_committee
-    if Committee.create(user_id: clean_params[:user_id], name: clean_params[:committee])
+    if Committee.create(chair_id: clean_params[:user_id], name: clean_params[:committee])
       redirect_to bridge_path, notice: "Successfully assigned committee."
     else
       redirect_to bridge_path, alert: "Unable to assign committee."
