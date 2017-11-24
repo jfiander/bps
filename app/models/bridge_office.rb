@@ -23,8 +23,7 @@ class BridgeOffice < ApplicationRecord
       WHEN office = 'treasurer'        THEN '6'
       WHEN office = 'asst_educational' THEN '7'
       WHEN office = 'asst_secretary'   THEN '8'
-    END"
-    )
+    END")
   }
 
   def title
