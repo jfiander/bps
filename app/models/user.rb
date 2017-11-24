@@ -10,7 +10,10 @@ class User < ApplicationRecord
   validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be nil or one of [S, P, AP, JN, N, SN]"
 
   def full_name
-    [(auto_rank || rank), "#{first_name} #{last_name}", grade].reject { |n| n.blank? }.join(", ")
+    [
+      [(auto_rank || rank), "#{first_name} #{last_name}"].join,
+      grade
+    ].reject { |n| n.blank? }.join(", ")
   end
 
   def photo
