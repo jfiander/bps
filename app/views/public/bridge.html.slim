@@ -53,6 +53,6 @@ table#bridge
                 = committee.chair&.full_name || "TBD"
                 - if current_user&.permitted?(:users)
                   | &nbsp;
-                  = link_to "X", remove_committee_path(committee.name), class: "red", method: :delete
+                  = link_to "X", remove_committee_path(committee: committee.name), class: "red", method: :delete
     tr
       td.spacer colspan=3

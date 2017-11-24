@@ -92,7 +92,7 @@ class UserController < ApplicationController
   end
 
   def remove_committee
-    if Committee.find_by(clean_params[:committee])&.destroy
+    if Committee.find_by(name: clean_params[:committee])&.destroy
       redirect_to bridge_path, notice: "Successfully removed committee."
     else
       redirect_to bridge_path, alert: "Unable to remove committee."
