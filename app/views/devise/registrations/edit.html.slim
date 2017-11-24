@@ -8,7 +8,7 @@ h2 Edit Profile
     br
     = f.label :profile_photo
     br
-    = f.file_field :profile_photo
+    = f.file_field :profile_photo, accept: 'image/jpeg'
 
   .field
     = f.label :rank, "Preferred Rank"
