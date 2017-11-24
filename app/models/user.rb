@@ -5,8 +5,6 @@ class User < ApplicationRecord
   has_one  :bridge_office
   has_many :committees, foreign_key: :chair_id
 
-  before_validation { self.password ||= SecureRandom.hex(16) }
-
   validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be nil or one of [S, P, AP, JN, N, SN]"
 
   def full_name
