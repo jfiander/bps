@@ -6,8 +6,8 @@ Rails.application.routes.draw do
     controllers: {invitations: 'users/invitations', registrations: 'users/registrations'}
 
   as :user do
-    get   '/profile/edit',       to: 'devise/registrations#edit'
-    put   '/profile/edit',       to: 'devise/registrations#update'
+    get   '/profile/edit',       to: 'users/registrations#edit'
+    put   '/profile/edit',       to: 'users/registrations#update'
     get   '/reset',              to: 'devise/passwords#new'
   end
 
