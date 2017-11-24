@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
   def photo
     s3_link = BpsS3.link(bucket: :files, key: "profile_photos/#{certificate}.jpg")
-    no_profile_image = ActionController::Base.helpers.image_path("no_profile.png")
+    no_profile_image = User.no_photo
 
     s3_link.present? ? s3_link : no_profile_image
   end
@@ -64,6 +64,10 @@ class User < ApplicationRecord
 
   def unlock
     self.update(locked_at: nil)
+  end
+
+  def self.no_photo
+    ActionController::Base.helpers.image_path("no_profile.png")
   end
 
   private
