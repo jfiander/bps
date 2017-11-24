@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   def full_name
     [
-      [(auto_rank || rank), "#{first_name} #{last_name}"].join,
+      [(auto_rank || rank), "#{first_name} #{last_name}"].join(" "),
       grade
     ].reject { |n| n.blank? }.join(", ")
   end
