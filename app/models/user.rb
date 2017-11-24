@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
   has_one  :bridge_office
-  has_many :committees
+  has_many :committees, foreign_key: :chair_id
 
   before_validation { self.password ||= SecureRandom.hex(16) }
 
