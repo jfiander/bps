@@ -83,7 +83,6 @@ class UserController < ApplicationController
   end
 
   def assign_committee
-    @departments = BridgeOffice.heads.map(&:office)
     committee = Committee.find_by(name: clean_params[:committee], department: clean_params[:department]) || Committee.create(name: clean_params[:committee], department: clean_params[:department])
     if committee.update(chair_id: clean_params[:user_id])
       redirect_to bridge_path, notice: "Successfully assigned committee."

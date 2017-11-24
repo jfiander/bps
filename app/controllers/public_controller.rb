@@ -46,6 +46,7 @@ class PublicController < ApplicationController
       [user.full_name, user.id]
     end
 
+    @departments = BridgeOffice.heads.map(&:office)
     @bridge_offices = BridgeOffice.all.map(&:office)
   end
 
