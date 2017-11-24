@@ -28,8 +28,8 @@ hr
 
 table#bridge
   - @bridge_officers.each do |bridge|
-    - name = bridge.user&.full_name || "TBD"
-    - photo = bridge.user&.photo
+    - name = bridge&.user&.full_name || "TBD"
+    - photo = bridge&.user&.photo
     tr
       th.flag = bridge.title
       td colspan=2 = name
