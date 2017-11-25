@@ -99,6 +99,17 @@ class UserController < ApplicationController
     end
   end
 
+  def register
+    @registration = current_user.register_for(Event.find_by(clean_params[:event_id]))
+    if @registration.valid?
+      flash[:notice] = "Successfully registered!"
+    else
+      flash[:alert] = "You are already registered."
+    end
+
+    redirect_to send("#{params[:type]}s_path")
+  end
+
   def lock
     user = User.find(params[:id])
 
@@ -142,6 +153,6 @@ class UserController < ApplicationController
   end
 
   def clean_params
-    params.permit(:id, :user_id, :role, :permit_id, :committee, :department, :bridge_office)
+    params.permit(:id, :user_id, :role, :permit_id, :committee, :department, :bridge_office, :type)
   end
 end

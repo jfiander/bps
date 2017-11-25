@@ -36,6 +36,10 @@ class User < ApplicationRecord
     end
   end
 
+  def register_for(event)
+    Registration.create(user: self, event: event)
+  end
+
   def permitted?(role, &block)
     role = Role.find_by(name: role.to_s)
     return false if role.blank?

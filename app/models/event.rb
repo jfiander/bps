@@ -44,6 +44,10 @@ class Event < ApplicationRecord
     "<b>Members:</b> $#{member_cost}, <b>Non-members:</b> $#{cost}".html_safe
   end
 
+  def register_user(user)
+    Registration.create(user: user, event: self)
+  end
+
   private
   def get_book_cover
     [:courses, :seminars].each do |type|
