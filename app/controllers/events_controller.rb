@@ -23,26 +23,26 @@ class EventsController < ApplicationController
   end
 
   def create_course
-    if @event.save
+    if @event = Event.create(course_params)
       redirect_to courses_path, notice: "Successfully added course."
     else
-      redirect_to new_course_path(@event), alert: "Unable to add course."
+      render :new_course, alert: "Unable to add course."
     end
   end
   
   def create_seminar
-    if @event.save
+    if @event = Event.create(event_params[:event])
       redirect_to seminars_path, notice: "Successfully added seminar."
     else
-      redirect_to new_seminar_path(@event), alert: "Unable to add seminar."
+      render :new_seminar, alert: "Unable to add seminar."
     end
   end
   
   def create_meeting
-    if @event.save
+    if @event = Event.create(event_params[:event])
       redirect_to events_path, notice: "Successfully added event."
     else
-      redirect_to new_event_path(@event), alert: "Unable to add event."
+      render :new_event, alert: "Unable to add event."
     end
   end
 
