@@ -99,19 +99,19 @@ ActiveRecord::Schema.define(version: 20171125155459) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "grade"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.string   "email",                      default: "", null: false
+    t.string   "encrypted_password",         default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",              default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "failed_attempts",        default: 0,  null: false
+    t.integer  "failed_attempts",            default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "invitation_token"
@@ -121,9 +121,12 @@ ActiveRecord::Schema.define(version: 20171125155459) do
     t.integer  "invitation_limit"
     t.string   "invited_by_type"
     t.integer  "invited_by_id"
-    t.integer  "invitations_count",      default: 0
+    t.integer  "invitations_count",          default: 0
     t.string   "rank"
-    t.         "profile_photo"
+    t.string   "profile_photo_file_name"
+    t.string   "profile_photo_content_type"
+    t.integer  "profile_photo_file_size"
+    t.datetime "profile_photo_updated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
