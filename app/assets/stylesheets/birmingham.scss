@@ -23,6 +23,10 @@ a:hover {
   color: darken($birmingham-blue, 20%);
 }
 
+a.red:hover {
+  color: lighten($old-glory-red, 10%);
+}
+
 sup {
   font-size: 60%;
 }
