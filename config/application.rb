@@ -13,5 +13,8 @@ module Bps
     # -- all .rb files in that directory are automatically loaded.
 
     config.exceptions_app = self.routes
+
+    config.time_zone = 'Eastern Time (US & Canada)'
+    config.active_record.default_timezone = :local
   end
 end
