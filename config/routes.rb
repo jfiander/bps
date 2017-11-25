@@ -31,12 +31,12 @@ Rails.application.routes.draw do
   get     '/members',            to: 'members#index'
   post    '/bilge',              to: 'members#upload_bilge'
   get     '/flags',              to: 'members#download_flags'
-  get     '/courses/new',        to: 'events#new_course',            as: 'new_course'
-  get     '/seminars/new',       to: 'events#new_seminar',           as: 'new_seminar'
-  get     '/events/new',         to: 'events#new_meeting',           as: 'new_event'
-  post    '/courses/create',     to: 'events#create_course',         as: 'create_course'
-  post    '/seminars/create',    to: 'events#create_seminar',        as: 'create_seminar'
-  post    '/events/create',      to: 'events#create_meeting',        as: 'create_event'
+  get     '/courses/new',        to: 'events#new_event',             as: 'new_course',     defaults: {type: :course}
+  post    '/courses/create',     to: 'events#create_event',          as: 'create_course',  defaults: {type: :course}
+  get     '/seminars/new',       to: 'events#new_event',             as: 'new_seminar',    defaults: {type: :seminar}
+  post    '/seminars/create',    to: 'events#create_event',          as: 'create_seminar', defaults: {type: :seminar}
+  get     '/events/new',         to: 'events#new_event',             as: 'new_event',      defaults: {type: :event}
+  post    '/events/create',      to: 'events#create_event',          as: 'create_event',   defaults: {type: :event}
 
   get     '/users',              to: 'user#list'
   get     '/users/current',      to: 'user#current',                 as: 'current_user'
