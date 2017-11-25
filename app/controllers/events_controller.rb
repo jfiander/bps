@@ -43,4 +43,10 @@ class EventsController < ApplicationController
       redirect_to new_event_path(@event), alert: "Unable to add event."
     end
   end
+
+  private
+  def clean_params
+    params.require(:event).permit(:event_type, :description, :cost, :requirements, :location,
+      :map_link, :start_at, :length, :sessions, :flyer, :expires_at, :prereq)
+  end
 end
