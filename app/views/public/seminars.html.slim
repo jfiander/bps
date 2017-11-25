@@ -1,3 +1,5 @@
 h2 Seminars
 
+p = link_to "Add a Seminar", new_seminar_path if current_user&.permitted?(:seminar)
+
 = @seminars.inspect

@@ -1,3 +1,5 @@
 h2 Squadron Events
 
+p = link_to "Add an Event", new_event_path if current_user&.permitted?(:events)
+
 = @events.inspect

@@ -1,3 +1,5 @@
 h2 Courses
 
+p = link_to "Add a Course", new_course_path if current_user&.permitted?(:course)
+
 = @courses.inspect
