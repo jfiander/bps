@@ -41,13 +41,13 @@ class PublicController < ApplicationController
     @bridge_officers = BridgeOffice.heads.ordered
     @committees = Committee.all.order(:name).group_by { |c| c.department }
 
-    @users = [["TBD", nil]] + User.all.to_a.map! do |user|
+    @users = [["TBD", nil]] + User.all.order(:last_name).to_a.map! do |user|
       return [user.email, user.id] if user.full_name.blank?
       [user.full_name, user.id]
     end
 
-    @departments = BridgeOffice.ordered.heads.map(&:office)
-    @bridge_offices = BridgeOffice.ordered.map(&:office)
+    @departments = BridgeOffice.ordered.heads.map { |b| [b.department, b.office] }
+    @bridge_offices = BridgeOffice.ordered.map { |b| [b.title, b.office] }
   end
 
   def history
