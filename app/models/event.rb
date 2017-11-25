@@ -3,7 +3,7 @@ class Event < ApplicationRecord
   belongs_to :event_category
   has_many   :course_topics
   has_many   :course_includes
-  has_one    :prereq, class_name: "Event"
+  belongs_to :prereq, class_name: "EventType"
 
   before_validation { self.event_category = self.event_type.event_category }
 
