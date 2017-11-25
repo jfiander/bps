@@ -1,6 +1,6 @@
 admin = Role.create!(name: "admin")
 education = Role.create!(name: "education", parent: admin)
-events = Role.create!(name: "events", parent: admin)
+event = Role.create!(name: "event", parent: admin)
 
 Role.create!([
   {name: "users", parent: admin},
