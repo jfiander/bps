@@ -31,9 +31,9 @@ Rails.application.routes.draw do
   get     '/members',            to: 'members#index'
   post    '/bilge',              to: 'members#upload_bilge'
   get     '/flags',              to: 'members#download_flags'
-  get     '/courses/new',        to: 'events#new_course'
-  get     '/seminars/new',       to: 'events#new_seminar'
-  get     '/events/new',         to: 'events#new_event'
+  get     '/courses/new',        to: 'events#new_course',            as: 'new_course'
+  get     '/seminars/new',       to: 'events#new_seminar',           as: 'new_seminar'
+  get     '/events/new',         to: 'events#new_event',             as: 'new_event'
 
   get     '/users',              to: 'user#list'
   get     '/users/current',      to: 'user#current',                 as: 'current_user'
