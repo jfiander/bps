@@ -1,21 +1,22 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
-  before_action only: [:new_course,  :create_course]  { require_permission(:courses) }
-  before_action only: [:new_seminar, :create_seminar] { require_permission(:seminars) }
-  before_action only: [:new_meeting, :create_meeting] { require_permission(:events) }
+  before_action only: [:new_course,  :create_course]  { require_permission(:course) }
+  before_action only: [:new_seminar, :create_seminar] { require_permission(:seminar) }
+  before_action only: [:new_meeting, :create_meeting] { require_permission(:event) }
 
   def new_course
-    @event = Event.new(event_type: EventType.find_by(name: "course"))
+    @event = Event.new(event_category: EventCategory.find_by(title: "advanced_grade"))
     @submit_path = "create_course"
+    @course_types = EventType.where(event_category: EventCategory.courses).map(&:title).map(&:titleize)
   end
 
   def new_seminar
-    @event = Event.new(event_type: EventType.find_by(name: "seminar"))
+    @event = Event.new(event_type: EventType.find_by(title: "seminar"))
     @submit_path = "create_seminar"
   end
 
   def new_meeting
-    @event = Event.new(event_type: EventType.find_by(name: "meeting"))
+    @event = Event.new(event_type: EventType.find_by(title: "meeting"))
     @submit_path = "create_meeting"
   end
 
