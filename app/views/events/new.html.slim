@@ -1,10 +1,12 @@
 h2
-  | Add 
+  = @edit_mode
+  |  
   = @event_title
 
 = form_for(@event, url: @submit_path, multipart: true) do |f|
-  = f.label :event_type, "#{@event_title} name"
-  = f.select :event_type, options_for_select(@event_types)
+  = f.hidden_field :id
+  = f.label :event_type_id, "#{@event_title} name"
+  = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id)
   br
   = f.label :description
   = f.text_area :description
@@ -44,7 +46,7 @@ h2
   = f.datetime_select :expires_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now + 3.months), discard_hour: true, discard_minute: true
   - if @event.is_a_course?
     br
-    = f.label :prereq, "Prerequisite course"
-    = f.select :prereq, options_for_select(@event_types), include_blank: true
+    = f.label :prereq_id, "Prerequisite course"
+    = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true
   hr
   = f.submit
