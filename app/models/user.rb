@@ -5,8 +5,12 @@ class User < ApplicationRecord
   has_one  :bridge_office
   has_many :committees, foreign_key: :chair_id
 
+  def self.no_photo
+    ActionController::Base.helpers.image_path("no_profile.png")
+  end
+
   has_attached_file :profile_photo,
-    default_url: ActionController::Base.helpers.image_path("no_profile.png"),
+    default_url: User.no_photo,
     storage: :s3,
     s3_region: "us-east-2",
     path: "profile_photos/:id/:filename",
@@ -25,7 +29,7 @@ class User < ApplicationRecord
   end
 
   def photo
-    profile_photo.present? ? profile_photo.s3_object.presigned_url(:get, expires_in: 15.seconds) : ActionController::Base.helpers.image_path("no_profile.png")
+    profile_photo.present? ? profile_photo.s3_object.presigned_url(:get, expires_in: 15.seconds) : User.no_photo
   end
 
   def permitted?(role, &block)
