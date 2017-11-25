@@ -1,0 +1,32 @@
+- events.each do |event|
+  tr
+    th
+      = event.event_type.title.titleize
+      - if current_user&.permitted?(params[:type])
+        |  
+        = link_to "E", send("edit_#{params[:type]}_path", event)
+        |  | 
+        = link_to "X", send("destroy_#{params[:type]}_path", event), method: :delete, class: "red"
+    td = event.start_at.strftime(@long_time_format)
+    td
+      - if event.location.present?
+        b
+          | Location: 
+          - if event.map_link.present?
+            = link_to "Map", event.map_link
+        br
+        = simple_format(event.location)
+
+      - else
+        | Location TBD
+  tr
+    td colspan=2 = simple_format(event.description)
+    td
+      - if event.flyer.present?
+        - if event.flyer_content_type == 'application/pdf'
+          | PDF
+        - else
+          = image_tag event.flyer.s3_object.presigned_url(:get, expires_in: 5.minutes)
+  tr
+    td.spacer colspan=3
+      hr

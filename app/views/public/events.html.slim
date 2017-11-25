@@ -1,5 +1,16 @@
-h2 Squadron Events
+h2 = "Squadron #{params[:type].to_s.titleize}s"
 
-p = link_to "Add an Event", new_event_path if current_user&.permitted?(:event)
+p = link_to "Add #{params[:type].to_s.titleize}", new_event_path if current_user&.permitted?(params[:type])
 
-= @events.inspect
+table#events
+  - if params[:type] == :course
+    - if @events.has_key? :advanced_grades
+      tr
+        th colspan=3 Advanced Grades
+      = render "events/table", events: @events[:advanced_grades]
+    - if @events.has_key? :electives
+      tr
+        th colspan=3 Electives
+      = render "events/table", events: @events[:electives]
+  - else
+    = render "events/table", events: @events
