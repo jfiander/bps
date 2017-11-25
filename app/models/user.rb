@@ -29,7 +29,11 @@ class User < ApplicationRecord
   end
 
   def photo
-    profile_photo.present? ? profile_photo.s3_object.presigned_url(:get, expires_in: 15.seconds) : User.no_photo
+    if profile_photo.present? && BpsS3.get_object(bucket: :files, key: profile_photo.s3_object.key).exists?
+      profile_photo.s3_object.presigned_url(:get, expires_in: 15.seconds)
+    else
+      User.no_photo
+    end
   end
 
   def permitted?(role, &block)
