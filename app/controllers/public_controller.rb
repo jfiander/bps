@@ -133,5 +133,6 @@ class PublicController < ApplicationController
   def time_formats
     @long_time_format = "%a %d %b %Y @ %H%M %Z"
     @short_time_format = "%-m/%-d @ %H%M"
+    @duration_format = "%-kh %Mm"
   end
 end
