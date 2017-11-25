@@ -1,10 +1,8 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
-  before_action                           only: [:new_course,  :create_course]  { require_permission(:course) }
-  before_action                           only: [:new_seminar, :create_seminar] { require_permission(:seminar) }
-  before_action                           only: [:new_meeting, :create_meeting] { require_permission(:events) }
+  before_action only: [:new, :create] { require_permission(params[:type]) }
 
-  def new_event
+  def new
     event_category_default_title = params[:type] == "course" ? "advanced_grade" : params[:type]
     @event = Event.new(event_category: EventCategory.find_by(title: params[:type]))
     @submit_path = send("create_#{params[:type]}_path")
@@ -12,7 +10,7 @@ class EventsController < ApplicationController
     @event_title = params[:type].to_s.titleize
   end
 
-  def create_event
+  def create
     event_type_id = EventType.find_by(title: event_type_title_from(event_params[:event_type])).id
     prereq_id = EventType.find_by(title: event_type_title_from(event_params[:prereq]))&.id
     @event_params = {event_type_id: event_type_id, prereq_id: prereq_id}.merge(event_params.except(:event_type, :prereq))
