@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
-  before_action only: [:new, :create] { require_permission(params[:type]) }
+  before_action only: [:new, :create, :update, :destroy] { require_permission(params[:type]) }
 
   def new
     event_category_default_title = params[:type] == "course" ? "advanced_grade" : params[:type]
@@ -20,6 +20,14 @@ class EventsController < ApplicationController
     else
       render :new_course, alert: "Unable to add #{params[:type]}."
     end
+  end
+
+  def update
+    #
+  end
+
+  def destroy
+    #
   end
 
   private
