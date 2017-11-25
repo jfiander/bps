@@ -22,19 +22,18 @@ class PublicController < ApplicationController
     #
   end
   
-  def courses
-    @courses = {
-      advanced_grades: Event.current(:advanced_grade),
-      electives: Event.current(:elective)
-    }
-  end
-  
-  def seminars
-    @seminars = Event.current(:seminar)
-  end
-
   def events
-    @events = Event.current(:meeting)
+    @events = case params[:type]
+    when :course
+      {
+        advanced_grades: Event.current(:advanced_grade),
+        electives: Event.current(:elective)
+      }
+    when :seminar
+      Event.current(:seminar)
+    when :event
+      Event.current(:meeting)
+    end
   end
 
   def calendar
