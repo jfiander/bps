@@ -4,6 +4,8 @@ class Event < ApplicationRecord
   has_many   :course_topics
   has_many   :course_includes
   has_one    :prereq, class_name: "Event"
+
+  before_save { self.event_category = self.event_type.event_category }
   
   scope :current, ->(category) { where.not("expires_at < ?", Time.now).find_all { |e| e.event_category == EventCategory.find_by(title: category.to_s) } }
 
