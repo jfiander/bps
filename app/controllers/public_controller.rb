@@ -22,15 +22,18 @@ class PublicController < ApplicationController
   end
   
   def courses
-    @courses = Event.where(event_type: EventType.find_by(name: "course"))
+    @courses = {
+      advanced_grades: Event.current(:advanced_grade),
+      electives: Event.current(:elective)
+    }
   end
   
   def seminars
-    @seminars = Event.where(event_type: EventType.find_by(name: "seminar"))
+    @seminars = Event.current(:seminar)
   end
 
   def events
-    @events = Event.where(event_type: EventType.find_by(name: "meeting"))
+    @events = Event.current(:meeting)
   end
 
   def calendar
