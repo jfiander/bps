@@ -1,14 +1,19 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
-  before_action                only: [:new, :create, :edit, :update, :destroy] { require_permission(params[:type]) }
-  before_action :get_event,    only: [:edit, :destroy]
-  before_action :prepare_form, only: [:new, :edit]
+  before_action                only: [:new, :copy, :create, :edit, :update, :destroy] { require_permission(params[:type]) }
+  before_action :get_event,    only: [:copy, :edit, :destroy]
+  before_action :prepare_form, only: [:new, :copy, :edit]
 
   def new
     event_category_default_title = params[:type] == "course" ? "advanced_grade" : params[:type]
     @event = Event.new(event_category: EventCategory.find_by(title: params[:type]))
     @submit_path = send("create_#{params[:type]}_path")
-    @edit_mode = "Add"
+  end
+
+  def copy
+    @submit_path = send("create_#{params[:type]}_path")
+    @event = Event.new(@event.attributes)
+    render :new
   end
 
   def create
@@ -51,7 +56,7 @@ class EventsController < ApplicationController
       :location, :map_link, :start_at, :length, :sessions, :flyer, :expires_at, :prereq_id)
   end
 
-  def destroy_params
+  def update_params
     params.permit(:id)
   end
 
@@ -60,12 +65,13 @@ class EventsController < ApplicationController
   end
 
   def get_event
-    @event = Event.find_by(id: destroy_params[:id])
+    @event = Event.find_by(id: update_params[:id])
   end
 
   def prepare_form
     @event_types = EventType.where(event_category: EventCategory.send("#{params[:type]}s")).map { |e| [e.title.titleize, e.id] }
     @event_title = params[:type].to_s.titleize
+    @edit_mode = "Add"
     @form_title = "#{@edit_mode} #{@event_title}"
   end
 end
