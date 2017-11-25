@@ -3,6 +3,14 @@
     = f.label :event_type, "Course name"
     = f.select :event_type, options_for_select(@course_types)
     br
+  - elsif @event.is_a_seminar?
+    = f.label :event_type, "Seminar name"
+    = f.select :event_type, options_for_select(@seminar_types)
+    br
+  - else
+    = f.label :event_type, "Event type"
+    = f.select :event_type, options_for_select(@meeting_types)
+    br
   = f.label :description
   = f.text_field :description
   br
