@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
   belongs_to :event_type
+  belongs_to :event_category
   has_many   :course_topics
   has_many   :course_includes
   has_one    :prereq, class_name: "Event"
