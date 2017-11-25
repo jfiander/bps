@@ -23,6 +23,10 @@ class EventsController < ApplicationController
   end
 
   def create_course
+    event_type_id = EventType.find_by(title: event_type_title_from(event_params[:event_type])).id
+    prereq_id = EventType.find_by(title: event_type_title_from(event_params[:prereq])).id
+    course_params = {event_type_id: event_type_id, prereq_id: prereq_id}.merge(event_params.except(:event_type, :prereq))
+
     if @event = Event.create(course_params)
       redirect_to courses_path, notice: "Successfully added course."
     else
