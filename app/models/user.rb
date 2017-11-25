@@ -5,7 +5,15 @@ class User < ApplicationRecord
   has_one  :bridge_office
   has_many :committees, foreign_key: :chair_id
 
+  has_attached_file :profile_photo, default_url: ActionController::Base.helpers.image_path("no_profile.png"),
+    storage: :s3,
+    s3_region: "us-east-2",
+    path: "profile_photos/#{SecureRandom.hex(8)}.jpg",
+    s3_credentials: {bucket: "bps-files", access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
+    # styles: { medium: "300x300>", thumb: "100x100#" }, 
+
   validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be nil or one of [S, P, AP, JN, N, SN]"
+  validates_attachment_content_type :profile_photo, content_type: /\Aimage\/jpe?g\Z/
 
   def full_name
     [
@@ -15,10 +23,7 @@ class User < ApplicationRecord
   end
 
   def photo
-    s3_link = BpsS3.link(bucket: :files, key: "profile_photos/#{certificate}.jpg")
-    no_profile_image = User.no_photo
-
-    s3_link.present? ? s3_link : no_profile_image
+    BpsS3.link(bucket: :files, key: "profile_photos/#{certificate}.jpg")
   end
 
   def permitted?(role, &block)
@@ -63,9 +68,9 @@ class User < ApplicationRecord
   def unlock
     self.update(locked_at: nil)
   end
-
-  def self.no_photo
-    ActionController::Base.helpers.image_path("no_profile.png")
+  
+  def profile_photo_content_type
+    "image/jpeg"
   end
 
   private

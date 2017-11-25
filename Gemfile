@@ -18,11 +18,13 @@ gem 'turbolinks',         '~> 5'
 gem 'jbuilder',           '~> 2.5'
 
 gem 'sendgrid-ruby',      '~> 5.2.0'
+gem 'paperclip',          '~> 5.1.0'
 
 gem 'devise',             '~> 4.2.0'
 gem 'devise_invitable',   '~> 1.7.2'
 
 gem 'slim',               '~> 3.0.6'
+gem 'aws-sdk',            '~> 2.10.86'
 gem 'aws-sdk-rails',      '~> 1.0.1'
 gem 'inline_svg',         '~> 1.3.0'
 
