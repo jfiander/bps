@@ -1,7 +1,7 @@
 h2 = "#{@edit_mode} #{@event_title}"
 
 = form_for(@event, url: @submit_path, multipart: true) do |f|
-  = f.hidden_field :id if @submit_path == "update_#{params[:type]}_path"
+  = f.hidden_field :id if @submit_path.match /\/update/
   = f.label :event_type_id, "#{@event_title} name"
   = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id)
   br
