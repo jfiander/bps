@@ -14,6 +14,8 @@ class Event < ApplicationRecord
     path: "#{Rails.env}/event_flyers/:id/:filename",
     s3_permissions: :private,
     s3_credentials: {bucket: "bps-files", access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
+
+  validates_attachment_content_type :flyer, content_type: /\A(image\/(jpe?g|png|gif))|(application\/pdf)\Z/
   
   scope :current, ->(category) do
     event_category_id = EventCategory.where(title: category.to_s)
