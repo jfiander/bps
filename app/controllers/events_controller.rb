@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   before_action :authenticate_user!
   before_action only: [:new_course,  :create_course]  { require_permission(:course) }
   before_action only: [:new_seminar, :create_seminar] { require_permission(:seminar) }
-  before_action only: [:new_meeting, :create_meeting] { require_permission(:event) }
+  before_action only: [:new_meeting, :create_meeting] { require_permission(:events) }
 
   def new_course
     @event = Event.new(event_category: EventCategory.find_by(title: "advanced_grade"))
