@@ -68,7 +68,16 @@ table#events {
       margin: 0.5em 0;
     }
 
+    th.title {
+      font-size: 110%;
+      color: $old-glory-red;
+    }
+
     th.section {
-      font-size: 1.25em;
+      font-size: 125%;
+    }
+
+    span.costs {
+      font-size: 80%;
     }
 }
