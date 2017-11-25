@@ -1,6 +1,6 @@
 h2 = "Squadron #{params[:type].to_s.titleize}s"
 
-p = link_to "Add #{params[:type].to_s.titleize}", new_event_path if current_user&.permitted?(params[:type])
+p = link_to "Add #{params[:type].to_s.titleize}", send("new_#{params[:type]}_path") if current_user&.permitted?(params[:type])
 
 table#events
   - if params[:type] == :course
