@@ -15,10 +15,7 @@ Rails.application.routes.draw do
   get     '/join',               to: 'public#join'
   get     '/vsc',                to: 'public#vsc'
   get     '/education',          to: 'public#education'
-  get     '/courses',            to: 'public#courses'
-  get     '/seminars',           to: 'public#seminars'
   get     '/calendar',           to: 'public#calendar'
-  get     '/events',             to: 'public#events'
   get     '/photos',             to: 'public#photos'
   get     '/civic',              to: 'public#civic'
   get     '/bridge',             to: 'public#bridge'
@@ -33,6 +30,7 @@ Rails.application.routes.draw do
   get     '/flags',              to: 'members#download_flags'
 
   [:course, :seminar, :event].each do |event_type|
+    get     "/#{event_type}s",             to: 'public#events',                                   defaults: {type: event_type}
     get     "/#{event_type}s/new",         to: 'events#new',         as: "new_#{event_type}",     defaults: {type: event_type}
     post    "/#{event_type}s/create",      to: 'events#create',      as: "create_#{event_type}",  defaults: {type: event_type}
     get     "/#{event_type}s/edit/:id",    to: 'events#edit',        as: "edit_#{event_type}",    defaults: {type: event_type}
