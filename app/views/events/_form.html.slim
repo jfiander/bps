@@ -1,0 +1,4 @@
+= form_for(@event, url: @submit_path, multipart: true) do |f|
+  = f.label :title
+  = f.text_field :title
+  = f.submit

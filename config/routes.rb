@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get     '/join',               to: 'public#join'
   get     '/vsc',                to: 'public#vsc'
   get     '/education',          to: 'public#education'
+  get     '/courses',            to: 'public#courses'
+  get     '/seminars',           to: 'public#seminars'
   get     '/calendar',           to: 'public#calendar'
   get     '/events',             to: 'public#events'
   get     '/photos',             to: 'public#photos'
@@ -29,6 +31,9 @@ Rails.application.routes.draw do
   get     '/members',            to: 'members#index'
   post    '/bilge',              to: 'members#upload_bilge'
   get     '/flags',              to: 'members#download_flags'
+  get     '/courses/new',        to: 'events#new_course'
+  get     '/seminars/new',       to: 'events#new_seminar'
+  get     '/events/new',         to: 'events#new_event'
 
   get     '/users',              to: 'user#list'
   get     '/users/current',      to: 'user#current',                 as: 'current_user'

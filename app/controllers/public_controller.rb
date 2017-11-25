@@ -20,12 +20,20 @@ class PublicController < ApplicationController
   def education
     #
   end
-
-  def calendar
-    #
+  
+  def courses
+    @courses = Events.where(event_type: EventType.find_by(name: "course"))
+  end
+  
+  def seminars
+    @seminars = Events.where(event_type: EventType.find_by(name: "seminar"))
   end
 
   def events
+    @events = Events.where(event_type: EventType.find_by(name: "meeting"))
+  end
+
+  def calendar
     #
   end
 
