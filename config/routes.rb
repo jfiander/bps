@@ -34,6 +34,9 @@ Rails.application.routes.draw do
   get     '/courses/new',        to: 'events#new_course',            as: 'new_course'
   get     '/seminars/new',       to: 'events#new_seminar',           as: 'new_seminar'
   get     '/events/new',         to: 'events#new_meeting',           as: 'new_event'
+  post    '/courses/create',     to: 'events#create_course',         as: 'create_course'
+  post    '/seminars/create',    to: 'events#create_seminar',        as: 'create_seminar'
+  post    '/events/create',      to: 'events#create_meeting',        as: 'create_event'
 
   get     '/users',              to: 'user#list'
   get     '/users/current',      to: 'user#current',                 as: 'current_user'
