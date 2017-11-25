@@ -1,4 +1,42 @@
 = form_for(@event, url: @submit_path, multipart: true) do |f|
-  = f.label :title
-  = f.text_field :title
+  - if @event.is_a_course?
+    = f.label :event_type, "Course name"
+    = f.select :event_type, options_for_select(@course_types)
+    br
+  = f.label :description
+  = f.text_field :description
+  br
+  = f.label :cost
+  = f.number_field :cost
+  br
+  = f.label :requirements, "Student requirements"
+  = f.text_field :requirements
+  br
+  small Computer, calculator, etc.
+  br
+  = f.label :location
+  = f.text_area :location
+  br
+  = f.label :map_link
+  = f.text_field :map_link
+  br
+  = f.label :start_at
+  = f.datetime_select :start_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now.beginning_of_day + 9.hours), minute_step: 15
+  br
+  = f.label :length, "Session length (minutes)"
+  = f.number_field :length
+  br
+  = f.label :sessions, "Number of sessions"
+  = f.number_field :sessions
+  br
+  = f.label :flyer
+  = f.file_field :flyer
+  br
+  = f.label :expires_at, "Do not display after"
+  = f.datetime_select :expires_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now + 3.months), discard_hour: true, discard_minute: true
+  - if @event.is_a_course?
+    br
+    = f.label :prereq, "Prerequisite course"
+    = f.select :prereq, options_for_select(@course_types), include_blank: true
+  hr
   = f.submit
