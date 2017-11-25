@@ -7,7 +7,7 @@ class Event < ApplicationRecord
   
   scope :current, ->(category) { where.not("expires_at < ?", Time.now).find_all { |e| e.event_category == EventCategory.find_by(title: category.to_s) } }
 
-  def event_category
-    event_type.event_category
+  def is_a_course?
+    event_category&.title.in? ["advanced_grade", "elective"]
   end
 end
