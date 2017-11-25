@@ -12,7 +12,7 @@
     = f.select :event_type, options_for_select(@meeting_types)
     br
   = f.label :description
-  = f.text_field :description
+  = f.text_area :description
   br
   = f.label :cost, "Cost"
   |  $
@@ -36,8 +36,8 @@
   = f.label :start_at
   = f.datetime_select :start_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now.beginning_of_day + 9.hours), minute_step: 15
   br
-  = f.label :length, "Session length (minutes)"
-  = f.number_field :length
+  = f.label :length, "Session length"
+  = f.time_select :length, minute_step: 15, end_hour: 8
   br
   = f.label :sessions, "Number of sessions"
   = f.number_field :sessions
