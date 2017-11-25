@@ -13,7 +13,7 @@ class User < ApplicationRecord
     default_url: User.no_photo,
     storage: :s3,
     s3_region: "us-east-2",
-    path: "profile_photos/#{Rails.env}/:id/:filename",
+    path: "#{Rails.env}/profile_photos/:id/:filename",
     s3_permissions: :private,
     s3_credentials: {bucket: "bps-files", access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
     # styles: { medium: "300x300>", thumb: "100x100#" }
