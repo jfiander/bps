@@ -22,11 +22,11 @@
   tr
     td colspan=2 = simple_format(event.description)
     td colspan=2
-      - if event.flyer.present?
-        - if event.flyer_content_type == 'application/pdf'
-          | PDF
-        - else
-          = image_tag event.flyer.s3_object.presigned_url(:get, expires_in: 5.minutes)
+      / - if event.flyer.present?
+      - if event.flyer_content_type == 'application/pdf'
+        | PDF
+      - else
+        = image_tag event.get_flyer
   tr
     td.spacer colspan=4
       hr

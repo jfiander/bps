@@ -25,4 +25,17 @@ class Event < ApplicationRecord
   def is_a_course?
     event_category&.title.in? ["advanced_grade", "elective"]
   end
+
+  def get_flyer
+    f = flyer_file_name.blank? ? get_book_cover : flyer&.s3_object
+
+    f.presigned_url(:get, expires_in: 5.minutes)
+  end
+
+  private
+  def get_book_cover
+    [:courses, :seminars].each do |type|
+      return BpsS3.get_object(bucket: :files, key: "book_covers/#{type.to_s}/#{event_type.title}.png") if event_category_id.in?(EventCategory.send(type).map(&:id))
+    end
+  end
 end
