@@ -21,12 +21,12 @@
         = link_to "Expire", send("destroy_#{params[:type]}_path", event), method: :delete, class: "red control"
   tr
     td colspan=2 = simple_format(event.description)
-    td
+    td colspan=2
       - if event.flyer.present?
         - if event.flyer_content_type == 'application/pdf'
           | PDF
         - else
           = image_tag event.flyer.s3_object.presigned_url(:get, expires_in: 5.minutes)
   tr
-    td.spacer colspan=3
+    td.spacer colspan=4
       hr
