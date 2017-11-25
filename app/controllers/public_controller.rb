@@ -101,6 +101,22 @@ class PublicController < ApplicationController
     #
   end
 
+  def register
+    registration = Registration.new(email: clean_params[:email], event_id: clean_params[:event_id])
+
+    respond_to do |format|
+      format.js do
+        if registration.save
+          flash[:notice] = "You have successfully registered!"
+          render json: registration
+        else
+          flash[:alert] = "We are unable to register you at this time."
+          render json: registration
+        end
+      end
+    end
+  end
+
   def officer_flag(office)
     rank = case office
     when "commander"
@@ -117,7 +133,7 @@ class PublicController < ApplicationController
 
   private
   def clean_params
-    params.permit(:year, :month)
+    params.permit(:year, :month, :email, :event_id)
   end
 
   def list_bilges

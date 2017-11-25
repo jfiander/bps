@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get     '/bilge/:year/:month', to: 'public#get_bilge',             as: 'bilge'
   get     '/store',              to: 'public#store'
   get     '/links',              to: 'public#links'
+  put     '/register',           to: 'public#register',                as: 'public_register'
 
   get     '/members',            to: 'members#index'
   post    '/bilge',              to: 'members#upload_bilge'

@@ -33,6 +33,8 @@
         = link_to "Expire", send("destroy_#{params[:type]}_path", event), method: :delete, class: "red control", data: {confirm: "Are you shure you want to force this #{params[:type]} to expire?"}
       - if user_signed_in?
         = link_to "Register", register_path(params[:type], event.id), method: :put, class: "control"
+      - else
+        = render "events/register_form", event_id: event.id
   tr
     td colspan=2
       = simple_format(event.description)

@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  after_action { flash.discard if request.xhr? }
+
   private
   def ssl_configured?
     Rails.env.production? || Rails.env.staging?
