@@ -5,7 +5,10 @@ class Event < ApplicationRecord
   has_many   :course_includes
   belongs_to :prereq, class_name: "EventType"
 
-  before_validation { self.event_category = self.event_type.event_category }
+  before_validation do
+    self.event_category = self.event_type.event_category
+    self.map_link = "http://#{self.map_link}" unless self.map_link.blank? || self.map_link.match(/https?\:\/\//)
+  end
 
   has_attached_file :flyer,
     default_url: nil,
