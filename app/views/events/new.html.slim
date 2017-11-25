@@ -2,48 +2,84 @@ h2 = "#{@edit_mode} #{@event_title}"
 
 = form_for(@event, url: @submit_path, multipart: true) do |f|
   = f.hidden_field :id if @submit_path.match /\/update/
-  = f.label :event_type_id, "#{@event_title} name"
-  = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id)
-  br
-  = f.label :description
-  = f.text_area :description
-  br
-  = f.label :cost, "Cost"
-  |  $
-  = f.number_field :cost
-  br
-  = f.label :member_cost, "Member discounted cost (if applicable)"
-  |  $
-  = f.number_field :member_cost
-  br
-  = f.label :requirements, "Student requirements"
-  = f.text_area :requirements
-  br
-  small Computer, calculator, etc.
-  br
-  = f.label :location
-  = f.text_area :location
-  br
-  = f.label :map_link
-  = f.text_field :map_link
-  br
-  = f.label :start_at
-  = f.datetime_select :start_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now.beginning_of_day + 9.hours), minute_step: 15
-  br
-  = f.label :length, "Session length"
-  = f.time_select :length, minute_step: 15, end_hour: 8
-  br
-  = f.label :sessions, "Number of sessions"
-  = f.number_field :sessions
-  br
-  = f.label :flyer
-  = f.file_field :flyer
-  br
-  = f.label :expires_at, "Do not display after"
-  = f.datetime_select :expires_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now + 3.months), discard_hour: true, discard_minute: true
-  - if @event.is_a_course?
-    br
-    = f.label :prereq_id, "Prerequisite course"
-    = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true
-  hr
-  = f.submit "#{@edit_mode} #{@event_title}"
+
+  #new-event
+    .left = f.label :event_type_id, "#{@event_title} name"
+    .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), include_blank: true, prompt: "Please select a #{params[:type]} type"
+    br.clear
+
+    .left = f.label :description
+    .right = f.text_area :description
+    br.clear
+
+    - if params[:type].in? [:course, :seminar]
+      .left = f.label :requirements, "Student requirements"
+      .right 
+        = f.text_area :requirements
+        br
+        small Computer, calculator, etc.
+      br.clear
+
+
+    .left = f.label :flyer
+    .right = f.file_field :flyer
+    br.clear
+
+    hr
+
+    .left = f.label :location
+    .right = f.text_area :location
+    br.clear
+
+    .left = f.label :map_link
+    .right = f.text_field :map_link
+    br.clear
+
+    hr
+
+    .left
+      = f.label :cost, "Cost"
+    .right
+      |  $ 
+      = f.number_field :cost, class: "number", min: 0
+    br.clear
+
+    .left
+      = f.label :member_cost, "Member discounted cost"
+    .right
+      |  $ 
+      = f.number_field :member_cost, class: "number", min: 0
+      small
+        | (if applicable)
+    br.clear
+
+    hr
+
+    .left = f.label :start_at
+    .right = f.datetime_select :start_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now.beginning_of_day + 9.hours), minute_step: 15
+    br.clear
+
+    .left = f.label :length, "Session length"
+    .right = f.time_select :length, minute_step: 15, end_hour: 8, default: {hour: 2, minute: 0}
+    br.clear
+
+    .left = f.label :sessions, "Number of sessions"
+    .right = f.number_field :sessions, class: "number", min: 1
+    br.clear
+
+    hr
+
+    .left = f.label :expires_at, "Do not display this #{params[:type]} after", class: "red"
+    .right = f.datetime_select :expires_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now + 3.months), discard_hour: true, discard_minute: true
+    br.clear
+
+    - if @event.is_a_course?
+     
+      .left = f.label :prereq_id, "Prerequisite course"
+      .right = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true
+      br.clear
+
+    .center
+      hr
+      = f.submit "#{@edit_mode} #{@event_title}"
+    br.clear

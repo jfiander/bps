@@ -80,4 +80,53 @@ table#events {
     span.costs {
       font-size: 80%;
     }
+
+    td.spacer hr {
+      margin: 3em 0;
+    }
+}
+
+div#new-event {
+  width: 80%;
+  margin: 0 auto;
+
+  label {
+    font-weight: bold;
+  }
+
+  textarea {
+    width: 75%;
+    height: 7.5em;
+  }
+
+  input.number {
+    width: 5em;
+  }
+
+  div.left {
+    width: 49%;
+    float: left;
+    text-align: right;
+    margin-bottom: 1em;
+  }
+
+  div.right {
+    width: 49%;
+    float: right;
+    text-align: left;
+    margin-bottom: 1em;
+
+    small {
+      margin-left: 0.25em;
+    }
+  }
+
+  div.center {
+    width: 100%;
+    text-align: center;
+  }
+
+  br.clear {
+    clear: both;
+  }
 }
