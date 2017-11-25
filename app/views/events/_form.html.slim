@@ -6,8 +6,13 @@
   = f.label :description
   = f.text_field :description
   br
-  = f.label :cost
+  = f.label :cost, "Cost"
+  |  $
   = f.number_field :cost
+  br
+  = f.label :member_cost, "Member discounted cost (if applicable)"
+  |  $
+  = f.number_field :member_cost
   br
   = f.label :requirements, "Student requirements"
   = f.text_field :requirements

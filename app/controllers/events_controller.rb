@@ -45,8 +45,8 @@ class EventsController < ApplicationController
   end
 
   private
-  def clean_params
-    params.require(:event).permit(:event_type, :description, :cost, :requirements, :location,
-      :map_link, :start_at, :length, :sessions, :flyer, :expires_at, :prereq)
+  def event_params
+    params.require(:event).permit(:event_type, :description, :cost, :member_cost, :requirements,
+      :location, :map_link, :start_at, :length, :sessions, :flyer, :expires_at, :prereq)
   end
 end

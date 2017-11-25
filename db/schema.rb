@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171125165054) do
+ActiveRecord::Schema.define(version: 20171125171826) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20171125165054) do
     t.integer  "flyer_file_size"
     t.datetime "flyer_updated_at"
     t.integer  "event_category_id"
+    t.integer  "member_cost"
   end
 
   create_table "roles", force: :cascade do |t|
