@@ -28,18 +28,18 @@ Rails.application.routes.draw do
   get     '/store',              to: 'public#store'
   get     '/links',              to: 'public#links'
 
-  get     '/members',            to: 'members#index'
-  post    '/bilge',              to: 'members#upload_bilge'
-  get     '/flags',              to: 'members#download_flags'
-  get     '/courses/new',        to: 'events#new',                   as: 'new_course',      defaults: {type: :course}
-  post    '/courses/create',     to: 'events#create',                as: 'create_course',   defaults: {type: :course}
-  delete  '/courses/destroy',    to: 'events#destroy',               as: 'create_course',   defaults: {type: :course}
-  get     '/seminars/new',       to: 'events#new',                   as: 'new_seminar',     defaults: {type: :seminar}
-  post    '/seminars/create',    to: 'events#create',                as: 'create_seminar',  defaults: {type: :seminar}
-  delete  '/seminars/destroy',   to: 'events#destroy',               as: 'destroy_seminar', defaults: {type: :seminar}
-  get     '/events/new',         to: 'events#new',                   as: 'new_event',       defaults: {type: :event}
-  post    '/events/create',      to: 'events#create',                as: 'create_event',    defaults: {type: :event}
-  delete  '/events/destroy',     to: 'events#destroy',               as: 'destroy_event',   defaults: {type: :event}
+  get     '/members',              to: 'members#index'
+  post    '/bilge',                to: 'members#upload_bilge'
+  get     '/flags',                to: 'members#download_flags'
+  get     '/courses/new',          to: 'events#new',                   as: 'new_course',      defaults: {type: :course}
+  post    '/courses/create',       to: 'events#create',                as: 'create_course',   defaults: {type: :course}
+  delete  '/courses/destroy/:id',  to: 'events#destroy',               as: 'destroy_course',  defaults: {type: :course}
+  get     '/seminars/new',         to: 'events#new',                   as: 'new_seminar',     defaults: {type: :seminar}
+  post    '/seminars/create',      to: 'events#create',                as: 'create_seminar',  defaults: {type: :seminar}
+  delete  '/seminars/destroy/:id', to: 'events#destroy',               as: 'destroy_seminar', defaults: {type: :seminar}
+  get     '/events/new',           to: 'events#new',                   as: 'new_event',       defaults: {type: :event}
+  post    '/events/create',        to: 'events#create',                as: 'create_event',    defaults: {type: :event}
+  delete  '/events/destroy/:id',   to: 'events#destroy',               as: 'destroy_event',   defaults: {type: :event}
 
   get     '/users',              to: 'user#list'
   get     '/users/current',      to: 'user#current',                 as: 'current_user'
