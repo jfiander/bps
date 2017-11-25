@@ -5,7 +5,7 @@ class Event < ApplicationRecord
   has_many   :course_includes
   has_one    :prereq, class_name: "Event"
 
-  before_save { self.event_category = self.event_type.event_category }
+  before_validation { self.event_category = self.event_type.event_category }
 
   has_attached_file :flyer,
     default_url: nil,
