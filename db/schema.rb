@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171125155459) do
+ActiveRecord::Schema.define(version: 20171125155915) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20171125155459) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.datetime "expires_at"
+    t.integer  "prereq_id"
   end
 
   create_table "roles", force: :cascade do |t|
