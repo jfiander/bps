@@ -1,5 +1,6 @@
 class PublicController < ApplicationController
   before_action :list_bilges, only: [:newsletter, :get_bilge]
+  before_action :time_formats, only: [:courses, :seminars, :events]
 
   def index
     #
@@ -128,5 +129,10 @@ class PublicController < ApplicationController
       issue_date = b.key.delete(".pdf")
       { issue_date => BpsS3.link(bucket: :bilge, key: key) }
     end.reduce({}, :merge)
+  end
+
+  def time_formats
+    @long_time_format = "%a %d %b %Y @ %H%M %Z"
+    @short_time_format = "%-m/%-d @ %H%M"
   end
 end
