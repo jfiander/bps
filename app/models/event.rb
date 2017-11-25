@@ -15,7 +15,10 @@ class Event < ApplicationRecord
     s3_permissions: :private,
     s3_credentials: {bucket: "bps-files", access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
   
-  scope :current, ->(category) { where.not("expires_at < ?", Time.now).find_all { |e| e.event_category == EventCategory.find_by(title: category.to_s) } }
+  scope :current, ->(category) do
+    event_category_id = EventCategory.where(title: category.to_s)
+    where("expires_at > ?", Time.now).where(event_category: event_category_id)
+  end
 
   def is_a_course?
     event_category&.title.in? ["advanced_grade", "elective"]
