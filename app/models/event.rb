@@ -36,6 +36,11 @@ class Event < ApplicationRecord
     f&.presigned_url(:get, expires_in: 5.minutes)
   end
 
+  def formatted_cost
+    return cost if member_cost.blank?
+    "<b>Members:</b> $#{member_cost}, <b>Non-members:</b> $#{cost}".html_safe
+  end
+
   private
   def get_book_cover
     [:courses, :seminars].each do |type|
