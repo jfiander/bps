@@ -72,6 +72,5 @@ class EventsController < ApplicationController
     @event_types = EventType.where(event_category: EventCategory.send("#{params[:type]}s")).map { |e| [e.title.titleize, e.id] }
     @event_title = params[:type].to_s.titleize
     @edit_mode = "Add"
-    @form_title = "#{@edit_mode} #{@event_title}"
   end
 end
