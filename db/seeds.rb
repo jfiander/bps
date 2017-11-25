@@ -36,6 +36,6 @@ end
   EventType.create!(title: e, event_category: seminar)
 end
 
-%w[rendezvous membership_meeting change_of_watch commanders_ball].each do |e|
+%w[rendezvous membership_meeting change_of_watch commanders_ball conference].each do |e|
   EventType.create!(title: e, event_category: meeting)
 end
