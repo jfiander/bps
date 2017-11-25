@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171125155915) do
+ActiveRecord::Schema.define(version: 20171125165054) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20171125155915) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer  "course_type_id"
+    t.integer  "event_type_id"
     t.integer  "cost"
     t.text     "description"
     t.string   "requirements"
@@ -74,11 +74,15 @@ ActiveRecord::Schema.define(version: 20171125155915) do
     t.datetime "start_at"
     t.integer  "length"
     t.integer  "sessions"
-    t.string   "flyer_link"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.datetime "expires_at"
     t.integer  "prereq_id"
+    t.string   "flyer_file_name"
+    t.string   "flyer_content_type"
+    t.integer  "flyer_file_size"
+    t.datetime "flyer_updated_at"
+    t.integer  "event_category_id"
   end
 
   create_table "roles", force: :cascade do |t|
