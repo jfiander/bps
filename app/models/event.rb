@@ -27,9 +27,13 @@ class Event < ApplicationRecord
   end
 
   def get_flyer
-    f = flyer_file_name.blank? ? get_book_cover : flyer&.s3_object
+    f = if is_a_course?
+      flyer_file_name.blank? ? get_book_cover : flyer&.s3_object
+    elsif flyer_file_name.present?
+      flyer.s3_object
+    end
 
-    f.presigned_url(:get, expires_in: 5.minutes)
+    f&.presigned_url(:get, expires_in: 5.minutes)
   end
 
   private
