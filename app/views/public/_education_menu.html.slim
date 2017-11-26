@@ -1,0 +1,3 @@
+ul#education
+  = link "Courses", path: courses_path, permit: active[:courses] ? "active" : ""
+  = link "Seminars", path: seminars_path, permit: active[:seminars] ? "active" : ""

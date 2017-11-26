@@ -1,5 +1,7 @@
 h2 = "Squadron #{params[:type].to_s.titleize}s"
 
+= render "education_menu", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)} if params[:type].in? [:course, :seminar]
+
 p = link_to "Add #{params[:type].to_s.titleize}", send("new_#{params[:type]}_path") if current_user&.permitted?(params[:type])
 
 table#events
