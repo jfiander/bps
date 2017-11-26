@@ -5,8 +5,7 @@ class EventsController < ApplicationController
   before_action :prepare_form, only: [:new, :copy, :edit]
 
   def new
-    event_category_default_title = params[:type] == "course" ? "advanced_grade" : params[:type]
-    @event = Event.new(event_category: EventCategory.find_by(title: params[:type]))
+    @event = Event.new
     @submit_path = send("create_#{params[:type]}_path")
   end
 

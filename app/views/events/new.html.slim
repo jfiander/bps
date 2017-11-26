@@ -20,6 +20,11 @@ h2 = "#{@edit_mode} #{@event_title}"
         small Computer, calculator, etc.
       br.clear
 
+    - if params[:type] == :course
+      .left = f.label :prereq_id, "Prerequisite course"
+      .right = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true
+      br.clear
+
 
     .left = f.label :flyer
     .right = f.file_field :flyer
@@ -72,12 +77,6 @@ h2 = "#{@edit_mode} #{@event_title}"
     .left = f.label :expires_at, "Do not display this #{params[:type]} after", class: "red"
     .right = f.datetime_select :expires_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now + 3.months), discard_hour: true, discard_minute: true
     br.clear
-
-    - if @event.is_a_course?
-     
-      .left = f.label :prereq_id, "Prerequisite course"
-      .right = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true
-      br.clear
 
     .center
       hr
