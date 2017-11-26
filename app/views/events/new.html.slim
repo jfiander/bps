@@ -5,7 +5,7 @@ h2 = "#{@edit_mode} #{@event_title}"
 
   #new-event
     .left = f.label :event_type_id, "#{@event_title} name"
-    .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), include_blank: true, prompt: "Please select a #{params[:type]} type"
+    .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), include_blank: true, prompt: "Please select a #{params[:type]} type", required: true
     br.clear
 
     .left = f.label :description
@@ -75,7 +75,7 @@ h2 = "#{@edit_mode} #{@event_title}"
     hr
 
     .left = f.label :expires_at, "Do not display this #{params[:type]} after", class: "red"
-    .right = f.datetime_select :expires_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now + 3.months), discard_hour: true, discard_minute: true
+    .right = f.datetime_select :expires_at, start_year: (Time.now.year), end_year: (Time.now.year + 2), default: (0.days.from_now + 3.months), discard_hour: true, discard_minute: true, required: true
     br.clear
 
     .center
