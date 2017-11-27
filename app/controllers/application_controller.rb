@@ -26,4 +26,28 @@ class ApplicationController < ActionController::Base
     @short_time_format = "%-m/%-d @ %H%M"
     @duration_format = "%-kh %Mm"
   end
+
+  def render_markdown
+    burgee_html = center_html { USPSFlags::Burgees.new { |b| b.squadron = :birmingham }.svg }
+    education_menu = view_context.render "application/education_menu", active: {courses: false, seminars: false}
+
+    render layout: "application", inline: ("<div class='markdown'>" + Redcarpet::Markdown.new(Redcarpet::Render::HTML,
+      autolink: true,
+      images: true,
+      tables: true,
+      no_intra_emphasis: true,
+      strikethrough: true,
+      superscript: true,
+      underline: true
+    ).render(StaticPage.find_by(name: action_name).markdown.to_s.
+      gsub(/(#+)/, '#\1')
+    ) + "</div>").
+      gsub("<p>@", '<p class="center">').
+      gsub(/<p>%burgee<\/p>/, burgee_html).
+      gsub(/<p>%education<\/p>/, education_menu)
+  end
+
+  def center_html
+    "<div class='center'>" + yield + "</div>"
+  end
 end

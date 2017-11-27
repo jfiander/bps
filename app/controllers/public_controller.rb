@@ -158,16 +158,4 @@ class PublicController < ApplicationController
       { issue_date => BpsS3.link(bucket: :bilge, key: key) }
     end.reduce({}, :merge)
   end
-
-  def render_markdown
-    render layout: "application", inline: ("<div class='markdown'>" + Redcarpet::Markdown.new(Redcarpet::Render::HTML,
-      autolink: true,
-      tables: true,
-      no_intra_emphasis: true,
-      strikethrough: true,
-      underline: true
-    ).render(StaticPage.find_by(name: action_name).markdown.to_s.
-      gsub(/(#+)/, '#\1')
-    ) + "</div>").gsub("<p>@", '<p class="center">')
-  end
 end
