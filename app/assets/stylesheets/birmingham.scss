@@ -170,12 +170,12 @@ div#main {
 }
 
 div#flashes {
-  div.notice {
+  div#notice {
     color: $birmingham-blue;
     background-color: inherit;
   }
 
-  div.alert {
+  div#alert {
     color: $old-glory-red;
     background-color: lighten($old-glory-red, 40%);
     background-color: inherit;

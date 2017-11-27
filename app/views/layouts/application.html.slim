@@ -16,7 +16,7 @@ html
         - current_user&.permitted?(:admin) do
           ul#admin-menu = render "application/admin_menu"
         #flashes
-          .notice = notice
-          .alert = alert
+          #notice = notice
+          #alert = alert
         = yield
       footer = render "application/footer"
