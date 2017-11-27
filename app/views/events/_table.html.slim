@@ -57,6 +57,23 @@
           | PDF
         - else
           = image_tag event.get_flyer
+  - if current_user&.permitted?(params[:type]) && @registered_users[event.id].present?
+    tr
+      td colspan=2
+      th colspan=2
+        hr
+        | Registered Users
+    tr
+      td colspan=2
+      td colspan=2
+        - @registered_users[event.id].each do |r|
+          - if r.user.present?
+           = link_to(r.user.full_name, "mailto:#{r.user.email}")
+          - else
+            = link_to(r.email, "mailto:#{r.email}")
+          |  
+          = link_to "X", cancel_registration_path(r.id), method: :delete, remote: true, class: "red"
+          br
   tr
     td.spacer colspan=4
       hr
