@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
       strikethrough: true,
       superscript: true,
       underline: true
-    ).render(StaticPage.find_by(name: action_name).markdown.to_s.
+    ).render(StaticPage.find_by(name: action_name)&.markdown.to_s.
       gsub(/(#+)/, '#\1')
     ) + "</div>").
       gsub("<p>@", '<p class="center">').

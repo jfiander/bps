@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get     '/home',               to: redirect('/')
   get     '/about',              to: 'public#about'
   get     '/join',               to: 'public#join'
+  get     '/requirements',       to: 'public#requirements'
   get     '/vsc',                to: 'public#vsc'
   get     '/education',          to: 'public#education'
   get     '/calendar',           to: 'public#calendar'

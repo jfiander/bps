@@ -1,7 +1,7 @@
 class PublicController < ApplicationController
   before_action :list_bilges, only: [:newsletter, :get_bilge]
   before_action :time_formats, only: [:courses, :seminars, :events]
-  before_action :render_markdown, only: [:home, :about, :join, :vsc, :education, :civic, :history, :links]
+  before_action :render_markdown, only: [:home, :about, :join, :requirements, :vsc, :education, :civic, :history, :links]
 
   def home
     #
@@ -12,6 +12,10 @@ class PublicController < ApplicationController
   end
 
   def join
+    #
+  end
+
+  def requirements
     #
   end
 
