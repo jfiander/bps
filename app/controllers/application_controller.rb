@@ -19,4 +19,11 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:account_update, keys: [:profile_photo, :rank, :first_name, :last_name])
   end
+
+  def time_formats
+    @long_time_format = "%a %d %b %Y @ %H%M %Z"
+    @medium_time_format = "%-m/%-d/%Y @ %H%M"
+    @short_time_format = "%-m/%-d @ %H%M"
+    @duration_format = "%-kh %Mm"
+  end
 end
