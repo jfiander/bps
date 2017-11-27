@@ -101,6 +101,11 @@ class UserController < ApplicationController
 
   def register
     @event_id = clean_params[:id]
+    unless Event.find_by(id: @event_id).accept_member_registrations
+      flash[:alert] = "This course is not currently accepting registrations."
+      render status: :unprocessable_entity and return
+    end
+
     @registration = current_user.register_for(Event.find_by(id: @event_id))
 
     if @registration.valid?

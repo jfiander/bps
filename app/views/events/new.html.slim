@@ -72,6 +72,14 @@ h2 = "#{@edit_mode} #{@event_title}"
         | (if applicable)
     br.clear
 
+    .left = f.label :allow_member_registrations, "Allow member registrations"
+    .right = f.check_box :allow_member_registrations
+    br.clear
+
+    .left = f.label :allow_public_registrations, "Allow public registrations"
+    .right = f.check_box :allow_public_registrations
+    br.clear
+
     hr
 
     .left = f.label :start_at

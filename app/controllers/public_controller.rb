@@ -105,6 +105,11 @@ class PublicController < ApplicationController
 
   def register
     @event_id = clean_params[:event_id]
+    unless Event.find_by(id: @event_id).accept_public_registrations
+      flash[:alert] = "This course is not currently accepting public registrations."
+      render status: :unprocessable_entity and return
+    end
+
     registration_attributes = {email: clean_params[:email], event_id: @event_id}
     registration = Registration.new(registration_attributes)
 

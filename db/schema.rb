@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171127160650) do
+ActiveRecord::Schema.define(version: 20171127170819) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -68,8 +68,8 @@ ActiveRecord::Schema.define(version: 20171127160650) do
     t.datetime "start_at"
     t.datetime "length"
     t.integer  "sessions"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.datetime "expires_at"
     t.integer  "prereq_id"
     t.string   "flyer_file_name"
@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(version: 20171127160650) do
     t.integer  "flyer_file_size"
     t.datetime "flyer_updated_at"
     t.integer  "member_cost"
+    t.boolean  "allow_member_registrations", default: true
+    t.boolean  "allow_public_registrations", default: true
   end
 
   create_table "registrations", force: :cascade do |t|
