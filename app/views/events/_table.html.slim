@@ -64,10 +64,6 @@
     td.right colspan=2
       - if event.get_flyer.present? && event.flyer_content_type != 'application/pdf'
           = image_tag event.get_flyer
-  - if event.get_flyer.present? && event.flyer_content_type == 'application/pdf'
-    tr
-      td colspan=4
-        iframe src=(event.get_flyer)
   - if current_user&.permitted?(params[:type]) && @registered_users[event.id].present?
     tr
       td colspan=2
@@ -85,6 +81,10 @@
           |  
           = link_to "X", cancel_registration_path(r.id), method: :delete, remote: true, class: "red", data: {confirm: "Are you sure you want to cancel this registration?"}
           br
+  - if event.get_flyer.present? && event.flyer_content_type == 'application/pdf'
+    tr
+      td colspan=4
+        iframe src=(event.get_flyer)
   tr
     td.spacer colspan=4
       hr
