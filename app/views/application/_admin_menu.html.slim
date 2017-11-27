@@ -1,3 +1,5 @@
+- if controller.action_name.in? StaticPage.names
+  = link "Edit This Page",     path: edit_page_path(controller.action_name), suffix: " | "
 = link "Show All Users",       path: users_path,               suffix: " | "
 = link "Invite New User",      path: new_user_invitation_path, suffix: " | "
 = link "Manage Permissions",   path: permit_path

@@ -34,3 +34,15 @@ end
 %w[rendezvous membership_meeting change_of_watch commanders_ball conference].each do |e|
   EventType.create!(title: e, event_category_id: 4)
 end
+
+StaticPage.create!([
+  {name: "home"},
+  {name: "about"},
+  {name: "join"},
+  {name: "vsc"},
+  {name: "education"},
+  {name: "civic"},
+  {name: "history"},
+  {name: "links"},
+  {name: "members"}
+])

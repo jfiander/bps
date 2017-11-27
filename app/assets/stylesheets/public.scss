@@ -152,3 +152,30 @@ ul#education {
     margin: 1em;
   }
 }
+
+
+div.markdown {
+  text-align: left;
+  padding: 0 0.5em;
+
+  h2 {
+    text-align: center;
+  }
+
+  p {
+    margin: 1.5em 0.5em;
+  }
+
+  p.center {
+    text-align: center;
+  }
+
+  table {
+    margin: 1em auto;
+    text-align: left;
+
+    th, td {
+      padding: 0 1em;
+    }
+  }
+}

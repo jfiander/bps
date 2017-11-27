@@ -20,3 +20,17 @@ ul#admin-menu {
     color: darken($birmingham-blue, 5%);
   }
 }
+
+form.edit_static_page textarea {
+  background-color: lighten($background-blue, 12%);
+  border: 0;
+  margin-bottom: 1em;
+  padding: 0.5em;
+  font-family: Courier;
+  width: 95%;
+  min-height: 50%;
+}
+
+div.markdown-help {
+  font-size: 60%;
+}

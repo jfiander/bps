@@ -1,34 +1,42 @@
 Rails.application.routes.draw do
-  root                               'public#index'
+  root                               'public#home'
 
   devise_for :users, path: '',
     path_names: {sign_in: 'login', sign_out: 'logout'},
     controllers: {invitations: 'users/invitations', registrations: 'users/registrations'}
 
+  # Profile management
   as :user do
     get   '/profile/edit',       to: 'users/registrations#edit'
     put   '/profile/edit',       to: 'users/registrations#update'
     get   '/reset',              to: 'devise/passwords#new'
   end
 
+  # Static pages
+  get     '/home',               to: redirect('/')
   get     '/about',              to: 'public#about'
   get     '/join',               to: 'public#join'
   get     '/vsc',                to: 'public#vsc'
   get     '/education',          to: 'public#education'
   get     '/calendar',           to: 'public#calendar'
-  get     '/photos',             to: 'public#photos'
   get     '/civic',              to: 'public#civic'
-  get     '/bridge',             to: 'public#bridge'
   get     '/history',            to: 'public#history'
-  get     '/newsletter',         to: 'public#newsletter'
-  get     '/bilge/:year/:month', to: 'public#get_bilge',             as: 'bilge'
-  get     '/store',              to: 'public#store'
   get     '/links',              to: 'public#links'
-  put     '/register',           to: 'public#register',                as: 'public_register'
-
   get     '/members',            to: 'members#index'
+
+  # Functional pages
+  get     '/bridge',             to: 'public#bridge'
+  get     '/newsletter',         to: 'public#newsletter'
+  get     '/store',              to: 'public#store'
+  get     '/photos',             to: 'public#photos'
+
+  # Functional page back-ends
+  get     '/bilge/:year/:month', to: 'public#get_bilge',             as: 'bilge'
+  put     '/register',           to: 'public#register',              as: 'public_register'
   post    '/bilge',              to: 'members#upload_bilge'
   get     '/flags',              to: 'members#download_flags'
+  get     '/edit/:page_name',    to: 'members#edit_markdown',        as: 'edit_page'
+  patch   '/edit/:page_name',    to: 'members#update_markdown'
 
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",             to: 'public#events',                                   defaults: {type: event_type}
@@ -40,6 +48,7 @@ Rails.application.routes.draw do
     delete  "/#{event_type}s/destroy/:id", to: 'events#destroy',     as: "destroy_#{event_type}", defaults: {type: event_type}
   end
 
+  # User management
   get     '/users',              to: 'user#list'
   get     '/users/current',      to: 'user#current',                 as: 'current_user'
   get     '/users/:id',          to: 'user#show',                    as: 'user'
@@ -54,6 +63,7 @@ Rails.application.routes.draw do
   put     '/register/:type/:id', to: 'user#register',                as: 'register'
   delete  '/register/:id',       to: 'user#cancel_registration',     as: 'cancel_registration'
 
+  # Error codes
   match   '/404',                to: 'errors#not_found',             via: :all
   match   '/500',                to: 'errors#internal_server_error', via: :all
 end

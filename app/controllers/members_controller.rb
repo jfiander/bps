@@ -2,6 +2,7 @@ class MembersController < ApplicationController
   before_action :authenticate_user!
   before_action                   only: [:admin, :download_flags] { require_permission(:admin) }
   before_action                   only: [:upload_bilge] { require_permission(:newsletter) }
+  before_action                   only: [:edit_markdown] { require_permission(:admin) }
   before_action :get_bilge_issue, only: [:upload_bilge, :remove_bilge]
 
   def index
@@ -21,9 +22,27 @@ class MembersController < ApplicationController
     redirect_to members_path, notice: "Successfully downloaded flags images."
   end
 
+  def edit_markdown
+    @page = StaticPage.find_by(name: clean_params[:page_name])
+  end
+
+  def update_markdown
+    page = StaticPage.find_by(name: static_page_params[:name])
+
+    if page.update(markdown: static_page_params[:markdown])
+      redirect_to send("#{page.name}_path"), notice: "Successfully updated #{page.name} page."
+    else
+      redirect_to send("#{page.name}_path"), alert: "Unable to update #{page.name} page."
+    end
+  end
+
   private
   def clean_params
-    params.permit(:bilge_upload_file, :bilge_remove, issue: ['date(1i)', 'date(2i)'])
+    params.permit(:page_name, :bilge_upload_file, :bilge_remove, issue: ['date(1i)', 'date(2i)'])
+  end
+
+  def static_page_params
+    params.require(:static_page).permit(:name, :markdown)
   end
 
   def get_bilge_issue

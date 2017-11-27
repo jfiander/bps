@@ -27,6 +27,7 @@ gem 'slim',               '~> 3.0.6'
 gem 'aws-sdk',            '~> 2.10.86'
 gem 'aws-sdk-rails',      '~> 1.0.1'
 gem 'inline_svg',         '~> 1.3.0'
+gem 'redcarpet',          '~> 3.4.0'
 
 gem 'bugsnag',            '~> 6.1.0'
 

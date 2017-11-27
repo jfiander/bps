@@ -1,0 +1,59 @@
+h2 Edit Page
+h3 = @page.name.titleize
+
+= form_for @page, url: edit_page_path, method: :patch do |f|
+  = f.hidden_field :name
+  = f.text_area :markdown
+  br
+  = f.submit "Save page"
+
+  hr
+
+h2 Formatting Help
+
+small These pages use Markdown formatting. Please refer to the guide below for help.
+
+hr
+
+small Adjacent lines will be combined into a single paragraph.
+br
+small To start a new paragraph, enter a blank line.
+
+p
+  small Bare URLs will be automatically linked.
+
+.markdown-help
+  h1 # Heading
+  h2 ## Sub-heading
+  h3 ## Sub-sub-heading
+  | [Link Text](http://example.com/some/path)
+
+  p
+    u Format text:
+    br
+    b
+      span.red
+        | **
+      | Bold
+      span.red
+        | **
+    br
+    i
+      span.red
+        | *
+      | Italic
+      span.red
+        | *
+    br
+    b
+      i
+        span.red
+          | ***
+        | Bold Italic
+        span.red
+          | ***
+    br
+    u
+      span.red _
+      | Underline
+      span.red _

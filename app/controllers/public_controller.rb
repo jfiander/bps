@@ -1,8 +1,9 @@
 class PublicController < ApplicationController
   before_action :list_bilges, only: [:newsletter, :get_bilge]
   before_action :time_formats, only: [:courses, :seminars, :events]
+  before_action :render_markdown, only: [:home, :about, :join, :vsc, :education, :civic, :history, :links]
 
-  def index
+  def home
     #
   end
 
@@ -19,6 +20,18 @@ class PublicController < ApplicationController
   end
 
   def education
+    #
+  end
+
+  def civic
+    #
+  end
+
+  def history
+    #
+  end
+
+  def links
     #
   end
   
@@ -46,10 +59,6 @@ class PublicController < ApplicationController
     #
   end
 
-  def civic
-    #
-  end
-
   def bridge
     @bridge_officers = BridgeOffice.heads.ordered
     @committees = Committee.all.order(:name).group_by { |c| c.department }
@@ -61,10 +70,6 @@ class PublicController < ApplicationController
 
     @departments = BridgeOffice.ordered.heads.map { |b| [b.department, b.office] }
     @bridge_offices = BridgeOffice.ordered.map { |b| [b.title, b.office] }
-  end
-
-  def history
-    #
   end
 
   def newsletter
@@ -96,10 +101,6 @@ class PublicController < ApplicationController
   end
 
   def store
-    #
-  end
-
-  def links
     #
   end
 
@@ -156,5 +157,17 @@ class PublicController < ApplicationController
       issue_date = b.key.delete(".pdf")
       { issue_date => BpsS3.link(bucket: :bilge, key: key) }
     end.reduce({}, :merge)
+  end
+
+  def render_markdown
+    render layout: "application", inline: ("<div class='markdown'>" + Redcarpet::Markdown.new(Redcarpet::Render::HTML,
+      autolink: true,
+      tables: true,
+      no_intra_emphasis: true,
+      strikethrough: true,
+      underline: true
+    ).render(StaticPage.find_by(name: action_name).markdown.to_s.
+      gsub(/(#+)/, '#\1')
+    ) + "</div>").gsub("<p>@", '<p class="center">')
   end
 end
