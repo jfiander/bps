@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   post    '/assign_committee',   to: 'user#assign_committee'
   delete  '/remove_committee',   to: 'user#remove_committee'
   put     '/register/:type/:id', to: 'user#register',                as: 'register'
+  delete  '/register/:id',       to: 'user#cancel_registration',     as: 'cancel_registration'
 
   match   '/404',                to: 'errors#not_found',             via: :all
   match   '/500',                to: 'errors#internal_server_error', via: :all
