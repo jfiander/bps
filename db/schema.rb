@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< 9a5e4dce60463ba3a243e6fb081e99dec65f40b5
-ActiveRecord::Schema.define(version: 20171125231031) do
-=======
-ActiveRecord::Schema.define(version: 20171125222406) do
->>>>>>> Make event length a datetime field
+ActiveRecord::Schema.define(version: 20171127160650) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -53,12 +49,6 @@ ActiveRecord::Schema.define(version: 20171125222406) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "event_categories", force: :cascade do |t|
-    t.string   "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "event_types", force: :cascade do |t|
     t.integer  "event_category_id"
     t.string   "title"
@@ -86,7 +76,6 @@ ActiveRecord::Schema.define(version: 20171125222406) do
     t.string   "flyer_content_type"
     t.integer  "flyer_file_size"
     t.datetime "flyer_updated_at"
-    t.integer  "event_category_id"
     t.integer  "member_cost"
   end
 

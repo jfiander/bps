@@ -13,18 +13,13 @@ Role.create!([
   {name: "vsc", parent: events}
 ])
 
-adv_grade = EventCategory.create!(title: "advanced_grade")
-elective = EventCategory.create!(title: "elective")
-seminar = EventCategory.create!(title: "seminar")
-meeting = EventCategory.create!(title: "meeting")
-
 %w[seamanship piloting advanced_piloting junior_navigation navigation].each do |ag|
-  EventType.create!(title: ag, event_category: adv_grade)
+  EventType.create!(title: ag, event_category_id: 1)
 end
 
 %w[cruise_planning electronic_navigation engine_maintenance marine_communication_systems
    marine_electrical_systems sail weather instructor_development].each do |e|
-  EventType.create!(title: e, event_category: elective)
+  EventType.create!(title: e, event_category_id: 2)
 end
 
 %w[boat_handling_under_power advanced_powerboat_handling anchoring boating_on_rivers_locks_and_lakes sail_trim_and_rig_tuning 
@@ -33,9 +28,9 @@ end
    emergencies_on_board fuel_and_boating partner_in_command man_overboard using_vhf vhf_dsc_marine_radio 
    knots_bends_and_hitches paddle_smart trailering_your_boat 
    crossing_borders].each do |e|
-  EventType.create!(title: e, event_category: seminar)
+  EventType.create!(title: e, event_category_id: 3)
 end
 
 %w[rendezvous membership_meeting change_of_watch commanders_ball conference].each do |e|
-  EventType.create!(title: e, event_category: meeting)
+  EventType.create!(title: e, event_category_id: 4)
 end

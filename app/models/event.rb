@@ -1,14 +1,10 @@
 class Event < ApplicationRecord
   belongs_to :event_type
-  belongs_to :event_category
   has_many   :course_topics
   has_many   :course_includes
   belongs_to :prereq, class_name: "EventType", optional: true
 
-  before_validation do
-    self.event_category = self.event_type.event_category
-    self.map_link = "http://#{self.map_link}" unless self.map_link.blank? || self.map_link.match(/https?\:\/\//)
-  end
+  before_validation { self.map_link = "http://#{self.map_link}" unless self.map_link.blank? || self.map_link.match(/https?\:\/\//) }
 
   has_attached_file :flyer,
     default_url: nil,
@@ -21,12 +17,11 @@ class Event < ApplicationRecord
   validates_attachment_content_type :flyer, content_type: /\A(image\/(jpe?g|png|gif))|(application\/pdf)\Z/
   
   scope :current, ->(category) do
-    event_category_id = EventCategory.where(title: category.to_s)
-    where("expires_at > ?", Time.now).where(event_category: event_category_id)
+    includes(:event_type).where("expires_at > ?", Time.now).where(event_types: {event_category_id: EventType.send("#{category.to_s}s")})
   end
 
   def is_a_course?
-    event_category&.title.in? ["advanced_grade", "elective"]
+    event_type.event_category_id.in? EventType.course_category_ids
   end
 
   def get_flyer
@@ -51,7 +46,7 @@ class Event < ApplicationRecord
   private
   def get_book_cover
     [:courses, :seminars].each do |type|
-      return BpsS3.get_object(bucket: :files, key: "book_covers/#{type.to_s}/#{event_type.title}.png") if event_category_id.in?(EventCategory.send(type).map(&:id))
+      return BpsS3.get_object(bucket: :files, key: "book_covers/#{type.to_s}/#{event_type.title}.png") if event_type.event_category_id.in?(EventType.course_category_ids)
     end
   end
 end
