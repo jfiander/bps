@@ -33,4 +33,9 @@ form.edit_static_page textarea {
 
 div.markdown-help {
   font-size: 60%;
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
 }

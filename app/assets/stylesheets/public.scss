@@ -144,10 +144,13 @@ div#new-event {
 ul#education {
   padding: 0;
   list-style: none;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
 
   li {
     @include blue-button;
-    width: 15%;
+    width: 10em;
     display: inline-block;
     margin: 1em;
   }
@@ -168,6 +171,17 @@ div.markdown {
 
   p.center {
     text-align: center;
+  }
+
+  img {
+    max-width: 15em;
+  }
+
+  svg {
+    max-width: 50%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
   }
 
   table {
