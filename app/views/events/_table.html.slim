@@ -62,11 +62,12 @@
         br
         p = event.prereq.title.titleize
     td colspan=2
-      - if event.get_flyer.present?
-        - if event.flyer_content_type == 'application/pdf'
-          | PDF
-        - else
+      - if event.get_flyer.present? && event.flyer_content_type != 'application/pdf'
           = image_tag event.get_flyer
+  - if event.get_flyer.present? && event.flyer_content_type == 'application/pdf'
+    tr
+      td colspan=4
+        iframe src=(event.get_flyer)
   - if current_user&.permitted?(params[:type]) && @registered_users[event.id].present?
     tr
       td colspan=2
