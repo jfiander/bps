@@ -6,6 +6,7 @@ class EventType < ApplicationRecord
   scope :courses,         -> { advanced_grades.or(electives) }
   scope :seminars,        -> { where(event_category_id: category_hash[:seminar]) }
   scope :events,          -> { where(event_category_id: category_hash[:meeting]) }
+  scope :meetings,        -> { events }
 
   def display_title
     title.titleize.

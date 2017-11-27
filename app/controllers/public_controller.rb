@@ -28,13 +28,13 @@ class PublicController < ApplicationController
     @events = case params[:type]
     when :course
       {
-        advanced_grades: Event.current(:advanced_grade),
-        electives: Event.current(:elective)
+        advanced_grades: Event.current(:advanced_grades),
+        electives: Event.current(:electives)
       }
     when :seminar
-      Event.current(:seminar)
+      Event.current(:seminars)
     when :event
-      Event.current(:meeting)
+      Event.current(:meetings)
     end
   end
 
