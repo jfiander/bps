@@ -14,10 +14,6 @@
 
 
 // Responsive Scaling
-body {
-  min-width: 450px;
-}
-
 @media all and (min-width: 1250px) {
   #navigation {max-width: 11.4em;text-align:left;-webkit-flex: 1 auto;flex:1 auto;-webkit-order:1;order:1;}
   #content {-webkit-flex:5 0px;flex:5 0px;-webkit-order:2;order:2;}
@@ -29,8 +25,24 @@ body {
 }
 
 @media all and (max-width: 1250px) {
+  body {
+    min-width: 40em;
+    margin: 0 15%;
+  }
+
   header #main-header {
     display: none;
+  }
+
+  header #small-header {
+    width: 100%;
+    float: right;
+
+    img {
+      float: right;
+      border-top-right-radius: 10px;
+      max-width: 45%;
+    }
   }
 
   #navigation {
@@ -63,9 +75,14 @@ body {
   }
 }
 
+@media all and (max-width: 1050px) {
+  header #small-header img {
+    max-width: 35%;
+  }
+}
+
 @media all and (max-width: 850px) {
   #navigation ul li {
-    line-height: 1.75em;
-    font-size: x-small;
+    max-width: 10.5em;
   }
 }
