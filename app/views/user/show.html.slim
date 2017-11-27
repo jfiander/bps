@@ -19,3 +19,14 @@ h2 = "#{@profile_title} user"
   hr.clear
   - if current_user.id == @user.id
     .center = link_to "Update your information", profile_edit_path
+  hr.clear
+  .center
+    b Current registrations
+  br.clear
+    - @registrations.each do |r|
+      .profile-left
+        = r.event.event_type.display_title
+      .profile-right
+        = r.event.start_at.strftime(@medium_time_format)
+        |  – 
+        = link_to "Cancel", cancel_registration_path(id: r.id), method: :delete, remote: true, class: "red control", id: "event_#{r.event_id}", data: {confirm: "Are you sure you want to cancel this registration?"}

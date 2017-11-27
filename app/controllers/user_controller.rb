@@ -4,6 +4,7 @@ class UserController < ApplicationController
   before_action                        only: [                 :permissions_index, :permissions_add, :permissions_remove, :assign_bridge, :assign_committee, :remove_committee] { require_permission(:users) }
   before_action :get_users,            only: [:list]
   before_action :get_users_for_select, only: [:permissions_imdex, :assign_bridge, :assign_committee]
+  before_action :time_formats,         only: [:show]
 
   def current
     redirect_to user_path(id: current_user.id)
@@ -13,6 +14,8 @@ class UserController < ApplicationController
     redirect_to user_path(current_user.id) and return unless clean_params[:id].to_i == current_user.id || current_user.permitted?(:admin)
 
     @user = User.find(clean_params[:id])
+
+    @registrations = Registration.for_user(@user.id).current
 
     @profile_title = @user.id == current_user.id ? "Current" : "Selected"
 
@@ -101,7 +104,7 @@ class UserController < ApplicationController
 
   def register
     @event_id = clean_params[:id]
-    unless Event.find_by(id: @event_id).accept_member_registrations
+    unless Event.find_by(id: @event_id).allow_member_registrations
       flash[:alert] = "This course is not currently accepting registrations."
       render status: :unprocessable_entity and return
     end
@@ -119,9 +122,9 @@ class UserController < ApplicationController
   def cancel_registration
     @reg_id = clean_params[:id]
     r = Registration.find_by(id: @reg_id)
-    @event_id = r.event_id
+    @event_id = r&.event_id
 
-    if r.destroy
+    if r&.destroy
       flash[:notice] = "Successfully cancelled registration!"
     else
       flash[:alert] = "We are unable to cancel your registration at this time."
