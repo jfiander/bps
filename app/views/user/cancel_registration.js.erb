@@ -1,2 +1,3 @@
 $("#notice").html("<%= flash[:notice] %>");
 $("#alert").html("<%= flash[:alert] %>");
+$("#event_<%= @event_id %>").html("Cancelled").attr("href", "#");
