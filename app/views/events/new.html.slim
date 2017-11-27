@@ -21,6 +21,20 @@ h2 = "#{@edit_mode} #{@event_title}"
       br.clear
 
     - if params[:type] == :course
+      .left = label_tag :topics, "Course topics"
+      .right
+        = text_area_tag :topics
+        br
+        small Put each item on a separate line.
+      br.clear
+
+      .left = label_tag :includes, "Course materials"
+      .right
+        = text_area_tag :includes
+        br
+        small Put each item on a separate line.
+      br.clear
+
       .left = f.label :prereq_id, "Prerequisite course"
       .right = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true
       br.clear

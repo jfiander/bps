@@ -17,6 +17,7 @@ class EventsController < ApplicationController
 
   def create
     if @event = Event.create(event_params)
+      update_topics_and_includes
       redirect_to send("#{params[:type]}s_path"), notice: "Successfully added #{params[:type]}."
     else
       render :new, alert: "Unable to add #{params[:type]}."
@@ -30,7 +31,9 @@ class EventsController < ApplicationController
   end
 
   def update
-    flash = if Event.find_by(id: event_params[:id]).update(event_params)
+    @event = Event.find_by(id: event_params[:id])
+    flash = if @event.update(event_params)
+      update_topics_and_includes
       {notice: "Successfully updated #{params[:type]}."}
     else
       {alert: "Unable to update #{params[:type]}."}
@@ -56,7 +59,7 @@ class EventsController < ApplicationController
   end
 
   def update_params
-    params.permit(:id)
+    params.permit(:id, :includes, :topics)
   end
 
   def event_type_title_from(formatted)
@@ -71,5 +74,17 @@ class EventsController < ApplicationController
     @event_types = EventType.send("#{params[:type]}s").map { |e| [e.display_title, e.id] }
     @event_title = params[:type].to_s.titleize
     @edit_mode = "Add"
+  end
+
+  def update_topics_and_includes
+    return nil unless params[:type] == :course
+
+    update_params[:includes].split("\n").map(&:squish).each do |i|
+      CourseInclude.find_by(course: @event, text: i) || CourseInclude.create(course: @event, text: i)
+    end
+
+    update_params[:topics].split("\n").map(&:squish).each do |t|
+      CourseTopic.find_by(course: @event, text: t) || CourseTopic.create(course: @event, text: t)
+    end
   end
 end

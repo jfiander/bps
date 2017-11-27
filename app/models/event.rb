@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
   belongs_to :event_type
-  has_many   :course_topics
-  has_many   :course_includes
+  has_many   :course_topics,   foreign_key: :course_id
+  has_many   :course_includes, foreign_key: :course_id
   belongs_to :prereq, class_name: "EventType", optional: true
 
   before_validation { self.map_link = "http://#{self.map_link}" unless self.map_link.blank? || self.map_link.match(/https?\:\/\//) }

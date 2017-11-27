@@ -1,3 +1,3 @@
 class CourseTopic < ApplicationRecord
-  belongs_to :event
+  belongs_to :course, class_name: "Event"
 end
