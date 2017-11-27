@@ -100,14 +100,28 @@ class UserController < ApplicationController
   end
 
   def register
-    @registration = current_user.register_for(Event.find_by(clean_params[:event_id]))
+    @event_id = clean_params[:id]
+    @registration = current_user.register_for(Event.find_by(id: @event_id))
+
     if @registration.valid?
       flash[:notice] = "Successfully registered!"
     else
-      flash[:alert] = "You are already registered."
+      flash[:alert] = "We are unable to register you at this time."
+      render status: :unprocessable_entity
     end
+  end
 
-    redirect_to send("#{params[:type]}s_path")
+  def cancel_registration
+    @reg_id = clean_params[:id]
+    r = Registration.find_by(id: @reg_id)
+    @event_id = r.event_id
+
+    if r.destroy
+      flash[:notice] = "Successfully cancelled registration!"
+    else
+      flash[:alert] = "We are unable to cancel your registration at this time."
+      render status: :unprocessable_entity
+    end
   end
 
   def lock

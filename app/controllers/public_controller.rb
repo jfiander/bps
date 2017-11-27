@@ -23,6 +23,8 @@ class PublicController < ApplicationController
   end
   
   def events
+    @registered = Registration.where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
+    @registered_users = Registration.all.group_by { |r| r.event_id }
     @events = case params[:type]
     when :course
       {
@@ -102,16 +104,21 @@ class PublicController < ApplicationController
   end
 
   def register
-    registration = Registration.new(email: clean_params[:email], event_id: clean_params[:event_id])
+    @event_id = clean_params[:event_id]
+    registration_attributes = {email: clean_params[:email], event_id: @event_id}
+    registration = Registration.new(registration_attributes)
 
     respond_to do |format|
       format.js do
         if registration.save
           flash[:notice] = "You have successfully registered!"
-          render json: registration
+          render status: :success
+        elsif Registration.find_by(registration_attributes)
+          flash[:alert] = "You are already registered for this course."
+          render status: :unprocessable_entity
         else
           flash[:alert] = "We are unable to register you at this time."
-          render json: registration
+          render status: :unprocessable_entity
         end
       end
     end
