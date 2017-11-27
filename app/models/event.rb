@@ -35,7 +35,7 @@ class Event < ApplicationRecord
   end
 
   def formatted_cost
-    return cost if member_cost.blank?
+    "<b>Cost:</b> $#{cost}".html_safe and return if member_cost.blank?
     "<b>Members:</b> $#{member_cost}, <b>Non-members:</b> $#{cost}".html_safe
   end
 
