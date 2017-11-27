@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   get     '/civic',              to: 'public#civic'
   get     '/history',            to: 'public#history'
   get     '/links',              to: 'public#links'
-  get     '/members',            to: 'members#index'
+  get     '/members',            to: 'members#members'
 
   # Functional pages
   get     '/bridge',             to: 'public#bridge'

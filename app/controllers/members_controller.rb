@@ -5,7 +5,9 @@ class MembersController < ApplicationController
   before_action                   only: [:edit_markdown] { require_permission(:admin) }
   before_action :get_bilge_issue, only: [:upload_bilge, :remove_bilge]
 
-  def index
+  before_action :render_markdown, only: [:members]
+
+  def members
     #
   end
 
