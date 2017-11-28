@@ -64,7 +64,7 @@ class User < ApplicationRecord
     all_roles = Role.all
     [
       roles_array.map(&:name).map(&:to_sym),
-      all_roles.find_all { |r| r.parent_id.in?(roles_array.map(&:id)) }.map(&:name).map(&:to_sym),
+      roles_array.map(&:children).flatten.map(&:name).map(&:to_sym),
       permitted_roles_from_bridge_office,
       permitted_roles_from_committee
     ].flatten.uniq.reject { |r| r.nil? }
