@@ -50,14 +50,14 @@ hr
 
 table#bridge
   - @bridge_officers.each do |bridge|
-    - name = bridge&.user&.full_name || "TBD"
-    - photo = bridge&.user&.photo
+    - officer_name = bridge&.user&.full_name || "TBD"
+    - officer_photo = bridge&.user&.photo || User.no_profile
     tr
       th.flag = bridge.title
-      td colspan=2 = link_to name, bridge.email
+      td colspan=2 = link_to officer_name, bridge.email
     tr
       th = officer_flag(bridge.office).html_safe
-      td = image_tag photo, width:125
+      td = image_tag officer_photo, width: 125
       td
         table#committees
           tr
