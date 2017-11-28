@@ -1,0 +1,3 @@
+$("#notice").html("<%= flash[:notice] %>");
+$("#alert").html("<%= flash[:alert] %>");
+$("#fulfill_item_<%= @request_id %>").html("Fulfilled!").addClass("red");

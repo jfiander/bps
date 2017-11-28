@@ -44,6 +44,8 @@ Rails.application.routes.draw do
   get     '/store/edit/:id',     to: 'store#edit',                   as: 'edit_store_item'
   patch   '/store/update',       to: 'store#update',                 as: 'update_store_item'
   delete  '/store/destroy/:id',  to: 'store#destroy',                as: 'destroy_store_item'
+  put     '/store/request/:id',  to: 'members#request_item',         as: 'request_store_item'
+  patch   '/store/fulfill/:id',  to: 'members#fulfill_item',         as: 'fulfill_store_item'
 
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",             to: 'public#events',                                   defaults: {type: event_type}

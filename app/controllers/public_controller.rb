@@ -108,6 +108,7 @@ class PublicController < ApplicationController
 
   def store
     @store_items = StoreItem.all
+    @store_item_requests = ItemRequest.outstanding
   end
 
   def register

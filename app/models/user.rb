@@ -42,6 +42,10 @@ class User < ApplicationRecord
     Registration.create(user: self, event: event)
   end
 
+  def request_from_store(item_id)
+    ItemRequest.create(user: self, store_item_id: item_id)
+  end
+
   def permitted?(*required_roles, &block)
     roles = []
     all_roles = Role.all

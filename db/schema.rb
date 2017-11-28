@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128155646) do
+ActiveRecord::Schema.define(version: 20171128172245) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -79,6 +79,14 @@ ActiveRecord::Schema.define(version: 20171128155646) do
     t.integer  "member_cost"
     t.boolean  "allow_member_registrations", default: true
     t.boolean  "allow_public_registrations", default: true
+  end
+
+  create_table "item_requests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "store_item_id"
+    t.boolean  "fulfilled",     default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "registrations", force: :cascade do |t|

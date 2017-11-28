@@ -29,8 +29,23 @@ table#items
         td = v
     tr
       td colspan=2
+        - if user_signed_in?
+          - if @store_item_requests.find_by(user_id: current_user.id, store_item_id: item.id).present?
+            span.red Requested
+          - else
+            = link_to "Request", request_store_item_path(item.id), method: :put, remote: true, id: "request_item_#{item.id}"
         - if current_user&.permitted?(:store)
-          |  
+          |  | 
           = link_to "Edit", edit_store_item_path(item.id)
           |  | 
           = link_to "Remove", destroy_store_item_path(item.id), method: :delete, class: "red"
+
+- if current_user&.permitted?(:store) && @store_item_requests.present?
+  h3 Requested Items
+  table#requested-items
+    - @store_item_requests.each do |request|
+      tr
+        td = link_to request.user.full_name, request.user.email
+        td = request.store_item.name
+        td = request.store_item.options_hash
+        td = link_to "Fulfill", fulfill_store_item_path(request.id), method: :patch, remote: true, id: "fulfill_item_#{request.id}"
