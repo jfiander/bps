@@ -20,7 +20,7 @@
         b
           | Location: 
           - if event.map_link.present?
-            = link_to "Map", event.map_link
+            = link_to "Map", event.map_link, target: :_blank
         br
         p = simple_format(event.location)
 
