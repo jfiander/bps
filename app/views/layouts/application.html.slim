@@ -13,7 +13,7 @@ html
       #navigation
         ul = render "application/navigation"
       #content
-        - current_user&.permitted?(:admin) do
+        - current_user&.permitted?(:page, :users) do
           ul#admin-menu = render "application/admin_menu"
         #flashes
           #notice = notice
