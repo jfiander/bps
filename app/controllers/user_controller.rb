@@ -3,7 +3,7 @@ class UserController < ApplicationController
   before_action                      except: [:current, :show, :permissions_index, :permissions_add, :permissions_remove, :assign_bridge, :assign_committee, :remove_committee] { require_permission(:admin) }
   before_action                        only: [                 :permissions_index, :permissions_add, :permissions_remove, :assign_bridge, :assign_committee, :remove_committee] { require_permission(:users) }
   before_action :get_users,            only: [:list]
-  before_action :get_users_for_select, only: [:permissions_imdex, :assign_bridge, :assign_committee]
+  before_action :get_users_for_select, only: [:permissions_index, :assign_bridge, :assign_committee]
   before_action :time_formats,         only: [:show]
 
   def current
