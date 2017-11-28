@@ -46,7 +46,7 @@ class Event < ApplicationRecord
   private
   def get_book_cover
     [:courses, :seminars].each do |type|
-      return BpsS3.get_object(bucket: :files, key: "book_covers/#{type.to_s}/#{event_type.title}.png") if event_type.event_category_id.in?(EventType.course_category_ids)
+      return BpsS3.get_object(bucket: :files, key: "book_covers/#{type.to_s}/#{event_type.title}.jpg") if event_type.event_category_id.in?(EventType.course_category_ids)
     end
   end
 end
