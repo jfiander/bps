@@ -49,6 +49,10 @@ input.number {
   width: 5em;
 }
 
+.center {
+  text-align: center;
+}
+
 div#main {
   background-color: darken($background-blue, 5%);
   @include shadow-box(4);
