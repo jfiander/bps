@@ -61,7 +61,7 @@
         b Prerequisite course:
         br
         p = event.prereq.title.titleize
-    td.right colspan=2
+    td.right.flyer colspan=2
       - if event.get_flyer.present? && event.flyer_content_type != 'application/pdf'
           = image_tag event.get_flyer
   - if current_user&.permitted?(params[:type]) && @registered_users[event.id].present?
