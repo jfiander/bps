@@ -10,7 +10,7 @@ class Event < ApplicationRecord
     default_url: nil,
     storage: :s3,
     s3_region: "us-east-2",
-    path: "#{Rails.env}/event_flyers/:id/:filename",
+    path: "#{ENV['ASSET_ENVIRONMENT']}/event_flyers/:id/:filename",
     s3_permissions: :private,
     s3_credentials: {bucket: "bps-files", access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
 

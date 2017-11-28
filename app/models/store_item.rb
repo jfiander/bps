@@ -9,7 +9,7 @@ class StoreItem < ApplicationRecord
     default_url: StoreItem.no_image,
     storage: :s3,
     s3_region: "us-east-2",
-    path: "#{Rails.env}/store_items/:id/:filename",
+    path: "#{ENV['ASSET_ENVIRONMENT']}/store_items/:id/:filename",
     s3_permissions: :private,
     s3_credentials: {bucket: "bps-files", access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
 
