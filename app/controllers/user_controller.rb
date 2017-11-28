@@ -1,9 +1,10 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
-  before_action                      except: [:current, :show, :permissions_index, :permissions_add, :permissions_remove, :assign_bridge,
-                                              :assign_committee, :remove_committee, :assign_standing_committee, :remove_standing_committee] { require_permission(:admin) }
-  before_action                        only: [                 :permissions_index, :permissions_add, :permissions_remove, :assign_bridge,
-                                              :assign_committee, :remove_committee, :assign_standing_committee, :remove_standing_committee] { require_permission(:users) }
+  before_action                        only: [:list, :lock, :unlock,
+                                              :permissions_index, :permissions_add, :permissions_remove,
+                                              :assign_bridge, :assign_committee, :remove_committee,
+                                              :assign_standing_committee, :remove_standing_committee] { require_permission(:users) }
+
   before_action :get_users,            only: [:list]
   before_action :get_users_for_select, only: [:permissions_index, :assign_bridge, :assign_committee]
   before_action :time_formats,         only: [:show]

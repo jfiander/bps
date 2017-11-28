@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
   before_action                only: [:new, :copy, :create, :edit, :update, :destroy] { require_permission(params[:type]) }
+
   before_action :get_event,    only: [:copy, :edit, :destroy]
   before_action :prepare_form, only: [:new, :copy, :edit]
 
