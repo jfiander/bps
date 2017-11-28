@@ -2,7 +2,7 @@ class StoreItem < ApplicationRecord
   serialize :options
 
   def self.no_image
-    ActionController::Base.helpers.image_path("no_image.png")
+    ActionController::Base.helpers.image_path(BpsS3::CloudFront.link(bucket: :files, key: "static/no_image.png"))
   end
 
   has_attached_file :image,
@@ -29,7 +29,7 @@ class StoreItem < ApplicationRecord
 
   def get_image
     if image.present? && BpsS3.get_object(bucket: :files, key: image.s3_object.key).exists?
-      image.s3_object.presigned_url(:get, expires_in: 15.seconds)
+      BpsS3::CloudFront.link(bucket: :files, key: image.s3_object.key)
     else
       StoreItem.no_image
     end

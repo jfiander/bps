@@ -53,12 +53,16 @@ module BpsS3
   end
 
   module CloudFront
-    def self.host
-      ENV['CLOUDFRONT_ENDPOINT']
+    def self.host(bucket)
+      {
+        files: ENV['CLOUDFRONT_FILES_ENDPOINT'],
+        bilge: ENV['CLOUDFRONT_BILGE_ENDPOINT'],
+        photos: ENV['CLOUDFRONT_PHOTOS_ENDPOINT'],
+      }[bucket]
     end
 
-    def self.link(key)
-      "https://#{host}/#{key}"
+    def self.link(bucket:, key:)
+      "https://#{host(bucket)}/#{key}"
     end
   end
 end

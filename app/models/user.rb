@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :committees, foreign_key: :chair_id
 
   def self.no_photo
-    ActionController::Base.helpers.image_path("no_profile.png")
+    ActionController::Base.helpers.image_path(BpsS3::CloudFront.link(bucket: :files, key: "static/no_profile.png"))
   end
 
   has_attached_file :profile_photo,
@@ -32,7 +32,7 @@ class User < ApplicationRecord
 
   def photo
     if profile_photo.present? && BpsS3.get_object(bucket: :files, key: profile_photo.s3_object.key).exists?
-      profile_photo.s3_object.presigned_url(:get, expires_in: 15.seconds)
+      BpsS3::CloudFront.link(bucket: :files, key: profile_photo.s3_object.key)
     else
       User.no_photo
     end

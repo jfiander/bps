@@ -103,7 +103,12 @@ class PublicController < ApplicationController
     issue_link = @bilge_links[key]
     issue_title = key.gsub("/", "-")
 
-    send_data open(issue_link).read, filename: "Bilge Chatter #{issue_title}.pdf", type: "application/pdf", disposition: 'inline', stream: 'true', buffer_size: '4096'
+    begin
+      send_data open(issue_link).read, filename: "Bilge Chatter #{issue_title}.pdf", type: "application/pdf", disposition: 'inline'
+    rescue SocketError => e
+      newsletter
+      render :newsletter, alert: "There was a problem accessing the Bilge Chatter. Please try again later."
+    end
   end
 
   def store
@@ -162,7 +167,7 @@ class PublicController < ApplicationController
     @bilge_links = @bilges.map do |b|
       key = b.key.dup
       issue_date = b.key.delete(".pdf")
-      { issue_date => BpsS3.link(bucket: :bilge, key: key) }
+      { issue_date => BpsS3::CloudFront.link(bucket: :bilge, key: key) }
     end.reduce({}, :merge)
   end
 end

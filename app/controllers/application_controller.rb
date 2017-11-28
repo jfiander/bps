@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :pick_header_image
 
   after_action { flash.discard if request.xhr? }
 
@@ -49,5 +50,12 @@ class ApplicationController < ActionController::Base
 
   def center_html
     "<div class='center'>" + yield + "</div>"
+  end
+
+  def pick_header_image
+    objects = BpsS3.list(bucket: :files, prefix: "headers/")
+    keys = objects.map(&:key)
+    keys.shift
+    @header_image = BpsS3::CloudFront.link(bucket: :files, key: keys.sample)
   end
 end

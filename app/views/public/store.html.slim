@@ -6,7 +6,7 @@ h2 Ship's Store
 
 table#items
   - @store_items.each do |item|
-    - image = item&.get_image # || StoreItem.no_image
+    - image = item&.get_image
     tr
       td rowspan=(5 + item.options_hash.count) = image_tag image, width: 200
       th colspan=2 = item.name.titleize

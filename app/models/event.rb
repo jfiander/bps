@@ -31,7 +31,7 @@ class Event < ApplicationRecord
       flyer.s3_object
     end
 
-    f&.presigned_url(:get, expires_in: 5.minutes)
+    BpsS3::CloudFront.link(bucket: :files, key: f&.key)
   end
 
   def formatted_cost
