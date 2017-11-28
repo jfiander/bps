@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
   validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be nil or one of [S, P, AP, JN, N, SN]"
   validates_attachment_content_type :profile_photo, content_type: /\Aimage\/jpe?g\Z/
+  validates :certificate, uniqueness: true
 
   def full_name
     [
