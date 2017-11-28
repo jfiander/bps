@@ -47,8 +47,7 @@ class User < ApplicationRecord
     return false if roles.blank?
 
     permitted = false
-    user_permitted_role = permitted_roles.map(&:to_s)
-    roles.each { |r| permitted = true if r.name.in?(user_permitted_role) }
+    roles.each { |r| permitted = true if r&.name.in?(permitted_roles.map(&:to_s)) }
 
     yield if permitted && block_given?
     permitted
