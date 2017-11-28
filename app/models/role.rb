@@ -18,8 +18,8 @@ class Role < ApplicationRecord
   end
 
   def children
-    child_roles  = Role.where(parent_id: self.id).to_a
-    child_roles << child_roles.map(&:children) if child_roles.present?
+    child_roles = Role.where(parent_id: self.id).to_a
+    child_roles << child_roles&.map(&:children)
     child_roles.flatten
   end
 
