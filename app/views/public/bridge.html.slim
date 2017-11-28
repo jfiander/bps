@@ -54,7 +54,7 @@ table#bridge
     - photo = bridge&.user&.photo || User.no_photo
     tr
       th.flag = bridge.title
-      td colspan=2 = name
+      td colspan=2 = link_to name, bridge.email
     tr
       th = officer_flag(bridge.office).html_safe
       td = image_tag photo, width:125

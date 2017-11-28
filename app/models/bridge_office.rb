@@ -35,4 +35,16 @@ class BridgeOffice < ApplicationRecord
   def department
     self.office.gsub("asst_", "Assistant ").titleize
   end
+
+  def email
+    emails = {
+      commander: "cdr",
+      executive: "xo",
+      administrative: "ao",
+      educational: "seo",
+      secretary: "secretary",
+      treasurer: "treasurer"
+    }
+    "mailto:#{emails[office.to_sym]}@bpsd9.org"
+  end
 end
