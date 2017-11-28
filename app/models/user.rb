@@ -131,6 +131,6 @@ class User < ApplicationRecord
   end
 
   def update_invitation_limit
-    self.update invitation_limit: (self.permitted?(:users) ? nil : 0)
+    self.update(invitation_limit: (self.permitted?(:users) ? 1000 : 0))
   end
 end
