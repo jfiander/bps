@@ -152,7 +152,7 @@ class PublicController < ApplicationController
       "1LT"
     end
 
-    BpsS3.get_object(bucket: :files, key: "flags/SVG/#{rank}.svg").get.body.read
+    BpsS3.get_object(bucket: :files, key: "static/flags/SVG/#{rank}.svg").get.body.read
   end
   helper_method :officer_flag
 

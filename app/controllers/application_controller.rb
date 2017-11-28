@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
   end
 
   def pick_header_image
-    objects = BpsS3.list(bucket: :files, prefix: "headers/")
+    objects = BpsS3.list(bucket: :files, prefix: "static/headers/")
     keys = objects.map(&:key)
     keys.shift
     @header_image = BpsS3::CloudFront.link(bucket: :files, key: keys.sample)
