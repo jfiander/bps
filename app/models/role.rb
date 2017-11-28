@@ -1,7 +1,9 @@
 class Role < ApplicationRecord
   has_many :user_roles, dependent: :destroy
   has_many :users, through: :user_roles
-  belongs_to :parent, class_name: "Role", optional: true
+  belongs_to :parent, class_name: "Role"
+
+  before_validation { self.parent ||= Role.find_by(name: "admin") }
 
   def parents
     parent = self.parent
