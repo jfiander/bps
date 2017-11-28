@@ -19,7 +19,7 @@
   #content {-webkit-flex:5 0px;flex:5 0px;-webkit-order:2;order:2;}
   footer {-webkit-order:3;order:3;}
 
-  header #small-header {
+  #small-titles {
     display: none;
   }
 }
@@ -30,22 +30,72 @@
     margin: 0 15%;
   }
 
-  header #main-header {
-    display: none;
+  #small-titles {
+    position: absolute;
+    color: white;
+    text-shadow: 3px 3px $old-glory-blue-faded;
+    font-size: 125%;
+    top: 0;
+
+    h4 {
+      position: absolute;
+      font-size: 75%;
+      top: 110%;
+      right: 0;
+      text-align: center;
+    }
+  }
+
+  div#main-header {
+    div#header-left {
+      float: left;
+      max-width: 20%;
+      margin: 0.5em 0.5em 0.75em 0.5em;
+
+      h2 {
+        display: none;
+      }
+
+      svg {
+        width: 100%;
+        max-width: 5em;
+        height: auto;
+        margin-top: 0.25em;
+      }
+    }
+
+    div#header-right {
+      float: left;
+      max-width: 70%;
+      text-align: left;
+
+      #large-titles {
+        display: none;
+      }
+
+      h2, h3 {
+        width: 100%;
+        margin: 0.75em 0.25em 0.25em 1em;
+      }
+
+      h3 {
+        margin-left: 1.25em;
+      }
+    }
   }
 
   iframe {
     max-width: 39.75em;
   }
 
-  header #small-header {
+  header #main-header {
     width: 100%;
     float: right;
 
     img {
       float: right;
       border-top-right-radius: 10px;
-      max-width: 45%;
+      /*max-width: 45%;*/
     }
   }
 
@@ -80,13 +130,19 @@
 }
 
 @media all and (max-width: 1050px) {
-  header #small-header img {
-    max-width: 35%;
+  #small-titles h4 {
+    display: none;
   }
 }
 
 @media all and (max-width: 850px) {
   #navigation ul li {
     max-width: 10.5em;
+  }
+}
+
+@media all and (max-width: 475px) {
+  #small-titles {
+    font-size: 80%;
   }
 }

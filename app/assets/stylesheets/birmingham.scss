@@ -110,37 +110,6 @@ div#main {
       }
     }
 
-    div#small-header {
-      div#header-left {
-        float: left;
-        max-width: 20%;
-        margin: 0.5em 0.5em 0.75em 0.5em;
-
-        svg {
-          width: 100%;
-          max-width: 5em;
-          height: auto;
-          margin-top: 0.25em;
-        }
-      }
-
-      div#header-right {
-        float: left;
-        width: 100%;
-        max-width: 19em;
-        text-align: left;
-
-        h2, h3 {
-          width: 100%;
-          margin: 0.75em 0.25em 0.25em 1em;
-        }
-
-        h3 {
-          margin-left: 1.25em;
-        }
-      }
-    }
-
     div#wave {
       width: 100%;
       position: absolute;
