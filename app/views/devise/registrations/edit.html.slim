@@ -2,64 +2,56 @@ h2 Edit Profile
 
 = form_for(resource, as: resource_name, url: profile_edit_path(resource_name).sub(/\.[\w]*\z/, ''), html: { method: :put }, multipart: true) do |f|
   = devise_error_messages!
+  #login
+    .profile-photo
+      = image_tag resource.photo, width: 125
+      br.clear
+      .center = f.file_field :profile_photo, accept: 'image/jpeg'
+      br.clear
 
-  .field
-    = image_tag resource.photo, width: 125
-    br
-    = f.label :profile_photo
-    br
-    = f.file_field :profile_photo, accept: 'image/jpeg'
+    .left = f.label :rank, "Preferred Rank"
+    .right = f.text_field :rank
+    br.clear
 
-  .field
-    = f.label :rank, "Preferred Rank"
-    br
-    = f.text_field :rank
+    .left = f.label :first_name
+    .right = f.text_field :first_name
+    br.clear
 
-  .field
-    = f.label :first_name
-    br
-    = f.text_field :first_name
+    .left= f.label :last_name
+    .right = f.text_field :last_name
+    br.clear
 
-  .field
-    = f.label :last_name
-    br
-    = f.text_field :last_name
+    .left = f.label :email
+    .right = f.email_field :email
+    br.clear
 
-  .field
-    = f.label :email
-    br
-    = f.email_field :email
+    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+      .center
+        | Currently waiting confirmation for:
+        = resource.unconfirmed_email
 
-  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    div
-      | Currently waiting confirmation for:
-      = resource.unconfirmed_email
-
-  .password_box
-  .field
-    small Leave these blank unless you would like to change your password.
-    br
-    = f.label :password, "New Password"
-    br
-    = f.password_field :password, autocomplete: "off"
+    hr.clear
+    .center.red Leave these blank unless you would like to change your password.
+    .left = f.label :password, "New Password"
+    .right
+      = f.password_field :password, autocomplete: "off"
       - if @minimum_password_length
         br
-        em
-          = @minimum_password_length
-          |  characters minimum
+        small
+          em
+            = @minimum_password_length
+            |  characters minimum
+    br.clear
 
-  .field
-    = f.label :password_confirmation, "Confirm New Password"
-    br
-    = f.password_field :password_confirmation, autocomplete: "off"
+    .left = f.label :password_confirmation, "Confirm New Password"
+    .right = f.password_field :password_confirmation, autocomplete: "off"
+    hr.clear
 
-  .field
-    br
-    = f.label :current_password, "Please enter your current password to confirm changes."
-    br
-    = f.password_field :current_password
+    .left = f.label :current_password, "Enter your current password to confirm changes"
+    .right = f.password_field :current_password
+    br.clear
 
-  .actions
-    = f.submit "Update"
-
-= link_to "Back", :back
+    .center
+      = f.submit "Update profile"
+      hr
+      = link_to "Cancel", :back

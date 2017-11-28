@@ -1,0 +1,15 @@
+h2 Member Login
+
+= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  #login
+    .left = f.label :email
+    .right = f.email_field :email, autofocus: true
+    br.clear
+
+    .left = f.label :password
+    .right = f.password_field :password, autocomplete: "off"
+    br.clear
+
+    .center = f.submit "Login"
+    br.clear
+    .center = render "devise/shared/links"

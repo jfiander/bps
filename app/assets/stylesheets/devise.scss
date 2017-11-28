@@ -1,3 +1,54 @@
 div.field {
   margin: 1em 0;
 }
+
+#login {
+  width: 60%;
+  margin: 0 auto;
+  padding-top: 2em;
+  font-size: 1.25em;
+
+  div {
+    height: 3em;
+    width: 49%;
+  }
+
+  .profile-photo {
+    width: 100%;
+    height: auto;
+    padding-bottom: 1em;
+
+    .center {
+      margin-top: 0.5em;
+    }
+  }
+
+  .left {
+    font-weight: bold;
+    float: left;
+    text-align: right;
+  }
+
+  .right {
+    float: right;
+    text-align: left;
+  }
+
+  .center {
+    width: 100%;
+    float: left;
+  }
+
+  .red {
+    font-size: 80%;
+  }
+
+  input {
+    width: 20em;
+    height: 2.5em;
+  }
+
+  input[type=submit] {
+    width: 12em;
+  }
+}
