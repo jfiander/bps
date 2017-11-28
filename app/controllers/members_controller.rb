@@ -2,9 +2,8 @@ class MembersController < ApplicationController
   before_action :authenticate_user!
   before_action                   only: [:admin, :download_flags] { require_permission(:admin) }
   before_action                   only: [:upload_bilge] { require_permission(:newsletter) }
-  before_action                   only: [:edit_markdown] { require_permission(:admin) }
+  before_action                   only: [:edit_markdown, :update_markdown] { require_permission(:pages) }
   before_action :get_bilge_issue, only: [:upload_bilge, :remove_bilge]
-
   before_action :render_markdown, only: [:members]
 
   def members
