@@ -4,6 +4,7 @@ event = Role.create!(name: "event", parent: admin)
 
 Role.create!([
   {name: "users", parent: admin},
+  {name: "page", parent: admin},
   {name: "store", parent: admin},
   {name: "photos", parent: admin},
   {name: "newsletter", parent: admin},
