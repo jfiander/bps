@@ -54,6 +54,10 @@ class User < ApplicationRecord
     permitted
   end
 
+  def granted_roles
+    roles.map(&:name).uniq
+  end
+
   def permitted_roles
     roles_array = roles.to_a
     all_roles = Role.all

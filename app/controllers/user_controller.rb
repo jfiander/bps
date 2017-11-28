@@ -30,11 +30,11 @@ class UserController < ApplicationController
   def list
     @users = []
 
-    User.where(locked_at: nil).each do |user|
+    User.where(locked_at: nil).order(:last_name).each do |user|
       @users << user_hash(user)
     end
 
-    User.where.not(locked_at: nil).each do |user|
+    User.where.not(locked_at: nil).order(:last_name).each do |user|
       @users << user_hash(user)
     end
 
@@ -183,7 +183,8 @@ class UserController < ApplicationController
       id:                 user.id,
       name:               "#{user.first_name} #{user.last_name}",
       email:              user.email,
-      roles:              user.roles.map(&:name).flatten.uniq,
+      granted_roles:      user.granted_roles,
+      permitted_roles:    user.permitted_roles,
       current_login_at:   user.current_sign_in_at,
       current_login_from: user.current_sign_in_ip,
       locked:             user.locked?

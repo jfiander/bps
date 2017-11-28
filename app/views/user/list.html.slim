@@ -14,10 +14,15 @@ table#users
         - if current_user.permitted?(:admin)
           - if user[:locked]
             = button_to("Unlock", unlock_user_path(user[:id]), class: "unlock", method: :patch)
-          - elsif !user[:roles].join(",").match(/admin/)
+          - elsif !user[:granted_roles].join(",").match(/admin/)
             = button_to("Lock", lock_user_path(user[:id]), class: "lock", method: :patch)
       td.center.narrow
-        = user[:roles].join("<br>").html_safe
+        = user[:granted_roles].join("<br>").html_safe
+        br
+        - if user[:permitted_roles].include? :admin
+          span.red All
+        - else
+          span.red = (user[:permitted_roles] - user[:granted_roles]).join("<br>").html_safe
       td.center.narrow = user[:id]
       td.center.wide = user[:current_login_at] || "Never logged in"
       td.center.wide = user[:current_login_from]
