@@ -50,19 +50,21 @@ Rails.application.routes.draw do
   end
 
   # User management
-  get     '/users',              to: 'user#list'
-  get     '/users/current',      to: 'user#current',                 as: 'current_user'
-  get     '/users/:id',          to: 'user#show',                    as: 'user'
-  patch   '/users/:id/lock',     to: 'user#lock',                    as: 'lock_user'
-  patch   '/users/:id/unlock',   to: 'user#unlock',                  as: 'unlock_user'
-  get     '/permit',             to: 'user#permissions_index'
-  post    '/permit',             to: 'user#permissions_add'
-  delete  '/permit',             to: 'user#permissions_remove'
-  post    '/assign_bridge',      to: 'user#assign_bridge'
-  post    '/assign_committee',   to: 'user#assign_committee'
-  delete  '/remove_committee',   to: 'user#remove_committee'
-  put     '/register/:type/:id', to: 'user#register',                as: 'register'
-  delete  '/register/:id',       to: 'user#cancel_registration',     as: 'cancel_registration'
+  get     '/users',                         to: 'user#list'
+  get     '/users/current',                 to: 'user#current',                   as: 'current_user'
+  get     '/users/:id',                     to: 'user#show',                      as: 'user'
+  patch   '/users/:id/lock',                to: 'user#lock',                      as: 'lock_user'
+  patch   '/users/:id/unlock',              to: 'user#unlock',                    as: 'unlock_user'
+  get     '/permit',                        to: 'user#permissions_index'
+  post    '/permit',                        to: 'user#permissions_add'
+  delete  '/permit',                        to: 'user#permissions_remove'
+  post    '/assign_bridge',                 to: 'user#assign_bridge'
+  post    '/assign_committee',              to: 'user#assign_committee'
+  delete  '/remove_committee',              to: 'user#remove_committee'
+  post    '/assign_standing_committee',     to: 'user#assign_standing_committee'
+  delete  '/remove_standing_committee/:id', to: 'user#remove_standing_committee', as: 'remove_standing_committee'
+  put     '/register/:type/:id',            to: 'user#register',                  as: 'register'
+  delete  '/register/:id',                  to: 'user#cancel_registration',       as: 'cancel_registration'
 
   # Error codes
   match   '/404',                to: 'errors#not_found',             via: :all

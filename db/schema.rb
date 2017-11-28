@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171127202827) do
+ActiveRecord::Schema.define(version: 20171128020635) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -96,6 +96,17 @@ ActiveRecord::Schema.define(version: 20171127202827) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "parent_id"
+  end
+
+  create_table "standing_committee_offices", force: :cascade do |t|
+    t.string   "committee_name"
+    t.integer  "user_id"
+    t.datetime "term_start_at"
+    t.integer  "term_length"
+    t.datetime "term_expires_at"
+    t.boolean  "chair"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "static_pages", force: :cascade do |t|

@@ -4,9 +4,9 @@ h2 Bridge Officers
   h3#profile-title Assign Bridge Office
 
   #add-permissions
-    = form_tag "/assign_bridge", id: "assign-bridge", name: "assign-bridge"
-      = select_tag "bridge_office", options_for_select(@bridge_offices), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a bridge office"
-      = select_tag "user_id", options_for_select(@users), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a user"
+    = form_tag assign_bridge_path, id: "assign-bridge", name: "assign-bridge"
+      = select_tag :bridge_office, options_for_select(@bridge_offices), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a bridge office"
+      = select_tag :user_id, options_for_select(@users), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a user"
       br
       .spacer
       = submit_tag "Assign bridge office"
@@ -16,13 +16,35 @@ h2 Bridge Officers
   h3#profile-title Assign Committee
 
   #add-permissions
-    = form_tag "/assign_committee", id: "assign-committee", name: "assign-committee"
-      = select_tag "department", options_for_select(@departments), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a department"
-      = text_field_tag "committee", "", required: true
+    = form_tag assign_committee_path, id: "assign-committee", name: "assign-committee"
+      = select_tag :department, options_for_select(@departments), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a department"
+      = text_field_tag :committee, "", required: true
       = select_tag "user_id", options_for_select(@users), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
       br
       .spacer
       = submit_tag "Assign committee"
+
+  hr
+
+  h3#profile-title Assign Standing Committee
+
+  #add-permissions
+    = form_tag assign_standing_committee_path, id: "assign-standing-committee", name: "assign-standing-committee"
+      = select_tag :committee_name, options_for_select(@standing_committees), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a committee"
+      = select_tag :user_id, options_for_select(@users), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a user"
+      = check_box_tag :chair
+      = label_tag :chair
+      br
+      = label_tag :term_start_at, "Start date: "
+      = date_select :term_start_at, "", start_year: Time.now.year, end_year: (Time.now.year + 2), required: true
+      br
+      = label_tag :term_length, "Years: "
+      | 1
+      = range_field_tag :term_length, 3, min: 1, max: 3, required: true, class: "number"
+      | 3
+      br
+      .spacer
+      = submit_tag "Assign standing committee"
 
 hr
 
@@ -48,11 +70,31 @@ table#bridge
               td = assistant.user&.full_name || "TBD"
           - @committees[bridge.office]&.each do |committee|
             tr
-              td = committee.name.titleize
               td
-                = committee.chair&.full_name || "TBD"
+                = committee.name.titleize
                 - if current_user&.permitted?(:users)
                   | &nbsp;
-                  = link_to "X", remove_committee_path(committee: committee.name), class: "red", method: :delete
+                  = link_to "X", remove_committee_path(committee: committee.name), class: "red", method: :delete, data: {confirm: "Are you sure you want to remove this committee?"}
+              td = committee.chair&.full_name || "TBD"
+                
     tr
       td.spacer colspan=3
+  tr
+    th.standing-title colspan=3 Standing Committees
+  tr
+    td.standing-info colspan=3
+      | Numbers after each name indicate years into term
+      hr
+  - @standing_committees.each do |committee|
+    tr
+      th.standing-committee colspan=2 = "#{committee.titleize} Committee"
+      td
+        - @standing_committee_members[committee]&.each do |member|
+          = member.user.full_name
+          small
+            = " (chair)" if member.chair
+            |  
+            = member.term_fraction
+          |  
+          = link_to "X", remove_standing_committee_path(member.id), method: :delete, class: "red", data: {confirm: "Are you sure you want to remove this standing committee assignment?"}
+          br

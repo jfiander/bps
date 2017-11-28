@@ -45,6 +45,10 @@ br.clear-right {
   line-height: 0;
 }
 
+input.number {
+  width: 5em;
+}
+
 div#main {
   background-color: darken($background-blue, 5%);
   @include shadow-box(4);

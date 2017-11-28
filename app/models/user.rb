@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
   has_one  :bridge_office
+  has_many :standing_committee_office
   has_many :committees, foreign_key: :chair_id
 
   def self.no_photo

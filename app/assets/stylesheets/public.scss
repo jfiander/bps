@@ -44,6 +44,20 @@ table#bridge {
     width: 40%;
   }
 
+  th.standing-title {
+    text-align: center;
+    font-size: 125%;
+  }
+
+  td.standing-info {
+    text-align: center;
+    font-style: italic;
+  }
+
+  th.standing-committee {
+    text-align: right;
+  }
+
   td.spacer {
     height: 2em;
   }
@@ -106,10 +120,6 @@ div#new-event {
   textarea {
     width: 75%;
     height: 7.5em;
-  }
-
-  input.number {
-    width: 5em;
   }
 
   div.left {

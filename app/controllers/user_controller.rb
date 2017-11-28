@@ -1,7 +1,9 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
-  before_action                      except: [:current, :show, :permissions_index, :permissions_add, :permissions_remove, :assign_bridge, :assign_committee, :remove_committee] { require_permission(:admin) }
-  before_action                        only: [                 :permissions_index, :permissions_add, :permissions_remove, :assign_bridge, :assign_committee, :remove_committee] { require_permission(:users) }
+  before_action                      except: [:current, :show, :permissions_index, :permissions_add, :permissions_remove, :assign_bridge,
+                                              :assign_committee, :remove_committee, :assign_standing_committee, :remove_standing_committee] { require_permission(:admin) }
+  before_action                        only: [                 :permissions_index, :permissions_add, :permissions_remove, :assign_bridge,
+                                              :assign_committee, :remove_committee, :assign_standing_committee, :remove_standing_committee] { require_permission(:users) }
   before_action :get_users,            only: [:list]
   before_action :get_users_for_select, only: [:permissions_index, :assign_bridge, :assign_committee]
   before_action :time_formats,         only: [:show]
@@ -102,6 +104,27 @@ class UserController < ApplicationController
     end
   end
 
+  def assign_standing_committee
+    y = clean_params[:term_start_at]["(1i)"]
+    m = clean_params[:term_start_at]["(2i)"]
+    d = clean_params[:term_start_at]["(3i)"]
+    term_start = "#{y}-#{m}-#{d}"
+    standing_committee = StandingCommitteeOffice.new(committee_name: clean_params[:committee_name], chair: clean_params[:chair], user_id: clean_params[:user_id], term_start_at: term_start, term_length: clean_params[:term_length])
+    if standing_committee.save
+      redirect_to bridge_path, notice: "Successfully assigned to standing committee."
+    else
+      redirect_to bridge_path, alert: "Unable to assign to standing committee."
+    end
+  end
+
+  def remove_standing_committee
+    if StandingCommitteeOffice.find_by(id: clean_params[:id])&.destroy
+      redirect_to bridge_path, notice: "Successfully removed standing committee assignment."
+    else
+      redirect_to bridge_path, alert: "Unable to remove from standing committee."
+    end
+  end
+
   def register
     @event_id = clean_params[:id]
     unless Event.find_by(id: @event_id).allow_member_registrations
@@ -175,6 +198,7 @@ class UserController < ApplicationController
   end
 
   def clean_params
-    params.permit(:id, :user_id, :role, :permit_id, :committee, :department, :bridge_office, :type)
+    params.permit(:id, :user_id, :role, :permit_id, :committee, :department, :bridge_office, :type,
+      :committee_name, :chair, :term_length, term_start_at: ["(1i)", "(2i)", "(3i)"])
   end
 end
