@@ -130,18 +130,30 @@
 }
 
 @media all and (max-width: 1050px) {
+  body {
+    margin: 0 10%;
+  }
+
   #small-titles h4 {
     display: none;
   }
 }
 
 @media all and (max-width: 850px) {
+  body {
+    margin: 0 7%;
+  }
+
   #navigation ul li {
     max-width: 10.5em;
   }
 }
 
 @media all and (max-width: 475px) {
+  body {
+    margin: 0 5%;
+  }
+
   #small-titles {
     font-size: 80%;
   }
