@@ -5,6 +5,8 @@ class Role < ApplicationRecord
 
   before_validation { self.parent ||= Role.find_by(name: "admin") }
 
+  validate :descends_from_admin?
+
   def parents
     parent = self.parent
     parents_array = []
@@ -19,5 +21,12 @@ class Role < ApplicationRecord
     child_roles  = Role.where(parent_id: self.id).to_a
     child_roles << child_roles.map(&:children) if child_roles.present?
     child_roles.flatten
+  end
+
+  private
+  def descends_from_admin?
+    return true if name == "admin"
+    return true if parents.map(&:name).include? "admin"
+    false
   end
 end
