@@ -1,0 +1,41 @@
+h2 = "#{@edit_mode} Item"
+
+= form_for(@store_item, url: @submit_path, multipart: true) do |f|
+  = f.hidden_field :id if @submit_path.match /\/update/
+
+  #new-event
+    .left = f.label :name
+    .right = f.text_field :name
+    br.clear
+
+    .left = f.label :description
+    .right = f.text_field :description
+    br.clear
+
+    .left = f.label :price
+    .right 
+      |  $
+      = f.number_field :price, step: :any, min: 0, class: "number"
+    br.clear
+
+    .left = f.label :stock
+    .right = f.number_field :stock, min: 0, class: "number"
+    br.clear
+
+    .left
+      = f.label :options
+      br
+      small Option name: option value
+    .right
+      = f.text_area :options
+      br
+      small Put each option on a separate line.
+    br.clear
+
+    .left = f.label :image
+    .right = f.file_field :image
+    br.clear
+
+    .center
+      hr
+      = f.submit "#{@edit_mode} Item"

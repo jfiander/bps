@@ -39,6 +39,12 @@ Rails.application.routes.draw do
   get     '/edit/:page_name',    to: 'members#edit_markdown',        as: 'edit_page'
   patch   '/edit/:page_name',    to: 'members#update_markdown'
 
+  get     '/store/new',          to: 'store#new',                    as: 'new_store_item'
+  post    '/store/create',       to: 'store#create',                 as: 'create_store_item'
+  get     '/store/edit/:id',     to: 'store#edit',                   as: 'edit_store_item'
+  patch   '/store/update',       to: 'store#update',                 as: 'update_store_item'
+  delete  '/store/destroy/:id',  to: 'store#destroy',                as: 'destroy_store_item'
+
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",             to: 'public#events',                                   defaults: {type: event_type}
     get     "/#{event_type}s/new",         to: 'events#new',         as: "new_#{event_type}",     defaults: {type: event_type}

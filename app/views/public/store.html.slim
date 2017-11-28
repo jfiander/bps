@@ -1,3 +1,36 @@
 h2 Ship's Store
 
-b Coming soon!
+- if current_user&.permitted?(:store)
+  = link_to "Add Item", new_store_item_path
+  hr
+
+table#items
+  - @store_items.each do |item|
+    - image = item&.get_image # || StoreItem.no_image
+    tr
+      td rowspan=(5 + item.options_hash.count) = image_tag image, width: 200
+      th colspan=2 = item.name.titleize
+    tr
+      td colspan=2 = item.description
+    tr
+      td colspan=2
+        | $
+        = number_with_precision(item.price, precision: 2)
+    tr
+      td colspan=2
+        - if item.stock > 0
+          | In stock: 
+          = item.stock
+        - else
+          | Out of stock!
+    - item.options_hash.each do |k, v|
+      tr.options
+        td = k.titleize + ":"
+        td = v
+    tr
+      td colspan=2
+        - if current_user&.permitted?(:store)
+          |  
+          = link_to "Edit", edit_store_item_path(item.id)
+          |  | 
+          = link_to "Remove", destroy_store_item_path(item.id), method: :delete, class: "red"

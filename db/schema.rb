@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128020635) do
+ActiveRecord::Schema.define(version: 20171128155646) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -114,6 +114,20 @@ ActiveRecord::Schema.define(version: 20171128020635) do
     t.string   "markdown"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "store_items", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.decimal  "price",              precision: 5, scale: 2
+    t.integer  "stock"
+    t.text     "options"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
   create_table "user_roles", force: :cascade do |t|

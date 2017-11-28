@@ -107,7 +107,7 @@ class PublicController < ApplicationController
   end
 
   def store
-    #
+    @store_items = StoreItem.all
   end
 
   def register
