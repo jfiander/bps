@@ -17,11 +17,15 @@ class EventsController < ApplicationController
   end
 
   def create
-    if @event = Event.create(event_params)
+    @event = Event.create(event_params)
+    if @event.valid?
       update_topics_and_includes
       redirect_to send("#{params[:type]}s_path"), notice: "Successfully added #{params[:type]}."
     else
-      render :new, alert: "Unable to add #{params[:type]}."
+      @submit_path = send("update_#{params[:type]}_path")
+      @edit_mode = "Add"
+      flash[:alert] = "Unable to add #{params[:type]}."
+      render :new
     end
   end
 
@@ -32,15 +36,16 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find_by(id: event_params[:id])
-    flash = if @event.update(event_params)
+    @event = Event.find_by(id: event_params[:id]).update(event_params)
+    flash = if @event.valid?
       update_topics_and_includes
-      {notice: "Successfully updated #{params[:type]}."}
+      redirect_to send("#{params[:type]}s_path"), notice: "Successfully updated #{params[:type]}."
     else
-      {alert: "Unable to update #{params[:type]}."}
+      @submit_path = send("update_#{params[:type]}_path")
+      @edit_mode = "Modify"
+      flash[:alert] = "Unable to update #{params[:type]}."
+      render :edit
     end
-
-    redirect_to send("#{params[:type]}s_path"), flash
   end
 
   def destroy
