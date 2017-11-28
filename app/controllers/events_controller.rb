@@ -68,6 +68,10 @@ class EventsController < ApplicationController
 
   def get_event
     @event = Event.find_by(id: update_params[:id])
+    if @event.is_a_course?
+      @course_includes = CourseInclude.where(course_id: @event.id).map(&:text).join("\n")
+      @course_topics = CourseTopic.where(course_id: @event.id).map(&:text).join("\n")
+    end
   end
 
   def prepare_form
@@ -79,12 +83,17 @@ class EventsController < ApplicationController
   def update_topics_and_includes
     return nil unless params[:type] == :course
 
+    clear_before_time = Time.now
+
     update_params[:includes].split("\n").map(&:squish).each do |i|
-      CourseInclude.find_by(course: @event, text: i) || CourseInclude.create(course: @event, text: i)
+      CourseInclude.create(course: @event, text: i)
     end
 
     update_params[:topics].split("\n").map(&:squish).each do |t|
-      CourseTopic.find_by(course: @event, text: t) || CourseTopic.create(course: @event, text: t)
+      CourseTopic.create(course: @event, text: t)
     end
+
+    CourseInclude.where("updated_at < ?", clear_before_time).destroy_all
+    CourseTopic.where("updated_at < ?", clear_before_time).destroy_all
   end
 end

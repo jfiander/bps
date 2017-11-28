@@ -23,14 +23,14 @@ h2 = "#{@edit_mode} #{@event_title}"
     - if params[:type] == :course
       .left = label_tag :topics, "Course topics"
       .right
-        = text_area_tag :topics
+        = text_area_tag :topics, @course_topics
         br
         small Put each item on a separate line.
       br.clear
 
       .left = label_tag :includes, "Course materials"
       .right
-        = text_area_tag :includes
+        = text_area_tag :includes, @course_includes
         br
         small Put each item on a separate line.
       br.clear
