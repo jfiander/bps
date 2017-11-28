@@ -3,14 +3,13 @@ div.field {
 }
 
 #login {
-  width: 60%;
+  width: 75%;
   margin: 0 auto;
   padding-top: 2em;
   font-size: 1.25em;
 
   div {
     height: 3em;
-    width: 49%;
   }
 
   .profile-photo {
@@ -24,12 +23,14 @@ div.field {
   }
 
   .left {
+    width: 49%;
     font-weight: bold;
     float: left;
     text-align: right;
   }
 
   .right {
+    width: 49%;
     float: right;
     text-align: left;
   }
@@ -51,4 +52,22 @@ div.field {
   input[type=submit] {
     width: 12em;
   }
+}
+
+div#error_explanation {
+  color: $old-glory-red;
+
+  h2 {
+    font-size: 90%;
+  }
+
+  ul {
+    font-size: 80%;
+    list-style: none;
+    padding: 0;
+  }
+}
+
+div.field_with_errors input {
+  box-shadow: 0 0 5px $old-glory-red;
 }

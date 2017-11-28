@@ -1,7 +1,8 @@
 h2 Edit Profile
 
+.center = devise_error_messages!
+
 = form_for(resource, as: resource_name, url: profile_edit_path(resource_name).sub(/\.[\w]*\z/, ''), html: { method: :put }, multipart: true) do |f|
-  = devise_error_messages!
   #login
     .profile-photo
       = image_tag resource.photo, width: 125
