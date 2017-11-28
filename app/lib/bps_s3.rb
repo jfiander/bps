@@ -51,4 +51,14 @@ module BpsS3
   def self.remove_object(bucket:, key:)
     in_bucket(bucket).object(key).delete
   end
+
+  module CloudFront
+    def self.host
+      ENV['CLOUDFRONT_ENDPOINT']
+    end
+
+    def self.link(key)
+      "https://#{host}/#{key}"
+    end
+  end
 end
