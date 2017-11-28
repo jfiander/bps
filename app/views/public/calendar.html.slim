@@ -1,3 +1,15 @@
 h2 Squadron Calendar
 
-b Coming soon!
+- if current_user&.permitted?(:calendar)
+  .center
+    | Please go to 
+    = link_to "Google Calendar", "https://calendar.google.com"
+    |  to make changes.
+    br
+    small
+      | Email 
+      = link_to "webmaster@bpsd9.org", "mailto:webmaster@bpsd9.org"
+      |  if you need edit access.
+  hr
+
+iframe#calendar src="https://calendar.google.com/calendar/embed?src=7qhss59aev6u2qn68q6uheh4l0%40group.calendar.google.com&ctz=America/New_York" frameborder="0" scrolling="no"
