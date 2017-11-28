@@ -40,20 +40,26 @@ class User < ApplicationRecord
     Registration.create(user: self, event: event)
   end
 
-  def permitted?(role, &block)
-    role = Role.find_by(name: role.to_s)
-    return false if role.blank?
+  def permitted?(*required_roles, &block)
+    roles = []
+    all_roles = Role.all
+    required_roles.each { |role| roles << all_roles.find_by(name: role.to_s) }
+    return false if roles.blank?
 
-    permitted = role.name.in?(permitted_roles.map(&:to_s))
+    permitted = false
+    user_permitted_role = permitted_roles.map(&:to_s)
+    roles.each { |r| permitted = true if r.name.in?(user_permitted_role) }
 
     yield if permitted && block_given?
     permitted
   end
 
   def permitted_roles
+    roles_array = roles.to_a
+    all_roles = Role.all
     [
-      roles.map(&:name).map(&:to_sym),
-      roles.map(&:children).flatten.map(&:name).map(&:to_sym),
+      roles_array.map(&:name).map(&:to_sym),
+      all_roles.find_all { |r| r.parent_id.in?(roles_array.map(&:id)) }.map(&:name).map(&:to_sym),
       permitted_roles_from_bridge_office,
       permitted_roles_from_committee
     ].flatten.uniq.reject { |r| r.nil? }
