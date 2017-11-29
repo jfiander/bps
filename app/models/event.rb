@@ -23,6 +23,10 @@ class Event < ApplicationRecord
     includes(:event_type).where("expires_at < ?", Time.now).find_all { |e| e.event_type.in? EventType.send(category) }
   end
 
+  def expired?
+    expires_at < Time.now
+  end
+
   def is_a_course?
     event_type.event_category_id.in? EventType.course_category_ids
   end
