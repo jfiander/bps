@@ -32,8 +32,6 @@ h2 Bridge Officers
     = form_tag assign_standing_committee_path, id: "assign-standing-committee", name: "assign-standing-committee"
       = select_tag :committee_name, options_for_select(@standing_committees), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a committee"
       = select_tag :user_id, options_for_select(@users), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a user"
-      = check_box_tag :chair
-      = label_tag :chair
       br
       = label_tag :term_start_at, "Start date: "
       = date_select :term_start_at, "", start_year: Time.now.year, end_year: (Time.now.year + 2), required: true
@@ -43,6 +41,10 @@ h2 Bridge Officers
       = range_field_tag :term_length, 3, min: 1, max: 3, required: true, class: "number"
       | 3
       br
+      label.switch
+        = check_box_tag :chair, class: "slider round"
+        span.slider.round.blue
+          .description.chair
       .spacer
       = submit_tag "Assign standing committee"
 
