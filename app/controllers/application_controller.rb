@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :pick_header_image
+  before_action :meta_tags
 
   after_action { flash.discard if request.xhr? }
 
@@ -77,5 +78,24 @@ class ApplicationController < ActionController::Base
   def markdown_image(key)
     key = "#{ENV['ASSET_ENVIRONMENT']}/uploaded_files/#{key}"
     view_context.image_tag(BpsS3::CloudFront.link(bucket: :files, key: key))
+  end
+
+  def meta_tags
+    @site_description = <<~DESCRIPTION
+      Are you a power or sail boat enthusiast in the Birmingham MI area?
+      Do you know the names of the knots you use?
+      Join the Birmingham chapter of the United States Power Squadron.
+    DESCRIPTION
+
+    keywords = <<~KEYWORDS
+      America's Boating Club®, birminghampowersquadron.org Power Squadron, bpsd9.org, Michigan,
+      Boating Safety, D9, District 9, fun boating, boating, Birmingham, boater, water, recreation,
+      recreational, safety, vessels, education, boating classes, join, weather, sail, sailing,
+      powerboats, sailboats, marine, maritime, nautical, navigation, courses, classes,
+      Birmingham Power Squadron, Power Squadron vsc, Power Squadron Vessel Exams, USPS,
+      Power Squadron, United States Power Squadrons, U.S.P.S., Safe Boating, VSC, Vessel Exams,
+      Vessel Safety Checks, VSC, America's Boating Club
+    KEYWORDS
+    @site_keywords = keywords
   end
 end
