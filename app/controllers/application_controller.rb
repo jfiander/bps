@@ -46,7 +46,8 @@ class ApplicationController < ActionController::Base
       gsub("<p>@", '<p class="center">').
       gsub(/<p>%burgee<\/p>/, burgee_html).
       gsub(/<p>%education<\/p>/, education_menu).
-      gsub(/(.*?)%file\/(.*?)\/(.*?)\/(.*?)$/, '\1' + markdown_link('\2', title: '\3') + '\4').
+      gsub(/(.*?)%static_file\/(.*?)\/(.*?)\/(.*?)$/, '\1' + markdown_static_link('\2', title: '\3') + '\4').
+      gsub(/(.*?)%file\/(.*?)\/(.*?)\/(.*?)$/, '\1' + markdown_file_link('\2', title: '\3') + '\4').
       gsub(/(.*?)%image\/(.*?)\/(.*?)$/, '\1' + markdown_image('\2') + '\3')
   end
 
@@ -61,14 +62,20 @@ class ApplicationController < ActionController::Base
     @header_image = BpsS3::CloudFront.link(bucket: :files, key: keys.sample)
   end
 
-  def markdown_link(key, title: "")
+  def markdown_static_link(key, title: "")
     link_title = title || key
     link_path = BpsS3::CloudFront.link(bucket: :files, key: "static/general/#{key}")
     view_context.link_to(link_title, link_path)
   end
 
+  def markdown_file_link(key, title: "")
+    link_title = title || key
+    link_path = BpsS3::CloudFront.link(bucket: :files, key: "#{ENV['ASSET_ENVIRONMENT']}/uploaded_files/#{key}")
+    view_context.link_to(link_title, link_path)
+  end
+
   def markdown_image(key)
-    key = "#{ENV['ASSET_ENVIRONMENT']}/markdown_images/#{key}"
+    key = "#{ENV['ASSET_ENVIRONMENT']}/uploaded_files/#{key}"
     view_context.image_tag(BpsS3::CloudFront.link(bucket: :files, key: key))
   end
 end

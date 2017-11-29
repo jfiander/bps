@@ -1,0 +1,24 @@
+h2 Upload a new file
+
+= form_for(@file, url: upload_file_path, multipart: true) do |f|
+  = f.file_field :file
+  = f.submit "Upload file"
+
+hr
+
+- if @markdown_files.present?
+  table#files
+    tr
+      th File name
+      th Markdown key
+      td
+    - @markdown_files.each do |file|
+      tr
+        td = file.file_file_name
+        td
+          pre
+            - if file.file_content_type.match(/image/)
+              = "\%image/#{file.file_file_name}/"
+            - else
+              = "\%file/#{file.file_file_name}/File Title/"
+        td = link_to "X", remove_file_path(file.id), method: :delete, class: "red"

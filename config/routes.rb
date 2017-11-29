@@ -39,6 +39,10 @@ Rails.application.routes.draw do
   get     '/edit/:page_name',    to: 'members#edit_markdown',        as: 'edit_page'
   patch   '/edit/:page_name',    to: 'members#update_markdown'
 
+  get     '/file',               to: 'file#new',                     as: 'file'
+  post    '/file/upload',        to: 'file#create',                  as: 'upload_file'
+  delete  '/file/upload/:id',    to: 'file#destroy',                 as: 'remove_file'
+
   get     '/store/new',          to: 'store#new',                    as: 'new_store_item'
   post    '/store/create',       to: 'store#create',                 as: 'create_store_item'
   get     '/store/edit/:id',     to: 'store#edit',                   as: 'edit_store_item'
