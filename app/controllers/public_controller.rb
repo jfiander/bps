@@ -42,17 +42,8 @@ class PublicController < ApplicationController
   def events
     @registered = Registration.where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
     @registered_users = Registration.all.group_by { |r| r.event_id }
-    @events = case params[:type]
-    when :course
-      {
-        advanced_grades: Event.current(:advanced_grades),
-        electives: Event.current(:electives)
-      }
-    when :seminar
-      Event.current(:seminars)
-    when :event
-      Event.current(:meetings)
-    end
+    @events = get_events(params[:type], :current)
+    @expired_events = get_events(params[:type], :expired)
   end
 
   def calendar
@@ -170,4 +161,18 @@ class PublicController < ApplicationController
       { issue_date => BpsS3::CloudFront.link(bucket: :bilge, key: key) }
     end.reduce({}, :merge)
   end
+  
+  def get_events(type, scope = :current)
+    case type
+    when :course
+      {
+        advanced_grades: Event.send(scope, :advanced_grades),
+        electives: Event.send(scope, :electives)
+      }
+    when :seminar
+      Event.send(scope, :seminars)
+    when :event
+      Event.send(scope, :meetings)
+    end
+   end
 end

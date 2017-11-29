@@ -5,14 +5,8 @@ h2 = "Squadron #{params[:type].to_s.titleize}s"
 p = link_to "Add #{params[:type].to_s.titleize}", send("new_#{params[:type]}_path") if current_user&.permitted?(params[:type])
 
 table#events
-  - if params[:type] == :course
-    - if @events.has_key?(:advanced_grades) && @events[:advanced_grades].present?
-      tr
-        th.section colspan=4 Advanced Grades
-      = render "events/table", events: @events[:advanced_grades]
-    - if @events.has_key?(:electives) && @events[:electives].present?
-      tr
-        th.section colspan=4 Electives
-      = render "events/table", events: @events[:electives]
-  - else
-    = render "events/table", events: @events
+  = render "events/table_section", type: params[:type], all_events: @events
+  - if current_user&.permitted?(params[:type]) && @expired_events.present?
+    tr
+      th.section.red colspan=4 = "Expired #{params[:type]}s"
+    = render "events/table_section", type: params[:type], all_events: @expired_events
