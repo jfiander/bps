@@ -4,6 +4,8 @@ h2 Squadron Meeting Minutes
   = form_tag upload_minutes_path, multipart: true
     = file_field_tag :minutes_upload_file, accept: 'application/pdf', required: true
     = date_select(:issue, :date, start_year: 2015, use_month_numbers: true, discard_day: true, required: true)
+    = check_box_tag :minutes_excom
+    = label_tag :minutes_excom, "ExCom"
     = submit_tag "Upload Minutes"
     = check_box_tag :minutes_remove
     = label_tag :minutes_remove, "Remove Issue"
@@ -17,6 +19,13 @@ table#bilge
       th = year
       - @available_issues.each do |issue, month|
         td = @issues.include?("#{year}/#{issue}") ? link_to(month, get_minutes_path(year: year, month: issue), target: :_blank) : "-"
+    tr
+      th ExCom
+      - @available_issues.each do |issue, month|
+        td = @issues_excom.include?("#{year}/#{issue}") ? link_to(month, get_minutes_excom_path(year: year, month: issue), target: :_blank) : "-"
+    tr
+      td colspan=11
+        hr
 
 hr
 = link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag BpsS3::CloudFront.link(bucket: :files, key: "static/acrobat_reader.png") }

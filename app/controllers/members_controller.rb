@@ -7,15 +7,19 @@ class MembersController < ApplicationController
   before_action :get_bilge_issue,   only: [:upload_bilge, :remove_bilge]
   before_action :get_minutes_issue, only: [:upload_minutes, :remove_minutes]
   before_action :render_markdown,   only: [:members]
-  before_action :list_minutes,      only: [:minutes, :get_minutes]
+  before_action :list_minutes,      only: [:minutes, :get_minutes, :get_minutes_excom]
 
   def members
     #
   end
 
   def minutes
-    @years = @minutes.map(&:key).map { |b| b.sub(minutes_prefix, '').delete('.pdf').gsub(/\/(s|\d+)/, '') }.uniq
+    minutes_years = @minutes.map(&:key).map { |b| b.sub(minutes_prefix, '').delete('.pdf').gsub(/\/(s|\d+)/, '') }
+    minutes_excom_years = @minutes_excom.map(&:key).map { |b| b.sub(minutes_prefix(excom: true), '').delete('.pdf').gsub(/\/(s|\d+)/, '') }
+
+    @years = [minutes_years, minutes_excom_years].flatten.uniq
     @issues = @minutes_links.keys
+    @issues_excom = @minutes_excom_links.keys
     @available_issues = {
       1   => "Jan",
       2   => "Feb",
@@ -31,14 +35,27 @@ class MembersController < ApplicationController
   end
 
   def get_minutes
-    key = "#{minutes_prefix}/#{clean_params[:year]}/#{clean_params[:month]}"
-    issue_link = @minutes_links[key]
+    key = "#{minutes_prefix}#{minutes_params[:year]}/#{minutes_params[:month]}"
+    issue_link = @minutes_links[key.sub(minutes_prefix, '')]
     issue_title = key.gsub("/", "-")
 
     begin
       send_data open(issue_link).read, filename: "BPS Minutes #{issue_title}.pdf", type: "application/pdf", disposition: 'inline'
     rescue SocketError => e
-      newsletter
+      minutes
+      render :minutes, alert: "There was a problem accessing the minutes. Please try again later."
+    end
+  end
+
+  def get_minutes_excom
+    key = "#{minutes_prefix(excom: true)}#{minutes_params[:year]}/#{minutes_params[:month]}"
+    issue_link = @minutes_excom_links[key.sub(minutes_prefix(excom: true), '')]
+    issue_title = key.gsub("/", "-")
+
+    begin
+      send_data open(issue_link).read, filename: "BPS ExCom Minutes #{issue_title}.pdf", type: "application/pdf", disposition: 'inline'
+    rescue SocketError => e
+      minutes
       render :minutes, alert: "There was a problem accessing the minutes. Please try again later."
     end
   end
@@ -112,7 +129,7 @@ class MembersController < ApplicationController
   end
 
   def minutes_params
-    params.permit(:minutes_upload_file, :minutes_remove, issue: ['date(1i)', 'date(2i)'])
+    params.permit(:minutes_upload_file, :minutes_remove, :minutes_excom, :year, :month, issue: ['date(1i)', 'date(2i)'])
   end
 
   def get_bilge_issue
@@ -134,24 +151,33 @@ class MembersController < ApplicationController
   end
 
   def get_minutes_issue
+    excom = minutes_params[:minutes_excom]
     @year = minutes_params[:issue]['date(1i)']
     month = minutes_params[:issue]['date(2i)']
     @month = month.to_i.in?([7,8]) ? "s" : month
     @issue = "#{@year}/#{@month}"
-    @key = "#{minutes_prefix}#{@issue}.pdf"
+    @key = "#{minutes_prefix(excom: excom)}#{@issue}.pdf"
   end
 
   def list_minutes
     @minutes = BpsS3.list(bucket: :files, prefix: minutes_prefix)
+    @minutes_excom = BpsS3.list(bucket: :files, prefix: minutes_prefix(excom: true))
 
-    @minutes_links = @minutes.map do |b|
-      key = b.key.dup
-      issue_date = b.key.sub(minutes_prefix, '').delete(".pdf")
+    @minutes_links = @minutes.map do |m|
+      key = m.key.dup
+      issue_date = m.key.sub(minutes_prefix, '').delete(".pdf")
+      { issue_date => BpsS3::CloudFront.link(bucket: :files, key: key) }
+    end.reduce({}, :merge)
+
+    @minutes_excom_links = @minutes_excom.map do |m|
+      key = m.key.dup
+      issue_date = m.key.sub(minutes_prefix(excom: true), '').delete(".pdf")
       { issue_date => BpsS3::CloudFront.link(bucket: :files, key: key) }
     end.reduce({}, :merge)
   end
 
-  def minutes_prefix
-    "#{ENV['ASSET_ENVIRONMENT']}/minutes/"
+  def minutes_prefix(excom: false)
+    excom_prefix = excom ? "excom_" : ""
+    "#{ENV['ASSET_ENVIRONMENT']}/#{excom_prefix}minutes/"
   end
 end
