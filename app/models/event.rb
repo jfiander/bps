@@ -31,14 +31,20 @@ class Event < ApplicationRecord
     event_type.event_category_id.in? EventType.course_category_ids
   end
 
+  def is_a_seminar?
+    event_type.event_category_id == EventType.category_hash[:seminar]
+  end
+
   def get_flyer
-    f = if is_a_course?
-      flyer_file_name.blank? ? get_book_cover : flyer&.s3_object
-    elsif flyer_file_name.present?
-      flyer.s3_object
+    key = if is_a_course? && flyer_file_name.blank?
+      get_book_cover(:courses, event_type.title)
+    elsif is_a_seminar? && flyer_file_name.blank?
+      get_book_cover(:seminars, event_type.title)
+    elsif flyer.present?
+      flyer&.s3_object&.key
     end
 
-    BpsS3::CloudFront.link(bucket: :files, key: f&.key)
+    BpsS3::CloudFront.link(bucket: :files, key: key)
   end
 
   def formatted_cost
@@ -51,11 +57,7 @@ class Event < ApplicationRecord
   end
 
   private
-  def get_book_cover
-    cover = nil
-    [:courses, :seminars].each do |type|
-      cover = BpsS3.get_object(bucket: :files, key: "static/book_covers/#{type.to_s}/#{event_type.title}.jpg") and break if event_type.event_category_id.in?(EventType.course_category_ids)
-    end
-    cover if cover.exists?
+  def get_book_cover(type, title)
+    "static/book_covers/#{type.to_s}/#{title}.jpg"
   end
 end
