@@ -30,14 +30,17 @@ Rails.application.routes.draw do
   get     '/newsletter',         to: 'public#newsletter'
   get     '/store',              to: 'public#store'
   get     '/photos',             to: 'public#photos'
+  get     '/minutes',            to: 'members#minutes'
 
   # Functional page back-ends
-  get     '/bilge/:year/:month', to: 'public#get_bilge',             as: 'bilge'
-  put     '/register',           to: 'public#register',              as: 'public_register'
-  post    '/bilge',              to: 'members#upload_bilge'
-  get     '/flags',              to: 'members#download_flags'
-  get     '/edit/:page_name',    to: 'members#edit_markdown',        as: 'edit_page'
-  patch   '/edit/:page_name',    to: 'members#update_markdown'
+  get     '/bilge/:year/:month',   to: 'public#get_bilge',           as: 'bilge'
+  get     '/minutes/:year/:month', to: 'members#get_minutes',        as: 'get_minutes'
+  put     '/register',             to: 'public#register',            as: 'public_register'
+  post    '/bilge',                to: 'members#upload_bilge',       as: 'upload_bilge'
+  post    '/minutes',              to: 'members#upload_minutes',     as: 'upload_minutes'
+  get     '/flags',                to: 'members#download_flags'
+  get     '/edit/:page_name',      to: 'members#edit_markdown',      as: 'edit_page'
+  patch   '/edit/:page_name',      to: 'members#update_markdown'
 
   get     '/file',               to: 'file#new',                     as: 'file'
   post    '/file/upload',        to: 'file#create',                  as: 'upload_file'

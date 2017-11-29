@@ -4,11 +4,51 @@ class MembersController < ApplicationController
   before_action                   only: [:upload_bilge] { require_permission(:newsletter) }
   before_action                   only: [:edit_markdown, :update_markdown] { require_permission(:page) }
 
-  before_action :get_bilge_issue, only: [:upload_bilge, :remove_bilge]
-  before_action :render_markdown, only: [:members]
+  before_action :get_bilge_issue,   only: [:upload_bilge, :remove_bilge]
+  before_action :get_minutes_issue, only: [:upload_minutes, :remove_minutes]
+  before_action :render_markdown,   only: [:members]
+  before_action :list_minutes,      only: [:minutes, :get_minutes]
 
   def members
     #
+  end
+
+  def minutes
+    @years = @minutes.map(&:key).map { |b| b.sub(minutes_prefix, '').delete('.pdf').gsub(/\/(s|\d+)/, '') }.uniq
+    @issues = @minutes_links.keys
+    @available_issues = {
+      1   => "Jan",
+      2   => "Feb",
+      3   => "Mar",
+      4   => "Apr",
+      5   => "May",
+      6   => "Jun",
+      9   => "Sep",
+      10  => "Oct",
+      11  => "Nov",
+      12  => "Dec"
+    }
+  end
+
+  def get_minutes
+    key = "#{minutes_prefix}/#{clean_params[:year]}/#{clean_params[:month]}"
+    issue_link = @minutes_links[key]
+    issue_title = key.gsub("/", "-")
+
+    begin
+      send_data open(issue_link).read, filename: "BPS Minutes #{issue_title}.pdf", type: "application/pdf", disposition: 'inline'
+    rescue SocketError => e
+      newsletter
+      render :minutes, alert: "There was a problem accessing the minutes. Please try again later."
+    end
+  end
+
+  def upload_minutes
+    redirect_to minutes_path, alert: "You must either upload a file or check the remove box." and return unless minutes_params[:minutes_upload_file] || minutes_params[:minutes_remove]
+    remove_minutes and return if minutes_params[:minutes_remove].present?
+
+    BpsS3.upload(minutes_params[:minutes_upload_file], bucket: :files, key: @key)
+    redirect_to minutes_path, notice: "Minutes uploaded successfully."
   end
 
   def upload_bilge
@@ -71,6 +111,10 @@ class MembersController < ApplicationController
     params.require(:static_page).permit(:name, :markdown)
   end
 
+  def minutes_params
+    params.permit(:minutes_upload_file, :minutes_remove, issue: ['date(1i)', 'date(2i)'])
+  end
+
   def get_bilge_issue
     @year = clean_params[:issue]['date(1i)']
     month = clean_params[:issue]['date(2i)']
@@ -82,5 +126,32 @@ class MembersController < ApplicationController
   def remove_bilge
     BpsS3.remove_object(bucket: :bilge, key: @key)
     redirect_to newsletter_path, notice: "Bilge Chatter #{@issue} removed successfully."
+  end
+
+  def remove_minutes
+    BpsS3.remove_object(bucket: :files, key: @key)
+    redirect_to minutes_path, notice: "Minutes #{@issue} removed successfully."
+  end
+
+  def get_minutes_issue
+    @year = minutes_params[:issue]['date(1i)']
+    month = minutes_params[:issue]['date(2i)']
+    @month = month.to_i.in?([7,8]) ? "s" : month
+    @issue = "#{@year}/#{@month}"
+    @key = "#{minutes_prefix}#{@issue}.pdf"
+  end
+
+  def list_minutes
+    @minutes = BpsS3.list(bucket: :files, prefix: minutes_prefix)
+
+    @minutes_links = @minutes.map do |b|
+      key = b.key.dup
+      issue_date = b.key.sub(minutes_prefix, '').delete(".pdf")
+      { issue_date => BpsS3::CloudFront.link(bucket: :files, key: key) }
+    end.reduce({}, :merge)
+  end
+
+  def minutes_prefix
+    "#{ENV['ASSET_ENVIRONMENT']}/minutes/"
   end
 end
