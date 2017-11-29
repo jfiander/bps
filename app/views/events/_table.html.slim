@@ -28,15 +28,16 @@
         | Location TBD
     td
       - if current_user&.permitted?(params[:type])
-        = link_to "Edit", send("edit_#{params[:type]}_path", event), class: "control"
         = link_to "Use as Template", send("copy_#{params[:type]}_path", event), class: "control"
-        = link_to "Expire", send("destroy_#{params[:type]}_path", event), method: :delete, class: "red control", data: {confirm: "Are you sure you want to force this #{params[:type]} to expire?"}
-      - if user_signed_in? && event.allow_member_registrations
+        - unless event.expired?
+          = link_to "Edit", send("edit_#{params[:type]}_path", event), class: "control"
+          = link_to "Expire", send("destroy_#{params[:type]}_path", event), method: :delete, class: "red control", data: {confirm: "Are you sure you want to force this #{params[:type]} to expire?"}
+      - if user_signed_in? && event.allow_member_registrations && !event.expired?
         - if @registered.has_key?(event.id)
           = link_to "Cancel Registration", cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}
         - else
           = link_to "Register", register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}"
-      - elsif event.allow_public_registrations
+      - elsif event.allow_public_registrations && !event.expired?
         = render "events/register_form", event_id: event.id
   tr
     td colspan=2
