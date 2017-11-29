@@ -19,6 +19,9 @@ class Event < ApplicationRecord
   scope :current, ->(category) do
     includes(:event_type).where("expires_at > ?", Time.now).find_all { |e| e.event_type.in? EventType.send(category) }
   end
+  scope :expired, ->(category) do
+    includes(:event_type).where("expires_at < ?", Time.now).find_all { |e| e.event_type.in? EventType.send(category) }
+  end
 
   def is_a_course?
     event_type.event_category_id.in? EventType.course_category_ids
