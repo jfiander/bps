@@ -7,3 +7,9 @@ $ ->
     $(this).height $(this).prop('scrollHeight')
     return
   return
+
+$(document).ready ->
+  $('#minutes_remove').change ->
+    $('#minutes_upload_file').prop 'disabled', $(this).is(':checked')
+    return
+  return
