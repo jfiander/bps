@@ -1,7 +1,7 @@
 h2 Bridge Officers
 
 - current_user&.permitted?(:users) do
-  h3#profile-title Assign Bridge Office
+  h3#profile-title Assign to Bridge Office
 
   #add-permissions
     = form_tag assign_bridge_path, id: "assign-bridge", name: "assign-bridge"
@@ -9,11 +9,11 @@ h2 Bridge Officers
       = select_tag :user_id, options_for_select(@users), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a user"
       br
       .spacer
-      = submit_tag "Assign bridge office"
+      = submit_tag "Assign to bridge office"
 
   hr
 
-  h3#profile-title Assign Committee
+  h3#profile-title Assign to Committee
 
   #add-permissions
     = form_tag assign_committee_path, id: "assign-committee", name: "assign-committee"
@@ -22,11 +22,11 @@ h2 Bridge Officers
       = select_tag "user_id", options_for_select(@users), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
       br
       .spacer
-      = submit_tag "Assign committee"
+      = submit_tag "Assign to committee"
 
   hr
 
-  h3#profile-title Assign Standing Committee
+  h3#profile-title Assign to Standing Committee
 
   #add-permissions
     = form_tag assign_standing_committee_path, id: "assign-standing-committee", name: "assign-standing-committee"
@@ -46,7 +46,7 @@ h2 Bridge Officers
         span.slider.round.blue
           .description.chair
       .spacer
-      = submit_tag "Assign standing committee"
+      = submit_tag "Assign to standing committee"
 
 hr
 
