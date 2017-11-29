@@ -36,7 +36,7 @@ h2 = "#{@edit_mode} #{@event_title}"
       br.clear
 
       .left = f.label :prereq_id, "Prerequisite course"
-      .right = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true
+      .right = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true, prompt: "Please select a prerequisite course, if applicable"
       br.clear
 
 
@@ -51,7 +51,7 @@ h2 = "#{@edit_mode} #{@event_title}"
     br.clear
 
     .left = f.label :map_link
-    .right = f.text_field :map_link
+    .right = f.text_field :map_link, class: "map-link", placeholder: "https://maps.google.com/..."
     br.clear
 
     hr
@@ -60,14 +60,14 @@ h2 = "#{@edit_mode} #{@event_title}"
       = f.label :cost, "Cost"
     .right
       |  $ 
-      = f.number_field :cost, class: "number", min: 0
+      = f.number_field :cost, class: "number", min: 0, placeholder: "0.00"
     br.clear
 
     .left
       = f.label :member_cost, "Member discounted cost"
     .right
       |  $ 
-      = f.number_field :member_cost, class: "number", min: 0
+      = f.number_field :member_cost, class: "number", min: 0, placeholder: "0.00"
       small
         | (if applicable)
     br.clear

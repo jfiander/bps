@@ -77,6 +77,18 @@ table#bridge {
   }
 }
 
+div.assign-bridge input, div.assign-bridge select {
+  margin: 0.5em;
+}
+
+div.assign-bridge .start-date {
+  margin: 0.5em;
+
+  select {
+    margin: 0;
+  }
+}
+
 table#events {
   width: 90%;
   margin: 0 auto;
