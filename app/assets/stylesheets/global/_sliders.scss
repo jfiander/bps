@@ -1,0 +1,133 @@
+$switch-width: 5.5em;
+$switch-height: 2em;
+$slider-size: 1.5em;
+$slider-margin: 0.25em;
+$slider-move: $switch-width - ($slider-size + 0.5em);
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: $switch-width;
+  height: $switch-height;
+  margin: 0.25em $slider-margin;
+
+  div.description {
+    width: 85%;
+    height: 50%;
+    color: white;
+    font-size: 75%;
+    font-weight: bold;
+    text-align: right;
+    margin: 0.75em 0.5em;
+  }
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $birmingham-blue;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: $slider-size;
+  width: $slider-size;
+  left: $slider-margin;
+  bottom: $slider-margin;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: $old-glory-red;
+
+  div.description {
+    text-align: left;
+  }
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px $old-glory-red;
+}
+
+input:checked + .slider.blue {
+  background-color: lighten($old-glory-blue, 10%);
+
+  div.description {
+    text-align: left;
+  }
+}
+
+input:focus + .slider.blue {
+  box-shadow: 0 0 1px lighten($old-glory-blue, 10%);
+}
+
+.slider.inverse {
+  background-color: $old-glory-red;
+}
+
+input:checked + .slider.inverse {
+  background-color: $birmingham-blue;
+}
+
+input:focus + .slider.inverse {
+  box-shadow: 0 0 1px $birmingham-blue;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX($slider-move);
+  -ms-transform: translateX($slider-move);
+  transform: translateX($slider-move);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Specific slider text changes */
+.slider div.description.excom:after {
+  content: "General";
+}
+
+input:checked + .slider div.description.excom:after {
+  content: "ExCom";
+}
+
+.slider div.description.remove:after {
+  content: "Upload";
+}
+
+input:checked + .slider div.description.remove:after {
+  content: "Remove";
+}
+
+.slider div.description.member_registrations:after {
+  content: "Deny";
+}
+
+input:checked + .slider div.description.member_registrations:after {
+  content: "Allow";
+}
+
+.slider div.description.public_registrations:after {
+  content: "Deny";
+}
+
+input:checked + .slider div.description.public_registrations:after {
+  content: "Allow";
+}

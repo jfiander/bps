@@ -16,6 +16,10 @@ table#bilge {
   a {
     @include blue-button(0.25em);
   }
+
+  td.excom a {
+    background-color: lighten($old-glory-blue, 10%);
+  }
 }
 
 table#bridge {

@@ -72,12 +72,20 @@ h2 = "#{@edit_mode} #{@event_title}"
         | (if applicable)
     br.clear
 
-    .left = f.label :allow_member_registrations, "Allow member registrations"
-    .right = f.check_box :allow_member_registrations
+    .left = f.label :allow_member_registrations, "Member registrations"
+    .right
+      label.switch
+        = f.check_box :allow_member_registrations, class: "slider round"
+        span.slider.round.inverse
+          .description.member_registrations
     br.clear
 
-    .left = f.label :allow_public_registrations, "Allow public registrations"
-    .right = f.check_box :allow_public_registrations
+    .left = f.label :allow_public_registrations, "Public registrations"
+    .right
+      label.switch
+        = f.check_box :allow_public_registrations, class: "slider round"
+        span.slider.round.inverse
+          .description.public_registrations
     br.clear
 
     hr
