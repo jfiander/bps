@@ -1,3 +1,9 @@
 h2 Squadron Photos
 
-b Coming soon!
+- if current_user&.permitted?(:photos)
+  small
+    | Please go to 
+    = link_to "Albumizr", "https://albumizr.com"
+    |  to manage these photos.
+
+iframe#photos src="https://albumizr.com/a/2XWu" scrolling="no" frameborder="0" allowfullscreen
