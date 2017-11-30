@@ -101,19 +101,19 @@ class ApplicationController < ActionController::Base
   end
 
   def static_bucket
-    BpsS3.new { |b| b.bucket = :static }
+    ApplicationRecord.buckets[:static]
   end
 
   def files_bucket
-    BpsS3.new { |b| b.bucket = :files }
+    ApplicationRecord.buckets[:files]
   end
 
   def bilge_bucket
-    BpsS3.new { |b| b.bucket = :bilge }
+    ApplicationRecord.buckets[:bilge]
   end
   
   def photos_bucket
-    BpsS3.new { |b| b.bucket = :photos }
+    ApplicationRecord.buckets[:photos]
   end
   helper_method :static_bucket, :files_bucket, :bilge_bucket, :photos_bucket
 end
