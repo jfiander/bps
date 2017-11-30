@@ -137,7 +137,7 @@ class MembersController < ApplicationController
     month = clean_params[:issue]['date(2i)']
     @month = month.to_i.in?([7,8]) ? "s" : month
     @issue = "#{@year}/#{@month}"
-    @key = "#{@issue}.pdf"
+    @key = "#{ENV['ASSET_ENVIRONMENT']}/#{@issue}.pdf"
   end
 
   def remove_bilge
