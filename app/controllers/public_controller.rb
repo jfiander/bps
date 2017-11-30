@@ -143,7 +143,7 @@ class PublicController < ApplicationController
       "1LT"
     end
 
-    open(static_bucket.link(key: "flags/SVG/#{rank}.svg"))
+    open(static_bucket.link(key: "flags/SVG/#{rank}.svg")).read.html_safe
   end
   helper_method :officer_flag
 
