@@ -70,7 +70,7 @@ class PublicController < ApplicationController
   end
 
   def newsletter
-    @years = @bilges.map(&:key).map { |b| b.sub("#{ENV['ASSET_ENVIRONMENT']}/", '').delete('.pdf').gsub(/\/(s|\d+)/, '') }.uniq
+    @years = @bilges.map(&:key).map { |b| b.sub(ENV['ASSET_ENVIRONMENT'], '').sub('.pdf', '').sub(/\/(s|\d+)$/, '').delete('/') }.uniq.reject { |b| b.blank? }
 
     @issues = @bilge_links.keys
 
@@ -153,12 +153,11 @@ class PublicController < ApplicationController
   end
 
   def list_bilges
-    @bilges = BpsS3.list(bucket: :bilge)
+    @bilges = BpsS3.list(bucket: :bilge, prefix: ENV['ASSET_ENVIRONMENT'])
 
-    @bilge_links = @bilges.map do |b|
-      key = b.key.dup
-      issue_date = b.key.delete(".pdf")
-      { issue_date => BpsS3::CloudFront.link(bucket: :bilge, key: key) }
+    @bilge_links = @bilges.map(&:key).map do |b|
+      issue_date = b.sub("#{ENV['ASSET_ENVIRONMENT']}/", '').sub('.pdf', '')
+      { issue_date => BpsS3::CloudFront.link(bucket: :bilge, key: b) }
     end.reduce({}, :merge)
   end
   
