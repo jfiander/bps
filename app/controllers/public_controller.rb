@@ -1,57 +1,18 @@
 class PublicController < ApplicationController
+  MARKDOWN_EDITABLE_VIEWS ||= [:home, :about, :join, :requirements, :vsc, :education, :civic, :history, :links].freeze
+  # STATIC_VIEWS = [:calendar, :photos].freeze
+
   before_action :list_bilges, only: [:newsletter, :get_bilge]
   before_action :time_formats, only: [:courses, :seminars, :events]
-  before_action :render_markdown, only: [:home, :about, :join, :requirements, :vsc, :education, :civic, :history, :links]
+  before_action :render_markdown, only: MARKDOWN_EDITABLE_VIEWS
 
-  def home
-    #
-  end
-
-  def about
-    #
-  end
-
-  def join
-    #
-  end
-
-  def requirements
-    #
-  end
-
-  def vsc
-    #
-  end
-
-  def education
-    #
-  end
-
-  def civic
-    #
-  end
-
-  def history
-    #
-  end
-
-  def links
-    #
-  end
+  MARKDOWN_EDITABLE_VIEWS.each { |m| define_method(m) {} }
   
   def events
     @registered = Registration.where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
     @registered_users = Registration.all.group_by { |r| r.event_id }
     @events = get_events(params[:type], :current)
     @expired_events = get_events(params[:type], :expired)
-  end
-
-  def calendar
-    #
-  end
-
-  def photos
-    #
   end
 
   def bridge

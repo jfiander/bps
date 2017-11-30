@@ -4,14 +4,14 @@ class MembersController < ApplicationController
   before_action                   only: [:upload_bilge] { require_permission(:newsletter) }
   before_action                   only: [:edit_markdown, :update_markdown] { require_permission(:page) }
 
+  MARKDOWN_EDITABLE_VIEWS ||= [:members].freeze
+
   before_action :get_bilge_issue,   only: [:upload_bilge, :remove_bilge]
   before_action :get_minutes_issue, only: [:upload_minutes, :remove_minutes]
-  before_action :render_markdown,   only: [:members]
+  before_action :render_markdown,   only: MARKDOWN_EDITABLE_VIEWS
   before_action :list_minutes,      only: [:minutes, :get_minutes, :get_minutes_excom]
 
-  def members
-    #
-  end
+  MARKDOWN_EDITABLE_VIEWS.each { |m| define_method(m) {} }
 
   def minutes
     minutes_years = @minutes.map(&:key).map { |b| b.sub(minutes_prefix, '').delete('.pdf').gsub(/\/(s|\d+)/, '') }
