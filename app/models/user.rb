@@ -105,10 +105,10 @@ class User < ApplicationRecord
       "executive" => [:admin],
       "administrative" => [:users],
       "educational" => [:education],
-      "secretary" => [:admin, :newsletter, :calendar, :photos],
+      "secretary" => [:admin, :newsletter, :calendar, :photos, :minutes],
       "treasurer" => [:property],
       "asst_educational" => [:education],
-      "asst_secretary" => [:newsletter, :calendar, :photos]
+      "asst_secretary" => [:newsletter, :calendar, :photos, :minutes]
     }[bridge_office&.office]
   end
 
