@@ -56,6 +56,6 @@ class Event < ApplicationRecord
 
   private
   def get_book_cover(type)
-    Event.buckets[:files].link(key: "book_covers/#{type.to_s}/#{event_type.title}.jpg")
+    Event.buckets[:static].link(key: "book_covers/#{type.to_s}/#{event_type.title}.jpg")
   end
 end
