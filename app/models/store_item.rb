@@ -2,16 +2,16 @@ class StoreItem < ApplicationRecord
   serialize :options
 
   def self.no_image
-    ActionController::Base.helpers.image_path(BpsS3::CloudFront.link(bucket: :files, key: "static/no_image.png"))
+    ActionController::Base.helpers.image_path(StoreItem.buckets[:static].link(key: "no_image.png"))
   end
 
   has_attached_file :image,
     default_url: StoreItem.no_image,
     storage: :s3,
     s3_region: "us-east-2",
-    path: "#{ENV['ASSET_ENVIRONMENT']}/store_items/:id/:filename",
+    path: "store_items/:id/:filename",
     s3_permissions: :private,
-    s3_credentials: {bucket: "bps-files", access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
+    s3_credentials: {bucket: self.buckets[:files].bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
 
   validates_attachment_content_type :image, content_type: /\Aimage\/(jpe?g|png|gif)\Z/
   validates :name, presence: true
@@ -28,8 +28,8 @@ class StoreItem < ApplicationRecord
   end
 
   def get_image
-    if image.present? && BpsS3.get_object(bucket: :files, key: image.s3_object.key).exists?
-      BpsS3::CloudFront.link(bucket: :files, key: image.s3_object.key)
+    if image.present? && StoreItem.buckets[:files].object(key: image.s3_object.key).exists?
+      StoreItem.buckets[:files].link(key: image.s3_object.key)
     else
       StoreItem.no_image
     end

@@ -10,9 +10,9 @@ class Event < ApplicationRecord
     default_url: nil,
     storage: :s3,
     s3_region: "us-east-2",
-    path: "#{ENV['ASSET_ENVIRONMENT']}/event_flyers/:id/:filename",
+    path: "event_flyers/:id/:filename",
     s3_permissions: :private,
-    s3_credentials: {bucket: "bps-files", access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
+    s3_credentials: {bucket: self.buckets[:files].bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
 
   validates_attachment_content_type :flyer, content_type: /\A(image\/(jpe?g|png|gif))|(application\/pdf)\Z/
   
@@ -37,14 +37,12 @@ class Event < ApplicationRecord
 
   def get_flyer
     key = if is_a_course? && flyer_file_name.blank?
-      get_book_cover(:courses, event_type.title)
+      get_book_cover(:courses)
     elsif is_a_seminar? && flyer_file_name.blank?
-      get_book_cover(:seminars, event_type.title)
+      get_book_cover(:seminars)
     elsif flyer.present?
-      flyer&.s3_object&.key
+      Event.buckets[:files].link(key: flyer&.s3_object&.key)
     end
-
-    BpsS3::CloudFront.link(bucket: :files, key: key)
   end
 
   def formatted_cost
@@ -57,7 +55,7 @@ class Event < ApplicationRecord
   end
 
   private
-  def get_book_cover(type, title)
-    "static/book_covers/#{type.to_s}/#{title}.jpg"
+  def get_book_cover(type)
+    Event.buckets[:files].link(key: "book_covers/#{type.to_s}/#{event_type.title}.jpg")
   end
 end

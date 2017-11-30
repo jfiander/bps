@@ -6,7 +6,7 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     meta name="description" content=(@site_description)
     meta name="keywords" content=(@site_keywords)
-    = favicon_link_tag BpsS3::CloudFront.link(bucket: :files, key: "static/favicon.ico")
+    = favicon_link_tag static_bucket.link(key: "favicon.ico")
   body
     #main.flex
       header

@@ -7,16 +7,16 @@ class User < ApplicationRecord
   has_many :committees, foreign_key: :chair_id
 
   def self.no_photo
-    ActionController::Base.helpers.image_path(BpsS3::CloudFront.link(bucket: :files, key: "static/no_profile.png"))
+    ActionController::Base.helpers.image_path(User.buckets[:static].link(key: "no_profile.png"))
   end
 
   has_attached_file :profile_photo,
     default_url: User.no_photo,
     storage: :s3,
     s3_region: "us-east-2",
-    path: "#{ENV['ASSET_ENVIRONMENT']}/profile_photos/:id/:filename",
+    path: "profile_photos/:id/:filename",
     s3_permissions: :private,
-    s3_credentials: {bucket: "bps-files", access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
+    s3_credentials: {bucket: self.buckets[:files].bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
     # styles: { medium: "300x300>", thumb: "100x100#" }
 
   validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be nil or one of [S, P, AP, JN, N, SN]"
@@ -31,8 +31,8 @@ class User < ApplicationRecord
   end
 
   def photo
-    if profile_photo.present? && BpsS3.get_object(bucket: :files, key: profile_photo.s3_object.key).exists?
-      BpsS3::CloudFront.link(bucket: :files, key: profile_photo.s3_object.key)
+    if profile_photo.present? && User.buckets[:files].object(key: profile_photo.s3_object.key).exists?
+      User.buckets[:files].link(key: profile_photo.s3_object.key)
     else
       User.no_photo
     end

@@ -58,27 +58,27 @@ class ApplicationController < ActionController::Base
   end
 
   def pick_header_image
-    objects = BpsS3.list(bucket: :files, prefix: "static/headers/")
+    objects = static_bucket.list(prefix: "headers/")
     keys = objects.map(&:key)
     keys.shift
-    @header_image = BpsS3::CloudFront.link(bucket: :files, key: keys.sample)
+    @header_image = static_bucket.link(key: keys.sample)
   end
 
   def markdown_static_link(key, title: "")
     link_title = title || key
-    link_path = BpsS3::CloudFront.link(bucket: :files, key: "static/general/#{key}")
+    link_path = static_bucket.link(key: "general/#{key}")
     view_context.link_to(link_title, link_path)
   end
 
   def markdown_file_link(key, title: "")
     link_title = title || key
-    link_path = BpsS3::CloudFront.link(bucket: :files, key: "#{ENV['ASSET_ENVIRONMENT']}/uploaded_files/#{key}")
+    link_path = files_bucket.link(key: "uploaded_files/#{key}")
     view_context.link_to(link_title, link_path)
   end
 
   def markdown_image(key)
-    key = "#{ENV['ASSET_ENVIRONMENT']}/uploaded_files/#{key}"
-    view_context.image_tag(BpsS3::CloudFront.link(bucket: :files, key: key))
+    key = "uploaded_files/#{key}"
+    view_context.image_tag(files_bucket.link(key: key))
   end
 
   def meta_tags

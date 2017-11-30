@@ -25,4 +25,4 @@ table#bilge
         td = @issues.include?("#{year}/#{key}") ? link_to(issue, bilge_path(year: year, month: key), target: :_blank) : "-"
 
 hr
-= link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag BpsS3::CloudFront.link(bucket: :files, key: "static/acrobat_reader.png") }
+= link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag static_bucket.link(key: "acrobat_reader.png") }

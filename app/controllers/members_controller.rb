@@ -64,7 +64,7 @@ class MembersController < ApplicationController
     redirect_to minutes_path, alert: "You must either upload a file or check the remove box." and return unless minutes_params[:minutes_upload_file] || minutes_params[:minutes_remove]
     remove_minutes and return if minutes_params[:minutes_remove].present?
 
-    BpsS3.upload(minutes_params[:minutes_upload_file], bucket: :files, key: @key)
+    files_bucket.upload(file: minutes_params[:minutes_upload_file], key: @key)
     redirect_to minutes_path, notice: "Minutes uploaded successfully."
   end
 
@@ -72,7 +72,7 @@ class MembersController < ApplicationController
     redirect_to newsletter_path, alert: "You must either upload a file or check the remove box." and return unless clean_params[:bilge_upload_file] || clean_params[:bilge_remove]
     remove_bilge and return if clean_params[:bilge_remove].present?
 
-    BpsS3.upload(clean_params[:bilge_upload_file], bucket: :bilge, key: @key)
+    bilge_bucket.upload(file: clean_params[:bilge_upload_file], key: @key)
     redirect_to newsletter_path, notice: "Bilge Chatter uploaded successfully."
   end
 
@@ -132,16 +132,16 @@ class MembersController < ApplicationController
     month = clean_params[:issue]['date(2i)']
     @month = month.to_i.in?([7,8]) ? "s" : month
     @issue = "#{@year}/#{@month}"
-    @key = "#{ENV['ASSET_ENVIRONMENT']}/#{@issue}.pdf"
+    @key = "#{@issue}.pdf"
   end
 
   def remove_bilge
-    BpsS3.remove_object(bucket: :bilge, key: @key)
+    bilge_bucket.remove_object(key: @key)
     redirect_to newsletter_path, notice: "Bilge Chatter #{@issue} removed successfully."
   end
 
   def remove_minutes
-    BpsS3.remove_object(bucket: :files, key: @key)
+    files_bucket.remove_object(key: @key)
     redirect_to minutes_path, notice: "Minutes #{@issue} removed successfully."
   end
 
@@ -155,24 +155,24 @@ class MembersController < ApplicationController
   end
 
   def list_minutes
-    @minutes = BpsS3.list(bucket: :files, prefix: minutes_prefix)
-    @minutes_excom = BpsS3.list(bucket: :files, prefix: minutes_prefix(excom: true))
+    @minutes = files_bucket.list(prefix: minutes_prefix)
+    @minutes_excom = files_bucket.list(prefix: minutes_prefix(excom: true))
 
     @minutes_links = @minutes.map do |m|
       key = m.key.dup
       issue_date = m.key.sub(minutes_prefix, '').delete(".pdf")
-      { issue_date => BpsS3::CloudFront.link(bucket: :files, key: key) }
+      { issue_date => files_bucket.link(key: key) }
     end.reduce({}, :merge)
 
     @minutes_excom_links = @minutes_excom.map do |m|
       key = m.key.dup
       issue_date = m.key.sub(minutes_prefix(excom: true), '').delete(".pdf")
-      { issue_date => BpsS3::CloudFront.link(bucket: :files, key: key) }
+      { issue_date => files_bucket.link(key: key) }
     end.reduce({}, :merge)
   end
 
   def minutes_prefix(excom: false)
     excom_prefix = excom ? "excom_" : ""
-    "#{ENV['ASSET_ENVIRONMENT']}/#{excom_prefix}minutes/"
+    "#{excom_prefix}minutes/"
   end
 end

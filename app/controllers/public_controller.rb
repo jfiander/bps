@@ -90,7 +90,7 @@ class PublicController < ApplicationController
   end
 
   def get_bilge
-    key = "#{ENV['ASSET_ENVIRONMENT']}/#{clean_params[:year]}/#{clean_params[:month]}"
+    key = "#{clean_params[:year]}/#{clean_params[:month]}"
     issue_link = @bilge_links[key]
     issue_title = key.gsub("/", "-")
 
@@ -143,7 +143,7 @@ class PublicController < ApplicationController
       "1LT"
     end
 
-    BpsS3.get_object(bucket: :files, key: "static/flags/SVG/#{rank}.svg").get.body.read
+    open(static_bucket.link(key: "flags/SVG/#{rank}.svg"))
   end
   helper_method :officer_flag
 
@@ -153,11 +153,11 @@ class PublicController < ApplicationController
   end
 
   def list_bilges
-    @bilges = BpsS3.list(bucket: :bilge, prefix: ENV['ASSET_ENVIRONMENT'])
+    @bilges = bilge_bucket.list
 
     @bilge_links = @bilges.map(&:key).map do |b|
-      issue_date = b.sub("#{ENV['ASSET_ENVIRONMENT']}/", '').sub('.pdf', '')
-      { issue_date => BpsS3::CloudFront.link(bucket: :bilge, key: b) }
+      issue_date = b.delete(".pdf")
+      { issue_date => bilge_bucket.link(key: b) }
     end.reduce({}, :merge)
   end
   

@@ -3,9 +3,9 @@ class MarkdownFile < ApplicationRecord
     default_url: nil,
     storage: :s3,
     s3_region: "us-east-2",
-    path: "#{ENV['ASSET_ENVIRONMENT']}/uploaded_files/:id/:filename",
+    path: "uploaded_files/:id/:filename",
     s3_permissions: :private,
-    s3_credentials: {bucket: "bps-files", access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
+    s3_credentials: {bucket: self.buckets[:files].bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
 
   validates_attachment_content_type :file, content_type: /\A(image\/(jpe?g|png|gif))|(application\/pdf)\Z/
 end
