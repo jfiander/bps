@@ -76,11 +76,6 @@ class MembersController < ApplicationController
     redirect_to newsletter_path, notice: "Bilge Chatter uploaded successfully."
   end
 
-  def download_flags
-    BpsS3.download_with_prefix(bucket: :files, prefix: "static/flags/", to: USPSFlags.configuration.flags_dir)
-    redirect_to members_path, notice: "Successfully downloaded flags images."
-  end
-
   def edit_markdown
     @page = StaticPage.find_by(name: clean_params[:page_name])
   end

@@ -39,7 +39,6 @@ Rails.application.routes.draw do
   put     '/register',             to: 'public#register',            as: 'public_register'
   post    '/bilge',                to: 'members#upload_bilge',       as: 'upload_bilge'
   post    '/minutes',              to: 'members#upload_minutes',     as: 'upload_minutes'
-  get     '/flags',                to: 'members#download_flags'
   get     '/edit/:page_name',      to: 'members#edit_markdown',      as: 'edit_page'
   patch   '/edit/:page_name',      to: 'members#update_markdown'
 
