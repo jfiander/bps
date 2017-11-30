@@ -62,6 +62,7 @@ class ApplicationController < ActionController::Base
     keys = objects.map(&:key)
     keys.shift
     @header_image = static_bucket.link(key: keys.sample)
+    @header_wheel = open(static_bucket.link(key: "flags/SVG/WHEEL.svg")).read.html_safe
   end
 
   def markdown_static_link(key, title: "")
