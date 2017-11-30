@@ -156,8 +156,7 @@ class PublicController < ApplicationController
     @bilges = bilge_bucket.list
 
     @bilge_links = @bilges.map(&:key).map do |b|
-      issue_date = b.delete(".pdf")
-      { issue_date => bilge_bucket.link(key: b) }
+      { b.delete(".pdf") => bilge_bucket.link(key: b) }
     end.reduce({}, :merge)
   end
   
