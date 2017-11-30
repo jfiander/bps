@@ -49,7 +49,8 @@ class ApplicationController < ActionController::Base
       gsub(/<p>%education<\/p>/, education_menu).
       gsub(/(.*?)%static_file\/(.*?)\/(.*?)\/(.*?)$/, '\1' + markdown_static_link('\2', title: '\3') + '\4').
       gsub(/(.*?)%file\/(.*?)\/(.*?)\/(.*?)$/, '\1' + markdown_file_link('\2', title: '\3') + '\4').
-      gsub(/(.*?)%image\/(.*?)\/(.*?)$/, '\1' + markdown_image('\2') + '\3')
+      gsub(/(.*?)%image\/(.*?)\/(.*?)$/, '\1' + markdown_image('\2') + '\3').
+      gsub("&reg;", "<sup>&reg;</sup>")
   end
 
   def center_html
