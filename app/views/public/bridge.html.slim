@@ -18,7 +18,13 @@ h2 Bridge Officers
       = text_field_tag :committee, "", required: true, placeholder: "Enter committee name"
       = select_tag "user_id", options_for_select(@users), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
       br
-      small Enter the committee name exactly as it should appear on this page.
+      small
+        | Enter the committee name exactly as it should appear on this page,
+        br
+        | except that any 
+        code.red
+          | //
+        |  will be replaced with a newline-and-indent.
       br
       .spacer
       = submit_tag "Assign to committee"
@@ -70,7 +76,7 @@ table#bridge
           - @committees[bridge.office]&.each do |committee|
             tr
               td.committee
-                = committee.name
+                = committee.display_name
                 - if current_user&.permitted?(:users)
                   | &nbsp;
                   = link_to "X", remove_committee_path(committee: committee.name), class: "red", method: :delete,

@@ -9,4 +9,8 @@ class Committee < ApplicationRecord
   def search_name
     name.downcase
   end
+
+  def display_name
+    name.gsub("//", "<br>&nbsp;&nbsp;").html_safe
+  end
 end
