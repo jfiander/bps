@@ -18,6 +18,8 @@ h2 Bridge Officers
       = text_field_tag :committee, "", required: true, placeholder: "Enter committee name"
       = select_tag "user_id", options_for_select(@users), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
       br
+      small Enter the committee name exactly as it should appear on this page.
+      br
       .spacer
       = submit_tag "Assign to committee"
   hr
@@ -47,38 +49,43 @@ table#bridge
   - @bridge_officers.each do |bridge|
     - officer_name = bridge&.user&.full_name || "TBD"
     - officer_photo = bridge&.user&.photo || User.no_profile
+    - assistant = BridgeOffice.find_by(office: "asst_#{bridge.office}")
+    - assistant_name = assistant&.user&.full_name || "TBD"
     tr
       th.flag = bridge.title
-      td colspan=2 = link_to officer_name, bridge.email
-    tr
-      th = officer_flag(bridge.office)
-      td = image_tag officer_photo, width: 125
+      th.department = link_to officer_name, bridge.email
       td
-        table#committees
+    tr
+      td.flag = officer_flag(bridge.office)
+      td.department = image_tag officer_photo, width: 125
+      td
+        table.committees
+          - if assistant.present?
+            tr.assistant
+              td = assistant.title
+              td = link_to assistant_name, assistant.email
           tr
             th.committee Committees
             th.committee-chair Chair
-          - assistant = BridgeOffice.find_by(office: "asst_#{bridge.office}")
-          - if assistant.present?
-            tr
-              td = assistant.title
-              td = assistant.user&.full_name || "TBD"
           - @committees[bridge.office]&.each do |committee|
             tr
-              td
-                = committee.name.titleize
+              td.committee
+                = committee.name
                 - if current_user&.permitted?(:users)
                   | &nbsp;
-                  = link_to "X", remove_committee_path(committee: committee.name), class: "red", method: :delete, data: {confirm: "Are you sure you want to remove this committee?"}
-              td = committee.chair&.full_name || "TBD"
-                
+                  = link_to "X", remove_committee_path(committee: committee.name), class: "red", method: :delete,
+                    data: {confirm: "Are you sure you want to remove this committee? You can also assign a committee as 'TBD' above."}
+              td.committee-chair = committee.chair&.full_name || "TBD"
+      / tr
+      /   td colspan=3
+      /     hr
     tr
       td.spacer colspan=3
   tr
     th.standing-title colspan=3 Standing Committees
   tr
     td.standing-info colspan=3
-      | Numbers after each name indicate years into term
+      | Numbers after each name indicate year of term
       hr
   - @standing_committees.each do |committee|
     tr

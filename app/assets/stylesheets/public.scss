@@ -23,7 +23,7 @@ table#bilge {
 }
 
 table#bridge {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   text-align: left;
 
@@ -32,20 +32,38 @@ table#bridge {
     padding: 0.25em;
   }
 
-  td.flag {
-    width: 10%;
+  hr {
+    margin-top: 2em;
   }
 
-  th.department {
-    width: 25%;
+  .flag {
+    width: 22%;
+    text-align: center;
   }
 
-  td.committee {
-    width: 25%;
+  .department {
+    width: 32%;
+    text-align: center;
   }
 
-  td.committee-chair {
-    width: 40%;
+  tr.assistant td {
+    font-weight: bold;
+    height: 2.5em;
+  }
+
+  table.committees {
+    font-size: 90%;
+    width: 100%;
+
+    .committee {
+      width: 55%;
+      text-align: left;
+    }
+
+    .committee-chair {
+      width: 45%;
+      text-align: left;
+    }
   }
 
   th.standing-title {
@@ -87,6 +105,10 @@ div.assign-bridge .start-date {
   select {
     margin: 0;
   }
+}
+
+div.assign-bridge small {
+  font-style: italic;
 }
 
 table#events {
