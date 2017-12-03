@@ -1,7 +1,7 @@
 class StandingCommitteeOffice < ApplicationRecord
   belongs_to :user
 
-  before_create { self.term_expires_at = self.term_start_at + self.term_length.years }
+  before_create { self.term_expires_at = self.term_start_at + self.term_length.years unless self.committee_name == "executive" }
 
   validate :valid_committee_name
   validates :user_id, uniqueness: { scope: :committee_name }
@@ -29,19 +29,26 @@ class StandingCommitteeOffice < ApplicationRecord
   end
 
   def years_remaining
+    return 1 if executive?
     ((term_expires_at - Time.now) / 1.year).ceil
   end
 
   def term_year
+    return 1 if executive?
     term_length - years_remaining + 1
   end
 
   def term_fraction
+    return "" if executive?
     "[#{term_year}/#{term_length}]"
   end
 
   private
   def valid_committee_name
     committee_name.downcase.in? %w[executive auditing nominations rules]
+  end
+
+  def executive?
+    self.committee_name.casecmp("executive") == 0
   end
 end
