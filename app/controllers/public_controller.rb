@@ -95,20 +95,6 @@ class PublicController < ApplicationController
     end
   end
 
-  def officer_flag(office)
-    rank = case office
-    when "commander"
-      "CDR"
-    when "executive", "educational", "administrative", "secretary", "treasurer"
-      "LTC"
-    when "asst_educational", "asst_secretary"
-      "1LT"
-    end
-
-    open(static_bucket.link(key: "flags/SVG/#{rank}.svg")).read.html_safe
-  end
-  helper_method :officer_flag
-
   private
   def clean_params
     params.permit(:year, :month, :email, :event_id)
