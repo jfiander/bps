@@ -24,10 +24,8 @@ class User < ApplicationRecord
   validates :certificate, uniqueness: true
 
   def full_name
-    [
-      [(auto_rank || rank), "#{first_name} #{last_name}"].join(" "),
-      grade
-    ].reject { |n| n.blank? }.join(", ")
+    ranked_name = [auto_rank, "#{first_name} #{last_name}"].join(" ")
+    [ranked_name, grade].reject { |n| n.blank? }.join(", ")
   end
 
   def photo
