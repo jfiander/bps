@@ -3,7 +3,7 @@ class StandingCommitteeOffice < ApplicationRecord
 
   before_create { self.term_expires_at = self.term_start_at + self.term_length.years }
 
-  validates :committee_name, inclusion: { in: %w[executive auditing nominations rules] }
+  validate :valid_committee_name
   validates :user_id, uniqueness: { scope: :committee_name }
   validates :chair, uniqueness: { scope: :committee_name }
 
@@ -38,5 +38,10 @@ class StandingCommitteeOffice < ApplicationRecord
 
   def term_fraction
     "[#{term_year}/#{term_length}]"
+  end
+
+  private
+  def valid_committee_name
+    committee_name.downcase.in? %w[executive auditing nominations rules]
   end
 end
