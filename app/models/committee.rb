@@ -11,6 +11,11 @@ class Committee < ApplicationRecord
   end
 
   def display_name
-    name.gsub("//", "<br>&nbsp;&nbsp;").html_safe
+    return name unless name.match("//")
+
+    lines = name.split("//")
+    committee = lines.shift << "<small>"
+    combined = [committee, lines].join("<br>&nbsp;&nbsp;")  << "</small>"
+    combined.html_safe
   end
 end
