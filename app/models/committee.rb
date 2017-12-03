@@ -6,6 +6,19 @@ class Committee < ApplicationRecord
     administrative secretary treasurer asst_educational asst_secretary],
     message: "%{value} is not a valid department" }
 
+  def self.sorted
+    Committee.all.
+      order(:name).
+      group_by { |c| c.department }.
+      map do |dept, coms|
+        {
+          dept => coms.sort do |c|
+            c.name.downcase.match(/assistant /).present? ? 1 : 0
+          end
+        }
+      end.reduce({}, :merge)
+  end
+
   def search_name
     name.downcase
   end

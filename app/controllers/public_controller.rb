@@ -17,7 +17,7 @@ class PublicController < ApplicationController
 
   def bridge
     @bridge_officers = BridgeOffice.heads.ordered
-    @committees = Committee.all.order(:name).group_by { |c| c.department }
+    @committees = Committee.sorted
     @standing_committees = StandingCommitteeOffice.committees
     @standing_committee_titles = StandingCommitteeOffice.committee_titles
     @standing_committee_members = StandingCommitteeOffice.current.chair_first.group_by { |s| s.committee_name }
