@@ -24,6 +24,10 @@ class StandingCommitteeOffice < ApplicationRecord
     %w[executive auditing nominating rules]
   end
 
+  def self.committee_titles
+    committees.map(&:titleize)
+  end
+
   def years_remaining
     ((term_expires_at - Time.now) / 1.year).ceil
   end
