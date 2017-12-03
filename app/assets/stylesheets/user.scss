@@ -28,6 +28,11 @@
 // Users List
 table#users {
   margin: 0 auto;
+  
+  svg {
+  	width: 3em;
+  	height: 2em;
+  }
 
   tr.gray {
     background-color: $background-blue;

@@ -17,7 +17,7 @@ table#users
           - elsif !user[:granted_roles].join(",").match(/admin/)
             = button_to("Lock", lock_user_path(user[:id]), class: "lock", method: :patch)
       td.center.narrow
-        = officer_flag(user[:bridge_office], width: 50) if user[:bridge_office].present?
+        = officer_flag(user[:bridge_office]) if user[:bridge_office].present?
         = user[:granted_roles].join("<br>").html_safe
         br
         - if user[:permitted_roles].include? :admin
