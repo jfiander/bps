@@ -18,7 +18,8 @@ class PublicController < ApplicationController
   def bridge
     @bridge_officers = BridgeOffice.heads.ordered
     @committees = Committee.all.order(:name).group_by { |c| c.department }
-    @standing_committees = StandingCommitteeOffice.committee_titles
+    @standing_committees = StandingCommitteeOffice.committees
+    @standing_committee_titles = StandingCommitteeOffice.committee_titles
     @standing_committee_members = StandingCommitteeOffice.current.chair_first.group_by { |s| s.committee_name }
 
     @users = [["TBD", nil]] + User.all.order(:last_name).to_a.map! do |user|

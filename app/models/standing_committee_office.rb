@@ -1,13 +1,14 @@
 class StandingCommitteeOffice < ApplicationRecord
   belongs_to :user
 
-  before_create { self.term_expires_at = self.term_start_at + self.term_length.years unless self.committee_name == "executive" }
+  before_validation { self.chair = false if executive? }
+  before_create { self.term_expires_at = self.term_start_at + self.term_length.years unless executive? }
+  before_create { self.committee_name = self.committee_name.downcase }
 
-  validate :valid_committee_name
+  validate :valid_committee_name, :only_one_chair
   validates :user_id, uniqueness: { scope: :committee_name }
-  validates :chair, uniqueness: { scope: :committee_name }
 
-  scope :current,     -> { where("term_expires_at > ?", Time.now) }
+  scope :current,     -> { where("term_expires_at IS NULL OR term_expires_at > ?", Time.now) }
   scope :chair_first, -> { order(chair: :desc) }
   scope :ordered,     -> {
     order <<~SQL
@@ -46,6 +47,10 @@ class StandingCommitteeOffice < ApplicationRecord
   private
   def valid_committee_name
     committee_name.downcase.in? %w[executive auditing nominations rules]
+  end
+
+  def only_one_chair
+    StandingCommitteeOffice.current.where(committee_name: committee_name).where(chair: true).count <= 1
   end
 
   def executive?

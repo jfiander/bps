@@ -33,7 +33,7 @@ h2 Bridge Officers
   h3 Assign to Standing Committee
   .assign-bridge
     = form_tag assign_standing_committee_path, id: "assign-standing-committee", name: "assign-standing-committee"
-      = select_tag :committee_name, options_for_select(@standing_committees), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a committee"
+      = select_tag :committee_name, options_for_select(@standing_committee_titles), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a committee"
       = select_tag :user_id, options_for_select(@users), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a user"
       .start-date
         = label_tag :term_start_at, "Start date: "
