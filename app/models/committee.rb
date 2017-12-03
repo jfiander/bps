@@ -5,4 +5,8 @@ class Committee < ApplicationRecord
   validates :department, inclusion: { in: %w[commander executive educational
     administrative secretary treasurer asst_educational asst_secretary],
     message: "%{value} is not a valid department" }
+
+  def search_name
+    name.downcase
+  end
 end

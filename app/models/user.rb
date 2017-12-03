@@ -116,7 +116,7 @@ class User < ApplicationRecord
     {
       "seminars" => [:seminar],
       "vsc" => [:vsc]
-    }.select { |k,_| k.in? committees.map(&:name) }.values
+    }.select { |k,_| k.in? committees.map(&:search_name) }.values
   end
 
   def auto_rank
