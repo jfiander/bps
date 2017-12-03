@@ -31,7 +31,7 @@ gem 'slim',               '~> 3.0.6'
 gem 'inline_svg',         '~> 1.3.0'
 gem 'redcarpet',          '~> 3.4.0'
 
-gem 'usps_flags',         '~> 0.3.15'
+gem 'usps_flags',         '~> 0.3.16'
 gem 'usps_flags-burgees', '~> 0.0.14'
 gem 'usps_flags-grades',  '~> 0.0.1'
 
