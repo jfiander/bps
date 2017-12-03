@@ -65,7 +65,7 @@ class MembersController < ApplicationController
     remove_minutes and return if minutes_params[:minutes_remove].present?
 
     files_bucket.upload(file: minutes_params[:minutes_upload_file], key: @key)
-    redirect_to minutes_path, notice: "Minutes uploaded successfully."
+    redirect_to minutes_path, notice: "Minutes #{@issue} uploaded successfully."
   end
 
   def upload_bilge
@@ -73,7 +73,7 @@ class MembersController < ApplicationController
     remove_bilge and return if clean_params[:bilge_remove].present?
 
     bilge_bucket.upload(file: clean_params[:bilge_upload_file], key: @key)
-    redirect_to newsletter_path, notice: "Bilge Chatter uploaded successfully."
+    redirect_to newsletter_path, notice: "Bilge Chatter #{@issue} uploaded successfully."
   end
 
   def edit_markdown
