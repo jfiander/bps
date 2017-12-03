@@ -186,6 +186,7 @@ class UserController < ApplicationController
       email:              user.email,
       granted_roles:      user.granted_roles,
       permitted_roles:    user.permitted_roles,
+      bridge_office:      user.bridge_office&.office,
       current_login_at:   user.current_sign_in_at,
       current_login_from: user.current_sign_in_ip,
       locked:             user.locked?
