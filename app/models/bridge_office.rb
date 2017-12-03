@@ -43,7 +43,9 @@ class BridgeOffice < ApplicationRecord
       administrative: "ao",
       educational: "seo",
       secretary: "secretary",
-      treasurer: "treasurer"
+      treasurer: "treasurer",
+      asst_educational: "aseo",
+      asst_secretary: "asst_secretary"
     }
     "mailto:#{emails[office.to_sym]}@bpsd9.org"
   end
