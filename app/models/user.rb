@@ -118,7 +118,7 @@ class User < ApplicationRecord
   end
 
   def auto_rank
-    case bridge_office&.office
+    bridge_rank = case bridge_office&.office
     when "commander"
       "Cdr"
     when "executive", "administrative", "educational", "secretary", "treasurer"
@@ -126,6 +126,11 @@ class User < ApplicationRecord
     when "asst_educational", "asst_secretary"
       "1/Lt"
     end
+
+    committee_rank = "Lt" if standing_committee_offices.present? || committees.present?
+    committee_rank = "F/Lt" if "Flag Lieutenant".in? committees.map(&:name)
+
+    bridge_rank || rank || committee_rank
   end
 
   def update_invitation_limit
