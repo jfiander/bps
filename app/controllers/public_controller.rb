@@ -18,8 +18,8 @@ class PublicController < ApplicationController
   def bridge
     @bridge_officers = BridgeOffice.heads.ordered
     @committees = Committee.all.order(:name).group_by { |c| c.department }
-    @standing_committees = StandingCommitteeOffice.committees.map(&:titleize)
-    @standing_committee_members = StandingCommitteeOffice.current.order(chair: :desc).group_by { |s| s.committee_name }
+    @standing_committees = StandingCommitteeOffice.committees
+    @standing_committee_members = StandingCommitteeOffice.current.chair_first.group_by { |s| s.committee_name }
 
     @users = [["TBD", nil]] + User.all.order(:last_name).to_a.map! do |user|
       return [user.email, user.id] if user.full_name.blank?
