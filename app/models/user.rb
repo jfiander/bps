@@ -19,9 +19,9 @@ class User < ApplicationRecord
     s3_credentials: {bucket: self.buckets[:files].bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
     # styles: { medium: "300x300>", thumb: "100x100#" }
 
-  validates_inclusion_of :grade, in: %w( S P AP JN N SN ) << nil, message: "must be nil or one of [S, P, AP, JN, N, SN]"
+  validate :valid_rank, :valid_grade
   validates_attachment_content_type :profile_photo, content_type: /\Aimage\/jpe?g\Z/
-  validates :certificate, uniqueness: true
+  validates :certificate, uniqueness: true, allow_nil: true
 
   def full_name
     ranked_name = [auto_rank, "#{first_name} #{last_name}"].join(" ")
@@ -96,6 +96,14 @@ class User < ApplicationRecord
     self.update(locked_at: nil)
   end
 
+  def self.valid_ranks
+    %w[P/Lt/C P/C 1/Lt Lt/C Cdr Lt F/Lt P/D/Lt/C P/D/C D/1/Lt D/Lt/C D/C D/Lt D/Aide D/F/Lt P/Stf/C P/R/C P/V/C P/C/C N/Aide N/F/Lt P/N/F/Lt Stf/C R/C V/C C/C]
+  end
+
+  def self.valid_grades
+    %w[S P AP JN N SN]
+  end
+
   private
   def permitted_roles_from_bridge_office
     {
@@ -135,5 +143,17 @@ class User < ApplicationRecord
 
   def update_invitation_limit
     self.update(invitation_limit: (self.permitted?(:users) ? 1000 : 0))
+  end
+
+  def valid_rank
+    return true if rank.nil?
+    return true if rank.in? User.valid_ranks
+    errors.add(:rank, "must be nil or in User.valid_ranks")
+  end
+
+  def valid_grade
+    return true if grade.nil?
+    return true if grade.in? User.valid_grades
+    errors.add(:grade, "must be nil or in User.valid_grades")
   end
 end
