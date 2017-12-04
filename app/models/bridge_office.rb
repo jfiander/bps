@@ -1,15 +1,20 @@
 class BridgeOffice < ApplicationRecord
   belongs_to :user, optional: true
 
+  def self.departments(assistants: false)
+    depts = %w[commander executive educational administrative secretary treasurer]
+    depts += %w[asst_educational asst_secretary] if assistants
+    depts
+  end
+
   before_validation do
     self.office = self.office.to_s
     BridgeOffice.where.not(office: self.office).where(user: self.user).update_all(user_id: nil)
   end
 
   validates :user_id, uniqueness: true, allow_nil: true
-  validates :office,  uniqueness: true, inclusion: { in: %w[commander executive educational
-    administrative secretary treasurer asst_educational asst_secretary],
-    message: "%{value} is not a valid office" }
+  validates :office,  uniqueness: true
+  validate :valid_office
 
   scope :heads,      -> { where.not("office LIKE ?", "asst_%") }
   scope :assistants, -> { where("office LIKE ?", "asst_%") }
@@ -33,7 +38,7 @@ class BridgeOffice < ApplicationRecord
   end
 
   def department
-    self.office.gsub("asst_", "Assistant ").titleize
+    BridgeOffice.title(self.office)
   end
 
   def email
@@ -48,5 +53,16 @@ class BridgeOffice < ApplicationRecord
       asst_secretary: "asst_secretary"
     }
     "mailto:#{emails[office.to_sym]}@bpsd9.org"
+  end
+
+  def self.title(office)
+    title = office.gsub("asst_", "Assistant ").titleize
+    %w[Executive Educational Administrative].any? { |o| o.in? title } ? "#{title} Officer" : title
+  end
+
+  private
+  def valid_office
+    return true if office.in? BridgeOffice.departments(assistants: true)
+    errors.add(:office, "must be in BridgeOffice.departments(assistants: true)")
   end
 end

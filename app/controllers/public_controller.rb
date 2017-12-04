@@ -16,19 +16,20 @@ class PublicController < ApplicationController
   end
 
   def bridge
+    # Current officers
     @bridge_officers = BridgeOffice.heads.ordered
     @committees = Committee.sorted
     @standing_committees = StandingCommitteeOffice.committees
     @standing_committee_titles = StandingCommitteeOffice.committee_titles
     @standing_committee_members = StandingCommitteeOffice.current.chair_first.group_by { |s| s.committee_name }
 
+    # Lists for form selectors
+    @departments = BridgeOffice.departments.map { |b| [b.titleize, b] }
+    @bridge_offices = BridgeOffice.departments(assistants: true).map { |b| [BridgeOffice.title(b), b] }
     @users = [["TBD", nil]] + User.all.order(:last_name).to_a.map! do |user|
       return [user.email, user.id] if user.full_name.blank?
       [user.full_name, user.id]
     end
-
-    @departments = BridgeOffice.ordered.heads.map { |b| [b.department, b.office] }
-    @bridge_offices = BridgeOffice.ordered.map { |b| [b.title, b.office] }
   end
 
   def newsletter
