@@ -33,12 +33,12 @@ class BridgeOffice < ApplicationRecord
     SQL
   }
 
-  def title
-    %w[Executive Educational Administrative].any? { |o| o.in? department } ? "#{department} Officer" : department
+  def department
+    BridgeOffice.department(office)
   end
 
-  def department
-    BridgeOffice.title(self.office)
+  def title
+    BridgeOffice.title(office)
   end
 
   def email
@@ -55,8 +55,12 @@ class BridgeOffice < ApplicationRecord
     "mailto:#{emails[office.to_sym]}@bpsd9.org"
   end
 
+  def self.department(office)
+    office.gsub("asst_", "Assistant ").titleize
+  end
+
   def self.title(office)
-    title = office.gsub("asst_", "Assistant ").titleize
+    title = self.department(office)
     %w[Executive Educational Administrative].any? { |o| o.in? title } ? "#{title} Officer" : title
   end
 
