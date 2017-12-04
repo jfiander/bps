@@ -12,7 +12,7 @@ class Committee < ApplicationRecord
       group_by { |c| c.department }.
       map do |dept, coms|
         {
-          dept => coms.sort { |c| c.name.downcase.match(/assistant /).present? ? 1 : 0 }
+          dept => coms.sort_by { |c| c.name.downcase.gsub(/(assistant) (.*)/, '\2//zzzzz') }
         }
       end.reduce({}, :merge)
   end
