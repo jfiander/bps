@@ -3,27 +3,30 @@ h2 All users
 table#users
   tr
     th.wide User
-    th.narrow Roles
-    th.center.narrow ID
-    th.wide Current Login
-    th.wide Logged in From
+    th.center.narrow Roles
+    th.center.very-narrow ID
+    th.medium Current Login
+    th.medium Logged in From
   - @users.each do |user|
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
-      td.medium
+      td
         = user[:name].blank? ? user[:email] : mail_to(user[:email], user[:name])
         - if current_user.permitted?(:admin)
           - if user[:locked]
             = button_to("Unlock", unlock_user_path(user[:id]), class: "unlock", method: :patch)
           - elsif !user[:granted_roles].join(",").match(/admin/)
             = button_to("Lock", lock_user_path(user[:id]), class: "lock", method: :patch)
-      td.center.narrow
-        = officer_flag(user[:bridge_office]) if user[:bridge_office].present?
-        = user[:granted_roles].join("<br>").html_safe
-        br
+      td.center
+        - if user[:bridge_office].present?
+          = officer_flag(user[:bridge_office])
+          hr
+        - if user[:granted_roles].present?
+          = user[:granted_roles].join("<br>").html_safe
+          br
         - if user[:permitted_roles].include? :admin
           span.red All
         - else
           span.red = (user[:permitted_roles] - user[:granted_roles]).join("<br>").html_safe
-      td.center.narrow = user[:id]
-      td.center.wide = user[:current_login_at] || "Never logged in"
-      td.center.wide = user[:current_login_from]
+      td.center = user[:id]
+      td.center.small-text = user[:current_login_at] || "Never logged in"
+      td.center.small-text = user[:current_login_from]

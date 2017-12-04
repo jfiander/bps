@@ -32,7 +32,6 @@ table#users {
   svg {
   	width: 3em;
   	height: 2em;
-  	margin: 0 auto;
   }
 
   tr.gray {
@@ -44,16 +43,24 @@ table#users {
     padding: 0.25em;
   }
 
+  .very-narrow {
+    width: 3em;
+  }
+
   .narrow {
-    width: 5em;
+    width: 6em;
   }
 
   .medium {
-    width: 10em;
+    width: 13em;
   }
 
   .wide {
-    width: 15em;
+    width: 20em;
+  }
+
+  .small-text {
+    font-size: 90%;
   }
 
   .locked {
