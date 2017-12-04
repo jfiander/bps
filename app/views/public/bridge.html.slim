@@ -80,7 +80,9 @@ table#bridge
             th.committee-chair Chair
           - @committees[bridge.office]&.each do |committee|
             tr
-              td.committee = committee.display_name
+              td.committee
+                = committee.display_name unless committee.display_name == @last_committee_name
+                - @last_committee_name = committee.display_name
               td.committee-chair
                 = committee.user&.full_name || "TBD"
                 - if current_user&.permitted?(:users)
