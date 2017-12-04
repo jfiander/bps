@@ -3,8 +3,9 @@
     th.title = event.event_type.display_title
     td
       = event.start_at.strftime(@long_time_format)
-      - if event.sessions.present?
+      - if event.sessions.present? || event.length.present?
         br
+      - if event.sessions.present?
         = event.sessions
         |  
         = "session".pluralize(event.sessions)
