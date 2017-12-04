@@ -33,7 +33,7 @@ class PublicController < ApplicationController
   end
 
   def newsletter
-    @years = @bilges.map(&:key).map { |b| b.sub(ENV['ASSET_ENVIRONMENT'], '').sub('.pdf', '').sub(/\/(s|\d+)$/, '').delete('/') }.uniq.reject { |b| b.blank? }
+    @years = @bilges.map(&:key).map { |b| b.sub('.pdf', '').sub(/\/(s|\d+)$/, '').delete('/') }.uniq.reject { |b| b.blank? }
 
     @issues = @bilge_links.keys
 
