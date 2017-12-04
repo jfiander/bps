@@ -113,8 +113,8 @@ class PublicController < ApplicationController
     when :course
       courses = {
         public: Event.send(scope, :public),
-        advanced_grades: Event.send(scope, :advanced_grades),
-        electives: Event.send(scope, :electives)
+        advanced_grades: Event.send(scope, :advanced_grade),
+        electives: Event.send(scope, :elective)
       }
 
       courses.all? { |h| h.blank? } ? [] : courses
