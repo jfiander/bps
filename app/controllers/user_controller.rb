@@ -31,11 +31,11 @@ class UserController < ApplicationController
   def list
     @users = []
 
-    User.where(locked_at: nil).order(:last_name).each do |user|
+    User.unlocked.alphabetized.with_positions.each do |user|
       @users << user_hash(user)
     end
 
-    User.where.not(locked_at: nil).order(:last_name).each do |user|
+    User.locked.alphabetized.with_positions.each do |user|
       @users << user_hash(user)
     end
 

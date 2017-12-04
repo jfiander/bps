@@ -23,6 +23,11 @@ class User < ApplicationRecord
   validates_attachment_content_type :profile_photo, content_type: /\Aimage\/jpe?g\Z/
   validates :certificate, uniqueness: true, allow_nil: true
 
+  scope :locked,         -> { where.not(locked_at: nil) }
+  scope :unlocked,       -> { not(locked) }
+  scope :alphabetized,   -> { order(:last_name) }
+  scope :with_positions, -> { includes(:bridge_office, :standing_committee_offices, :committees, :user_roles, :roles) }
+
   def simple_name
     "#{first_name} #{last_name}"
   end
