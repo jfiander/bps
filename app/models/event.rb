@@ -17,10 +17,10 @@ class Event < ApplicationRecord
   validates_attachment_content_type :flyer, content_type: /\A(image\/(jpe?g|png|gif))|(application\/pdf)\Z/
   
   scope :current, ->(category) do
-    includes(:event_type).where("expires_at > ?", Time.now).where(event_types: {event_category_id: EventType.filter_categories[category]})
+    includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at > ?", Time.now).where(event_types: {event_category_id: EventType.filter_categories[category]})
   end
   scope :expired, ->(category) do
-    includes(:event_type).where("expires_at < ?", Time.now).where(event_types: {event_category_id: EventType.filter_categories[category]})
+    includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at < ?", Time.now).where(event_types: {event_category_id: EventType.filter_categories[category]})
   end
 
   def expired?

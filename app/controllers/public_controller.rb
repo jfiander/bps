@@ -9,24 +9,29 @@ class PublicController < ApplicationController
   MARKDOWN_EDITABLE_VIEWS.each { |m| define_method(m) {} }
   
   def events
-    @registered = Registration.where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
-    @registered_users = Registration.all.group_by { |r| r.event_id }
     @events = get_events(params[:type], :current)
-    @expired_events = get_events(params[:type], :expired)
+    @registered = Registration.includes(:user).where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
+
+    if current_user&.permitted?(params[:type])
+      @registered_users = Registration.includes(:user).all.group_by { |r| r.event_id }
+      @expired_events = get_events(params[:type], :expired)
+    end
   end
 
   def bridge
+    @users = User.includes(:bridge_office, :standing_committee_offices, {committees: :chair})
+
     # Current officers
-    @bridge_officers = BridgeOffice.heads.ordered
-    @committees = Committee.sorted
-    @standing_committees = StandingCommitteeOffice.committees
-    @standing_committee_titles = StandingCommitteeOffice.committee_titles
-    @standing_committee_members = StandingCommitteeOffice.current.chair_first.group_by { |s| s.committee_name }
+    @bridge_officers = BridgeOffice.includes(:user).heads.ordered
+    @committees = Committee.includes(:chair).sorted
+    @standing_committee_members = StandingCommitteeOffice.includes(:user).current.chair_first.group_by { |s| s.committee_name }
 
     # Lists for form selectors
     @departments = BridgeOffice.departments.map { |b| [b.titleize, b] }
     @bridge_offices = BridgeOffice.departments(assistants: true).map { |b| [BridgeOffice.title(b), b] }
-    @users = [["TBD", nil]] + User.all.order(:last_name).to_a.map! do |user|
+    @standing_committees = StandingCommitteeOffice.committees
+    @standing_committee_titles = StandingCommitteeOffice.committee_titles
+    @users = [["TBD", nil]] + @users.order(:last_name).to_a.map! do |user|
       return [user.email, user.id] if user.full_name.blank?
       [user.full_name, user.id]
     end
