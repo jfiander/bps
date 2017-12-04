@@ -75,8 +75,15 @@ table#bridge {
     font-style: italic;
   }
 
-  th.standing-committee {
+  tr.standing-committee th {
     text-align: right;
+  }
+
+  tr.standing-committee td {
+    text-align: left;
+    font-size: 90%;
+    padding-bottom: 1em;
+    line-height: 1.5em;
   }
 
   td.spacer {

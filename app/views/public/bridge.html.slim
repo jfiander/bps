@@ -97,8 +97,8 @@ table#bridge
       | Numbers after each name indicate year of term
       hr
   - @standing_committees.each do |committee|
-    tr
-      th.standing-committee colspan=2 = "#{committee.titleize} Committee"
+    tr.standing-committee
+      th colspan=2 = "#{committee.titleize} Committee"
       td
         - @standing_committee_members[committee]&.each do |member|
           = member.user.full_name
