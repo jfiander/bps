@@ -49,6 +49,8 @@ group :development, :test do
   gem 'sqlite3',          '~> 1.3.11'
   gem 'listen',           '~> 3.1.5'
 
+  gem 'bullet',           '~> 5.7.0'
+
   gem 'rspec-rails',      '~> 3.7.1'
   gem 'simplecov',        '~> 0.15.1'
 end
