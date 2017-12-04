@@ -36,8 +36,8 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find_by(id: event_params[:id]).update(event_params)
-    flash = if @event.valid?
+    @event = Event.find_by(id: event_params[:id])
+    flash = if @event.update(event_params)
       update_topics_and_includes
       redirect_to send("#{params[:type]}s_path"), notice: "Successfully updated #{params[:type]}."
     else
