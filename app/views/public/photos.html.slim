@@ -1,10 +1,12 @@
 h2 Squadron Photos
 
 - if current_user&.permitted?(:photos)
-  small
-    | Please go to 
-    = link_to "Albumizr", "https://albumizr.com"
-    |  to manage these photos.
-  br
+  .editor
+    hr
+    small
+      | Please go to 
+      = link_to "Albumizr", "https://albumizr.com"
+      |  to manage these photos.
+    hr
 
 iframe#photos src="https://albumizr.com/a/2XWu" scrolling="no" frameborder="0"

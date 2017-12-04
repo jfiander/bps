@@ -1,8 +1,10 @@
 h2 Ship's Store
 
 - if current_user&.permitted?(:store)
-  = link_to "Add Item", new_store_item_path
-  hr
+  .editor
+    hr
+    = link_to "Add Item", new_store_item_path
+    hr
 
 table#items
   - @store_items.each do |item|

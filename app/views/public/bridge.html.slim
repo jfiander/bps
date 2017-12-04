@@ -1,58 +1,60 @@
 h2 Bridge Officers
 
 - if current_user&.permitted?(:users)
-  h3 Assign to Bridge Office
-  .assign-bridge
-    = form_tag assign_bridge_path, id: "assign-bridge", name: "assign-bridge"
-      = select_tag :bridge_office, options_for_select(@bridge_offices), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a bridge office"
-      = select_tag :user_id, options_for_select(@users), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a user"
-      br
-      .spacer
-      = submit_tag "Assign to bridge office"
-  hr
-
-  h3 Assign to Committee
-  .assign-bridge
-    = form_tag assign_committee_path, id: "assign-committee", name: "assign-committee"
-      = select_tag :department, options_for_select(@departments), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a department"
-      = text_field_tag :committee, "", required: true, placeholder: "Enter committee name"
-      = select_tag "user_id", options_for_select(@users), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
-      br
-      small
-        | Enter the committee name exactly as it should appear on this page,
+  .editor
+    hr
+    h3 Assign to Bridge Office
+    .assign-bridge
+      = form_tag assign_bridge_path, id: "assign-bridge", name: "assign-bridge"
+        = select_tag :bridge_office, options_for_select(@bridge_offices), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a bridge office"
+        = select_tag :user_id, options_for_select(@users), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a user"
         br
-        | except that any 
-        code.red
-          | //
-        |  will be replaced with a newline-and-indent.
-      br
-      .spacer
-      = submit_tag "Assign to committee"
-  hr
+        .spacer
+        = submit_tag "Assign to bridge office"
+    hr
 
-  h3 Assign to Standing Committee
-  .assign-bridge
-    = form_tag assign_standing_committee_path, id: "assign-standing-committee", name: "assign-standing-committee"
-      = select_tag :committee_name, options_for_select(@standing_committee_titles), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a committee"
-      = select_tag :user_id, options_for_select(@users), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a user"
-      .start-date
-        = label_tag :term_start_at, "Start date: "
-        = date_select :term_start_at, "", start_year: (Time.now.year - 2), end_year: (Time.now.year + 2), required: true
-      = label_tag :term_length, "Years: "
-      | 1
-      = range_field_tag :term_length, 3, min: 1, max: 3, required: true, class: "number"
-      | 3
-      br
-      label.switch
-        = check_box_tag :chair, class: "slider round"
-        span.slider.round.blue
-          .description.chair
-      .spacer
-      br
-      small Term lengths and chair status do not apply to the Executive Committee.
-      br
-      = submit_tag "Assign to standing committee"
-  hr
+    h3 Assign to Committee
+    .assign-bridge
+      = form_tag assign_committee_path, id: "assign-committee", name: "assign-committee"
+        = select_tag :department, options_for_select(@departments), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a department"
+        = text_field_tag :committee, "", required: true, placeholder: "Enter committee name"
+        = select_tag "user_id", options_for_select(@users), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
+        br
+        small
+          | Enter the committee name exactly as it should appear on this page,
+          br
+          | except that any 
+          code.red
+            | //
+          |  will be replaced with a newline-and-indent.
+        br
+        .spacer
+        = submit_tag "Assign to committee"
+    hr
+
+    h3 Assign to Standing Committee
+    .assign-bridge
+      = form_tag assign_standing_committee_path, id: "assign-standing-committee", name: "assign-standing-committee"
+        = select_tag :committee_name, options_for_select(@standing_committee_titles), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a committee"
+        = select_tag :user_id, options_for_select(@users), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a user"
+        .start-date
+          = label_tag :term_start_at, "Start date: "
+          = date_select :term_start_at, "", start_year: (Time.now.year - 2), end_year: (Time.now.year + 2), required: true
+        = label_tag :term_length, "Years: "
+        | 1
+        = range_field_tag :term_length, 3, min: 1, max: 3, required: true, class: "number"
+        | 3
+        br
+        label.switch
+          = check_box_tag :chair, class: "slider round"
+          span.slider.round.blue
+            .description.chair
+        .spacer
+        br
+        small Term lengths and chair status do not apply to the Executive Committee.
+        br
+        = submit_tag "Assign to standing committee"
+    hr
 
 table#bridge
   - @bridge_officers.each do |bridge|

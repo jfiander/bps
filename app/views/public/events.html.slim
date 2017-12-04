@@ -2,7 +2,11 @@ h2 = "Squadron #{params[:type].to_s.titleize}s"
 
 = render "application/education_menu", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)} if params[:type].in? [:course, :seminar]
 
-p = link_to "Add #{params[:type].to_s.titleize}", send("new_#{params[:type]}_path") if current_user&.permitted?(params[:type])
+- if current_user&.permitted?(params[:type])
+  .editor
+    hr
+    = link_to "Add #{params[:type].to_s.titleize}", send("new_#{params[:type]}_path") if current_user&.permitted?(params[:type])
+    hr
 
 table#events
   = render "events/table_section", type: params[:type], all_events: @events

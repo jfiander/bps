@@ -54,6 +54,10 @@ input.number {
   text-align: center;
 }
 
+div.editor {
+  background-color: lighten($background-blue, 3%);
+}
+
 div#main {
   background-color: darken($background-blue, 5%);
   @include shadow-box(4);
