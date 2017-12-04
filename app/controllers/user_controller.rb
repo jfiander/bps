@@ -82,9 +82,9 @@ class UserController < ApplicationController
   def assign_bridge
     bridge_office = BridgeOffice.find_by(office: clean_params[:bridge_office]) || BridgeOffice.create(office: clean_params[:bridge_office])
     if bridge_office.update(user_id: clean_params[:user_id])
-      redirect_to bridge_path, notice: "Successfully assigned committee."
+      redirect_to bridge_path, notice: "Successfully assigned to bridge office."
     else
-      redirect_to bridge_path, alert: "Unable to assign committee."
+      redirect_to bridge_path, alert: "Unable to assign to bridge office."
     end
   end
 
