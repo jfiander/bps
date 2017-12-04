@@ -23,8 +23,12 @@ class User < ApplicationRecord
   validates_attachment_content_type :profile_photo, content_type: /\Aimage\/jpe?g\Z/
   validates :certificate, uniqueness: true, allow_nil: true
 
+  def simple_name
+    "#{first_name} #{last_name}"
+  end
+
   def full_name
-    ranked_name = [auto_rank, "#{first_name} #{last_name}"].join(" ")
+    ranked_name = [auto_rank, "#{simple_name}"].join(" ")
     [ranked_name, grade].reject { |n| n.blank? }.join(", ")
   end
 
