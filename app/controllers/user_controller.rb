@@ -182,7 +182,7 @@ class UserController < ApplicationController
   def user_hash(user)
     {
       id:                 user.id,
-      name:               "#{user.first_name} #{user.last_name}",
+      name:               user.full_name,
       email:              user.email,
       granted_roles:      user.granted_roles,
       permitted_roles:    user.permitted_roles,
