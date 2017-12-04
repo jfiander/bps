@@ -1,4 +1,8 @@
 - if type == :course
+  - if all_events.has_key?(:public) && all_events[:public].present?
+    tr
+      th.section colspan=4 Public
+    = render "events/table", events: all_events[:public]
   - if all_events.has_key?(:advanced_grades) && all_events[:advanced_grades].present?
     tr
       th.section colspan=4 Advanced Grades

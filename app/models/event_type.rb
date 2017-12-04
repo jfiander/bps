@@ -3,8 +3,9 @@ class EventType < ApplicationRecord
 
   scope :advanced_grades, -> { where(event_category_id: category_hash[:advanced_grade]) }
   scope :electives,       -> { where(event_category_id: category_hash[:elective]) }
-  scope :courses,         -> { advanced_grades.or(electives) }
+  scope :courses,         -> { public_courses.or(advanced_grades).or(electives) }
   scope :seminars,        -> { where(event_category_id: category_hash[:seminar]) }
+  scope :public_courses,  -> { where(event_category_id: category_hash[:public]) }
   scope :events,          -> { where(event_category_id: category_hash[:meeting]) }
   scope :meetings,        -> { events }
 
@@ -27,11 +28,37 @@ class EventType < ApplicationRecord
       advanced_grade: 1,
       elective: 2,
       seminar: 3,
-      meeting: 4
+      meeting: 4,
+      public: 5
     }
   end
 
   def self.course_category_ids
-    [category_hash[:advanced_grade], category_hash[:elective]]
+    [category_hash[:public], category_hash[:advanced_grade], category_hash[:elective]]
+  end
+
+  def self.filter_categories
+    {
+      course: [
+        self.category_hash[:public],
+        self.category_hash[:advanced_grade],
+        self.category_hash[:elective],
+      ],
+      public: [
+        self.category_hash[:public]
+      ],
+      advanced_grade: [
+        self.category_hash[:advanced_grade]
+      ],
+      elective: [
+        self.category_hash[:elective],
+      ],
+      seminar: [
+        self.category_hash[:seminar]
+      ],
+      meeting: [
+        self.category_hash[:meeting]
+      ]
+    }
   end
 end
