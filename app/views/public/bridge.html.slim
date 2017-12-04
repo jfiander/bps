@@ -80,13 +80,12 @@ table#bridge
             th.committee-chair Chair
           - @committees[bridge.office]&.each do |committee|
             tr
-              td.committee
-                = committee.display_name
+              td.committee = committee.display_name
+              td.committee-chair
+                = committee.user&.full_name || "TBD"
                 - if current_user&.permitted?(:users)
                   | &nbsp;
-                  = link_to "X", remove_committee_path(committee: committee.name), class: "red", method: :delete,
-                    data: {confirm: "Are you sure you want to remove this committee? You can also assign a committee as 'TBD' above."}
-              td.committee-chair = committee.chair&.full_name || "TBD"
+                  = link_to "X", remove_committee_path(committee.id), class: "red", method: :delete, data: {confirm: "Are you sure you want to remove this committee?"}
       / tr
       /   td colspan=3
       /     hr

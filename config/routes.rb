@@ -75,7 +75,7 @@ Rails.application.routes.draw do
   delete  '/permit',                        to: 'user#permissions_remove'
   post    '/assign_bridge',                 to: 'user#assign_bridge'
   post    '/assign_committee',              to: 'user#assign_committee'
-  delete  '/remove_committee',              to: 'user#remove_committee'
+  delete  '/remove_committee/:id',          to: 'user#remove_committee',          as: 'remove_committee'
   post    '/assign_standing_committee',     to: 'user#assign_standing_committee'
   delete  '/remove_standing_committee/:id', to: 'user#remove_standing_committee', as: 'remove_standing_committee'
   put     '/register/:type/:id',            to: 'user#register',                  as: 'register'

@@ -89,19 +89,19 @@ class UserController < ApplicationController
   end
 
   def assign_committee
-    committee = Committee.find_by(name: clean_params[:committee], department: clean_params[:department]) || Committee.create(name: clean_params[:committee], department: clean_params[:department])
-    if committee.update(chair_id: clean_params[:user_id])
-      redirect_to bridge_path, notice: "Successfully assigned committee."
+    committee = Committee.create(name: clean_params[:committee], department: clean_params[:department], user_id: clean_params[:user_id])
+    if committee.valid?
+      redirect_to bridge_path, notice: "Successfully assigned to committee."
     else
-      redirect_to bridge_path, alert: "Unable to assign committee."
+      redirect_to bridge_path, alert: "Unable to assign to committee."
     end
   end
 
   def remove_committee
-    if Committee.find_by(name: clean_params[:committee])&.destroy
-      redirect_to bridge_path, notice: "Successfully removed committee."
+    if Committee.find_by(id: clean_params[:id])&.destroy
+      redirect_to bridge_path, notice: "Successfully removed committee assignment."
     else
-      redirect_to bridge_path, alert: "Unable to remove committee."
+      redirect_to bridge_path, alert: "Unable to remove committee assignment."
     end
   end
 

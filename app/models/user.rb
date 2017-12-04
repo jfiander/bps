@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :roles, through: :user_roles
   has_one  :bridge_office
   has_many :standing_committee_offices
-  has_many :committees, foreign_key: :chair_id
+  has_many :committees
 
   def self.no_photo
     ActionController::Base.helpers.image_path(User.buckets[:static].link(key: "no_profile.png"))

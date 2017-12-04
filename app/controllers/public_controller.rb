@@ -19,11 +19,11 @@ class PublicController < ApplicationController
   end
 
   def bridge
-    @users = User.includes(:bridge_office, :standing_committee_offices, {committees: :chair})
+    @users = User.includes(:bridge_office, :standing_committee_offices, {committees: :user})
 
     # Current officers
     @bridge_officers = BridgeOffice.includes(:user).heads.ordered
-    @committees = Committee.includes(:chair).sorted
+    @committees = Committee.includes(:user).sorted
     @standing_committee_members = StandingCommitteeOffice.includes(:user).current.chair_first.group_by { |s| s.committee_name }
 
     # Lists for form selectors
