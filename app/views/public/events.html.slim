@@ -6,7 +6,7 @@ p = link_to "Add #{params[:type].to_s.titleize}", send("new_#{params[:type]}_pat
 
 table#events
   = render "events/table_section", type: params[:type], all_events: @events
-  - if current_user&.permitted?(params[:type]) && @expired_events.present?
+  - if current_user&.permitted?(params[:type]) && @expired_events.present? && !(params[:type] == "course" && @expired_events.all? { |k,v| v.blank? })
     tr
       th.section.red colspan=4 = "Expired #{params[:type]}s"
     = render "events/table_section", type: params[:type], all_events: @expired_events
