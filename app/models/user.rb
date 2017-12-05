@@ -19,6 +19,8 @@ class User < ApplicationRecord
     s3_credentials: {bucket: self.buckets[:files].full_bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
     # styles: { medium: "300x300>", thumb: "100x100#" }
 
+  before_validation { self.rank = nil if self.rank.blank? }
+
   validate :valid_rank, :valid_grade
   validates_attachment_content_type :profile_photo, content_type: /\Aimage\/jpe?g\Z/
   validates :certificate, uniqueness: true, allow_nil: true
