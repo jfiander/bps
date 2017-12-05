@@ -32,23 +32,23 @@
     td
       - if current_user&.permitted?(params[:type])
         = link_to(send("copy_#{params[:type]}_path", event), class: "control blue-faded") do
-          = fa_icon("clone")
+          = fa_icon("clone", class: "fa-fw")
           | Clone
         - unless event.expired?
           = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
-            = fa_icon("pencil-square")
+            = fa_icon("pencil-square", class: "fa-fw")
             | Edit
           = link_to(send("destroy_#{params[:type]}_path", event), method: :delete, class: "red control", data: {confirm: "Are you sure you want to force this #{params[:type]} to expire?"}) do
-            = fa_icon("eye-slash")
+            = fa_icon("eye-slash", class: "fa-fw")
             | Expire
       - if user_signed_in? && event.allow_member_registrations && !event.expired?
         - if @registered.has_key?(event.id)
           = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
-            = fa_icon("minus-square")
+            = fa_icon("minus-square", class: "fa-fw")
             | Cancel Registration
         - else
           = link_to(register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
-            = fa_icon("calendar-check-o")
+            = fa_icon("calendar-check-o", class: "fa-fw")
             | Register
       - elsif event.allow_public_registrations && !event.expired?
         = render "events/register_form", event_id: event.id
