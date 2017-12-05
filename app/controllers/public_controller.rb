@@ -125,9 +125,9 @@ class PublicController < ApplicationController
 
       courses.all? { |h| h.blank? } ? [] : courses
     when :seminar
-      Event.send(scope, :seminars)
+      Event.send(scope, :seminar)
     when :event
-      Event.send(scope, :meetings)
+      Event.send(scope, :meeting)
     end
    end
 end
