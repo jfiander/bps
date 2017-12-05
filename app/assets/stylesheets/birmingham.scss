@@ -30,6 +30,10 @@ a.red:hover {
   color: lighten($old-glory-red, 10%);
 }
 
+a.blue-faded:hover {
+  color: lighten($old-glory-blue, 40%);
+}
+
 sup {
   font-size: 60%;
 }
@@ -61,7 +65,7 @@ div.editor {
 }
 
 i.fa {
-  margin-right: 0.5em;
+  margin: 0 0.5em;
 }
 
 div#main {

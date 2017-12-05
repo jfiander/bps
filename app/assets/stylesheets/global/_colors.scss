@@ -12,6 +12,10 @@ $background-blue: #C5D1E1;
   color: $old-glory-blue;
 }
 
+.blue-faded {
+  color: lighten($old-glory-blue, 20%);
+}
+
 .red {
   color: $old-glory-red;
 }
