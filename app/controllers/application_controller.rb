@@ -69,13 +69,17 @@ class ApplicationController < ActionController::Base
   def markdown_static_link(key, title: "")
     link_title = title || key
     link_path = static_bucket.link(key: "general/#{key}")
-    view_context.link_to(link_title, link_path)
+    view_context.link_to(link_path, target: :_blank) do
+      view_context.fa_icon("cloud-download") + link_title
+    end
   end
 
   def markdown_file_link(key, title: "")
     link_title = title || key
     link_path = files_bucket.link(key: "uploaded_files/#{key}")
-    view_context.link_to(link_title, link_path)
+    view_context.link_to(link_path, target: :_blank) do
+      view_context.fa_icon("cloud-download") + link_title
+    end
   end
 
   def markdown_image(key)
