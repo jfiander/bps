@@ -11,7 +11,7 @@ class StoreItem < ApplicationRecord
     s3_region: "us-east-2",
     path: "store_items/:id/:filename",
     s3_permissions: :private,
-    s3_credentials: {bucket: self.buckets[:files].bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
+    s3_credentials: {bucket: self.buckets[:files].full_bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
 
   validates_attachment_content_type :image, content_type: /\Aimage\/(jpe?g|png|gif)\Z/
   validates :name, presence: true

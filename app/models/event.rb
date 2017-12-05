@@ -12,7 +12,7 @@ class Event < ApplicationRecord
     s3_region: "us-east-2",
     path: "event_flyers/:id/:filename",
     s3_permissions: :private,
-    s3_credentials: {bucket: self.buckets[:files].bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
+    s3_credentials: {bucket: self.buckets[:files].full_bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
 
   validates_attachment_content_type :flyer, content_type: /\A(image\/(jpe?g|png|gif))|(application\/pdf)\Z/
   
