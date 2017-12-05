@@ -17,6 +17,8 @@ gem 'jquery-ui-rails',    '~> 6.0.1'
 gem 'turbolinks',         '~> 5'
 gem 'jbuilder',           '~> 2.5'
 
+gem 'font-awesome-rails', '~> 4.7.0.2'
+
 gem 'bugsnag',            '~> 6.1.0'
 
 gem 'aws-sdk',            '~> 2.10.86'
