@@ -12,6 +12,7 @@ class EventType < ApplicationRecord
   def display_title
     title.titleize.
       gsub(/americas/i, "America's").
+      gsub(/commanders/i, "Commander's").
       gsub(/gps/i, "GPS").
       gsub(/vhf/i, "VHF").
       gsub(/dsc/i, "DSC").
