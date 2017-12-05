@@ -1,13 +1,5 @@
 h2 Ship's Store
 
-- if current_user&.permitted?(:store)
-  .editor
-    hr
-    = link_to(new_store_item_path) do
-      = fa_icon("plus-square")
-      | Add Item
-    hr
-
 table#items
   - @store_items.each do |item|
     - image = item&.get_image
