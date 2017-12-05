@@ -1,6 +1,8 @@
 h2 Upload a new file
 
 = form_for(@file, url: upload_file_path, multipart: true) do |f|
+  = fa_icon("file-pdf-o", class: "file-type")
+  = fa_icon("file-image-o", class: "file-type")
   = f.file_field :file
   = f.submit "Upload file"
 

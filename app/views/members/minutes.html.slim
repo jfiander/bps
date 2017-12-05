@@ -4,6 +4,7 @@ h2 Squadron Meeting Minutes
   .editor
     hr
     = form_tag upload_minutes_path, multipart: true
+      = fa_icon("file-pdf-o", class: "file-type")
       = file_field_tag :minutes_upload_file, accept: 'application/pdf', required: true
       = date_select(:issue, :date, start_year: 2014, use_month_numbers: true, discard_day: true, required: true)
       = submit_tag "Submit"

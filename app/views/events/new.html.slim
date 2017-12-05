@@ -41,7 +41,10 @@ h2 = "#{@edit_mode} #{@event_title}"
 
 
     .left = f.label :flyer
-    .right = f.file_field :flyer
+    .right
+      = fa_icon("file-pdf-o", class: "file-type")
+      = fa_icon("file-image-o", class: "file-type")
+      = f.file_field :flyer
     br.clear
 
     hr

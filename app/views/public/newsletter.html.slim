@@ -5,6 +5,7 @@ h3 The Bilge Chatter
   .editor
     hr
     = form_tag upload_bilge_path, multipart: true
+      = fa_icon("file-pdf-o", class: "file-type")
       = file_field_tag :bilge_upload_file, accept: 'application/pdf', required: true
       = date_select(:issue, :date, start_year: 2015, use_month_numbers: true, discard_day: true, required: true)
       = submit_tag "Submit"
