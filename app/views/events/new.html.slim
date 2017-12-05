@@ -113,5 +113,5 @@ h2 = "#{@edit_mode} #{@event_title}"
 
     .center
       hr
-      = f.submit "#{@edit_mode} #{@event_title}"
+      = f.button "#{@edit_mode} #{@event_title}", data: { disable_with: (fa_icon("spinner", class: "fa-pulse") + "#{@edit_mode.sub(/e$/, '')}ing #{@event_title}...") }
     br.clear

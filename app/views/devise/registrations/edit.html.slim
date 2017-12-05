@@ -53,6 +53,6 @@ h2 Edit Profile
     br.clear
 
     .center
-      = f.submit "Update profile"
+      = f.button "Update profile", data: { disable_with: (fa_icon("spinner", class: "fa-pulse") + "Saving changes...") }
       hr
       = link_to "Cancel", :back

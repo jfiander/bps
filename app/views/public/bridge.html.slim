@@ -10,7 +10,7 @@ h2 Bridge Officers
         = select_tag :user_id, options_for_select(@users), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a user"
         br
         .spacer
-        = submit_tag "Assign to bridge office"
+        = button_tag "Assign to bridge office", data: { disable_with: (fa_icon("spinner", class: "fa-pulse") + "Assigning bridge office...") }
     hr
 
     h3 Assign to Committee
@@ -29,7 +29,7 @@ h2 Bridge Officers
           |  will be replaced with a newline-and-indent.
         br
         .spacer
-        = submit_tag "Assign to committee"
+        = button_tag "Assign to committee", data: { disable_with: (fa_icon("spinner", class: "fa-pulse") + "Assigning to committee...") }
     hr
 
     h3 Assign to Standing Committee
@@ -53,7 +53,7 @@ h2 Bridge Officers
         br
         small Term lengths and chair status do not apply to the Executive Committee.
         br
-        = submit_tag "Assign to standing committee"
+        = button_tag "Assign to standing committee", data: { disable_with: (fa_icon("spinner", class: "fa-pulse") + "Assigning to standing committee...") }
     hr
 
 table#bridge
