@@ -40,11 +40,11 @@ class BpsS3
     object(key: key).get.body.read
   end
 
-  private
   def full_bucket
     "bps-#{@environment}-#{@bucket}"
   end
 
+  private
   def s3
     Aws::S3::Resource.new(
       region: 'us-east-2',
