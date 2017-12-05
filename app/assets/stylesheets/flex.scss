@@ -132,6 +132,18 @@
     padding: 0;
     font-size: smaller;
   }
+
+  table#bridge {
+    font-size: 90%;
+
+    .flag svg {
+      max-width: 8em;
+    }
+
+    .department {
+      width: 24%;
+    }
+  }
 }
 
 @media all and (max-width: 1050px) {
