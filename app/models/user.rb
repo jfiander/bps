@@ -24,7 +24,7 @@ class User < ApplicationRecord
   validates :certificate, uniqueness: true, allow_nil: true
 
   scope :locked,         -> { where.not(locked_at: nil) }
-  scope :unlocked,       -> { not(locked) }
+  scope :unlocked,       -> { where.not(id: locked) }
   scope :alphabetized,   -> { order(:last_name) }
   scope :with_positions, -> { includes(:bridge_office, :standing_committee_offices, :committees, :user_roles, :roles) }
 
