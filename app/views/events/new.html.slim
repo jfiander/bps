@@ -62,14 +62,14 @@ h2 = "#{@edit_mode} #{@event_title}"
     .left
       = f.label :cost, "Cost"
     .right
-      |  $ 
+      = fa_icon("usd")
       = f.number_field :cost, class: "number", min: 0, placeholder: "0.00"
     br.clear
 
     .left
       = f.label :member_cost, "Member discounted cost"
     .right
-      |  $ 
+      = fa_icon("usd")
       = f.number_field :member_cost, class: "number", min: 0, placeholder: "0.00"
       small
         | (if applicable)
