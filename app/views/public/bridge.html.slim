@@ -88,9 +88,6 @@ table#bridge
                   | &nbsp;
                   = link_to "X", remove_committee_path(committee.id), class: "red", method: :delete, data: {confirm: "Are you sure you want to remove this committee?"}
               - @last_committee_name = committee.display_name
-      / tr
-      /   td colspan=3
-      /     hr
     tr
       td.spacer colspan=3
   tr
