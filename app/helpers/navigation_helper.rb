@@ -22,9 +22,10 @@ module NavigationHelper
     css_class = permit.to_s
     css_class += " active" if active
 
+    icon_tag = icon.present? ? fa_icon(icon) : ""
     link = link_to(path, options) do
       content_tag(:li, class: css_class) do
-        fa_icon(icon) + title
+        icon_tag + title
       end
     end
 

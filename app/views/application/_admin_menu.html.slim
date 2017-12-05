@@ -1,7 +1,7 @@
 - if current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)
-  = link "Edit This Page",       path: edit_page_path(controller.action_name), suffix: " | "
-  = link "Upload Files",         path: file_path,                              suffix: (current_user&.permitted?(:users) ? " | " : "")
+  = link "Edit This Page", path: edit_page_path(controller.action_name), icon: "pencil-square"
+  = link "Upload Files",   path: file_path,                              icon: "cloud-upload"
 - if current_user&.permitted?(:users)
-  = link "Show All Users",       path: users_path,               suffix: " | "
-  = link "Invite New User",      path: new_user_invitation_path, suffix: " | "
-  = link "Manage Permissions",   path: permit_path
+  = link "Users List",     path: users_path,                             icon: "users"
+  = link "Invite User",    path: new_user_invitation_path,               icon: "user-plus"
+  = link "Permissions",    path: permit_path,                            icon: "user-secret"
