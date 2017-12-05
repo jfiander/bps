@@ -21,7 +21,9 @@
         b
           | Location: 
           - if event.map_link.present?
-            = link_to "Map", event.map_link, target: :_blank
+            = link_to(event.map_link, target: :_blank) do
+              = fa_icon("map-marker")
+              | Map
         br
         p = simple_format(event.location)
 
