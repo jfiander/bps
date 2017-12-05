@@ -18,7 +18,7 @@ hr
         td
           pre
             - if file.file_content_type.match(/image/)
-              = "\%image/#{file.file_file_name}/"
+              = "\%image/#{file.id}/#{file.file_file_name}/"
             - else
-              = "\%file/#{file.file_file_name}/#{file.file_file_name.match(/^(.*?)\.\w{2,4}$/)[1].titleize}/"
+              = "\%file/#{file.id}/#{file.file_file_name}/#{file.file_file_name.match(/^(.*?)\.\w{2,4}$/)[1].titleize}/"
         td = link_to "X", remove_file_path(file.id), method: :delete, class: "red"

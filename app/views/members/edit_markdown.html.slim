@@ -113,13 +113,12 @@ p
         span.red %education
   p
     b Uploaded files:
-    ul
-      li
-        span.red %file/
-        | file_name.abc
-        span.red
-          | /
-        | File Title
-      li
-        span.red %image/
-        | image_file_name.abc
+  p
+    | To link to uploaded files or display uploaded images, go to the 
+    = link_to "upload files page", file_path
+    |  and copy the "Markdown key" into where you want it to display on the page.
+    br
+    | You can change the link title by modifying the text between the right two 
+    span.red
+      | /
+    | .
