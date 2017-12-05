@@ -3,6 +3,7 @@ h2 All users
 table#users
   tr
     th.wide User
+    th.center.very-narrow
     th.center.narrow Roles
     th.center.very-narrow ID
     th.medium Current Login
@@ -11,11 +12,12 @@ table#users
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
       td
         = user[:name].blank? ? user[:email] : mail_to(user[:email], user[:name])
+      td.center
         - if current_user.permitted?(:admin)
           - if user[:locked]
-            = button_to("Unlock", unlock_user_path(user[:id]), class: "unlock", method: :patch)
+            = link_to(unlock_user_path(user[:id]), class: "unlock", method: :patch) { fa_icon "lock" }
           - elsif !user[:granted_roles].join(",").match(/admin/)
-            = button_to("Lock", lock_user_path(user[:id]), class: "lock", method: :patch)
+            = link_to(lock_user_path(user[:id]), class: "lock", method: :patch) { fa_icon "unlock" }
       td.center
         - if user[:bridge_office].present?
           = officer_flag(user[:bridge_office])

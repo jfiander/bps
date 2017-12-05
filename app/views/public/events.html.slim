@@ -5,7 +5,9 @@ h2 = "Squadron #{params[:type].to_s.titleize}s"
 - if current_user&.permitted?(params[:type])
   .editor
     hr
-    = link_to "Add #{params[:type].to_s.titleize}", send("new_#{params[:type]}_path") if current_user&.permitted?(params[:type])
+    = link_to(send("new_#{params[:type]}_path")) do
+      = fa_icon("plus-square")
+      = "Add #{params[:type].to_s.titleize}"
     hr
 
 table#events

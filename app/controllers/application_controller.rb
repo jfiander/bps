@@ -50,7 +50,8 @@ class ApplicationController < ActionController::Base
       gsub(/(.*?)%static_file\/(.*?)\/(.*?)\/(.*?)$/, '\1' + markdown_static_link('\2', title: '\3') + '\4').
       gsub(/(.*?)%file\/(\d+)\/(.*?)\/(.*?)\/(.*?)$/, '\1' + markdown_file_link('\2/\3', title: '\4') + '\5').
       gsub(/(.*?)%image\/(\d+)\/(.*?)\/(.*?)$/, '\1' + markdown_image('\2/\3') + '\4').
-      gsub("&reg;", "<sup>&reg;</sup>")
+      gsub("&reg;", "<sup>&reg;</sup>").
+      gsub(/(.*?)%fa\/(.*?)\/(.*?)$/, view_context.fa_icon('\2'))
   end
 
   def center_html

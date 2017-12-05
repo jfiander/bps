@@ -83,10 +83,10 @@ table#bridge
               td.committee class=("additional" if @last_committee_name == committee.display_name)
                 = committee.display_name unless committee.display_name == @last_committee_name
               td.committee-chair class=("additional" if @last_committee_name == committee.display_name)
-                = committee.user&.full_name || "TBD"
                 - if current_user&.permitted?(:users)
-                  | &nbsp;
-                  = link_to "X", remove_committee_path(committee.id), class: "red", method: :delete, data: {confirm: "Are you sure you want to remove this committee?"}
+                  = link_to(remove_committee_path(committee.id), class: "red", method: :delete,
+                    data: {confirm: "Are you sure you want to remove #{committee.user&.simple_name} from #{committee.name}?"}) { fa_icon "minus-square" }
+                = committee.user&.full_name || "TBD"
               - @last_committee_name = committee.display_name
     tr
       td.spacer colspan=3
@@ -101,12 +101,12 @@ table#bridge
       th colspan=2 = "#{committee.titleize} Committee"
       td
         - @standing_committee_members[committee]&.each do |member|
+          - if current_user&.permitted?(:users)
+            = link_to(remove_standing_committee_path(member.id), method: :delete, class: "red",
+            data: {confirm: "Are you sure you want to remove #{member.user&.simple_name} from the #{committee.titleize} Committee?"}) { fa_icon "minus-square" }
           = member.user.full_name
           small
             = " (chair)" if member.chair
             |  
             = member.term_fraction
-          - if current_user&.permitted?(:users)
-            |  
-            = link_to "X", remove_standing_committee_path(member.id), method: :delete, class: "red", data: {confirm: "Are you sure you want to remove this standing committee assignment?"}
           br

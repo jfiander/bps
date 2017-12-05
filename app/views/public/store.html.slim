@@ -3,7 +3,9 @@ h2 Ship's Store
 - if current_user&.permitted?(:store)
   .editor
     hr
-    = link_to "Add Item", new_store_item_path
+    = link_to(new_store_item_path) do
+      = fa_icon("plus-square")
+      | Add Item
     hr
 
 table#items
@@ -35,12 +37,16 @@ table#items
           - if @store_item_requests.find_by(user_id: current_user.id, store_item_id: item.id).present?
             span.red Requested
           - else
-            = link_to "Request", request_store_item_path(item.id), method: :put, remote: true, id: "request_item_#{item.id}"
+            = link_to(request_store_item_path(item.id), method: :put, remote: true, id: "request_item_#{item.id}") do
+              = fa_icon("cart-plus")
+              | Request
         - if current_user&.permitted?(:store)
-          |  | 
-          = link_to "Edit", edit_store_item_path(item.id)
-          |  | 
-          = link_to "Remove", destroy_store_item_path(item.id), method: :delete, class: "red"
+          = link_to(edit_store_item_path(item.id), class: "blue-faded") do
+            = fa_icon "pencil-square"
+            | Edit
+          = link_to(destroy_store_item_path(item.id), method: :delete, class: "red") do
+            = fa_icon "minus-square"
+            | Remove
 
 - if current_user&.permitted?(:store) && @store_item_requests.present?
   h3 Requested Items

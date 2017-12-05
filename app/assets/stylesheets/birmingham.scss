@@ -60,6 +60,10 @@ div.editor {
   background-color: lighten($background-blue, 3%);
 }
 
+i.fa {
+  margin-right: 0.5em;
+}
+
 div#main {
   background-color: darken($background-blue, 5%);
   @include shadow-box(4);

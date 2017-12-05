@@ -21,4 +21,4 @@ hr
               = "\%image/#{file.id}/#{file.file_file_name}/"
             - else
               = "\%file/#{file.id}/#{file.file_file_name}/#{file.file_file_name.match(/^(.*?)\.\w{2,4}$/)[1].titleize}/"
-        td = link_to "X", remove_file_path(file.id), method: :delete, class: "red"
+        td = link_to(remove_file_path(file.id), method: :delete, class: "red") { fa_icon "minus-square" }
