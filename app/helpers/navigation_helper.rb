@@ -1,5 +1,5 @@
 module NavigationHelper
-  def link(title = nil, permit: nil, path: nil, show_when: :always, suffix: "", active: false)
+  def link(title = nil, permit: nil, path: nil, show_when: :always, suffix: "", active: false, icon: nil)
     return nil unless show_menu?(title: title, permit: permit, show_when: show_when, path: path)
 
     options = {class: permit.to_s}
@@ -8,18 +8,27 @@ module NavigationHelper
       title = "Logout"
       path = destroy_user_session_path
       options = {method: :delete, class: "red"}
+      icon = "sign-out"
     elsif title == :login_or_logout
       title = "Member Login"
       path = new_user_session_path
       options = {class: "members"}
-    elsif title.in? [:members_area, :your_profile, :admin]
+      icon = "sign-in"
+    elsif title.in? [:members_area, :profile, :admin]
       options = {class: "members"}
     end
 
     title = title.to_s.titleize if title.is_a?(Symbol)
     css_class = permit.to_s
     css_class += " active" if active
-    link_to(content_tag(:li, title, class: css_class).html_safe, path, options) + suffix
+
+    link = link_to(path, options) do
+      content_tag(:li, class: css_class) do
+        fa_icon(icon) + title
+      end
+    end
+
+    link.html_safe + suffix
   end
 
   private
