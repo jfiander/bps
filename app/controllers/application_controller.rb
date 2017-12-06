@@ -121,7 +121,7 @@ class ApplicationController < ActionController::Base
   helper_method :officer_flag
 
   def spinner_button(form = nil, button_text: "Submit", disable_text: nil)
-    disable_text ||= button_text.sub(/e$/, '') + "ing"
+    disable_text ||= button_text == "Submit" ? "Submitting" : button_text.sub(/e$/, '') + "ing"
     data_hash = { disable_with: (view_context.fa_icon("spinner pulse") + "#{disable_text}...") }
     
     return form.button(button_text, data: data_hash) if form.present?
