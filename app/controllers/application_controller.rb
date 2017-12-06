@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   force_ssl if: :ssl_configured?
   protect_from_forgery with: :exception
 
+  helper ViewHelpers
+  include BucketHelpers
+  helper_method :static_bucket, :files_bucket, :bilge_bucket, :photos_bucket
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :pick_header_image
   before_action :meta_tags
@@ -105,44 +109,4 @@ class ApplicationController < ActionController::Base
     KEYWORDS
     @site_keywords = keywords
   end
-
-  def officer_flag(office)
-    rank = case office
-    when "commander"
-      "CDR"
-    when "executive", "educational", "administrative", "secretary", "treasurer"
-      "LTC"
-    when "asst_educational", "asst_secretary"
-      "1LT"
-    end
-
-    open(static_bucket.link(key: "flags/SVG/#{rank}.svg")).read.html_safe
-  end
-  helper_method :officer_flag
-
-  def spinner_button(form = nil, button_text: "Submit", disable_text: nil)
-    disable_text ||= button_text == "Submit" ? "Submitting" : button_text.sub(/e$/, '') + "ing"
-    data_hash = { disable_with: (view_context.fa_icon("spinner pulse") + "#{disable_text}...") }
-    
-    return form.button(button_text, data: data_hash) if form.present?
-    view_context.button_tag(button_text, data: data_hash)
-  end
-  helper_method :spinner_button
-
-  def static_bucket
-    ApplicationRecord.buckets[:static]
-  end
-
-  def files_bucket
-    ApplicationRecord.buckets[:files]
-  end
-
-  def bilge_bucket
-    ApplicationRecord.buckets[:bilge]
-  end
-  
-  def photos_bucket
-    ApplicationRecord.buckets[:photos]
-  end
-  helper_method :static_bucket, :files_bucket, :bilge_bucket, :photos_bucket
 end
