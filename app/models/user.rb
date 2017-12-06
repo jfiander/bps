@@ -59,28 +59,22 @@ class User < ApplicationRecord
   end
 
   def permitted?(*required_roles, &block)
-    roles = []
-    all_roles = Role.all
-    required_roles.each { |role| roles << all_roles.find_by(name: role.to_s) }
-    return false if roles.blank?
-
-    permitted = false
-    roles.each { |r| permitted = true if r&.name.in?(permitted_roles.map(&:to_s)) }
+    return false if required_roles.blank? || required_roles.all? { |r| r.blank? }
+    permitted = permitted_roles.any? { |p| p.in? required_roles.reject { |r| r.nil? }.map(&:to_sym) }
 
     yield if permitted && block_given?
     permitted
   end
 
   def granted_roles
-    roles.map(&:name).uniq
+    @roles.map(&:name).map(&:to_sym).uniq
   end
 
   def permitted_roles
-    roles_array = roles.to_a
-    all_roles = Role.all
+    @roles = roles.to_a
     [
-      roles_array.map(&:name).map(&:to_sym),
-      roles_array.map(&:children).flatten.map(&:name).map(&:to_sym),
+      granted_roles,
+      implied_roles,
       permitted_roles_from_bridge_office,
       permitted_roles_from_committee
     ].flatten.uniq.reject { |r| r.nil? }
@@ -94,8 +88,9 @@ class User < ApplicationRecord
 
   def unpermit!(role)
     UserRole.where(user: self).destroy_all and return true if role == :all
-    UserRole.where(user: self, role: Role.find_by(name: role.to_s)).destroy_all.present?
+    result = UserRole.where(user: self, role: Role.find_by(name: role.to_s)).destroy_all.present?
     update_invitation_limit
+    result
   end
 
   def locked?
@@ -119,6 +114,16 @@ class User < ApplicationRecord
   end
 
   private
+  def implied_roles
+    orig_roles = @roles.dup
+    output = []
+    while orig_roles.present?
+      output << new_roles = Role.all.to_a.find_all { |r| r.parent_id.in? orig_roles.map(&:id) }
+      orig_roles = new_roles
+    end
+    output.flatten.map(&:name).map(&:to_sym)
+  end
+
   def permitted_roles_from_bridge_office
     {
       "commander" => [:admin],

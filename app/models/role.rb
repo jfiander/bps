@@ -18,7 +18,7 @@ class Role < ApplicationRecord
   end
 
   def children
-    child_roles = Role.where(parent_id: self.id).to_a
+    child_roles = Role.all.to_a.find_all { |r| r.parent_id == self.id }.to_a
     child_roles << child_roles&.map(&:children)
     child_roles.flatten
   end
