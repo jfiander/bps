@@ -1,13 +1,13 @@
 h2 Bridge Officers
 
-- if current_user&.permitted?(:users)
+- if @current_user_permitted_users
   .editor
     hr
     h3 Assign to Bridge Office
     .assign-bridge
       = form_tag assign_bridge_path, id: "assign-bridge", name: "assign-bridge"
-        = select_tag :bridge_office, options_for_select(@bridge_offices), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a bridge office"
-        = select_tag :user_id, options_for_select(@users), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a user"
+        = select_tag :bridge_office, options_for_select(@select[:bridge_offices]), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a bridge office"
+        = select_tag :user_id, options_for_select(@select[:users]), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a user"
         br
         .spacer
         = spinner_button(button_text: "Assign to bridge office", disable_text: "Assigning bridge office")
@@ -16,9 +16,9 @@ h2 Bridge Officers
     h3 Assign to Committee
     .assign-bridge
       = form_tag assign_committee_path, id: "assign-committee", name: "assign-committee"
-        = select_tag :department, options_for_select(@departments), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a department"
+        = select_tag :department, options_for_select(@select[:departments]), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a department"
         = text_field_tag :committee, "", required: true, placeholder: "Enter committee name"
-        = select_tag "user_id", options_for_select(@users), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
+        = select_tag "user_id", options_for_select(@select[:users]), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
         br
         small
           | Enter the committee name exactly as it should appear on this page,
@@ -35,8 +35,8 @@ h2 Bridge Officers
     h3 Assign to Standing Committee
     .assign-bridge
       = form_tag assign_standing_committee_path, id: "assign-standing-committee", name: "assign-standing-committee"
-        = select_tag :committee_name, options_for_select(@standing_committee_titles), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a committee"
-        = select_tag :user_id, options_for_select(@users), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a user"
+        = select_tag :committee_name, options_for_select(@select[:standing_committees]), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a committee"
+        = select_tag :user_id, options_for_select(@select[:users]), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a user"
         .start-date
           = label_tag :term_start_at, "Start date: "
           = date_select :term_start_at, "", start_year: (Time.now.year - 2), end_year: (Time.now.year + 2), required: true
@@ -56,57 +56,53 @@ h2 Bridge Officers
         = spinner_button(button_text: "Assign to standing committee", disable_text: "Assigning to standing committee")
     hr
 
-table#bridge
-  - @bridge_officers.each do |bridge|
-    - officer_name = bridge&.user&.full_name || "TBD"
-    - officer_photo = bridge&.user&.photo || User.no_profile
-    - assistant = BridgeOffice.find_by(office: "asst_#{bridge.office}")
-    - assistant_name = assistant&.user&.full_name || "TBD"
-    tr
-      th.flag = bridge.title
-      th.department = link_to officer_name, bridge.email
-      td
-    tr
-      td.flag = officer_flag(bridge.office)
-      td.department = image_tag officer_photo, width: 125
-      td
-        table.committees
-          - if assistant.present?
-            tr.assistant
-              td = assistant.title
-              td = link_to assistant_name, assistant.email
-          tr
-            th.committee Committees
-            th.committee-chair Chair
-          - @committees[bridge.office]&.each do |committee|
-            tr
-              td.committee class=("additional" if @last_committee_name == committee.display_name)
-                = committee.display_name unless committee.display_name == @last_committee_name
-              td.committee-chair class=("additional" if @last_committee_name == committee.display_name)
-                - if current_user&.permitted?(:users)
-                  = link_to(remove_committee_path(committee.id), class: "red", method: :delete,
-                    data: {confirm: "Are you sure you want to remove #{committee.user&.simple_name} from #{committee.name}?"}) { fa_icon "minus-square" }
-                = committee.user&.full_name || "TBD"
-              - @last_committee_name = committee.display_name
-    tr
-      td.spacer colspan=3
-  tr
-    th.standing-title colspan=3 Standing Committees
-  tr
-    td.standing-info colspan=3
-      | Numbers after each name indicate year of term
-      hr
-  - @standing_committees.each do |committee|
-    tr.standing-committee
-      th colspan=2 = "#{committee.titleize} Committee"
-      td
-        - @standing_committee_members[committee]&.each do |member|
-          - if current_user&.permitted?(:users)
-            = link_to(remove_standing_committee_path(member.id), method: :delete, class: "red",
-            data: {confirm: "Are you sure you want to remove #{member.user&.simple_name} from the #{committee.titleize} Committee?"}) { fa_icon "minus-square" }
-          = member.user.full_name
+  #bridge.table
+    - @bridge_list[:departments].each do |dept, data|
+      .table-row
+        .table-cell.table-header.flag = data[:head][:title]
+        .table-cell.table-header.department = link_to(data[:head][:user][:full_name], data[:head][:email]) if data[:head][:user].present?
+      .table-row
+        .table-cell.flag = officer_flag(data[:head][:office])
+        .table-cell.department = image_tag(data[:head][:user][:photo], width: 125)
+        .table-cell
+          .table.committees
+            - if data[:assistant].present?
+              .table-row.assistant
+                .table-cell = data[:assistant][:title]
+                .table-cell = link_to data[:assistant][:user][:full_name], data[:assistant][:email]
+            .table-row
+              .table-cell.table-header.committee Committees
+              .table-cell.table-header.committee-chair Chair
+            - data[:committees]&.each do |committee|
+              - committee_user = get_user(committee[1])
+              .table-row id=("committee_row_#{committee[2]}")
+                .table-cell.committee class=("additional" if @last_committee_name == committee[0])
+                  = committee[0] unless committee[0] == @last_committee_name
+                .table-cell.committee-chair class=("additional" if @last_committee_name == committee[0])
+                  - if @current_user_permitted_users
+                    = link_to(remove_committee_path(committee[2]), class: "red", method: :delete, remote: true,
+                      data: {confirm: "Are you sure you want to remove #{committee_user&.simple_name} from #{committee[0]}?"}) { fa_icon "minus-square" }
+                  = committee_user&.full_name || "TBD"
+                - @last_committee_name = committee[0]
+      .table-row
+        .table-cell.spacer
+
+hr
+h2 Standing Committees
+.info Numbers after each name indicate year of term
+
+#standing-committees.table
+  - @bridge_list[:standing_committees].each do |(committee, members)|
+    .table-row.standing-committee
+      .table-cell.table-header = "#{committee.titleize} Committee"
+      .table-cell
+        - members&.each do |member|
+          - if @current_user_permitted_users
+            = link_to(remove_standing_committee_path(member[:id]), method: :delete, class: "red",
+            data: {confirm: "Are you sure you want to remove #{member[:simple_name]} from the #{committee.titleize} Committee?"}) { fa_icon "minus-square" }
+          = member[:full_name]
           small
-            = " (chair)" if member.chair
+            = " (chair)" if member[:chair]
             |  
-            = member.term_fraction
+            = member[:term_fraction]
           br

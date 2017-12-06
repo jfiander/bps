@@ -19,23 +19,61 @@ class PublicController < ApplicationController
   end
 
   def bridge
-    @users = User.includes(:bridge_office, :standing_committee_offices, {committees: :user})
+    # Only load roles for editing permissions once
+    @current_user_permitted_users = current_user&.permitted?(:users)
 
-    # Current officers
-    @bridge_officers = BridgeOffice.includes(:user).heads.ordered
-    @committees = Committee.includes(:user).sorted
-    @standing_committee_members = StandingCommitteeOffice.includes(:user).current.chair_first.group_by { |s| s.committee_name }
+    # Preload all needed data
+    @users = User.order(:last_name) #.includes(:bridge_office, :committees, :standing_committee_offices)
+    all_bridge_officers = BridgeOffice.ordered
+    all_committees = Committee.sorted
+    standing_committees = StandingCommitteeOffice.current.chair_first.group_by { |s| s.committee_name }
 
-    # Lists for form selectors
-    @departments = BridgeOffice.departments.map { |b| [b.titleize, b] }
-    @bridge_offices = BridgeOffice.departments(assistants: true).map { |b| [BridgeOffice.title(b), b] }
-    @standing_committees = StandingCommitteeOffice.committees
-    @standing_committee_titles = StandingCommitteeOffice.committee_titles
-    @users = [["TBD", nil]] + @users.order(:last_name).to_a.map! do |user|
-      return [user.email, user.id] if user.full_name.blank?
+    # Build lists for form selectors
+    @select = {}
+    @select[:departments] = BridgeOffice.departments.map { |b| [b.titleize, b] }
+    @select[:bridge_offices] = BridgeOffice.departments(assistants: true).map { |b| [BridgeOffice.title(b), b] }
+    @select[:standing_committees] = StandingCommitteeOffice.committee_titles
+    @select[:users] = [["TBD", nil]] + @users.to_a.map! do |user|
+      return [user.email, user.id] if user&.full_name.blank?
       [user.full_name, user.id]
     end
+
+    # Assemble data for view
+    @bridge_list = {}
+    department_data = {}
+    standing_committee_data = {}
+    BridgeOffice.departments.each do |dept|
+      head = all_bridge_officers.find_all { |b| b.office == dept }.first
+      assistant = all_bridge_officers.find_all { |b| b.office == "asst_#{dept}" }.first
+      department_data[dept.to_sym] = {}
+      department_data[dept.to_sym][:head] = {title: head&.title, office: head&.office, email: head&.email, user: get_user(head&.user_id)&.bridge_hash}
+      department_data[dept.to_sym][:assistant] = {title: assistant&.title, office: assistant&.office, email: assistant&.email, user: get_user(assistant&.user_id)&.bridge_hash} if assistant.present?
+      department_data[dept.to_sym][:committees] = all_committees[dept]&.map { |c| [c.name, c.user_id, c.id] }
+    end
+    standing_committees.each do |committee, members|
+      standing_committee_data[committee] = []
+      members.each do |member|
+        user = get_user(member.user_id)
+        standing_committee_data[committee] << {
+          id: member.id,
+          simple_name: user&.simple_name,
+          full_name: user&.full_name,
+          chair: member.chair.present?,
+          term_fraction: member.term_fraction
+        }
+      end
+    end
+
+    @bridge_list = {
+      departments: department_data,
+      standing_committees: standing_committee_data
+    }
   end
+
+  def get_user(id)
+    @users.find_all { |u| u.id == id }.first
+  end
+  helper_method :get_user
 
   def newsletter
     @years = @bilges.map(&:key).map { |b| b.sub('.pdf', '').sub(/\/(s|\d+)$/, '').delete('/') }.uniq.reject { |b| b.blank? }

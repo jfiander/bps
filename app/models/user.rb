@@ -38,8 +38,9 @@ class User < ApplicationRecord
   scope :with_name,      ->(name) { where(simple_name: name) }
 
   def full_name
-    ranked_name = [auto_rank, "#{simple_name}"].join(" ")
-    [ranked_name, grade].reject { |n| n.blank? }.join(", ")
+    (auto_rank.present? ? "#{auto_rank} " : "") +
+    simple_name +
+    (grade.present? ? ", #{grade}" : "")
   end
 
   def photo
@@ -48,6 +49,14 @@ class User < ApplicationRecord
     else
       User.no_photo
     end
+  end
+
+  def bridge_hash
+    {
+      full_name: full_name,
+      simple_name: simple_name,
+      photo: photo
+    }
   end
 
   def register_for(event)

@@ -5,6 +5,8 @@ class Committee < ApplicationRecord
     administrative secretary treasurer asst_educational asst_secretary],
     message: "%{value} is not a valid department" }
 
+  scope :for_department, ->(department) { where(department: department.to_s) }
+
   def self.sorted
     Committee.all.
       order(:name).
