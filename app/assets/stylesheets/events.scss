@@ -4,6 +4,11 @@
 
 div#new-event {
   width: 95%;
+
+  ul {
+    font-size: 80%;
+    list-style: none;
+  }
 }
 
 input.map-link {
