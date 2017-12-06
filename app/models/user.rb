@@ -6,6 +6,9 @@ class User < ApplicationRecord
   has_many :standing_committee_offices
   has_many :committees
 
+  has_many :event_instructors
+  has_many :events, through: :event_instructors
+
   def self.no_photo
     ActionController::Base.helpers.image_path(User.buckets[:static].link(key: "no_profile.png"))
   end

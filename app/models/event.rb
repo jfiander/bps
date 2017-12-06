@@ -3,6 +3,9 @@ class Event < ApplicationRecord
   has_many   :course_topics,   foreign_key: :course_id
   has_many   :course_includes, foreign_key: :course_id
   belongs_to :prereq, class_name: "EventType", optional: true
+  
+  has_many :event_instructors
+  has_many :instructors, through: :event_instructors, source: :user
 
   before_validation { self.map_link = "http://#{self.map_link}" unless self.map_link.blank? || self.map_link.match(/https?\:\/\//) }
 
@@ -52,6 +55,10 @@ class Event < ApplicationRecord
 
   def register_user(user)
     Registration.create(user: user, event: self)
+  end
+
+  def assign_instructor(user)
+    EventInstructor.create(event: self, user: user)
   end
 
   private
