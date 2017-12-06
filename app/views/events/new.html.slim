@@ -49,6 +49,21 @@ h2 = "#{@edit_mode} #{@event_title}"
 
     hr
 
+    - if params[:type].in? [:course, :seminar]
+      .left
+        = label_tag :instructors
+        ul
+          li Enter the full name of each instructor without rank or grade.
+          li You can also put a slash followed by their certificate number.
+          li.red Invalid instructors will not be saved.
+      .right
+        = text_area_tag :instructors, @instructors
+        br
+        small Put each item on a separate line.
+      br.clear
+
+      hr
+
     .left = f.label :location
     .right = f.text_area :location
     br.clear

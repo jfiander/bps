@@ -70,6 +70,11 @@
         b Student requirements:
         br
         p = simple_format(event.requirements)
+      - if event.instructors.present?
+        hr
+        b Instructors:
+        br
+        p = simple_format(event.instructors.map(&:full_name).join("\n"))
       - if event.prereq.present?
         hr
         b Prerequisite course:

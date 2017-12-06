@@ -115,19 +115,20 @@ class PublicController < ApplicationController
   end
   
   def get_events(type, scope = :current)
+    events = Event.includes(:event_instructors, :instructors)
     case type
     when :course
       courses = {
-        public: Event.send(scope, :public),
-        advanced_grades: Event.send(scope, :advanced_grade),
-        electives: Event.send(scope, :elective)
+        public: events.send(scope, :public),
+        advanced_grades: events.send(scope, :advanced_grade),
+        electives: events.send(scope, :elective)
       }
 
       courses.all? { |h| h.blank? } ? [] : courses
     when :seminar
-      Event.send(scope, :seminar)
+      events.send(scope, :seminar)
     when :event
-      Event.send(scope, :meeting)
+      events.send(scope, :meeting)
     end
    end
 end
