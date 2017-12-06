@@ -34,10 +34,10 @@ table#items
               | Request
         - if current_user&.permitted?(:store)
           = link_to(edit_store_item_path(item.id), class: "blue-faded") do
-            = fa_icon "pencil-square"
+            = fa_icon("pencil-square")
             | Edit
           = link_to(destroy_store_item_path(item.id), method: :delete, class: "red") do
-            = fa_icon "minus-square"
+            = fa_icon("minus-square")
             | Remove
 
 - if current_user&.permitted?(:store) && @store_item_requests.present?

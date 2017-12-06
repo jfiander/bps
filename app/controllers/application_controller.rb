@@ -120,6 +120,15 @@ class ApplicationController < ActionController::Base
   end
   helper_method :officer_flag
 
+  def spinner_button(form = nil, button_text: "Submit", disable_text: nil)
+    disable_text ||= button_text.sub(/e$/, '') + "ing"
+    data_hash = { disable_with: (view_context.fa_icon("spinner pulse") + "#{disable_text}...") }
+    
+    form.button(button_text, data: data_hash) and return if form.present?
+    view_context.button_tag(button_text, data: data_hash)
+  end
+  helper_method :spinner_button
+
   def static_bucket
     ApplicationRecord.buckets[:static]
   end

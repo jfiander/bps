@@ -5,7 +5,7 @@ h3 = @page.name.titleize
   = f.hidden_field :name
   = f.text_area :markdown
   br
-  = f.button "Save page", data: { disable_with: (fa_icon("spinner", class: "fa-pulse") + "Saving...") }
+  = spinner_button(f, button_text: "Save page", disable_text: "Saving")
 
   hr
 

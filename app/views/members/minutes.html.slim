@@ -7,7 +7,7 @@ h2 Squadron Meeting Minutes
       = fa_icon("file-pdf-o", class: "file-type")
       = file_field_tag :minutes_upload_file, accept: 'application/pdf', required: true
       = date_select(:issue, :date, start_year: 2014, use_month_numbers: true, discard_day: true, required: true)
-      = button_tag "Submit", data: { disable_with: (fa_icon("spinner", class: "fa-pulse") + "Submitting...") }
+      = spinner_button(button_text: "Submit")
       br
       label.switch
         = check_box_tag :minutes_excom, class: "slider round"

@@ -4,7 +4,7 @@ h2 Upload a new file
   = fa_icon("file-pdf-o", class: "file-type")
   = fa_icon("file-image-o", class: "file-type")
   = f.file_field :file, required: true
-  = f.button "Upload file", data: { disable_with: (fa_icon("spinner", class: "fa-pulse") + "Uploading...") }
+  = spinner_button(f, button_text: "Upload file", disable_text: "Uploading")
 hr
 
 - if @markdown_files.present?
