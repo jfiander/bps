@@ -54,6 +54,7 @@ group :development, :test do
 
   gem 'bullet',           '~> 5.7.0'
 
-  gem 'rspec-rails',      '~> 3.7.1'
-  gem 'simplecov',        '~> 0.15.1'
+  gem 'rspec-rails',       '~> 3.7.1'
+  gem 'simplecov',         '~> 0.15.1'
+  gem 'factory_bot_rails', '~> 4.8.2'
 end
