@@ -17,6 +17,9 @@
 !/log/.keep
 !/tmp/.keep
 
+# Ignore generated converage
+coverage/*
+
 # Ignore Byebug command history file.
 .byebug_history
 
