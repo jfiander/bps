@@ -22,11 +22,11 @@ table#bilge {
   }
 }
 
-table#bridge {
+#bridge {
   width: 100%;
   text-align: left;
 
-  td, th {
+  .table-cell {
     vertical-align: top;
     padding: 0.25em;
   }
@@ -41,24 +41,24 @@ table#bridge {
   }
 
   .department {
-    width: 28%;
+    width: 22%;
     text-align: center;
   }
 
-  tr.assistant td {
+  .table-row.assistant .table-cell {
     font-weight: bold;
     height: 2.5em;
   }
 
-  table.committees {
+  .table.committees {
     font-size: 90%;
     width: 100%;
 
-    td {
+    .table-cell {
       padding: 0.75em 0.25em 0 0.25em;
     }
 
-    td.additional {
+    .table-cell.additional {
       padding: 0 0.25em;
     }
 
@@ -73,32 +73,7 @@ table#bridge {
     }
   }
 
-  th.standing-title {
-    text-align: center;
-    font-size: 125%;
-  }
-
-  td.standing-info {
-    text-align: center;
-    font-style: italic;
-  }
-
-  tr.standing-committee th {
-    text-align: right;
-  }
-
-  tr.standing-committee td {
-    text-align: left;
-    font-size: 90%;
-    padding-bottom: 1em;
-    line-height: 1.5em;
-  }
-
-  td.spacer {
-    height: 2em;
-  }
-
-  table#committees {
+  #committees {
     width: 100%;
     text-align: left;
   }
@@ -106,6 +81,30 @@ table#bridge {
   svg {
     width: 9em;
     height: 6em;
+  }
+}
+
+#standing-committees {
+  margin-top: 1.5em;
+
+  h2 {
+    text-align: center;
+  }
+  .table-cell {
+    font-size: 90%;
+    padding-bottom: 1em;
+    line-height: 1.5em;
+  }
+
+  .table-header {
+    width: 50%;
+    text-align: right;
+    font-size: 1em;
+  }
+
+  .info {
+    text-align: center;
+    font-style: italic;
   }
 }
 
