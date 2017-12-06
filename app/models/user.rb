@@ -32,6 +32,7 @@ class User < ApplicationRecord
   scope :unlocked,       -> { where.not(id: locked) }
   scope :alphabetized,   -> { order(:last_name) }
   scope :with_positions, -> { includes(:bridge_office, :standing_committee_offices, :committees, :user_roles, :roles) }
+  scope :with_name,      ->(name) { select("users.*, (first_name || ' ' || last_name) AS full_name").where("full_name = ?", name) }
 
   def simple_name
     "#{first_name} #{last_name}"
