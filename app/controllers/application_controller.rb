@@ -124,7 +124,7 @@ class ApplicationController < ActionController::Base
     disable_text ||= button_text.sub(/e$/, '') + "ing"
     data_hash = { disable_with: (view_context.fa_icon("spinner pulse") + "#{disable_text}...") }
     
-    form.button(button_text, data: data_hash) and return if form.present?
+    return form.button(button_text, data: data_hash) if form.present?
     view_context.button_tag(button_text, data: data_hash)
   end
   helper_method :spinner_button
