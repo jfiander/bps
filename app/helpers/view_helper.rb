@@ -1,5 +1,5 @@
-module ViewHelpers
-  def officer_flag(office)
+module ViewHelper
+  def officer_flag(office, mode: :svg)
     rank = case office
     when "commander"
       "CDR"
@@ -9,7 +9,11 @@ module ViewHelpers
       "1LT"
     end
 
-    open(static_bucket.link(key: "flags/SVG/#{rank}.svg")).read.html_safe
+    if mode == :svg
+      open(static_bucket.link(key: "flags/SVG/#{rank}.svg")).read.html_safe
+    elsif mode == :png
+      image_tag static_bucket.link(key: "flags/PNG/#{rank}.thumb.png")
+    end
   end
 
   def spinner_button(form = nil, button_text: "Submit", disable_text: nil)

@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   force_ssl if: :ssl_configured?
   protect_from_forgery with: :exception
 
-  helper ViewHelpers
   include BucketHelpers
   helper_method :static_bucket, :files_bucket, :bilge_bucket, :photos_bucket
 
