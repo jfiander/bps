@@ -46,8 +46,8 @@ class PublicController < ApplicationController
       head = all_bridge_officers.find_all { |b| b.office == dept }.first
       assistant = all_bridge_officers.find_all { |b| b.office == "asst_#{dept}" }.first
       department_data[dept.to_sym] = {}
-      department_data[dept.to_sym][:head] = {title: head&.title, office: head&.office, email: head&.email, user: get_user(head&.user_id)&.bridge_hash}
-      department_data[dept.to_sym][:assistant] = {title: assistant&.title, office: assistant&.office, email: assistant&.email, user: get_user(assistant&.user_id)&.bridge_hash} if assistant.present?
+      department_data[dept.to_sym][:head] = {title: head&.title, office: dept, email: head&.email, user: get_user(head&.user_id)}
+      department_data[dept.to_sym][:assistant] = {title: assistant&.title, office: assistant&.office, email: assistant&.email, user: get_user(assistant&.user_id)} if assistant.present?
       department_data[dept.to_sym][:committees] = all_committees[dept]&.map { |c| [c.name, c.user_id, c.id] }
     end
     standing_committees.each do |committee, members|
@@ -56,8 +56,8 @@ class PublicController < ApplicationController
         user = get_user(member.user_id)
         standing_committee_data[committee] << {
           id: member.id,
-          simple_name: user&.simple_name,
-          full_name: user&.full_name,
+          simple_name: user[:simple_name],
+          full_name: user[:full_name],
           chair: member.chair.present?,
           term_fraction: member.term_fraction
         }
@@ -71,7 +71,15 @@ class PublicController < ApplicationController
   end
 
   def get_user(id)
-    @users.find_all { |u| u.id == id }.first
+    user = @users.find_all { |u| u.id == id }.first
+
+    return user.bridge_hash if user.present?
+
+    {
+      full_name: "TBD",
+      simple_name: "TBD",
+      photo: User.no_photo
+    }
   end
   helper_method :get_user
 

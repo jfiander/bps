@@ -60,10 +60,10 @@ h2 Bridge Officers
     - @bridge_list[:departments].each do |dept, data|
       .table-row
         .table-cell.table-header.flag = data[:head][:title]
-        .table-cell.table-header.department = link_to(data[:head][:user][:full_name], data[:head][:email]) if data[:head][:user].present?
+        .table-cell.table-header.department = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : link_to(data[:head][:user][:full_name], data[:head][:email])
       .table-row
         .table-cell.flag = officer_flag(data[:head][:office], mode: :png)
-        .table-cell.department = image_tag(data[:head][:user][:photo], width: 125)
+        .table-cell.department = image_tag(data[:head][:user][:photo], width: 125) if data[:head][:user].present?
         .table-cell
           .table.committees
             - if data[:assistant].present?
@@ -81,8 +81,8 @@ h2 Bridge Officers
                 .table-cell.committee-chair class=("additional" if @last_committee_name == committee[0])
                   - if @current_user_permitted_users
                     = link_to(remove_committee_path(committee[2]), class: "red", method: :delete, remote: true,
-                      data: {confirm: "Are you sure you want to remove #{committee_user&.simple_name} from #{committee[0]}?"}) { fa_icon "minus-square" }
-                  = committee_user&.full_name || "TBD"
+                      data: {confirm: "Are you sure you want to remove #{committee_user[:simple_name]} from #{committee[0]}?"}) { fa_icon "minus-square" }
+                  = committee_user[:full_name]
                 - @last_committee_name = committee[0]
       .table-row
         .table-cell.spacer
