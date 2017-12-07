@@ -2,8 +2,9 @@ class EventsController < ApplicationController
   before_action :authenticate_user!
   before_action { require_permission(params[:type]) }
 
-  before_action :get_event,    only: [:copy, :edit, :destroy]
-  before_action :prepare_form, only: [:new, :copy, :edit]
+  before_action :get_event,       only: [:copy, :edit, :destroy]
+  before_action :prepare_form,    only: [:new, :copy, :edit]
+  before_action :check_for_blank, only: [:create, :update]
 
   def new
     @event = Event.new
@@ -85,7 +86,7 @@ class EventsController < ApplicationController
   end
 
   def prepare_form
-    @event_types = EventType.send("#{params[:type]}s").map { |e| [e.display_title, e.id] }
+    @event_types = EventType.selector(params[:type])
     @event_title = params[:type].to_s.titleize
     @edit_mode = "Add"
   end
@@ -116,6 +117,19 @@ class EventsController < ApplicationController
       CourseInclude.where(course: @event).where("updated_at < ?", clear_before_time).destroy_all
       CourseTopic.where(course: @event).where("updated_at < ?", clear_before_time).destroy_all
       EventInstructor.where(event: @event).where("updated_at < ?", clear_before_time).destroy_all
+    end
+  end
+
+  def check_for_blank
+    if event_params["event_type_id"].blank?
+      prepare_form
+      @submit_path = send("create_#{params[:type]}_path")
+      @event = Event.new(event_params)
+      @course_topics = update_params[:includes]
+      @course_includes = update_params[:topics]
+      @instructors = update_params[:instructors]
+      flash[:alert] = "You must select a valid #{params[:type]} name."
+      render :new
     end
   end
 end

@@ -33,6 +33,29 @@ class EventType < ApplicationRecord
     SQL
   }
   
+  def self.selector(type)
+    return self.seminars.ordered.map(&:to_select_array) if type == :seminar
+    return self.meetings.ordered.map(&:to_select_array) if type == :meeting
+
+    courses = []
+    courses += [["Public Courses", ""]]
+    courses += [["--------------", ""]]
+    courses += public_courses.ordered.map(&:to_select_array)
+    courses += [["", ""]]
+    courses += [["Advanced Grade Courses", ""]]
+    courses += [["----------------------", ""]]
+    courses += advanced_grades.ordered.map(&:to_select_array)
+    courses += [["", ""]]
+    courses += [["Elective Courses", ""]]
+    courses += [["----------------", ""]]
+    courses += electives.ordered.map(&:to_select_array)
+    courses
+  end
+
+  def to_select_array
+    [display_title, id]
+  end
+
   def display_title
     cleanup_titles(title.titleize)
   end
