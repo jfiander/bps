@@ -25,7 +25,7 @@ class PublicController < ApplicationController
     # Preload all needed data
     @users = User.order(:last_name).includes(:bridge_office, :committees, :standing_committee_offices)
     all_bridge_officers = BridgeOffice.ordered
-    all_committees = Committee.sorted
+    @all_committees = Committee.sorted
     standing_committees = StandingCommitteeOffice.current.chair_first.group_by { |s| s.committee_name }
 
     # Build lists for form selectors
@@ -46,9 +46,9 @@ class PublicController < ApplicationController
       head = all_bridge_officers.find_all { |b| b.office == dept }.first
       assistant = all_bridge_officers.find_all { |b| b.office == "asst_#{dept}" }.first
       department_data[dept.to_sym] = {}
-      department_data[dept.to_sym][:head] = {title: BridgeOffice.title(dept), office: dept, email: head&.email, user: get_user(head&.user_id)}
-      department_data[dept.to_sym][:assistant] = {title: assistant&.title, office: assistant&.office, email: assistant&.email, user: get_user(assistant&.user_id)} if assistant.present?
-      department_data[dept.to_sym][:committees] = all_committees[dept]&.map { |c| [c.name, c.user_id, c.id] }
+      department_data[dept.to_sym][:head] = generate_dept_head(dept, head)
+      department_data[dept.to_sym][:assistant] = generate_dept_asst(dept, assistant) if assistant.present?
+      department_data[dept.to_sym][:committees] = generate_committees(dept)
     end
     standing_committees.each do |committee, members|
       standing_committee_data[committee] = []
@@ -176,5 +176,33 @@ class PublicController < ApplicationController
     when :event
       events.send(scope, :meeting)
     end
-   end
+  end
+  
+  def generate_dept_head(dept, head)
+    {
+      title: BridgeOffice.title(dept),
+      office: dept,
+      email: head&.email,
+      user: get_user(head&.user_id)
+    }
+  end
+  
+  def generate_dept_asst(dept, assistant)
+    {
+      title: assistant&.title,
+      office: assistant&.office,
+      email: assistant&.email,
+      user: get_user(assistant&.user_id)
+    }
+  end
+
+  def generate_committees(dept)
+    @all_committees[dept]&.map do |c|
+      {
+        name: c.display_name,
+        user: get_user(c.user_id),
+        id: c.id
+      }
+    end
+  end
 end
