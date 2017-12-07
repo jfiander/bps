@@ -22,7 +22,10 @@ class User < ApplicationRecord
     s3_credentials: {bucket: self.buckets[:files].full_bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
     # styles: { medium: "300x300>", thumb: "100x100#" }
 
-  before_validation { self.rank = nil if self.rank.blank? }
+  before_validation do
+    self.rank = nil if self.rank.blank?
+    self.simple_name = "#{first_name} #{last_name}"
+  end
 
   validate :valid_rank, :valid_grade
   validates_attachment_content_type :profile_photo, content_type: /\Aimage\/jpe?g\Z/
@@ -33,10 +36,6 @@ class User < ApplicationRecord
   scope :alphabetized,   -> { order(:last_name) }
   scope :with_positions, -> { includes(:bridge_office, :standing_committee_offices, :committees, :user_roles, :roles) }
   scope :with_name,      ->(name) { select("users.*, (first_name || ' ' || last_name) AS full_name").where("full_name = ?", name) }
-
-  def simple_name
-    "#{first_name} #{last_name}"
-  end
 
   def full_name
     ranked_name = [auto_rank, "#{simple_name}"].join(" ")
