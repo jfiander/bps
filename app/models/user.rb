@@ -77,6 +77,7 @@ class User < ApplicationRecord
   end
 
   def granted_roles
+    @roles ||= roles.to_a
     @roles.map(&:name).map(&:to_sym).uniq
   end
 
