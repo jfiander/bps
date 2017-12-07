@@ -38,18 +38,17 @@ class EventType < ApplicationRecord
     return self.meetings.ordered.map(&:to_select_array) if type == :meeting
 
     courses = []
-    courses += [["Public Courses", ""]]
-    courses += [["--------------", ""]]
-    courses += public_courses.ordered.map(&:to_select_array)
-    courses += [["", ""]]
-    courses += [["Advanced Grade Courses", ""]]
-    courses += [["----------------------", ""]]
-    courses += advanced_grades.ordered.map(&:to_select_array)
-    courses += [["", ""]]
-    courses += [["Elective Courses", ""]]
-    courses += [["----------------", ""]]
-    courses += electives.ordered.map(&:to_select_array)
+    courses += select_array_section(:public_course, blank: false)
+    courses += select_array_section(:advanced_grade)
+    courses += select_array_section(:elective)
     courses
+  end
+
+  def self.select_array_section(scope, blank: true)
+    (blank ? [["", ""]] : []) +
+    [["#{scope.to_s.titleize} Courses", ""]] +
+    [["-" * (scope.to_s.size + 10), ""]] +
+    send(scope).ordered.map(&:to_select_array)
   end
 
   def to_select_array
