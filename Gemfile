@@ -26,6 +26,7 @@ gem 'aws-sdk',            '~> 2.10.86'
 gem 'aws-sdk-rails',      '~> 1.0.1'
 gem 'sendgrid-ruby',      '~> 5.2.0'
 gem 'paperclip',          '~> 5.1.0'
+gem 'mini_magick',        '~> 4.8.0'
 
 gem 'devise',             '~> 4.2.0'
 gem 'devise_invitable',   '~> 1.7.2'
