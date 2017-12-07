@@ -1,26 +1,19 @@
 class EventType < ApplicationRecord
   has_many   :events
 
-  scope :advanced_grades, -> { where(event_category_id: category_hash[:advanced_grade]) }
-  scope :electives,       -> { where(event_category_id: category_hash[:elective]) }
+  scope :advanced_grades, -> { where(event_category: :advanced_grade) }
+  scope :electives,       -> { where(event_category: :elective) }
+  scope :public_courses,  -> { where(event_category: :public) }
   scope :courses,         -> { public_courses.or(advanced_grades).or(electives) }
-  scope :seminars,        -> { where(event_category_id: category_hash[:seminar]) }
-  scope :public_courses,  -> { where(event_category_id: category_hash[:public]) }
-  scope :events,          -> { where(event_category_id: category_hash[:meeting]) }
+  scope :seminars,        -> { where(event_category: :seminar) }
+  scope :events,          -> { where(event_category: :meeting) }
   scope :meetings,        -> { events }
+  scope :course,          -> { courses }
+  scope :seminar,         -> { seminars }
+  scope :meeting,         -> { meetings }
 
   def display_title
     cleanup_titles(title.titleize)
-  end
-
-  def self.category_hash
-    {
-      advanced_grade: 1,
-      elective: 2,
-      seminar: 3,
-      meeting: 4,
-      public: 5
-    }
   end
 
   private

@@ -20,10 +20,10 @@ class Event < ApplicationRecord
   validates_attachment_content_type :flyer, content_type: /\A(image\/(jpe?g|png|gif))|(application\/pdf)\Z/
   
   scope :current, ->(category) do
-    includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at > ?", Time.now).where(event_types: {event_category_id: EventType.filter_categories[category]})
+    includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at > ?", Time.now).where(event_type: EventType.send(category))
   end
   scope :expired, ->(category) do
-    includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at < ?", Time.now).where(event_types: {event_category_id: EventType.filter_categories[category]})
+    includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at < ?", Time.now).where(event_type: EventType.send(category))
   end
 
   def expired?
@@ -31,11 +31,11 @@ class Event < ApplicationRecord
   end
 
   def is_a_course?
-    event_type.event_category_id.in? EventType.course_category_ids
+    event_type.in? EventType.courses
   end
 
   def is_a_seminar?
-    event_type.event_category_id == EventType.category_hash[:seminar]
+    event_type.event_category == :seminar
   end
 
   def get_flyer
