@@ -46,7 +46,7 @@ class PublicController < ApplicationController
       head = all_bridge_officers.find_all { |b| b.office == dept }.first
       assistant = all_bridge_officers.find_all { |b| b.office == "asst_#{dept}" }.first
       department_data[dept.to_sym] = {}
-      department_data[dept.to_sym][:head] = {title: head&.title, office: dept, email: head&.email, user: get_user(head&.user_id)}
+      department_data[dept.to_sym][:head] = {title: BridgeOffice.title(dept), office: dept, email: head&.email, user: get_user(head&.user_id)}
       department_data[dept.to_sym][:assistant] = {title: assistant&.title, office: assistant&.office, email: assistant&.email, user: get_user(assistant&.user_id)} if assistant.present?
       department_data[dept.to_sym][:committees] = all_committees[dept]&.map { |c| [c.name, c.user_id, c.id] }
     end
