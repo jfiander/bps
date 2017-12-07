@@ -113,9 +113,9 @@ class EventsController < ApplicationController
         EventInstructor.create(event: @event, user: user)
       end
 
-      CourseInclude.where("updated_at < ?", clear_before_time).destroy_all
-      CourseTopic.where("updated_at < ?", clear_before_time).destroy_all
-      EventInstructor.where("updated_at < ?", clear_before_time).destroy_all
+      CourseInclude.where(course: @event).where("updated_at < ?", clear_before_time).destroy_all
+      CourseTopic.where(course: @event).where("updated_at < ?", clear_before_time).destroy_all
+      EventInstructor.where(event: @event).where("updated_at < ?", clear_before_time).destroy_all
     end
   end
 end
