@@ -10,19 +10,7 @@ class EventType < ApplicationRecord
   scope :meetings,        -> { events }
 
   def display_title
-    title.titleize.
-      gsub(/americas/i, "America's").
-      gsub(/commanders/i, "Commander's").
-      gsub(/gps/i, "GPS").
-      gsub(/vhf/i, "VHF").
-      gsub(/dsc/i, "DSC").
-      gsub(/ A /, " a ").
-      gsub(/ To /, " to ").
-      gsub(/ The /, " the ").
-      gsub(/ Of /, " of ").
-      gsub(/ And /, " and ").
-      gsub(/ On /, " on ").
-      gsub(/ For /, " for ")
+    cleanup_titles(title.titleize)
   end
 
   def self.category_hash
@@ -35,32 +23,37 @@ class EventType < ApplicationRecord
     }
   end
 
-  def self.course_category_ids
-    [category_hash[:public], category_hash[:advanced_grade], category_hash[:elective]]
+  private
+  def cleanup_titles(title)
+    title_hash.each do |k,v|
+      title.gsub!(/#{k}/i, v)
+    end
+    title
   end
 
-  def self.filter_categories
-    {
-      course: [
-        self.category_hash[:public],
-        self.category_hash[:advanced_grade],
-        self.category_hash[:elective],
-      ],
-      public: [
-        self.category_hash[:public]
-      ],
-      advanced_grade: [
-        self.category_hash[:advanced_grade]
-      ],
-      elective: [
-        self.category_hash[:elective],
-      ],
-      seminar: [
-        self.category_hash[:seminar]
-      ],
-      meeting: [
-        self.category_hash[:meeting]
-      ]
+  def title_hash
+    possessives = {
+      "americas" => "America's",
+      "commanders" => "Commander's"
     }
+
+    initials = {
+      "gps" => "GPS",
+      "vhf" => "VHF",
+      "dsc" => "DSC",
+      "pcoc" => "PCOC"
+    }
+
+    small_words = {
+      " A " => " a ",
+      " To " => " to ",
+      " The " => " the ",
+      " Of " => " of ",
+      " And " => " and ",
+      " On " => " on ",
+      " For " => " for "
+    }
+
+    possessives.merge(initials).merge(small_words)
   end
 end
