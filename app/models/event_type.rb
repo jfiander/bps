@@ -61,13 +61,13 @@ class EventType < ApplicationRecord
 
   private
   def cleanup_titles(title)
-    title_hash.each do |k,v|
-      title.gsub!(/#{k}/i, v)
+    title_subs.each do |pattern, replacement|
+      title.gsub!(/#{pattern}/i, replacement)
     end
     title
   end
 
-  def title_hash
+  def title_subs
     possessives = {
       "americas" => "America's",
       "commanders" => "Commander's"
@@ -90,6 +90,6 @@ class EventType < ApplicationRecord
       " For " => " for "
     }
 
-    possessives.merge(initials).merge(small_words)
+    [possessives, initials, small_words].inject(&:merge)
   end
 end
