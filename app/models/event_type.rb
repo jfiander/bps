@@ -8,6 +8,9 @@ class EventType < ApplicationRecord
   scope :seminars,        -> { where(event_category: :seminar) }
   scope :events,          -> { where(event_category: :meeting) }
   scope :meetings,        -> { events }
+  scope :advanced_grade,  -> { advanced_grades }
+  scope :elective,        -> { electives }
+  scope :public_course,   -> { public_courses }
   scope :course,          -> { courses }
   scope :seminar,         -> { seminars }
   scope :meeting,         -> { meetings }
