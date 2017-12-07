@@ -62,7 +62,7 @@ h2 Bridge Officers
         .table-cell.table-header.flag = data[:head][:title]
         .table-cell.table-header.department = link_to(data[:head][:user][:full_name], data[:head][:email]) if data[:head][:user].present?
       .table-row
-        .table-cell.flag = officer_flag(data[:head][:office])
+        .table-cell.flag = officer_flag(data[:head][:office], mode: :png)
         .table-cell.department = image_tag(data[:head][:user][:photo], width: 125)
         .table-cell
           .table.committees

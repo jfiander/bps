@@ -17,10 +17,10 @@ class User < ApplicationRecord
     default_url: User.no_photo,
     storage: :s3,
     s3_region: "us-east-2",
-    path: "profile_photos/:id/:filename",
+    path: "profile_photos/:id/:style/:filename",
     s3_permissions: :private,
-    s3_credentials: {bucket: self.buckets[:files].full_bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
-    # styles: { medium: "300x300>", thumb: "100x100#" }
+    s3_credentials: {bucket: self.buckets[:files].full_bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]},
+    styles: { medium: "500x500", thumb: "200x200" }
 
   before_validation do
     self.rank = nil if self.rank.blank?
@@ -43,9 +43,9 @@ class User < ApplicationRecord
     (grade.present? ? ", #{grade}" : "")
   end
 
-  def photo
+  def photo(style: :medium)
     if profile_photo.present? && User.buckets[:files].object(key: profile_photo.s3_object.key).exists?
-      User.buckets[:files].link(key: profile_photo.s3_object.key)
+      User.buckets[:files].link(key: profile_photo.s3_object(style).key)
     else
       User.no_photo
     end
