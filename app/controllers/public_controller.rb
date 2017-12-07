@@ -165,7 +165,7 @@ class PublicController < ApplicationController
     case type
     when :course
       courses = {
-        public: events.send(scope, :public),
+        public: events.send(scope, :public_courses),
         advanced_grades: events.send(scope, :advanced_grade),
         electives: events.send(scope, :elective)
       }
