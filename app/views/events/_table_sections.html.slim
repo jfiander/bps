@@ -1,15 +1,12 @@
 - if type == :course
   - if all_events.has_key?(:public) && all_events[:public].present?
-    tr
-      th.section colspan=4 Public
+    .events-section-header Public
     = render "events/table", events: all_events[:public]
   - if all_events.has_key?(:advanced_grades) && all_events[:advanced_grades].present?
-    tr
-      th.section colspan=4 Advanced Grades
+    .events-section-header Advanced Grades
     = render "events/table", events: all_events[:advanced_grades]
   - if all_events.has_key?(:electives) && all_events[:electives].present?
-    tr
-      th.section colspan=4 Electives
+    .events-section-header Electives
     = render "events/table", events: all_events[:electives]
 - else
   = render "events/table", events: all_events

@@ -1,110 +1,108 @@
 - events.each do |event|
-  tr
-    th.title = event.event_type.display_title
-    td
-      = event.start_at.strftime(@long_time_format)
-      - if event.sessions.present? || event.length.present?
-        br
-      - if event.sessions.present?
-        = event.sessions
-        |  
-        = "session".pluralize(event.sessions)
-        - if event.length.present?
-          | , 
-      - if event.length.present?
-        = event.length&.strftime(@duration_format)
-      - if event.cost.present?
-        br
-        span.costs = event.formatted_cost
-    td
-      - if event.location.present?
-        b
-          | Location: 
-          - if event.map_link.present?
-            = link_to(event.map_link, target: :_blank) do
-              = fa_icon("map-marker")
-              | Map
-        br
-        p = simple_format(event.location)
+  .events-full-width
+    hr
+  .table.events
+    .table-row
+      .table-cell.top-left
+        .table
+          .table-row
+            .table-cell.table-header.event-title = event.event_type.display_title
+            .table-cell.date-details
+              = event.start_at.strftime(@long_time_format)
+              - if event.sessions.present? || event.length.present?
+                br
+              - if event.sessions.present?
+                = event.sessions
+                |  
+                = "session".pluralize(event.sessions)
+                - if event.length.present?
+                  | , 
+              - if event.length.present?
+                = event.length&.strftime(@duration_format)
+              - if event.cost.present?
+                br
+                span.costs = event.formatted_cost
+      .table-cell.top-right
+        .table
+          .table-row
+            .table-cell.location
+              - if event.location.present?
+                b
+                  | Location: 
+                  - if event.map_link.present?
+                    = link_to(event.map_link, target: :_blank) do
+                      = fa_icon("map-marker")
+                      | Map
+                br
+                p = simple_format(event.location)
 
-      - else
-        | Location TBD
-    td
-      - if current_user&.permitted?(params[:type])
-        = link_to(send("copy_#{params[:type]}_path", event), class: "control blue-faded") do
-          = fa_icon("clone fw")
-          | Clone
-        = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
-          = fa_icon("pencil-square fw")
-          | Edit
-        - unless event.expired?
-          = link_to(send("destroy_#{params[:type]}_path", event), method: :delete, class: "red control", data: {confirm: "Are you sure you want to force this #{params[:type]} to expire?"}) do
-            = fa_icon("eye-slash fw")
-            | Expire
-      - if user_signed_in? && event.allow_member_registrations && !event.expired?
-        - if @registered.has_key?(event.id)
-          = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
-            = fa_icon("minus-square fw")
-            | Cancel Registration
-        - else
-          = link_to(register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
-            = fa_icon("calendar-check-o fw")
-            | Register
-      - elsif event.allow_public_registrations && !event.expired?
-        = render "events/register_form", event_id: event.id
-  tr
-    td colspan=2
-      = simple_format(event.description)
-      - if event.is_a_course? && event.course_topics.present?
-        b Topics include:
-        ul
-          - event.course_topics.each do |t|
-            li = t.text
-      - if event.is_a_course? && event.course_includes.present?
-        b Materials include:
-        ul
-          - event.course_includes.each do |i|
-            li = i.text
-      - if event.requirements.present?
-        hr
-        b Student requirements:
-        br
-        p = simple_format(event.requirements)
-      - if event.instructors.present?
-        hr
-        b Instructors:
-        br
-        p = simple_format(event.instructors.map(&:full_name).join("\n"))
-      - if event.prereq.present?
-        hr
-        b Prerequisite course:
-        br
-        p = event.prereq.title.titleize
-    td.right.flyer colspan=2
-      - if event.get_flyer.present? && event.flyer_content_type != 'application/pdf'
-        = image_tag event.get_flyer
-  - if current_user&.permitted?(params[:type]) && @registered_users[event.id].present?
-    tr
-      td colspan=2
-      th colspan=2
-        hr
-        | Registered Users
-    tr
-      td colspan=2
-      td colspan=2
-        - @registered_users[event.id].each do |r|
-          div id=("registration_#{r.id}")
-            - if r.user.present?
-              = link_to(r.user.full_name, "mailto:#{r.user.email}")
-            - else
-              = link_to(r.email, "mailto:#{r.email}")
-            |  
-            = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true,
-              data: {confirm: "Are you sure you want to cancel this registration?"}) { fa_icon "minus-square" }
+              - else
+                | Location TBD
+            .table-cell
+              - if current_user&.permitted?(params[:type])
+                = link_to(send("copy_#{params[:type]}_path", event), class: "control blue-faded") do
+                  = fa_icon("clone fw")
+                  | Clone
+                = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
+                  = fa_icon("pencil-square fw")
+                  | Edit
+                - unless event.expired?
+                  = link_to(send("destroy_#{params[:type]}_path", event), method: :delete, class: "red control", data: {confirm: "Are you sure you want to force this #{params[:type]} to expire?"}) do
+                    = fa_icon("eye-slash fw")
+                    | Expire
+              - if user_signed_in? && event.allow_member_registrations && !event.expired?
+                - if @registered.has_key?(event.id)
+                  = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
+                    = fa_icon("minus-square fw")
+                    | Cancel Registration
+                - else
+                  = link_to(register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
+                    = fa_icon("calendar-check-o fw")
+                    | Register
+              - elsif event.allow_public_registrations && !event.expired?
+                = render "events/register_form", event_id: event.id
+    .table-row
+      .table-cell.bottom-left
+        = simple_format(event.description)
+        - if event.is_a_course? && event.course_topics.present?
+          b Topics include:
+          ul
+            - event.course_topics.each do |t|
+              li = t.text
+        - if event.is_a_course? && event.course_includes.present?
+          b Materials include:
+          ul
+            - event.course_includes.each do |i|
+              li = i.text
+        - if event.requirements.present?
+          hr
+          b Student requirements:
+          = simple_format(event.requirements)
+        - if event.instructors.present?
+          hr
+          b Instructors:
+          = simple_format(event.instructors.map(&:full_name).join("\n"))
+        - if event.prereq.present?
+          hr
+          b Prerequisite course:
+          p = event.prereq.title.titleize
+        - if current_user&.permitted?(params[:type]) && @registered_users[event.id].present?
+          hr
+          b Registered Users:
+          - @registered_users[event.id].each do |r|
+            .registration id=("registration_#{r.id}")
+              - if r.user.present?
+                = link_to(r.user.full_name, "mailto:#{r.user.email}")
+              - else
+                = link_to(r.email, "mailto:#{r.email}")
+              |  
+              = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true,
+                data: {confirm: "Are you sure you want to cancel this registration?"}) { fa_icon "minus-square" }
+      .table-cell.bottom-right.flyer
+        - if event.get_flyer.present? && event.flyer_content_type != 'application/pdf'
+          = image_tag event.get_flyer
   - if event.get_flyer.present? && event.flyer_content_type == 'application/pdf'
-    tr
-      td colspan=4
-        iframe src=(event.get_flyer)
-  tr
-    td.spacer colspan=4
-      hr
+    .events-full-width
+      iframe src=(event.get_flyer)
+.events-full-width
+  hr
