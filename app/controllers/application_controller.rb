@@ -67,6 +67,8 @@ class ApplicationController < ActionController::Base
     keys.shift
     @header_image = static_bucket.link(key: keys.sample)
     @header_logo = static_bucket.link(key: "logos/ABC.tr.300.png")
+    @wheel_logo = static_bucket.link(key: "flags/PNG/WHEEL.thumb.png")
+    @dca_award = static_bucket.link(key: "logos/DCA_web_2016.png")
   end
 
   def markdown_static_link(key, title: "")
