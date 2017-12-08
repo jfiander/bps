@@ -33,6 +33,8 @@ class EventType < ApplicationRecord
     SQL
   }
   
+  validates :event_cagerory, inclusion: %w[advanced_grade elective public seminar meeting]
+
   def self.selector(type)
     return self.seminars.ordered.map(&:to_select_array) if type == :seminar
     return self.meetings.ordered.map(&:to_select_array) if type == :event
