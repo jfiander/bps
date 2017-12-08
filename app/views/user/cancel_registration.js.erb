@@ -1,3 +1,8 @@
 $("#notice").html("<%= flash[:notice] %>");
 $("#alert").html("<%= flash[:alert] %>");
-$("#event_<%= @event_id %>").html("Cancelled").attr("href", "#");
+
+<% if @cancel_link %>
+  $("#event_<%= @event_id %>").html("Cancelled").attr("href", "#");
+<% end %>
+
+$("#registration_<%= @reg_id %>").fadeOut();

@@ -153,6 +153,8 @@ class UserController < ApplicationController
 
     redirect_to root_path, status: :unprocessable_entity, alert: "You are not allowed to cancel that registration." and return unless (r.user == current_user) || current_user.permitted?(:course, :seminar, :event)
 
+    @cancel_link = (r.user == current_user)
+
     if r&.destroy
       flash[:notice] = "Successfully cancelled registration!"
     else
