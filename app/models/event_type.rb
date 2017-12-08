@@ -35,7 +35,7 @@ class EventType < ApplicationRecord
   
   def self.selector(type)
     return self.seminars.ordered.map(&:to_select_array) if type == :seminar
-    return self.meetings.ordered.map(&:to_select_array) if type == :meeting
+    return self.meetings.ordered.map(&:to_select_array) if type == :event
 
     courses = []
     courses += select_array_section(:public_course, blank: false)
