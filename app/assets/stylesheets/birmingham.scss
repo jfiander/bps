@@ -169,8 +169,25 @@ div#main {
     border-top: thin solid $old-glory-blue-faded;
     text-align: center;
 
-    div.copyright {
-      margin-top: 1em;
+    img {
+      max-width: 5em;
+    }
+
+    .table {
+      width: 100%;
+      text-align: center;
+    }
+
+    .table-cell.footer-left, .table-cell.footer-right {
+      width: 30%;
+    }
+
+    .table-cell.footer-center {
+      vertical-align: middle;
+
+      div.copyright {
+        margin-top: 1.25em;
+      }
     }
   }
 }
