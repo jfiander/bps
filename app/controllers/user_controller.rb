@@ -122,10 +122,13 @@ class UserController < ApplicationController
   end
 
   def remove_standing_committee
-    if StandingCommitteeOffice.find_by(id: clean_params[:id])&.destroy
-      redirect_to bridge_path, notice: "Successfully removed standing committee assignment."
+    @standing_committee_id = clean_params[:id]
+    if StandingCommitteeOffice.find_by(id: @standing_committee_id)&.destroy
+      flash[:notice] = "Successfully removed standing committee assignment."
+      @do_remove = true
     else
-      redirect_to bridge_path, alert: "Unable to remove from standing committee."
+      flash[:alert] = "Unable to remove from standing committee."
+      @do_remove = false
     end
   end
 

@@ -96,12 +96,12 @@ h2 Standing Committees
       .table-cell.table-header = "#{committee.titleize} Committee"
       .table-cell
         - members&.each do |member|
-          - if @current_user_permitted_users
-            = link_to(remove_standing_committee_path(member[:id]), method: :delete, class: "red",
-            data: {confirm: "Are you sure you want to remove #{member[:simple_name]} from the #{committee.titleize} Committee?"}) { fa_icon "minus-square" }
-          = member[:full_name]
-          small
-            = " (chair)" if member[:chair]
-            |  
-            = member[:term_fraction]
-          br
+          div id=("standing_committee_post_#{member[:id]}")
+            - if @current_user_permitted_users
+              = link_to(remove_standing_committee_path(member[:id]), method: :delete, remote: true, class: "red",
+              data: {confirm: "Are you sure you want to remove #{member[:simple_name]} from the #{committee.titleize} Committee?"}) { fa_icon "minus-square" }
+            = member[:full_name]
+            small
+              = " (chair)" if member[:chair]
+              |  
+              = member[:term_fraction]

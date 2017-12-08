@@ -1,0 +1,6 @@
+$("#notice").html("<%= flash[:notice] %>");
+$("#alert").html("<%= flash[:alert] %>");
+
+<% if @do_remove %>
+  $('#standing_committee_post_<%= @standing_committee_id %>').fadeOut();
+<% end %>
