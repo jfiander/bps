@@ -3,6 +3,6 @@ h2 = "Squadron #{params[:type].to_s.titleize}s"
 = render "application/education_menu", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)} if params[:type].in? [:course, :seminar]
 
 = render "events/table_sections", type: params[:type], all_events: @events
-- if current_user&.permitted?(params[:type]) && @expired_events.present? && !(params[:type] == "course" && @expired_events.all? { |k,v| v.blank? })
+- if @current_user_permitted_event_type && @expired_events.present? && !(params[:type] == "course" && @expired_events.all? { |k,v| v.blank? })
   .events-section-header.red = "Expired #{params[:type]}s"
   = render "events/table_sections", type: params[:type], all_events: @expired_events

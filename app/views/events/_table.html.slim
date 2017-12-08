@@ -39,7 +39,7 @@
               - else
                 | Location TBD
             .table-cell
-              - if current_user&.permitted?(params[:type])
+              - if @current_user_permitted_event_type
                 = link_to(send("copy_#{params[:type]}_path", event), class: "control blue-faded") do
                   = fa_icon("clone fw")
                   | Clone
@@ -86,7 +86,7 @@
           hr
           b Prerequisite course:
           p = event.prereq.title.titleize
-        - if current_user&.permitted?(params[:type]) && @registered_users[event.id].present?
+        - if @current_user_permitted_event_type && @registered_users[event.id].present?
           hr
           b Registered Users:
           - @registered_users[event.id].each do |r|

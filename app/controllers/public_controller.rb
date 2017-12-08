@@ -9,8 +9,11 @@ class PublicController < ApplicationController
   MARKDOWN_EDITABLE_VIEWS.each { |m| define_method(m) {} }
   
   def events
+    @all_events = Event.includes(:event_instructors, :instructors, :event_type)
     @events = get_events(params[:type], :current)
     @registered = Registration.includes(:user).where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
+
+    @current_user_permitted_event_type = current_user&.permitted?(params[:type])
 
     if current_user&.permitted?(params[:type])
       @registered_users = Registration.includes(:user).all.group_by { |r| r.event_id }
@@ -161,20 +164,24 @@ class PublicController < ApplicationController
   end
   
   def get_events(type, scope = :current)
-    events = Event.includes(:event_instructors, :instructors)
+    scoped_events = {
+      current: @all_events.find_all { |e| e.expires_at > Time.now },
+      expired: @all_events.find_all { |e| e.expires_at <= Time.now }
+    }
+
     case type
     when :course
       courses = {
-        public: events.send(scope, :public_courses),
-        advanced_grades: events.send(scope, :advanced_grade),
-        electives: events.send(scope, :elective)
+        public: scoped_events[scope].find_all { |c| c.event_type.event_category == "public" },
+        advanced_grades: scoped_events[scope].find_all { |c| c.event_type.event_category == "advanced_grades" },
+        electives: scoped_events[scope].find_all { |c| c.event_type.event_category == "electives" }
       }
 
       courses.all? { |h| h.blank? } ? [] : courses
     when :seminar
-      events.send(scope, :seminar)
+      scoped_events[scope].find_all { |c| c.event_type.event_category == "seminar" }
     when :event
-      events.send(scope, :meeting)
+      scoped_events[scope].find_all { |c| c.event_type.event_category == "event" }
     end
   end
   

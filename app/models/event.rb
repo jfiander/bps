@@ -26,7 +26,7 @@ class Event < ApplicationRecord
     includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at > ?", Time.now).where(event_type: EventType.send(category))
   end
   scope :expired, ->(category) do
-    includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at < ?", Time.now).where(event_type: EventType.send(category))
+    includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at <= ?", Time.now).where(event_type: EventType.send(category))
   end
 
   def expired?
