@@ -54,8 +54,8 @@ class User < ApplicationRecord
 
   def bridge_hash
     {
-      full_name: full_name,
-      simple_name: simple_name,
+      full_name: full_name.gsub(" ", "&nbsp;").html_safe,
+      simple_name: simple_name.gsub(" ", "&nbsp;").html_safe,
       photo: photo
     }
   end
