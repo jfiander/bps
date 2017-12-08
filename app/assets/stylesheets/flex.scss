@@ -15,19 +15,27 @@
 
 // Responsive Scaling
 @media all and (min-width: 1250px) {
+  #small-titles {display: none;}
   #navigation {max-width: 11.4em;text-align:left;-webkit-flex: 1 auto;flex:1 auto;-webkit-order:1;order:1;}
   #content {-webkit-flex:5 0px;flex:5 0px;-webkit-order:2;order:2;}
   footer {-webkit-order:3;order:3;}
+}
 
-  #small-titles {
-    display: none;
+@media all and (max-width: 1500px) {
+  div.logo img {
+    max-width: 10em;
+  }
+}
+
+@media all and (max-width: 1400px) {
+  body {
+    margin: 0 15%;
   }
 }
 
 @media all and (max-width: 1250px) {
   body {
     min-width: 40em;
-    margin: 0 15%;
   }
 
   iframe#photos {
@@ -52,6 +60,10 @@
   }
 
   div#main-header {
+    div.logo img {
+      max-width: 9em;
+    }
+
     div#header-left {
       float: left;
       max-width: 20%;

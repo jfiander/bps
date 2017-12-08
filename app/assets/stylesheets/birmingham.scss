@@ -87,6 +87,14 @@ div#main {
     height: auto;
     border-bottom: thin solid $old-glory-blue-faded;
 
+    div.logo {
+      padding-top: 1em;
+
+      img {
+        width: 13em;
+      }
+    }
+
     div#main-header {
       width: 100%;
       margin: 0;
@@ -128,6 +136,7 @@ div#main {
           color: white;
           text-shadow: 3px 3px $old-glory-blue-faded;
           font-size: 2.5em;
+          width: 39%;
         }
 
         h4 {
