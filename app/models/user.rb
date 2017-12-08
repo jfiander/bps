@@ -151,7 +151,8 @@ class User < ApplicationRecord
   def permitted_roles_from_committee
     {
       "seminars" => [:seminar],
-      "vsc" => [:vsc]
+      "vsc" => [:vsc],
+      "ships_store" => [:store]
     }.select { |k,_| k.in? committees.map(&:search_name) }.values
   end
 
