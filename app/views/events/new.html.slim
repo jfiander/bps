@@ -16,22 +16,19 @@ h2 = "#{@edit_mode} #{@event_title}"
       .left = f.label :requirements, "Student requirements"
       .right 
         = f.text_area :requirements
-        br
-        small Computer, calculator, etc.
+        small e.g. A computer to run navigation software; a calculator; etc.
       br.clear
 
     - if params[:type] == :course
       .left = label_tag :topics, "Course topics"
       .right
-        = text_area_tag :topics, @course_topics
-        br
-        small Put each item on a separate line.
+        = text_area_tag :topics, @course_topics, class: "bulletted"
+        small Put each topic on a separate line.
       br.clear
 
       .left = label_tag :includes, "Course materials"
       .right
-        = text_area_tag :includes, @course_includes
-        br
+        = text_area_tag :includes, @course_includes, class: "bulletted"
         small Put each item on a separate line.
       br.clear
 
@@ -57,15 +54,14 @@ h2 = "#{@edit_mode} #{@event_title}"
           li You can also put a slash followed by their certificate number.
           li.red Invalid instructors will not be saved.
       .right
-        = text_area_tag :instructors, @instructors
-        br
-        small Put each item on a separate line.
+        = text_area_tag :instructors, @instructors, class: "bulletted"
+        small Put each name on a separate line.
       br.clear
 
       hr
 
     .left = f.label :location
-    .right = f.text_area :location
+    .right = f.text_area :location, class: "location"
     br.clear
 
     .left = f.label :map_link
@@ -74,20 +70,17 @@ h2 = "#{@edit_mode} #{@event_title}"
 
     hr
 
-    .left
-      = f.label :cost, "Cost"
+    .left = f.label :cost, "Cost"
     .right
       = fa_icon("usd")
       = f.number_field :cost, class: "number", min: 0, placeholder: "0.00"
     br.clear
 
-    .left
-      = f.label :member_cost, "Member discounted cost"
+    .left = f.label :member_cost, "Member discounted cost"
     .right
       = fa_icon("usd")
       = f.number_field :member_cost, class: "number", min: 0, placeholder: "0.00"
-      small
-        | (if applicable)
+      small Only enter if applicable
     br.clear
 
     .left = f.label :allow_member_registrations, "Member registrations"
@@ -117,7 +110,7 @@ h2 = "#{@edit_mode} #{@event_title}"
     br.clear
 
     .left = f.label :sessions, "Number of sessions"
-    .right = f.number_field :sessions, class: "number", min: 1
+    .right = f.number_field :sessions, class: "number", min: 1, max: 100
     br.clear
 
     hr

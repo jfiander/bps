@@ -9,6 +9,19 @@ div#new-event {
     font-size: 80%;
     list-style: none;
   }
+
+  textarea.location {
+    width: 16em;
+  }
+
+  textarea.bulletted {
+    background-color: lighten($old-glory-blue, 80%);
+  }
+
+  small {
+    display: block;
+    font-style: italic;
+  }
 }
 
 input.map-link {

@@ -7,7 +7,10 @@ class Event < ApplicationRecord
   has_many :event_instructors
   has_many :instructors, through: :event_instructors, source: :user
 
-  before_validation { self.map_link = "http://#{self.map_link}" unless self.map_link.blank? || self.map_link.match(/https?\:\/\//) }
+  before_validation do
+    self.map_link = "http://#{self.map_link}" unless self.map_link.blank? || self.map_link.match(/https?\:\/\//)
+    self.member_cost = nil if self.member_cost == self.cost
+  end
 
   has_attached_file :flyer,
     default_url: nil,
@@ -38,6 +41,10 @@ class Event < ApplicationRecord
     event_type.event_category == "seminar"
   end
 
+  def has_length?
+    length.present? && length&.strftime("%-kh %Mm") != "0h 00m"
+  end
+
   def get_flyer
     key = if is_a_course? && flyer_file_name.blank?
       get_book_cover(:courses)
@@ -49,7 +56,8 @@ class Event < ApplicationRecord
   end
 
   def formatted_cost
-    "<b>Cost:</b> $#{cost}".html_safe and return if member_cost.blank?
+    return nil if cost.blank?
+    return "<b>Cost:</b> $#{cost}".html_safe if member_cost.blank?
     "<b>Members:</b> $#{member_cost}, <b>Non-members:</b> $#{cost}".html_safe
   end
 
