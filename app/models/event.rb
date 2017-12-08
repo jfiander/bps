@@ -35,7 +35,7 @@ class Event < ApplicationRecord
   end
 
   def is_a_seminar?
-    event_type.event_category == :seminar
+    event_type.event_category == "seminar"
   end
 
   def get_flyer
