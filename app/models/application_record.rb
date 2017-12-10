@@ -1,5 +1,6 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
+  has_paper_trail
 
   def self.find_or_create(attributes)
     query = self.find_by(attributes)

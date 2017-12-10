@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207163738) do
+ActiveRecord::Schema.define(version: 20171210185919) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 20171207163738) do
     t.string   "location"
     t.string   "map_link"
     t.datetime "start_at"
-    t.datetime "length"
     t.integer  "sessions"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
@@ -84,6 +83,7 @@ ActiveRecord::Schema.define(version: 20171207163738) do
     t.integer  "flyer_file_size"
     t.datetime "flyer_updated_at"
     t.integer  "member_cost"
+    t.datetime "length"
     t.boolean  "allow_member_registrations", default: true
     t.boolean  "allow_public_registrations", default: true
   end
@@ -166,19 +166,19 @@ ActiveRecord::Schema.define(version: 20171207163738) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "grade"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.string   "email",                      default: "", null: false
-    t.string   "encrypted_password",         default: "", null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",              default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "failed_attempts",            default: 0,  null: false
+    t.integer  "failed_attempts",        default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "invitation_token"
@@ -188,18 +188,25 @@ ActiveRecord::Schema.define(version: 20171207163738) do
     t.integer  "invitation_limit"
     t.string   "invited_by_type"
     t.integer  "invited_by_id"
-    t.integer  "invitations_count",          default: 0
+    t.integer  "invitations_count",      default: 0
     t.string   "rank"
-    t.string   "profile_photo_file_name"
-    t.string   "profile_photo_content_type"
-    t.integer  "profile_photo_file_size"
-    t.datetime "profile_photo_updated_at"
+    t.         "profile_photo"
     t.string   "simple_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string   "item_type",                     null: false
+    t.integer  "item_id",                       null: false
+    t.string   "event",                         null: false
+    t.string   "whodunnit"
+    t.text     "object",     limit: 1073741823
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
 end

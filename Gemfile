@@ -31,6 +31,8 @@ gem 'mini_magick',        '~> 4.8.0'
 gem 'devise',             '~> 4.2.0'
 gem 'devise_invitable',   '~> 1.7.2'
 
+gem 'paper_trail',        '~> 8.1.0'
+
 gem 'slim',               '~> 3.0.6'
 gem 'inline_svg',         '~> 1.3.0'
 gem 'redcarpet',          '~> 3.4.0'

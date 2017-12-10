@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :pick_header_image
   before_action :meta_tags
+  before_action :set_paper_trail_whodunnit
 
   after_action { flash.discard if request.xhr? }
 
