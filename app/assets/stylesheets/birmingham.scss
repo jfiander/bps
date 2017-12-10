@@ -179,11 +179,21 @@ div#main {
     }
 
     .table-cell.footer-left, .table-cell.footer-right {
-      width: 30%;
+      width: 25%;
     }
 
     .table-cell.footer-center {
       vertical-align: middle;
+
+      ul.links {
+        list-style: none;
+        padding: 0;
+
+        li {
+          margin: 0 0.5em;
+          display: inline-block;
+        }
+      }
 
       div.copyright {
         margin-top: 1.25em;
