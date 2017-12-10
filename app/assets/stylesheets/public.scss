@@ -285,6 +285,19 @@ div.markdown {
       padding: 0 1em;
     }
   }
+
+  ul {
+    list-style: none;
+
+    li:before {
+      content: "\f13d";
+      font-family: "FontAwesome";
+      width: 0.75em;
+      height: 0.75em;
+      margin-left: -1.5em;
+      margin-right: 0.5em;
+    }
+  }
 }
 
 iframe#calendar, iframe#photos {
