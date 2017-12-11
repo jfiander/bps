@@ -55,6 +55,7 @@ class ApplicationController < ActionController::Base
       gsub(/(.*?)%file\/(\d+)\/(.*?)\/(.*?)\/(.*?)$/, '\1' + markdown_file_link('\2/\3', title: '\4') + '\5').
       gsub(/(.*?)%image\/(\d+)\/(.*?)\/(.*?)$/, '\1' + markdown_image('\2/\3') + '\4').
       gsub("&reg;", "<sup>&reg;</sup>").
+      gsub("<ul>", "<ul class='md'>").
       gsub(/(.*?)%fa\/(.*?)\/(.*?)$/, view_context.fa_icon('\2'))
   end
 

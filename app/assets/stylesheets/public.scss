@@ -286,16 +286,20 @@ div.markdown {
     }
   }
 
-  ul {
+  ul.md {
     list-style: none;
+
+    li {
+      margin-bottom: 0.5em;
+    }
 
     li:before {
       content: "\f13d";
       font-family: "FontAwesome";
       width: 0.75em;
       height: 0.75em;
-      margin-left: -1.5em;
       margin-right: 0.5em;
+      margin-left: 1.5em;
     }
   }
 }
