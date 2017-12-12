@@ -19,7 +19,7 @@ class Committee < ApplicationRecord
   end
 
   def search_name
-    name.downcase.gsub(' ', '_').delete("'")
+    name.downcase.gsub(' ', '_').delete("'").gsub('assistant_', '')
   end
 
   def display_name
