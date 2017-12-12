@@ -61,6 +61,8 @@
                     | Register
               - elsif event.allow_public_registrations && !event.expired?
                 = render "events/register_form", event_id: event.id
+              - elsif !event.expired?
+                = render "events/no_public_registrations"
     .table-row
       .table-cell.bottom-left
         = simple_format(event.description)
