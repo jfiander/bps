@@ -199,9 +199,15 @@ class UserController < ApplicationController
     file = File.open(import_path, "w+")
     file.write(uploaded_file.read)
     file.close
-    User.import(import_path)
-    flash[:notice] = "Successfully imported user data."
-    render :import
+    begin
+      User.import(import_path)
+      flash[:notice] = "Successfully imported user data."
+      render :import
+    rescue => e
+      flash[:alert] = "Unable to import user data."
+      render :import and return
+      raise e
+    end
   end
 
   private
