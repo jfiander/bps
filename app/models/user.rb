@@ -126,6 +126,32 @@ class User < ApplicationRecord
     %w[S P AP JN N SN]
   end
 
+  def self.import(path)
+    User.transaction do
+      all_problems = []
+      CSV.parse(File.read(path).force_encoding("UTF-8"), headers: true).each do |row|
+        user = User.find_by(certificate: row["Certificate"])
+        email = row["E-Mail"] || "nobody-#{SecureRandom.hex(8)}@bpsd9.org"
+        email = "duplicate-#{SecureRandom.hex(8)}@bpsd9.org" if User.where(email: row["email"].to_s.downcase).count > 0
+        rank = row["Rank"] || row["SQ_Rank"] || row["HQ_Rank"]
+        user = User.create!(certificate: row["Certificate"], first_name: row["First Name"], last_name: row["Last Name"], email: email, grade: row["Grade"], password: SecureRandom.hex(16)) unless user.present?
+    
+        user.update(rank: rank, grade: row["Grade"], mm: row["MM"], ed_pro: row["EdPro"], id_expr: row["IDEXPR"])
+        ["Certificate", "First Name", "Last Name", "Grade", "Rank", "E-Mail", "MM", "EdPro", "IDEXPR"].each { |column| row.delete(column) }
+    
+        row.each do |(key, date)|
+          next unless date.present?
+          date = "#{date}0" while date.to_s.length < 6
+          date = "#{date[0..4]}1" if date.match /00$/
+          date = Date.strptime(date, "%Y%m")
+          CourseCompletion.create!(user: user, course_key: key, date: date) unless CourseCompletion.find_by(user: user, course_key: key).present?
+        end
+      end
+    end
+
+    File.unlink(path) if File.exist?(path)
+  end
+
   private
   def implied_roles
     orig_roles = @roles.dup
