@@ -3,23 +3,15 @@ h2 All users
 table#users
   tr
     th.wide User
-    th.center.very-narrow
+    th.narrow Certificate
     th.center.narrow Roles
-    th.center.very-narrow ID
     th.medium Current Login
-    th.medium Logged in From
+    th.center.very-narrow ID
+    th.center.very-narrow
   - @users.each do |user|
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
-      td
-        = user[:name].blank? ? user[:email] : mail_to(user[:email], user[:name])
-        br
-        small = user[:certificate]
-      td.center
-        - if current_user.permitted?(:admin)
-          - if user[:locked]
-            = link_to(unlock_user_path(user[:id]), class: "unlock", method: :patch) { fa_icon "lock" }
-          - elsif !user[:granted_roles].join(",").match(/admin/)
-            = link_to(lock_user_path(user[:id]), class: "lock", method: :patch) { fa_icon "unlock" }
+      td = user[:name].blank? ? user[:email] : mail_to(user[:email], user[:name])
+      td = user[:certificate]
       td.center
         - if user[:bridge_office].present?
           = officer_flag(user[:bridge_office])
@@ -31,6 +23,14 @@ table#users
           span.red All
         - else
           span.red = (user[:permitted_roles] - user[:granted_roles]).join("<br>").html_safe
+      td.center.small-text
+        = user[:current_login_at] || "Never logged in"
+        br
+        = user[:current_login_from]
       td.center = user[:id]
-      td.center.small-text = user[:current_login_at] || "Never logged in"
-      td.center.small-text = user[:current_login_from]
+      td.center
+        - if current_user.permitted?(:admin)
+          - if user[:locked]
+            = link_to(unlock_user_path(user[:id]), class: "unlock", method: :patch) { fa_icon "lock" }
+          - elsif !user[:granted_roles].join(",").match(/admin/)
+            = link_to(lock_user_path(user[:id]), class: "lock", method: :patch) { fa_icon "unlock" }
