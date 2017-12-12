@@ -12,6 +12,8 @@ table#users
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
       td
         = user[:name].blank? ? user[:email] : mail_to(user[:email], user[:name])
+        br
+        small = user[:certificate]
       td.center
         - if current_user.permitted?(:admin)
           - if user[:locked]

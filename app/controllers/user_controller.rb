@@ -222,6 +222,7 @@ class UserController < ApplicationController
     {
       id:                 user.id,
       name:               user.full_name,
+      certificate:        user.certificate,
       email:              user.email,
       granted_roles:      user.granted_roles,
       permitted_roles:    user.permitted_roles,
