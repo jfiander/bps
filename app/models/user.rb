@@ -188,7 +188,8 @@ class User < ApplicationRecord
     {
       "seminars" => [:seminar],
       "vsc" => [:vsc],
-      "ships_store" => [:store]
+      "ships_store" => [:store],
+      "webmaster" => [:page, :calendar, :photos]
     }.select { |k,_| k.in? committees.map(&:search_name) }.values
   end
 
