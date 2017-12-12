@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :standing_committee_offices
   has_many :committees
 
+  has_many :course_completions
+
   has_many :event_instructors
   has_many :events, through: :event_instructors
 
