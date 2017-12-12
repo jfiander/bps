@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
     burgee_html = center_html { USPSFlags::Burgees.new { |b| b.squadron = :birmingham }.svg }
     education_menu = view_context.render "application/education_menu", active: {courses: false, seminars: false}
 
-    render layout: "application", inline: ("<div class='markdown'>" + Redcarpet::Markdown.new(Redcarpet::Render::HTML,
+    render layout: "application", inline: ("<div class='markdown'>" + Redcarpet::Markdown.new(TargetBlankRenderer,
       autolink: true,
       images: true,
       tables: true,
