@@ -80,6 +80,8 @@ Rails.application.routes.draw do
   delete  '/remove_standing_committee/:id', to: 'user#remove_standing_committee', as: 'remove_standing_committee'
   put     '/register/:type/:id',            to: 'user#register',                  as: 'register'
   delete  '/register/:id',                  to: 'user#cancel_registration',       as: 'cancel_registration'
+  get     '/import',                        to: 'user#import',                    as: 'import_users'
+  post    '/import',                        to: 'user#do_import'
 
   # Error codes
   match   '/404',                to: 'errors#not_found',             via: :all
