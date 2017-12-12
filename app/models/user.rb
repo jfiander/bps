@@ -131,9 +131,17 @@ class User < ApplicationRecord
       all_problems = []
       CSV.parse(File.read(path).force_encoding("UTF-8"), headers: true).each do |row|
         user = User.find_by(certificate: row["Certificate"])
-        email = row["E-Mail"] || "nobody-#{SecureRandom.hex(8)}@bpsd9.org"
-        email = "duplicate-#{SecureRandom.hex(8)}@bpsd9.org" if User.where(email: row["email"].to_s.downcase).count > 0
-        rank = row["Rank"] || row["SQ_Rank"] || row["HQ_Rank"]
+        email = row["E-Mail"].present? ? row["E-Mail"].downcase : "nobody-#{SecureRandom.hex(8)}@bpsd9.org"
+        email = "duplicate-#{SecureRandom.hex(8)}@bpsd9.org" if User.where(email: email).count > 0
+        rank = if row.has_key?("Rank") && row["Rank"].present?
+          row["Rank"]
+        elsif row.has_key?("SQ_Rank") && row["SQ_Rank"].present?
+          row["SQ_Rank"]
+        elsif row.has_key?("HQ_Rank") && row["HQ_Rank"].present?
+          row["HQ_Rank"]
+        else
+          ""
+        end
         user = User.create!(certificate: row["Certificate"], first_name: row["First Name"], last_name: row["Last Name"], email: email, grade: row["Grade"], password: SecureRandom.hex(16)) unless user.present?
     
         user.update(rank: rank, grade: row["Grade"], mm: row["MM"], ed_pro: row["EdPro"], id_expr: row["IDEXPR"])
