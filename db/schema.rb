@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171210185919) do
+ActiveRecord::Schema.define(version: 20171211220944) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -195,6 +195,9 @@ ActiveRecord::Schema.define(version: 20171210185919) do
     t.integer  "profile_photo_file_size"
     t.datetime "profile_photo_updated_at"
     t.string   "simple_name"
+    t.integer  "mm"
+    t.datetime "ed_pro"
+    t.datetime "id_expr"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
