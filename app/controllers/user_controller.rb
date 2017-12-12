@@ -1,6 +1,6 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
-  before_action                        only: [:list, :lock, :unlock,
+  before_action                        only: [:list, :lock, :unlock, :import, :do_import,
                                               :permissions_index, :permissions_add, :permissions_remove,
                                               :assign_bridge, :assign_committee, :remove_committee,
                                               :assign_standing_committee, :remove_standing_committee] { require_permission(:users) }
@@ -181,6 +181,29 @@ class UserController < ApplicationController
     redirect_to users_path, notice: "Successfully unlocked user."
   end
 
+  def import
+    #
+  end
+
+  def do_import
+    uploaded_file = clean_params[:import_file]
+
+    if uploaded_file.content_type == "text/csv"
+      flash[:alert] = nil
+    else
+      flash[:alert] = "You can only upload CSV files."
+      render :import and return
+    end
+
+    import_path = "#{Rails.root}/tmp/#{Time.now.to_i}-users_import.csv"
+    file = File.open(import_path, "w+")
+    file.write(uploaded_file.read)
+    file.close
+    User.import(import_path)
+    flash[:notice] = "Successfully imported user data."
+    render :import
+  end
+
   private
   def get_users
     unlocked_users = User.all.select{ |u| !u.locked? }.sort { |a,b| a.id <=> b.id }
@@ -212,6 +235,6 @@ class UserController < ApplicationController
 
   def clean_params
     params.permit(:id, :user_id, :role, :permit_id, :committee, :department, :bridge_office, :type,
-      :committee_name, :chair, :term_length, term_start_at: ["(1i)", "(2i)", "(3i)"])
+      :committee_name, :chair, :term_length, :import_file, term_start_at: ["(1i)", "(2i)", "(3i)"])
   end
 end

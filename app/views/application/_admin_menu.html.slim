@@ -2,6 +2,8 @@
   = link "Add #{params[:type].to_s.titleize}", path: send("new_#{params[:type]}_path"), icon: "plus-square"
 - if current_user&.permitted?(:store) && controller.action_name == "store"
   = link "Add Item",         path: new_store_item_path, icon: "plus-square"
+- if current_user&.permitted?(:users) && controller.action_name == "list"
+  = link "Import user data", path: import_users_path, icon: "plus-square"
 - if current_user&.permitted?(:page)
   - if controller.action_name.in?(StaticPage.names)
     = link "Edit This Page", path: edit_page_path(controller.action_name), icon: "pencil-square"

@@ -1,0 +1,19 @@
+h2 Import user data
+
+.center
+  | If you want to specify which rank each user should be assigned by default, enter that in a new column, titled 
+  b Rank
+  | .
+.center
+  | Otherwise, 
+  b SQ_Rank
+  |  will take precedence over 
+  b HQ_Rank
+  | .
+.center
+  | (This will not override automatic ranks from bridge offices.)
+hr
+
+= form_tag import_path, multipart: true
+  = file_field_tag :import_file, required: true
+  = spinner_button button_text: "Upload"
