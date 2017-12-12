@@ -5,15 +5,15 @@ h2 Change your password
     = devise_error_messages!
     = f.hidden_field :reset_password_token
 
-    .left
-      = f.label :password, "New password"
+    .left = f.label :password, "New password"
+    .right
+      = f.password_field :password, autofocus: true, autocomplete: "off"
       - if @minimum_password_length
-        em
-          | (
-          = @minimum_password_length
-          |  characters minimum)
         br
-    .right = f.password_field :password, autofocus: true, autocomplete: "off"
+        small
+          em
+            = @minimum_password_length
+            |  characters minimum
     br.clear
 
     .left = f.label :password_confirmation, "Confirm new password"
