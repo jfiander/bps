@@ -32,3 +32,4 @@ h2 = "#{@profile_title} user"
           |  
           = link_to(cancel_registration_path(id: r.id), method: :delete, remote: true, class: "red control", id: "event_#{r.event_id}",
             data: {confirm: "Are you sure you want to cancel your registration for #{r.event.event_type.display_title} on #{r.event.start_at.strftime(@short_time_format)}?"}) { fa_icon "minus-square" }
+        br.clear
