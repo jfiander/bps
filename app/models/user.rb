@@ -96,14 +96,11 @@ class User < ApplicationRecord
   def permit!(role)
     role = Role.find_by(name: role.to_s)
     UserRole.find_or_create(user: self, role: role)
-    update_invitation_limit
   end
 
   def unpermit!(role)
     UserRole.where(user: self).destroy_all and return true if role == :all
-    result = UserRole.where(user: self, role: Role.find_by(name: role.to_s)).destroy_all.present?
-    update_invitation_limit
-    result
+    UserRole.where(user: self, role: Role.find_by(name: role.to_s)).destroy_all.present?
   end
 
   def locked?
@@ -209,9 +206,9 @@ class User < ApplicationRecord
     bridge_rank || rank || committee_rank
   end
 
-  def update_invitation_limit
-    self.update(invitation_limit: (self.permitted?(:users) ? 1000 : 0))
-  end
+  # def update_invitation_limit
+  #   self.update(invitation_limit: (self.permitted?(:users) ? 1000 : 0))
+  # end
 
   def valid_rank
     return true if rank.nil?
