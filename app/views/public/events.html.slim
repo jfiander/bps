@@ -6,7 +6,7 @@ h2 = "Squadron #{params[:type].to_s.titleize}s"
   = render "events/table_sections", type: params[:type], all_events: @events
 - else
   = render "events/none", type: params[:type]
-- if @current_user_permitted_event_type && @expired_events.present? && !(params[:type] == "course" && @expired_events.all? { |k,v| v.blank? })
+- if @current_user_permitted_event_type && @expired_events.present? && !(params[:type] == :course && @expired_events.all? { |_,v| v.blank? })
   hr
   .events-section-header.red = "Expired #{params[:type]}s"
   = render "events/table_sections", type: params[:type], all_events: @expired_events
