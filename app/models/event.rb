@@ -45,6 +45,10 @@ class Event < ApplicationRecord
     length.present? && length&.strftime("%-kh %Mm") != "0h 00m"
   end
 
+  def has_multiple_sessions?
+    sessions.present? && sessions > 1
+  end
+
   def get_flyer
     key = if is_a_course? && flyer_file_name.blank?
       get_book_cover(:courses)

@@ -9,12 +9,10 @@
             .table-cell.table-header.event-title = event.event_type.display_title
             .table-cell.date-details
               = event.start_at.strftime(@long_time_format)
-              - if event.sessions.present? || event.has_length?
+              - if event.has_multiple_sessions? || event.has_length?
                 br
-              - if event.sessions.present?
-                = event.sessions
-                |  
-                = "session".pluralize(event.sessions)
+              - if event.has_multiple_sessions?
+                = "#{event.sessions} sessions"
                 - if event.has_length?
                   | , 
               - if event.has_length?
