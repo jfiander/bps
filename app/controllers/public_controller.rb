@@ -136,12 +136,11 @@ class PublicController < ApplicationController
 
     respond_to do |format|
       format.js do
-        if registration.save
-          flash[:notice] = "You have successfully registered!"
-          render status: :success
-        elsif Registration.find_by(registration_attributes)
+        if Registration.find_by(registration_attributes)
           flash[:alert] = "You are already registered for this course."
           render status: :unprocessable_entity
+        elsif registration.save
+          flash[:notice] = "You have successfully registered!"
         else
           flash[:alert] = "We are unable to register you at this time."
           render status: :unprocessable_entity
