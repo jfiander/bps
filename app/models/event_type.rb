@@ -89,6 +89,7 @@ class EventType < ApplicationRecord
       " Of " => " of ",
       " And " => " and ",
       " On " => " on ",
+      " In " => " in ",
       " For " => " for "
     }
 
