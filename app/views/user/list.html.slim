@@ -3,7 +3,7 @@ h2 All users
 table#users
   tr
     th.wide User
-    th.narrow Certificate
+    th.center.narrow Certificate
     th.center.narrow Roles
     th.medium Current Login
     th.center.very-narrow ID
@@ -11,7 +11,7 @@ table#users
   - @users.each do |user|
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
       td = user[:name].blank? ? user[:email] : mail_to(user[:email], user[:name])
-      td = user[:certificate]
+      td.center = user[:certificate]
       td.center
         - if user[:bridge_office].present?
           = officer_flag(user[:bridge_office])
