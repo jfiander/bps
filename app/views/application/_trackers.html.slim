@@ -1,0 +1,5 @@
+- if ENV["ASSET_ENVIRONMENT"].in? ["production", "staging"]
+  = render "analytics"
+
+- if ENV["ASSET_ENVIRONMENT"].in? ["production"]
+  = render "facebook_pixel"
