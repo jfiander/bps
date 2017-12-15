@@ -64,12 +64,12 @@
     .table-row
       .table-cell.bottom-left
         = simple_format(event.description)
-        - if event.is_a_course? && event.course_topics.present?
+        - if event.course_topics.present?
           b Topics include:
           ul
             - event.course_topics.each do |t|
               li = t.text
-        - if event.is_a_course? && event.course_includes.present?
+        - if event.course_includes.present?
           b Materials include:
           ul
             - event.course_includes.each do |i|

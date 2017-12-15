@@ -92,7 +92,7 @@ class EventsController < ApplicationController
   end
 
   def update_attachments
-    return nil unless params[:type] == :course
+    return nil unless params[:type].in? [:course, :seminar]
 
     Event.transaction do
       clear_before_time = Time.now

@@ -19,7 +19,6 @@ h2 = "#{@edit_mode} #{@event_title}"
         small e.g. A computer to run navigation software; a calculator; etc.
       br.clear
 
-    - if params[:type] == :course
       .left = label_tag :topics, "Course topics"
       .right
         = text_area_tag :topics, @course_topics, class: "bulletted"
