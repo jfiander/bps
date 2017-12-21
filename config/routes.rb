@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users, path: '',
     path_names: {sign_in: 'login', sign_out: 'logout'},
-    controllers: {registrations: 'users/registrations'}
+    controllers: {registrations: 'users/registrations', sessions: 'users/sessions'}
 
   # Profile management
   as :user do
@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get     '/history',            to: 'public#history'
   get     '/links',              to: 'public#links'
   get     '/members',            to: 'members#members'
+  get     '/welcome',            to: 'members#welcome'
 
   # Functional pages
   get     '/bridge',             to: 'public#bridge'
