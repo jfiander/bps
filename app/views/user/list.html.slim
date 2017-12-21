@@ -37,4 +37,4 @@ table#users
             = link_to(unlock_user_path(user[:id]), title: "Unlock", class: "unlock", method: :patch) { fa_icon "lock" }
           - elsif !user[:granted_roles].join(",").match(/admin/)
             = link_to(lock_user_path(user[:id]), title: "Lock", class: "lock", method: :patch) { fa_icon "unlock" }
-        = link_to(invite_path(id: user[:id]), title: "Send invitation") { fa_icon "envelope" }
+        = link_to(invite_path(id: user[:id]), title: "Send invitation") { fa_icon "envelope" } if user[:invitable]
