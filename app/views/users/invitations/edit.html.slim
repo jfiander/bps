@@ -1,0 +1,42 @@
+h2 = t 'devise.invitations.edit.header'
+
+= form_for resource, :as => resource_name, :url => invitation_path(resource_name), html: { method: :put } do |f|
+  #login
+    = devise_error_messages!
+    = f.hidden_field :invitation_token
+
+    .center
+      | Welcome! Please choose a password for your account.
+      br
+      small
+        em This password is not shared with any other websites.
+    hr
+
+    .left = f.label :email, "Your email"
+    .right
+      = f.text_field :email, disabled: true
+    br.clear
+
+    - if f.object.class.require_password_on_accepting
+      .left = f.label :password, "Choose a password"
+      .right
+        = f.password_field :password
+        - if @minimum_password_length
+          br
+          small
+            em
+              = @minimum_password_length
+              |  characters minimum
+      br.clear
+
+    .left = f.label :password_confirmation, "Confirm your password"
+    .right = f.password_field :password_confirmation
+    br.clear
+
+    .center
+      = f.submit t("devise.invitations.edit.submit_button")
+      hr
+      small
+        | Once you've chosen your password and clicked the 
+        em = t("devise.invitations.edit.submit_button")
+        |  button, you will be automatically logged in and be able view the members areas of the website.
