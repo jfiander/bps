@@ -1,12 +1,12 @@
 #header-left
-  .logo = image_tag @header_logo
+  .logo = image_tag @header_logo if @header_logo.present?
   h2
     | Birmingham
     br
     | Squadron
 
 #header-right
-  = image_tag @header_image
+  = image_tag @header_image if @header_image.present?
   #large-titles
     h1
       | America's Boating Club
