@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171211220944) do
+ActiveRecord::Schema.define(version: 20171221162006) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -194,7 +194,7 @@ ActiveRecord::Schema.define(version: 20171211220944) do
     t.string   "profile_photo_content_type"
     t.integer  "profile_photo_file_size"
     t.datetime "profile_photo_updated_at"
-    t.string   "simple_name"
+    t.string   "simple_name",                default: ""
     t.integer  "mm"
     t.datetime "ed_pro"
     t.datetime "id_expr"
