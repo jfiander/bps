@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   post    '/minutes',              to: 'members#upload_minutes',     as: 'upload_minutes'
   get     '/edit/:page_name',      to: 'members#edit_markdown',      as: 'edit_page'
   patch   '/edit/:page_name',      to: 'members#update_markdown'
+  get     '/invite_all',           to: 'user#invite_all'
 
   get     '/file',               to: 'file#new',                     as: 'file'
   post    '/file/upload',        to: 'file#create',                  as: 'upload_file'

@@ -1,6 +1,6 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
-  before_action                        only: [:list, :lock, :unlock, :import, :do_import,
+  before_action                        only: [:list, :lock, :unlock, :import, :do_import, :invite_all,
                                               :permissions_index, :permissions_add, :permissions_remove,
                                               :assign_bridge, :assign_committee, :remove_committee,
                                               :assign_standing_committee, :remove_standing_committee] { require_permission(:users) }
@@ -208,6 +208,12 @@ class UserController < ApplicationController
       render :import and return
       raise e
     end
+  end
+
+  def invite_all
+    users = User.all.reject { |u| u.sign_in_count > 0 || u.email.match(/@example\.com/) || u.email.match(/bpsd9\.org/) }
+    users.each { |user| user.invite! }
+    redirect_to users_path, notice: "All new users have been sent invitations."
   end
 
   private
