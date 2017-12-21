@@ -24,7 +24,7 @@ table#users
         - else
           span.red = (user[:permitted_roles] - user[:granted_roles]).join("<br>").html_safe
       td.center.small-text
-        = user[:current_login_at] || "Never logged in"
+        = user[:current_login_at] || (user[:invited_at] ? "Invited:<br>#{user[:invited_at]}".html_safe : "Never logged in")
         br
         = user[:current_login_from]
       td.center = user[:id]

@@ -229,6 +229,7 @@ class UserController < ApplicationController
       bridge_office:      user.bridge_office&.office,
       current_login_at:   user.current_sign_in_at,
       current_login_from: user.current_sign_in_ip,
+      invited_at:         user.invitation_sent_at,
       locked:             user.locked?
     }
   end
