@@ -17,7 +17,7 @@ en:
         submit_button: "Set my password"
     mailer:
       invitation_instructions:
-        subject: "Invitation instructions"
+        subject: "Birmingham Power Squadron website invitation"
         hello: "Hello %{email}"
         someone_invited_you: "Someone has invited you to %{url}. You can accept this invitation and create your account at the link below."
         accept: "Accept invitation"
