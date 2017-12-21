@@ -1,6 +1,6 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
-  before_action                        only: [:list, :lock, :unlock, :import, :do_import, :invite_all,
+  before_action                        only: [:list, :lock, :unlock, :import, :do_import, :invite, :invite_all,
                                               :permissions_index, :permissions_add, :permissions_remove,
                                               :assign_bridge, :assign_committee, :remove_committee,
                                               :assign_standing_committee, :remove_standing_committee] { require_permission(:users) }
@@ -208,6 +208,14 @@ class UserController < ApplicationController
       render :import and return
       raise e
     end
+  end
+
+  def invite
+    user = User.find_by(id: clean_params[:id])
+    redirect_to users_path, alert: "User not found." if user.blank?
+
+    user.invite!
+    redirect_to users_path, notice: "Invitation sent!"
   end
 
   def invite_all
