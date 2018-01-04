@@ -79,6 +79,7 @@ class EventType < ApplicationRecord
       "gps" => "GPS",
       "vhf" => "VHF",
       "dsc" => "DSC",
+      "ais" => "AIS",
       "pcoc" => "PCOC"
     }
 
