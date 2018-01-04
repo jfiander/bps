@@ -11,7 +11,7 @@ class PublicController < ApplicationController
   def events
     event_includes = [:event_instructors, :instructors, :event_type]
     event_includes += [:course_topics, :course_includes, :prereq] if params[:type] == :course
-    @all_events = Event.includes(event_includes)
+    @all_events = Event.includes(event_includes).order(:start_at)
     @events = get_events(params[:type], :current)
     @registered = Registration.includes(:user).where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
 
