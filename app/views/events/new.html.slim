@@ -36,11 +36,20 @@ h2 = "#{@edit_mode} #{@event_title}"
       br.clear
 
 
-    .left = f.label :flyer
+    .left
+      = f.label :flyer
+      ul
+        li An image will display a thumbnail next to the description.
+        li A PDF will display in a box under all other information.
     .right
       = fa_icon("file-pdf-o", class: "file-type")
       = fa_icon("file-image-o", class: "file-type")
       = f.file_field :flyer
+      br
+      - if @event.get_flyer.match(/\.pdf$/)
+        iframe src=(@event.get_flyer) width="100"
+      - elsif @event.get_flyer.match(/\.(jpe?g|png)$/)
+        = image_tag @event.get_flyer, width: 100
     br.clear
 
     hr

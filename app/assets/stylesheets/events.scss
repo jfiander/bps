@@ -22,6 +22,10 @@ div#new-event {
     display: block;
     font-style: italic;
   }
+
+  img, iframe {
+    margin-top: 1em;
+  }
 }
 
 input.map-link {
