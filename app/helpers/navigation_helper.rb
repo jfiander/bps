@@ -16,6 +16,8 @@ module NavigationHelper
       icon = "sign-in"
     elsif title.in? [:members_area, :profile, :admin]
       options = {class: "members"}
+    elsif title == "Edit This Page"
+      options = {"data-turbolinks" => "false"}
     end
 
     title = title.to_s.titleize if title.is_a?(Symbol)
