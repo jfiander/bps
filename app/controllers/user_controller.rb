@@ -2,7 +2,7 @@ class UserController < ApplicationController
   before_action :authenticate_user!
   before_action                      except: [:current, :show, :register, :cancel_registration] { require_permission(:users) }
 
-  before_action :get_users,            only: [:list]
+  before_action :get_users,            only: [:list, :permissions_index]
   before_action :get_users_for_select, only: [:permissions_index, :assign_bridge, :assign_committee]
   before_action :time_formats,         only: [:show]
 
