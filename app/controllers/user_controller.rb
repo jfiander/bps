@@ -225,10 +225,14 @@ class UserController < ApplicationController
 
   private
   def get_users
-    unlocked_users = User.all.select{ |u| !u.locked? }.sort { |a,b| a.id <=> b.id }
-    locked_users   = User.all.select{ |u| u.locked? }.sort { |a,b| a.id <=> b.id }
+    all_users = User.order(:last_name)
+    unlocked_users = all_users.select{ |u| !u.locked? } #.sort { |a,b| a.id <=> b.id }
+    locked_users   = all_users.select{ |u| u.locked? } #.sort { |a,b| a.id <=> b.id }
 
-    @users = unlocked_users + locked_users
+    @users = (unlocked_users + locked_users).map do |u|
+      display_name = u.full_name.present? ? u.full_name : u.email
+      [display_name, u.id]
+    end
   end
 
   def user_hash(user)
