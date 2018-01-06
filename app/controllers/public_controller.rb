@@ -28,7 +28,7 @@ class PublicController < ApplicationController
     @current_user_permitted_users = current_user&.permitted?(:users)
 
     # Preload all needed data
-    @users = User.order(:last_name).includes(:bridge_office, :committees, :standing_committee_offices)
+    @users = User.unlocked.order(:last_name).includes(:bridge_office, :committees, :standing_committee_offices)
     all_bridge_officers = BridgeOffice.ordered
     @all_committees = Committee.sorted
     standing_committees = StandingCommitteeOffice.current.chair_first.group_by { |s| s.committee_name }
