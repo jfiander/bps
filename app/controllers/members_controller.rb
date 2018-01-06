@@ -5,7 +5,7 @@ class MembersController < ApplicationController
   before_action                   only: [:edit_markdown, :update_markdown] { require_permission(:page) }
   before_action                   only: [:fulfill_item] { require_permission(:store) }
 
-  MARKDOWN_EDITABLE_VIEWS ||= [:members, :welcome].freeze
+  MARKDOWN_EDITABLE_VIEWS ||= [:members, :welcome, :user_help].freeze
 
   before_action :get_bilge_issue,   only: [:upload_bilge, :remove_bilge]
   before_action :get_minutes_issue, only: [:upload_minutes, :remove_minutes]

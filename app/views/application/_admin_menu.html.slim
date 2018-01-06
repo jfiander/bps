@@ -12,3 +12,7 @@
   = link "Users List",       path: users_path,                             icon: "users"
   = link "Invite User",      path: new_user_invitation_path,               icon: "user-plus"
   = link "Permissions",      path: permit_path,                            icon: "user-secret"
+- if current_user&.permitted?(:users) && (controller_name.in?(["user", "invitations"]) || controller.action_name == "bridge")
+  = link_to(user_help_path) do
+    = fa_icon("question-circle")
+    | Help
