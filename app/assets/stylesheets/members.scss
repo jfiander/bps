@@ -32,7 +32,11 @@ form.edit_static_page textarea {
   min-height: 50%;
 }
 
-div.markdown-help {
+div#markdown-help {
+  display: none;
+}
+
+div#markdown-details {
   font-size: 60%;
 
   ul {

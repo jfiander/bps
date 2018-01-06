@@ -13,3 +13,11 @@ $(document).ready ->
     $('#minutes_upload_file').prop 'disabled', $(this).is(':checked')
     return
   return
+
+$ ->
+  $('a#show-markdown-help').click (event) ->
+    event.preventDefault()
+    $('div#markdown-help').fadeIn(1000, "swing")
+    $('a#show-markdown-help').toggle()
+    return
+  return

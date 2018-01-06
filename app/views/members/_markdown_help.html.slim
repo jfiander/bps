@@ -1,0 +1,131 @@
+small This page use Markdown formatting. Please refer to the guide below for help.
+hr
+
+small Adjacent lines will be combined into a single paragraph.
+br
+small To start a new paragraph, enter a blank line.
+br
+small To enter a manual line break within a paragraph, end a line with two spaces.
+
+p
+  small
+    | Bare URLs (e.g. 
+    b https://bpsd9.org
+    | ) will be automatically linked.
+
+#markdown-details
+  h1
+    span.red #
+    |  Heading
+  h2
+    span.red ##
+    |  Sub-heading
+  h3
+    span.red ###
+    |  Sub-sub-heading
+
+  p
+    | Bulleted list:
+    br
+    span.red -
+    |  Item 1
+    br
+    span.red -
+    |  Item 2
+    br
+    | Indent items one level by preceeding the 
+    span.red -
+    |  with two spaces
+
+  p
+    span.red
+      | [
+    | Link Text
+    span.red
+      | ](
+    | http://example.com/some/path
+    span.red )
+
+  p
+    span.red
+      | [
+    | Email Link Name
+    span.red
+      | ](
+    | mailto:example@example.com
+    span.red )
+
+  p
+    | Horizontal line:
+    br
+    span.red ---
+
+  p
+    span.red @
+    | Center align
+    br
+    b
+      span.red
+        | **
+      | Bold
+      span.red
+        | **
+    br
+    i
+      span.red
+        | *
+      | Italic
+      span.red
+        | *
+    br
+    b
+      i
+        span.red
+          | ***
+        | Bold Italic
+        span.red
+          | ***
+    br
+    u
+      span.red _
+      | Underline
+      span.red _
+
+  p
+    | Image:
+    br
+    span.red ![
+    | Image alt text
+    span.red ](
+    | http://example.com/some/path/image.png
+    span.red )
+
+  p
+    = link_to "Font-Awesome", "http://fontawesome.io/icons", target: :_blank
+    |  icons:
+    br
+    span.red %fa/
+    | icon-name
+    span.red
+      | /
+
+  p
+    b Shortcuts:
+    ul
+      li
+        | Birmingham burgee: 
+        span.red %burgee
+      li 
+        | Education menu: 
+        span.red %education
+  p
+    b Uploaded files:
+  p
+    | To link to uploaded files or display uploaded images, go to the 
+    = link_to "upload files page", file_path
+    |  and copy the "Markdown key" into where you want it to display on the page.
+    br
+    | You can change the link title by modifying the text between the right two 
+    span.red
+      | /
+    | .
