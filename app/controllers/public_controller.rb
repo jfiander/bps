@@ -39,8 +39,7 @@ class PublicController < ApplicationController
     @select[:bridge_offices] = BridgeOffice.departments(assistants: true).map { |b| [BridgeOffice.title(b), b] }
     @select[:standing_committees] = StandingCommitteeOffice.committee_titles
     @select[:users] = [["TBD", nil]] + @users.to_a.map! do |user|
-      return [user.email, user.id] if user&.full_name.blank?
-      [user.full_name, user.id]
+      user&.full_name.blank? ? [user.email, user.id] : [user.full_name, user.id]
     end
 
     # Assemble data for view
