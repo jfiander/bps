@@ -66,7 +66,7 @@ h2 Bridge Officers
       .table-cell.department = image_tag(data[:head][:user][:photo], width: 125) if data[:head][:user].present?
       .table-cell
         .table.committees
-          - if data[:assistant].present?
+          - if data[:assistant].present? && data[:assistant][:user][:full_name] != "TBD"
             .table-row.assistant
               .table-cell = data[:assistant][:title]
               .table-cell = link_to data[:assistant][:user][:full_name], data[:assistant][:email]
