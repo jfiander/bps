@@ -90,6 +90,10 @@ p
       span.red _
       | Underline
       span.red _
+    br
+    | Text with
+    span.red ^
+    sup superscript
 
   p
     | Image:
@@ -123,7 +127,9 @@ p
   p
     | To link to uploaded files or display uploaded images, go to the 
     = link_to "upload files page", file_path
-    |  and copy the "Markdown key" into where you want it to display on the page.
+    |  and copy the "Markdown key"
+    br
+    | into where you want it to display on the page.
     br
     | You can change the link title by modifying the text between the right two 
     span.red
