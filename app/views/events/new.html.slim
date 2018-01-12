@@ -56,7 +56,7 @@ h2 = "#{@edit_mode} #{@event_title}"
 
     - if params[:type].in? [:course, :seminar]
       .left
-        = label_tag :instructors
+        = label_tag :instructors, "Instructor(s)"
         ul
           li Enter the full name of each instructor without rank or grade.
           li You can also put a slash followed by their certificate number.

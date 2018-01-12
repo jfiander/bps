@@ -80,7 +80,7 @@
           = simple_format(event.requirements)
         - if event.instructors.present?
           hr
-          b Instructors:
+          b = "Instructor".pluralize(event.instructors.count) + ":"
           = simple_format(event.instructors.map(&:full_name).join("\n"))
         - if event.prereq.present?
           hr
