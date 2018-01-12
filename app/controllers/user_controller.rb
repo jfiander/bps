@@ -253,7 +253,7 @@ class UserController < ApplicationController
   end
 
   def get_users_for_select
-    @users = User.all.to_a.map! do |user|
+    @users = User.unlocked.to_a.map! do |user|
       return [user.email, user.id] if user.full_name.blank?
       [user.full_name, user.id]
     end
