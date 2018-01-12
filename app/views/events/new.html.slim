@@ -46,9 +46,9 @@ h2 = "#{@edit_mode} #{@event_title}"
       = fa_icon("file-image-o", class: "file-type")
       = f.file_field :flyer
       br
-      - if @event.get_flyer.match(/\.pdf$/)
+      - if @event.get_flyer&.downcase&.match(/\.pdf$/)
         iframe src=(@event.get_flyer) width="100"
-      - elsif @event.get_flyer.match(/\.(jpe?g|png)$/)
+      - elsif @event.get_flyer&.downcase&.match(/\.(jpe?g|png)$/)
         = image_tag @event.get_flyer, width: 100
     br.clear
 
