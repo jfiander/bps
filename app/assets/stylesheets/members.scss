@@ -22,6 +22,12 @@ ul#admin-menu {
   }
 }
 
+.red-border {
+  margin: 1em 0;
+  border-top: thin solid red;
+  border-bottom: thin solid red;
+}
+
 form.edit_static_page textarea {
   background-color: lighten($background-blue, 12%);
   border: 0;

@@ -82,12 +82,11 @@ class MembersController < ApplicationController
   end
 
   def update_markdown
-    page = StaticPage.find_by(name: static_page_params[:name])
-
-    if page.update(markdown: static_page_params[:markdown])
-      redirect_to send("#{page.name}_path"), notice: "Successfully updated #{page.name} page."
-    else
-      redirect_to send("#{page.name}_path"), alert: "Unable to update #{page.name} page."
+    if clean_params["save"]
+      save_markdown
+    elsif clean_params["preview"]
+      preview_markdown
+      render "preview_markdown"
     end
   end
 
@@ -117,7 +116,7 @@ class MembersController < ApplicationController
 
   private
   def clean_params
-    params.permit(:id, :page_name, :bilge_upload_file, :bilge_remove, issue: ['date(1i)', 'date(2i)'])
+    params.permit(:id, :page_name, :save, :preview, :bilge_upload_file, :bilge_remove, issue: ['date(1i)', 'date(2i)'])
   end
 
   def static_page_params
@@ -175,5 +174,21 @@ class MembersController < ApplicationController
   def minutes_prefix(excom: false)
     excom_prefix = excom ? "excom_" : ""
     "#{excom_prefix}minutes/"
+  end
+
+  def save_markdown
+    page = StaticPage.find_by(name: static_page_params[:name])
+
+    if page.update(markdown: static_page_params[:markdown])
+      redirect_to send("#{page.name}_path"), notice: "Successfully updated #{page.name} page."
+    else
+      redirect_to send("#{page.name}_path"), alert: "Unable to update #{page.name} page."
+    end
+  end
+
+  def preview_markdown
+    @page = StaticPage.find_by(name: clean_params[:page_name])
+    @new_markdown = static_page_params[:markdown]
+    @preview_html = render_markdown_raw(markdown: static_page_params[:markdown]).html_safe
   end
 end

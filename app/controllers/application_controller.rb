@@ -39,10 +39,17 @@ class ApplicationController < ActionController::Base
   end
 
   def render_markdown
+    render layout: "application", inline: render_markdown_raw(name: action_name)
+  end
+
+  def render_markdown_raw(name: nil, markdown: nil)
+    raise ArgumentError, "Must provide name or markdown." unless name.present? || markdown.present?
+
+    markdown ||= StaticPage.find_by(name: name)&.markdown
     burgee_html = center_html { USPSFlags::Burgees.new { |b| b.squadron = :birmingham }.svg }
     education_menu = view_context.render "application/education_menu", active: {courses: false, seminars: false}
 
-    render layout: "application", inline: ("<div class='markdown'>" + Redcarpet::Markdown.new(TargetBlankRenderer,
+    ("<div class='markdown'>" + Redcarpet::Markdown.new(TargetBlankRenderer,
       autolink: true,
       images: true,
       tables: true,
@@ -50,7 +57,7 @@ class ApplicationController < ActionController::Base
       strikethrough: true,
       superscript: true,
       underline: true
-    ).render(StaticPage.find_by(name: action_name)&.markdown.to_s.
+    ).render(markdown.to_s.
       gsub(/(#+)/, '#\1')
     ) + "</div>").
       gsub("<p>@", '<p class="center">').
