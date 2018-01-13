@@ -1,0 +1,11 @@
+h2 Preview Page
+h3 = @page.name.titleize
+
+h4.red This is only a preview! Your changes have not yet been saved.
+h5.red Your changes will be lost if you refresh or leave this page.
+
+.red-border = @preview_html
+
+= render "edit_markdown_form", markdown: @new_markdown
+
+= render "markdown_help"

@@ -1,16 +1,6 @@
 h2 Edit Page
 h3 = @page.name.titleize
 
-= form_for @page, url: edit_page_path, method: :patch do |f|
-  = f.hidden_field :name
-  = f.text_area :markdown
-  br
-  small If this text box is too small, you should be able to drag the bottom right corner to expand it.
-  br
-  = spinner_button(f, button_text: "Save page", disable_text: "Saving")
-  hr
+= render "edit_markdown_form"
 
-h2 Formatting Help
-
-#markdown-help = render "markdown_help"
-= link_to "Show formatting help", "#", id: "show-markdown-help"
+= render "markdown_help"

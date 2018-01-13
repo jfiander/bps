@@ -1,0 +1,12 @@
+= form_for @page, url: edit_page_path, method: :patch do |f|
+  = f.hidden_field :name
+  - if controller.action_name == "edit_markdown"
+    = f.text_area :markdown
+  - elsif controller.action_name == "update_markdown"
+    = text_area_tag "static_page[markdown]", @new_markdown
+  br
+  small If this text box is too small, you should be able to drag the bottom right corner to expand it.
+  br
+  = spinner_button(f, button_text: "Preview", disable_text: "Loading", name: "preview")
+  = spinner_button(f, button_text: "Save", disable_text: "Saving", name: "save")
+  hr
