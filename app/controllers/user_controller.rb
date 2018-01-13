@@ -225,7 +225,7 @@ class UserController < ApplicationController
 
   private
   def get_users
-    all_users = User.order(:last_name)
+    all_users = User.alphabetized
     unlocked_users = all_users.select{ |u| !u.locked? } #.sort { |a,b| a.id <=> b.id }
     locked_users   = all_users.select{ |u| u.locked? } #.sort { |a,b| a.id <=> b.id }
 
@@ -253,9 +253,8 @@ class UserController < ApplicationController
   end
 
   def get_users_for_select
-    @users = User.unlocked.to_a.map! do |user|
-      return [user.email, user.id] if user.full_name.blank?
-      [user.full_name, user.id]
+    @users = User.unlocked.alphabetized.with_positions.map do |user|
+      user.full_name.present? ? [user.full_name, user.id] : [user.email, user.id]
     end
   end
 
