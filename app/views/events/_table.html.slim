@@ -75,19 +75,19 @@
             - event.course_includes.each do |i|
               li = i.text
         - if event.requirements.present?
-          hr
+          br
           b Student requirements:
           = simple_format(event.requirements)
         - if event.instructors.present?
-          hr
+          br
           b = "Instructor".pluralize(event.instructors.count) + ":"
           = simple_format(event.instructors.map(&:full_name).join("\n"))
         - if event.prereq.present?
-          hr
+          br
           b Prerequisite course:
           p = event.prereq.title.titleize
         - if @current_user_permitted_event_type && @registered_users[event.id].present?
-          hr
+          br
           b Registered Users:
           - @registered_users[event.id].each do |r|
             .registration id=("registration_#{r.id}")
