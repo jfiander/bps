@@ -206,10 +206,6 @@ class User < ApplicationRecord
     bridge_rank || rank || committee_rank
   end
 
-  # def update_invitation_limit
-  #   self.update(invitation_limit: (self.permitted?(:users) ? 1000 : 0))
-  # end
-
   def valid_rank
     return true if rank.nil?
     return true if rank.in? User.valid_ranks
