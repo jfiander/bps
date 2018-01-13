@@ -20,7 +20,7 @@ table#permissions
     th = "User"
     th = "Permission"
     th
-  - UserRole.all.order(:user_id).each do |p|
+  - UserRole.all.order(:user_id).includes(:user, :role).each do |p|
     tr
       td = display_name = p.user.full_name || p.user.email
       td = p.role.name
