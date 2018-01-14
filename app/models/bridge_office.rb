@@ -33,6 +33,10 @@ class BridgeOffice < ApplicationRecord
     SQL
   }
 
+  def self.preload
+    all.map { |b| {b.user_id => b.office} }.reduce({}, :merge)
+  end
+
   def department
     BridgeOffice.department(office)
   end

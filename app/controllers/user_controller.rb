@@ -2,7 +2,7 @@ class UserController < ApplicationController
   before_action :authenticate_user!
   before_action                      except: [:current, :show, :register, :cancel_registration] { require_permission(:users) }
 
-  before_action :get_users,            only: [:list, :permissions_index]
+  before_action :get_users,            only: [:list]
   before_action :get_users_for_select, only: [:permissions_index, :assign_bridge, :assign_committee]
   before_action :time_formats,         only: [:show]
 
@@ -26,16 +26,6 @@ class UserController < ApplicationController
   end
 
   def list
-    @users = []
-
-    User.unlocked.alphabetized.with_positions.each do |user|
-      @users << user_hash(user)
-    end
-
-    User.locked.alphabetized.with_positions.each do |user|
-      @users << user_hash(user)
-    end
-
     respond_to do |format|
       format.html
       format.json { render :json => @users }
@@ -225,14 +215,11 @@ class UserController < ApplicationController
 
   private
   def get_users
-    all_users = User.alphabetized
-    unlocked_users = all_users.select{ |u| !u.locked? } #.sort { |a,b| a.id <=> b.id }
-    locked_users   = all_users.select{ |u| u.locked? } #.sort { |a,b| a.id <=> b.id }
+    all_users ||= User.alphabetized.with_positions
+    @user_roles ||= UserRole.preload
+    @bridge_offices ||= BridgeOffice.preload
 
-    @users = (unlocked_users + locked_users).map do |u|
-      display_name = u.full_name.present? ? u.full_name : u.email
-      [display_name, u.id]
-    end
+    @users = all_users.unlocked.map { |user| user_hash(user) } + all_users.locked.map { |user| user_hash(user) }
   end
 
   def user_hash(user)
@@ -241,15 +228,41 @@ class UserController < ApplicationController
       name:               user.full_name,
       certificate:        user.certificate,
       email:              user.email,
-      granted_roles:      user.granted_roles,
-      permitted_roles:    user.permitted_roles,
-      bridge_office:      user.bridge_office&.office,
+      granted_roles:      get_granted_roles_for(user),
+      permitted_roles:    get_permitted_roles_for(user),
+      bridge_office:      get_bridge_office_for(user),
       current_login_at:   user.current_sign_in_at,
       current_login_from: user.current_sign_in_ip,
       invited_at:         user.invitation_sent_at,
       invitable:          user.invitation_accepted_at.blank? && user.current_sign_in_at.blank?,
       locked:             user.locked?
     }
+  end
+
+  def get_granted_roles_for(user)
+    user_has_explicit_roles?(user) ? @user_roles[user.id] : []
+  end
+
+  def get_permitted_roles_for(user)
+    user_has_implicit_roles?(user) ? user.permitted_roles : []
+  end
+
+  def get_bridge_office_for(user)
+    @bridge_offices[user.id]
+  end
+
+  def user_has_explicit_roles?(user)
+    @user_roles.has_key? user.id
+  end
+
+  def user_has_implicit_roles?(user)
+    user.id.in? (@users_with_implied_permissions ||= users_with_implied_permissions)
+  end
+
+  def users_with_implied_permissions
+    BridgeOffice.all.map(&:user_id) +
+    StandingCommitteeOffice.current.map(&:user_id) +
+    Committee.all.map(&:user_id)
   end
 
   def get_users_for_select
