@@ -20,7 +20,7 @@ table#users
       td.center = user[:certificate]
       td.center
         - if user[:bridge_office].present?
-          = officer_flag(user[:bridge_office])
+          = officer_flag(user[:bridge_office], mode: :png)
           hr
         - if user[:granted_roles].present?
           = user[:granted_roles].join("<br>").html_safe
