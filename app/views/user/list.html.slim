@@ -1,6 +1,9 @@
 h2 All users
 
-= link_to "Send invitations to all new users", invite_all_path
+- if ENV["DOMAIN"] == "bpsd9.org"
+  = link_to "Send invitations to all new users", invite_all_path
+- else
+  strike Send invitations to all new users
 hr
 
 table#users
