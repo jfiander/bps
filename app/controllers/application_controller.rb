@@ -63,9 +63,9 @@ class ApplicationController < ActionController::Base
       gsub("<p>@", '<p class="center">').
       gsub(/<p>%burgee<\/p>/, burgee_html).
       gsub(/<p>%education<\/p>/, education_menu).
-      gsub(/(.*?)%static_file\/(.*?)\/(.*?)\/(.*?)$/, '\1' + markdown_static_link('\2', title: '\3') + '\4').
-      gsub(/(.*?)%file\/(\d+)\/(.*?)\/(.*?)\/(.*?)$/, '\1' + markdown_file_link('\2/\3', title: '\4') + '\5').
-      gsub(/(.*?)%image\/(\d+)\/(.*?)\/(.*?)$/, '\1' + markdown_image('\2/\3') + '\4').
+      gsub(/(.*?)%static_file\/(.*?)\/(.*?)\/(.*?)$/) { $1 + markdown_static_link($2, title: $3) + $4 }.
+      gsub(/(.*?)%file\/(\d+)\/(.*?)\/(.*?)$/) { $1 + markdown_file_link($2, title: $3) + $4 }.
+      gsub(/(.*?)%image\/(\d+)\/(.*?)$/) { $1 + markdown_image($2) + $3 }.
       gsub("&reg;", "<sup>&reg;</sup>").
       gsub("<ul>", "<ul class='md'>").
       gsub(/(.*?)%fa\/(.*?)\/(.*?)$/, view_context.fa_icon('\2'))
@@ -85,7 +85,8 @@ class ApplicationController < ActionController::Base
     @dca_award = static_bucket.link(key: "logos/DCA_web_2016.png")
   end
 
-  def markdown_static_link(key, title: "")
+  def markdown_static_link(id, title: "")
+    key = get_uploaded_file_name(id)
     link_title = title || key
     link_path = static_bucket.link(key: "general/#{key}")
     view_context.link_to(link_path, target: :_blank) do
@@ -93,7 +94,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def markdown_file_link(key, title: "")
+  def markdown_file_link(id, title: "")
+    key = get_uploaded_file_name(id)
     link_title = title || key
     link_path = files_bucket.link(key: "uploaded_files/#{key}")
     view_context.link_to(link_path, target: :_blank) do
@@ -101,9 +103,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def markdown_image(key)
-    key = "uploaded_files/#{key}"
+  def markdown_image(id)
+    key = "uploaded_files/#{get_uploaded_file_name(id)}"
     view_context.image_tag(files_bucket.link(key: key))
+  end
+  
+  def get_uploaded_file_name(id)
+    "#{id}/#{MarkdownFile.find_by(id: id)&.file_file_name}"
   end
 
   def meta_tags
