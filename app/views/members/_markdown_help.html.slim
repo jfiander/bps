@@ -1,20 +1,18 @@
 h2 Formatting Help
 
 #markdown-help
-  small This page use Markdown formatting. Please refer to the guide below for help.
+  h4 This page use Markdown formatting. Please refer to the guide below for help.
   hr
 
-  small Adjacent lines will be combined into a single paragraph.
-  br
-  small To start a new paragraph, enter a blank line.
-  br
-  small To enter a manual line break within a paragraph, end a line with two spaces.
-
   p
-    small
-      | Bare URLs (e.g. 
-      b https://bpsd9.org
-      | ) will be automatically linked.
+    b General notes
+  p
+  small Adjacent lines will be combined into a single paragraph.
+  p
+  small To start a new paragraph, enter a blank line.
+  p
+  small To enter a manual line break within a paragraph, end a line with two spaces.
+  hr
 
   #markdown-details
     h1
@@ -26,27 +24,53 @@ h2 Formatting Help
     h3
       span.red ###
       |  Sub-sub-heading
+    hr
 
     p
-      | Bulleted list:
-      br
-      span.red -
-      |  Item 1
-      br
-      span.red -
-      |  Item 2
-      br
-      small The space between the dash and text matters.
-      br
-      small
-        | Indent items one level by preceeding the 
-        span.red -
-        |  with two spaces
+      b Text formatting
+    p
+      span.red @
+      | Center align
 
     p
       span.red
+        | *
+      em Italic
+      span.red
+        | *
+
+    p
+      span.red
+        | **
+      b Bold
+      span.red
+        | **
+
+    p
+      span.red
+        | ***
+      b
+        i Bold Italic
+      span.red
+        | ***
+
+    p
+      span.red _
+      u Underline
+      span.red _
+
+    p
+      | Text with
+      span.red ^
+      sup superscript
+    hr
+
+    p
+      b Links
+    p
+      span.red
         | [
-      | Link Text
+      | Page Name
       span.red
         | ](
       | http://example.com/some/path
@@ -55,73 +79,112 @@ h2 Formatting Help
     p
       span.red
         | [
-      | Email Link Name
+      | Email Name
       span.red
-        | ](
-      | mailto:example@example.com
+        | ](mailto:
+      | example@example.com
       span.red )
 
     p
-      | Horizontal line:
-      br
-      span.red ---
+      small
+        | Bare URLs (e.g. 
+        b https://bpsd9.org
+        | ) will be automatically linked.
+    hr
 
     p
-      span.red @
-      | Center align
-      br
-      b
-        span.red
-          | **
-        | Bold
-        span.red
-          | **
-      br
-      i
-        span.red
-          | *
-        | Italic
-        span.red
-          | *
-      br
-      b
-        i
-          span.red
-            | ***
-          | Bold Italic
-          span.red
-            | ***
-      br
-      u
-        span.red _
-        | Underline
-        span.red _
-      br
-      | Text with
-      span.red ^
-      sup superscript
-
+      b Image
     p
-      | Image:
-      br
       span.red ![
-      | Image alt text
+      | Image description
       span.red ](
       | http://example.com/some/path/image.png
       span.red )
+    hr
 
     p
-      = link_to "Font-Awesome", "http://fontawesome.io/icons", target: :_blank
-      |  icons:
+      b Horizontal line
+    p
+      span.red ---
+    hr
+
+    p
+      b Bulleted list
+    p
+      span.red -
+      |  Item 1
       br
+      span.red -
+      |  Item 2
+
+    p
+      small
+        | You must leave a blank line on both sides of a bulleted list.
+      br
+        |  You must leave a space between the dash and text.
+      br
+      small
+        | You can indent items one level by preceeding the 
+        span.red -
+        |  with two spaces
+    hr
+
+    p
+      b Table
+    p
+      pre
+        span.red | 
+        | Header 1
+        span.red  | 
+        | Header 2
+        span.red  |
+      br
+        span.red |----------|----------|
+      br
+        span.red | 
+        | Item 1.1
+        span.red  | 
+        | Item 2.1
+        span.red  |
+      br
+        span.red | 
+        | Item 1.2
+        span.red  | 
+        | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        span.red  |
+    hr
+
+    p
+      b Uploaded files
+    p
+      | To link to uploaded files or display uploaded images, go to the 
+      = link_to "upload files page", file_path
+      |  and copy the "Markdown key"
+      br
+      | into where you want it to display on the page.
+    hr
+
+    p
+      b FontAwesome
+    p
+      small
+        | The 
+        = link_to "FontAwesome", "http://fontawesome.io/icons", target: :_blank
+        |  icon set is available, if you want to use a particular icon somewhere in a page.
+    p
       span.red %fa/
       | icon-name
       span.red
         | /
+    hr
 
     p
-      b Shortcuts:
-      | Copy the red text into the page.
+      b Shortcuts
+    p
+      small
+        em Note: These are here for reference. You will probably not need to use these.
+    p
+      small Copy the red text into the page.
       ul
         li
           | Birmingham burgee: 
@@ -129,18 +192,5 @@ h2 Formatting Help
         li 
           | Education menu: 
           span.red %education
-    p
-      b Uploaded files:
-    p
-      | To link to uploaded files or display uploaded images, go to the 
-      = link_to "upload files page", file_path
-      |  and copy the "Markdown key"
-      br
-      | into where you want it to display on the page.
-      br
-      | You can change the link title by modifying the text between the right two 
-      span.red
-        | /
-      | .
 
 = link_to "Show formatting help", "#", id: "show-markdown-help"
