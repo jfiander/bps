@@ -38,7 +38,7 @@ class Event < ApplicationRecord
   end
 
   def is_a_seminar?
-    event_type.event_category == "seminar"
+    event_type.in? EventType.seminars
   end
 
   def has_length?
