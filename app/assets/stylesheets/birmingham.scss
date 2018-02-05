@@ -231,3 +231,42 @@ div#flashes {
 @import "flex";
 
 @import "overrides";
+
+@media screen {
+  #print-header, #print-footer {
+    display: none;
+  }
+}
+
+@media print {
+  body, #main, #content {
+    background-color: #FFFFFF;
+  }
+
+  body {
+    width: 100%;
+    margin: 0;
+  }
+
+  #main-header, #navigation, ul#admin-menu, #main-footer {
+    display: none;
+  }
+
+  #print-header #header-right img {
+    width: 100%;
+  }
+
+  div#user-ranks {
+    .member {
+      margin: 1.5em 1.25em;
+    }
+
+    .rank, .grade {
+      width: 1.5em;
+    }
+
+    .name {
+      width: 12em;
+    }
+  }
+}

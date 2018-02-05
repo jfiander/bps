@@ -12,6 +12,7 @@ html
     #main.flex
       header
         #main-header = render "application/header"
+        #print-header = render "application/print_header"
       #navigation
         ul = render "application/navigation"
       #content
@@ -21,4 +22,6 @@ html
           #notice = notice
           #alert = alert
         = yield
-      footer = render "application/footer"
+      footer
+        #main-footer = render "application/footer"
+        #print-footer = render "application/print_footer"
