@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   get     '/welcome',            to: 'members#welcome'
   get     '/user_help',          to: 'members#user_help'
 
+  # Dynamic pages
+  get     '/ranks',              to: 'members#ranks'
+
   # Functional pages
   get     '/bridge',             to: 'public#bridge'
   get     '/newsletter',         to: 'public#newsletter'

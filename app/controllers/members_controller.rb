@@ -4,6 +4,7 @@ class MembersController < ApplicationController
   before_action                   only: [:upload_bilge] { require_permission(:newsletter) }
   before_action                   only: [:edit_markdown, :update_markdown] { require_permission(:page) }
   before_action                   only: [:fulfill_item] { require_permission(:store) }
+  before_action                   only: [:ranks] { require_permission(:users, :newsletter, :page, :minutes, :event, :education) }
 
   MARKDOWN_EDITABLE_VIEWS ||= [:members, :welcome, :user_help].freeze
 
@@ -112,6 +113,10 @@ class MembersController < ApplicationController
       flash[:alert] = "There was a problem fulfilling this item."
       render status: :internal_server_error
     end
+  end
+
+  def ranks
+    @users = User.unlocked.with_positions.alphabetized.with_a_name
   end
 
   private

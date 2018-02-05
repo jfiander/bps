@@ -1,0 +1,9 @@
+h2 Member Ranks and Grades
+
+div#user-ranks
+  - @users.each do |user|
+    .member
+      .rank = user.auto_rank
+      .name = user.simple_name
+      .grade = user.grade
+      br.clear

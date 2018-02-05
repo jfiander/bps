@@ -50,3 +50,24 @@ div#markdown-details {
     padding: 0;
   }
 }
+
+div#user-ranks {
+  margin: 0 auto;
+  text-align: center;
+
+  .member {
+    margin: 1.5em 4em;
+    display: inline-block;
+  }
+
+  .rank, .grade {
+    float: left;
+    width: 2em;
+    min-height: 1em;
+  }
+
+  .name {
+    float: left;
+    width: 15em;
+  }
+}
