@@ -17,8 +17,8 @@ class ApplicationController < ActionController::Base
     Rails.env.production?
   end
 
-  def require_permission(role)
-    redirect_to root_path and return unless current_user&.permitted?(role)
+  def require_permission(*role)
+    redirect_to root_path and return unless current_user&.permitted?(*role)
     # before_action only: [:method_1, :method_2] { require_permission(:role_name) }
   end
 
