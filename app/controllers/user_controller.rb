@@ -206,7 +206,7 @@ class UserController < ApplicationController
   end
 
   def invite_all
-    redirect_to users_path, alert: "This action is only available on Production." and return unless ENV["ASSET_ENVIRONMENT"] == "production"
+    redirect_to users_path, alert: "This action is currently disabled." and return unless ENV["ALLOW_BULK_INVITE"] == "true"
 
     users = User.all.reject { |u| u.sign_in_count > 0 || u.email.match(/@example\.com/) || u.email.match(/bpsd9\.org/) }
     users.each { |user| user.invite! }

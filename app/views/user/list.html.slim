@@ -1,10 +1,8 @@
 h2 All users
 
-- if ENV["DOMAIN"] == "bpsd9.org"
+- if ENV["ALLOW_BULK_INVITE"] == "true"
   = link_to "Send invitations to all new users", invite_all_path
-- else
-  strike Send invitations to all new users
-hr
+  hr
 
 table#users
   tr
