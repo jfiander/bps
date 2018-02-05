@@ -3,7 +3,9 @@ if defined? Rack::Cors
         allow do
             origins [
               "https://#{ENV['DOMAIN']}",
-              "http://#{ENV['DOMAIN']}"
+              "http://#{ENV['DOMAIN']}",
+              "https://#{ENV['CLOUDFRONT_RAILS_ENDPOINT']}",
+              "http://#{ENV['CLOUDFRONT_RAILS_ENDPOINT']}"
             ]
             resource '/assets/*'
         end
