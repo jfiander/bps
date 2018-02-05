@@ -39,6 +39,7 @@ class User < ApplicationRecord
   scope :alphabetized,   -> { order(:last_name) }
   scope :with_positions, -> { includes(:bridge_office, :standing_committee_offices, :committees, :user_roles, :roles) }
   scope :with_name,      ->(name) { where(simple_name: name) }
+  scope :with_a_name,    -> { where.not(simple_name: [nil, "", " "]) }
 
   def full_name
     (auto_rank.present? ? "#{auto_rank} " : "") +
