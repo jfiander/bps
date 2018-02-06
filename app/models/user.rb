@@ -255,6 +255,6 @@ class User < ApplicationRecord
       'Lt'       => 26
     }
 
-    ranks.map { |r| {r => rank_priority[r] } }.reduce({}, :merge).min_by { |_, p| p }&.first
+    ranks.map { |r| {r => (rank_priority[r] || 100) } }.reduce({}, :merge).min_by { |_, p| p }&.first
   end
 end
