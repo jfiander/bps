@@ -3,15 +3,13 @@ class PublicController < ApplicationController
   # STATIC_VIEWS = [:calendar, :photos].freeze
 
   before_action :list_bilges, only: [:newsletter, :get_bilge]
-  before_action :time_formats, only: [:courses, :seminars, :events]
+  before_action :time_formats, only: [:events, :catalog]
+  before_action :preload_events, only: [:events] #, :catalog]
   before_action :render_markdown, only: MARKDOWN_EDITABLE_VIEWS
 
   MARKDOWN_EDITABLE_VIEWS.each { |m| define_method(m) {} }
-  
+
   def events
-    event_includes = [:event_instructors, :instructors, :event_type]
-    event_includes += [:course_topics, :course_includes, :prereq] if params[:type] == :course
-    @all_events = Event.includes(event_includes).order(:start_at)
     @events = get_events(params[:type], :current)
     @registered = Registration.includes(:user).where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
 
@@ -21,6 +19,27 @@ class PublicController < ApplicationController
       @registered_users = Registration.includes(:user).all.group_by { |r| r.event_id }
       @expired_events = get_events(params[:type], :expired)
     end
+  end
+
+  def catalog
+    events = Event.includes(:event_type).order(:created_at).group_by(&:event_type).group_by { |t, e| t.event_category }
+
+    case params[:type]
+    when :course
+      @event_catalog = {"advanced_grade" => {}, "elective" => {}, "public" => {}}
+
+      ["advanced_grade", "elective", "public"].each do |course_type|
+        events[course_type].each { |et, e| @event_catalog[course_type][et] = e.first }
+      end
+      @event_catalog.symbolize_keys!
+    when :seminar
+      @event_catalog = {"seminar" => {}}
+
+      events["seminar"].each { |et, e| @event_catalog["seminar"][et] = e.first }
+    end
+
+    @event_catalog = @event_catalog.map { |et, data| {et => data.values} }.reduce({}, :merge)
+    @event_catalog = @event_catalog["seminar"] if params[:type] == :seminar
   end
 
   def bridge
@@ -162,7 +181,7 @@ class PublicController < ApplicationController
       { b.delete(".pdf") => bilge_bucket.link(key: b) }
     end.reduce({}, :merge)
   end
-  
+
   def get_events(type, scope = :current)
     scoped_events = {
       current: @all_events.find_all { |e| e.expires_at > Time.now },
@@ -184,7 +203,7 @@ class PublicController < ApplicationController
       scoped_events[scope].find_all { |c| c.event_type.event_category == "meeting" }
     end
   end
-  
+
   def generate_dept_head(dept, head)
     {
       title: BridgeOffice.title(dept),
@@ -193,7 +212,7 @@ class PublicController < ApplicationController
       user: get_user(head&.user_id)
     }
   end
-  
+
   def generate_dept_asst(dept, assistant)
     {
       title: assistant&.title,
@@ -211,5 +230,11 @@ class PublicController < ApplicationController
         id: c.id
       }
     end
+  end
+
+  def preload_events
+    event_includes = [:event_instructors, :instructors, :event_type]
+    event_includes += [:course_topics, :course_includes, :prereq] if params[:type] == :course
+    @all_events = Event.includes(event_includes).order(:start_at)
   end
 end

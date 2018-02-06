@@ -1,3 +1,7 @@
 ul#education
-  = link "Courses", path: courses_path, active: active[:courses]
-  = link "Seminars", path: seminars_path, active: active[:seminars]
+  - if defined?(catalog)
+    = link "Courses", path: course_catalog_path, active: active[:courses]
+    = link "Seminars", path: seminar_catalog_path, active: active[:seminars]
+  - else
+    = link "Courses", path: courses_path, active: active[:courses]
+    = link "Seminars", path: seminars_path, active: active[:seminars]

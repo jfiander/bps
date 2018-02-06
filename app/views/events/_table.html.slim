@@ -8,59 +8,60 @@
           .table-row
             .table-cell.table-header.event-title = event.event_type.display_title
             .table-cell.date-details
-              = event.start_at.strftime(@long_time_format)
-              - if event.has_multiple_sessions? || event.has_length?
+              = event.start_at.strftime(@long_time_format) unless defined?(@event_catalog)
+              - if !defined?(@event_catalog) && event.has_multiple_sessions? || event.has_length?
                 br
               - if event.has_multiple_sessions?
                 = "#{event.sessions} sessions"
                 - if event.has_length?
                   | , 
-              - if event.has_length?
+              - if event.has_length? && !defined?(@event_catalog)
                 = event.length&.strftime(@duration_format)
               - if event.cost.present?
                 br
                 span.costs = event.formatted_cost
       .table-cell.top-right
-        .table
-          .table-row
-            .table-cell.location
-              - if event.location.present?
-                b
-                  | Location: 
-                  - if event.map_link.present?
-                    = link_to(event.map_link, target: :_blank) do
-                      = fa_icon("map-marker")
-                      | Map
-                br
-                p = simple_format(event.location)
+        - unless defined?(@event_catalog)
+          .table
+            .table-row
+              .table-cell.location
+                - if event.location.present?
+                  b
+                    | Location: 
+                    - if event.map_link.present?
+                      = link_to(event.map_link, target: :_blank) do
+                        = fa_icon("map-marker")
+                        | Map
+                  br
+                  p = simple_format(event.location)
 
-              - else
-                | Location TBD
-            .table-cell
-              - if @current_user_permitted_event_type
-                = link_to(send("copy_#{params[:type]}_path", event), class: "control blue-faded") do
-                  = fa_icon("clone fw")
-                  | Clone
-                = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
-                  = fa_icon("pencil-square fw")
-                  | Edit
-                - unless event.expired?
-                  = link_to(send("destroy_#{params[:type]}_path", event), method: :delete, class: "red control", data: {confirm: "Are you sure you want to force this #{params[:type]} to expire?"}) do
-                    = fa_icon("eye-slash fw")
-                    | Expire
-              - if user_signed_in? && event.allow_member_registrations && !event.expired?
-                - if @registered.has_key?(event.id)
-                  = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
-                    = fa_icon("minus-square fw")
-                    | Cancel Registration
                 - else
-                  = link_to(register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
-                    = fa_icon("calendar-check-o fw")
-                    | Register
-              - elsif event.allow_public_registrations && !event.expired?
-                = render "events/register_form", event_id: event.id
-              - elsif !event.expired?
-                = render "events/no_public_registrations"
+                  | Location TBD
+              .table-cell
+                - if @current_user_permitted_event_type
+                  = link_to(send("copy_#{params[:type]}_path", event), class: "control blue-faded") do
+                    = fa_icon("clone fw")
+                    | Clone
+                  = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
+                    = fa_icon("pencil-square fw")
+                    | Edit
+                  - unless event.expired?
+                    = link_to(send("destroy_#{params[:type]}_path", event), method: :delete, class: "red control", data: {confirm: "Are you sure you want to force this #{params[:type]} to expire?"}) do
+                      = fa_icon("eye-slash fw")
+                      | Expire
+                - if user_signed_in? && event.allow_member_registrations && !event.expired?
+                  - if @registered.has_key?(event.id)
+                    = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
+                      = fa_icon("minus-square fw")
+                      | Cancel Registration
+                  - else
+                    = link_to(register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
+                      = fa_icon("calendar-check-o fw")
+                      | Register
+                - elsif event.allow_public_registrations && !event.expired?
+                  = render "events/register_form", event_id: event.id
+                - elsif !event.expired?
+                  = render "events/no_public_registrations"
     .table-row
       .table-cell.bottom-left
         = simple_format(event.description)
@@ -78,7 +79,7 @@
           br
           b Student requirements:
           = simple_format(event.requirements)
-        - if event.instructors.present?
+        - if event.instructors.present? && !defined?(@event_catalog)
           br
           b = "Instructor".pluralize(event.instructors.count) + ":"
           = simple_format(event.instructors.map(&:full_name).join("\n"))
@@ -86,7 +87,7 @@
           br
           b Prerequisite course:
           p = event.prereq.title.titleize
-        - if @current_user_permitted_event_type && @registered_users[event.id].present?
+        - if @current_user_permitted_event_type && @registered_users[event.id].present? && !defined?(@event_catalog)
           br
           b Registered Users:
           - @registered_users[event.id].each do |r|
