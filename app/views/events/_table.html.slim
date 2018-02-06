@@ -21,7 +21,7 @@
                 - if event.cost.present?
                   - if event.has_multiple_sessions? || event.has_length?
                     br
-                span.costs = event.formatted_cost
+              span.costs = event.formatted_cost
       .table-cell.top-right
         - unless defined?(@event_catalog)
           .table
