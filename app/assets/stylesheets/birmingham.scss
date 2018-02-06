@@ -239,7 +239,7 @@ div#flashes {
 }
 
 @media print {
-  body, #main, #content {
+  body, body div#main, body div#main #content {
     background-color: #FFFFFF;
   }
 
