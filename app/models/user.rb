@@ -159,6 +159,10 @@ class User < ApplicationRecord
   end
 
   def auto_rank
+    highest_rank(*ranks)
+  end
+
+  def ranks
     bridge_rank = case bridge_office&.office
     when 'commander'
       'Cdr'
@@ -171,7 +175,7 @@ class User < ApplicationRecord
     committee_rank = 'Lt' if standing_committee_offices.present? || committees.present?
     committee_rank = 'F/Lt' if 'Flag Lieutenant'.in? committees.map(&:name)
 
-    bridge_rank || rank || committee_rank
+    [bridge_rank, rank, committee_rank].reject(&:blank?)
   end
 
   private
@@ -217,5 +221,38 @@ class User < ApplicationRecord
     return true if grade.nil?
     return true if grade.in? User.valid_grades
     errors.add(:grade, 'must be nil or in User.valid_grades')
+  end
+
+  def highest_rank(*ranks)
+    rank_priority = {
+      'C/C'      => 1,
+      'P/C/C'    => 2,
+      'V/C'      => 3,
+      'P/V/C'    => 4,
+      'R/C'      => 5,
+      'P/R/C'    => 6,
+      'D/C'      => 7,
+      'P/D/C'    => 8,
+      'Stf/C'    => 9,
+      'P/Stf/C'  => 10,
+      'Cdr'      => 11,
+      'P/C'      => 12,
+      'N/F/Lt'   => 13,
+      'P/N/F/Lt' => 14,
+      'N/Chpln'  => 15,
+      'Aide/CC'  => 16,
+      'D/Lt/C'   => 17,
+      'P/D/Lt/C' => 18,
+      'D/1st/Lt' => 19,
+      'D/1/Lt'   => 19,
+      'D/Lt'     => 20,
+      'Lt/C'     => 21,
+      'P/Lt/C'   => 22,
+      '1st/Lt'   => 23,
+      '1/Lt'     => 23,
+      'Lt'       => 24
+    }
+
+    ranks.map { |r| {r => rank_priority[r] } }.reduce({}, :merge).min_by { |_, p| p }&.first
   end
 end
