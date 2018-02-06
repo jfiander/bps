@@ -245,12 +245,14 @@ class User < ApplicationRecord
       'P/D/Lt/C' => 18,
       'D/1st/Lt' => 19,
       'D/1/Lt'   => 19,
-      'D/Lt'     => 20,
-      'Lt/C'     => 21,
-      'P/Lt/C'   => 22,
-      '1st/Lt'   => 23,
-      '1/Lt'     => 23,
-      'Lt'       => 24
+      'D/F/Lt'   => 20,
+      'D/Lt'     => 21,
+      'Lt/C'     => 22,
+      'P/Lt/C'   => 23,
+      '1st/Lt'   => 24,
+      '1/Lt'     => 24,
+      'F/Lt'     => 25,
+      'Lt'       => 26
     }
 
     ranks.map { |r| {r => rank_priority[r] } }.reduce({}, :merge).min_by { |_, p| p }&.first
