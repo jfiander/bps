@@ -9,16 +9,17 @@
             .table-cell.table-header.event-title = event.event_type.display_title
             .table-cell.date-details
               = event.start_at.strftime(@long_time_format) unless defined?(@event_catalog)
-              - if !defined?(@event_catalog) && event.has_multiple_sessions? || event.has_length?
+              - if !defined?(@event_catalog) && (event.has_multiple_sessions? || event.has_length?)
                 br
               - if event.has_multiple_sessions?
                 = "#{event.sessions} sessions"
-                - if event.has_length?
+                - if !defined?(@event_catalog) && event.has_length?
                   | , 
               - if event.has_length? && !defined?(@event_catalog)
                 = event.length&.strftime(@duration_format)
               - if event.cost.present?
-                br
+                - if event.has_multiple_sessions? || (!defined?(@event_catalog) && event.has_length?)
+                  br
                 span.costs = event.formatted_cost
       .table-cell.top-right
         - unless defined?(@event_catalog)
