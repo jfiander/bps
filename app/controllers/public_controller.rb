@@ -39,6 +39,7 @@ class PublicController < ApplicationController
     end
 
     @event_catalog = @event_catalog.map { |et, data| {et => data.values} }.reduce({}, :merge)
+    @event_catalog = @event_catalog.map { |c, data| {c => data.sort_by { |e| e.event_type } } }.reduce({}, :merge)
     @event_catalog = @event_catalog["seminar"] if params[:type] == :seminar
   end
 
