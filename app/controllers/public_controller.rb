@@ -193,8 +193,8 @@ class PublicController < ApplicationController
     when :course
       courses = {
         public: scoped_events[scope].find_all { |c| c.event_type.event_category == "public" },
-        advanced_grades: scoped_events[scope].find_all { |c| c.event_type.event_category == "advanced_grade" },
-        electives: scoped_events[scope].find_all { |c| c.event_type.event_category == "elective" }
+        advanced_grade: scoped_events[scope].find_all { |c| c.event_type.event_category == "advanced_grade" },
+        elective: scoped_events[scope].find_all { |c| c.event_type.event_category == "elective" }
       }
 
       courses.all? { |h| h.blank? } ? [] : courses
