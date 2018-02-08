@@ -8,10 +8,6 @@ class TargetBlankRenderer < Redcarpet::Render::HTML
   end
 
   def autolink(link, link_type)
-    if link.match(/^https?:\/\/#{ENV["DOMAIN"]}\/.*/) || link.match(/^\//)
-      "<a href='#{link}'>#{link}</a>"
-    else
-      "<a target='_blank' href='#{link}'>#{link}</a>"
-    end
+    link(link, nil, link)
   end
 end
