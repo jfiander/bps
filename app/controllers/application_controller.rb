@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
       gsub(/(.*?)%image\/(\d+)\/(.*?)$/) { $1 + markdown_image($2) + $3 }.
       gsub("&reg;", "<sup>&reg;</sup>").
       gsub("<ul>", "<ul class='md'>").
-      gsub(/(.*?)%fa\/(.*?)\/(.*?)$/, view_context.fa_icon('\2'))
+      gsub(/(.*?)%fa\/(.*?)\/(.*?)$/) { $1 + view_context.fa_icon($2) + $3 }
   end
 
   def center_html
