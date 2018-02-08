@@ -41,8 +41,8 @@ class User < ApplicationRecord
   scope :with_name,      ->(name) { where(simple_name: name) }
   scope :with_a_name,    -> { where.not(simple_name: [nil, '', ' ']) }
 
-  def full_name
-    (auto_rank.present? ? "#{auto_rank} " : '') +
+  def full_name(html: true)
+    (auto_rank.present? ? "#{auto_rank(html: html)} " : '') +
     simple_name +
     (grade.present? ? ", #{grade}" : '')
   end
@@ -158,18 +158,18 @@ class User < ApplicationRecord
     File.unlink(path) if File.exist?(path)
   end
 
-  def auto_rank
-    highest_rank(*ranks)
+  def auto_rank(html: true)
+    highest_rank(*ranks(html: html))
   end
 
-  def ranks
+  def ranks(html: true)
     bridge_rank = case bridge_office&.office
     when 'commander'
       'Cdr'
     when 'executive', 'administrative', 'educational', 'secretary', 'treasurer'
       'Lt/C'
     when 'asst_educational', 'asst_secretary'
-      '1/Lt'
+      html ? '1<sup>st</sup>/Lt'.html_safe : '1st/Lt'
     end
 
     committee_rank = 'Lt' if standing_committee_offices.present? || committees.present?
@@ -244,12 +244,14 @@ class User < ApplicationRecord
       'D/Lt/C'   => 17,
       'P/D/Lt/C' => 18,
       'D/1st/Lt' => 19,
+      'D/1<sup>st</sup>/Lt' => 19,
       'D/1/Lt'   => 19,
       'D/F/Lt'   => 20,
       'D/Lt'     => 21,
       'Lt/C'     => 22,
       'P/Lt/C'   => 23,
       '1st/Lt'   => 24,
+      '1<sup>st</sup>/Lt'  => 24,
       '1/Lt'     => 24,
       'F/Lt'     => 25,
       'Lt'       => 26

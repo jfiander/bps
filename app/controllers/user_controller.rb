@@ -225,7 +225,7 @@ class UserController < ApplicationController
   def user_hash(user)
     {
       id:                 user.id,
-      name:               user.full_name,
+      name:               user.full_name(html: false),
       certificate:        user.certificate,
       email:              user.email,
       granted_roles:      get_granted_roles_for(user),
