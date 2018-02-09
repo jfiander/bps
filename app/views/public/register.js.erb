@@ -1,3 +1,5 @@
 $("#notice").html("<%= flash[:notice] %>");
 $("#alert").html("<%= flash[:alert] %>");
-$("#public-register-<%= @event_id %>").html("Registered").addClass("red");
+<%- unless flash[:alert].present? %>
+  $("#public-register-<%= @event_id %>").html("Registered").addClass("red");
+<%- end %>
