@@ -40,7 +40,7 @@ class RegistrationMailer < ApplicationMailer
       end
     end
 
-    list.uniq.reject(&:blank?)
+    list.flatten.uniq.reject(&:blank?)
   end
 
   def get_committee_chairs
@@ -51,6 +51,6 @@ class RegistrationMailer < ApplicationMailer
   end
 
   def get_chair_email(name)
-    @committee_chairs.find_all { |c| c.name == name }&.first&.user&.email
+    @committee_chairs.find_all { |c| c.name == name }&.map { |c| c&.user&.email }
   end
 end
