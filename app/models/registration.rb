@@ -2,6 +2,8 @@ class Registration < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :event
 
+  before_validation :convert_email_to_user
+
   validate :email_or_user_present, :no_duplicate_registrations
 
   scope :current,  -> { all.find_all { |r| r.event.expires_at.future? } }
@@ -32,5 +34,13 @@ class Registration < ApplicationRecord
 
   def public_registration?
     email.present? && user.blank?
+  end
+
+  def convert_email_to_user
+    return unless public_registration?
+    return unless (user = User.find_by(email: email))
+
+    self.user = user
+    self.email = nil
   end
 end
