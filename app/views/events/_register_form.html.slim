@@ -1,5 +1,5 @@
 = form_tag public_register_path, method: :put, remote: true, id: "public-register-#{event_id}"
   = hidden_field_tag :event_id, event_id
   = label_tag :email, "Email address"
-  = email_field_tag :email
+  = email_field_tag :email, '', required: true
   = submit_tag "Register"
