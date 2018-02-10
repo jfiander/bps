@@ -3,7 +3,7 @@ class RegistrationMailer < ApplicationMailer
 
   def send_new(registration)
     @registration = registration
-    @committee_chairs = get_committee_chairs
+    @committee_chairs = load_committee_chairs
     @to_list = to_list
 
     mail(to: @to_list, subject: 'New registration')
@@ -11,7 +11,7 @@ class RegistrationMailer < ApplicationMailer
 
   def send_cancelled(registration)
     @registration = registration
-    @committee_chairs = get_committee_chairs
+    @committee_chairs = load_committee_chairs
     @to_list = to_list
 
     mail(to: @to_list, subject: 'Cancelled registration')
@@ -43,10 +43,10 @@ class RegistrationMailer < ApplicationMailer
     list.flatten.uniq.reject(&:blank?)
   end
 
-  def get_committee_chairs
+  def load_committee_chairs
     [
-      Committee.includes(:user).where(department: 'administrative', name: ['Rendezvous', 'Meetings & Programs']),
-      Committee.includes(:user).where(department: 'educational', name: ['Seminars', 'ABC', 'Advanced Grades', 'Electives'])
+      Committee.get(:administrative, 'Rendezvous', 'Meetings & Programs'),
+      Committee.get(:educational, 'Seminars', 'ABC', 'Advanced Grades', 'Electives')
     ].flatten.reject(&:nil?)
   end
 

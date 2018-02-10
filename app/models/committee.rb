@@ -6,6 +6,7 @@ class Committee < ApplicationRecord
     message: "%{value} is not a valid department" }
 
   scope :for_department, ->(department) { where(department: department.to_s) }
+  scope :get, ->(department, *names) { includes(:user).for_department(department).where(name: names.map(&:to_s)) }
 
   acts_as_paranoid
 
