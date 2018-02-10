@@ -20,6 +20,8 @@ gem 'jbuilder',           '~> 2.5'
 gem 'font-awesome-rails', '~> 4.7.0.2'
 gem 'rack-cors',          '~> 1.0.2'
 
+gem 'paranoia', :github => 'rubysherpas/paranoia', :branch => 'rails4'
+
 gem 'bugsnag',            '~> 6.1.0'
 
 gem 'aws-sdk',            '~> 2.10.86'

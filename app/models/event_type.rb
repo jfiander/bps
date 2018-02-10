@@ -35,6 +35,8 @@ class EventType < ApplicationRecord
   
   validates :event_category, inclusion: %w[advanced_grade elective public seminar meeting]
 
+  acts_as_paranoid
+
   def self.selector(type)
     return self.seminars.ordered.map(&:to_select_array) if type == :seminar
     return self.meetings.ordered.map(&:to_select_array) if type == :event
@@ -58,11 +60,11 @@ class EventType < ApplicationRecord
   end
 
   def display_title
-    cleanup_titles(title.titleize)
+    cleanup_title(title.titleize)
   end
 
   private
-  def cleanup_titles(title)
+  def cleanup_title(title)
     title_subs.each do |pattern, replacement|
       title.gsub!(/#{pattern}/i, replacement)
     end

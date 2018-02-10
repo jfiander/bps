@@ -41,6 +41,8 @@ class User < ApplicationRecord
   scope :with_name,      ->(name) { where(simple_name: name) }
   scope :with_a_name,    -> { where.not(simple_name: [nil, '', ' ']) }
 
+  acts_as_paranoid
+
   def full_name(html: true)
     (auto_rank.present? ? "#{auto_rank(html: html)} " : '') +
     simple_name +

@@ -7,6 +7,8 @@ class Committee < ApplicationRecord
 
   scope :for_department, ->(department) { where(department: department.to_s) }
 
+  acts_as_paranoid
+
   def self.sorted
     Committee.all.
       order(:name).

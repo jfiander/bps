@@ -8,6 +8,8 @@ class Registration < ApplicationRecord
   scope :expired,  -> { all.find_all { |r| r.event.expires_at.past? } }
   scope :for_user, ->(user_id) { where(user_id: user_id) }
 
+  acts_as_paranoid
+
   private
   def email_or_user_present
     errors.add(:base, 'Must have a user or event') unless user.present? || email.present?

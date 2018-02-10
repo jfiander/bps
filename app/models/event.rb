@@ -29,6 +29,8 @@ class Event < ApplicationRecord
     includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at <= ?", Time.now).where(event_type: EventType.send(category))
   end
 
+  acts_as_paranoid
+
   def expired?
     expires_at < Time.now
   end

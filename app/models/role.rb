@@ -7,6 +7,8 @@ class Role < ApplicationRecord
 
   validate :descends_from_admin?
 
+  acts_as_paranoid
+
   def parents
     parent = self.parent
     parents_array = []

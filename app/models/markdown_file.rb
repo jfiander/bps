@@ -9,4 +9,6 @@ class MarkdownFile < ApplicationRecord
 
   validates_attachment_content_type :file, content_type: /\A(image\/(jpe?g|png|gif))|(application\/pdf)\Z/
   validates :file, presence: true
+
+  acts_as_paranoid
 end

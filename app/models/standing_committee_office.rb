@@ -21,6 +21,8 @@ class StandingCommitteeOffice < ApplicationRecord
     SQL
   }
 
+  acts_as_paranoid
+
   def self.committees
     %w[executive auditing nominating rules]
   end

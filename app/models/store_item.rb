@@ -22,6 +22,8 @@ class StoreItem < ApplicationRecord
     self.price ||= 0.00
   end
 
+  acts_as_paranoid
+
   def options_hash
     prepared_options = "{" + options.delete('"').split(/\r?\n/).map { |o| o.gsub(/(.*?):\s?(.*?)/, '"\1": "\2') + '"' }.join(", ") + "}"
     JSON.parse(prepared_options)

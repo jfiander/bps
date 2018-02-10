@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171221162006) do
+ActiveRecord::Schema.define(version: 20180210154204) do
 
   create_table "bridge_offices", force: :cascade do |t|
     t.string   "office"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
   end
 
   create_table "course_completions", force: :cascade do |t|
@@ -33,6 +34,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
   end
 
   create_table "course_includes", force: :cascade do |t|
@@ -63,6 +65,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "course_key"
+    t.datetime "deleted_at"
   end
 
   create_table "events", force: :cascade do |t|
@@ -86,6 +89,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.integer  "member_cost"
     t.boolean  "allow_member_registrations", default: true
     t.boolean  "allow_public_registrations", default: true
+    t.datetime "deleted_at"
   end
 
   create_table "item_requests", force: :cascade do |t|
@@ -94,6 +98,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.boolean  "fulfilled",     default: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.datetime "deleted_at"
   end
 
   create_table "markdown_files", force: :cascade do |t|
@@ -103,6 +108,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.datetime "file_updated_at"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.datetime "deleted_at"
   end
 
   create_table "registrations", force: :cascade do |t|
@@ -113,6 +119,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.datetime "paid_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -120,6 +127,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "parent_id"
+    t.datetime "deleted_at"
   end
 
   create_table "standing_committee_offices", force: :cascade do |t|
@@ -131,6 +139,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.boolean  "chair"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.datetime "deleted_at"
   end
 
   create_table "static_pages", force: :cascade do |t|
@@ -138,6 +147,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.string   "markdown"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
   end
 
   create_table "store_items", force: :cascade do |t|
@@ -152,6 +162,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.datetime "image_updated_at"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.datetime "deleted_at"
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -159,6 +170,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.integer  "role_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
   end
 
   create_table "users", force: :cascade do |t|
@@ -198,6 +210,7 @@ ActiveRecord::Schema.define(version: 20171221162006) do
     t.integer  "mm"
     t.datetime "ed_pro"
     t.datetime "id_expr"
+    t.datetime "deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
