@@ -8,7 +8,8 @@ class Registration < ApplicationRecord
   scope :expired,  -> { all.find_all { |r| r.event.expires_at.past? } }
   scope :for_user, ->(user_id) { where(user_id: user_id) }
 
-  after_create { notify_on_create }
+  after_create :notify_on_create
+  after_create :confirm_public, if: :public_registration?
 
   acts_as_paranoid
 
@@ -23,5 +24,13 @@ class Registration < ApplicationRecord
 
   def notify_on_create
     RegistrationMailer.send_new(self).deliver
+  end
+
+  def confirm_public
+    RegistrationMailer.send_public(self).deliver
+  end
+
+  def public_registration?
+    email.present? && user.blank?
   end
 end

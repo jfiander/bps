@@ -17,6 +17,12 @@ class RegistrationMailer < ApplicationMailer
     mail(to: @to_list, subject: 'Cancelled registration')
   end
 
+  def send_public(registration)
+    @registration = registration
+
+    mail(to: @registration.email, from: 'seo@bpsd9.org', subject: 'Registration confirmation')
+  end
+
   private
   def to_list
     if @registration.event.event_type.event_category == 'meeting'
