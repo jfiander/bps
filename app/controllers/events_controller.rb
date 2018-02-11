@@ -100,18 +100,18 @@ class EventsController < ApplicationController
       update_params[:includes].split("\n").map(&:squish).each do |i|
         CourseInclude.create(course: @event, text: i)
       end
-      
+
       update_params[:topics].split("\n").map(&:squish).each do |t|
         CourseTopic.create(course: @event, text: t)
       end
-          
+
       update_params[:instructors].split("\n").map(&:squish).each do |u|
         user = if u.match(/\//)
-          User.find_by(certificate: u.split("/").last.squish)
+          User.find_by(certificate: u.split("/").last.squish.upcase)
         else
           User.with_name(u).first
         end
-        EventInstructor.create(event: @event, user: user)
+        EventInstructor.create(event: @event, user: user) if user.present?
       end
 
       CourseInclude.where(course: @event).where("updated_at < ?", clear_before_time).destroy_all
