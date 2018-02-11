@@ -22,6 +22,8 @@ gem 'rack-cors',          '~> 1.0.2'
 
 gem 'paranoia', :github => 'rubysherpas/paranoia', :branch => 'rails4'
 
+gem 'sanitize_email',     '~> 1.2.2'
+
 gem 'bugsnag',            '~> 6.1.0'
 
 gem 'aws-sdk',            '~> 2.10.86'
