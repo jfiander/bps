@@ -32,6 +32,7 @@ class RegistrationMailer < ApplicationMailer
       end
     else
       list = ['seo@bpsd9.org', 'aseo@bpsd9.org']
+      list << @registration.event.instructors.map(&:email)
       list << case @registration.event.event_type.event_category
       when 'seminar'
         get_chair_email('Seminars')
