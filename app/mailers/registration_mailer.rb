@@ -1,6 +1,4 @@
 class RegistrationMailer < ApplicationMailer
-  default from: 'support@bpsd9.org'
-
   def send_new(registration)
     @registration = registration
     @committee_chairs = load_committee_chairs
