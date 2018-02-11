@@ -17,6 +17,11 @@ class ApplicationController < ActionController::Base
     Rails.env.production?
   end
 
+  def handle_unverified_request
+    flash[:alert] = 'Sorry, please try that again.'
+    redirect_to :back
+  end
+
   def require_permission(*role)
     redirect_to root_path and return unless current_user&.permitted?(*role)
     # before_action only: [:method_1] { require_permission(:role_name) }
@@ -141,7 +146,7 @@ class ApplicationController < ActionController::Base
     key = "uploaded_files/#{get_uploaded_file_name(id)}"
     view_context.image_tag(files_bucket.link(key: key))
   end
-  
+
   def get_uploaded_file_name(id)
     "#{id}/#{MarkdownFile.find_by(id: id)&.file_file_name}"
   end
