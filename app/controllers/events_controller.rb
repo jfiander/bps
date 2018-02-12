@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action                      except: [:show] { require_permission(params[:type]) }
 
-  before_action :get_event,       only: [:copy, :edit, :destroy]
+  before_action :get_event,       only: [:copy, :edit, :expire]
   before_action :prepare_form,    only: [:new, :copy, :edit]
   before_action :check_for_blank, only: [:create, :update]
 
@@ -61,7 +61,7 @@ class EventsController < ApplicationController
     end
   end
 
-  def destroy
+  def expire
     flash = if @event.update(expires_at: Time.now)
       {notice: "Successfully expired #{params[:type]}."}
     else
