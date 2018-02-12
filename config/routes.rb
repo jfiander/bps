@@ -91,6 +91,9 @@ Rails.application.routes.draw do
   get     '/import',                        to: 'user#import',                    as: 'import_users'
   post    '/import',                        to: 'user#do_import'
 
+  # Miscellaneous
+  get     '/sitemap.xml',                   to: 'sitemap#index', format: 'xml',   as: 'sitemap'
+
   # Error codes
   match   '/404',                to: 'errors#not_found',             via: :all
   match   '/500',                to: 'errors#internal_server_error', via: :all
