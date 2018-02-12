@@ -2,10 +2,13 @@ html
   head
     title Birmingham Power Squadron
     = csrf_meta_tags
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
     meta name="description" content=(@site_description)
     meta name="keywords" content=(@site_keywords)
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    script src="https://code.jquery.com/jquery-1.12.4.js"
+    script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
     = favicon_link_tag static_bucket.link(key: "favicon.ico")
     = render "trackers"
   body
@@ -13,6 +16,10 @@ html
       header
         #main-header = render "application/header"
         #print-header = render "application/print_header"
+      #navigation-mobile
+        h3 Navigation
+        .collapsible
+          ul = render "application/navigation"
       #navigation
         ul = render "application/navigation"
       #content

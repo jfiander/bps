@@ -1,40 +1,41 @@
 // Main Menu
-
-#navigation a {
-  color: white;
-  width: 11.4em;
-}
-
-#navigation ul {
-  list-style: none;
-  margin: 0 0.25em;
-  padding: 0;
-
-  i.fa {
-    margin-left: 0;
+#navigation, #navigation-mobile {
+  a {
+    color: white;
+    width: 11.4em;
   }
-}
 
-#navigation ul li {
-  @include blue-button(0.5em);
-  float: left;
-  list-style: none;
-  text-align: center;
-  margin: 0.2em 0;
-  padding: 0;
-  line-height: 2em;
-  width: 11em;
-  clear: both;
-}
+  ul {
+    list-style: none;
+    margin: 0 0.25em;
+    padding: 0;
 
-#navigation ul a.red li {
-  @include blue-button(0.5em, $old-glory-red);
-  padding: 0;
-}
+    i.fa {
+      margin-left: 0;
+    }
+  }
 
-#navigation ul a.members li {
-  @include blue-button(0.5em, lighten($old-glory-blue, 20%));
-  padding: 0;
+  ul li {
+    @include blue-button(0.5em);
+    float: left;
+    list-style: none;
+    text-align: center;
+    margin: 0.2em 0;
+    padding: 0;
+    line-height: 2em;
+    width: 11em;
+    clear: both;
+  }
+
+  ul a.red li {
+    @include blue-button(0.5em, $old-glory-red);
+    padding: 0;
+  }
+
+  ul a.members li {
+    @include blue-button(0.5em, lighten($old-glory-blue, 20%));
+    padding: 0;
+  }
 }
 
 ul#education .catalog-button {
