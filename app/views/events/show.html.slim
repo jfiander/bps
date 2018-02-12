@@ -1,23 +1,34 @@
 h2 = "#{@event_title} Details"
 
-= render "table", events: [@event], long_form: true
+= render 'table', events: [@event], long_form: true
 
 - unless @event.expired?
   h3 = "Register for #{@event_title}"
 
-  #new-event
-    = form_for(@registration, url: long_register_path, method: :post) do |f|
-      = f.hidden_field :event_id
-      .left = f.label :name
-      .right = f.text_field :name, required: true
-      br.clear
+  - if user_signed_in?
+    .center
+      - if @registered.present?
+        = link_to(cancel_registration_path(id: @registered), method: :delete, remote: true, class: "red control", id: "event_#{@event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
+          = fa_icon('minus-square fw')
+          | Cancel Registration
+      - else
+        = link_to(register_path(params[:type], @event.id), method: :put, remote: true, class: 'control', id: "event_#{@event.id}") do
+          = fa_icon('calendar-check-o fw')
+          | Register
+  - else
+    #new-event
+      = form_for(@registration, url: long_register_path, method: :post) do |f|
+        = f.hidden_field :event_id
+        .left = f.label :name
+        .right = f.text_field :name, required: true
+        br.clear
 
-      .left = f.label :email
-      .right = f.email_field :email, required: true
-      br.clear
+        .left = f.label :email
+        .right = f.email_field :email, required: true
+        br.clear
 
-      .left = f.label :phone
-      .right = f.text_field :phone
-      br.clear
+        .left = f.label :phone
+        .right = f.text_field :phone
+        br.clear
 
-      .center = f.submit "Register"
+        .center = f.submit 'Register'
