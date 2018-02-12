@@ -93,6 +93,7 @@ Rails.application.routes.draw do
 
   # Miscellaneous
   get     '/sitemap.xml',                   to: 'sitemap#index', format: 'xml',   as: 'sitemap'
+  get     '/robots.:format',                to: 'sitemap#robots',                 as: 'robots'
 
   # Error codes
   match   '/404',                to: 'errors#not_found',             via: :all
