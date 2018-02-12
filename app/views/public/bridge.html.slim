@@ -61,6 +61,10 @@ h2 Bridge Officers
     .table-row
       .table-cell.table-header.flag = data[:head][:title]
       .table-cell.table-header.department = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : link_to(data[:head][:user][:full_name], data[:head][:email])
+      .table-cell.table-header.dept-head-mobile
+        = data[:head][:title]
+        | : 
+        = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : link_to(data[:head][:user][:full_name], data[:head][:email])
     .table-row
       .table-cell.flag = officer_flag(data[:head][:office], mode: :png)
       .table-cell.department = image_tag(data[:head][:user][:photo], width: 125) if data[:head][:user].present?

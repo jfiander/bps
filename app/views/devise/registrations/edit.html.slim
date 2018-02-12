@@ -38,6 +38,8 @@ h2 Edit Profile
       | If you would like to change your password, please type your new password
       br
       | in both of these boxes, to ensure you've typed it correctly.
+    br.clear.password-note
+
     .left = f.label :password, "New Password"
     .right
       = f.password_field :password, autocomplete: "off"

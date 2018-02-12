@@ -33,12 +33,17 @@ table#items
               = fa_icon("cart-plus")
               | Request
         - if current_user&.permitted?(:store)
+          br.mobile
           = link_to(edit_store_item_path(item.id), class: "blue-faded") do
             = fa_icon("pencil-square")
             | Edit
+          br.mobile
           = link_to(destroy_store_item_path(item.id), method: :delete, class: "red") do
             = fa_icon("minus-square")
             | Remove
+    tr
+      td colspan=3
+        hr
 
 - if current_user&.permitted?(:store) && @store_item_requests.present?
   h3 Requested Items
