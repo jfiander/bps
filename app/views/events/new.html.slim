@@ -110,7 +110,7 @@ h2 = "#{@edit_mode} #{@event_title}"
     hr
 
     .left = f.label :start_at
-    .right = f.datetime_select :start_at, start_year: 2017, end_year: (Time.now.year + 2), default: (0.days.from_now.beginning_of_day + 9.hours), minute_step: 15
+    .right = f.datetime_select :start_at, start_year: 2017, end_year: (Time.now.year + 2), default: (0.days.from_now.beginning_of_day + 9.hours), minute_step: 15, datetime_separator: "<br/>"
     br.clear
 
     .left = f.label :length, "Session length"
