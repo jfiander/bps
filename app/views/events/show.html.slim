@@ -1,0 +1,23 @@
+h2 = "#{@event_title} Details"
+
+= render "table", events: [@event], long_form: true
+
+- unless @event.expired?
+  h3 = "Register for #{@event_title}"
+
+  #new-event
+    = form_for(@registration, url: long_register_path, method: :post) do |f|
+      = f.hidden_field :event_id
+      .left = f.label :name
+      .right = f.text_field :name, required: true
+      br.clear
+
+      .left = f.label :email
+      .right = f.email_field :email, required: true
+      br.clear
+
+      .left = f.label :phone
+      .right = f.text_field :phone
+      br.clear
+
+      .center = f.submit "Register"

@@ -1,10 +1,16 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user!
-  before_action { require_permission(params[:type]) }
+  before_action :authenticate_user!, except: [:show]
+  before_action                      except: [:show] { require_permission(params[:type]) }
 
   before_action :get_event,       only: [:copy, :edit, :destroy]
   before_action :prepare_form,    only: [:new, :copy, :edit]
   before_action :check_for_blank, only: [:create, :update]
+
+  def show
+    @event = Event.find_by(id: show_params[:id])
+    @event_title = params[:type].to_s.titleize
+    @registration = Registration.new(event_id: show_params[:id])
+  end
 
   def new
     @event = Event.new
@@ -67,6 +73,10 @@ class EventsController < ApplicationController
 
   def update_params
     params.permit(:id, :includes, :topics, :instructors)
+  end
+
+  def show_params
+    params.permit(:id)
   end
 
   def event_type_title_from(formatted)

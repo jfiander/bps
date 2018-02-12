@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   get     '/minutes/:year/:month', to: 'members#get_minutes',        as: 'get_minutes'
   get     '/excom/:year/:month',   to: 'members#get_minutes_excom',  as: 'get_minutes_excom'
   put     '/register',             to: 'public#register',            as: 'public_register'
+  post    '/register',             to: 'public#register',            as: 'long_register'
   post    '/bilge',                to: 'members#upload_bilge',       as: 'upload_bilge'
   post    '/minutes',              to: 'members#upload_minutes',     as: 'upload_minutes'
   get     '/edit/:page_name',      to: 'members#edit_markdown',      as: 'edit_page'
@@ -70,6 +71,7 @@ Rails.application.routes.draw do
     get     "/#{event_type}s/edit/:id",    to: 'events#edit',        as: "edit_#{event_type}",    defaults: {type: event_type}
     patch   "/#{event_type}s/update",      to: 'events#update',      as: "update_#{event_type}",  defaults: {type: event_type}
     delete  "/#{event_type}s/destroy/:id", to: 'events#destroy',     as: "destroy_#{event_type}", defaults: {type: event_type}
+    get     "/#{event_type}s/:id",         to: 'events#show',        as: "show_#{event_type}",    defaults: {type: event_type}
   end
 
   # User management

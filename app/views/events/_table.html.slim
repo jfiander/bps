@@ -51,8 +51,8 @@
                     = link_to(send("destroy_#{params[:type]}_path", event), method: :delete, class: "red control", data: {confirm: "Are you sure you want to force this #{params[:type]} to expire?"}) do
                       = fa_icon("eye-slash fw")
                       | Expire
-                - if user_signed_in? && event.allow_member_registrations && !event.expired?
-                  - if @registered.has_key?(event.id)
+                - if user_signed_in? && event.allow_member_registrations && !event.expired? && !defined?(long_form)
+                  - if @registered&.has_key?(event.id)
                     = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
                       = fa_icon("minus-square fw")
                       | Cancel Registration
@@ -60,9 +60,9 @@
                     = link_to(register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
                       = fa_icon("calendar-check-o fw")
                       | Register
-                - elsif event.allow_public_registrations && !event.expired?
+                - elsif event.allow_public_registrations && !event.expired? && !defined?(long_form)
                   = render "events/register_form", event_id: event.id
-                - elsif !event.expired?
+                - elsif !event.expired? && !defined?(long_form)
                   = render "events/no_public_registrations"
     .table-row
       .table-cell.bottom-left

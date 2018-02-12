@@ -146,13 +146,21 @@ class PublicController < ApplicationController
   end
 
   def register
-    @event_id = clean_params[:event_id]
-    unless Event.find_by(id: @event_id).allow_public_registrations
+    if register_params.present?
+      @event_id = register_params[:event_id]
+      registration_attributes = register_params.to_hash.symbolize_keys
+    else
+      @event_id = clean_params[:event_id]
+      registration_attributes = { event_id: @event_id, email: clean_params[:email] }
+    end
+
+    @event = Event.find_by(id: @event_id)
+
+    unless @event.allow_public_registrations
       flash[:alert] = "This course is not currently accepting public registrations."
       render status: :unprocessable_entity and return
     end
 
-    registration_attributes = {email: clean_params[:email], event_id: @event_id}
     registration = Registration.new(registration_attributes)
 
     respond_to do |format|
@@ -167,12 +175,37 @@ class PublicController < ApplicationController
           render status: :unprocessable_entity
         end
       end
+
+      format.html do
+        event_type = if @event.is_a_course?
+          :course
+        elsif @event.is_a_seminar?
+          :seminar
+        else
+          :event
+        end
+
+        if Registration.find_by(registration_attributes)
+          flash[:alert] = 'You are already registered for this course.'
+          redirect_to send("show_#{event_type}_path", id: @event_id)
+        elsif registration.save
+          flash[:notice] = 'You have successfully registered!'
+          redirect_to send("show_#{event_type}_path", id: @event_id)
+        else
+          flash[:alert] = 'We are unable to register you at this time.'
+          redirect_to send("show_#{event_type}_path", id: @event_id)
+        end
+      end
     end
   end
 
   private
   def clean_params
     params.permit(:year, :month, :email, :event_id)
+  end
+
+  def register_params
+    params.require(:registration).permit(:event_id, :name, :email, :phone)
   end
 
   def list_bilges

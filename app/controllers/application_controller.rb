@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :pick_header_image
   before_action :meta_tags
   before_action :set_paper_trail_whodunnit
+  before_action :time_formats
 
   after_action { flash.discard if request.xhr? }
 
