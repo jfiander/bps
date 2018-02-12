@@ -210,11 +210,19 @@
       }
     }
   }
+
+  div.events-table {
+    display: none;
+  }
 }
 
 // Screen Only
 @media screen and (min-width: 501px) {
   #print-header, #navigation-mobile, #print-footer {
+    display: none;
+  }
+
+  div.events-table-mobile {
     display: none;
   }
 }

@@ -1,6 +1,7 @@
 h2 = "#{@event_title} Details"
 
 = render 'table', events: [@event], long_form: true
+= render 'table_mobile', events: [@event], long_form: true
 
 - unless @event.expired?
   h3 = "Register for #{@event_title}"

@@ -193,6 +193,29 @@ div.assign-bridge small {
   }
 }
 
+div.events-table-mobile {
+  div.event-mobile-title {
+    font-size: 120%;
+    color: $old-glory-red;
+    font-weight: bold;
+  }
+
+  div.event-mobile-contents {
+    img {
+      max-width: 10em;
+    }
+  }
+
+  div.event-mobile-contents.spaced {
+    margin: 1em 0;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+}
+
 div#new-event {
   width: 80%;
   margin: 0 auto;
