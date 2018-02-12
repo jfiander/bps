@@ -52,26 +52,26 @@ Rails.application.routes.draw do
 
   get     '/file',               to: 'file#new',                     as: 'file'
   post    '/file/upload',        to: 'file#create',                  as: 'upload_file'
-  delete  '/file/upload/:id',    to: 'file#destroy',                 as: 'remove_file'
+  delete  '/file/:id/destroy',   to: 'file#destroy',                 as: 'remove_file'
 
   get     '/store/new',          to: 'store#new',                    as: 'new_store_item'
   post    '/store/create',       to: 'store#create',                 as: 'create_store_item'
-  get     '/store/edit/:id',     to: 'store#edit',                   as: 'edit_store_item'
   patch   '/store/update',       to: 'store#update',                 as: 'update_store_item'
-  delete  '/store/destroy/:id',  to: 'store#destroy',                as: 'destroy_store_item'
-  put     '/store/request/:id',  to: 'members#request_item',         as: 'request_store_item'
-  patch   '/store/fulfill/:id',  to: 'members#fulfill_item',         as: 'fulfill_store_item'
+  get     '/store/:id/edit',     to: 'store#edit',                   as: 'edit_store_item'
+  put     '/store/:id/request',  to: 'members#request_item',         as: 'request_store_item'
+  patch   '/store/:id/fulfill',  to: 'members#fulfill_item',         as: 'fulfill_store_item'
+  delete  '/store/:id/destroy',  to: 'store#destroy',                as: 'destroy_store_item'
 
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",             to: 'public#events',                                   defaults: {type: event_type}
     get     "/#{event_type}s/catalog",     to: 'public#catalog',     as: "#{event_type}_catalog", defaults: {type: event_type} unless event_type == :event
     get     "/#{event_type}s/new",         to: 'events#new',         as: "new_#{event_type}",     defaults: {type: event_type}
-    get     "/#{event_type}s/copy/:id",    to: 'events#copy',        as: "copy_#{event_type}",    defaults: {type: event_type}
     post    "/#{event_type}s/create",      to: 'events#create',      as: "create_#{event_type}",  defaults: {type: event_type}
-    get     "/#{event_type}s/edit/:id",    to: 'events#edit',        as: "edit_#{event_type}",    defaults: {type: event_type}
     patch   "/#{event_type}s/update",      to: 'events#update',      as: "update_#{event_type}",  defaults: {type: event_type}
-    delete  "/#{event_type}s/destroy/:id", to: 'events#destroy',     as: "destroy_#{event_type}", defaults: {type: event_type}
     get     "/#{event_type}s/:id",         to: 'events#show',        as: "show_#{event_type}",    defaults: {type: event_type}
+    get     "/#{event_type}s/:id/copy",    to: 'events#copy',        as: "copy_#{event_type}",    defaults: {type: event_type}
+    get     "/#{event_type}s/:id/edit",    to: 'events#edit',        as: "edit_#{event_type}",    defaults: {type: event_type}
+    delete  "/#{event_type}s/:id/expire",  to: 'events#expire',      as: "expire_#{event_type}",  defaults: {type: event_type}
   end
 
   # User management
