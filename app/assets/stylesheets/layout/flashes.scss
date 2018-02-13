@@ -1,0 +1,16 @@
+div#flashes {
+  div#notice {
+    color: $birmingham-blue;
+    background-color: inherit;
+  }
+
+  div#alert {
+    color: $old-glory-red;
+    background-color: lighten($old-glory-red, 40%);
+    background-color: inherit;
+  }
+
+  div.slogan {
+    font-style: italic;
+  }
+}

@@ -1,0 +1,32 @@
+@media print {
+  body, body div#main, body div#main div#content {
+    background-color: #FFFFFF;
+  }
+
+  body {
+    width: 100%;
+    margin: 0;
+  }
+
+  div#main-header, div#navigation, div#navigation-mobile, ul#admin-menu, ul#education, div#main-footer {
+    display: none;
+  }
+
+  div#print-header div#header-right img {
+    width: 100%;
+  }
+
+  div#user-ranks {
+    .member {
+      margin: 1.5em 1.25em;
+    }
+
+    .rank, .grade {
+      width: 1.5em;
+    }
+
+    .name {
+      width: 12em;
+    }
+  }
+}

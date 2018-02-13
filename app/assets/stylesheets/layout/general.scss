@@ -1,0 +1,57 @@
+
+body {
+  font-family: Arial;
+  color: $old-glory-blue;
+
+  margin: 0 20%;
+  padding: 0;
+
+  background-color: $background-blue;
+}
+
+a {
+  text-decoration: none;
+  color: $birmingham-blue;
+}
+
+a:hover {
+  color: darken($birmingham-blue, 20%);
+}
+
+a.red:hover {
+  color: lighten($old-glory-red, 10%);
+}
+
+a.blue-faded:hover {
+  color: lighten($old-glory-blue, 40%);
+}
+
+sup {
+  font-size: 60%;
+}
+
+hr.clear {
+  clear: both;
+}
+
+br.clear-left {
+  clear: left;
+  line-height: 0;
+}
+
+br.clear-right {
+  clear: right;
+  line-height: 0;
+}
+
+input.number {
+  width: 5em;
+}
+
+.center {
+  text-align: center;
+}
+
+div.editor {
+  background-color: lighten($background-blue, 3%);
+}

@@ -38,9 +38,23 @@
   }
 }
 
-ul#education .catalog-button {
-  @include blue-button(0.5em, lighten($old-glory-blue, 20%));
-  width: 15em;
-  margin-top: 0;
-  margin-bottom: 2em;
+ul#education {
+  .catalog-button {
+    @include blue-button(0.5em, lighten($old-glory-blue, 20%));
+    width: 15em;
+    margin-top: 0;
+    margin-bottom: 2em;
+  }
+
+  li.active {
+    background-color: $old-glory-red;
+  }
+  
+  li.active:hover {
+    background-color: darken($old-glory-red, 10%);
+  }
+  
+  li.active:active {
+    background-color: darken($old-glory-red, 20%);
+  }
 }
