@@ -7,6 +7,6 @@ class Users::InvitationsController < Devise::InvitationsController
 
   private
   def redirect_if_no_invitations
-    redirect_to root_path, alert: "You do not have any invitations remaining." and return if current_user&.invitation_limit.in?([nil, 0])
+    redirect_to root_path, alert: "You do not have any invitations remaining." and return unless current_user&.permitted?(:users)
   end
 end
