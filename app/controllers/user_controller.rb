@@ -209,8 +209,7 @@ class UserController < ApplicationController
   def invite_all
     redirect_to users_path, alert: "This action is currently disabled." and return unless ENV["ALLOW_BULK_INVITE"] == "true"
 
-    users = User.unlocked.reject { |u| u.sign_in_count > 0 || u.email.match(/@example\.com/) || u.email.match(/bpsd9\.org/) }
-    users.each { |user| user.invite! }
+    User.invitable.each(&:invite!)
     redirect_to users_path, notice: "All new users have been sent invitations."
   end
 
@@ -235,7 +234,9 @@ class UserController < ApplicationController
       current_login_at:   user.current_sign_in_at,
       current_login_from: user.current_sign_in_ip,
       invited_at:         user.invitation_sent_at,
-      invitable:          user.invitation_accepted_at.blank? && user.current_sign_in_at.blank? && !user.locked?,
+      invitable:          user.invitable?,
+      placeholder_email:  user.has_placeholder_email?,
+      invited:            user.invited?,
       locked:             user.locked?
     }
   end

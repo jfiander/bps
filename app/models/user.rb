@@ -40,6 +40,7 @@ class User < ApplicationRecord
   scope :with_positions, -> { includes(:bridge_office, :standing_committee_offices, :committees, :user_roles, :roles) }
   scope :with_name,      ->(name) { where(simple_name: name) }
   scope :with_a_name,    -> { where.not(simple_name: [nil, '', ' ']) }
+  scope :invitable,      -> { unlocked.where('sign_in_count = 0').reject(&:has_placeholder_email?) }
 
   acts_as_paranoid
 
@@ -116,6 +117,24 @@ class User < ApplicationRecord
 
   def unlock
     update(locked_at: nil)
+  end
+
+  def invitable?
+    invitation_accepted_at.blank? &&
+      current_sign_in_at.blank? &&
+      !locked? &&
+      sign_in_count.zero? &&
+      !has_placeholder_email?
+  end
+
+  def invited?
+    invitation_sent_at.present? &&
+      invitation_accepted_at.blank?
+  end
+
+  def has_placeholder_email?
+    email.match(/nobody-.*@bpsd9\.org/) ||
+      email.match(/duplicate-.*@bpsd9\.org/)
   end
 
   def self.valid_ranks
