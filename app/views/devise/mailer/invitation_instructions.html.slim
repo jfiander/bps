@@ -1,12 +1,12 @@
-p = "Hello, #{@resource.email}!"
+p = "Hello, #{@resource.first_name || @resource.email}!"
 
 p Birmingham Power Squadron has a new website! Members can now login with their email address and a unique password of their choosing, instead of the previous shared password.
 
-p In order to be able to login, please click on the link below to go to the new website, where you will be able to choose your password.
+p In order to be able to login, please click on the link below to go to the new website, where you will be able to choose your password. (This password will only be used on this website.)
 
-p = link_to "Choose your password and login", accept_invitation_url(@resource, :invitation_token => @token)
+p = link_to "Choose your password and login", accept_invitation_url(@resource, invitation_token: @token)
 
-p If you don't want to be able to login and access the members areas of the new website, you can disregard this email.
+p If you don't want to be able to login and access the members areas of the new website, feel free to disregard this email.
 
 p
   | If you have any questions or concerns, please email 
