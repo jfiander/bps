@@ -38,4 +38,12 @@ table#users
             = link_to(unlock_user_path(user[:id]), title: "Unlock", class: "unlock", method: :patch) { fa_icon "lock" }
           - elsif !user[:granted_roles].join(",").match(/admin/)
             = link_to(lock_user_path(user[:id]), title: "Lock", class: "lock", method: :patch) { fa_icon "unlock" }
-        = link_to(invite_path(id: user[:id]), title: "Send invitation") { fa_icon "envelope" } if user[:invitable]
+        - unless user[:locked]
+          - if user[:invited]
+            = link_to(invite_path(id: user[:id]), title: "Re-send invitation") { fa_icon "envelope", class: 'pending' }
+          - elsif user[:invitable]
+            = link_to(invite_path(id: user[:id]), title: "Send invitation") { fa_icon "envelope" }
+          - elsif user[:placeholder_email]
+            span.icon.fa-stack title='Invalid email address'
+              i.fa.fa-envelope.fa-stack.gray
+              i.fa.fa-exclamation.fa-stack.overlay.red
