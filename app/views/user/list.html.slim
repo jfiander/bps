@@ -14,7 +14,13 @@ table#users
     th.center.very-narrow
   - @users.each do |user|
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
-      td = user[:name].blank? ? user[:email] : mail_to(user[:email], user[:name])
+      td
+        - if user[:name].blank?
+          = user[:email]
+        - elsif user[:placeholder_email]
+          = user[:name]
+        - else
+          = mail_to(user[:email], user[:name])
       td.center = user[:certificate]
       td.center
         - if user[:bridge_office].present?
