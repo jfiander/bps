@@ -4,7 +4,7 @@ p Birmingham Power Squadron has a new website! Members can now login with their 
 
 p In order to be able to login, please click on the link below to go to the new website, where you will be able to choose your password. (This password will only be used on this website.)
 
-p = link_to "Choose your password and login", accept_invitation_url(@resource, invitation_token: @token)
+p = link_to "Choose your password and login", accept_invitation_url(@resource, invitation_token: @token), clicktracking: 'off'
 
 p If you don't want to be able to login and access the members areas of the new website, feel free to disregard this email.
 
