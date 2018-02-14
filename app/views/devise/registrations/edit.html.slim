@@ -12,6 +12,10 @@ h2 Edit Profile
       .center = f.file_field :profile_photo, accept: 'image/jpeg'
       br.clear
 
+    .left = f.label :certificate
+    .right = f.text_field :certificate, disabled: true, title: 'If there is a problem with your certificate number, please contact the AO at ao@bpsd9.org.'
+    br.clear
+
     .left = f.label :rank, "Preferred Rank"
     .right = f.text_field :rank
     br.clear
@@ -20,7 +24,7 @@ h2 Edit Profile
     .right = f.text_field :first_name
     br.clear
 
-    .left= f.label :last_name
+    .left = f.label :last_name
     .right = f.text_field :last_name
     br.clear
 

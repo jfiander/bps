@@ -4,17 +4,21 @@
 
 // Profile
 #profile {
-  width:     65%;
-  margin:    0 auto;
+  width: 65%;
+  margin: 0 auto;
 }
 
   #profile .profile-left {
-    float:       left;
+    float: left;
+    text-align: left;
     font-weight: bold;
+    max-width: 30%;
   }
 
   #profile .profile-right {
     float: right;
+    text-align: right;
+    max-width: 70%;
   }
 
   #profile div.password-box {
@@ -39,7 +43,7 @@ table#users {
   }
 
   td  {
-    height:  3em;
+    height: 3em;
     padding: 0.25em;
   }
 

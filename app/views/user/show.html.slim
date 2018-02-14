@@ -4,20 +4,34 @@ h2 = "#{@profile_title} user"
   .center = image_tag @user.photo, width: 125
   hr.clear
   .profile-left Name
-  .profile-right
-    = @user.full_name
-    = ' (Admin)' if @user.permitted?(:admin)
+  .profile-right = @user.full_name
+  br.clear
+  .profile-left Certificate
+  .profile-right = @user.certificate || '?'
   br.clear
   .profile-left Email
   .profile-right = @user.email
-  br.clear
-  .profile-left Last login
-  .profile-right = @user.last_sign_in_at.blank? ? 'Never logged in' : @user.last_sign_in_at
-  br.clear
-  .profile-left From
-  .profile-right = @user.last_sign_in_at.blank? ? '' : @user.last_sign_in_ip
-  hr.clear
+  - if @user.permitted?(:users)
+    br.clear
+    .profile-left Last login
+    .profile-right = @user.last_sign_in_at.blank? ? 'Never logged in' : @user.last_sign_in_at
+    br.clear
+    .profile-left From
+    .profile-right = @user.last_sign_in_at.blank? ? '' : @user.last_sign_in_ip
+  - if @user.permitted_roles.present?
+    hr.clear
+    .profile-left Permissions
+    .profile-right
+      = @user.granted_roles.join('<br>').html_safe
+      - if @user.granted_roles.present? && @user.permitted_roles.present?
+        br
+      .red
+        - if @user.permitted?(:admin)
+          | All
+        - else
+          = (@user.permitted_roles - @user.granted_roles).join('<br>').html_safe
   - if current_user.id == @user.id
+    hr.clear
     .center = link_to(profile_edit_path) { fa_icon('edit') + 'Update your information' }
   hr.clear
   - if @registrations.present?
