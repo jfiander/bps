@@ -146,7 +146,7 @@ class PublicController < ApplicationController
   end
 
   def register
-    if register_params.present?
+    if params.has_key?(:registration)
       @event_id = register_params[:event_id]
       registration_attributes = register_params.to_hash.symbolize_keys
     else
