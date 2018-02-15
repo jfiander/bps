@@ -14,9 +14,7 @@ h2 Squadron Photos
             .description.remove
         br
         = spinner_button(button_text: "Submit")
-    hr
     = render 'upload_form', redirect_to_album: false
-    hr
 
 - if @albums.blank?
   h3 We're sorry, but there are currently no photo albums available.
@@ -25,8 +23,9 @@ h2 Squadron Photos
   - @albums.each do |album|
     h3
       = album.name.titleize
-      - if current_user.permitted?(:photos)
+      - if current_user&.permitted?(:photos)
         small.header = link_to '(edit)', edit_album_path(album)
     - album.photos.each do |photo|
       a data-fancybox="gallery" href=(photos_bucket.link(key: "photos/#{photo.id}/original/#{photo.photo_file_file_name}"))
         = image_tag photos_bucket.link(key: "photos/#{photo.id}/thumb/#{photo.photo_file_file_name}")
+    hr

@@ -1,5 +1,6 @@
-h3 Upload photos
-#upload-photo
+#upload-photo.editor
+  hr
+  h3 Upload photos
   = form_for(@photo, url: upload_photo_path, multipart: true) do |f|
     - if redirect_to_album
       = hidden_field_tag :redirect_to_album, true
