@@ -226,10 +226,15 @@ class User < ApplicationRecord
   def permitted_roles_from_committee
     {
       'seminars' => [:seminar],
-      'vsc' => [:vsc],
+      'vessel_safety_check' => [:vsc],
       'ships_store' => [:store],
-      'webmaster' => [:page, :calendar, :photos]
-    }.select { |k,_| k.in? committees.map(&:search_name) }.values
+      'webmaster' => [:page, :calendar, :photos],
+      'newsletter_editor' => [:newsletter],
+      'meetings_&_programs' => [:events],
+      'rendezvous' => [:events],
+      'change_of_watch' => [:events],
+      'membership' => [:users]
+    }.select { |k, _| k.in? committees.map(&:search_name) }.values
   end
 
   def valid_rank
