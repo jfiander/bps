@@ -210,31 +210,19 @@ class User < ApplicationRecord
     output.flatten.map(&:name).map(&:to_sym)
   end
 
+  def implicit_permissions
+    permissions = File.read("#{Rails.root}/config/implicit_permissions.yml")
+    @implicit_permissions ||= YAML.safe_load(permissions)
+  end
+
   def permitted_roles_from_bridge_office
-    {
-      'commander' => [:admin],
-      'executive' => [:admin],
-      'educational' => [:education, :calendar],
-      'administrative' => [:users, :calendar, :event],
-      'secretary' => [:admin],
-      'treasurer' => [:property, :store],
-      'asst_educational' => [:education, :calendar],
-      'asst_secretary' => [:newsletter, :calendar, :photos, :minutes, :page]
-    }[bridge_office&.office]
+    implicit_permissions['bridge_office'][bridge_office&.office]&.map(&:to_sym)
   end
 
   def permitted_roles_from_committee
-    {
-      'seminars' => [:seminar],
-      'vessel_safety_check' => [:vsc],
-      'ships_store' => [:store],
-      'webmaster' => [:page, :calendar, :photos],
-      'newsletter_editor' => [:newsletter],
-      'meetings_&_programs' => [:events],
-      'rendezvous' => [:events],
-      'change_of_watch' => [:events],
-      'membership' => [:users]
-    }.select { |k, _| k.in? committees.map(&:search_name) }.values
+    implicit_permissions['committee'].select do |k, _|
+      k.in? committees.map(&:search_name)
+    end.values.flatten&.map(&:to_sym)
   end
 
   def valid_rank

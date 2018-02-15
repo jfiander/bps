@@ -1,0 +1,47 @@
+bridge_office:
+  commander:
+    - admin
+  executive:
+    - admin
+  educational:
+    - education
+    - calendar
+  administrative:
+    - users
+    - calendar
+    - event
+  secretary:
+    - admin
+  treasurer:
+    - property
+    - store
+  asst_educational:
+    - education
+    - calendar
+  asst_secretary:
+    - newsletter
+    - calendar
+    - photos
+    - minutes
+    - page
+committee:
+  seminars:
+    - seminar
+  vessel_safety_check:
+    - vsc
+  ships_store:
+    - store
+  webmaster:
+    - page
+    - calendar
+    - photos
+  newsletter_editor:
+    - newsletter
+  meetings_&_programs:
+    - events
+  rendezvous:
+    - events
+  change_of_watch:
+    - events
+  membership:
+    - users
