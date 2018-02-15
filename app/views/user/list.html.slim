@@ -21,7 +21,7 @@ table#users
           = user[:name]
         - else
           = mail_to(user[:email], user[:name])
-      td.center = user[:certificate]
+      td.center = user[:certificate] || fa_icon('question-circle', class: 'red')
       td.center
         - if user[:bridge_office].present?
           = officer_flag(user[:bridge_office], mode: :png)
