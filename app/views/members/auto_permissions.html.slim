@@ -1,1 +1,10 @@
-pre = @auto_permissions
+h2 Ex Officio Permissions
+
+- @auto_permissions.each do |group, permissions|
+  h3 = group.to_s.titleize
+  .table.auto-permissions
+    - permissions.each do |permission, roles|
+      .table-row
+        .table-cell.left = permission.to_s.titleize
+        .table-cell.right = roles.join(', ')
+

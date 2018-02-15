@@ -121,7 +121,7 @@ class MembersController < ApplicationController
   end
 
   def auto_permissions
-    @auto_permissions = File.read("#{Rails.root}/config/implicit_permissions.yml")
+    @auto_permissions = YAML.safe_load(File.read("#{Rails.root}/config/implicit_permissions.yml"))
   end
 
   private

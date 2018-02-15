@@ -79,3 +79,23 @@ div#user-ranks {
     width: 15em;
   }
 }
+
+div.table.auto-permissions {
+  margin: 2em;
+
+  .table-row {
+    height: 1.5em;
+  }
+
+  .table-row .table-cell {
+    margin: 1em 0;
+  }
+
+  .table-cell.left {
+    width: 35%;
+  }
+
+  .table-cell.right {
+    width: 65%;
+  }
+}
