@@ -55,3 +55,9 @@ input.number {
 div.editor {
   background-color: lighten($background-blue, 3%);
 }
+
+pre {
+  text-align: left;
+  width: 20%;
+  margin: 0 auto;
+}

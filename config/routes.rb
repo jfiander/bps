@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get     '/members',            to: 'members#members'
   get     '/welcome',            to: 'members#welcome'
   get     '/user_help',          to: 'members#user_help'
+  get     '/auto_permissions',   to: 'members#auto_permissions'
 
   # Dynamic pages
   get     '/ranks',              to: 'members#ranks'

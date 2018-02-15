@@ -13,7 +13,13 @@ h2#profile-title = t('grant_permission')
 
 h2#profile-title = "Current Permissions"
 
-p Note: Bridge officers and committee chairs are automatically granted relevant permissions ex officio.
+p
+  | Note: Bridge officers and committee chairs are automatically granted relevant permissions 
+  - if current_user.permitted?(:admin)
+    = link_to 'ex officio', auto_permissions_path
+  - else
+    | ex officio
+  | .
 
 table#permissions
   tr
