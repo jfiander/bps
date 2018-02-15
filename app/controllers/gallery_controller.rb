@@ -30,6 +30,11 @@ class GalleryController < ApplicationController
   def edit_album
     @album = Album.find_by(id: clean_params[:id])
     @photo = Photo.new
+
+    if @album.blank?
+      flash[:alert] = 'Album not found.'
+      redirect_to photos_path
+    end
   end
 
   def upload_photo
