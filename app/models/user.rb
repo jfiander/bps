@@ -214,11 +214,11 @@ class User < ApplicationRecord
     {
       'commander' => [:admin],
       'executive' => [:admin],
-      'educational' => [:education],
-      'administrative' => [:users],
+      'educational' => [:education, :calendar],
+      'administrative' => [:users, :calendar, :event],
       'secretary' => [:admin],
-      'treasurer' => [:property],
-      'asst_educational' => [:education],
+      'treasurer' => [:property, :store],
+      'asst_educational' => [:education, :calendar],
       'asst_secretary' => [:newsletter, :calendar, :photos, :minutes, :page]
     }[bridge_office&.office]
   end
