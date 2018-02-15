@@ -2,6 +2,7 @@ class MembersController < ApplicationController
   before_action :authenticate_user!
   before_action                   only: [:admin, :download_flags] { require_permission(:admin) }
   before_action                   only: [:upload_bilge] { require_permission(:newsletter) }
+  before_action                   only: [:upload_minutes] { require_permission(:minutes) }
   before_action                   only: [:edit_markdown, :update_markdown] { require_permission(:page) }
   before_action                   only: [:fulfill_item] { require_permission(:store) }
   before_action                   only: [:ranks] { require_permission(:users, :newsletter, :page, :minutes, :event, :education) }
