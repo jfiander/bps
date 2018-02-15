@@ -11,7 +11,7 @@ h2 = "Edit Album – #{@album.name.titleize}"
       .table-cell.table-header Remove from Album
     - @album.photos.each do |photo|
       .table-row
-        .table-cell.left = image_tag photos_bucket.link(key: "photos/#{photo.id}/thumb/#{photo.photo_file_file_name}")
+        .table-cell.left = image_tag photos_bucket.link(key: photo.photo_file.path(:thumb))
         .table-cell.right = link_to(remove_photo_path(id: photo.id), method: :delete, data: {confirm: 'Are you sure you want to remove this photo from the album?'}) { fa_icon('minus-square', class: 'red') }
 - else
   h4 There are no photos in this album.

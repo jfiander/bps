@@ -4,7 +4,7 @@ class Photo < ApplicationRecord
   has_attached_file :photo_file,
     storage: :s3,
     s3_region: 'us-east-2',
-    path: 'photos/:id/:style/:filename',
+    path: ':id/:style/:filename',
     s3_permissions: :private,
     s3_credentials: {bucket: self.buckets[:photos].full_bucket, access_key_id: ENV['S3_ACCESS_KEY'], secret_access_key: ENV['S3_SECRET']},
     styles: { medium: '500x500', thumb: '200x200' }

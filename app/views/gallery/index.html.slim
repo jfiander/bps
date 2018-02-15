@@ -26,6 +26,6 @@ h2 Squadron Photos
       - if current_user&.permitted?(:photos)
         small.header = link_to '(edit)', edit_album_path(album)
     - album.photos.each do |photo|
-      a data-fancybox="gallery" href=(photos_bucket.link(key: "photos/#{photo.id}/original/#{photo.photo_file_file_name}"))
-        = image_tag photos_bucket.link(key: "photos/#{photo.id}/thumb/#{photo.photo_file_file_name}")
+      a data-fancybox="gallery" href=(photos_bucket.link(key: photo.photo_file.path))
+        = image_tag photos_bucket.link(key: photo.photo_file.path(:thumb))
     hr
