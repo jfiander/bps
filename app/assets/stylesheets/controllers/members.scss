@@ -56,8 +56,8 @@ div#user-ranks {
   text-align: center;
 
   .member {
+    float: left;
     margin: 1.5em 4em;
-    display: inline-block;
   }
 
   .rank, .grade {

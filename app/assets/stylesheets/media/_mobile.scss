@@ -5,7 +5,7 @@
     min-width: 100vw;
   }
 
-  div#main-header, div#navigation , div#print-footer{
+  div#main-header, div#navigation, div#user-ranks, div#print-footer{
     display: none;
   }
 
@@ -156,6 +156,29 @@
   div#profile {
     div.profile-left, div.profile-right {
       clear: both;
+    }
+  }
+
+  div#user-ranks-mobile {
+    .member-container {
+      width: 100%;
+    }
+
+    .member {
+      margin: 1em auto;
+    }
+
+    .rank, .grade, .name {
+      text-align: center;
+    }
+
+    .rank, .grade {
+      margin: 0 1em;
+      width: 20%;
+    }
+
+    .name {
+      width: 60%
     }
   }
 }
