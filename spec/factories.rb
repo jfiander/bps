@@ -1,4 +1,10 @@
 FactoryBot.define do
+  factory :photo do
+    album_id 1
+  end
+  factory :album do
+    name "MyString"
+  end
   factory :role do
     sequence(:name) { |n| "This is example #{n}." }
   end

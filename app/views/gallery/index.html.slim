@@ -1,0 +1,35 @@
+h2 Squadron Photos
+
+- if current_user&.permitted?(:photos)
+  .editor
+    hr
+    h3 Add (or remove) an album
+    #add-album
+      = form_for(@album, url: new_album_path, multipart: true) do |f|
+        = f.text_field :name, required: true, placeholder: 'Enter album name'
+        br
+        label.switch
+          = check_box_tag :remove, class: "slider round"
+          span.slider.round
+            .description.remove
+        br
+        = spinner_button(button_text: "Submit")
+    hr
+      #upload-photo
+        = form_for(@photo, url: upload_photo_path, multipart: true) do |f|
+          = f.select :album_id, options_for_select(@albums.map { |a| [a.name, a.id] }), include_blank: true, required: true, prompt: "Please select an album"
+          br
+          = f.file_field :photo_file, required: true
+          br
+          = spinner_button(button_text: "Submit")
+    hr
+
+- if @albums.blank?
+  h3 We're sorry, but there are currently no photo albums available.
+  p Please check back again later!
+- else
+  - @albums.each do |album|
+    h3 = album.name.titleize
+    - album.photos.each do |photo|
+      a data-fancybox="gallery" href=(photos_bucket.link(key: "photos/#{photo.id}/original/#{photo.photo_file_file_name}"))
+        = image_tag photos_bucket.link(key: "photos/#{photo.id}/thumb/#{photo.photo_file_file_name}")

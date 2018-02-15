@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   get     '/bridge',             to: 'public#bridge'
   get     '/newsletter',         to: 'public#newsletter'
   get     '/store',              to: 'public#store'
-  get     '/photos',             to: 'public#photos'
+  get     '/photos',             to: 'gallery#index'
   get     '/minutes',            to: 'members#minutes'
 
   # Functional page back-ends
@@ -54,6 +54,9 @@ Rails.application.routes.draw do
   get     '/file',               to: 'file#new',                     as: 'file'
   post    '/file/upload',        to: 'file#create',                  as: 'upload_file'
   delete  '/file/:id/destroy',   to: 'file#destroy',                 as: 'remove_file'
+
+  post    '/album/new',          to: 'gallery#add_album',            as: 'new_album'
+  post    '/album/photo',        to: 'gallery#upload_photo',         as: 'upload_photo'
 
   get     '/store/new',          to: 'store#new',                    as: 'new_store_item'
   post    '/store/create',       to: 'store#create',                 as: 'create_store_item'
