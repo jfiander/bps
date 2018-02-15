@@ -1,12 +1,11 @@
 h2 Squadron Photos
 
-- if current_user&.permitted?(:photos)
-  .editor
-    hr
-    small
-      | Please go to 
-      = link_to "Albumizr", "https://albumizr.com"
-      |  to manage these photos.
-    hr
+/ - if current_user&.permitted?(:photos)
+/   .editor
+/     hr
+/     hr
 
-iframe#photos src="https://albumizr.com/a/2XWu" scrolling="no" frameborder="0"
+a data-fancybox="gallery" href=(image_path('flags/PNG/LTC.png'))
+  = image_tag "flags/PNG/LTC.thumb.png"
+a data-fancybox="gallery" href=(image_path('flags/PNG/CDR.png'))
+  = image_tag "flags/PNG/CDR.thumb.png"
