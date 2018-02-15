@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   before_action :authenticate_user!
-  before_action                   only: [:admin, :download_flags] { require_permission(:admin) }
+  before_action                   only: [:admin] { require_permission(:admin) }
   before_action                   only: [:upload_bilge] { require_permission(:newsletter) }
   before_action                   only: [:upload_minutes] { require_permission(:minutes) }
   before_action                   only: [:edit_markdown, :update_markdown] { require_permission(:page) }
@@ -118,6 +118,10 @@ class MembersController < ApplicationController
 
   def ranks
     @users = User.unlocked.with_positions.alphabetized.with_a_name
+  end
+
+  def auto_permissions
+    @auto_permissions = File.read("#{Rails.root}/config/implicit_permissions.yml")
   end
 
   private
