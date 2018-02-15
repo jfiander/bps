@@ -20,15 +20,15 @@ class UserController < ApplicationController
     @profile_title = @user.id == current_user.id ? "Current" : "Selected"
 
     respond_to do |format|
-        format.html
-        format.json { render :json => @user }
+      format.html
+      format.json { render json: @user }
     end
   end
 
   def list
     respond_to do |format|
       format.html
-      format.json { render :json => @users }
+      format.json { render json: @users }
     end
   end
 
