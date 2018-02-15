@@ -15,6 +15,7 @@ h2 Squadron Photos
         br
         = spinner_button(button_text: "Submit")
     hr
+      h3 Upload a photo
       #upload-photo
         = form_for(@photo, url: upload_photo_path, multipart: true) do |f|
           = f.select :album_id, options_for_select(@albums.map { |a| [a.name, a.id] }), include_blank: true, required: true, prompt: "Please select an album"
@@ -29,7 +30,10 @@ h2 Squadron Photos
   p Please check back again later!
 - else
   - @albums.each do |album|
-    h3 = album.name.titleize
+    h3
+      = album.name.titleize
+      - if current_user.permitted?(:photos)
+        small.header = link_to '(edit)', edit_album_path(album)
     - album.photos.each do |photo|
       a data-fancybox="gallery" href=(photos_bucket.link(key: "photos/#{photo.id}/original/#{photo.photo_file_file_name}"))
         = image_tag photos_bucket.link(key: "photos/#{photo.id}/thumb/#{photo.photo_file_file_name}")

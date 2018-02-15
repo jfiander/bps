@@ -1,6 +1,6 @@
 class GalleryController < ApplicationController
   before_action :authenticate_user!, except: [:index] 
-  before_action                        only: [:add_album, :remove_album, :upload_photos, :remove_photo] { require_permission(:photos) }
+  before_action                        only: [:add_album, :edit_album, :remove_album, :upload_photos, :remove_photo] { require_permission(:photos) }
   def index
     @albums = Album.includes(:photos).all
 
@@ -9,7 +9,7 @@ class GalleryController < ApplicationController
   end
 
   def add_album
-    if remove_params[:remove].present?
+    if clean_params[:remove].present?
       if Album.find_by(album_params).destroy
         flash[:notice] = "Successfully removed album!"
       else
@@ -27,6 +27,11 @@ class GalleryController < ApplicationController
     redirect_to photos_path
   end
 
+  def edit_album
+    @album = Album.find_by(id: clean_params[:id])
+    @photo = Photo.new
+  end
+
   def upload_photo
     @photo = Photo.new(photo_params)
 
@@ -36,10 +41,24 @@ class GalleryController < ApplicationController
       flash[:alert] = "There was a problem creating the photo."
     end
 
-    redirect_to photos_path
+    if clean_params[:redirect_to_album].present?
+      redirect_to edit_album_path(photo_params[:album_id])
+    else
+      redirect_to photos_path
+    end
   end
 
   def remove_photo
+    photo = Photo.find_by(id: clean_params[:id])
+    album_id = photo.album_id
+
+    if photo.destroy
+      flash[:notice] = "Successfully removed photo!"
+    else
+      flash[:alert] = "There was a problem removing the photo."
+    end
+
+    redirect_to edit_album_path(album_id)
   end
 
   private
@@ -52,7 +71,7 @@ class GalleryController < ApplicationController
     params.require(:photo).permit(:album_id, :photo_file)
   end
 
-  def remove_params
-    params.permit(:remove)
+  def clean_params
+    params.permit(:id, :remove,:redirect_to_album)
   end
 end

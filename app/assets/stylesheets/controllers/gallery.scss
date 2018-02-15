@@ -1,0 +1,16 @@
+.table.photos {
+  width: 75%;
+  margin: 0 auto;
+
+  .table-header {
+    height: 2em;
+  }
+
+  .table-cell.left {
+    width: 75%;
+  }
+
+  .table-cell.right {
+    width: 25%;
+  }
+}

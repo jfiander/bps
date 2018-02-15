@@ -56,7 +56,9 @@ Rails.application.routes.draw do
   delete  '/file/:id/destroy',   to: 'file#destroy',                 as: 'remove_file'
 
   post    '/album/new',          to: 'gallery#add_album',            as: 'new_album'
+  get     '/album/:id',          to: 'gallery#edit_album',           as: 'edit_album'
   post    '/album/photo',        to: 'gallery#upload_photo',         as: 'upload_photo'
+  delete  '/album/photo/:id',    to: 'gallery#remove_photo',         as: 'remove_photo'
 
   get     '/store/new',          to: 'store#new',                    as: 'new_store_item'
   post    '/store/create',       to: 'store#create',                 as: 'create_store_item'

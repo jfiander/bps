@@ -1,0 +1,21 @@
+h2 = "Edit #{@album.name.titleize}"
+h3 Upload a photo
+#upload-photo
+  = form_for(@photo, url: upload_photo_path, multipart: true) do |f|
+    = hidden_field_tag :redirect_to_album, true
+    = f.hidden_field :album_id, value: @album.id
+    = f.file_field :photo_file, required: true
+    br
+    = spinner_button(button_text: "Submit")
+  hr
+- if @album.photos.present?
+  .table.photos
+    .table-row
+      .table-cell.table-header Photo
+      .table-cell.table-header Remove from Album
+    - @album.photos.each do |photo|
+      .table-row
+        .table-cell.left = image_tag photos_bucket.link(key: "photos/#{photo.id}/thumb/#{photo.photo_file_file_name}")
+        .table-cell.right = link_to(remove_photo_path(id: photo.id), method: :delete, data: {confirm: 'Are you sure you want to remove this photo from the album?'}) { fa_icon('minus-square', class: 'red') }
+- else
+  h4 There are no photos in this album.
