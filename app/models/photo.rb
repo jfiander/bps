@@ -6,10 +6,10 @@ class Photo < ApplicationRecord
     s3_region: 'us-east-2',
     path: ':id/:style/:filename',
     s3_permissions: :private,
-    s3_credentials: {bucket: self.buckets[:photos].full_bucket, access_key_id: ENV['S3_ACCESS_KEY'], secret_access_key: ENV['S3_SECRET']},
+    s3_credentials: aws_credentials(:photos),
     styles: { medium: '500x500', thumb: '200x200' }
 
-  validates_attachment_content_type :photo_file, content_type: /\Aimage\/.*\z/
+  validates_attachment_content_type :photo_file, content_type: %r{\Aimage/.*\Z}
   validates :photo_file, presence: true
 
   acts_as_paranoid

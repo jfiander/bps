@@ -18,9 +18,9 @@ class Event < ApplicationRecord
     s3_region: "us-east-2",
     path: "event_flyers/:id/:filename",
     s3_permissions: :private,
-    s3_credentials: {bucket: self.buckets[:files].full_bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
+    s3_credentials: aws_credentials(:files)
 
-  validates_attachment_content_type :flyer, content_type: /\A(image\/(jpe?g|png|gif))|(application\/pdf)\Z/
+  validates_attachment_content_type :flyer, content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\Z}
 
   scope :current, ->(category) do
     includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at > ?", Time.now).where(event_type: EventType.send(category))

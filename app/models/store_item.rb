@@ -2,18 +2,18 @@ class StoreItem < ApplicationRecord
   serialize :options
 
   def self.no_image
-    ActionController::Base.helpers.image_path(StoreItem.buckets[:static].link(key: "no_image.png"))
+    ActionController::Base.helpers.image_path(StoreItem.buckets[:static].link(key: 'no_image.png'))
   end
 
   has_attached_file :image,
     default_url: StoreItem.no_image,
     storage: :s3,
-    s3_region: "us-east-2",
-    path: "store_items/:id/:filename",
+    s3_region: 'us-east-2',
+    path: 'store_items/:id/:filename',
     s3_permissions: :private,
-    s3_credentials: {bucket: self.buckets[:files].full_bucket, access_key_id: ENV["S3_ACCESS_KEY"], secret_access_key: ENV["S3_SECRET"]}
+    s3_credentials: aws_credentials(:files)
 
-  validates_attachment_content_type :image, content_type: /\Aimage\/(jpe?g|png|gif)\Z/
+  validates_attachment_content_type :image, content_type: %r{\Aimage/(jpe?g|png|gif)\Z}
   validates :name, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
@@ -25,7 +25,9 @@ class StoreItem < ApplicationRecord
   acts_as_paranoid
 
   def options_hash
-    prepared_options = "{" + options.delete('"').split(/\r?\n/).map { |o| o.gsub(/(.*?):\s?(.*?)/, '"\1": "\2') + '"' }.join(", ") + "}"
+    prepared_options = '{' + options.delete('"').split(/\r?\n/).map do |o|
+      o.gsub(/(.*?):\s?(.*?)/, '"\1": "\2') + '"'
+    end.join(', ') + '}'
     JSON.parse(prepared_options)
   end
 

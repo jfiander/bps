@@ -21,7 +21,7 @@ class User < ApplicationRecord
     s3_region: 'us-east-2',
     path: 'profile_photos/:id/:style/:filename',
     s3_permissions: :private,
-    s3_credentials: {bucket: self.buckets[:files].full_bucket, access_key_id: ENV['S3_ACCESS_KEY'], secret_access_key: ENV['S3_SECRET']},
+    s3_credentials: aws_credentials(:files),
     styles: { medium: '500x500', thumb: '200x200' }
 
   before_validation do
