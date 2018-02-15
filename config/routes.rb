@@ -57,6 +57,7 @@ Rails.application.routes.draw do
 
   post    '/album/new',          to: 'gallery#add_album',            as: 'new_album'
   get     '/album/:id',          to: 'gallery#edit_album',           as: 'edit_album'
+  delete  '/album/:id',          to: 'gallery#remove_album',         as: 'remove_album'
   post    '/album/photo',        to: 'gallery#upload_photo',         as: 'upload_photo'
   delete  '/album/photo/:id',    to: 'gallery#remove_photo',         as: 'remove_photo'
 

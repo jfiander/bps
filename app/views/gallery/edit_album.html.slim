@@ -1,5 +1,7 @@
 h2 = "Edit Album – #{@album.name.titleize}"
 
+= link_to 'Remove album', remove_album_path(@album), method: :delete, class: 'red', data: {confirm: 'Are you sure you want to remove this album and all of its photos?'}
+
 = render 'upload_form', redirect_to_album: true
 
 - if @album.photos.present?
