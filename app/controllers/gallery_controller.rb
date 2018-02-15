@@ -11,16 +11,16 @@ class GalleryController < ApplicationController
   def add_album
     if clean_params[:remove].present?
       if Album.find_by(album_params).destroy
-        flash[:notice] = "Successfully removed album!"
+        flash[:notice] = 'Successfully removed album!'
       else
-        flash[:alert] = "There was a problem removing the album."
+        flash[:alert] = 'There was a problem removing the album.'
       end
     else
       @album = Album.new(album_params)
       if @album.save
-        flash[:notice] = "Successfully added album!"
+        flash[:notice] = 'Successfully added album!'
       else
-        flash[:alert] = "There was a problem creating the album."
+        flash[:alert] = 'There was a problem creating the album.'
       end
     end
 
@@ -33,12 +33,23 @@ class GalleryController < ApplicationController
   end
 
   def upload_photo
-    @photo = Photo.new(photo_params)
+    Photo.transaction do
+      photo_params[:photo_file].each do |photo_file|
+        photo_attributes = photo_params.to_hash.merge(photo_file: photo_file)
+        photo = Photo.new(photo_attributes)
+        if photo.valid?
+          photo.save
+        else
+          @failed = true
+          raise ActiveRecord::Rollback
+        end
+      end
+    end
 
-    if @photo.save
-      flash[:notice] = "Successfully added photo!"
+    if defined?(@failed)
+      flash[:alert] = 'There was a problem creating the photo.'
     else
-      flash[:alert] = "There was a problem creating the photo."
+      flash[:notice] = 'Successfully added photo!'
     end
 
     if clean_params[:redirect_to_album].present?
@@ -53,9 +64,9 @@ class GalleryController < ApplicationController
     album_id = photo.album_id
 
     if photo.destroy
-      flash[:notice] = "Successfully removed photo!"
+      flash[:notice] = 'Successfully removed photo!'
     else
-      flash[:alert] = "There was a problem removing the photo."
+      flash[:alert] = 'There was a problem removing the photo.'
     end
 
     redirect_to edit_album_path(album_id)
@@ -68,7 +79,7 @@ class GalleryController < ApplicationController
   end
 
   def photo_params
-    params.require(:photo).permit(:album_id, :photo_file)
+    params.require(:photo).permit(:album_id, photo_file: [])
   end
 
   def clean_params

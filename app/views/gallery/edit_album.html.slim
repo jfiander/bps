@@ -1,13 +1,7 @@
 h2 = "Edit #{@album.name.titleize}"
-h3 Upload a photo
-#upload-photo
-  = form_for(@photo, url: upload_photo_path, multipart: true) do |f|
-    = hidden_field_tag :redirect_to_album, true
-    = f.hidden_field :album_id, value: @album.id
-    = f.file_field :photo_file, required: true
-    br
-    = spinner_button(button_text: "Submit")
-  hr
+
+= render 'upload_form', redirect_to_album: true
+
 - if @album.photos.present?
   .table.photos
     .table-row

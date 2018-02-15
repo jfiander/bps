@@ -15,14 +15,7 @@ h2 Squadron Photos
         br
         = spinner_button(button_text: "Submit")
     hr
-      h3 Upload a photo
-      #upload-photo
-        = form_for(@photo, url: upload_photo_path, multipart: true) do |f|
-          = f.select :album_id, options_for_select(@albums.map { |a| [a.name, a.id] }), include_blank: true, required: true, prompt: "Please select an album"
-          br
-          = f.file_field :photo_file, required: true
-          br
-          = spinner_button(button_text: "Submit")
+    = render 'upload_form', redirect_to_album: false
     hr
 
 - if @albums.blank?
