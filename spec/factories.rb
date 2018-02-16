@@ -1,4 +1,7 @@
 FactoryBot.define do
+  factory :header_image do
+    image_file ""
+  end
   factory :photo do
     album_id 1
   end

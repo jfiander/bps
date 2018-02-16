@@ -115,10 +115,7 @@ class ApplicationController < ActionController::Base
   end
 
   def pick_header_image
-    objects = static_bucket.list(prefix: 'headers/')
-    keys = objects.map(&:key)
-    keys.shift
-    @header_image = static_bucket.link(key: keys.sample)
+    @header_image = files_bucket.link(key: HeaderImage.all.map(&:file).sample.path)
     @header_logo = static_bucket.link(key: 'logos/ABC.tr.300.png')
     @print_logo = static_bucket.link(key: 'logos/ABC.long.birmingham.1000.png')
     @wheel_logo = static_bucket.link(key: 'flags/PNG/WHEEL.thumb.png')

@@ -54,6 +54,9 @@ Rails.application.routes.draw do
   get     '/file',               to: 'file#new',                     as: 'file'
   post    '/file/upload',        to: 'file#create',                  as: 'upload_file'
   delete  '/file/:id/destroy',   to: 'file#destroy',                 as: 'remove_file'
+  get     '/header',             to: 'file#new_header',              as: 'header'
+  post    '/header/upload',      to: 'file#create_header',           as: 'upload_header'
+  delete  '/header/:id/destroy', to: 'file#destroy_header',          as: 'remove_header'
 
   post    '/album/new',          to: 'gallery#add_album',            as: 'new_album'
   get     '/album/:id',          to: 'gallery#edit_album',           as: 'edit_album'

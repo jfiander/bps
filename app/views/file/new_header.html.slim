@@ -1,0 +1,20 @@
+h2 Header Images
+.editor
+  hr
+  h3 Upload a new header image
+  | Header images must:
+  ul.simple
+    li be at least 750px wide
+    li have an aspect ratio between 2.75:1 and 3.5:1
+  = form_for(@header, url: upload_header_path, multipart: true) do |f|
+    = fa_icon("file-image-o", class: "file-type")
+    = f.file_field :file, required: true
+    = spinner_button(f, button_text: "Upload file", disable_text: "Uploading")
+  hr
+
+- if @headers.present?
+  table#files
+    - @headers.each do |header|
+      tr
+        td = image_tag files_bucket.link(key: header.file.path(:thumb))
+        td = link_to(remove_header_path(header.id), method: :delete, class: "red", data: {confirm: "Are you sure you want to remove this header image?"}) { fa_icon "minus-square" }
