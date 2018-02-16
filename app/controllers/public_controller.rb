@@ -198,11 +198,6 @@ class PublicController < ApplicationController
       end
     end
   end
-  
-  def cf_bilge_url(year:, month:)
-    'https://' + [ENV['CLOUDFRONT_BILGE_ENDPOINT'], year, month].join('/') + '.pdf'
-  end
-  helper_method :cf_bilge_url
 
   private
   def clean_params
