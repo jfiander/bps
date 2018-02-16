@@ -86,9 +86,9 @@
             = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true,
               data: {confirm: "Are you sure you want to cancel this registration?"}) { fa_icon "minus-square" }
 
-    - if !defined?(@event_catalog) && event.allow_public_registrations && !event.expired? && !defined?(long_form)
+    - if !defined?(@event_catalog) && !user_signed_in? && event.allow_public_registrations && !event.expired? && !defined?(long_form)
       = render "events/register_form", event_id: event.id, mobile: true
-    - elsif !defined?(@event_catalog) && !event.expired? && !defined?(long_form)
+    - elsif !defined?(@event_catalog) && !user_signed_in? && !event.expired? && !defined?(long_form)
       = render "events/no_public_registrations"
 
     .event-mobile-contents.spaced
