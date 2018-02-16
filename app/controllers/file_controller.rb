@@ -11,9 +11,9 @@ class FileController < ApplicationController
     @file = MarkdownFile.create(file_params)
 
     if @file.valid?
-      redirect_to file_path, notice: "Successfully uploaded file."
+      redirect_to file_path, notice: 'Successfully uploaded file.'
     else
-      redirect_to file_path, alert: "Unable to upload file."
+      redirect_to file_path, alert: 'Unable to upload file.'
     end
   end
 
@@ -21,7 +21,11 @@ class FileController < ApplicationController
     @file = MarkdownFile.find_by(id: destroy_params[:id])
 
     if @file.destroy
-      redirect_to file_path, notice: "Successfully removed file."
+      redirect_to file_path, notice: 'Successfully removed file.'
+    else
+      redirect_to file_path, alert: 'Unable to upload file.'
+    end
+  end
     else
       redirect_to file_path, alert: "Unable to upload file."
     end
