@@ -62,6 +62,16 @@ class MembersController < ApplicationController
       render :minutes, alert: "There was a problem accessing the minutes. Please try again later."
     end
   end
+  
+  def cf_minutes_url(year:, month:)
+    'https://' + [ENV['CLOUDFRONT_FILES_ENDPOINT'], 'minutes', year, month].join('/') + '.pdf'
+  end
+  helper_method :cf_minutes_url
+  
+  def cf_minutes_excom_url(year:, month:)
+    'https://' + [ENV['CLOUDFRONT_FILES_ENDPOINT'], 'excom', year, month].join('/') + '.pdf'
+  end
+  helper_method :cf_minutes_excom_url
 
   def upload_minutes
     redirect_to minutes_path, alert: "You must either upload a file or check the remove box." and return unless minutes_params[:minutes_upload_file] || minutes_params[:minutes_remove]

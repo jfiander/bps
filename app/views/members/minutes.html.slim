@@ -30,11 +30,11 @@ table#bilge
     tr
       th = year
       - @available_issues.each do |issue, month|
-        td = @issues.include?("#{year}/#{issue}") ? link_to(month, get_minutes_path(year: year, month: issue), target: :_blank) : "-"
+        td = @issues.include?("#{year}/#{issue}") ? link_to(month, cf_minutes_url(year: year, month: issue), target: :_blank) : "-"
     tr
       th ExCom
       - @available_issues.each do |issue, month|
-        td.excom = @issues_excom.include?("#{year}/#{issue}") ? link_to(month, get_minutes_excom_path(year: year, month: issue), target: :_blank) : "-"
+        td.excom = @issues_excom.include?("#{year}/#{issue}") ? link_to(month, cf_minutes_excom_url(year: year, month: issue), target: :_blank) : "-"
     tr
       td colspan=11
         hr
