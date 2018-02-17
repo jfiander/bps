@@ -4,31 +4,31 @@ html
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
-    meta name="description" content=(@site_description)
-    meta name="keywords" content=(@site_keywords)
-    meta name="viewport" content="width=device-width, initial-scale=1.0"
-    script src="https://code.jquery.com/jquery-1.12.4.js"
-    script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
-    = favicon_link_tag static_bucket.link(key: "favicon.ico")
-    = render "trackers"
+    meta name='description' content=(@site_description)
+    meta name='keywords' content=(@site_keywords)
+    meta name='viewport' content='width=device-width, initial-scale=1.0'
+    script src='https://code.jquery.com/jquery-1.12.4.js'
+    script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'
+    = favicon_link_tag static_bucket.link(key: 'favicon.ico')
+    = render 'trackers'
   body
     #main.flex
       header
-        #main-header = render "application/header"
-        #print-header = render "application/print_header"
+        #main-header = render 'application/header'
+        #print-header = render 'application/print_header'
       #navigation-mobile
         h3 Navigation
         .collapsible
-          ul = render "application/navigation"
+          ul = render 'application/navigation'
       #navigation
-        ul = render "application/navigation"
+        ul = render 'application/navigation'
       #content
         - current_user&.permitted?(:page, :users) do
-          ul#admin-menu = render "application/admin_menu"
+          ul#admin-menu = render 'application/admin_menu'
         #flashes
           #notice = notice
           #alert = alert
         = yield
       footer
-        #main-footer = render "application/footer"
-        #print-footer = render "application/print_footer"
+        #main-footer = render 'application/footer'
+        #print-footer = render 'application/print_footer'
