@@ -7,6 +7,18 @@ class PublicController < ApplicationController
   before_action :preload_events, only: [:events] #, :catalog]
   before_action :render_markdown, only: MARKDOWN_EDITABLE_VIEWS
 
+  before_action only: [:events] { page_title("#{params[:type].to_s.titleize}s") }
+
+  before_action only: [:catalog] { page_title("#{params[:type].to_s.titleize} Catalog") }
+
+  before_action only: [:bridge] { page_title('Bridge Officers') }
+
+  before_action only: [:newsletter] { page_title('The Bilge Chatter') }
+
+  before_action only: [:store] { page_title("Ship's Store") }
+
+  before_action only: [:calendar] { page_title('Calendar') }
+
   MARKDOWN_EDITABLE_VIEWS.each { |m| define_method(m) {} }
 
   def events

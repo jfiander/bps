@@ -1,6 +1,9 @@
 class GalleryController < ApplicationController
   before_action :authenticate_user!, except: [:index] 
   before_action                        only: [:add_album, :edit_album, :remove_album, :upload_photos, :remove_photo, :remove_album] { require_permission(:photos) }
+
+  before_action { page_title('Photos') }
+
   def index
     @albums = Album.includes(:photos).all
 

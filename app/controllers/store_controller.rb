@@ -4,6 +4,8 @@ class StoreController < ApplicationController
 
   before_action :get_item, only: [:edit, :update, :destroy]
 
+  before_action { page_title("Ship's Store") }
+
   def new
     @submit_path = create_store_item_path
     @edit_mode = "Add"

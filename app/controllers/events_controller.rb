@@ -6,6 +6,8 @@ class EventsController < ApplicationController
   before_action :prepare_form,    only: [:new, :copy, :edit]
   before_action :check_for_blank, only: [:create, :update]
 
+  before_action { page_title("#{params[:type].to_s.titleize}s") }
+
   def show
     @event = Event.find_by(id: show_params[:id])
     @event_title = params[:type].to_s.titleize

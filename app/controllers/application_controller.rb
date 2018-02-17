@@ -48,6 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_markdown
+  	page_title(StaticPage.find_by(name: action_name).title) unless action_name == 'home'
     render layout: 'application', inline: render_markdown_raw(name: action_name)
   end
 
@@ -151,6 +152,8 @@ class ApplicationController < ActionController::Base
   end
 
   def meta_tags
+    page_title
+
     @site_description = <<~DESCRIPTION
       Are you a power or sail boat enthusiast in the Birmingham, MI area?
       Do you know the names of the knots you use?
@@ -166,5 +169,10 @@ class ApplicationController < ActionController::Base
       Power Squadron, United States Power Squadrons, USPS, Safe Boating, VSC, Vessel Exams,
       Vessel Safety Checks, vessel safety
     KEYWORDS
+  end
+  
+  def page_title(title = nil)
+  	title = "#{title} | " if title.present?
+    @title = "#{title}America's Boating Club – Birmingham Squadron"
   end
 end

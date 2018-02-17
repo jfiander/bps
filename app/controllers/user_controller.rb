@@ -6,6 +6,8 @@ class UserController < ApplicationController
   before_action :get_users_for_select, only: [:permissions_index, :assign_bridge, :assign_committee]
   before_action :time_formats,         only: [:show]
 
+  before_action { page_title('Users') }
+
   def current
     redirect_to user_path(id: current_user.id)
   end

@@ -1,6 +1,10 @@
 class FileController < ApplicationController
   before_action { require_permission(:page) }
 
+  before_action only: [:new, :create, :destroy] { page_title('Files') }
+
+  before_action only: [:new_header, :create_header, :destroy_header] { page_title('Headers') }
+
   def new
     @file = MarkdownFile.new
 
