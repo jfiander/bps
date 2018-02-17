@@ -108,6 +108,7 @@ class ApplicationController < ActionController::Base
       .gsub('&reg;', '<sup>&reg;</sup>')
       .gsub('<ul>', '<ul class="md">')
       .gsub(%r{(.*?)%fa/(.*?)/(.*?)$}) { $1 + view_context.fa_icon($2) + $3 }
+      .gsub(%r{href='(.+@.+\..+)'}) { "href='mailto:#{$1}'" }
   end
 
   def center_html
