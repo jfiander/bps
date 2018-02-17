@@ -1,19 +1,21 @@
 - if current_user&.permitted?(params[:type])
-  = link "Add #{params[:type].to_s.titleize}", path: send("new_#{params[:type]}_path"), icon: "plus-square"
-- if current_user&.permitted?(:store) && controller.action_name == "store"
-  = link "Add Item",         path: new_store_item_path, icon: "plus-square"
-- if current_user&.permitted?(:users) && controller.action_name == "list"
-  = link "Import user data", path: import_users_path, icon: "plus-square"
-- if current_user&.permitted?(:page)
-  - if controller.action_name.in?(StaticPage.names)
-    = link "Edit This Page", path: edit_page_path(controller.action_name), icon: "pencil-square"
-  = link "Files",     path: file_path,                              icon: "cloud-upload"
-  = link "Headers",     path: header_path,                              icon: "desktop"
+  = link "Add #{params[:type].to_s.titleize}", path: send("new_#{params[:type]}_path"), icon: 'plus-square'
+
+- if current_user&.permitted?(:store) && controller.action_name == 'store'
+  = link 'Add Item', path: new_store_item_path, icon: 'plus-square'
+
 - if current_user&.permitted?(:users)
-  = link "Users List",       path: users_path,                             icon: "users"
-  = link "Invite User",      path: new_user_invitation_path,               icon: "user-plus"
-  = link "Permissions",      path: permit_path,                            icon: "user-secret"
-- if current_user&.permitted?(:users) && (controller_name.in?(["user", "invitations"]) || controller.action_name == "bridge")
-  = link_to(user_help_path) do
-    = fa_icon("question-circle")
-    | Help
+  - if controller.action_name == 'list'
+    = link 'Import user data', path: import_users_path, icon: 'plus-square'
+
+  - if controller.action_name.in?(StaticPage.names)
+    = link 'Edit This Page', path: edit_page_path(controller.action_name), icon: 'pencil-square'
+
+  = link 'Files', path: file_path, icon: 'cloud-upload'
+  = link 'Headers', path: header_path, icon: 'desktop'
+  = link 'Users List', path: users_path, icon: 'users'
+  = link 'Invite User', path: new_user_invitation_path, icon: 'user-plus'
+  = link 'Permissions', path: permit_path, icon: 'user-secret'
+
+  - if (controller_name.in?(['user', 'invitations']) || controller.action_name == 'bridge')
+    = link 'Help', path: user_help_path, icon: 'question-circle'
