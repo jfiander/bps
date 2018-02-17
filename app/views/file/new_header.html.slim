@@ -1,11 +1,12 @@
 h2 Header Images
+p Every time the site is loaded, a random image listed from this page will be displayed in the header.
+p Header images must:
+ul.simple
+  li be at least 750px wide
+  li have an aspect ratio between 2.75:1 and 3.5:1
 .editor
   hr
   h3 Upload a new header image
-  | Header images must:
-  ul.simple
-    li be at least 750px wide
-    li have an aspect ratio between 2.75:1 and 3.5:1
   = form_for(@header, url: upload_header_path, multipart: true) do |f|
     = fa_icon("file-image-o", class: "file-type")
     = f.file_field :file, required: true
