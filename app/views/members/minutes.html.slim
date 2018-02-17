@@ -30,11 +30,11 @@ table#bilge
     tr
       th = year
       - @available_issues.each do |issue, month|
-        td = @issues.include?("#{year}/#{issue}") ? link_to(month, files_bucket.link(key: "minutes/#{year}/#{issue}.pdf", target: :_blank) : "-"
+        td = @issues.include?("#{year}/#{issue}") ? link_to(month, files_bucket.link(key: "minutes/#{year}/#{issue}.pdf"), target: :_blank) : "-"
     tr
       th ExCom
       - @available_issues.each do |issue, month|
-        td.excom = @issues_excom.include?("#{year}/#{issue}") ? link_to(month, files_bucket.link(key: "excom_minutes/#{year}/#{issue}.pdf", target: :_blank) : "-"
+        td.excom = @issues_excom.include?("#{year}/#{issue}") ? link_to(month, files_bucket.link(key: "excom_minutes/#{year}/#{issue}.pdf"), target: :_blank) : "-"
     tr
       td colspan=11
         hr

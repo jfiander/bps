@@ -27,7 +27,7 @@ table#bilge
     tr
       th = year
       - @available_issues.each do |key, issue|
-        td = @issues.include?("#{year}/#{key}") ? link_to(issue, bilge_bucket.link(key: "#{year}/#{month}.pdf", target: :_blank) : "-"
+        td = @issues.include?("#{year}/#{key}") ? link_to(issue, bilge_bucket.link(key: "#{year}/#{key}.pdf"), target: :_blank) : "-"
 
 hr
 = link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag static_bucket.link(key: "acrobat_reader.png") }
