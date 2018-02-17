@@ -15,18 +15,18 @@ p
   hr
 
 - if @markdown_files.present?
-  table#files
-    tr
-      th File name
-      th Markdown key
-      td
+  .table#files
+    .table-row
+      .table-cell.table-header File name
+      .table-cell.table-header Markdown key
+      .table-cell
     - @markdown_files.each do |file|
-      tr
-        td = file.file_file_name
-        td
+      .table-row
+        .table-cell = file.file_file_name
+        .table-cell
           pre
             - if file.file_content_type.match(/image/)
               = "\%image/#{file.id}/"
             - else
               = "\%file/#{file.id}/#{file.file_file_name.match(/^(.*?)\.\w{2,4}$/)[1].titleize}/"
-        td = link_to(remove_file_path(file.id), method: :delete, class: "red", data: {confirm: "Are you sure you want to remove this file? This will break any remaining links to this file."}) { fa_icon "minus-square" }
+        .table-cell = link_to(remove_file_path(file.id), method: :delete, class: "red", data: {confirm: "Are you sure you want to remove this file? This will break any remaining links to this file."}) { fa_icon "minus-square" }
