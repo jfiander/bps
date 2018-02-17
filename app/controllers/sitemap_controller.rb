@@ -8,6 +8,28 @@ class SitemapController < ApplicationController
       seminars seminars/catalog events
     ]
 
+    @priorities = {
+      '' => 1.0,
+      'education' => 0.8,
+      'courses' => 0.7,
+      'seminars' => 0.7,
+      'courses/catalog' => 0.6,
+      'seminars/catalog' => 0.6,
+      'events' => 0.6
+    }
+
+    @frequencies = {
+      'courses' => 'monthly',
+      'seminars' => 'monthly',
+      'events' => 'monthly',
+      'newsletter' => 'monthly',
+      'bridge' => 'yearly',
+      'courses/catalog' => 'yearly',
+      'seminars/catalog' => 'yearly'
+    }
+
+    @base_url = "http://#{request.host_with_port}/"
+
     respond_to do |format|
       format.xml
     end
