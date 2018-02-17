@@ -14,8 +14,8 @@ ul.simple
   hr
 
 - if @headers.present?
-  table#files
+  .table#files
     - @headers.each do |header|
-      tr
-        td = image_tag files_bucket.link(key: header.file.path(:thumb))
-        td = link_to(remove_header_path(header.id), method: :delete, class: "red", data: {confirm: "Are you sure you want to remove this header image?"}) { fa_icon "minus-square" }
+      .table-row
+        .table-cell = image_tag files_bucket.link(key: header.file.path(:thumb))
+        .table-cell = link_to(remove_header_path(header.id), method: :delete, class: "red", data: {confirm: "Are you sure you want to remove this header image?"}) { fa_icon "minus-square" }
