@@ -19,11 +19,11 @@
       .event-mobile-contents
         - if user_signed_in? && event.allow_member_registrations && !event.expired? && !defined?(long_form)
           - if @registered&.has_key?(event.id)
-            = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
+            = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}_mobile", data: {confirm: "Are you sure you want to cancel this registration?"}) do
               = fa_icon("minus-square fw")
               | Cancel Registration
           - else
-            = link_to(register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
+            = link_to(register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}_mobile") do
               = fa_icon("calendar-check-o fw")
               | Register
       .event-mobile-contents = event.start_at.strftime(@long_time_format)
@@ -77,7 +77,7 @@
       .event-mobile-contents.spaced
         b Registered Users:
         - @registered_users[event.id].each do |r|
-          .registration id=("registration_#{r.id}")
+          .registration id=("registration_#{r.id}_mobile")
             - if r.user.present?
               = link_to(r.user.full_name, "mailto:#{r.user.email}")
             - else
