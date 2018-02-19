@@ -27,8 +27,19 @@ div.field {
     }
   }
 
-  .change-password {
+  a#show-change-password {
+    color: $old-glory-red;
+  }
+
+  div#change-password {
     background-color: lighten($old-glory-red, 50%);
+    border-top: thin solid $old-glory-red;
+    border-bottom: thin solid $old-glory-red;
+    display: none;
+  }
+
+  div.confirm-password {
+    margin-top: 0.5em;
   }
 
   .left {

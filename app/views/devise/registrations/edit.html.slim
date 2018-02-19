@@ -39,10 +39,9 @@ h2 Edit Profile
           = resource.unconfirmed_email
         br.clear
 
-    .profile-section.change-password
-      .center.red If you would like to change your password, please type your new password in both of these boxes, to ensure you've typed it correctly.
-      .left
-      .right
+    = link_to "Change password", "#", id: "show-change-password"
+    .profile-section#change-password
+      .center.red Please type your new password in both of boxes, to ensure you've typed it correctly.
       br.clear
 
       .left = f.label :password, "New Password"
@@ -59,6 +58,8 @@ h2 Edit Profile
       .left = f.label :password_confirmation, "Confirm New Password"
       .right = f.password_field :password_confirmation, autocomplete: "off"
       br.clear
+
+      small If you don't want to change your password, leave these boxes blank.
 
     .profile-section.confirm-password
       .left = f.label :current_password, "Enter your current password to confirm changes"
