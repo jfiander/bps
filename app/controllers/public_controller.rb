@@ -1,11 +1,7 @@
 class PublicController < ApplicationController
-  MARKDOWN_EDITABLE_VIEWS ||= [:home, :about, :join, :requirements, :vsc, :education, :civic, :history, :links].freeze
-  # STATIC_VIEWS = [:calendar, :photos].freeze
-
   before_action :list_bilges, only: [:newsletter, :get_bilge]
   before_action :time_formats, only: [:events, :catalog]
   before_action :preload_events, only: [:events] #, :catalog]
-  before_action :render_markdown, only: MARKDOWN_EDITABLE_VIEWS
 
   before_action only: [:events] { page_title("#{params[:type].to_s.titleize}s") }
 
@@ -19,7 +15,7 @@ class PublicController < ApplicationController
 
   before_action only: [:calendar] { page_title('Calendar') }
 
-  MARKDOWN_EDITABLE_VIEWS.each { |m| define_method(m) {} }
+  has_markdown_views
 
   def events
     @events = get_events(params[:type], :current)

@@ -8,24 +8,17 @@ class MembersController < ApplicationController
   before_action only: [:fulfill_item] { require_permission(:store) }
   before_action only: [:ranks] { require_permission(:users, :newsletter, :page, :minutes, :event, :education) }
 
-  MARKDOWN_EDITABLE_VIEWS ||= [:members, :welcome, :user_help].freeze
-
   before_action :get_bilge_issue,   only: [:upload_bilge, :remove_bilge]
   before_action :get_minutes_issue, only: [:upload_minutes, :remove_minutes]
-  before_action :render_markdown,   only: MARKDOWN_EDITABLE_VIEWS
   before_action :list_minutes,      only: [:minutes, :get_minutes, :get_minutes_excom]
 
   before_action only: [:minutes] { page_title('Minutes') }
-
   before_action only: [:excom_minutes] { page_title('ExCom Minutes') }
-
   before_action only: [:edit_markdown] { page_title('Edit Page') }
-
   before_action only: [:ranks] { page_title('Member Ranks and Grades') }
-
   before_action only: [:auto_permissions] { page_title('Automatic Permissions') }
 
-  MARKDOWN_EDITABLE_VIEWS.each { |m| define_method(m) {} }
+  has_markdown_views
 
   def minutes
     minutes_years = @minutes.map(&:key).map { |b| b.sub(minutes_prefix, '').delete('.pdf').gsub(/\/(s|\d+)/, '') }

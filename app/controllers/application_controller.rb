@@ -14,6 +14,11 @@ class ApplicationController < ActionController::Base
 
   after_action { flash.discard if request.xhr? }
 
+  def self.has_markdown_views
+    before_action :render_markdown, only: MarkdownHelper::VIEWS[controller_name]
+    MarkdownHelper::VIEWS[controller_name]&.each { |m| define_method(m) {} }
+  end
+
   private
   def ssl_configured?
     Rails.env.production?
@@ -79,5 +84,9 @@ class ApplicationController < ActionController::Base
   def page_title(title = nil)
     title = "#{title} | " if title.present?
     @title = "#{title}America's Boating Club – Birmingham Squadron"
+  end
+
+  def markdown_views?
+    defined?(MARKDOWN_EDITABLE_VIEWS)
   end
 end

@@ -1,4 +1,9 @@
 module MarkdownHelper
+  VIEWS ||= {
+    'public' => %w[home about join requirements vsc education civic history links],
+    'members' => %w[members welcome user_help]
+  }.freeze
+
   def render_markdown
     page_title(StaticPage.find_by(name: action_name).title) unless action_name == 'home'
     render layout: 'application', inline: render_markdown_raw(name: action_name)
@@ -16,6 +21,8 @@ module MarkdownHelper
     generate_markdown_div
     parse_markdown_div
   end
+
+  private
 
   def default_markdown
     @burgee_html = center_html do
@@ -61,18 +68,17 @@ module MarkdownHelper
       .gsub(/href='(.+@.+\..+)'/) { "href='mailto:#{$1}'" }
       .gsub(%r{<p>%burgee</p>}, @burgee_html)
       .gsub(%r{<p>%education</p>}, @education_menu)
-      .gsub(%r{(.*?)%static_file/(.*?)/(.*?)/(.*?)$}) { $1 + markdown_static_link($2, title: $3) + $4 }
-      .gsub(%r{(.*?)%file/(\d+)/(.*?)/(.*?)$}) { $1 + markdown_file_link($2, title: $3) + $4 }
-      .gsub(%r{(.*?)%image/(\d+)/(.*?)$}) { $1 + markdown_image($2) + $3 }
+      .gsub(%r{(.*?)%static_file/(.*?)/(.*?)/(.*?)$}) { $1 + static_link($2, title: $3) + $4 }
+      .gsub(%r{(.*?)%file/(\d+)/(.*?)/(.*?)$}) { $1 + file_link($2, title: $3) + $4 }
+      .gsub(%r{(.*?)%image/(\d+)/(.*?)$}) { $1 + image($2) + $3 }
       .gsub(%r{(.*?)%fa/(.*?)/(.*?)$}) { $1 + view_context.fa_icon($2) + $3 }
   end
 
-  private
   def center_html
     '<div class="center">' + yield + '</div>'
   end
 
-  def markdown_static_link(id, title: '')
+  def static_link(id, title: '')
     key = get_uploaded_file_name(id)
     link_title = title || key
     link_path = static_bucket.link(key: "general/#{key}")
@@ -81,7 +87,7 @@ module MarkdownHelper
     end
   end
 
-  def markdown_file_link(id, title: '')
+  def file_link(id, title: '')
     key = get_uploaded_file_name(id)
     link_title = title || key
     link_path = files_bucket.link(key: "uploaded_files/#{key}")
@@ -90,7 +96,7 @@ module MarkdownHelper
     end
   end
 
-  def markdown_image(id)
+  def image(id)
     key = "uploaded_files/#{get_uploaded_file_name(id)}"
     view_context.image_tag(files_bucket.link(key: key))
   end
