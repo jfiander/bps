@@ -9,17 +9,26 @@ div.field {
   font-size: 1.25em;
 
   div {
-    height: 3em;
+    min-height: 2em;
+  }
+
+  .profile-section {
+    width: 100%;
+    height: auto;
+    padding: 0.5em;
   }
 
   .profile-photo {
     width: 100%;
     height: auto;
-    padding-bottom: 1em;
 
     .center {
       margin-top: 0.5em;
     }
+  }
+
+  .change-password {
+    background-color: lighten($old-glory-red, 50%);
   }
 
   .left {
