@@ -1,18 +1,13 @@
 class PublicController < ApplicationController
   before_action :list_bilges, only: [:newsletter, :get_bilge]
   before_action :time_formats, only: [:events, :catalog]
-  before_action :preload_events, only: [:events] #, :catalog]
+  before_action :preload_events, only: [:events]
 
   before_action only: [:events] { page_title("#{params[:type].to_s.titleize}s") }
-
   before_action only: [:catalog] { page_title("#{params[:type].to_s.titleize} Catalog") }
-
   before_action only: [:bridge] { page_title('Bridge Officers') }
-
   before_action only: [:newsletter] { page_title('The Bilge Chatter') }
-
   before_action only: [:store] { page_title("Ship's Store") }
-
   before_action only: [:calendar] { page_title('Calendar') }
 
   has_markdown_views
@@ -34,21 +29,21 @@ class PublicController < ApplicationController
 
     case params[:type]
     when :course
-      @event_catalog = {"advanced_grade" => {}, "elective" => {}, "public" => {}}
+      @event_catalog = {'advanced_grade' => {}, 'elective' => {}, 'public' => {}}
 
-      ["advanced_grade", "elective", "public"].each do |course_type|
+      ['advanced_grade', 'elective', 'public'].each do |course_type|
         events[course_type].each { |et, e| @event_catalog[course_type][et] = e.first }
       end
       @event_catalog.symbolize_keys!
     when :seminar
-      @event_catalog = {"seminar" => {}}
+      @event_catalog = {'seminar' => {}}
 
-      events["seminar"].each { |et, e| @event_catalog["seminar"][et] = e.first }
+      events['seminar'].each { |et, e| @event_catalog['seminar'][et] = e.first }
     end
 
     @event_catalog = @event_catalog.map { |et, data| {et => data.values} }.reduce({}, :merge)
     @event_catalog = @event_catalog.map { |c, data| {c => data.sort_by { |e| e.event_type } } }.reduce({}, :merge)
-    @event_catalog = @event_catalog["seminar"] if params[:type] == :seminar
+    @event_catalog = @event_catalog['seminar'] if params[:type] == :seminar
   end
 
   def bridge
@@ -66,7 +61,7 @@ class PublicController < ApplicationController
     @select[:departments] = BridgeOffice.departments.map { |b| [b.titleize, b] }
     @select[:bridge_offices] = BridgeOffice.departments(assistants: true).map { |b| [BridgeOffice.title(b), b] }
     @select[:standing_committees] = StandingCommitteeOffice.committee_titles
-    @select[:users] = [["TBD", nil]] + @users.to_a.map! do |user|
+    @select[:users] = [['TBD', nil]] + @users.to_a.map! do |user|
       user&.full_name.blank? ? [user.email, user.id] : [user.full_name, user.id]
     end
 
@@ -108,8 +103,8 @@ class PublicController < ApplicationController
     return user.bridge_hash if user.present?
 
     {
-      full_name: "TBD",
-      simple_name: "TBD",
+      full_name: 'TBD',
+      simple_name: 'TBD',
       photo: User.no_photo
     }
   end
@@ -121,17 +116,17 @@ class PublicController < ApplicationController
     @issues = @bilge_links.keys
 
     @available_issues = {
-      1   => "Jan",
-      2   => "Feb",
-      3   => "Mar",
-      4   => "Apr",
-      5   => "May",
-      6   => "Jun",
-      "s" => "Sum",
-      9   => "Sep",
-      10  => "Oct",
-      11  => "Nov",
-      12  => "Dec"
+      1   => 'Jan',
+      2   => 'Feb',
+      3   => 'Mar',
+      4   => 'Apr',
+      5   => 'May',
+      6   => 'Jun',
+      's' => 'Sum',
+      9   => 'Sep',
+      10  => 'Oct',
+      11  => 'Nov',
+      12  => 'Dec'
     }
   end
 
@@ -141,10 +136,10 @@ class PublicController < ApplicationController
     issue_title = key.gsub("/", "-")
 
     begin
-      send_data open(issue_link).read, filename: "Bilge Chatter #{issue_title}.pdf", type: "application/pdf", disposition: 'inline'
+      send_data open(issue_link).read, filename: "Bilge Chatter #{issue_title}.pdf", type: 'application/pdf', disposition: 'inline'
     rescue SocketError => e
       newsletter
-      render :newsletter, alert: "There was a problem accessing the Bilge Chatter. Please try again later."
+      render :newsletter, alert: 'There was a problem accessing the Bilge Chatter. Please try again later.'
     end
   end
 
@@ -165,7 +160,7 @@ class PublicController < ApplicationController
     @event = Event.find_by(id: @event_id)
 
     unless @event.allow_public_registrations
-      flash[:alert] = "This course is not currently accepting public registrations."
+      flash[:alert] = 'This course is not currently accepting public registrations.'
       render status: :unprocessable_entity and return
     end
 
@@ -174,12 +169,12 @@ class PublicController < ApplicationController
     respond_to do |format|
       format.js do
         if Registration.find_by(registration_attributes)
-          flash[:alert] = "You are already registered for this course."
+          flash[:alert] = 'You are already registered for this course.'
           render status: :unprocessable_entity
         elsif registration.save
-          flash[:notice] = "You have successfully registered!"
+          flash[:notice] = 'You have successfully registered!'
         else
-          flash[:alert] = "We are unable to register you at this time."
+          flash[:alert] = 'We are unable to register you at this time.'
           render status: :unprocessable_entity
         end
       end
@@ -220,7 +215,7 @@ class PublicController < ApplicationController
     @bilges = bilge_bucket.list
 
     @bilge_links = @bilges.map(&:key).map do |b|
-      { b.delete(".pdf") => bilge_bucket.link(key: b) }
+      { b.delete('.pdf') => bilge_bucket.link(key: b) }
     end.reduce({}, :merge)
   end
 
@@ -233,16 +228,16 @@ class PublicController < ApplicationController
     case type
     when :course
       courses = {
-        public: scoped_events[scope].find_all { |c| c.event_type.event_category == "public" },
-        advanced_grade: scoped_events[scope].find_all { |c| c.event_type.event_category == "advanced_grade" },
-        elective: scoped_events[scope].find_all { |c| c.event_type.event_category == "elective" }
+        public: scoped_events[scope].find_all { |c| c.event_type.event_category == 'public' },
+        advanced_grade: scoped_events[scope].find_all { |c| c.event_type.event_category == 'advanced_grade' },
+        elective: scoped_events[scope].find_all { |c| c.event_type.event_category == 'elective' }
       }
 
       courses.all? { |h| h.blank? } ? [] : courses
     when :seminar
-      scoped_events[scope].find_all { |c| c.event_type.event_category == "seminar" }
+      scoped_events[scope].find_all { |c| c.event_type.event_category == 'seminar' }
     when :event
-      scoped_events[scope].find_all { |c| c.event_type.event_category == "meeting" }
+      scoped_events[scope].find_all { |c| c.event_type.event_category == 'meeting' }
     end
   end
 
