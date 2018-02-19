@@ -113,6 +113,8 @@ class PublicController < ApplicationController
   def newsletter
     @years = @bilges.map(&:key).map { |b| b.sub('.pdf', '').sub(/\/(s|\d+)$/, '').delete('/') }.uniq.reject { |b| b.blank? }
 
+    @years = @years.last(2) unless user_signed_in?
+
     @issues = @bilge_links.keys
 
     @available_issues = {
