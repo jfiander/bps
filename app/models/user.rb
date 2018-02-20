@@ -76,25 +76,21 @@ class User < ApplicationRecord
 
   def permitted?(*required_roles, &block)
     return false if required_roles.blank? || required_roles.all? { |r| r.blank? }
-    permitted = permitted_roles.any? { |p| p.in? required_roles.reject { |r| r.nil? }.map(&:to_sym) }
+    permitted = permitted_roles.any? { |p| p.in? required_roles.reject(&:nil?).map(&:to_sym) }
 
     yield if permitted && block_given?
     permitted
   end
 
   def granted_roles
-    @roles ||= roles.to_a
-    @roles.map(&:name).map(&:to_sym).uniq
+    roles.map(&:name).map(&:to_sym).uniq
   end
 
   def permitted_roles
-    @roles = roles.to_a
     [
-      granted_roles,
-      implied_roles,
-      permitted_roles_from_bridge_office,
-      permitted_roles_from_committee
-    ].flatten.uniq.reject { |r| r.nil? }
+      explicit_roles,
+      implicit_roles
+    ].flatten.uniq.reject(&:nil?)
   end
 
   def permit!(role)
@@ -199,15 +195,42 @@ class User < ApplicationRecord
     [bridge_rank, rank, committee_rank].reject(&:blank?)
   end
 
-  private
-  def implied_roles
-    orig_roles = @roles.dup
-    output = []
-    while orig_roles.present?
-      output << new_roles = Role.all.to_a.find_all { |r| r.parent_id.in? orig_roles.map(&:id) }
-      orig_roles = new_roles
+  # private
+  def office_roles
+    [
+      permitted_roles_from_bridge_office,
+      permitted_roles_from_committee
+    ].flatten.uniq.reject(&:nil?)
+  end
+
+  def explicit_roles
+    [
+      granted_roles,
+      office_roles
+    ].flatten.uniq.reject(&:nil?)
+  end
+
+  def implicit_roles
+    all_roles ||= Role.all.to_a
+    search_roles = explicit_roles
+
+    role_objs = search_roles.map do |role|
+      all_roles.find_all { |r| r.name == role.to_s }
+    end.flatten
+
+    collected_roles = []
+    done = false
+    until done
+      new_roles = role_objs.map do |role|
+        all_roles.find_all { |r| r.parent_id == role.id }
+      end.flatten
+
+      size = collected_roles.size
+      collected_roles = collected_roles.push(new_roles).uniq
+      done = true if collected_roles.size == size
     end
-    output.flatten.map(&:name).map(&:to_sym)
+
+    collected_roles.flatten.map(&:name).map(&:to_sym)
   end
 
   def implicit_permissions
@@ -216,13 +239,13 @@ class User < ApplicationRecord
   end
 
   def permitted_roles_from_bridge_office
-    implicit_permissions['bridge_office'][bridge_office&.office]&.map(&:to_sym)
+    implicit_permissions['bridge_office'][bridge_office&.office].map(&:to_sym)
   end
 
   def permitted_roles_from_committee
     implicit_permissions['committee'].select do |k, _|
       k.in? committees.map(&:search_name)
-    end.values.flatten&.map(&:to_sym)
+    end.values.flatten.map(&:to_sym)
   end
 
   def valid_rank
