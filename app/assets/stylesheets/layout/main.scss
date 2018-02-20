@@ -14,7 +14,7 @@
 div#main {
   background-color: darken($background-blue, 5%);
   @include shadow-box(4);
-  @include border-radius(10px);
+  @include border-radius(1em);
   margin: 0.5em 0 1em 0;
   border: thin solid $old-glory-blue-faded;
 
@@ -64,7 +64,8 @@ div#main {
 
         img {
           width: 100%;
-          border-top-right-radius: 10px;
+          border-top-right-radius: 1em;
+          border-bottom-left-radius: 1em;
         }
 
         h1 {
