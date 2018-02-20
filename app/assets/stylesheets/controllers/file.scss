@@ -11,3 +11,23 @@
     width: 45%;
   }
 }
+
+.table#files.headers {
+  width: 35%;
+
+  .table-row {
+    height: 6em;
+
+    .table-cell {
+      vertical-align: middle;
+    }
+
+    .table-cell.left {
+      width: 75%;
+    }
+
+    .table-cell.right {
+      width: 25%;
+    }
+  }
+}
