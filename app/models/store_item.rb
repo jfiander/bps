@@ -2,7 +2,7 @@ class StoreItem < ApplicationRecord
   serialize :options
 
   def self.no_image
-    ActionController::Base.helpers.image_path(StoreItem.buckets[:static].link(key: 'no_image.png'))
+    ActionController::Base.helpers.image_path(StoreItem.buckets[:static].link('no_image.png'))
   end
 
   has_attached_file :image,
@@ -33,7 +33,7 @@ class StoreItem < ApplicationRecord
 
   def get_image
     if image.present? && StoreItem.buckets[:files].object(image.s3_object.key).exists?
-      StoreItem.buckets[:files].link(key: image.s3_object.key)
+      StoreItem.buckets[:files].link(image.s3_object.key)
     else
       StoreItem.no_image
     end

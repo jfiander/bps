@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :events, through: :event_instructors
 
   def self.no_photo
-    ActionController::Base.helpers.image_path(User.buckets[:static].link(key: 'no_profile.png'))
+    ActionController::Base.helpers.image_path(User.buckets[:static].link('no_profile.png'))
   end
 
   has_attached_file :profile_photo,
@@ -52,7 +52,7 @@ class User < ApplicationRecord
 
   def photo(style: :medium)
     if profile_photo.present? && User.buckets[:files].object(profile_photo.s3_object.key).exists?
-      User.buckets[:files].link(key: profile_photo.s3_object(style).key)
+      User.buckets[:files].link(profile_photo.s3_object(style).key)
     else
       User.no_photo
     end
