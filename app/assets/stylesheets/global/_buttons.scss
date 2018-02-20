@@ -15,3 +15,12 @@
     @include shadow-box(0.5);
   }
 }
+
+@mixin big-button($button-color: $birmingham-blue) {
+  @include blue-button;
+  @include shadow-box;
+  min-width: 12em;
+  line-height: 3em;
+  font-size: 1.25em;
+  margin: 1em;
+}
