@@ -75,12 +75,19 @@ div#main {
           text-shadow: 3px 3px $old-glory-blue-faded;
           font-size: 2.5em;
           width: 39%;
+          -webkit-text-stroke: 1px $old-glory-blue;
         }
 
         h4 {
           color: white;
           text-shadow: 2px 2px $old-glory-blue-faded;
           font-style: italic;
+        }
+
+        div#small-titles {
+          h2, h3 {
+            -webkit-text-stroke: 1px $old-glory-blue;
+          }
         }
       }
     }
