@@ -15,6 +15,10 @@ class HeaderImage < ApplicationRecord
 
   acts_as_paranoid
 
+  def self.random
+    all&.map(&:file)&.sample
+  end
+
   private
 
   def correct_image_dimensions
