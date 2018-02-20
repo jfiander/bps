@@ -1,4 +1,4 @@
-@mixin border-radius($radius: 5px) {
+@mixin border-radius($radius: 0.5em) {
   -webkit-border-radius: $radius;
      -moz-border-radius: $radius;
       -ms-border-radius: $radius;
@@ -6,7 +6,7 @@
 }
 
 @mixin flash($flash-color: black) {
-  @include          border-radius(10px);
+  @include          border-radius(1em);
   padding:          0 0.25em;
   text-align:       center;
   color:            $flash-color;
@@ -14,7 +14,7 @@
 }
 
 @mixin header-tag($tag-color) {
-  @include    border-radius(10px);
+  @include    border-radius(1em);
   background: $tag-color;
   color:      white;
   width:      3.5em;
