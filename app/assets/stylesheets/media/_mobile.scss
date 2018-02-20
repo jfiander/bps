@@ -83,6 +83,12 @@
     }
   }
 
+  input.big, button.big {
+    min-width: 25vw !important;
+    max-width: 75vw !important;
+    width: 75vw !important;
+  }
+
   div#login {
     max-width: 400px;
 
