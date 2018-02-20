@@ -83,11 +83,23 @@
     }
   }
 
+  input {
+    font-size: 1em;
+    margin: 0.5em auto !important;
+    min-width: 25vw !important;
+    max-width: 75vw !important;
+    width: 60vw !important;
+  }
+
+  input.number {
+    width: 5em !important;
+  }
+
   input.big, button.big {
+    margin: 0.5em auto !important;
     min-width: 25vw !important;
     max-width: 75vw !important;
     width: 75vw !important;
-    margin: 0.5em auto;
   }
 
   div#login {
