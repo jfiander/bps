@@ -6,7 +6,8 @@ class HeaderImage < ApplicationRecord
     path: 'header_images/:id/:style/:filename',
     s3_permissions: :private,
     s3_credentials: aws_credentials(:files),
-    styles: { medium: '500x500', thumb: '200x200' }
+    styles: { desktop: '1500x1500', medium: '500x500', thumb: '200x200' },
+    convert_options: { thumb: '-quality 75 -strip' }
 
   validates_attachment_content_type :file, content_type: %r{\A(image/(jpe?g|png|gif))\Z}
   validates :file, presence: true
