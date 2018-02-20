@@ -67,7 +67,7 @@ h2 Edit Profile
       br.clear
 
       .center
-        = spinner_button(f, button_text: "Update profile", disable_text: "Updating profile")
-        hr
-        = link_to "Cancel", :back
+        = spinner_button(f, button_text: "Update profile", disable_text: "Updating profile", css_class: 'big')
+        br
+        = button_to "Cancel", :back, class: 'cancel'
       br.clear

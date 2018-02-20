@@ -48,6 +48,24 @@ input.number {
   width: 5em;
 }
 
+input.big, button.big {
+  @include big-button;
+}
+
+input.medium, button.medium {
+  @include medium-button;
+}
+
+input.medium.light, button.medium.light {
+  @include medium-button($birmingham-blue-light);
+  color: $old-glory-blue;
+}
+
+input.cancel, button.cancel {
+  @include medium-button($old-glory-red);
+  min-width: 4em;
+}
+
 .center {
   text-align: center;
 }

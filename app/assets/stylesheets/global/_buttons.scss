@@ -20,7 +20,18 @@
   @include blue-button;
   @include shadow-box;
   min-width: 12em;
-  line-height: 3em;
   font-size: 1.25em;
+  line-height: 1.5em;
   margin: 1em;
+  padding: 0.1em 1em;
+}
+
+@mixin medium-button($button-color: $birmingham-blue) {
+  @include blue-button(0.5em, $button-color);
+  @include shadow-box(0.5);
+  min-width: 6em;
+  max-width: 8em;
+  font-size: 0.9em;
+  line-height: 1.25em;
+  margin: 0.5em;
 }

@@ -1,4 +1,4 @@
-#upload-photo.editor
+#upload-photo
   hr
   h3 Upload photos
   = form_for(@photo, url: upload_photo_path, multipart: true) do |f|
@@ -11,5 +11,5 @@
     = fa_icon("file-image-o", class: "file-type")
     = f.file_field :photo_file, required: true, multiple: true
     br
-    = spinner_button(button_text: "Submit")
+    = spinner_button(button_text: "Submit", css_class: 'big')
   hr

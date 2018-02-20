@@ -8,13 +8,13 @@ h3 The Bilge Chatter
       = fa_icon("file-pdf-o", class: "file-type")
       = file_field_tag :bilge_upload_file, accept: 'application/pdf', required: true
       = date_select(:issue, :date, start_year: 2015, use_month_numbers: true, discard_day: true, required: true)
-      = spinner_button(button_text: "Submit")
       br
       label.switch
         = check_box_tag :bilge_remove, class: "slider round"
         span.slider.round
           .description.remove
-    br
+      br
+      = spinner_button(button_text: "Submit", css_class: 'big')
     small Note: Uploads for either July or August will be treated as the Summer issue for that year.
     br
     small Uploading to an issue that has already been uploaded will overwrite the previous version.
