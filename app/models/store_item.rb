@@ -32,7 +32,7 @@ class StoreItem < ApplicationRecord
   end
 
   def get_image
-    if image.present? && StoreItem.buckets[:files].object(key: image.s3_object.key).exists?
+    if image.present? && StoreItem.buckets[:files].object(image.s3_object.key).exists?
       StoreItem.buckets[:files].link(key: image.s3_object.key)
     else
       StoreItem.no_image

@@ -1,3 +1,4 @@
+# Helper for accessing environmented S3 buckets and CloudFront links
 class BpsS3
   # usage:  BpsS3.new { |b| b.bucket = :files }
 
@@ -16,28 +17,28 @@ class BpsS3
     end
   end
 
-  def list(prefix: "")
-    s3.objects({prefix: prefix})
-  end
-
-  def object(key:)
-    s3.object(key)
-  end
-
-  def upload(file:, key:)
-    s3.object(key).upload_file(file.path)
-  end
-
-  def remove_object(key:)
-    s3.object(key).delete
-  end
-
-  def link(key:)
+  def link(key)
     "https://#{cf_host}/#{key}"
   end
 
-  def download(key:)
-    object(key: key).get.body.read
+  def list(prefix = '')
+    s3.objects(prefix: prefix)
+  end
+
+  def object(key)
+    s3.object(key)
+  end
+
+  def download(key)
+    object(key).get.body.read
+  end
+
+  def upload(file:, key:)
+    object(key).upload_file(file.path)
+  end
+
+  def remove_object(key)
+    object(key).delete
   end
 
   def full_bucket
@@ -45,10 +46,14 @@ class BpsS3
   end
 
   private
+
   def s3
     Aws::S3::Resource.new(
       region: 'us-east-2',
-      credentials: Aws::Credentials.new(Rails.application.secrets[:s3_access_key], Rails.application.secrets[:s3_secret])
+      credentials: Aws::Credentials.new(
+        Rails.application.secrets[:s3_access_key],
+        Rails.application.secrets[:s3_secret]
+      )
     ).bucket(full_bucket)
   end
 

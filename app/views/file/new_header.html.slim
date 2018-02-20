@@ -18,5 +18,5 @@ ul.simple
   .table#files.headers
     - @headers.each do |header|
       .table-row
-        .table-cell.left = image_tag files_bucket.link(key: header.file.path(:thumb))
+        .table-cell.left = image_tag files_bucket.link(header.file.path(:thumb))
         .table-cell.right = link_to(remove_header_path(header.id), method: :delete, class: 'red', data: {confirm: 'Are you sure you want to remove this header image?'}) { fa_icon 'minus-square' }

@@ -81,7 +81,7 @@ module MarkdownHelper
   def static_link(id, title: '')
     key = get_uploaded_file_name(id)
     link_title = title || key
-    link_path = static_bucket.link(key: "general/#{key}")
+    link_path = static_bucket.link("general/#{key}")
     view_context.link_to(link_path, target: :_blank) do
       view_context.fa_icon('cloud-download') + link_title
     end
@@ -90,7 +90,7 @@ module MarkdownHelper
   def file_link(id, title: '')
     key = get_uploaded_file_name(id)
     link_title = title || key
-    link_path = files_bucket.link(key: "uploaded_files/#{key}")
+    link_path = files_bucket.link("uploaded_files/#{key}")
     view_context.link_to(link_path, target: :_blank) do
       view_context.fa_icon('cloud-download') + link_title
     end
@@ -98,7 +98,7 @@ module MarkdownHelper
 
   def image(id)
     key = "uploaded_files/#{get_uploaded_file_name(id)}"
-    view_context.image_tag(files_bucket.link(key: key))
+    view_context.image_tag(files_bucket.link(key))
   end
 
   def get_uploaded_file_name(id)

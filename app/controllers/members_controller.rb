@@ -150,12 +150,12 @@ class MembersController < ApplicationController
   end
 
   def remove_bilge
-    bilge_bucket.remove_object(key: @key)
+    bilge_bucket.remove_object(@key)
     redirect_to newsletter_path, notice: "Bilge Chatter #{@issue} removed successfully."
   end
 
   def remove_minutes
-    files_bucket.remove_object(key: @key)
+    files_bucket.remove_object(@key)
     redirect_to minutes_path, notice: "Minutes #{@issue} removed successfully."
   end
 
@@ -169,24 +169,24 @@ class MembersController < ApplicationController
   end
 
   def list_minutes
-    @minutes = files_bucket.list(prefix: minutes_prefix)
-    @minutes_excom = files_bucket.list(prefix: minutes_prefix(excom: true))
+    @minutes = files_bucket.list(minutes_prefix)
+    @minutes_excom = files_bucket.list(minutes_prefix(excom: true))
 
     @minutes_links = @minutes.map do |m|
       key = m.key.dup
-      issue_date = m.key.sub(minutes_prefix, '').delete(".pdf")
-      { issue_date => files_bucket.link(key: key) }
+      issue_date = m.key.sub(minutes_prefix, '').delete('.pdf')
+      { issue_date => files_bucket.link(key) }
     end.reduce({}, :merge)
 
     @minutes_excom_links = @minutes_excom.map do |m|
       key = m.key.dup
-      issue_date = m.key.sub(minutes_prefix(excom: true), '').delete(".pdf")
-      { issue_date => files_bucket.link(key: key) }
+      issue_date = m.key.sub(minutes_prefix(excom: true), '').delete('.pdf')
+      { issue_date => files_bucket.link(key) }
     end.reduce({}, :merge)
   end
 
   def minutes_prefix(excom: false)
-    excom_prefix = excom ? "excom_" : ""
+    excom_prefix = excom ? 'excom_' : ''
     "#{excom_prefix}minutes/"
   end
 

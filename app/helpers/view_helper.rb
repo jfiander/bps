@@ -10,9 +10,9 @@ module ViewHelper
     end
 
     if mode == :svg
-      open(static_bucket.link(key: "flags/SVG/#{rank}.svg")).read.html_safe
+      open(static_bucket.link("flags/SVG/#{rank}.svg")).read.html_safe
     elsif mode == :png
-      image_tag static_bucket.link(key: "flags/PNG/#{rank}.thumb.png")
+      image_tag static_bucket.link("flags/PNG/#{rank}.thumb.png")
     end
   end
 

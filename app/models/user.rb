@@ -51,7 +51,7 @@ class User < ApplicationRecord
   end
 
   def photo(style: :medium)
-    if profile_photo.present? && User.buckets[:files].object(key: profile_photo.s3_object.key).exists?
+    if profile_photo.present? && User.buckets[:files].object(profile_photo.s3_object.key).exists?
       User.buckets[:files].link(key: profile_photo.s3_object(style).key)
     else
       User.no_photo
