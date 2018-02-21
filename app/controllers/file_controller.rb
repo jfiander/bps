@@ -27,7 +27,7 @@ class FileController < ApplicationController
     if @file.destroy
       redirect_to file_path, notice: 'Successfully removed file.'
     else
-      redirect_to file_path, alert: 'Unable to upload file.'
+      redirect_to file_path, alert: 'Unable to remove file.'
     end
   end
 
@@ -54,7 +54,7 @@ class FileController < ApplicationController
     if @header.destroy
       redirect_to header_path, notice: 'Successfully removed header image.'
     else
-      redirect_to header_path, alert: 'Unable to upload header image.'
+      redirect_to header_path, alert: 'Unable to remove header image.'
     end
   end
 
