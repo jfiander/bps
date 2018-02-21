@@ -1,7 +1,7 @@
 h3 Assign Profile Photo
 = form_tag assign_photo_path, method: :post, multipart: true
   = file_field_tag :photo, required: true
-  - if id.present?
+  - if defined?(id)
     = hidden_field_tag :id, value: id
   - else
     br.mobile

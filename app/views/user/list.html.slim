@@ -43,7 +43,11 @@ table#users
         = user[:current_login_at] || (user[:invited_at] ? "Invited:<br>#{user[:invited_at]}".html_safe : "Never logged in")
         br
         = user[:current_login_from]
-      td.center = user[:id]
+      td.center
+        - if current_user.permitted?(:admin)
+          = link_to user[:id], user_path(user[:id])
+        - else
+          = user[:id]
       td.center
         - if current_user.permitted?(:admin)
           - if user[:locked]
