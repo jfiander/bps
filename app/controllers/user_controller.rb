@@ -1,5 +1,6 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
+  before_action                        only: [:assign_photo] { require_permission(:admin) }
   before_action                      except: [:current, :show, :register, :cancel_registration] { require_permission(:users) }
 
   before_action :get_users,            only: [:list]
@@ -215,6 +216,17 @@ class UserController < ApplicationController
     redirect_to users_path, notice: "All new users have been sent invitations."
   end
 
+  def assign_photo
+    photo = clean_params[:photo]
+
+    if User.find_by(id: clean_params[:id]).assign_photo(local_path: photo.path)
+      flash[:notice] = 'Successfully assigned profile photo!'
+    else
+      flash[:alert] = 'Unable to assign profile photo.'
+    end
+    redirect_to users_path
+  end
+
   private
   def get_users
     all_users ||= User.alphabetized.with_positions
@@ -277,6 +289,6 @@ class UserController < ApplicationController
 
   def clean_params
     params.permit(:id, :user_id, :role, :permit_id, :committee, :department, :bridge_office, :type,
-      :committee_name, :chair, :term_length, :import_file, term_start_at: ["(1i)", "(2i)", "(3i)"])
+      :committee_name, :chair, :term_length, :import_file, :photo, term_start_at: ["(1i)", "(2i)", "(3i)"])
   end
 end

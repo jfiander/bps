@@ -1,0 +1,7 @@
+h3 Assign Profile Photo
+= form_tag assign_photo_path, method: :post, multipart: true
+  = file_field_tag :photo, required: true
+  = label_tag :id, 'User ID: '
+  = number_field_tag :id, '', required: true, class: 'number'
+  br
+  = spinner_button(button_text: "Assign photo", disable_text: "Assigning photo", css_class: 'big')

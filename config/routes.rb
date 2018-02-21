@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get     '/store',              to: 'public#store'
   get     '/photos',             to: 'gallery#index'
   get     '/minutes',            to: 'members#minutes'
+  post    '/assign_photo',       to: 'user#assign_photo'
 
   # Functional page back-ends
   get     '/bilge/:year/:month',   to: 'public#get_bilge',           as: 'bilge'

@@ -4,6 +4,12 @@ h2 All users
   = link_to "Send invitations to all new users", invite_all_path
   hr
 
+- if current_user&.permitted?(:admin)
+  .editor
+    hr
+    = render 'assign_photo'
+    hr
+
 table#users
   tr
     th.wide User

@@ -52,6 +52,9 @@ h2 Bridge Officers
         br
         = spinner_button(button_text: "Assign to standing committee", disable_text: "Assigning to standing committee", css_class: 'big')
     hr
+    - if current_user&.permitted?(:admin)
+      = render 'user/assign_photo'
+      hr
 
 #bridge.table
   - @bridge_list[:departments].each do |dept, data|
