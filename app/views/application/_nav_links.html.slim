@@ -1,0 +1,17 @@
+= link :home,                path: root_path
+= link :about_us,            path: about_path
+= link "How to Join",        path: join_path
+= link :vessel_safety_check, path: vsc_path
+= link :education,           path: education_path
+= link :calendar,            path: calendar_path
+= link :events,              path: events_path
+= link :photos,              path: photos_path
+= link :civic_services,      path: civic_path
+= link :bridge_officers,     path: bridge_path
+= link :history,             path: history_path
+= link :newsletter,          path: newsletter_path
+= link "Ship's Store",       path: store_path
+= link "Links of Interest",  path: links_path
+= link :members_area,        path: members_path,      show_when: :logged_in
+= link :profile,             path: current_user_path, show_when: :logged_in, icon: "address-card-o"
+= link :login_or_logout

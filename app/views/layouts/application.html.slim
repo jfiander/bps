@@ -16,17 +16,10 @@ html
       header
         #main-header = render 'application/header'
         #print-header = render 'application/print_header'
-      #navigation-mobile
-        h3 Navigation
-        .collapsible
-          ul = render 'application/navigation'
-      #navigation
-        ul = render 'application/navigation'
+      #navigation-mobile = render 'application/navigation_mobile'
+      #navigation = render 'application/navigation'
       #content
-        #content-top
-          - current_user&.permitted?(:page, :users) do
-            ul#admin-menu = render 'application/admin_menu'
-          = render 'application/flashes'
+        #content-top = render 'application/content_top'
         #content-main = yield
       footer
         #main-footer = render 'application/footer'
