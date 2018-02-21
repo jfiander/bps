@@ -239,13 +239,13 @@ class User < ApplicationRecord
   end
 
   def permitted_roles_from_bridge_office
-    implicit_permissions['bridge_office'][bridge_office&.office].map(&:to_sym)
+    implicit_permissions['bridge_office'][bridge_office&.office]&.map(&:to_sym)
   end
 
   def permitted_roles_from_committee
-    implicit_permissions['committee'].select do |k, _|
+    implicit_permissions['committee']&.select do |k, _|
       k.in? committees.map(&:search_name)
-    end.values.flatten.map(&:to_sym)
+    end&.values&.flatten&.map(&:to_sym)
   end
 
   def valid_rank
