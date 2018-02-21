@@ -135,13 +135,22 @@ class PublicController < ApplicationController
   def get_bilge
     key = "#{clean_params[:year]}/#{clean_params[:month]}"
     issue_link = @bilge_links[key]
-    issue_title = key.gsub("/", "-")
+    issue_title = key.tr('/', '-')
+
+    if issue_link.blank?
+      newsletter
+      flash[:alert] = 'There was a problem accessing the Bilge Chatter.'
+      flash[:error] = 'Issue not found.'
+      render :newsletter
+      return
+    end
 
     begin
       send_data open(issue_link).read, filename: "Bilge Chatter #{issue_title}.pdf", type: 'application/pdf', disposition: 'inline'
-    rescue SocketError => e
+    rescue SocketError
       newsletter
-      render :newsletter, alert: 'There was a problem accessing the Bilge Chatter. Please try again later.'
+      flash[:alert] = 'There was a problem accessing the Bilge Chatter. Please try again later.'
+      render :newsletter
     end
   end
 
