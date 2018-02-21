@@ -133,8 +133,11 @@ class UserController < ApplicationController
 
     if @registration.valid?
       flash[:success] = "Successfully registered!"
+    elsif Registration.find_by(@registration.attributes.slice(:user_id, :event_id))
+      flash[:alert] = 'You are already registered for this course.'
+      render status: :unprocessable_entity
     else
-      flash[:alert] = "We are unable to register you at this time."
+      flash.now[:alert] = "We are unable to register you at this time."
       render status: :unprocessable_entity
     end
   end
@@ -152,7 +155,7 @@ class UserController < ApplicationController
       flash[:success] = "Successfully cancelled registration!"
       RegistrationMailer.send_cancelled(r).deliver if @cancel_link
     else
-      flash[:alert] = "We are unable to cancel your registration at this time."
+      flash.now[:alert] = "We are unable to cancel your registration at this time."
       render status: :unprocessable_entity
     end
   end
@@ -180,9 +183,9 @@ class UserController < ApplicationController
     uploaded_file = clean_params[:import_file]
 
     if uploaded_file.content_type == "text/csv"
-      flash[:alert] = nil
+      flash.now[:alert] = nil
     else
-      flash[:alert] = "You can only upload CSV files."
+      flash.now[:alert] = "You can only upload CSV files."
       render :import and return
     end
 
@@ -192,10 +195,10 @@ class UserController < ApplicationController
     file.close
     begin
       User.import(import_path)
-      flash[:success] = "Successfully imported user data."
+      flash.now[:success] = "Successfully imported user data."
       render :import
     rescue => e
-      flash[:alert] = "Unable to import user data."
+      flash.now[:alert] = "Unable to import user data."
       render :import and return
       raise e
     end

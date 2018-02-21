@@ -102,10 +102,10 @@ class MembersController < ApplicationController
     if request.valid?
       flash[:success] = "Item requested! We'll be in contact with you shortly regarding quantity, payment, and delivery."
     elsif request.errors.added?(:store_item, :taken)
-      flash[:alert] = "You have already requested this item. We will contact you regarding quantity, payment, and delivery"
+      flash.now[:alert] = "You have already requested this item. We will contact you regarding quantity, payment, and delivery"
       render status: :unprocessable_entity
     else
-      flash[:alert] = "There was a problem requesting this item."
+      flash.now[:alert] = "There was a problem requesting this item."
       render status: :internal_server_error
     end
   end
@@ -115,7 +115,7 @@ class MembersController < ApplicationController
     if ItemRequest.find_by(id: @request_id).fulfill
       flash[:success] = "Item successfully fulfilled!"
     else
-      flash[:alert] = "There was a problem fulfilling this item."
+      flash.now[:alert] = "There was a problem fulfilling this item."
       render status: :internal_server_error
     end
   end

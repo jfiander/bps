@@ -139,8 +139,8 @@ class PublicController < ApplicationController
 
     if issue_link.blank?
       newsletter
-      flash[:alert] = 'There was a problem accessing the Bilge Chatter.'
-      flash[:error] = 'Issue not found.'
+      flash.now[:alert] = 'There was a problem accessing the Bilge Chatter.'
+      flash.now[:error] = 'Issue not found.'
       render :newsletter
       return
     end
@@ -149,7 +149,7 @@ class PublicController < ApplicationController
       send_data open(issue_link).read, filename: "Bilge Chatter #{issue_title}.pdf", type: 'application/pdf', disposition: 'inline'
     rescue SocketError
       newsletter
-      flash[:alert] = 'There was a problem accessing the Bilge Chatter. Please try again later.'
+      flash.now[:alert] = 'There was a problem accessing the Bilge Chatter. Please try again later.'
       render :newsletter
     end
   end
@@ -171,7 +171,7 @@ class PublicController < ApplicationController
     @event = Event.find_by(id: @event_id)
 
     unless @event.allow_public_registrations
-      flash[:alert] = 'This course is not currently accepting public registrations.'
+      flash.now[:alert] = 'This course is not currently accepting public registrations.'
       render status: :unprocessable_entity and return
     end
 
