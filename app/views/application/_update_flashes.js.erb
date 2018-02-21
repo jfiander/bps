@@ -1,0 +1,15 @@
+<%- if flash[:success] %>
+  $("#success").html("<%= flash[:success] %>").removeClass("hide");
+<%- end %>
+
+<%- if flash[:notice] %>
+  $("#notice").html("<%= flash[:notice] %>").removeClass("hide");
+<%- end %>
+
+<%- if flash[:alert] %>
+  $("#alert").html("<%= flash[:alert] %>").removeClass("hide");
+<%- end %>
+
+<%- if flash[:error] %>
+  $("#error").html("<%= flash[:error] %>").removeClass("hide");
+<%- end %>

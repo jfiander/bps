@@ -1,5 +1,5 @@
-$("#notice").html("<%= flash[:success] %>");
-$("#alert").html("<%= flash[:alert] %>");
+<%= render 'application/update_flashes' %>
+
 <%- unless flash[:alert].present? %>
   $("#public-register-<%= @event_id %>").html("Registered").addClass("red");
   $("#public-register-<%= @event_id %>-mobile").html("Registered").addClass("red");

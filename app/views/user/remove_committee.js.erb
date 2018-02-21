@@ -1,5 +1,4 @@
-$("#notice").html("<%= flash[:success] %>");
-$("#alert").html("<%= flash[:alert] %>");
+<%= render 'application/update_flashes' %>
 
 <% if @do_remove %>
   $('#committee_row_<%= @committee_id %>').fadeOut();
