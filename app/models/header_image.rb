@@ -25,11 +25,32 @@ class HeaderImage < ApplicationRecord
     image = file.queued_for_write[:original]
     return nil if image.nil?
 
+    dimensions, ratio = size_info(image)
+    add_errors(dimensions, ratio)
+  end
+
+  def size_info(image = file)
     dimensions = Paperclip::Geometry.from_file(image)
     ratio = dimensions.width / dimensions.height
-    errors.add(:file, 'must be at least 1000px wide') if dimensions.width < 750
-    errors.add(:file, 'aspect ratio must be less than 3.5:1') if ratio > 3.5
-    errors.add(:file, 'aspect ratio must be more than 2.75:1') if ratio < 2.75
-    true
+
+    [dimensions, ratio]
+  end
+
+  def add_errors(dimensions, ratio)
+    errors.add(:file, too_small) if dimensions.width < 750
+    errors.add(:file, too_narrow) if ratio > 3.5
+    errors.add(:file, too_wide) if ratio < 2.75
+  end
+
+  def too_small
+    'must be at least 1000px wide'
+  end
+
+  def too_narrow
+    'aspect ratio > 3.5:1 (make it wider)'
+  end
+
+  def too_wide
+    'aspect ratio < 2.75:1 (make it narrower)'
   end
 end
