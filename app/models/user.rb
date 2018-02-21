@@ -296,4 +296,21 @@ class User < ApplicationRecord
 
     ranks.map { |r| {r => (rank_priority[r] || 100) } }.reduce({}, :merge).min_by { |_, p| p }&.first
   end
+
+  def assign_photo(s3_path)
+    attach = Paperclip::Attachment.new('profile_photo', self, User.attachment_definitions[:profile_photo])
+    photo = User.buckets[:files].download(s3_path)
+    tmp_path = "tmp/#{simple_name}.jpg"
+
+    file = File.open(tmp_path, 'wb+')
+    file.write(photo)
+    file.close
+
+    file = File.open(tmp_path)
+    attach.assign file
+    attach.save
+    file.close
+
+    save!
+  end
 end
