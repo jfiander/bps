@@ -1,3 +1,6 @@
 <%= render 'application/update_flashes' %>
-$("#event_<%= @event_id %>").html("Registered").addClass("red").attr("href", "#");
-$("#event_<%= @event_id %>_mobile").html("Registered").addClass("red").attr("href", "#");
+
+<%- unless flash[:alert].present? %>
+  $("#event_<%= @event_id %>").html("Registered").addClass("red").attr("href", "#");
+  $("#event_<%= @event_id %>_mobile").html("Registered").addClass("red").attr("href", "#");
+<%- end %>
