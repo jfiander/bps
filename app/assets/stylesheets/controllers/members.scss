@@ -2,7 +2,8 @@
 
 ul#admin-menu {
   width: 100%;
-  background-color: lighten($old-glory-blue, 75%);
+  background-color: lighten($old-glory-blue, 70%);
+  border-bottom: thin solid lighten($old-glory-blue, 35%);
   padding: 0.25em 0;
   list-style: none;
   margin: 0;
