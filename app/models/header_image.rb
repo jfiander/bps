@@ -10,8 +10,8 @@ class HeaderImage < ApplicationRecord
     convert_options: { thumb: '-quality 75 -strip' }
 
   validates_attachment_content_type :file, content_type: %r{\A(image/(jpe?g|png|gif))\Z}
-  validates :file, presence: true
-  validate :correct_image_dimensions
+  validates :file, presence: true, if: :no_errors_yet?
+  validate :correct_image_dimensions, if: :no_errors_yet?
 
   acts_as_paranoid
 
@@ -23,7 +23,7 @@ class HeaderImage < ApplicationRecord
 
   def correct_image_dimensions
     image = file.queued_for_write[:original]
-    return nil if image.nil?
+    errors.add(:file, 'is not usable') and return if image.nil?
 
     dimensions, ratio = size_info(image)
     add_errors(dimensions, ratio)
@@ -52,5 +52,9 @@ class HeaderImage < ApplicationRecord
 
   def too_wide
     'aspect ratio < 2.75:1 (make it narrower)'
+  end
+
+  def no_errors_yet?
+    errors.blank?
   end
 end

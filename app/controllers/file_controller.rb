@@ -43,8 +43,8 @@ class FileController < ApplicationController
     if @header.valid?
       redirect_to header_path, notice: 'Successfully uploaded header image.'
     else
-      errors = @header.errors.full_messages.join(', ')
-      redirect_to header_path, alert: "Unable to upload header image: #{errors}"
+      errors = @header.errors.full_messages
+      redirect_to header_path, flash: { alert: 'Unable to upload header image.', error: errors }
     end
   end
 
