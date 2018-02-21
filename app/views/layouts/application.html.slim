@@ -23,12 +23,11 @@ html
       #navigation
         ul = render 'application/navigation'
       #content
-        - current_user&.permitted?(:page, :users) do
-          ul#admin-menu = render 'application/admin_menu'
-        #flashes
-          #notice = notice
-          #alert = alert
-        = yield
+        #content-top
+          - current_user&.permitted?(:page, :users) do
+            ul#admin-menu = render 'application/admin_menu'
+          = render 'application/flashes'
+        #content-main = yield
       footer
         #main-footer = render 'application/footer'
         #print-footer = render 'application/print_footer'
