@@ -49,5 +49,5 @@ h2 = "#{@profile_title} user"
 - if current_user&.permitted?(:admin) && current_user.id != @user.id
   .editor
     hr
-    = render 'user/assign_photo', id: @user.id
+    = render 'user/assign_photo', id: @user.id, redirect_to: 'show'
     hr

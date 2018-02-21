@@ -7,7 +7,7 @@ h2 All users
 - if current_user&.permitted?(:admin)
   .editor
     hr
-    = render 'assign_photo'
+    = render 'assign_photo', redirect_to: 'show'
     hr
 
 table#users

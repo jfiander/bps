@@ -224,7 +224,18 @@ class UserController < ApplicationController
     else
       flash[:alert] = 'Unable to assign profile photo.'
     end
-    redirect_to users_path
+
+    dest_path = case clean_params[:redirect_to]
+    when 'show'
+      user_path(clean_params[:id])
+    when 'list'
+      users_path
+    when 'bridge'
+      bridge_path
+    else
+      users_path
+    end
+    redirect_to dest_path
   end
 
   private
@@ -289,6 +300,6 @@ class UserController < ApplicationController
 
   def clean_params
     params.permit(:id, :user_id, :role, :permit_id, :committee, :department, :bridge_office, :type,
-      :committee_name, :chair, :term_length, :import_file, :photo, term_start_at: ["(1i)", "(2i)", "(3i)"])
+      :committee_name, :chair, :term_length, :import_file, :photo, :redirect_to, term_start_at: ["(1i)", "(2i)", "(3i)"])
   end
 end
