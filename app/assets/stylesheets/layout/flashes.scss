@@ -1,16 +1,46 @@
 div#flashes {
-  div#notice {
+  margin: 0.4em 0;
+
+  div {
+    margin: 0.2em 0;
+    padding: 0.15em 0;
+  }
+
+  div#success {
     color: $birmingham-blue;
-    background-color: inherit;
+    background-color: lighten($birmingham-blue, 38%);
+    border-top: thin solid $birmingham-blue;
+    border-bottom: thin solid $birmingham-blue;
+  }
+
+  div#notice {
+    color: lighten($old-glory-blue, 20%);
+    background-color: lighten($old-glory-blue, 70%);
+    border-top: thin solid lighten($old-glory-blue, 40%);
+    border-bottom: thin solid lighten($old-glory-blue, 40%);
   }
 
   div#alert {
-    color: $old-glory-red;
-    background-color: lighten($old-glory-red, 40%);
-    background-color: inherit;
+    margin-bottom: 0;
+    font-weight: bold;
+    color: lighten($old-glory-red, 10%);
+    background-color: lighten($old-glory-red, 45%);
+    border-top: thin solid lighten($old-glory-red, 10%);
+    border-bottom: thin solid lighten($old-glory-red, 10%);
   }
 
-  div.slogan {
+  div#error {
+    margin-top: 0;
+    padding: 0.2em 0;
     font-style: italic;
+    color: $old-glory-red;
+    background-color: lighten($old-glory-red, 50%);
+    border-bottom: thin solid lighten($old-glory-red, 30%);
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
   }
 }

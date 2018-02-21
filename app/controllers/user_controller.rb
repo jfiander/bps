@@ -90,7 +90,7 @@ class UserController < ApplicationController
   def remove_committee
     @committee_id = clean_params[:id]
     if Committee.find_by(id: @committee_id)&.destroy
-      flash[:notice] = "Successfully removed committee assignment."
+      flash[:success] = "Successfully removed committee assignment."
       @do_remove = true
     else
       flash[:alert] = "Unable to remove committee assignment."
@@ -114,7 +114,7 @@ class UserController < ApplicationController
   def remove_standing_committee
     @standing_committee_id = clean_params[:id]
     if StandingCommitteeOffice.find_by(id: @standing_committee_id)&.destroy
-      flash[:notice] = "Successfully removed standing committee assignment."
+      flash[:success] = "Successfully removed standing committee assignment."
       @do_remove = true
     else
       flash[:alert] = "Unable to remove from standing committee."
@@ -132,7 +132,7 @@ class UserController < ApplicationController
     @registration = current_user.register_for(Event.find_by(id: @event_id))
 
     if @registration.valid?
-      flash[:notice] = "Successfully registered!"
+      flash[:success] = "Successfully registered!"
     else
       flash[:alert] = "We are unable to register you at this time."
       render status: :unprocessable_entity
@@ -149,7 +149,7 @@ class UserController < ApplicationController
     @cancel_link = (r.user == current_user)
 
     if r&.destroy
-      flash[:notice] = "Successfully cancelled registration!"
+      flash[:success] = "Successfully cancelled registration!"
       RegistrationMailer.send_cancelled(r).deliver if @cancel_link
     else
       flash[:alert] = "We are unable to cancel your registration at this time."
@@ -192,7 +192,7 @@ class UserController < ApplicationController
     file.close
     begin
       User.import(import_path)
-      flash[:notice] = "Successfully imported user data."
+      flash[:success] = "Successfully imported user data."
       render :import
     rescue => e
       flash[:alert] = "Unable to import user data."
@@ -220,7 +220,7 @@ class UserController < ApplicationController
     photo = clean_params[:photo]
 
     if User.find_by(id: clean_params[:id]).assign_photo(local_path: photo.path)
-      flash[:notice] = 'Successfully assigned profile photo!'
+      flash[:success] = 'Successfully assigned profile photo!'
     else
       flash[:alert] = 'Unable to assign profile photo.'
     end

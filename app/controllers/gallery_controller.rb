@@ -16,7 +16,7 @@ class GalleryController < ApplicationController
 
     @album = Album.new(album_params)
     if @album.save
-      flash[:notice] = 'Successfully added album!'
+      flash[:success] = 'Successfully added album!'
     else
       flash[:alert] = 'There was a problem creating the album.'
     end
@@ -51,7 +51,7 @@ class GalleryController < ApplicationController
     if defined?(@failed)
       flash[:alert] = 'There was a problem creating the photo.'
     else
-      flash[:notice] = 'Successfully added photo!'
+      flash[:success] = 'Successfully added photo!'
     end
 
     if clean_params[:redirect_to_album].present?
@@ -66,7 +66,7 @@ class GalleryController < ApplicationController
     album_id = photo.album_id
 
     if photo.destroy
-      flash[:notice] = 'Successfully removed photo!'
+      flash[:success] = 'Successfully removed photo!'
     else
       flash[:alert] = 'There was a problem removing the photo.'
     end
@@ -82,7 +82,7 @@ class GalleryController < ApplicationController
     end
 
     if Album.find_by(album_attributes).destroy
-      flash[:notice] = 'Successfully removed album!'
+      flash[:success] = 'Successfully removed album!'
     else
       flash[:alert] = 'There was a problem removing the album.'
     end

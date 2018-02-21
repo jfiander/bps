@@ -1,0 +1,18 @@
+#flashes
+  - if flash[:success]
+    #success = flash[:success]
+  - if flash[:notice]
+    #notice = flash[:notice]
+  - if flash[:alert]
+    #alert = flash[:alert]
+  - if flash[:error] || flash[:errors]
+    - errors = flash[:error] || flash[:errors]
+    #error
+      - if errors.is_a?(String)
+        = errors
+      - elsif errors.count == 1
+        = errors.first
+      - else
+        ul
+          - errors.each do |error|
+            li = error

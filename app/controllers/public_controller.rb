@@ -174,7 +174,7 @@ class PublicController < ApplicationController
           flash[:alert] = 'You are already registered for this course.'
           render status: :unprocessable_entity
         elsif registration.save
-          flash[:notice] = 'You have successfully registered!'
+          flash[:success] = 'You have successfully registered!'
         else
           flash[:alert] = 'We are unable to register you at this time.'
           render status: :unprocessable_entity
@@ -194,7 +194,7 @@ class PublicController < ApplicationController
           flash[:alert] = 'You are already registered for this course.'
           redirect_to send("show_#{event_type}_path", id: @event_id)
         elsif registration.save
-          flash[:notice] = 'You have successfully registered!'
+          flash[:success] = 'You have successfully registered!'
           redirect_to send("show_#{event_type}_path", id: @event_id)
         else
           flash[:alert] = 'We are unable to register you at this time.'

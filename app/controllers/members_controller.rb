@@ -100,7 +100,7 @@ class MembersController < ApplicationController
     @item_id = clean_params[:id]
     request = current_user.request_from_store(@item_id)
     if request.valid?
-      flash[:notice] = "Item requested! We'll be in contact with you shortly regarding quantity, payment, and delivery."
+      flash[:success] = "Item requested! We'll be in contact with you shortly regarding quantity, payment, and delivery."
     elsif request.errors.added?(:store_item, :taken)
       flash[:alert] = "You have already requested this item. We will contact you regarding quantity, payment, and delivery"
       render status: :unprocessable_entity
@@ -113,7 +113,7 @@ class MembersController < ApplicationController
   def fulfill_item
     @request_id = clean_params[:id]
     if ItemRequest.find_by(id: @request_id).fulfill
-      flash[:notice] = "Item successfully fulfilled!"
+      flash[:success] = "Item successfully fulfilled!"
     else
       flash[:alert] = "There was a problem fulfilling this item."
       render status: :internal_server_error
