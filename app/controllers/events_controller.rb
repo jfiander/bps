@@ -35,11 +35,12 @@ class EventsController < ApplicationController
     @event = Event.create(event_params)
     if @event.valid?
       update_attachments
-      redirect_to send("#{params[:type]}s_path"), notice: "Successfully added #{params[:type]}."
+      redirect_to send("#{params[:type]}s_path"), flash: { success: "Successfully added #{params[:type]}." }
     else
       @submit_path = send("update_#{params[:type]}_path")
       @edit_mode = "Add"
       flash[:alert] = "Unable to add #{params[:type]}."
+      flash[:error] = @event.errors.full_messages
       render :new
     end
   end
@@ -52,25 +53,24 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find_by(id: event_params[:id])
-    flash = if @event.update(event_params)
+    if @event.update(event_params)
       update_attachments
-      redirect_to send("#{params[:type]}s_path"), notice: "Successfully updated #{params[:type]}."
+      redirect_to send("#{params[:type]}s_path"), flash: { success: "Successfully updated #{params[:type]}." }
     else
       @submit_path = send("update_#{params[:type]}_path")
       @edit_mode = "Modify"
       flash[:alert] = "Unable to update #{params[:type]}."
+      flash[:error] = @event.errors.full_messages
       render :edit
     end
   end
 
   def expire
-    flash = if @event.update(expires_at: Time.now)
-      {notice: "Successfully expired #{params[:type]}."}
+    if @event.update(expires_at: Time.now)
+      redirect_to send("#{params[:type]}s_path"), flash: { success: "Successfully expired #{params[:type]}." }
     else
-      {alert: "Unable to expire #{params[:type]}."}
+      redirect_to send("#{params[:type]}s_path"), alert: "Unable to expire #{params[:type]}."
     end
-
-    redirect_to send("#{params[:type]}s_path"), flash
   end
 
   private

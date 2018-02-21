@@ -16,12 +16,11 @@ class GalleryController < ApplicationController
 
     @album = Album.new(album_params)
     if @album.save
-      flash[:success] = 'Successfully added album!'
+      redirect_to photos_path, flash: { success: 'Successfully added album!' }
     else
-      flash[:alert] = 'There was a problem creating the album.'
+      errors = @album.errors.full_messages
+      redirect_to photos_path, flash: { alert: 'There was a problem creating the album.', error: errors }
     end
-
-    redirect_to photos_path
   end
 
   def edit_album
@@ -82,9 +81,9 @@ class GalleryController < ApplicationController
     end
 
     if Album.find_by(album_attributes).destroy
-      flash[:success] = 'Successfully removed album!'
+      redirect_to photos_path, flash: { success: 'Successfully removed album!' }
     else
-      flash[:alert] = 'There was a problem removing the album.'
+      redirect_to photos_path, alert: 'There was a problem removing the album.'
     end
 
     redirect_to photos_path

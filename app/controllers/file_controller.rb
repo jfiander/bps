@@ -15,9 +15,10 @@ class FileController < ApplicationController
     @file = MarkdownFile.create(file_params)
 
     if @file.valid?
-      redirect_to file_path, notice: 'Successfully uploaded file.'
+      redirect_to file_path, flash: { success: 'Successfully uploaded file.' }
     else
-      redirect_to file_path, alert: 'Unable to upload file.'
+      errors = @file.errors.full_messages
+      redirect_to file_path, flash: { alert: 'Unable to upload file.', error: errors }
     end
   end
 
@@ -25,7 +26,7 @@ class FileController < ApplicationController
     @file = MarkdownFile.find_by(id: destroy_params[:id])
 
     if @file.destroy
-      redirect_to file_path, notice: 'Successfully removed file.'
+      redirect_to file_path, flash: { success: 'Successfully removed file.' }
     else
       redirect_to file_path, alert: 'Unable to remove file.'
     end
@@ -41,7 +42,7 @@ class FileController < ApplicationController
     @header = HeaderImage.create(header_params)
 
     if @header.valid?
-      redirect_to header_path, notice: 'Successfully uploaded header image.'
+      redirect_to header_path, flash: { success: 'Successfully uploaded header image.' }
     else
       errors = @header.errors.full_messages
       redirect_to header_path, flash: { alert: 'Unable to upload header image.', error: errors }
@@ -52,7 +53,7 @@ class FileController < ApplicationController
     @header = HeaderImage.find_by(id: destroy_params[:id])
 
     if @header.destroy
-      redirect_to header_path, notice: 'Successfully removed header image.'
+      redirect_to header_path, flash: { success: 'Successfully removed header image.' }
     else
       redirect_to header_path, alert: 'Unable to remove header image.'
     end
