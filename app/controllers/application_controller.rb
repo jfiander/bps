@@ -35,6 +35,11 @@ class ApplicationController < ActionController::Base
     # before_action only: [:method_1] { require_permission(:role_name) }
   end
 
+  def authenticate_user!
+    return super if user_signed_in?
+    redirect_to new_user_session_path, flash: { referrer: request.original_fullpath }
+  end
+
   def authenticate_inviter!
     redirect_to root_path and return unless current_user&.permitted?(:users)
     super
