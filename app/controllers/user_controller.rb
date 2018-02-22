@@ -58,7 +58,7 @@ class UserController < ApplicationController
 
     UserRole.create!(user: user, role: role)
 
-    redirect_to permit_path
+    redirect_to permit_path, success: "Successfully added #{role.name} permission to #{user.simple_name}."
   end
 
   def permissions_remove
@@ -68,7 +68,7 @@ class UserController < ApplicationController
 
     user_role.destroy
 
-    redirect_to permit_path
+    redirect_to permit_path, success: "Successfully removed #{user_role.role.name} permission from #{user_role.user.simple_name}."
   end
 
   def assign_bridge
