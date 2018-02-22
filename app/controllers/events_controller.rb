@@ -35,7 +35,7 @@ class EventsController < ApplicationController
     @event = Event.create(event_params)
     if @event.valid?
       update_attachments
-      redirect_to send("#{params[:type]}s_path"), flash: { success: "Successfully added #{params[:type]}." }
+      redirect_to send("#{params[:type]}s_path"), success: "Successfully added #{params[:type]}."
     else
       @submit_path = send("update_#{params[:type]}_path")
       @edit_mode = "Add"
@@ -55,7 +55,7 @@ class EventsController < ApplicationController
     @event = Event.find_by(id: event_params[:id])
     if @event.update(event_params)
       update_attachments
-      redirect_to send("#{params[:type]}s_path"), flash: { success: "Successfully updated #{params[:type]}." }
+      redirect_to send("#{params[:type]}s_path"), success: "Successfully updated #{params[:type]}."
     else
       @submit_path = send("update_#{params[:type]}_path")
       @edit_mode = "Modify"
@@ -67,7 +67,7 @@ class EventsController < ApplicationController
 
   def expire
     if @event.update(expires_at: Time.now)
-      redirect_to send("#{params[:type]}s_path"), flash: { success: "Successfully expired #{params[:type]}." }
+      redirect_to send("#{params[:type]}s_path"), success: "Successfully expired #{params[:type]}."
     else
       redirect_to send("#{params[:type]}s_path"), alert: "Unable to expire #{params[:type]}."
     end

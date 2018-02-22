@@ -72,7 +72,7 @@ class MembersController < ApplicationController
     remove_minutes and return if minutes_params[:minutes_remove].present?
 
     files_bucket.upload(file: minutes_params[:minutes_upload_file], key: @key)
-    redirect_to minutes_path, flash: { success: "Minutes #{@issue} uploaded successfully." }
+    redirect_to minutes_path, success: "Minutes #{@issue} uploaded successfully."
   end
 
   def upload_bilge
@@ -80,7 +80,7 @@ class MembersController < ApplicationController
     remove_bilge and return if clean_params[:bilge_remove].present?
 
     bilge_bucket.upload(file: clean_params[:bilge_upload_file], key: @key)
-    redirect_to newsletter_path, flash: { success: "Bilge Chatter #{@issue} uploaded successfully." }
+    redirect_to newsletter_path, success: "Bilge Chatter #{@issue} uploaded successfully."
   end
 
   def edit_markdown
@@ -151,12 +151,12 @@ class MembersController < ApplicationController
 
   def remove_bilge
     bilge_bucket.remove_object(@key)
-    redirect_to newsletter_path, flash: { success: "Bilge Chatter #{@issue} removed successfully." }
+    redirect_to newsletter_path, success: "Bilge Chatter #{@issue} removed successfully."
   end
 
   def remove_minutes
     files_bucket.remove_object(@key)
-    redirect_to minutes_path, flash: { success: "Minutes #{@issue} removed successfully." }
+    redirect_to minutes_path, success: "Minutes #{@issue} removed successfully."
   end
 
   def get_minutes_issue
@@ -194,7 +194,7 @@ class MembersController < ApplicationController
     page = StaticPage.find_by(name: static_page_params[:name])
 
     if page.update(markdown: static_page_params[:markdown])
-      redirect_to send("#{page.name}_path"), flash: { success: "Successfully updated #{page.name} page." }
+      redirect_to send("#{page.name}_path"), success: "Successfully updated #{page.name} page."
     else
       redirect_to send("#{page.name}_path"), alert: "Unable to update #{page.name} page."
     end

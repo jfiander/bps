@@ -15,7 +15,7 @@ class StoreController < ApplicationController
   def create
     @store_item = StoreItem.create(store_params)
     if @store_item.valid?
-      redirect_to store_path, flash: { success: "Successfully added item." }
+      redirect_to store_path, success: "Successfully added item."
     else
       @submit_path = create_store_item_path
       @edit_mode = "Add"
@@ -33,7 +33,7 @@ class StoreController < ApplicationController
   def update
     @store_item.update(store_params)
     if @store_item.valid?
-      redirect_to store_path, flash: { success: "Successfully updates item." }
+      redirect_to store_path, success: "Successfully updates item."
     else
       @submit_path = update_store_item_path
       @edit_mode = "Edit"
@@ -44,7 +44,7 @@ class StoreController < ApplicationController
 
   def destroy
     if @store_item.destroy
-      redirect_to store_path, flash: { success: "Successfully removed item." }
+      redirect_to store_path, success: "Successfully removed item."
     else
       redirect_to store_path, alert: "Unable to remove item."
     end

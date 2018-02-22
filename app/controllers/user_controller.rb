@@ -74,7 +74,7 @@ class UserController < ApplicationController
   def assign_bridge
     bridge_office = BridgeOffice.find_by(office: clean_params[:bridge_office]) || BridgeOffice.create(office: clean_params[:bridge_office])
     if bridge_office.update(user_id: clean_params[:user_id])
-      redirect_to bridge_path, flash: { success: "Successfully assigned to bridge office." }
+      redirect_to bridge_path, success: "Successfully assigned to bridge office."
     else
       redirect_to bridge_path, alert: "Unable to assign to bridge office."
     end
@@ -83,7 +83,7 @@ class UserController < ApplicationController
   def assign_committee
     committee = Committee.create(name: clean_params[:committee], department: clean_params[:department], user_id: clean_params[:user_id])
     if committee.valid?
-      redirect_to bridge_path, flash: { success: "Successfully assigned to committee." }
+      redirect_to bridge_path, success: "Successfully assigned to committee."
     else
       redirect_to bridge_path, alert: "Unable to assign to committee."
     end
@@ -107,7 +107,7 @@ class UserController < ApplicationController
     term_start = "#{y}-#{m}-#{d}"
     standing_committee = StandingCommitteeOffice.new(committee_name: clean_params[:committee_name], chair: clean_params[:chair], user_id: clean_params[:user_id], term_start_at: term_start, term_length: clean_params[:term_length])
     if standing_committee.save
-      redirect_to bridge_path, flash: { success: "Successfully assigned to standing committee." }
+      redirect_to bridge_path, success: "Successfully assigned to standing committee."
     else
       redirect_to bridge_path, alert: "Unable to assign to standing committee."
     end
@@ -168,13 +168,13 @@ class UserController < ApplicationController
     redirect_to users_path, alert: "Cannot lock an admin user." if user.permitted?(:admin)
 
     user.lock
-    redirect_to users_path, flash: { success: "Successfully locked user." }
+    redirect_to users_path, success: "Successfully locked user."
   end
 
   def unlock
     User.find(clean_params[:id]).unlock
 
-    redirect_to users_path, flash: { success: "Successfully unlocked user." }
+    redirect_to users_path, success: "Successfully unlocked user."
   end
 
   def import
@@ -209,14 +209,14 @@ class UserController < ApplicationController
     redirect_to users_path, alert: "User not found." if user.blank?
 
     user.invite!
-    redirect_to users_path, flash: { success: "Invitation sent!" }
+    redirect_to users_path, success: "Invitation sent!"
   end
 
   def invite_all
     redirect_to users_path, alert: "This action is currently disabled." and return unless ENV["ALLOW_BULK_INVITE"] == "true"
 
     User.invitable.each(&:invite!)
-    redirect_to users_path, flash: { success: "All new users have been sent invitations." }
+    redirect_to users_path, success: "All new users have been sent invitations."
   end
 
   def assign_photo

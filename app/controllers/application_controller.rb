@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   force_ssl if: :ssl_configured?
   protect_from_forgery with: :exception
+  add_flash_types :success, :error
 
   include MarkdownHelper
   include BucketHelpers

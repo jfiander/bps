@@ -1,13 +1,13 @@
 #flashes
-  #success class=(flash[:success] ? '' : 'hide') = flash[:success]
-  #notice class=(flash[:notice] ? '' : 'hide') = flash[:notice]
-  #alert class=(flash[:alert] ? '' : 'hide') = flash[:alert]
-  #error class=(flash[:error] ? '' : 'hide')
-    - if flash[:error].present? && flash[:error]&.is_a?(String)
-      = flash[:error]
-    - elsif flash[:error].present? && flash[:error]&.count == 1
-      = flash[:error].first
-    - elsif flash[:error].present?
+  #success class=(success ? '' : 'hide') = success
+  #notice class=(notice ? '' : 'hide') = notice
+  #alert class=(alert ? '' : 'hide') = alert
+  #error class=(error ? '' : 'hide')
+    - if error.present? && error&.is_a?(String)
+      = error
+    - elsif error.present? && error&.count == 1
+      = error.first
+    - elsif error.present?
       ul
-        - flash[:error]&.each do |error|
+        - error&.each do |error|
           li = error
