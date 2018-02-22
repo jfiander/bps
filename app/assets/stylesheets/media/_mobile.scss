@@ -214,6 +214,24 @@
   }
   
   .table#files {
-    width: 95%;
+    width: 100%;
+    display: block;
+
+    .table-row {
+      width: 100%;
+      display: block;
+      float: left;
+      clear: both;
+      border-bottom: thin solid $old-glory-blue;
+      margin: 0.5em 0;
+      padding-bottom: 1em;
+
+      .table-cell, .table-header {
+        width: 100%;
+        display: block;
+        float: left;
+        clear: both;
+      }
+    }
   }
 }
