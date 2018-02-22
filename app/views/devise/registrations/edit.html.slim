@@ -2,7 +2,7 @@ h2 Edit Profile
 
 .center When you're done, please scroll down and click "Update profile" to save your changes.
 
-.center = devise_error_messages!
+- devise_error_messages!
 
 = form_for(resource, as: resource_name, url: profile_edit_path(resource_name).sub(/\.[\w]*\z/, ''), html: { method: :put }, multipart: true) do |f|
   #login
@@ -68,6 +68,4 @@ h2 Edit Profile
 
       .center
         = spinner_button(f, button_text: "Update profile", disable_text: "Updating profile", css_class: 'big')
-        br
-        = button_to "Cancel", :back, class: 'cancel'
       br.clear
