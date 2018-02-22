@@ -86,6 +86,7 @@ Rails.application.routes.draw do
   end
 
   # User management
+  get     '/profile',                       to: redirect('/users/current')
   get     '/users',                         to: 'user#list'
   get     '/users/current',                 to: 'user#current',                   as: 'current_user'
   get     '/users/:id',                     to: 'user#show',                      as: 'user'
