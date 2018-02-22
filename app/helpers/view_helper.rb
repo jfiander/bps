@@ -23,4 +23,11 @@ module ViewHelper
     return form.button(button_text, data: data_hash, name: name, class: css_class) if form.present?
     button_tag(button_text, data: data_hash, name: name, class: css_class)
   end
+
+  def summer_months(select_tag, mode: :summer)
+    select_tag.gsub(
+      "<option value=\"7\">July</option>\n<option value=\"8\">August</option>\n",
+      (mode == :summer ? '<option value="7">* Summer</option>' : '')
+    ).html_safe
+  end
 end

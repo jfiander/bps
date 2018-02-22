@@ -6,7 +6,7 @@ h2 Squadron Meeting Minutes
     = form_tag upload_minutes_path, multipart: true
       = fa_icon("file-pdf-o", class: "file-type")
       = file_field_tag :minutes_upload_file, accept: 'application/pdf', required: true
-      = date_select(:issue, :date, start_year: 2014, use_month_numbers: true, discard_day: true, required: true)
+      = summer_months(date_select(:issue, :date, start_year: 2014, discard_day: true, required: true), mode: :hide)
       br
       label.switch
         = check_box_tag :minutes_excom, class: "slider round"
@@ -18,8 +18,6 @@ h2 Squadron Meeting Minutes
           .description.remove
       br
       = spinner_button(button_text: "Submit", css_class: 'big')
-    small Issues for July and August will upload, but will not display.
-    br
     small Uploading to an issue that has already been uploaded will overwrite the previous version.
     hr
 
