@@ -84,7 +84,7 @@ h2 Bridge Officers
               .table-cell.committee-chair class=("additional" if @last_committee_name == committee[:name])
                 - if @current_user_permitted_users
                   = link_to(remove_committee_path(committee[:id]), class: "red", method: :delete, remote: true,
-                    data: {confirm: "Are you sure you want to remove #{committee[:user][:simple_name]} from #{committee[:name]}?"}) { fa_icon "minus-square" }
+                    data: {confirm: "Are you sure you want to remove #{committee[:user][:simple_name]} from #{committee[:name]}?"}) { fa_icon('minus-square') }
                 = committee[:user][:full_name]
               - @last_committee_name = committee[:name]
     .table-row
@@ -103,7 +103,7 @@ h2 Standing Committees
           div id=("standing_committee_post_#{member[:id]}")
             - if @current_user_permitted_users
               = link_to(remove_standing_committee_path(member[:id]), method: :delete, remote: true, class: "red",
-              data: {confirm: "Are you sure you want to remove #{member[:simple_name]} from the #{committee.titleize} Committee?"}) { fa_icon "minus-square" }
+              data: {confirm: "Are you sure you want to remove #{member[:simple_name]} from the #{committee.titleize} Committee?"}) { fa_icon('minus-square') }
             = member[:full_name]
             small
               = " (chair)" if member[:chair]

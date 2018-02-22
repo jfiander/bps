@@ -8,7 +8,7 @@
     - else
       = f.select :album_id, options_for_select(@albums.map { |a| [a.name, a.id] }), include_blank: true, required: true, prompt: "Please select an album"
       br
-    = fa_icon("file-image-o", class: "file-type")
+    = fa_icon('file-image', style: :regular, css: 'file-type')
     = f.file_field :photo_file, required: true, multiple: true
     br
     = spinner_button(button_text: "Submit", css_class: 'big')

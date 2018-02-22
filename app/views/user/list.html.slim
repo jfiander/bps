@@ -27,7 +27,7 @@ table#users
           = user[:name]
         - else
           = mail_to(user[:email], user[:name])
-      td.center = user[:certificate] || fa_icon('question-circle', class: 'red')
+      td.center = user[:certificate] || fa_icon('question-circle', css: 'red', style: :regular)
       td.center
         - if user[:bridge_office].present?
           = officer_flag(user[:bridge_office], mode: :png)
@@ -51,15 +51,14 @@ table#users
       td.center
         - if current_user.permitted?(:admin)
           - if user[:locked]
-            = link_to(unlock_user_path(user[:id]), title: "Unlock", class: "unlock", method: :patch) { fa_icon "lock" }
-          - elsif !user[:granted_roles].join(",").match(/admin/)
-            = link_to(lock_user_path(user[:id]), title: "Lock", class: "lock", method: :patch) { fa_icon "unlock" }
+            = link_to(unlock_user_path(user[:id]), title: 'Unlock', class: 'unlock', method: :patch) { fa_icon('lock', fa: 'fw') }
+          - elsif !user[:granted_roles].join(',').match(/admin/)
+            = link_to(lock_user_path(user[:id]), title: 'Lock', class: 'lock', method: :patch) { fa_icon('unlock', fa: 'fw') }
         - unless user[:locked]
           - if user[:invited]
-            = link_to(invite_path(id: user[:id]), title: "Re-send invitation") { fa_icon "envelope", class: 'pending' }
+            = link_to(invite_path(id: user[:id]), title: 'Re-send invitation') { fa_icon('envelope-open', css: 'pending', fa: 'fw') }
           - elsif user[:invitable]
-            = link_to(invite_path(id: user[:id]), title: "Send invitation") { fa_icon "envelope" }
+            = link_to(invite_path(id: user[:id]), title: 'Send invitation') { fa_icon('envelope', fa: 'fw') }
           - elsif user[:placeholder_email]
-            span.icon.fa-stack title='Invalid email address'
-              i.fa.fa-envelope.fa-stack.gray
-              i.fa.fa-exclamation.fa-stack.overlay.red
+            = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address.')
+

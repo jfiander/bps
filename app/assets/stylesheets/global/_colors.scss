@@ -21,6 +21,22 @@ $background-blue: #C5D1E1;
   color: $old-glory-red;
 }
 
+.green {
+  color: green;
+}
+
+.orange {
+  color: orange;
+}
+
+.gray {
+  color: #999999;
+}
+
+.pending {
+  color: #66BB66;
+}
+
 .notice {
   color: green;
   background-color: lighten(green, 40%);

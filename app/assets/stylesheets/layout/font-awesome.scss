@@ -1,24 +1,12 @@
-i.fa {
+.svg-inline--fa {
   margin: 0 0.5em;
 }
 
-i.fa.file-type {
+.svg-inline--fa.file-type {
   margin: 0 0.25em 0 0;
 }
 
-.fa-stack i.fa {
-  margin: 0;
-}
-
-.fa-stack i.fa.overlay {
-  position: absolute;
-  left: 0;
-}
-
-i.fa.gray {
-  color: #999999;
-}
-
-i.fa.pending {
-  color: #66BB66;
+span.icon {
+  display: inline-block;
+  margin: 0 0.5em;
 }

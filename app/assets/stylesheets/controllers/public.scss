@@ -77,11 +77,6 @@ table#bilge {
     width: 100%;
     text-align: left;
   }
-
-  svg {
-    width: 9em;
-    height: 6em;
-  }
 }
 
 .term-info {
@@ -293,7 +288,7 @@ div.markdown {
     max-width: 15em;
   }
 
-  svg {
+  .burgee svg {
     max-width: 50%;
     height: auto;
     display: block;
@@ -310,15 +305,11 @@ div.markdown {
   }
 
   ul.md {
-    list-style: none;
-
     li {
       margin-bottom: 0.5em;
     }
 
     li:before {
-      content: "\f13d";
-      font-family: "FontAwesome";
       width: 0.75em;
       height: 0.75em;
       margin-right: 0.5em;

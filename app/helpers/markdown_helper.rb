@@ -25,7 +25,7 @@ module MarkdownHelper
   private
 
   def default_markdown
-    @burgee_html = center_html do
+    @burgee_html = center_html('burgee') do
       USPSFlags::Burgees.new { |b| b.squadron = :birmingham }.svg
     end
 
@@ -74,8 +74,8 @@ module MarkdownHelper
       .gsub(%r{(.*?)%fa/(.*?)/(.*?)$}) { $1 + view_context.fa_icon($2) + $3 }
   end
 
-  def center_html
-    '<div class="center">' + yield + '</div>'
+  def center_html(classes = '')
+    "<div class='center #{classes}'>" + yield + '</div>'
   end
 
   def static_link(id, title: '')
@@ -83,7 +83,7 @@ module MarkdownHelper
     link_title = title || key
     link_path = static_bucket.link("general/#{key}")
     view_context.link_to(link_path, target: :_blank) do
-      view_context.fa_icon('cloud-download') + link_title
+      view_context.fa_icon('cloud-download-alt') + link_title
     end
   end
 
@@ -92,7 +92,7 @@ module MarkdownHelper
     link_title = title || key
     link_path = files_bucket.link("uploaded_files/#{key}")
     view_context.link_to(link_path, target: :_blank) do
-      view_context.fa_icon('cloud-download') + link_title
+      view_context.fa_icon('cloud-download-alt') + link_title
     end
   end
 

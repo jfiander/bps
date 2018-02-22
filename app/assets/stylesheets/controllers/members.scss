@@ -2,7 +2,7 @@
 
 ul#admin-menu {
   width: 100%;
-  background-color: lighten($old-glory-blue, 70%);
+  background-color: lighten($old-glory-blue, 68%);
   border-bottom: thin solid lighten($old-glory-blue, 35%);
   padding: 0.25em 0;
   list-style: none;
@@ -14,11 +14,11 @@ ul#admin-menu {
   }
 
   a {
-    color: darken($birmingham-blue, 15%);
+    color: lighten($old-glory-blue, 20%);
   }
 
   a:hover {
-    color: darken($birmingham-blue, 5%);
+    color: lighten($old-glory-blue, 40%);;
   }
 }
 

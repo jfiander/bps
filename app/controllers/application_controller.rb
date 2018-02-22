@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   add_flash_types :success, :error
 
   include MarkdownHelper
+  include FontAwesomeHelper
   include BucketHelpers
   helper_method :static_bucket, :files_bucket, :bilge_bucket, :photos_bucket
 
