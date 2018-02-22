@@ -2,8 +2,8 @@ module DeviseHelper
   def devise_error_messages!
     return unless devise_error_messages?
 
-    flash[:alert] = alert_sentence
-    flash[:error] = resource.errors.full_messages
+    flash.now[:alert] = alert_sentence
+    flash.now[:error] = resource.errors.full_messages
   end
 
   def devise_error_messages?
