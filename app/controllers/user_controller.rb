@@ -38,6 +38,7 @@ class UserController < ApplicationController
   def permissions_index
     @roles = Role.all.map(&:name)
     @roles.delete("admin")
+    @roles.delete('user') unless current_user&.permitted?(:admin)
 
     respond_to do |format|
       format.html
@@ -48,11 +49,12 @@ class UserController < ApplicationController
     redirect_to permit_path, alert: "User was not selected." and return if clean_params[:user_id].blank?
     redirect_to permit_path, alert: "Role was not selected." and return if clean_params[:role].blank?
     redirect_to permit_path, alert: "Cannot add admin permissions." and return if clean_params[:role] == "admin"
+    redirect_to permit_path, alert: 'Must be an admin to add user permissions.' and return if clean_params[:role] == 'user' && !current_user&.permitted?(:admin)
 
     user = User.find_by(id: clean_params[:user_id])
     role = Role.find_by(name: clean_params[:role])
 
-    redirect_to permit_path, alert: "Selected user already has that permission." and return if UserRole.find_by(user: user, role: role)
+    redirect_to permit_path, notice: 'Selected user already has that permission.' and return if UserRole.find_by(user: user, role: role)
 
     UserRole.create!(user: user, role: role)
 
@@ -125,7 +127,7 @@ class UserController < ApplicationController
   def register
     @event_id = clean_params[:id]
     unless Event.find_by(id: @event_id).allow_member_registrations
-      flash[:alert] = "This course is not currently accepting registrations."
+      flash.now[:alert] = 'This course is not currently accepting registrations.'
       render status: :unprocessable_entity and return
     end
 
@@ -134,7 +136,7 @@ class UserController < ApplicationController
     if @registration.valid?
       flash[:success] = "Successfully registered!"
     elsif Registration.find_by(@registration.attributes.slice(:user_id, :event_id))
-      flash[:alert] = 'You are already registered for this course.'
+      flash.now[:notice] = 'You are already registered for this course.'
       render status: :unprocessable_entity
     else
       flash.now[:alert] = "We are unable to register you at this time."
@@ -182,15 +184,13 @@ class UserController < ApplicationController
   def do_import
     uploaded_file = clean_params[:import_file]
 
-    if uploaded_file.content_type == "text/csv"
-      flash.now[:alert] = nil
-    else
-      flash.now[:alert] = "You can only upload CSV files."
+    unless uploaded_file.content_type == 'text/csv'
+      flash.now[:alert] = 'You can only upload CSV files.'
       render :import and return
     end
 
     import_path = "#{Rails.root}/tmp/#{Time.now.to_i}-users_import.csv"
-    file = File.open(import_path, "w+")
+    file = File.open(import_path, 'w+')
     file.write(uploaded_file.read)
     file.close
     begin
