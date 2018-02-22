@@ -156,8 +156,12 @@
     }
   }
 
-  table#bilge a {
-    font-size: 0.65em;
+  table#bilge {
+    width: 100%;
+
+    a {
+      font-size: 0.65em;
+    }
   }
 
   table#users {
