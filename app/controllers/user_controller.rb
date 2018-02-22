@@ -297,7 +297,7 @@ class UserController < ApplicationController
 
   def get_users_for_select
     @users = User.unlocked.alphabetized.with_positions.map do |user|
-      user.full_name.present? ? [user.full_name, user.id] : [user.email, user.id]
+      user.full_name.present? ? [user.full_name(html: false), user.id] : [user.email, user.id]
     end
   end
 
