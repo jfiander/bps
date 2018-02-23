@@ -54,7 +54,7 @@ class UserController < ApplicationController
     user = User.find_by(id: clean_params[:user_id])
     role = Role.find_by(name: clean_params[:role])
 
-    redirect_to permit_path, notice: 'Selected user already has that permission.' and return if UserRole.find_by(user: user, role: role)
+    redirect_to permit_path, notice: '#{user.simple_name} already has #{role.name} permissions.' and return if UserRole.find_by(user: user, role: role)
 
     UserRole.create!(user: user, role: role)
 
