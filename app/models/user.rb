@@ -195,7 +195,8 @@ class User < ApplicationRecord
     [bridge_rank, rank, committee_rank].reject(&:blank?)
   end
 
-  # private
+  private
+
   def office_roles
     [
       permitted_roles_from_bridge_office,
