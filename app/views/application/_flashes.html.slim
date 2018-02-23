@@ -1,7 +1,13 @@
 #flashes
-  #success class=(success ? '' : 'hide') = success
-  #notice class=(notice ? '' : 'hide') = notice
-  #alert class=(alert ? '' : 'hide') = alert
+  #success class=(success ? '' : 'hide')
+    = fa_icon('check-circle')
+    = success
+  #notice class=(notice ? '' : 'hide')
+    = fa_icon('info-circle')
+    = notice
+  #alert class=(alert ? '' : 'hide')
+    = fa_icon('exclamation-circle')
+    = notice
   #error class=(error ? '' : 'hide')
     - if error.present? && error&.is_a?(String)
       = error
