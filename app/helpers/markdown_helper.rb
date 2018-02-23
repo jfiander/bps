@@ -71,6 +71,7 @@ module MarkdownHelper
       .gsub(%r{(.*?)%static_file/(.*?)/(.*?)/(.*?)$}) { $1 + static_link($2, title: $3) + $4 }
       .gsub(%r{(.*?)%file/(\d+)/(.*?)/(.*?)$}) { $1 + file_link($2, title: $3) + $4 }
       .gsub(%r{(.*?)%image/(\d+)/(.*?)$}) { $1 + image($2) + $3 }
+      .gsub(%r{(.*?)%fa/(.*?):(.*?)/(.*?)$}) { $1 + view_context.fa_icon($2, css: $3) + $4 }
       .gsub(%r{(.*?)%fa/(.*?)/(.*?)$}) { $1 + view_context.fa_icon($2) + $3 }
   end
 
