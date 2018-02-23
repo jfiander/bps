@@ -11,7 +11,7 @@
   - if controller.action_name.in?(StaticPage.names)
     = link 'Edit This Page', path: edit_page_path(controller.action_name), fa: { name: 'edit' }
 
-  = link 'Files', path: file_path, fa: { name: 'cloud-upload-alt', options: { style: :regular } }
+  = link 'Files', path: file_path, fa: { name: 'upload', options: { style: :regular } }
   = link 'Headers', path: header_path, fa: { name: 'desktop', options: { style: :regular } }
   = link 'Users List', path: users_path, fa: { name: 'users', options: { style: :regular } }
   = link 'Invite User', path: new_user_invitation_path, fa: { name: 'user-plus', options: { style: :regular } }

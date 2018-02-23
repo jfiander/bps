@@ -84,7 +84,7 @@ module MarkdownHelper
     link_title = title || key
     link_path = static_bucket.link("general/#{key}")
     view_context.link_to(link_path, target: :_blank) do
-      view_context.fa_icon('cloud-download-alt') + link_title
+      view_context.fa_icon('download') + link_title
     end
   end
 
@@ -93,7 +93,7 @@ module MarkdownHelper
     link_title = title || key
     link_path = files_bucket.link("uploaded_files/#{key}")
     view_context.link_to(link_path, target: :_blank) do
-      view_context.fa_icon('cloud-download-alt') + link_title
+      view_context.fa_icon('download') + link_title
     end
   end
 
