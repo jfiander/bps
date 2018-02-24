@@ -61,7 +61,7 @@
                       = link_to(register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
                         = fa_icon('calendar-check', fa: 'fw', style: :regular)
                         | Register
-                  - elsif !defined?(long_form) && !event.registerable? && user_signed_in? && event.allow_member_registrations
+                  - elsif !defined?(long_form) && !event.registerable? &&  && !event.expired? && user_signed_in? && event.allow_member_registrations
                     = fa_layer([{ name: 'calendar-check', options: { style: :regular } }, { name: 'ban', options: { style: :solid, css: :red } }])
                     span.red Too late to register
                   - elsif !defined?(long_form) && event.registerable? && event.allow_public_registrations
