@@ -75,6 +75,13 @@ class Event < ApplicationRecord
     EventInstructor.create(event: self, user: user)
   end
 
+  def registerable?
+    return true if cutoff_at.blank? && expires_at.blank?
+    return false if cutoff_at.present? && cutoff_at < Time.now
+    return false if expires_at.present? && expires_at < Time.now
+    true
+  end
+
   private
   def get_book_cover(type)
     Event.buckets[:static].link("book_covers/#{type}/#{event_type.title}.jpg")

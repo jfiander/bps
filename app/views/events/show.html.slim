@@ -3,7 +3,7 @@ h2 = "#{@event_title} Details"
 = render 'table', events: [@event], long_form: true
 = render 'table_mobile', events: [@event], long_form: true
 
-- unless @event.expired?
+- if @event.registerable? || (user_signed_in? && @registered.present?)
   h3 = "Register for #{@event_title}"
 
   - if user_signed_in?
@@ -12,10 +12,12 @@ h2 = "#{@event_title} Details"
         = link_to(cancel_registration_path(id: @registered), method: :delete, remote: true, class: "red control", id: "event_#{@event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
           = fa_icon('minus-square', fa: 'fw')
           | Cancel Registration
-      - else
+      - elsif @event.registerable?
         = link_to(register_path(params[:type], @event.id), method: :put, remote: true, class: 'control', id: "event_#{@event.id}") do
           = fa_icon('calendar-check', fa: 'fw', style: :regular)
           | Register
+      - else
+        = render 'events/no_more_registrations'
   - else
     #new-event
       = form_for(@registration, url: long_register_path, method: :post) do |f|

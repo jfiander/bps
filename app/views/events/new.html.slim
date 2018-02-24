@@ -5,7 +5,7 @@ h2 = "#{@edit_mode} #{@event_title}"
 
   #new-event
     .left = f.label :event_type_id, "#{@event_title} name"
-    .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), include_blank: true, prompt: "Please select a #{params[:type]} type", required: true
+    .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), {include_blank: true, prompt: "Please select a #{params[:type]} type"}, required: true
     br.clear
 
     .left = f.label :description
@@ -110,7 +110,7 @@ h2 = "#{@edit_mode} #{@event_title}"
     hr
 
     .left = f.label :start_at
-    .right = f.datetime_select :start_at, start_year: 2017, end_year: (Time.now.year + 2), default: (0.days.from_now.beginning_of_day + 9.hours), minute_step: 15, datetime_separator: "<br/>"
+    .right = f.datetime_select :start_at, start_year: 2017, end_year: (Time.now.year + 2), default: (0.days.from_now.end_of_day + 9.hours), minute_step: 15, datetime_separator: "<br/>"
     br.clear
 
     .left = f.label :length, "Session length"
@@ -119,6 +119,12 @@ h2 = "#{@edit_mode} #{@event_title}"
 
     .left = f.label :sessions, "Number of sessions"
     .right = f.number_field :sessions, class: "number", min: 1, max: 100
+    br.clear
+
+    hr
+
+    .left = f.label :cutoff_at, 'Do not allow registrations after', class: "red"
+    .right = f.datetime_select :cutoff_at, start_year: 2017, end_year: (Time.now.year + 2), default: (0.days.from_now + 3.months), discard_hour: true, discard_minute: true, required: true
     br.clear
 
     hr

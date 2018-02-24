@@ -33,14 +33,15 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.create(event_params)
+
     if @event.valid?
       update_attachments
       redirect_to send("#{params[:type]}s_path"), success: "Successfully added #{params[:type]}."
     else
       @submit_path = send("update_#{params[:type]}_path")
       @edit_mode = "Add"
-      flash[:alert] = "Unable to add #{params[:type]}."
-      flash[:error] = @event.errors.full_messages
+      flash.now[:alert] = "Unable to add #{params[:type]}."
+      flash.now[:error] = @event.errors.full_messages
       render :new
     end
   end
@@ -59,8 +60,8 @@ class EventsController < ApplicationController
     else
       @submit_path = send("update_#{params[:type]}_path")
       @edit_mode = "Modify"
-      flash[:alert] = "Unable to update #{params[:type]}."
-      flash[:error] = @event.errors.full_messages
+      flash.now[:alert] = "Unable to update #{params[:type]}."
+      flash.now[:error] = @event.errors.full_messages
       render :edit
     end
   end
@@ -76,7 +77,7 @@ class EventsController < ApplicationController
   private
   def event_params
     params.require(:event).permit(:id, :event_type_id, :description, :cost, :member_cost, :requirements, :location, :map_link,
-      :start_at, :length, :sessions, :flyer, :expires_at, :prereq_id, :allow_member_registrations, :allow_public_registrations)
+      :start_at, :length, :sessions, :flyer, :cutoff_at, :expires_at, :prereq_id, :allow_member_registrations, :allow_public_registrations)
   end
 
   def update_params

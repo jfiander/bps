@@ -175,6 +175,11 @@ class PublicController < ApplicationController
       render status: :unprocessable_entity and return
     end
 
+    unless @event.registerable?
+      flash.now[:alert] = 'This course is no longer accepting registrations.'
+      render status: :unprocessable_entity and return
+    end
+
     registration = Registration.new(registration_attributes)
 
     respond_to do |format|
