@@ -68,7 +68,7 @@
                     = render "events/register_form", event_id: event.id
                   - elsif !defined?(long_form) && event.registerable? && !user_signed_in?
                     = render "events/no_public_registrations"
-                  - elsif !event.registerable?
+                  - elsif !event.expired?
                     = render 'events/no_more_registrations'
       .table-row
         .table-cell.bottom-left
