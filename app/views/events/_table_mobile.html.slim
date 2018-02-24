@@ -3,6 +3,8 @@
     .events-full-width
       hr
     .event-mobile-title = event.event_type.display_title
+    - if @current_user_permitted_event_type || !defined?(@event_catalog) && !event.expired?
+      br
     - if @current_user_permitted_event_type
       .event-mobile-contents
         = link_to(send("copy_#{params[:type]}_path", event), class: "control blue-faded") do
@@ -29,6 +31,8 @@
           - elsif !event.expired?
             = fa_layer([{ name: 'calendar-check', options: { style: :regular } }, { name: 'ban', options: { style: :solid, css: :red } }])
             span.red Too late to register
+      - if @current_user_permitted_event_type || !defined?(@event_catalog) && !event.expired?
+        br
       .event-mobile-contents = event.start_at.strftime(@long_time_format)
       - if (event.has_multiple_sessions? || event.has_length?)
         .event-mobile-contents
