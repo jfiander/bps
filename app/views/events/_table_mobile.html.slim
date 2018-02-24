@@ -97,7 +97,7 @@
       = render 'events/register_form', event_id: event.id, mobile: true
     - elsif !defined?(@event_catalog) && !defined?(long_form) && !user_signed_in? && event.registerable?
       = render 'events/no_public_registrations'
-    - elsif !defined?(@event_catalog) && !defined?(long_form)
+    - elsif !defined?(@event_catalog) && !defined?(long_form) && !user_signed_in?
       = render 'events/no_more_registrations'
 
     .event-mobile-contents.spaced
