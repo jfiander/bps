@@ -15,7 +15,11 @@ module FontAwesomeHelper
                         grow
                       end
 
-      i[:options] = i[:options].merge(grow: combined_grow)
+      if i.key?(:options)
+        i[:options] = i[:options].merge(grow: combined_grow)
+      else
+        i[:options] = { grow: combined_grow }
+      end
     end
 
     output = span_top + parse_all(icons).join + span_bottom
@@ -75,10 +79,13 @@ module FontAwesomeHelper
   end
 
   def parse_span(type, text, options = {})
+    options.delete(:style)
     options = fa_options(options)
     parse_options(options)
+    position = long_position(options.delete(:position))
 
     @classes << "fa-layers-#{type}"
+    @classes << position.present? ? "fa-layers-#{position}" : ''
     css = @classes.flatten.reject { |c| c.match(/^fa.$/) }.join(' ')
     transforms = @transforms.join(' ')
 
@@ -100,6 +107,13 @@ module FontAwesomeHelper
     "-#{size}x"
   end
 
+  def long_position(position)
+    return 'top-right' if position == :tr
+    return 'top-left' if position == :tl
+    return 'bottom-right' if position == :br
+    return 'bottom-left' if position == :bl
+  end
+
   def parse_options(options)
     @classes = []
     @transforms = []
@@ -111,6 +125,8 @@ module FontAwesomeHelper
                          'r'
                        when :light
                          'l'
+                       when :brands
+                         'b'
                        else
                          's'
                        end
