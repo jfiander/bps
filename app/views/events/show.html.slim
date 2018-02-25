@@ -35,3 +35,5 @@ h2 = "#{@event_title} Details"
         br.clear
 
         .center = f.submit 'Register'
+- else
+  = render 'events/no_more_registrations'
