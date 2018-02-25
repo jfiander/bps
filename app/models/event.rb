@@ -2,7 +2,7 @@ class Event < ApplicationRecord
   belongs_to :event_type
   has_many   :course_topics,   foreign_key: :course_id
   has_many   :course_includes, foreign_key: :course_id
-  belongs_to :prereq, class_name: "EventType", optional: true
+  belongs_to :prereq, class_name: 'EventType', optional: true
 
   has_many :event_instructors
   has_many :instructors, through: :event_instructors, source: :user
@@ -15,18 +15,23 @@ class Event < ApplicationRecord
   has_attached_file :flyer,
     default_url: nil,
     storage: :s3,
-    s3_region: "us-east-2",
-    path: "event_flyers/:id/:filename",
+    s3_region: 'us-east-2',
+    path: 'event_flyers/:id/:filename',
     s3_permissions: :private,
     s3_credentials: aws_credentials(:files)
 
-  validates_attachment_content_type :flyer, content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
+  validates_attachment_content_type :flyer,
+    content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
 
   scope :current, ->(category) do
-    includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at > ?", Time.now).where(event_type: EventType.send(category))
+    includes(:event_type, :course_topics, :course_includes, :prereq)
+      .where('expires_at > ?', Time.now)
+      .where(event_type: EventType.send(category))
   end
   scope :expired, ->(category) do
-    includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at <= ?", Time.now).where(event_type: EventType.send(category))
+    includes(:event_type, :course_topics, :course_includes, :prereq)
+      .where('expires_at <= ?', Time.now)
+      .where(event_type: EventType.send(category))
   end
 
   acts_as_paranoid
@@ -44,7 +49,7 @@ class Event < ApplicationRecord
   end
 
   def has_length?
-    length.present? && length&.strftime("%-kh %Mm") != "0h 00m"
+    length.present? && length&.strftime('%-kh %Mm') != '0h 00m'
   end
 
   def has_multiple_sessions?

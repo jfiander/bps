@@ -1,5 +1,5 @@
 class EventType < ApplicationRecord
-  has_many   :events
+  has_many :events
 
   scope :advanced_grades, -> { where(event_category: :advanced_grade) }
   scope :electives,       -> { where(event_category: :elective) }
@@ -14,8 +14,7 @@ class EventType < ApplicationRecord
   scope :course,          -> { courses }
   scope :seminar,         -> { seminars }
   scope :meeting,         -> { meetings }
-
-  scope :ordered,         -> {
+  scope :ordered,         lambda {
     order <<~SQL
       CASE
         WHEN event_category = 'public'     THEN '1' || title
@@ -32,14 +31,14 @@ class EventType < ApplicationRecord
       END
     SQL
   }
-  
+
   validates :event_category, inclusion: %w[advanced_grade elective public seminar meeting]
 
   acts_as_paranoid
 
   def self.selector(type)
-    return self.seminars.ordered.map(&:to_select_array) if type == :seminar
-    return self.meetings.ordered.map(&:to_select_array) if type == :event
+    return seminars.ordered.map(&:to_select_array) if type == :seminar
+    return meetings.ordered.map(&:to_select_array) if type == :event
 
     courses = []
     courses += select_array_section(:public_course, blank: false)
@@ -49,10 +48,10 @@ class EventType < ApplicationRecord
   end
 
   def self.select_array_section(scope, blank: true)
-    (blank ? [["", ""]] : []) +
-    [["#{scope.to_s.titleize} Courses", ""]] +
-    [["-" * (scope.to_s.size + 10), ""]] +
-    send(scope).ordered.map(&:to_select_array)
+    (blank ? [['', '']] : []) +
+      [["#{scope.to_s.titleize} Courses", '']] +
+      [['-' * (scope.to_s.size + 10), '']] +
+      send(scope).ordered.map(&:to_select_array)
   end
 
   def to_select_array
@@ -64,6 +63,7 @@ class EventType < ApplicationRecord
   end
 
   private
+
   def cleanup_title(title)
     title_subs.each do |pattern, replacement|
       title.gsub!(/#{pattern}/i, replacement)
@@ -73,27 +73,27 @@ class EventType < ApplicationRecord
 
   def title_subs
     possessives = {
-      "americas" => "America's",
-      "commanders" => "Commander's"
+      'americas' => "America's",
+      'commanders' => "Commander's"
     }
 
     initials = {
-      "gps" => "GPS",
-      "vhf" => "VHF",
-      "dsc" => "DSC",
-      "ais" => "AIS",
-      "pcoc" => "PCOC"
+      'gps' => 'GPS',
+      'vhf' => 'VHF',
+      'dsc' => 'DSC',
+      'ais' => 'AIS',
+      'pcoc' => 'PCOC'
     }
 
     small_words = {
-      " A " => " a ",
-      " To " => " to ",
-      " The " => " the ",
-      " Of " => " of ",
-      " And " => " and ",
-      " On " => " on ",
-      " In " => " in ",
-      " For " => " for "
+      ' A ' => ' a ',
+      ' To ' => ' to ',
+      ' The ' => ' the ',
+      ' Of ' => ' of ',
+      ' And ' => ' and ',
+      ' On ' => ' on ',
+      ' In ' => ' in ',
+      ' For ' => ' for '
     }
 
     [possessives, initials, small_words].inject(&:merge)

@@ -14,13 +14,16 @@ class UserController < ApplicationController
   end
 
   def show
-    redirect_to user_path(current_user.id) and return unless clean_params[:id].to_i == current_user.id || current_user.permitted?(:admin)
+    unless clean_params[:id].to_i == current_user.id || current_user.permitted?(:admin)
+      redirect_to user_path(current_user.id)
+      return
+    end
 
-    @user = User.find(clean_params[:id])
+    @user = User.find_by(id: clean_params[:id])
 
     @registrations = Registration.for_user(@user.id).current
 
-    @profile_title = @user.id == current_user.id ? "Current" : "Selected"
+    @profile_title = @user.id == current_user.id ? 'Current' : 'Selected'
 
     respond_to do |format|
       format.html
