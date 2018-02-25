@@ -18,6 +18,20 @@ class RegistrationMailer < ApplicationMailer
   def public(registration)
     @registration = registration
 
+    if @registration.event.category == :meeting
+      @signature = {
+        office: 'Administrative',
+        name: BridgeOffice.find_by(office: 'administrative').user.full_name,
+        email: 'ao@bpsd9.org'
+      }
+    else
+      @signature = {
+        office: 'Educational',
+        name: BridgeOffice.find_by(office: 'educational').user.full_name,
+        email: 'seo@bpsd9.org'
+      }
+    end
+
     mail(to: @registration.email, from: 'seo@bpsd9.org', subject: 'Registration confirmation')
   end
 

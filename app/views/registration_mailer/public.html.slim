@@ -1,0 +1,25 @@
+h2 Registration Confirmation
+
+p
+  | Hello, 
+  = @registration&.user&.full_name || @registration.email
+  | !
+
+p
+  | This is your confirmation that you have registered for:
+
+p
+  = @registration.event.category.to_s.titleize
+  | : 
+  b = @registration.event.event_type.display_title
+  br
+  | Date: 
+  b = @registration.event.start_at.strftime('%d %B %Y')
+  br
+  | Time:  
+  b = @registration.event.start_at.strftime('%k:%M %P')
+
+p
+  | If you have any questions, or if you would like to cancel this registration, please email me at 
+  = mail_to @signature[:email]
+  | .

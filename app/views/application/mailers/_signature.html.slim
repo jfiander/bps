@@ -1,0 +1,13 @@
+p Thank you!
+
+- if defined?(@signature)
+  b = @signature[:name]
+  br
+  | &nbsp;&nbsp;
+  = @signature[:office]
+  |  Officer
+  br
+  | &nbsp;&nbsp;
+  | America's Boating Club – Birmingham Squadron
+- else
+  b America's Boating Club – Birmingham Squadron

@@ -1,0 +1,25 @@
+$birmingham-blue: #1086FF;
+$old-glory-blue: #041E42;
+$old-glory-red: #BF0D3E;
+$gray: #999999;
+
+body {
+  font-family: "Arial";
+  color: $old-glory-blue;
+}
+
+.birmingham {
+  color: $birmingham-blue;
+}
+
+.blue {
+  color: $old-glory-blue;
+}
+
+.red {
+  color: $old-glory-red;
+}
+
+.gray {
+  color: $gray;
+}

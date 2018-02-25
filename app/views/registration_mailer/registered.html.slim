@@ -1,14 +1,18 @@
-p
-  em
-    | This is an automated message that was sent to: 
-    = @to_list.join(', ')
+= render 'application/mailers/auto'
+
+h2.birmingham New Registration
 
 p
-  | Someone has signed up for 
+  h3 Registration information:
+  = @registration.event.category.to_s.titleize
+  | : 
   b = @registration.event.event_type.display_title
-  |  on 
-  b = @registration.event.start_at.strftime('%d %b %Y @ %H%M')
-  | .
+  br
+  | Date: 
+  b = @registration.event.start_at.strftime('%d %b %Y')
+  br
+  | Time:  
+  b = @registration.event.start_at.strftime('%H%M')
 
 p
   h3 Registrant information:
@@ -23,8 +27,3 @@ p
     b = @registration.email
 
 p If necessary, please reach out to this registrant for any more information.
-
-p
-  | Thank you,
-  br
-  | Birmingham Power Squadron
