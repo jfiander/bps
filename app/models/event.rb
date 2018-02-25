@@ -8,8 +8,8 @@ class Event < ApplicationRecord
   has_many :instructors, through: :event_instructors, source: :user
 
   before_validation do
-    self.map_link = "http://#{self.map_link}" unless self.map_link.blank? || self.map_link.match(/https?\:\/\//)
-    self.member_cost = nil if self.member_cost == self.cost
+    self.map_link = "http://#{map_link}" unless map_link.blank? || map_link.match(%r{\Ahttps?://})
+    self.member_cost = nil if member_cost == cost
   end
 
   has_attached_file :flyer,
@@ -20,7 +20,7 @@ class Event < ApplicationRecord
     s3_permissions: :private,
     s3_credentials: aws_credentials(:files)
 
-  validates_attachment_content_type :flyer, content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\Z}
+  validates_attachment_content_type :flyer, content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
 
   scope :current, ->(category) do
     includes(:event_type, :course_topics, :course_includes, :prereq).where("expires_at > ?", Time.now).where(event_type: EventType.send(category))

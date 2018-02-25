@@ -30,8 +30,8 @@ class User < ApplicationRecord
   end
 
   validate :valid_rank, :valid_grade
-  validates_attachment_content_type :profile_photo, content_type: /\Aimage\//
-  validates_attachment_file_name :profile_photo, matches: [/\.png\Z/, /\.jpe?g\Z/]
+  validates_attachment_content_type :profile_photo, content_type: %r{\Aimage/}
+  validates_attachment_file_name :profile_photo, matches: [/\.png\z/, /\.jpe?g\z/]
   validates :certificate, uniqueness: true, allow_nil: true
 
   scope :locked,         -> { where.not(locked_at: nil) }
@@ -129,8 +129,8 @@ class User < ApplicationRecord
   end
 
   def has_placeholder_email?
-    email.match(/nobody-.*@bpsd9\.org/) ||
-      email.match(/duplicate-.*@bpsd9\.org/)
+    email.match(/nobody-.*@bpsd9\.org\z/) ||
+      email.match(/duplicate-.*@bpsd9\.org\z/)
   end
 
   def self.valid_ranks

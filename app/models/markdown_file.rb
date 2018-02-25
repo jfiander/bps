@@ -7,7 +7,7 @@ class MarkdownFile < ApplicationRecord
     s3_permissions: :private,
     s3_credentials: aws_credentials(:files)
 
-  validates_attachment_content_type :file, content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\Z}
+  validates_attachment_content_type :file, content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
   validates :file, presence: true
 
   acts_as_paranoid

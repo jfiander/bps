@@ -9,7 +9,7 @@ class HeaderImage < ApplicationRecord
     styles: { desktop: '1500x1500', medium: '500x500', thumb: '200x200' },
     convert_options: { thumb: '-quality 75 -strip' }
 
-  validates_attachment_content_type :file, content_type: %r{\A(image/(jpe?g|png|gif))\Z}
+  validates_attachment_content_type :file, content_type: %r{\A(image/(jpe?g|png|gif))\z}
   validates :file, presence: true, if: :no_errors_yet?
   validate :correct_image_dimensions, if: :no_errors_yet?
 

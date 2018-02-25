@@ -13,7 +13,7 @@ class StoreItem < ApplicationRecord
     s3_permissions: :private,
     s3_credentials: aws_credentials(:files)
 
-  validates_attachment_content_type :image, content_type: %r{\Aimage/(jpe?g|png|gif)\Z}
+  validates_attachment_content_type :image, content_type: %r{\Aimage/(jpe?g|png|gif)\z}
   validates :name, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
