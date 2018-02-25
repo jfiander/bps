@@ -1,0 +1,19 @@
+<%= render 'application/mailers/auto' %>
+New Registration
+
+Registration information:
+
+<%= @registration.event.category.to_s.titleize %>: <%= @registration.event.event_type.display_title %>
+Date: <%= @registration.event.start_at.strftime('%d %b %Y') %>
+Time: <%= @registration.event.start_at.strftime('%H%M') %>
+
+Registrant information:
+<%- if @registration.user.present? %>
+Name: <%= @registration.user.full_name %>
+Email: <%= @registration.user.email %>
+<%- else %>
+Email: <%= @registration.email %>
+<%- end %>
+
+
+If necessary, please reach out to this registrant for any more information.

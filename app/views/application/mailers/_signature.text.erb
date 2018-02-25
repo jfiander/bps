@@ -1,0 +1,9 @@
+Thank you!
+
+<%- if defined?(@signature) %>
+<%= @signature[:name] %>
+  <%= @signature[:office] %> Officer
+  America's Boating Club – Birmingham Squadron
+<%- else %>
+America's Boating Club – Birmingham Squadron
+<%- end %>

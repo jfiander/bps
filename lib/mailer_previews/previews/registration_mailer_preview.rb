@@ -8,8 +8,8 @@ class RegistrationMailerPreview < ActionMailer::Preview
     RegistrationMailer.cancelled(registration)
   end
 
-  def public
-    RegistrationMailer.public(registration)
+  def confirm
+    RegistrationMailer.confirm(registration)
   end
 
   private

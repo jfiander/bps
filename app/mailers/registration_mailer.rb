@@ -15,7 +15,7 @@ class RegistrationMailer < ApplicationMailer
     mail(to: @to_list, subject: 'Cancelled registration')
   end
 
-  def public(registration)
+  def confirm(registration)
     @registration = registration
 
     if @registration.event.category == :meeting
@@ -32,7 +32,9 @@ class RegistrationMailer < ApplicationMailer
       }
     end
 
-    mail(to: @registration.email, from: 'seo@bpsd9.org', subject: 'Registration confirmation')
+    to = @registration&.user&.email || @registration.email
+
+    mail(to: to, from: 'seo@bpsd9.org', subject: 'Registration confirmation')
   end
 
   private

@@ -23,3 +23,9 @@ p
   | If you have any questions, or if you would like to cancel this registration, please email me at 
   = mail_to @signature[:email]
   | .
+
+- if @registration&.user.present?
+  p 
+    | You can also cancel this registration from 
+    = link_to 'your profile page', user_url(@registration.user.id)
+    |  on the website. (You'll need to be logged in first.)

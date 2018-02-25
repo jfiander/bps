@@ -1,0 +1,18 @@
+Registration Confirmation
+
+Hello, <%= @registration&.user&.full_name || @registration.email %>!
+
+This is your confirmation that you have registered for:
+
+<%= @registration.event.category.to_s.titleize %>: <%= @registration.event.event_type.display_title %>
+Date: <%= @registration.event.start_at.strftime('%d %B %Y') %>
+Time: <%= @registration.event.start_at.strftime('%k:%M %P').strip %>
+
+
+If you have any questions, or if you would like to cancel this registration,
+please email me at <%= @signature[:email] %>.
+<%- if @registration&.user.present? %>
+
+You can also cancel this registration from your profile page on the website: <%= user_url(@registration.user.id) %>
+(You'll need to login first.)
+<%- end %>
