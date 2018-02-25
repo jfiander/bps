@@ -11,16 +11,16 @@
               .table-cell.date-details
                 - unless defined?(@event_catalog)
                   = event.start_at.strftime(@long_time_format)
-                  - if (event.has_multiple_sessions? || event.has_length?)
+                  - if (event.multiple_sessions? || event.length?)
                     br
-                  - if event.has_multiple_sessions?
+                  - if event.multiple_sessions?
                     = "#{event.sessions} sessions"
-                    - if event.has_length?
+                    - if event.length?
                       | , 
-                  - if event.has_length?
+                  - if event.length?
                     = event.length&.strftime(@duration_format)
                   - if event.cost.present?
-                    - if event.has_multiple_sessions? || event.has_length?
+                    - if event.multiple_sessions? || event.length?
                       br
                 span.costs = event.formatted_cost
         .table-cell.top-right

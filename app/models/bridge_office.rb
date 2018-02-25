@@ -8,17 +8,18 @@ class BridgeOffice < ApplicationRecord
   end
 
   before_validation do
-    self.office = self.office.to_s
-    BridgeOffice.where.not(office: self.office).where(user: self.user).update_all(user_id: nil)
+    self.office = office.to_s
+    BridgeOffice.other_than(office).where(user: user).update_all(user_id: nil)
   end
 
   validates :user_id, uniqueness: true, allow_nil: true
   validates :office,  uniqueness: true
   validate :valid_office
 
-  scope :heads,      -> { where.not("office LIKE ?", "asst_%") }
-  scope :assistants, -> { where("office LIKE ?", "asst_%") }
-  scope :ordered,    -> {
+  scope :other_than, ->(office) { where.not(office: office) }
+  scope :heads,      -> { where.not('office LIKE ?', 'asst_%') }
+  scope :assistants, -> { where('office LIKE ?', 'asst_%') }
+  scope :ordered,    (lambda do
     order <<~SQL
       CASE
         WHEN office = 'commander'        THEN '1'
@@ -31,7 +32,7 @@ class BridgeOffice < ApplicationRecord
         WHEN office = 'asst_secretary'   THEN '8'
       END
     SQL
-  }
+  end)
 
   def self.preload
     all.map { |b| {b.user_id => b.office} }.reduce({}, :merge)
@@ -47,30 +48,35 @@ class BridgeOffice < ApplicationRecord
 
   def email
     emails = {
-      commander: "cdr",
-      executive: "xo",
-      administrative: "ao",
-      educational: "seo",
-      secretary: "secretary",
-      treasurer: "treasurer",
-      asst_educational: "aseo",
-      asst_secretary: "asst_secretary"
+      commander: 'cdr',
+      executive: 'xo',
+      administrative: 'ao',
+      educational: 'seo',
+      secretary: 'secretary',
+      treasurer: 'treasurer',
+      asst_educational: 'aseo',
+      asst_secretary: 'asst_secretary'
     }
-    "mailto:#{emails[office.to_sym]}@bpsd9.org"
+    "#{emails[office.to_sym]}@bpsd9.org"
   end
 
   def self.department(office)
-    office.gsub("asst_", "Assistant ").titleize
+    office.gsub('asst_', 'Assistant ').titleize
   end
 
   def self.title(office)
-    title = self.department(office)
-    %w[Executive Educational Administrative].any? { |o| o.in? title } ? "#{title} Officer" : title
+    title = department(office)
+    if %w[Executive Educational Administrative].any? { |o| o.in? title }
+      "#{title} Officer"
+    else
+      title
+    end
   end
 
   private
+
   def valid_office
     return true if office.in? BridgeOffice.departments(assistants: true)
-    errors.add(:office, "must be in BridgeOffice.departments(assistants: true)")
+    errors.add(:office, 'must be in BridgeOffice.departments(assistants: true)')
   end
 end

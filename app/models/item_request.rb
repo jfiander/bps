@@ -6,8 +6,6 @@ class ItemRequest < ApplicationRecord
 
   # validates :store_item, uniqueness: { scope: :user }, if: :fulfilled?
 
-  acts_as_paranoid
-
   def fulfill
     # update(fulfilled: true)
     destroy

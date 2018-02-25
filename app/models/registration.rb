@@ -13,9 +13,8 @@ class Registration < ApplicationRecord
   after_create :notify_on_create
   after_create :confirm_public, if: :public_registration?
 
-  acts_as_paranoid
-
   private
+
   def email_or_user_present
     errors.add(:base, 'Must have a user or event') unless user.present? || email.present?
   end

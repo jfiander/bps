@@ -11,6 +11,4 @@ class Photo < ApplicationRecord
 
   validates_attachment_content_type :photo_file, content_type: %r{\Aimage/}
   validates :photo_file, presence: true
-
-  acts_as_paranoid
 end

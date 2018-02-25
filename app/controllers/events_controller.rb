@@ -99,12 +99,12 @@ class EventsController < ApplicationController
 
   def get_event
     @event = Event.includes(:event_instructors, :instructors).find_by(id: update_params[:id])
-    if @event.is_a_course?
+    if @event.course?
       @course_includes = CourseInclude.where(course_id: @event.id).map(&:text).join("\n")
       @course_topics = CourseTopic.where(course_id: @event.id).map(&:text).join("\n")
     end
 
-    if @event.is_a_course? || @event.is_a_seminar?
+    if @event.course? || @event.seminar?
       @instructors = EventInstructor.where(event_id: @event.id).map(&:user).map { |u| "#{u.simple_name} / #{u.certificate}" }.join("\n")
     end
   end

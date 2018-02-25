@@ -60,11 +60,11 @@ h2 Bridge Officers
   - @bridge_list[:departments].each do |dept, data|
     .table-row
       .table-cell.table-header.flag = data[:head][:title]
-      .table-cell.table-header.department = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : link_to(data[:head][:user][:full_name], data[:head][:email])
+      .table-cell.table-header.department = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : mail_to(data[:head][:email], data[:head][:user][:full_name])
       .table-cell.table-header.dept-head-mobile
         = data[:head][:title]
         | : 
-        = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : link_to(data[:head][:user][:full_name], data[:head][:email])
+        = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : mail_to(data[:head][:email], data[:head][:user][:full_name])
     .table-row
       .table-cell.flag = officer_flag(data[:head][:office], mode: :png)
       .table-cell.department = image_tag(data[:head][:user][:photo], width: 125) if data[:head][:user].present?
@@ -73,7 +73,7 @@ h2 Bridge Officers
           - if data[:assistant].present? && data[:assistant][:user][:full_name] != "TBD"
             .table-row.assistant
               .table-cell = data[:assistant][:title]
-              .table-cell = link_to data[:assistant][:user][:full_name], data[:assistant][:email]
+              .table-cell = mail_to data[:assistant][:email], data[:assistant][:user][:full_name]
           .table-row
             .table-cell.table-header.committee Committees
             .table-cell.table-header.committee-chair Chair

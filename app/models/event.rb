@@ -23,21 +23,24 @@ class Event < ApplicationRecord
   validates_attachment_content_type :flyer,
     content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
 
-  scope :current, ->(category) do
+  scope :current, (lambda do |category|
     includes(:event_type, :course_topics, :course_includes, :prereq)
       .where('expires_at > ?', Time.now)
       .where(event_type: EventType.send(category))
-  end
-  scope :expired, ->(category) do
+  end)
+
+  scope :expired, (lambda do |category|
     includes(:event_type, :course_topics, :course_includes, :prereq)
       .where('expires_at <= ?', Time.now)
       .where(event_type: EventType.send(category))
-  end
-
-  acts_as_paranoid
+  end)
 
   def expired?
-    expires_at < Time.now
+    expires_at.present? && expires_at < Time.now
+  end
+
+  def cutoff?
+    cutoff_at.present? && cutoff_at < Time.now
   end
 
   def category
@@ -46,30 +49,30 @@ class Event < ApplicationRecord
     return :meeting if event_type.in? EventType.meetings
   end
 
-  def is_a_course?
+  def course?
     category == :course
   end
 
-  def is_a_seminar?
+  def seminar?
     category == :seminar
   end
 
-  def is_a_meeting?
+  def meeting?
     category == :meeting
   end
 
-  def has_length?
+  def length?
     length.present? && length&.strftime('%-kh %Mm') != '0h 00m'
   end
 
-  def has_multiple_sessions?
+  def multiple_sessions?
     sessions.present? && sessions > 1
   end
 
   def get_flyer
-    key = if is_a_course? && flyer_file_name.blank?
+    if course? && flyer_file_name.blank?
       get_book_cover(:courses)
-    elsif is_a_seminar? && flyer_file_name.blank?
+    elsif seminar? && flyer_file_name.blank?
       get_book_cover(:seminars)
     elsif flyer.present?
       Event.buckets[:files].link(flyer&.s3_object&.key)
@@ -92,8 +95,8 @@ class Event < ApplicationRecord
 
   def registerable?
     return true if cutoff_at.blank? && expires_at.blank?
-    return false if cutoff_at.present? && cutoff_at < Time.now
-    return false if expires_at.present? && expires_at < Time.now
+    return false if cutoff?
+    return false if expired?
     true
   end
 

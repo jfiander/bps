@@ -1,11 +1,11 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
   has_paper_trail
+  acts_as_paranoid
 
   def self.find_or_create(attributes)
-    query = self.find_by(attributes)
-    return self.create!(attributes) if query.blank?
-    query
+    query = find_by(attributes)
+    query.blank? ? create!(attributes) : query
   end
 
   def self.buckets

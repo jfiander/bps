@@ -1,34 +1,33 @@
 class Role < ApplicationRecord
   has_many :user_roles, dependent: :destroy
   has_many :users, through: :user_roles
-  belongs_to :parent, class_name: "Role"
+  belongs_to :parent, class_name: 'Role'
 
-  before_validation { self.parent ||= Role.find_by(name: "admin") }
+  before_validation { self.parent ||= Role.find_by(name: 'admin') }
 
   validate :descends_from_admin?
 
-  acts_as_paranoid
-
   def parents
-    parent = self.parent
+    parent_role = parent
     parents_array = []
-    while parent.present?
-      parents_array << parent
-      parent = parent.parent
+    while parent_role.present?
+      parents_array << parent_role
+      parent_role = parent_role.parent
     end
     parents_array
   end
 
   def children
-    child_roles = Role.all.to_a.find_all { |r| r.parent_id == self.id }.to_a
+    child_roles = Role.all.to_a.find_all { |r| r.parent_id == id }.to_a
     child_roles << child_roles&.map(&:children)
     child_roles.flatten
   end
 
   private
+
   def descends_from_admin?
-    return true if name == "admin"
-    return true if parents.map(&:name).include? "admin"
+    return true if name == 'admin'
+    return true if parents.map(&:name).include? 'admin'
     false
   end
 end

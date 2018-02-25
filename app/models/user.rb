@@ -25,7 +25,7 @@ class User < ApplicationRecord
     styles: { medium: '500x500', thumb: '200x200' }
 
   before_validation do
-    self.rank = nil if self.rank.blank?
+    self.rank = nil if rank.blank?
     self.simple_name = "#{first_name} #{last_name}"
   end
 
@@ -42,12 +42,10 @@ class User < ApplicationRecord
   scope :with_a_name,    -> { where.not(simple_name: [nil, '', ' ']) }
   scope :invitable,      -> { unlocked.where('sign_in_count = 0').reject(&:has_placeholder_email?) }
 
-  acts_as_paranoid
-
   def full_name(html: true)
     (auto_rank.present? ? "#{auto_rank(html: html)} " : '') +
-    simple_name +
-    (grade.present? ? ", #{grade}" : '')
+      simple_name +
+      (grade.present? ? ", #{grade}" : '')
   end
 
   def photo(style: :medium)

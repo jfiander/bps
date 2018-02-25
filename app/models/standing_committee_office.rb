@@ -10,7 +10,7 @@ class StandingCommitteeOffice < ApplicationRecord
 
   scope :current,     -> { where("term_expires_at IS NULL OR term_expires_at > ?", Time.now) }
   scope :chair_first, -> { order(chair: :asc) }
-  scope :ordered,     -> {
+  scope :ordered,     (lambda do
     order <<~SQL
       CASE
         WHEN committee_name = 'executive'  THEN '1'
@@ -19,9 +19,7 @@ class StandingCommitteeOffice < ApplicationRecord
         WHEN committee_name = 'rules'      THEN '4'
       END
     SQL
-  }
-
-  acts_as_paranoid
+  end)
 
   def self.committees
     %w[executive auditing nominating rules]
@@ -42,20 +40,25 @@ class StandingCommitteeOffice < ApplicationRecord
   end
 
   def term_fraction
-    return "" if executive?
+    return '' if executive?
     "[#{term_year}/#{term_length}]"
   end
 
   private
+
   def valid_committee_name
     committee_name.downcase.in? %w[executive auditing nominations rules]
   end
 
   def only_one_chair
-    StandingCommitteeOffice.current.where(committee_name: committee_name).where(chair: true).count <= 1
+    StandingCommitteeOffice
+      .current
+      .where(committee_name: committee_name)
+      .where(chair: true)
+      .count <= 1
   end
 
   def executive?
-    self.committee_name.casecmp("executive") == 0
+    committee_name.casecmp('executive') == 0
   end
 end

@@ -34,13 +34,13 @@
       - if @current_user_permitted_event_type || !defined?(@event_catalog) && !event.expired?
         br
       .event-mobile-contents = event.start_at.strftime(@long_time_format)
-      - if (event.has_multiple_sessions? || event.has_length?)
+      - if (event.multiple_sessions? || event.length?)
         .event-mobile-contents
-          - if event.has_multiple_sessions?
+          - if event.multiple_sessions?
             = "#{event.sessions} sessions"
-            - if event.has_length?
+            - if event.length?
               | , 
-          - if event.has_length?
+          - if event.length?
             = event.length&.strftime(@duration_format)
       - if event.cost.present?
         .event-mobile-contents.spaced = event.formatted_cost

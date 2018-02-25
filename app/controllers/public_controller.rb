@@ -196,9 +196,9 @@ class PublicController < ApplicationController
       end
 
       format.html do
-        event_type = if @event.is_a_course?
+        event_type = if @event.course?
           :course
-        elsif @event.is_a_seminar?
+        elsif @event.seminar?
           :seminar
         else
           :event
