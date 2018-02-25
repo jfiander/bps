@@ -8,8 +8,8 @@ class Event < ApplicationRecord
   has_many :instructors, through: :event_instructors, source: :user
 
   before_validation do
-    self.map_link = "http://#{map_link}" unless map_link.blank? || map_link.match(%r{\Ahttps?://})
-    self.member_cost = nil if member_cost == cost
+    prefix_map_link
+    validate_costs
   end
 
   has_attached_file :flyer,
@@ -83,7 +83,22 @@ class Event < ApplicationRecord
   end
 
   private
+
   def get_book_cover(type)
     Event.buckets[:static].link("book_covers/#{type}/#{event_type.title}.jpg")
+  end
+
+  def prefix_map_link
+    return if map_link.blank? || map_link.match(%r{https?://})
+
+    self.map_link = "http://#{map_link}"
+  end
+
+  def validate_costs
+    return unless member_cost.present?
+    return if cost.present? && cost > member_cost
+
+    self.cost = member_cost
+    self.member_cost = nil
   end
 end
