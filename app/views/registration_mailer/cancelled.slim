@@ -4,11 +4,11 @@ p
     = @to_list.join(', ')
 
 p
-  = @registration.user.full_name
+  b = @registration.user.full_name
   |  (
   = @registration.user.email
   | ) has cancelled their registration for 
-  = @registration.event.event_type.display_title
+  b = @registration.event.event_type.display_title
   |  on 
   = @registration.event.start_at.strftime('%d %b %Y @ %H%M')
   | .

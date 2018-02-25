@@ -5,9 +5,9 @@ p
 
 p
   | This is your confirmation that you have registered for 
-  = @registration.event.event_type.display_title
+  b = @registration.event.event_type.display_title
   |  on 
-  = @registration.event.start_at.strftime('%d %b %Y at %l:%M %P')
+  b = @registration.event.start_at.strftime('%d %b %Y at %l:%M %P')
   | .
 
 p If you have any questions, or if you would like to cancel this registration, please email me at seo@bpsd9.org.

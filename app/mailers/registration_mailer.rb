@@ -1,5 +1,5 @@
 class RegistrationMailer < ApplicationMailer
-  def send_new(registration)
+  def registered(registration)
     @registration = registration
     @committee_chairs = load_committee_chairs
     @to_list = to_list
@@ -7,7 +7,7 @@ class RegistrationMailer < ApplicationMailer
     mail(to: @to_list, subject: 'New registration')
   end
 
-  def send_cancelled(registration)
+  def cancelled(registration)
     @registration = registration
     @committee_chairs = load_committee_chairs
     @to_list = to_list
@@ -15,7 +15,7 @@ class RegistrationMailer < ApplicationMailer
     mail(to: @to_list, subject: 'Cancelled registration')
   end
 
-  def send_public(registration)
+  def public(registration)
     @registration = registration
 
     mail(to: @registration.email, from: 'seo@bpsd9.org', subject: 'Registration confirmation')

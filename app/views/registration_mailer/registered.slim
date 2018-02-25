@@ -5,23 +5,22 @@ p
 
 p
   | Someone has signed up for 
-  = @registration.event.event_type.display_title
+  b = @registration.event.event_type.display_title
   |  on 
-  = @registration.event.start_at.strftime('%d %b %Y @ %H%M')
+  b = @registration.event.start_at.strftime('%d %b %Y @ %H%M')
   | .
 
 p
-  b Registrant information:
-  br
+  h3 Registrant information:
   - if @registration.user.present?
     | Name: 
-    = @registration.user.full_name
+    b = @registration.user.full_name
     br
     | Email: 
-    = @registration.user.email
+    b = @registration.user.email
   - else
     | Email: 
-    = @registration.email
+    b = @registration.email
 
 p If necessary, please reach out to this registrant for any more information.
 
