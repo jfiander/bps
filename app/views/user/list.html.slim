@@ -1,7 +1,7 @@
 h2 All users
 
 - if ENV["ALLOW_BULK_INVITE"] == "true"
-  = link_to "Send invitations to all new users", invite_all_path
+  = link_to "Send invitations to all new users", invite_all_path, method: :put
   hr
 
 - if current_user&.permitted?(:admin)
