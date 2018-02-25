@@ -10,6 +10,11 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find_by(id: show_params[:id])
+    if @event.blank? || @event.category != params[:type]
+      flash[:notice] = "Couldn't find that #{params[:type]}."
+      redirect_to send("#{params[:type]}s_path")
+      return
+    end
     @event_title = params[:type].to_s.titleize
     @registration = Registration.new(event_id: show_params[:id])
     @registered = if user_signed_in?

@@ -21,6 +21,12 @@ class UserController < ApplicationController
 
     @user = User.find_by(id: clean_params[:id])
 
+    if @user.blank?
+      flash[:notice] = "Couldn't find that user." if current_user.permitted?(:admin)
+      redirect_to root_path
+      return
+    end
+
     @registrations = Registration.for_user(@user.id).current
 
     @profile_title = @user.id == current_user.id ? 'Current' : 'Selected'
