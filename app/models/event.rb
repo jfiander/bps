@@ -40,12 +40,22 @@ class Event < ApplicationRecord
     expires_at < Time.now
   end
 
+  def category
+    return :course if event_type.in? EventType.courses
+    return :seminar if event_type.in? EventType.seminars
+    return :meeting if event_type.in? EventType.meetings
+  end
+
   def is_a_course?
-    event_type.in? EventType.courses
+    category == :course
   end
 
   def is_a_seminar?
-    event_type.in? EventType.seminars
+    category == :seminar
+  end
+
+  def is_a_meeting?
+    category == :meeting
   end
 
   def has_length?
