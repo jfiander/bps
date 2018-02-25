@@ -11,11 +11,29 @@ class Users::SessionsController < Devise::SessionsController
     referrer_params[:user][:referrer].present? &&
       referrer_params[:user][:referrer] != '/login'
   end
-  
+
   def valid_referrer?
-  	referrer_params[:user][:referrer].in? %w[
-  	  /members /minutes
-  	]
+    # Whitelist for valid member routes
+    #
+    # This whitelist is permissions-agnostic, since Devise will handle that
+    # after login is complete.
+    simple_paths = %w[
+      members minutes users permit invitation/new header file import
+      user_help profile profile/edit ranks auto_permissions
+    ]
+    profile_paths = '(users/(\d+|current))'
+    minutes_paths = '((minutes|excom)/\d{4}/\d{1,2})'
+    event_paths = '((courses|seminars|events)/(new|(\d+(/(copy|edit))?)))'
+    edit_paths = "edit/(#{MarkdownHelper::VIEWS.map { |_, v| v }.join('|')})"
+
+    member_paths = [
+      simple_paths.join('|'),
+      profile_paths,
+      minutes_paths,
+      event_paths,
+      edit_paths
+    ].join('|')
+    referrer_params[:user][:referrer].match %r{\A/(#{member_paths})\z}
   end
 
   def referrer_params
