@@ -170,7 +170,7 @@ class UserController < ApplicationController
 
     if r&.destroy
       flash[:success] = "Successfully cancelled registration!"
-      RegistrationMailer.send_cancelled(r).deliver if @cancel_link
+      RegistrationMailer.cancelled(r).deliver if @cancel_link
     else
       flash.now[:alert] = "We are unable to cancel your registration at this time."
       render status: :unprocessable_entity

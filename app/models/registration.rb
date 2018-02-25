@@ -25,11 +25,11 @@ class Registration < ApplicationRecord
   end
 
   def notify_on_create
-    RegistrationMailer.send_new(self).deliver
+    RegistrationMailer.registered(self).deliver
   end
 
   def confirm_public
-    RegistrationMailer.send_public(self).deliver
+    RegistrationMailer.confirm(self).deliver
   end
 
   def public_registration?
