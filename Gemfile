@@ -46,6 +46,10 @@ gem 'usps_flags-grades',   '~> 0.0.4'
 # Error Logging
 gem 'bugsnag',             '~> 6.1.0'
 
+# Inspection
+gem 'awesome_print',       '~> 1.8.0'
+gem 'differ',              '~> 0.1.2'
+
 # Manual Upgrades
 gem 'sinatra',             '~> 2.0.1'
 
@@ -63,7 +67,6 @@ group :development, :test do
   gem 'simplecov',         '~> 0.15.1'
 
   # Debugging
-  gem 'awesome_print'
   gem 'bullet',            '~> 5.7.0'
   gem 'listen',            '~> 3.1.5'
 end
