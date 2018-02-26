@@ -6,8 +6,8 @@ class Registration < ApplicationRecord
 
   validate :email_or_user_present, :no_duplicate_registrations
 
-  scope :current,  -> { all.find_all { |r| r.event.expires_at.future? } }
-  scope :expired,  -> { all.find_all { |r| r.event.expires_at.past? } }
+  scope :current,  -> { all.find_all { |r| !r.event.expired? } }
+  scope :expired,  -> { all.find_all { |r| r.event.expired? } }
   scope :for_user, ->(user_id) { where(user_id: user_id) }
 
   after_create :notify_on_create

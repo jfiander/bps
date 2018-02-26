@@ -237,23 +237,23 @@ class PublicController < ApplicationController
 
   def get_events(type, scope = :current)
     scoped_events = {
-      current: @all_events.find_all { |e| e.expires_at > Time.now },
-      expired: @all_events.find_all { |e| e.expires_at <= Time.now }
+      current: @all_events.find_all { |e| !e.expired? },
+      expired: @all_events.find_all { |e| e.expired? }
     }
 
     case type
     when :course
       courses = {
-        public: scoped_events[scope].find_all { |c| c.event_type.event_category == 'public' },
-        advanced_grade: scoped_events[scope].find_all { |c| c.event_type.event_category == 'advanced_grade' },
-        elective: scoped_events[scope].find_all { |c| c.event_type.event_category == 'elective' }
+        public: scoped_events[scope].find_all { |c| c&.event_type&.event_category == 'public' },
+        advanced_grade: scoped_events[scope].find_all { |c| c&.event_type&.event_category == 'advanced_grade' },
+        elective: scoped_events[scope].find_all { |c| c&.event_type&.event_category == 'elective' }
       }
 
       courses.all? { |h| h.blank? } ? [] : courses
     when :seminar
-      scoped_events[scope].find_all { |c| c.event_type.event_category == 'seminar' }
+      scoped_events[scope].find_all { |c| c&.event_type&.event_category == 'seminar' }
     when :event
-      scoped_events[scope].find_all { |c| c.event_type.event_category == 'meeting' }
+      scoped_events[scope].find_all { |c| c&.event_type&.event_category == 'meeting' }
     end
   end
 
