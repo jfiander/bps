@@ -1,6 +1,6 @@
 class GalleryController < ApplicationController
-  before_action :authenticate_user!, except: [:index] 
-  before_action                        only: [:add_album, :edit_album, :remove_album, :upload_photos, :remove_photo, :remove_album] { require_permission(:photos) }
+  before_action :authenticate_user!, except: [:index]
+  before_action except: [:index] { require_permission(:photos) }
 
   before_action { page_title('Photos') }
 
@@ -75,18 +75,16 @@ class GalleryController < ApplicationController
 
   def remove_album
     album_attributes = if params[:album].present?
-      album_params
-    else
-      { id: clean_params[:id] }
-    end
+                         album_params
+                       else
+                         { id: clean_params[:id] }
+                       end
 
     if Album.find_by(album_attributes)&.destroy
       redirect_to photos_path, success: 'Successfully removed album!'
     else
       redirect_to photos_path, alert: 'There was a problem removing the album.'
     end
-
-    redirect_to photos_path
   end
 
   private
@@ -100,6 +98,6 @@ class GalleryController < ApplicationController
   end
 
   def clean_params
-    params.permit(:id, :remove,:redirect_to_album)
+    params.permit(:id, :remove, :redirect_to_album)
   end
 end
