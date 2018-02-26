@@ -7,7 +7,7 @@
     = notice
   #alert class=(alert ? '' : 'hide')
     = fa_icon('exclamation-circle')
-    = notice
+    = alert
   #error class=(error ? '' : 'hide')
     - if error.present? && error&.is_a?(String)
       = error
