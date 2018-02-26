@@ -30,7 +30,7 @@ gem 'aws-sdk-rails',       '~> 1.0.1'
 gem 'devise',              '~> 4.2.0'
 gem 'devise_invitable',    '~> 1.7.2'
 gem 'mini_magick',         '~> 4.8.0'
-gem 'paperclip',           '~> 5.1.0'
+gem 'paperclip',           '~> 5.2.0'
 # gem 'redis',             '~> 3.0'
 gem 'sendgrid-ruby',       '~> 5.2.0'
 # gem 'sidekiq',           '~> 5.0.5'
@@ -45,6 +45,9 @@ gem 'usps_flags-grades',   '~> 0.0.4'
 
 # Error Logging
 gem 'bugsnag',             '~> 6.1.0'
+
+# Manual Upgrades
+gem 'sinatra',             '~> 2.0.1'
 
 group :production do
   gem 'pg',                '~> 0.18.4'
