@@ -1,19 +1,11 @@
-# Birmingham Power Squadron
-
-This is the 2018 version of the squadron website.
+# Birmingham Power Squadron – 2018 Website
 
 ## Location
 
-| Environment | URL                                                                         |
-|-------------|-----------------------------------------------------------------------------|
-| Production  | [https://bpsd9.herokuapp.com](https://bpsd9.herokuapp.com)                  |
-| Staging     | [https://bpsd9-staging.herokuapp.com](https://bpsd9-staging.herokuapp.com)  |
-
-* This site will eventually be located at [bpsd9.org](http://bpsd9.org).
-
-## Hosting
-
-Servers are hosted on Heroku.
+| Environment | URL                                                     |
+|-------------|---------------------------------------------------------|
+| Production  | [https://www.bpsd9.org](https://www.bpsd9.org)          |
+| Staging     | [https://staging.bpsd9.org](https://staging.bpsd9.org)  |
 
 ## Assets
 
@@ -23,8 +15,4 @@ All assets are served by CloudFront.
 
 Rspec testing is available:
 
-```bundle exec rspec```
-
-Currently tested:
-
-- User permissions
+`bundle exec rspec`
