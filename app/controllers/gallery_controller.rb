@@ -80,7 +80,7 @@ class GalleryController < ApplicationController
       { id: clean_params[:id] }
     end
 
-    if Album.find_by(album_attributes).destroy
+    if Album.find_by(album_attributes)&.destroy
       redirect_to photos_path, success: 'Successfully removed album!'
     else
       redirect_to photos_path, alert: 'There was a problem removing the album.'
