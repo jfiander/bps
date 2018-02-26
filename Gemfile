@@ -21,7 +21,7 @@ gem 'uglifier',            '>= 1.3.0'
 
 # Model Behavior
 gem 'paper_trail',         '~> 8.1.0'
-gem 'paranoia', github: 'rubysherpas/paranoia', branch: 'rails4'
+gem 'paranoia',            '~> 2.2'
 gem 'sanitize_email',      '~> 1.2.2'
 
 # App Functionality
