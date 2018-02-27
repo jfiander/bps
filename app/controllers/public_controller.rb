@@ -196,9 +196,9 @@ class PublicController < ApplicationController
       end
 
       format.html do
-        event_type = if @event.course?
+        event_type = if @event.course?(@event_types)
           :course
-        elsif @event.seminar?
+        elsif @event.seminar?(@event_types)
           :seminar
         else
           :event
@@ -236,26 +236,70 @@ class PublicController < ApplicationController
   end
 
   def get_events(type, scope = :current)
-    scoped_events = {
+    @scoped_events ||= {
       current: @all_events.find_all { |e| !e.expired? },
-      expired: @all_events.find_all { |e| e.expired? }
+      expired: @all_events.find_all(&:expired?)
     }
+
+    @event_types ||= EventType.all
+    @event_type_ids ||= @event_types.group_by(&:event_category).map do |c, t|
+      { c => t.map(&:id) }
+    end.reduce({}, :merge)
 
     case type
     when :course
       courses = {
-        public: scoped_events[scope].find_all { |c| c&.event_type&.event_category == 'public' },
-        advanced_grade: scoped_events[scope].find_all { |c| c&.event_type&.event_category == 'advanced_grade' },
-        elective: scoped_events[scope].find_all { |c| c&.event_type&.event_category == 'elective' }
+        public: @scoped_events[scope].find_all do |c|
+          c.event_type_id.in?(@event_type_ids['public'])
+        end,
+        advanced_grade: @scoped_events[scope].find_all do |c|
+          c.event_type_id.in?(@event_type_ids['advanced_grade'])
+        end,
+        elective: @scoped_events[scope].find_all do |c|
+          c.event_type_id.in?(@event_type_ids['elective'])
+        end
       }
 
-      courses.all? { |h| h.blank? } ? [] : courses
+      courses.all?(&:blank?) ? [] : courses
     when :seminar
-      scoped_events[scope].find_all { |c| c&.event_type&.event_category == 'seminar' }
+      @scoped_events[scope].find_all do |c|
+        c.event_type_id.in?(@event_type_ids['seminar'])
+      end
     when :event
-      scoped_events[scope].find_all { |c| c&.event_type&.event_category == 'meeting' }
+      @scoped_events[scope].find_all do |c|
+        c.event_type_id.in?(@event_type_ids['meeting'])
+      end
     end
   end
+
+  def event_type(event)
+    @event_types.find_all { |e| e.id == event.event_type_id }.first
+  end
+  helper_method :event_type
+
+  def event_prereq(event)
+    @event_types.find_all { |e| e.id == event.prereq_id }.first
+  end
+  helper_method :event_prereq
+
+  def event_instructors(event)
+    @users.find_all do |u|
+      u.id.in?(@event_instructors.find_all do |ei|
+        ei.event_id == event.id
+      end.map(&:user_id))
+    end
+  end
+  helper_method :event_instructors
+
+  def course_topics(event)
+    @course_topics.find_all { |ct| ct.course_id == event.id }
+  end
+  helper_method :course_topics
+
+  def course_includes(event)
+    @course_includes.find_all { |ci| ci.course_id == event.id }
+  end
+  helper_method :course_includes
 
   def generate_dept_head(dept, head)
     {
@@ -286,8 +330,11 @@ class PublicController < ApplicationController
   end
 
   def preload_events
-    event_includes = [:event_instructors, :instructors, :event_type]
-    event_includes += [:course_topics, :course_includes, :prereq] if params[:type] == :course
-    @all_events = Event.includes(event_includes).order(:start_at)
+    @all_events ||= Event.order(:start_at)
+    @course_topics ||= CourseTopic.all
+    @course_includes ||= CourseInclude.all
+    @users ||= User.all
+    @event_instructors ||= EventInstructor.all
+    @event_types ||= EventType.all
   end
 end

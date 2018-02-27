@@ -43,22 +43,40 @@ class Event < ApplicationRecord
     cutoff_at.present? && cutoff_at < Time.now
   end
 
-  def category
-    return :course if event_type.in? EventType.courses
-    return :seminar if event_type.in? EventType.seminars
-    return :meeting if event_type.in? EventType.meetings
+  def category(event_types = nil)
+    if event_types.present?
+      course_ids = event_types.select do |e|
+        e.event_category.in? [:public, :advanced_grade, :elective]
+      end.map(&:id)
+
+      seminar_ids = event_types.select do |e|
+        e.event_category.in? [:seminar]
+      end.map(&:id)
+
+      meeting_ids = event_types.select do |e|
+        e.event_category.in? [:meeting]
+      end.map(&:id)
+    else
+      course_ids = EventType.courses.map(&:id)
+      seminar_ids = EventType.seminars.map(&:id)
+      meeting_ids = EventType.meetings.map(&:id)
+    end
+
+    return :course if event_type_id.in? course_ids
+    return :seminar if event_type_id.in? seminar_ids
+    return :meeting if event_type_id.in? meeting_ids
   end
 
-  def course?
-    category == :course
+  def course?(event_types = nil)
+    category(event_types) == :course
   end
 
-  def seminar?
-    category == :seminar
+  def seminar?(event_types = nil)
+    category(event_types) == :seminar
   end
 
-  def meeting?
-    category == :meeting
+  def meeting?(event_types = nil)
+    category(event_types) == :meeting
   end
 
   def length?
@@ -69,11 +87,11 @@ class Event < ApplicationRecord
     sessions.present? && sessions > 1
   end
 
-  def get_flyer
-    if course? && flyer_file_name.blank?
-      get_book_cover(:courses)
-    elsif seminar? && flyer_file_name.blank?
-      get_book_cover(:seminars)
+  def get_flyer(event_types = nil)
+    if course?(event_types) && flyer_file_name.blank?
+      get_book_cover(:courses, event_types)
+    elsif seminar?(event_types) && flyer_file_name.blank?
+      get_book_cover(:seminars, event_types)
     elsif flyer.present?
       Event.buckets[:files].link(flyer&.s3_object&.key)
     end
@@ -102,8 +120,9 @@ class Event < ApplicationRecord
 
   private
 
-  def get_book_cover(type)
-    Event.buckets[:static].link("book_covers/#{type}/#{event_type.title}.jpg")
+  def get_book_cover(type, event_types = nil)
+    event_types ||= EventType.all
+    Event.buckets[:static].link("book_covers/#{type}/#{event_types.select { |e| e.id == event_type_id }.first.title}.jpg")
   end
 
   def prefix_map_link

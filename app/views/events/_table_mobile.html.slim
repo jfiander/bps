@@ -2,7 +2,7 @@
   - events.each do |event|
     .events-full-width
       hr
-    .event-mobile-title = event.event_type.display_title
+    .event-mobile-title = event_type(event).display_title
     - if @current_user_permitted_event_type || !defined?(@event_catalog) && !event.expired?
       br
     - if @current_user_permitted_event_type
@@ -56,30 +56,30 @@
           | Location TBD
 
     .event-mobile-contents.spaced = simple_format(event.description)
-    - if event.course_topics.present?
+    - if course_topics(event).present?
       .event-mobile-contents.spaced
         b Topics include:
         ul
-          - event.course_topics.each do |t|
+          - course_topics(event).each do |t|
             li = t.text
-    - if event.course_includes.present?
+    - if course_includes(event).present?
       .event-mobile-contents.spaced
         b Materials include:
         ul
-          - event.course_includes.each do |i|
+          - course_includes(event).each do |i|
             li = i.text
     - if event.requirements.present?
       .event-mobile-contents.spaced
         b Student requirements:
         p = simple_format(event.requirements)
-    - if event.instructors.present? && !defined?(@event_catalog)
+    - if event_instructors(event).present? && !defined?(@event_catalog)
       .event-mobile-contents.spaced
-        b = "Instructor".pluralize(event.instructors.count) + ":"
-        p = simple_format(event.instructors.map(&:full_name).join("\n"))
-    - if event.prereq.present?
+        b = "Instructor".pluralize(event_instructors(event).count) + ":"
+        p = simple_format(event_instructors(event).map(&:full_name).join("\n"))
+    - if event_prereq(event).present?
       .event-mobile-contents.spaced
         b Prerequisite course:
-        p = event.prereq.title.titleize
+        p = event_prereq(event).title.titleize
     - if @current_user_permitted_event_type && @registered_users[event.id].present? && !defined?(@event_catalog)
       .event-mobile-contents.spaced
         b Registered Users:
@@ -101,7 +101,7 @@
       = render 'events/no_more_registrations'
 
     .event-mobile-contents.spaced
-      - if event.get_flyer.present? && event.flyer_content_type != 'application/pdf'
-        = image_tag event.get_flyer
-      - if event.get_flyer.present? && event.flyer_content_type == 'application/pdf'
-        iframe src=(event.get_flyer)
+      - if event.get_flyer(@event_types).present? && event.flyer_content_type != 'application/pdf'
+        = image_tag event.get_flyer(@event_types)
+      - if event.get_flyer(@event_types).present? && event.flyer_content_type == 'application/pdf'
+        iframe src=(event.get_flyer(@event_types))
