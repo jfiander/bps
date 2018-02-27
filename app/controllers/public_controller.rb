@@ -1,7 +1,7 @@
 class PublicController < ApplicationController
   before_action :list_bilges, only: [:newsletter, :get_bilge]
   before_action :time_formats, only: [:events, :catalog]
-  before_action :preload_events, only: [:events]
+  before_action :preload_events, only: [:events, :catalog]
 
   before_action only: [:events] { page_title("#{params[:type].to_s.titleize}s") }
   before_action only: [:catalog] { page_title("#{params[:type].to_s.titleize} Catalog") }
@@ -25,7 +25,7 @@ class PublicController < ApplicationController
   end
 
   def catalog
-    events = Event.includes(:event_type).order(:created_at).group_by(&:event_type).group_by { |t, e| t.event_category }
+    events = @all_events.includes(:event_type).order(:created_at).group_by(&:event_type).group_by { |t, _| t.event_category }
 
     case params[:type]
     when :course
