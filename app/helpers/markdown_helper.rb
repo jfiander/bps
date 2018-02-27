@@ -16,27 +16,35 @@ module MarkdownHelper
 
     @page_markdown = markdown
 
-    default_markdown
     preload_markdown(name)
+    default_markdown(@page_markdown)
     generate_markdown_div
     parse_markdown_div
   end
 
   private
 
-  def default_markdown
-    @burgee_html = center_html('burgee') do
-      USPSFlags::Burgees.new { |b| b.squadron = :birmingham }.svg
-    end
-
-    @education_menu = view_context.render(
-      'application/education_menu',
-      active: { courses: false, seminars: false }
-    )
-  end
-
   def preload_markdown(name)
     @page_markdown ||= StaticPage.find_by(name: name)&.markdown
+  end
+
+  def default_markdown(markdown)
+    @burgee_html = if markdown&.match?(/%burgee/)
+      center_html('burgee') do
+        USPSFlags::Burgees.new { |b| b.squadron = :birmingham }.svg
+      end
+    else
+      ''
+    end
+
+    @education_menu = if markdown&.match?(/%education/)
+      view_context.render(
+        'application/education_menu',
+        active: { courses: false, seminars: false }
+      )
+    else
+      ''
+    end
   end
 
   def generate_markdown_div
