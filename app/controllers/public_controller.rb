@@ -1,4 +1,6 @@
 class PublicController < ApplicationController
+  include EventsHelper
+
   before_action :list_bilges, only: [:newsletter, :get_bilge]
   before_action :time_formats, only: [:events, :catalog]
   before_action :preload_events, only: [:events, :catalog]
@@ -27,6 +29,7 @@ class PublicController < ApplicationController
 
   def catalog
     events = @all_events.includes(:event_type).order(:created_at).group_by(&:event_type).group_by { |t, _| t.event_category }
+    @locations = Location.searchable
 
     case params[:type]
     when :course
@@ -273,35 +276,6 @@ class PublicController < ApplicationController
     end
   end
 
-  def event_type(event)
-    @event_types.find_all { |e| e.id == event.event_type_id }.first
-  end
-  helper_method :event_type
-
-  def event_prereq(event)
-    @event_types.find_all { |e| e.id == event.prereq_id }.first
-  end
-  helper_method :event_prereq
-
-  def event_instructors(event)
-    @users.find_all do |u|
-      u.id.in?(@event_instructors.find_all do |ei|
-        ei.event_id == event.id
-      end.map(&:user_id))
-    end
-  end
-  helper_method :event_instructors
-
-  def course_topics(event)
-    @course_topics.find_all { |ct| ct.course_id == event.id }
-  end
-  helper_method :course_topics
-
-  def course_includes(event)
-    @course_includes.find_all { |ci| ci.course_id == event.id }
-  end
-  helper_method :course_includes
-
   def generate_dept_head(dept, head)
     {
       title: BridgeOffice.title(dept),
@@ -328,14 +302,5 @@ class PublicController < ApplicationController
         id: c.id
       }
     end
-  end
-
-  def preload_events
-    @all_events ||= Event.order(:start_at)
-    @course_topics ||= CourseTopic.all
-    @course_includes ||= CourseInclude.all
-    @users ||= User.all
-    @event_instructors ||= EventInstructor.all
-    @event_types ||= EventType.all
   end
 end

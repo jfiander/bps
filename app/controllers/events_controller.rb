@@ -1,10 +1,14 @@
 class EventsController < ApplicationController
+  include EventsHelper
+
   before_action :authenticate_user!, except: [:show]
   before_action                      except: [:show, :locations, :remove_location] { require_permission(params[:type]) }
 
   before_action :get_event,       only: [:copy, :edit, :expire]
   before_action :prepare_form,    only: [:new, :copy, :edit]
   before_action :check_for_blank, only: [:create, :update]
+
+  before_action :preload_events,  only: [:show]
 
   before_action { page_title("#{params[:type].to_s.titleize}s") }
 

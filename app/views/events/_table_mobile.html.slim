@@ -52,10 +52,11 @@
               = link_to(@locations[event.location_id][:map_link], target: :_blank) do
                 = fa_icon("map-marker-alt")
                 | Map
-          - if @locations[event.location_id][:picture].present?
-            = image_tag files_bucket.link(@locations[event.location_id][:picture].path(:thumb))
-          - if @locations[event.location_id][:details].present?
-            = simple_format(@locations[event.location_id][:details])
+          - unless defined?(@event_catalog)
+            - if @locations[event.location_id][:picture].present?
+              = image_tag files_bucket.link(@locations[event.location_id][:picture].path(:thumb))
+            - if @locations[event.location_id][:details].present?
+              = simple_format(@locations[event.location_id][:details])
         - else
           | Location TBD
     .event-mobile-contents.spaced = simple_format(event.description)
