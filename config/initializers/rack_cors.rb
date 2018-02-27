@@ -1,13 +1,15 @@
 if defined? Rack::Cors
-    Rails.configuration.middleware.insert_before 0, Rack::Cors do
-        allow do
-            origins [
-              "https://#{ENV['DOMAIN']}",
-              "http://#{ENV['DOMAIN']}",
-              "https://#{ENV['CLOUDFRONT_RAILS_ENDPOINT']}",
-              "http://#{ENV['CLOUDFRONT_RAILS_ENDPOINT']}"
-            ]
-            resource '/assets/*'
-        end
+  Rails.configuration.middleware.insert_before 0, Rack::Cors do
+    allow do
+      domain = ENV['DOMAIN']
+      assets = ENV['CLOUDFRONT_RAILS_ENDPOINT']
+      origins [
+        %r{\Ahttps?://(.*?)\.bpsd9.org(:\d+)?\z},
+        %r{\Ahttps?://#{domain}\z},
+        %r{\Ahttps?://#{assets}\z}
+      ]
+      resource '/assets/*'
+      resource '/webfonts/*'
     end
+  end
 end
