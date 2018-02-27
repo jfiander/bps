@@ -70,15 +70,15 @@ class Event < ApplicationRecord
   end
 
   def course?(event_types = nil)
-    category(event_types) == :course
+    category?(:course, event_types)
   end
 
   def seminar?(event_types = nil)
-    category(event_types) == :seminar
+    category?(:seminar, event_types)
   end
 
   def meeting?(event_types = nil)
-    category(event_types) == :meeting
+    category?(:meeting, event_types)
   end
 
   def length?
