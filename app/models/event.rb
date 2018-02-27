@@ -43,16 +43,16 @@ class Event < ApplicationRecord
 
   def category(event_types = nil)
     if event_types.present?
-      course_ids = event_types.select do |e|
-        e.event_category.in? [:public, :advanced_grade, :elective]
+      course_ids = event_types.find_all do |e|
+        e.event_category.to_sym.in? [:public, :advanced_grade, :elective]
       end.map(&:id)
 
-      seminar_ids = event_types.select do |e|
-        e.event_category.in? [:seminar]
+      seminar_ids = event_types.find_all do |e|
+        e.event_category.to_sym.in? [:seminar]
       end.map(&:id)
 
-      meeting_ids = event_types.select do |e|
-        e.event_category.in? [:meeting]
+      meeting_ids = event_types.find_all do |e|
+        e.event_category.to_sym.in? [:meeting]
       end.map(&:id)
     else
       course_ids = EventType.courses.map(&:id)
@@ -63,6 +63,10 @@ class Event < ApplicationRecord
     return :course if event_type_id.in? course_ids
     return :seminar if event_type_id.in? seminar_ids
     return :meeting if event_type_id.in? meeting_ids
+  end
+
+  def category?(cat, event_types = nil)
+    category(event_types) == cat.to_sym
   end
 
   def course?(event_types = nil)
@@ -86,9 +90,9 @@ class Event < ApplicationRecord
   end
 
   def get_flyer(event_types = nil)
-    if course?(event_types) && flyer_file_name.blank?
+    if course?(event_types) && flyer.blank?
       get_book_cover(:courses, event_types)
-    elsif seminar?(event_types) && flyer_file_name.blank?
+    elsif seminar?(event_types) && flyer.blank?
       get_book_cover(:seminars, event_types)
     elsif flyer.present?
       Event.buckets[:files].link(flyer&.s3_object&.key)
@@ -120,7 +124,8 @@ class Event < ApplicationRecord
 
   def get_book_cover(type, event_types = nil)
     event_types ||= EventType.all
-    Event.buckets[:static].link("book_covers/#{type}/#{event_types.select { |e| e.id == event_type_id }.first.title}.jpg")
+    filename = event_types.select { |e| e.id == event_type_id }.first.title
+    Event.buckets[:static].link("book_covers/#{type}/#{filename}.jpg")
   end
 
   def validate_costs
