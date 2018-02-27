@@ -131,23 +131,6 @@ RSpec.describe Event, type: :model do
         expect(@event.member_cost).to eql(12)
       end
     end
-
-    describe 'map_links' do
-      it 'should store a valid http link as provided' do
-        @event.update(map_link: 'http://maps.google.com')
-        expect(@event.map_link).to eql('http://maps.google.com')
-      end
-
-      it 'should store a valid https link as provided' do
-        @event.update(map_link: 'https://maps.google.com')
-        expect(@event.map_link).to eql('https://maps.google.com')
-      end
-
-      it 'should prefix a bare link with http' do
-        @event.update(map_link: 'maps.google.com')
-        expect(@event.map_link).to eql('http://maps.google.com')
-      end
-    end
   end
 
   describe 'formatting' do

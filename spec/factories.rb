@@ -1,10 +1,4 @@
 FactoryBot.define do
-  factory :location do
-    address "MyText"
-    maplink "MyText"
-    details "MyText"
-    picture ""
-  end
   factory :header_image do
     image_file ''
   end
@@ -50,5 +44,12 @@ FactoryBot.define do
     name 'rendezvous'
     department 'administrative'
     association :user
+  end
+
+  factory :location do
+    address "#{SecureRandom.hex(8)}\n#{SecureRandom.hex(8)}\n#{SecureRandom.hex(8)}"
+    map_link 'https://maps.example.com'
+    details 'address details'
+    picture {}
   end
 end
