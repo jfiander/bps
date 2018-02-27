@@ -1,3 +1,5 @@
+h2 Locations
+
 .table.locations
   .table-row
     .table-cell.table-header Address
@@ -9,11 +11,11 @@
     .table-row
       .table-cell = simple_format(location[:address])
       .table-cell = link_to 'Map', location[:map_link]
-      .table-cell = location[:details]
+      .table-cell = simple_format(location[:details])
       .table-cell = image_tag files_bucket.link(location[:picture].path(:thumb)) if location[:picture].present?
       .table-cell.actions.pending
         = link_to(edit_location_path(id: location[:id])) { fa_icon('edit') }
-        - if Event.where(location_id: location[:id]).count.zero?
+        - if Event.current(:all).where(location_id: location[:id]).count.zero?
           = link_to(remove_location_path(id: location[:id]), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this location?' }) { fa_icon('minus-square') }
         - else
-          em In Use
+          em title="You cannot remove locations currently in use." In Use

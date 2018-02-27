@@ -2,8 +2,10 @@ class LocationsController < ApplicationController
   before_action :authenticate_user!
   before_action { require_permission(:event, :course, :seminar, :page) }
 
+  before_action { page_title('Locations') }
+
   def list
-    @locations = Location.all.map(&:display)
+    @locations = Location.all.order(:id).map(&:display)
   end
 
   def new
