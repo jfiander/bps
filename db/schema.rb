@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180225211335) do
+ActiveRecord::Schema.define(version: 20180227160619) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name"
@@ -84,7 +84,6 @@ ActiveRecord::Schema.define(version: 20180225211335) do
     t.integer  "cost"
     t.text     "description"
     t.string   "requirements"
-    t.string   "location"
     t.string   "map_link"
     t.datetime "start_at"
     t.datetime "length"
@@ -102,6 +101,7 @@ ActiveRecord::Schema.define(version: 20180225211335) do
     t.boolean  "allow_public_registrations", default: true
     t.datetime "deleted_at"
     t.datetime "cutoff_at"
+    t.integer  "location_id"
   end
 
   create_table "header_images", force: :cascade do |t|
@@ -121,6 +121,19 @@ ActiveRecord::Schema.define(version: 20180225211335) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.datetime "deleted_at"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.text     "address"
+    t.text     "map_link"
+    t.text     "details"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "markdown_files", force: :cascade do |t|

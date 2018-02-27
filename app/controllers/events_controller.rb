@@ -1,12 +1,13 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action                      except: [:show] { require_permission(params[:type]) }
+  before_action                      except: [:show, :locations, :remove_location] { require_permission(params[:type]) }
 
   before_action :get_event,       only: [:copy, :edit, :expire]
   before_action :prepare_form,    only: [:new, :copy, :edit]
   before_action :check_for_blank, only: [:create, :update]
 
-  before_action { page_title("#{params[:type].to_s.titleize}s") }
+  before_action except: [:locations] { page_title("#{params[:type].to_s.titleize}s") }
+  before_action   only: [:locations] { page_title('Locations') }
 
   def show
     @event = Event.find_by(id: show_params[:id])
@@ -15,6 +16,7 @@ class EventsController < ApplicationController
       redirect_to send("#{params[:type]}s_path")
       return
     end
+    @locations = Location.searchable
     @event_title = params[:type].to_s.titleize
     @registration = Registration.new(event_id: show_params[:id])
     @registered = if user_signed_in?
@@ -27,12 +29,14 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @locations = Location.all.map(&:display)
     @submit_path = send("create_#{params[:type]}_path")
   end
 
   def copy
-    @submit_path = send("create_#{params[:type]}_path")
     @event = Event.new(@event.attributes)
+    @locations = Location.all.map(&:display)
+    @submit_path = send("create_#{params[:type]}_path")
     render :new
   end
 
@@ -52,6 +56,7 @@ class EventsController < ApplicationController
   end
 
   def edit
+    @locations = Location.all.map(&:display)
     @submit_path = send("update_#{params[:type]}_path")
     @edit_mode = "Modify"
     render :new
@@ -81,8 +86,12 @@ class EventsController < ApplicationController
 
   private
   def event_params
-    params.require(:event).permit(:id, :event_type_id, :description, :cost, :member_cost, :requirements, :location, :map_link,
+    params.require(:event).permit(:id, :event_type_id, :description, :cost, :member_cost, :requirements, :location_id, :map_link,
       :start_at, :length, :sessions, :flyer, :cutoff_at, :expires_at, :prereq_id, :allow_member_registrations, :allow_public_registrations)
+  end
+
+  def location_params
+    params.permit(:locations)
   end
 
   def update_params

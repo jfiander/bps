@@ -1,4 +1,10 @@
 FactoryBot.define do
+  factory :location do
+    address "MyText"
+    maplink "MyText"
+    details "MyText"
+    picture ""
+  end
   factory :header_image do
     image_file ''
   end

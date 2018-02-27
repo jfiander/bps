@@ -3,14 +3,12 @@ class Event < ApplicationRecord
   has_many   :course_topics,   foreign_key: :course_id
   has_many   :course_includes, foreign_key: :course_id
   belongs_to :prereq, class_name: 'EventType', optional: true
+  belongs_to :location, optional: true
 
   has_many :event_instructors
   has_many :instructors, through: :event_instructors, source: :user
 
-  before_validation do
-    prefix_map_link
-    validate_costs
-  end
+  before_validation { validate_costs }
 
   has_attached_file :flyer,
     default_url: nil,
@@ -123,12 +121,6 @@ class Event < ApplicationRecord
   def get_book_cover(type, event_types = nil)
     event_types ||= EventType.all
     Event.buckets[:static].link("book_covers/#{type}/#{event_types.select { |e| e.id == event_type_id }.first.title}.jpg")
-  end
-
-  def prefix_map_link
-    return if map_link.blank? || map_link.match(%r{https?://})
-
-    self.map_link = "http://#{map_link}"
   end
 
   def validate_costs

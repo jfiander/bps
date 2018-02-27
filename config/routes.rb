@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   get     '/photos',             to: 'gallery#index'
   get     '/minutes',            to: 'members#minutes'
   post    '/assign_photo',       to: 'user#assign_photo'
+  get     '/locations',          to: 'locations#list'
 
   # Functional page back-ends
   get     '/bilge/:year/:month',   to: 'public#get_bilge',           as: 'bilge'
@@ -52,12 +53,18 @@ Rails.application.routes.draw do
   put     '/invite/:id',           to: 'user#invite',                as: 'invite'
   put     '/invite_all',           to: 'user#invite_all'
 
-  get     '/file',               to: 'file#new',                     as: 'file'
-  post    '/file/upload',        to: 'file#create',                  as: 'upload_file'
-  delete  '/file/:id/destroy',   to: 'file#destroy',                 as: 'remove_file'
-  get     '/header',             to: 'file#new_header',              as: 'header'
-  post    '/header/upload',      to: 'file#create_header',           as: 'upload_header'
-  delete  '/header/:id/destroy', to: 'file#destroy_header',          as: 'remove_header'
+  get     '/file',                 to: 'file#new',                   as: 'file'
+  post    '/file/upload',          to: 'file#create',                as: 'upload_file'
+  delete  '/file/:id/destroy',     to: 'file#destroy',               as: 'remove_file'
+  get     '/header',               to: 'file#new_header',            as: 'header'
+  post    '/header/upload',        to: 'file#create_header',         as: 'upload_header'
+  delete  '/header/:id/destroy',   to: 'file#destroy_header',        as: 'remove_header'
+
+  get     '/locations/new',        to: 'locations#new',              as: 'new_location'
+  post    '/locations/create',     to: 'locations#create',           as: 'create_location'
+  get     '/locations/:id/edit',   to: 'locations#edit',             as: 'edit_location'
+  patch   '/locations/:id/update', to: 'locations#update',           as: 'update_location'
+  delete  '/locations/:id/remove', to: 'locations#remove',           as: 'remove_location'
 
   post    '/album/new',          to: 'gallery#add_album',            as: 'new_album'
   get     '/album/:id',          to: 'gallery#edit_album',           as: 'edit_album'

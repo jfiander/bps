@@ -45,11 +45,11 @@
       - if event.cost.present?
         .event-mobile-contents.spaced = event.formatted_cost
       .event-mobile-contents.spaced
-        - if event.location.present?
-          .event-mobile-contents = simple_format(event.location)
-          - if event.map_link.present?
+        - if @locations[event.location_id].present?
+          .event-mobile-contents = simple_format(@locations[event.location_id][:address])
+          - if @locations[event.location_id][:map_link].present?
             .event-mobile-contents
-              = link_to(event.map_link, target: :_blank) do
+              = link_to(@locations[event.location_id][:map_link], target: :_blank) do
                 = fa_icon("map-marker-alt")
                 | Map
         - else

@@ -1,6 +1,9 @@
 - if current_user&.permitted?(params[:type])
   = link "Add #{params[:type].to_s.titleize}", path: send("new_#{params[:type]}_path"), fa: { name: 'calendar-plus', options: { style: :regular } }
 
+- if current_user&.permitted?(:event, :course, :seminar, :page) && controller_name == 'locations'
+  = link 'Add Location', path: new_location_path, fa: { name: 'plus-square' }
+
 - if current_user&.permitted?(:store) && controller.action_name == 'store'
   = link 'Add Item', path: new_store_item_path, fa: { name: 'plus-square' }
 

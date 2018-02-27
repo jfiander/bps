@@ -45,11 +45,12 @@ h2 = "#{@edit_mode} #{@event_title}"
       = fa_icon('file-pdf', style: :regular, css: 'file-type')
       = fa_icon('file-image', style: :regular, css: 'file-type')
       = f.file_field :flyer
-      br
-      - if @event.get_flyer&.downcase&.match(/\.pdf$/)
-        iframe src=(@event.get_flyer) width="100"
-      - elsif @event.get_flyer&.downcase&.match(/\.(jpe?g|png)$/)
-        = image_tag @event.get_flyer, width: 100
+      - if @event.flyer.present?
+        br
+        - if @event.get_flyer&.downcase&.match(/\.pdf$/)
+          iframe src=(@event.get_flyer) width="100"
+        - elsif @event.get_flyer&.downcase&.match(/\.(jpe?g|png)$/)
+          = image_tag @event.get_flyer, width: 100
     br.clear
 
     hr
@@ -69,11 +70,11 @@ h2 = "#{@edit_mode} #{@event_title}"
       hr
 
     .left = f.label :location
-    .right = f.text_area :location, class: "location"
-    br.clear
-
-    .left = f.label :map_link
-    .right = f.text_field :map_link, class: "map-link", placeholder: "https://maps.google.com/..."
+    .right
+      - if @locations.present?
+        = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: "Please select a location", required: true
+        br
+      = link_to 'Manage Locations', locations_path
     br.clear
 
     hr

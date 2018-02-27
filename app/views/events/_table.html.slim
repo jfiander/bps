@@ -28,15 +28,15 @@
             .table
               .table-row
                 .table-cell.location
-                  - if event.location.present?
+                  - if @locations[event.location_id].present?
                     b
                       | Location: 
-                      - if event.map_link.present?
-                        = link_to(event.map_link, target: :_blank) do
+                      - if @locations[event.location_id][:map_link].present?
+                        = link_to(@locations[event.location_id][:map_link], target: :_blank) do
                           = fa_icon("map-marker-alt")
                           | Map
                     br
-                    p = simple_format(event.location)
+                    p = simple_format(@locations[event.location_id][:address])
 
                   - else
                     | Location TBD

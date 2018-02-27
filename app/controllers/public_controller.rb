@@ -15,6 +15,7 @@ class PublicController < ApplicationController
   def events
     @events = get_events(params[:type], :current)
     @registered = Registration.includes(:user).where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
+    @locations = Location.searchable
 
     @current_user_permitted_event_type = current_user&.permitted?(params[:type])
 
