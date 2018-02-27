@@ -52,9 +52,12 @@
               = link_to(@locations[event.location_id][:map_link], target: :_blank) do
                 = fa_icon("map-marker-alt")
                 | Map
+          - if @locations[event.location_id][:picture].present?
+            = image_tag files_bucket.link(@locations[event.location_id][:picture].path(:thumb))
+          - if @locations[event.location_id][:details].present?
+            = simple_format(@locations[event.location_id][:details])
         - else
           | Location TBD
-
     .event-mobile-contents.spaced = simple_format(event.description)
     - if course_topics(event).present?
       .event-mobile-contents.spaced
@@ -101,7 +104,7 @@
       = render 'events/no_more_registrations'
 
     .event-mobile-contents.spaced
-      - if event.get_flyer(@event_types).present? && event.flyer_content_type != 'application/pdf'
+      - if event.flyer.present? && event.flyer_content_type != 'application/pdf'
         = image_tag event.get_flyer(@event_types)
-      - if event.get_flyer(@event_types).present? && event.flyer_content_type == 'application/pdf'
+      - if event.flyer.present? && event.flyer_content_type == 'application/pdf'
         iframe src=(event.get_flyer(@event_types))
