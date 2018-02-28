@@ -25,11 +25,13 @@ module EventsHelper
 
   def preload_events
     @all_events ||= Event.order(:start_at)
-    @catalog ||= @all_events.find_all(&:show_in_catalog).group_by(&:category)
     @course_topics ||= CourseTopic.all
     @course_includes ||= CourseInclude.all
     @users ||= User.all
     @event_instructors ||= EventInstructor.all
     @event_types ||= EventType.all
+    @catalog ||= @all_events.find_all(&:show_in_catalog)
+                            .sort_by { |e| event_type(e).title }
+                            .group_by { |e| e.category(@event_types) }
   end
 end
