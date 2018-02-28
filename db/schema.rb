@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227160619) do
+ActiveRecord::Schema.define(version: 20180228201309) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20180227160619) do
     t.datetime "deleted_at"
     t.datetime "cutoff_at"
     t.integer  "location_id"
+    t.boolean  "show_in_catalog"
   end
 
   create_table "header_images", force: :cascade do |t|

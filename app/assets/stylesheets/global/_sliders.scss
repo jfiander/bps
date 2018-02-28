@@ -76,12 +76,20 @@ input:focus + .slider.blue {
   background-color: $old-glory-red;
 }
 
+.slider.blue.inverse {
+  background-color: lighten($old-glory-blue, 10%);
+}
+
 input:checked + .slider.inverse {
   background-color: $birmingham-blue;
 }
 
 input:focus + .slider.inverse {
   box-shadow: 0 0 1px $birmingham-blue;
+}
+
+input:checked + .slider.blue.inverse {
+  background-color: $birmingham-blue;
 }
 
 input:checked + .slider:before {
@@ -119,6 +127,14 @@ input:checked + .slider div.description.excom:after {
 
 .slider div.description.create:after {
   content: "Create";
+}
+
+.slider div.description.catalog:after {
+  content: "Ignore";
+}
+
+input:checked + .slider div.description.catalog:after {
+  content: "Show";
 }
 
 input:checked + .slider div.description.remove:after,

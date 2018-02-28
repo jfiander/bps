@@ -19,6 +19,15 @@ h2 = "#{@edit_mode} #{@event_title}"
         li = link_to(locations_path) { fa_icon('edit') + 'Manage Locations' }
     br.clear
 
+    - if params[:type].in? [:course, :seminar]
+      .left = f.label :show_in_catalog
+      .right
+        label.switch
+          = f.check_box :show_in_catalog, class: "slider round"
+          span.slider.round.blue.inverse
+            .description.catalog
+      br.clear
+
     hr
 
     .left = f.label :description

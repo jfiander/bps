@@ -89,8 +89,14 @@ class EventsController < ApplicationController
 
   private
   def event_params
-    params.require(:event).permit(:id, :event_type_id, :description, :cost, :member_cost, :requirements, :location_id, :map_link,
-      :start_at, :length, :sessions, :flyer, :cutoff_at, :expires_at, :prereq_id, :allow_member_registrations, :allow_public_registrations)
+    params.require(:event).permit(
+      %i[
+        id event_type_id description cost member_cost requirements
+        location_id map_link start_at length sessions flyer
+        cutoff_at expires_at prereq_id allow_member_registrations
+        allow_public_registrations show_in_catalog
+      ]
+    )
   end
 
   def location_params
