@@ -29,6 +29,14 @@
     flex: 5 0px;
     -webkit-order: 2;
     order: 2;
+
+    div#profile .profile-left {
+      max-width: 55%;
+    }
+
+    div#Profile .profile-right {
+      max-width: 45%;
+    }
   }
 
   footer {
