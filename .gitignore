@@ -25,3 +25,6 @@ coverage/*
 
 # Generated flag files
 /app/assets/images/flags/*
+
+# Ignore gitallowed config
+.gitallowed
