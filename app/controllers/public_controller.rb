@@ -28,26 +28,7 @@ class PublicController < ApplicationController
   end
 
   def catalog
-    events = @all_events.includes(:event_type).order(:created_at).group_by(&:event_type).group_by { |t, _| t.event_category }
-    @locations = Location.searchable
-
-    case params[:type]
-    when :course
-      @event_catalog = {'advanced_grade' => {}, 'elective' => {}, 'public' => {}}
-
-      ['advanced_grade', 'elective', 'public'].each do |course_type|
-        events[course_type].each { |et, e| @event_catalog[course_type][et] = e.first }
-      end
-      @event_catalog.symbolize_keys!
-    when :seminar
-      @event_catalog = {'seminar' => {}}
-
-      events['seminar'].each { |et, e| @event_catalog['seminar'][et] = e.first }
-    end
-
-    @event_catalog = @event_catalog.map { |et, data| {et => data.values} }.reduce({}, :merge)
-    @event_catalog = @event_catalog.map { |c, data| {c => data.sort_by { |e| e.event_type } } }.reduce({}, :merge)
-    @event_catalog = @event_catalog['seminar'] if params[:type] == :seminar
+    @event_catalog = @catalog[params[:type]]
   end
 
   def bridge

@@ -25,6 +25,7 @@ module EventsHelper
 
   def preload_events
     @all_events ||= Event.order(:start_at)
+    @catalog ||= @all_events.find_all(&:show_in_catalog).group_by(&:category)
     @course_topics ||= CourseTopic.all
     @course_includes ||= CourseInclude.all
     @users ||= User.all
