@@ -8,14 +8,15 @@ h2 = "#{@edit_mode} #{@event_title}"
     .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), {include_blank: true, prompt: "Please select a #{params[:type]} type"}, required: true
     br.clear
 
-    .left = f.label :location
+    .left 
+      = f.label :location
+      ul
+        li.red If you need to add a new location, do that before continuing.
     .right
       - if @locations.present?
         = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: "Please select a location", required: true
-    br.clear
-
-    .left
-    .right = link_to(locations_path) { fa_icon('edit') + 'Manage Locations' }
+      ul
+        li = link_to(locations_path) { fa_icon('edit') + 'Manage Locations' }
     br.clear
 
     hr
