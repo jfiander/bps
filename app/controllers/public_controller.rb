@@ -28,7 +28,11 @@ class PublicController < ApplicationController
   end
 
   def catalog
-    @event_catalog = @catalog[params[:type]]
+    @event_catalog = if params[:type] == :course
+      @catalog.slice('public', 'advanced_grade', 'elective').symbolize_keys
+    else
+      @catalog[params[:type].to_s]
+    end
   end
 
   def bridge

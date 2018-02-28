@@ -32,6 +32,6 @@ module EventsHelper
     @event_types ||= EventType.all
     @catalog ||= @all_events.find_all(&:show_in_catalog)
                             .sort_by { |e| event_type(e).title }
-                            .group_by { |e| e.category(@event_types) }
+                            .group_by { |e| event_type(e).event_category }
   end
 end
