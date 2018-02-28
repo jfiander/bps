@@ -8,6 +8,18 @@ h2 = "#{@edit_mode} #{@event_title}"
     .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), {include_blank: true, prompt: "Please select a #{params[:type]} type"}, required: true
     br.clear
 
+    .left = f.label :location
+    .right
+      - if @locations.present?
+        = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: "Please select a location", required: true
+    br.clear
+
+    .left
+    .right = link_to(locations_path) { fa_icon('edit') + 'Manage Locations' }
+    br.clear
+
+    hr
+
     .left = f.label :description
     .right = f.text_area :description
     br.clear
@@ -68,16 +80,6 @@ h2 = "#{@edit_mode} #{@event_title}"
       br.clear
 
       hr
-
-    .left = f.label :location
-    .right
-      - if @locations.present?
-        = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: "Please select a location", required: true
-        br
-      = link_to 'Manage Locations', locations_path
-    br.clear
-
-    hr
 
     .left = f.label :cost, "Cost"
     .right
