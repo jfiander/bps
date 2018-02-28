@@ -27,7 +27,9 @@ class UserController < ApplicationController
       return
     end
 
-    @registrations = Registration.for_user(@user.id).current
+    @registrations = Registration.for_user(@user.id).current.reject do |r|
+      r.event.blank?
+    end
 
     @profile_title = @user.id == current_user.id ? 'Current' : 'Selected'
 
