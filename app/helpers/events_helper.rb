@@ -24,10 +24,10 @@ module EventsHelper
   end
 
   def preload_events
+    @users ||= User.all
     @all_events ||= Event.order(:start_at)
     @course_topics ||= CourseTopic.all
     @course_includes ||= CourseInclude.all
-    @users ||= User.all
     @event_instructors ||= EventInstructor.all
     @event_types ||= EventType.all
     @catalog ||= @all_events.find_all(&:show_in_catalog)
