@@ -30,8 +30,8 @@ module EventsHelper
     @course_includes ||= CourseInclude.all
     @event_instructors ||= EventInstructor.all
     @event_types ||= EventType.all
-    @catalog ||= @all_events.find_all(&:show_in_catalog)
-                            .sort_by { |e| event_type(e).title }
-                            .group_by { |e| event_type(e).event_category }
+    @catalog ||= @all_events.find_all(&:show_in_catalog).sort_by do |e|
+      [event_type(e).order_position, event_type(e).title]
+    end.group_by { |e| event_type(e).event_category }
   end
 end

@@ -60,6 +60,27 @@ class EventType < ApplicationRecord
     cleanup_title(title.titleize)
   end
 
+  def self.order_positions
+    {
+      'public' => 1,
+      'advanced_grade' => {
+        'seamanship' => 2,
+        'piloting' => 3,
+        'advanced_piloting' => 4,
+        'junior_navigation' => 5,
+        'navigation' => 6
+      },
+      'elective' => 7,
+      'seminar' => 8,
+      'meeting' => 9
+    }
+  end
+
+  def order_position
+    o = EventType.order_positions[event_category]
+    o.is_a?(Hash) ? o[title] : o
+  end
+
   private
 
   def cleanup_title(title)
