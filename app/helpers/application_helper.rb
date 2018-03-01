@@ -1,18 +1,20 @@
 module ApplicationHelper
   def editor(partial, options = {})
-    link = "<a href='#' id='show-editor'#{auto_show}>Show Editor</a>"
-    top = "<div id='editor'#{auto_show}>"
-    bottom = '</div>'
-    link.html_safe +
-      top.html_safe +
-      render(partial, options) +
-      bottom.html_safe
+    <<~HTML.html_safe
+      <script>#{render('application/show_editor.js', page_name: partial)}</script>
+      <a href='#' id='show-editor'#{auto_show(partial)}>Show Editor</a>
+      <div id='editor'#{auto_show(partial)}>#{render(partial, options)}</div>
+    HTML
   end
 
   private
 
-  def auto_show
-    return '' unless true # session says link was clicked
+  def auto_show(partial)
+    return '' unless page_name_in_auto_shows?(partial)
     " class='auto-show'"
+  end
+
+  def page_name_in_auto_shows?(partial)
+    session[:auto_shows]&.include?(partial)
   end
 end

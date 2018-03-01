@@ -1,5 +1,7 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token, only: [:auto_show]
+
   before_action                        only: [:assign_photo] { require_permission(:admin) }
   before_action                      except: [:current, :show, :register, :cancel_registration] { require_permission(:users) }
 
@@ -258,7 +260,16 @@ class UserController < ApplicationController
     redirect_to dest_path
   end
 
+  def auto_show
+    session[:auto_shows] ||= []
+    unless session[:auto_shows].include? clean_params[:page_name]
+      session[:auto_shows] << clean_params[:page_name]
+    end
+    head :ok
+  end
+
   private
+
   def get_users
     all_users ||= User.alphabetized.with_positions
     @user_roles ||= UserRole.preload
@@ -319,7 +330,7 @@ class UserController < ApplicationController
   end
 
   def clean_params
-    params.permit(:id, :user_id, :role, :permit_id, :committee, :department, :bridge_office, :type,
+    params.permit(:id, :user_id, :role, :permit_id, :committee, :department, :bridge_office, :type, :page_name,
       :committee_name, :chair, :term_length, :import_file, :photo, :redirect_to, term_start_at: ["(1i)", "(2i)", "(3i)"])
   end
 end

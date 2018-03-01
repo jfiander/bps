@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   patch   '/edit/:page_name',      to: 'members#update_markdown'
   put     '/invite/:id',           to: 'user#invite',                as: 'invite'
   put     '/invite_all',           to: 'user#invite_all'
+  post    '/auto_show',            to: 'user#auto_show',             as: 'auto_show'
 
   get     '/file',                 to: 'file#new',                   as: 'file'
   post    '/file/upload',          to: 'file#create',                as: 'upload_file'
