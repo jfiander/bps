@@ -1,12 +1,12 @@
-Registration Confirmation
+<%= render 'greeting' %>
 
-Hello, <%= @registration&.user&.full_name || @registration.email %>!
+This is your confirmation that you have registered for the following:
 
-This is your confirmation that you have registered for:
-  <%= @registration.event.category.to_s.titleize %>: <%= @registration.event.event_type.display_title %>
-  Date: <%= @registration.event.start_at.strftime('%d %B %Y') %>
-  Time: <%= @registration.event.start_at.strftime('%k:%M %P').strip %>
 
+**********
+
+<%= render 'registration' %>
+<%= render 'location' %>
 
 If you have any questions, or if you would like to cancel this registration,
 please email me at <%= @signature[:email] %>.

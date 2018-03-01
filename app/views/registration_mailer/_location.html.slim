@@ -1,0 +1,22 @@
+h3 Location:
+p
+  b Address:
+  - if @registration.event.location.map_link.present?
+    |  (
+    = link_to 'Map', @registration.event.location.map_link
+    | )
+  br
+  - @registration.event.location.address.split(/\r?\n/).each do |line|
+    = line
+    br
+  - if @registration.event.location.details.present?
+    br
+    b Instructions:
+    br
+    - @registration.event.location.details.split(/\r?\n/).each do |line|
+      = line
+      br
+  - if @registration.event.location.picture.present?
+    br
+    = link_to(ApplicationRecord.buckets[:files].link(@registration.event.location.picture.path(:large))) do
+      = image_tag ApplicationRecord.buckets[:files].link(@registration.event.location.picture.path(:thumb)), title: 'Location'

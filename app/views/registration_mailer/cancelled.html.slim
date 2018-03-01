@@ -2,26 +2,5 @@
 
 h2.red Cancelled Registration
 
-p
-  h3 Registration information:
-  = @registration.event.category.to_s.titleize
-  | : 
-  b = @registration.event.event_type.display_title
-  br
-  | Date: 
-  b = @registration.event.start_at.strftime('%d %b %Y')
-  br
-  | Time:  
-  b = @registration.event.start_at.strftime('%H%M')
-
-p
-  h3 Registrant information:
-  - if @registration.user.present?
-    | Name: 
-    b = @registration.user.full_name
-    br
-    | Email: 
-    b = @registration.user.email
-  - else
-    | Email: 
-    b = @registration.email
+= render 'registration'
+= render 'registrant'

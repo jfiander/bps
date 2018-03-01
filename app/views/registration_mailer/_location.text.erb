@@ -1,0 +1,24 @@
+<%- if @registration.event.location.present? %>
+Address:
+  <%= @registration.event.location.address.gsub(/(\r?\n)/, '\1  ') %>
+
+
+<%- if @registration.event.location.map_link.present? %>
+Map:
+  <%= @registration.event.location.map_link %>
+<%- end %>
+
+
+<%- if @registration.event.location.details.present? %>
+Instructions:
+  <%= @registration.event.location.details.gsub(/(\r?\n)/, '\1  ') %>
+<%- end %>
+
+
+<%- if @registration.event.location.picture.present? %>
+Help finding location:
+  <%= ApplicationRecord.buckets[:files].link(@registration.event.location.picture.path(:large)) %>
+<%- end %>
+
+**********
+<%- end %>

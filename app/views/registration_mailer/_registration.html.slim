@@ -1,0 +1,16 @@
+p
+  h3 Registration information:
+  b
+    = @registration.event.category.to_s.titleize
+    | : 
+  = @registration.event.event_type.display_title
+  br
+  b Date: 
+  = @registration.event.start_at.strftime('%-d %B %Y')
+  br
+  b Time:  
+  = @registration.event.start_at.strftime('%-k:%M %P')
+  - if @registration.event.location.present? && controller.action_name != 'confirm'
+    br
+    b Location: 
+    = @registration.event.location.address.split("\n").first

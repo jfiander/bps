@@ -1,0 +1,10 @@
+Registrant information:
+<%- if @registration.user.present? %>
+  Name: <%= @registration.user.full_name %>
+  <%- if @registration.user.certificate.present? %>
+  Certificate: <%= @registration.user.certificate %>
+  <%- end %>
+  Email: <%= @registration.user.email %>
+<%- else %>
+  Email: <%= @registration.email %>
+<%- end %>

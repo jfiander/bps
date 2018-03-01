@@ -1,0 +1,15 @@
+p
+  h3 Registrant information:
+  - if @registration.user.present?
+    b Name: 
+    = @registration.user.full_name
+    - if @registration.user.certificate.present?
+      |  (
+      = @registration.user.certificate
+      | )
+    br
+    b Email: 
+    = @registration.user.email
+  - else
+    b Email: 
+    = @registration.email
