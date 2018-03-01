@@ -79,10 +79,18 @@ div#editor {
   display: none;
 }
 
+div#editor.auto-show {
+  display: inherit;
+}
+
 a#show-editor {
   display: block;
   margin: 1em;
   font-size: 1.1em;
+}
+
+a#show-editor.auto-show {
+  display: none;
 }
 
 small.header {
