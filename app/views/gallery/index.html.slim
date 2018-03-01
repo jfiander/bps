@@ -1,11 +1,6 @@
 h2 Squadron Photos
 
-- if current_user&.permitted?(:photos)
-  .editor
-    hr
-    h3 Create or remove an album
-    = render 'add_album_form'
-    = render 'upload_form', redirect_to_album: false
+= editor('photos_editor') if current_user&.permitted?(:photos)
 
 - if @albums.blank?
   h3 We're sorry, but there are currently no photo albums available.

@@ -1,25 +1,6 @@
 h2 Squadron Meeting Minutes
 
-- if current_user&.permitted?(:minutes)
-  .editor
-    hr
-    = form_tag upload_minutes_path, multipart: true
-      = fa_icon("file-pdf", style: :regular, css: "file-type")
-      = file_field_tag :minutes_upload_file, accept: 'application/pdf', required: true
-      = summer_months(date_select(:issue, :date, start_year: 2014, discard_day: true, required: true), mode: :hide)
-      br
-      label.switch
-        = check_box_tag :minutes_excom, class: "slider round"
-        span.slider.round.blue
-          .description.excom
-      label.switch
-        = check_box_tag :minutes_remove, class: "slider round"
-        span.slider.round
-          .description.remove
-      br
-      = spinner_button(button_text: "Submit", css_class: 'big')
-    small Uploading to an issue that has already been uploaded will overwrite the previous version.
-    hr
+= editor('minutes_editor') if current_user&.permitted?(:minutes)
 
 h4 Click on a button below to view or download that issue.
 

@@ -1,22 +1,7 @@
 h2 Squadron Newsletter
 h3 The Bilge Chatter
 
-- if current_user&.permitted?(:newsletter)
-  .editor
-    hr
-    = form_tag upload_bilge_path, multipart: true
-      = fa_icon("file-pdf", style: :regular, css: "file-type")
-      = file_field_tag :bilge_upload_file, accept: 'application/pdf', required: true
-      = summer_months(date_select(:issue, :date, start_year: 2015, discard_day: true, required: true), mode: :summer)
-      br
-      label.switch
-        = check_box_tag :bilge_remove, class: "slider round"
-        span.slider.round
-          .description.remove
-      br
-      = spinner_button(button_text: "Submit", css_class: 'big')
-    small Uploading to an issue that has already been uploaded will overwrite the previous version.
-    hr
+= editor('newsletter_editor') if current_user&.permitted?(:newsletter)
 
 h4 Click on a button below to view or download that issue.
 

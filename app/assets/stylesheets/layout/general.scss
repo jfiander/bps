@@ -74,8 +74,15 @@ input.cancel, button.cancel {
   text-align: center;
 }
 
-div.editor {
+div#editor {
   background-color: lighten($background-blue, 3%);
+  display: none;
+}
+
+a#show-editor {
+  display: block;
+  margin: 1em;
+  font-size: 1.1em;
 }
 
 small.header {

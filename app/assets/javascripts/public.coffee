@@ -7,3 +7,11 @@ $(document).ready ->
     $('#bilge_upload_file').prop 'disabled', $(this).is(':checked')
     return
   return
+
+$ ->
+  $('a#show-editor').click (event) ->
+    event.preventDefault()
+    $('div#editor').fadeIn(1000, "swing")
+    $('a#show-editor').toggle()
+    return
+  return
