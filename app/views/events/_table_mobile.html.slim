@@ -105,7 +105,7 @@
       = render 'events/no_more_registrations'
 
     .event-mobile-contents.spaced
-      - if event.flyer.present? && event.flyer_content_type != 'application/pdf'
+      - if event.get_flyer(@event_types).present? && event.flyer_content_type != 'application/pdf'
         = image_tag event.get_flyer(@event_types)
-      - if event.flyer.present? && event.flyer_content_type == 'application/pdf'
+      - if event.get_flyer(@event_types).present? && event.flyer_content_type == 'application/pdf'
         iframe src=(event.get_flyer(@event_types))
