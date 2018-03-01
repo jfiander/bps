@@ -3,6 +3,10 @@
     .events-full-width
       hr
     .event-mobile-title = event_type(event).display_title
+    - if @current_user_permitted_event_type && event.show_in_catalog
+      .event-mobile-contents.birmingham-blue
+        = fa_icon('star', style: :regular)
+        | In catalog
     - if @current_user_permitted_event_type || !defined?(@event_catalog) && !event.expired?
       br
     - if @current_user_permitted_event_type
