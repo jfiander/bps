@@ -73,8 +73,11 @@ class User < ApplicationRecord
   end
 
   def permitted?(*required_roles, &block)
-    return false if required_roles.blank? || required_roles.all? { |r| r.blank? }
-    permitted = permitted_roles.any? { |p| p.in? required_roles.reject(&:nil?).map(&:to_sym) }
+    required_roles.flatten!
+    return false if required_roles.blank? || required_roles.all?(&:blank?)
+    permitted = permitted_roles.any? do |p|
+      p.in? required_roles.reject(&:nil?).map(&:to_sym)
+    end
 
     yield if permitted && block_given?
     permitted
@@ -97,8 +100,14 @@ class User < ApplicationRecord
   end
 
   def unpermit!(role)
-    UserRole.where(user: self).destroy_all and return true if role == :all
-    UserRole.where(user: self, role: Role.find_by(name: role.to_s)).destroy_all.present?
+    if role == :all
+      UserRole.where(user: self).destroy_all
+    else
+      UserRole.where(
+        user: self,
+        role: Role.find_by(name: role.to_s)
+      ).destroy_all.present?
+    end
   end
 
   def locked?
