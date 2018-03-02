@@ -8,8 +8,12 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def useful_referrer?
-    referrer_params[:user][:referrer].present? &&
-      referrer_params[:user][:referrer] != '/login'
+    begin
+      referrer_params[:user][:referrer].present? &&
+        referrer_params[:user][:referrer] != '/login'
+    rescue
+      false
+    end
   end
 
   def valid_referrer?
