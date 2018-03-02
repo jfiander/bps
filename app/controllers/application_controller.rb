@@ -13,15 +13,17 @@ class ApplicationController < ActionController::Base
   before_action :meta_tags
   before_action :set_paper_trail_whodunnit
   before_action :time_formats
+  before_action :prerender_for_layout
 
   after_action { flash.discard if request.xhr? }
 
-  def self.has_markdown_views
+  def self.render_markdown_views
     before_action :render_markdown, only: MarkdownHelper::VIEWS[controller_name]
     MarkdownHelper::VIEWS[controller_name]&.each { |m| define_method(m) {} }
   end
 
   private
+
   def ssl_configured?
     Rails.env.production?
   end
@@ -66,6 +68,15 @@ class ApplicationController < ActionController::Base
     @print_logo = static_bucket.link('logos/ABC.long.birmingham.1000.png')
     @wheel_logo = static_bucket.link('flags/PNG/WHEEL.thumb.png')
     @dca_award = static_bucket.link('logos/DCA_web_2016.png')
+  end
+
+  def prerender_for_layout
+    @nav_links = render_to_string partial: 'application/nav_links'
+    @copyright = render_to_string partial: 'application/copyright'
+    @wheel_img = view_context.image_tag(@wheel_logo) if @wheel_logo.present?
+
+    return unless current_user&.show_admin_menu?
+    @admin_menu = render_to_string partial: 'application/admin_menu'
   end
 
   def meta_tags

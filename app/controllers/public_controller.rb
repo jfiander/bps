@@ -12,7 +12,7 @@ class PublicController < ApplicationController
   before_action only: [:store] { page_title("Ship's Store") }
   before_action only: [:calendar] { page_title('Calendar') }
 
-  has_markdown_views
+  render_markdown_views
 
   def events
     @events = get_events(params[:type], :current)

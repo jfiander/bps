@@ -1,11 +1,6 @@
 .table
   .table-row
-    .table-cell.footer-left = image_tag @wheel_logo if @wheel_logo.present?
-    .table-cell.footer-center
-      ul.links
-        li = link_to "Trademarks", "http://www.usps.org/national/itcom/trademark.html"
-        li = link_to "Privacy Statement", "http://www.usps.org/national/itcom/privacy.html"
-        li = link_to "Disclaimer", "http://www.usps.org/national/itcom/disclaimer.html"
-        li = link_to "Webmaster", "mailto:webmaster@bpsd9.org"
-      .copyright Copyright &copy; 2017 Birmingham&nbsp;Power&nbsp;Squadron
-    .table-cell.footer-right = image_tag @wheel_logo if @wheel_logo.present?
+    .table-cell.footer-left = @wheel_img
+    .table-cell.footer-center = render 'footer_links'
+      .copyright = @copyright
+    .table-cell.footer-right = @wheel_img

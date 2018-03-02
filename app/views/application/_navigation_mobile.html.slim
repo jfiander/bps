@@ -2,10 +2,10 @@ h3
   = fa_icon('bars')
   | Navigation
 .collapsible
-  ul = render 'application/nav_links'
+  ul = @nav_links
 - if current_user&.show_admin_menu?
   h3.admin
     = fa_icon('cogs', style: :regular)
     | Admin
   .collapsible
-    ul#admin-menu = render 'application/admin_menu'
+    ul#admin-menu = @admin_menu

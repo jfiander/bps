@@ -18,7 +18,7 @@ class MembersController < ApplicationController
   before_action only: [:ranks] { page_title('Member Ranks and Grades') }
   before_action only: [:auto_permissions] { page_title('Automatic Permissions') }
 
-  has_markdown_views
+  render_markdown_views
 
   def minutes
     minutes_years = @minutes.map(&:key).map { |b| b.sub(minutes_prefix, '').delete('.pdf').gsub(/\/(s|\d+)/, '') }
