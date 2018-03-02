@@ -1,13 +1,13 @@
 (function() {
   $(function() {
-    $('a#show-editor').click(function(event) {
+    $('a#hide-editor').click(function(event) {
       event.preventDefault();
-      $('div#editor').fadeIn(500, "swing");
+      $('div#editor').fadeOut(300, "linear");
       $('a#show-editor').toggle();
       $('a#hide-editor').toggle();
       $.ajax({
         type: "POST",
-        url: '<%= auto_show_url %>',
+        url: '<%= auto_hide_url %>',
         data: {
           'page_name': '<%= page_name %>'
         }

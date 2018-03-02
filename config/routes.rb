@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   put     '/invite/:id',           to: 'user#invite',                as: 'invite'
   put     '/invite_all',           to: 'user#invite_all'
   post    '/auto_show',            to: 'user#auto_show',             as: 'auto_show'
+  post    '/auto_hide',            to: 'user#auto_hide',             as: 'auto_hide'
 
   get     '/file',                 to: 'file#new',                   as: 'file'
   post    '/file/upload',          to: 'file#create',                as: 'upload_file'

@@ -93,6 +93,16 @@ a#show-editor.auto-show {
   display: none;
 }
 
+a#hide-editor {
+  margin: 1em;
+  font-size: 1.1em;
+  display: none;
+}
+
+a#hide-editor.auto-show {
+  display: block;
+}
+
 small.header {
   margin: 0 0.5em;
 }
