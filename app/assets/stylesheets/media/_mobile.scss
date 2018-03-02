@@ -36,6 +36,11 @@
       span.ui-accordion-header-icon {
         display: none;
       }
+
+      .nav-heading {
+        display: inline-block;
+        min-width: 25vw;
+      }
     }
 
     h3.admin {
