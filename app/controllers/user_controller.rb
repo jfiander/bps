@@ -154,6 +154,7 @@ class UserController < ApplicationController
 
     if @registration.valid?
       flash[:success] = "Successfully registered!"
+      RegistrationMailer.confirm(@registration).deliver
     elsif Registration.find_by(@registration.attributes.slice(:user_id, :event_id))
       flash.now[:notice] = 'You are already registered for this course.'
       render status: :unprocessable_entity
