@@ -18,26 +18,16 @@ class RegistrationMailer < ApplicationMailer
   def confirm(registration)
     @registration = registration
 
-    if @registration.event.category == :meeting
-      @signature = {
-        office: 'Administrative',
-        name: BridgeOffice.find_by(office: 'administrative').user.full_name,
-        email: 'ao@bpsd9.org'
-      }
-    else
-      @signature = {
-        office: 'Educational',
-        name: BridgeOffice.find_by(office: 'educational').user.full_name,
-        email: 'seo@bpsd9.org'
-      }
-    end
+    @signature = signature_for_confirm
 
     to = @registration&.user&.email || @registration.email
+    from = "\"#{@signature[:name]}\" <#{@signature[:email]}>"
 
-    mail(to: to, from: 'seo@bpsd9.org', subject: 'Registration confirmation')
+    mail(to: to, from: from, subject: 'Registration confirmation')
   end
 
   private
+
   def to_list
     if @registration.event.event_type.event_category == 'meeting'
       list = ['ao@bpsd9.org']
@@ -73,5 +63,29 @@ class RegistrationMailer < ApplicationMailer
 
   def get_chair_email(name)
     @committee_chairs.find_all { |c| c.name == name }&.map { |c| c&.user&.email }
+  end
+
+  def signature_for_confirm
+    if @registration.event.category == :meeting
+      ao_signature
+    else
+      seo_signature
+    end
+  end
+
+  def ao_signature
+    {
+      office: 'Administrative',
+      name: BridgeOffice.find_by(office: 'administrative').user.full_name,
+      email: 'ao@bpsd9.org'
+    }
+  end
+
+  def seo_signature
+    {
+      office: 'Educational',
+      name: BridgeOffice.find_by(office: 'educational').user.full_name,
+      email: 'seo@bpsd9.org'
+    }
   end
 end
