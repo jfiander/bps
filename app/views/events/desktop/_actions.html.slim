@@ -1,0 +1,29 @@
+- if @current_user_permitted_event_type
+  = link_to(send("copy_#{params[:type]}_path", event), class: "control blue-faded") do
+    = fa_icon('clone', fa: 'fw', style: :regular)
+    | Clone
+  = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
+    = fa_icon('edit', fa: 'fw')
+    | Edit
+  - unless event.expired?
+    = link_to(send("expire_#{params[:type]}_path", event), method: :delete, class: "red control", data: {confirm: "Are you sure you want to force this #{params[:type]} to expire?"}) do
+      = fa_icon('eye-slash', fa: 'fw', style: :regular)
+      | Expire
+- if !defined?(long_form) && event.registerable? && user_signed_in? && event.allow_member_registrations
+  - if @registered&.has_key?(event.id)
+    = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
+      = fa_icon('minus-square', fa: 'fw')
+      | Cancel Registration
+  - else
+    = link_to(register_path(params[:type], event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
+      = fa_icon('calendar-check', fa: 'fw', style: :regular)
+      | Register
+- elsif !defined?(long_form) && !event.registerable? && !event.expired? && user_signed_in? && event.allow_member_registrations
+  = fa_layer([{ name: 'calendar-check', options: { style: :regular } }, { name: 'ban', options: { style: :solid, css: :red } }])
+  span.red Too late to register
+- elsif !defined?(long_form) && event.registerable? && event.allow_public_registrations
+  = render "events/register/public", event_id: event.id
+- elsif !defined?(long_form) && event.registerable? && !user_signed_in?
+  = render "events/no/public_registrations"
+- elsif !event.registerable?
+  = render 'events/no/registrations'

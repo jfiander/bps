@@ -1,0 +1,82 @@
+.events-full-width
+  hr
+.event-mobile-title = event_type(event).display_title
+- if @current_user_permitted_event_type && event.show_in_catalog
+  .event-mobile-contents.birmingham-blue
+    = fa_icon('star', style: :regular)
+    | In catalog
+- if @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
+  br
+= render 'events/mobile/actions', event: event
+= render 'events/mobile/register', event: event
+- if @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
+  br
+.event-mobile-contents = event.start_at.strftime(@long_time_format)
+- if (event.multiple_sessions? || event.length?)
+  .event-mobile-contents
+    - if event.multiple_sessions?
+      = "#{event.sessions} sessions"
+      - if event.length?
+        | , 
+    - if event.length?
+      = event.length&.strftime(@duration_format)
+- if event.cost.present?
+  .event-mobile-contents.spaced = event.formatted_cost
+.event-mobile-contents.spaced
+  - if @locations[event.location_id].present?
+    .event-mobile-contents = simple_format(@locations[event.location_id][:address])
+    - if @locations[event.location_id][:map_link].present?
+      .event-mobile-contents
+        = link_to(@locations[event.location_id][:map_link], target: :_blank) do
+          = fa_icon("map-marker-alt")
+          | Map
+    - unless defined?(@event_catalog)
+      - if @locations[event.location_id][:picture].present?
+        = image_tag files_bucket.link(@locations[event.location_id][:picture].path(:thumb))
+      - if @locations[event.location_id][:details].present?
+        small = simple_format(@locations[event.location_id][:details])
+  - else
+    | Location TBD
+.event-mobile-contents.spaced = simple_format(event.description)
+- if course_topics(event).present?
+  .event-mobile-contents.spaced
+    b Topics include:
+    ul
+      - course_topics(event).each do |t|
+        li = t.text
+- if course_includes(event).present?
+  .event-mobile-contents.spaced
+    b Materials include:
+    ul
+      - course_includes(event).each do |i|
+        li = i.text
+- if event.requirements.present?
+  .event-mobile-contents.spaced
+    b Student requirements:
+    p = simple_format(event.requirements)
+- if event_instructors(event).present? && !defined?(@event_catalog)
+  .event-mobile-contents.spaced
+    b = "Instructor".pluralize(event_instructors(event).count) + ":"
+    p = simple_format(event_instructors(event).map(&:full_name).join("\n"))
+- if event_prereq(event).present?
+  .event-mobile-contents.spaced
+    b Prerequisite course:
+    p = event_prereq(event).title.titleize
+- if @current_user_permitted_event_type && @registered_users[event.id].present? && !defined?(@event_catalog)
+  .event-mobile-contents.spaced
+    b Registered Users:
+    - @registered_users[event.id].each do |r|
+      = render 'events/register/member', r: r
+
+- if !defined?(@event_catalog) && !defined?(long_form) && !user_signed_in? && event.registerable? && event.allow_public_registrations
+  = render 'events/register/public', event_id: event.id, mobile: true
+- elsif !defined?(@event_catalog) && !defined?(long_form) && !user_signed_in? && event.registerable?
+  = render 'events/no/public_registrations'
+- elsif !defined?(@event_catalog) && !defined?(long_form) && !user_signed_in?
+  = render 'events/no/registrations'
+
+.event-mobile-contents.spaced
+  - if event.get_flyer(@event_types).present? && event.flyer_content_type != 'application/pdf'
+    = image_tag event.get_flyer(@event_types)
+  - if event.get_flyer(@event_types).present? && event.flyer_content_type == 'application/pdf'
+    iframe src=(event.get_flyer(@event_types))

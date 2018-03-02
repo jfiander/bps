@@ -1,5 +1,8 @@
 class MembersController < ApplicationController
   before_action :authenticate_user!
+
+  skip_before_action :prerender_for_layout, only: [:request_item, :fulfill_item]
+
   before_action only: [:admin] { require_permission(:admin) }
   before_action only: [:auto_permissions] { require_permission(:users) }
   before_action only: [:upload_bilge] { require_permission(:newsletter) }

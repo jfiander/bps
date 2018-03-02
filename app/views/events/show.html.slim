@@ -17,7 +17,7 @@ h2 = "#{@event_title} Details"
           = fa_icon('calendar-check', fa: 'fw', style: :regular)
           | Register
       - else
-        = render 'events/no_more_registrations'
+        = render 'events/no/registrations'
   - else
     #new-event
       = form_for(@registration, url: long_register_path, method: :post) do |f|
@@ -36,4 +36,4 @@ h2 = "#{@event_title} Details"
 
         .center = f.submit 'Register'
 - else
-  = render 'events/no_more_registrations'
+  = render 'events/no/registrations'
