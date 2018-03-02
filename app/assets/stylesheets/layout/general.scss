@@ -52,20 +52,20 @@ input.number {
   width: 5em;
 }
 
-input.big, button.big {
+input.big, button.big, a.big {
   @include big-button;
 }
 
-input.medium, button.medium {
+input.medium, button.medium, a.medium {
   @include medium-button;
 }
 
-input.medium.light, button.medium.light {
+input.medium.light, button.medium.light, a.medium.light {
   @include medium-button($birmingham-blue-light);
   color: $old-glory-blue;
 }
 
-input.cancel, button.cancel {
+input.cancel, button.cancel, a.cancel {
   @include medium-button($old-glory-red);
   min-width: 4em;
 }
@@ -74,33 +74,42 @@ input.cancel, button.cancel {
   text-align: center;
 }
 
+.center-block {
+  margin: 0 auto;
+}
+
 div#editor {
   background-color: lighten($background-blue, 3%);
   display: none;
 }
 
 div#editor.auto-show {
-  display: inherit;
+  display: block;
+}
+
+div#editor-buttons {
+  padding-bottom: 1em;
+}
+
+a#show-editor, a#hide-editor {
+  margin: 1em;
+  font-size: 1.1em;
 }
 
 a#show-editor {
-  display: block;
-  margin: 1em;
-  font-size: 1.1em;
+  display: inline;
+}
+
+a#hide-editor {
+  display: none;
 }
 
 a#show-editor.auto-show {
   display: none;
 }
 
-a#hide-editor {
-  margin: 1em;
-  font-size: 1.1em;
-  display: none;
-}
-
 a#hide-editor.auto-show {
-  display: block;
+  display: inline;
 }
 
 small.header {
