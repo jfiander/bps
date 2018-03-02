@@ -5,6 +5,10 @@
     min-width: 100vw;
   }
 
+  .desktop {
+    display: none;
+  }
+
   div#main-header, div#navigation, div#user-ranks, div#print-footer{
     display: none;
   }
@@ -21,15 +25,21 @@
 
   div#navigation-mobile {
     max-width: 100vw;
+    border-bottom: thin solid $old-glory-blue-faded;
 
     h3 {
       background-color: darken($background-blue, 5%);
+      border: none;
       color: $old-glory-blue;
       font-weight: bold;
 
       span.ui-accordion-header-icon {
         display: none;
       }
+    }
+
+    h3.admin {
+      border-top: thin solid $old-glory-blue-faded;
     }
 
     h3.ui-state-hover {
@@ -41,9 +51,19 @@
       border: none;
     }
 
+    h3.ui-state-focus {
+      outline: none;
+    }
+
     div.collapsible {
       padding: 0.1em 0;
       background-color: $background-blue;
+    }
+
+    ul#admin-menu {
+      background-color: inherit;
+      border-bottom: none;
+      padding: 0;
     }
 
     ul {
