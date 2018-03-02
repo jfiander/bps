@@ -12,6 +12,10 @@ h2 = "#{@edit_mode} #{@event_title}"
       = f.label :location
       ul
         li.red If you need to add a new location, do that before continuing.
+        li.red
+          | You can also save this 
+          = params[:type]
+          | , go create the location, then add it here later.
     .right
       - if @locations.present?
         = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: "Please select a location", required: true
