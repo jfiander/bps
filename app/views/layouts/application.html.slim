@@ -11,6 +11,7 @@ html
     script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'
     = favicon_link_tag static_bucket.link('favicon.ico')
     = render 'trackers'
+    = yield :head
   body
     #main.flex
       header
