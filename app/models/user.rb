@@ -202,6 +202,10 @@ class User < ApplicationRecord
     [bridge_rank, rank, committee_rank].reject(&:blank?)
   end
 
+  def show_admin_menu?
+    permitted? %i[page users course seminar event]
+  end
+
   private
 
   def office_roles
