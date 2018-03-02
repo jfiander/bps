@@ -6,6 +6,8 @@ h2 All users
 
 = editor('photo_editor') if current_user&.permitted?(:admin)
 
+- admin = current_user&.permitted?(:admin)
+
 table#users
   tr
     th.wide User
@@ -15,46 +17,5 @@ table#users
     th.center.very-narrow ID
     th.center.very-narrow
   - @users.each do |user|
-    tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
-      td
-        - if user[:name].blank?
-          = user[:email]
-        - elsif user[:placeholder_email]
-          = user[:name]
-        - else
-          = mail_to(user[:email], user[:name])
-      td.center = user[:certificate] || fa_icon('question-circle', css: 'red', style: :regular)
-      td.center
-        - if user[:bridge_office].present?
-          = officer_flag(user[:bridge_office], mode: :png)
-          hr
-        - if user[:granted_roles].present?
-          = user[:granted_roles].join("<br>").html_safe
-          br
-        - if user[:permitted_roles].include? :admin
-          span.red All
-        - else
-          span.red = (user[:permitted_roles] - user[:granted_roles]).join("<br>").html_safe
-      td.center.small-text
-        = user[:current_login_at] || (user[:invited_at] ? "Invited:<br>#{user[:invited_at]}".html_safe : "Never logged in")
-        br
-        = user[:current_login_from]
-      td.center
-        - if current_user.permitted?(:admin)
-          = link_to user[:id], user_path(user[:id])
-        - else
-          = user[:id]
-      td.center
-        - if current_user.permitted?(:admin)
-          - if user[:locked]
-            = link_to(unlock_user_path(user[:id]), title: 'Unlock', class: 'unlock', method: :patch) { fa_icon('lock', fa: 'fw') }
-          - elsif !user[:granted_roles].join(',').match(/admin/)
-            = link_to(lock_user_path(user[:id]), title: 'Lock', class: 'lock', method: :patch) { fa_icon('unlock', fa: 'fw') }
-        - unless user[:locked]
-          - if user[:invited]
-            = link_to(invite_path(id: user[:id]), title: 'Re-send invitation') { fa_icon('envelope-open', css: 'pending', fa: 'fw') }
-          - elsif user[:invitable]
-            = link_to(invite_path(id: user[:id]), title: 'Send invitation') { fa_icon('envelope', fa: 'fw') }
-          - elsif user[:placeholder_email]
-            = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address.')
+    = render 'user', user: user, admin: admin
 

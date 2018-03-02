@@ -1,0 +1,12 @@
+- if admin
+  - if locked
+    = link_to(unlock_user_path(id), title: 'Unlock', class: 'unlock', method: :patch) { fa_icon('lock', fa: 'fw') }
+  - elsif !is_admin
+    = link_to(lock_user_path(id), title: 'Lock', class: 'lock', method: :patch) { fa_icon('unlock', fa: 'fw') }
+- unless locked
+  - if invited
+    = link_to(invite_path(id: id), title: 'Re-send invitation') { fa_icon('envelope-open', css: 'pending', fa: 'fw') }
+  - elsif invitable
+    = link_to(invite_path(id: id), title: 'Send invitation') { fa_icon('envelope', fa: 'fw') }
+  - elsif placeholder_email
+    = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address.')

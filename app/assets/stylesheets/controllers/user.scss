@@ -40,11 +40,12 @@ table#users {
 
   tr.gray {
     background-color: $background-blue;
+    color: $old-glory-blue;
   }
 
   td  {
     height: 3em;
-    padding: 0.25em;
+    padding: 0.5em;
   }
 
   .very-narrow {
@@ -82,7 +83,6 @@ table#users {
 
   a {
     display: inline-block;
-    margin: 0.25em;
   }
 }
 

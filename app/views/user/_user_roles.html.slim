@@ -1,0 +1,10 @@
+- if office.present?
+  = officer_flag(office, mode: :png)
+  hr
+- if granted.present?
+  = granted.join("<br>").html_safe
+  br
+- if permitted.include? :admin
+  span.red All
+- else
+  span.red = (permitted - granted).join("<br>").html_safe

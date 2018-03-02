@@ -4,37 +4,7 @@ h2 Bridge Officers
 
 #bridge.table
   - @bridge_list[:departments].each do |dept, data|
-    .table-row
-      .table-cell.table-header.flag = data[:head][:title]
-      .table-cell.table-header.department = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : mail_to(data[:head][:email], data[:head][:user][:full_name])
-      .table-cell.table-header.dept-head-mobile
-        = data[:head][:title]
-        | : 
-        = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : mail_to(data[:head][:email], data[:head][:user][:full_name])
-    .table-row
-      .table-cell.flag = officer_flag(data[:head][:office], mode: :png)
-      .table-cell.department = image_tag(data[:head][:user][:photo], width: 125) if data[:head][:user].present?
-      .table-cell
-        .table.committees
-          - if data[:assistant].present? && data[:assistant][:user][:full_name] != "TBD"
-            .table-row.assistant
-              .table-cell = data[:assistant][:title]
-              .table-cell = mail_to data[:assistant][:email], data[:assistant][:user][:full_name]
-          .table-row
-            .table-cell.table-header.committee Committees
-            .table-cell.table-header.committee-chair Chair
-          - data[:committees]&.each do |committee|
-            .table-row id=("committee_row_#{committee[:id]}")
-              .table-cell.committee class=("additional" if @last_committee_name == committee[:name])
-                = committee[:name] unless committee[:name] == @last_committee_name
-              .table-cell.committee-chair class=("additional" if @last_committee_name == committee[:name])
-                - if @current_user_permitted_users
-                  = link_to(remove_committee_path(committee[:id]), class: "red", method: :delete, remote: true,
-                    data: {confirm: "Are you sure you want to remove #{committee[:user][:simple_name]} from #{committee[:name]}?"}) { fa_icon('minus-square') }
-                = committee[:user][:full_name]
-              - @last_committee_name = committee[:name]
-    .table-row
-      .table-cell.spacer
+    = render 'bridge_department', dept: dept, data: data
 
 hr
 h2 Standing Committees
@@ -42,16 +12,4 @@ h2 Standing Committees
 
 #standing-committees.table
   - @bridge_list[:standing_committees].each do |(committee, members)|
-    .table-row.standing-committee
-      .table-cell.table-header = "#{committee.titleize} Committee"
-      .table-cell
-        - members&.each do |member|
-          div id=("standing_committee_post_#{member[:id]}")
-            - if @current_user_permitted_users
-              = link_to(remove_standing_committee_path(member[:id]), method: :delete, remote: true, class: "red",
-              data: {confirm: "Are you sure you want to remove #{member[:simple_name]} from the #{committee.titleize} Committee?"}) { fa_icon('minus-square') }
-            = member[:full_name]
-            small
-              = " (chair)" if member[:chair]
-              |  
-              = member[:term_fraction]
+    = render 'bridge_standing_com', committee: committee, members: members
