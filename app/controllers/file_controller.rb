@@ -1,4 +1,5 @@
 class FileController < ApplicationController
+  before_action :authenticate_user!
   before_action { require_permission(:page) }
 
   before_action only: [:new, :create, :destroy] { page_title('Files') }
