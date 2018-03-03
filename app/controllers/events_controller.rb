@@ -44,12 +44,8 @@ class EventsController < ApplicationController
     @event_title = params[:type].to_s.titleize
     @registration = Registration.new(event_id: show_params[:id])
     if user_signed_in?
-      reg = Registration.find_by(
-        event_id: show_params[:id],
-        user: current_user
-      )
-
-      @registered = { reg.event_id => reg.id }
+      reg = Registration.find_by(event_id: show_params[:id], user: current_user)
+      @registered = { reg.event_id => reg.id } if reg.present?
     end
   end
 
