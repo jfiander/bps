@@ -124,3 +124,12 @@ ul.simple {
 .hide {
   display: none;
 }
+
+div.red-background {
+  background-color: lighten($old-glory-red, 50%);
+  padding: 0.25em 0;
+
+  h4, h5 {
+    margin: 0.75em;
+  }
+}
