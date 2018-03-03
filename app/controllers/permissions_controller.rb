@@ -41,4 +41,10 @@ class PermissionsController < ApplicationController
 
     redirect_to permit_path, success: "Successfully removed #{user_role.role.name} permission from #{user_role.user.simple_name}."
   end
+
+  def auto
+    @auto_permissions = YAML.safe_load(
+      File.read("#{Rails.root}/config/implicit_permissions.yml")
+    )
+  end
 end

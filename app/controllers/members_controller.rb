@@ -6,7 +6,6 @@ class MembersController < ApplicationController
   skip_before_action :prerender_for_layout, only: %i[request_item fulfill_item]
 
   before_action only: [:admin] { require_permission(:admin) }
-  before_action only: [:auto_permits] { require_permission(:users) }
   before_action only: [:upload_bilge] { require_permission(:newsletter) }
   before_action only: [:upload_minutes] { require_permission(:minutes) }
   before_action only: [:fulfill_item] { require_permission(:store) }
@@ -71,12 +70,6 @@ class MembersController < ApplicationController
 
   def ranks
     @users = User.unlocked.with_positions.alphabetized.with_a_name
-  end
-
-  def auto_permits
-    @auto_permissions = YAML.safe_load(
-      File.read("#{Rails.root}/config/implicit_permissions.yml")
-    )
   end
 
   private

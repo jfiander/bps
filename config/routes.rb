@@ -41,7 +41,7 @@ Rails.application.routes.draw do
 
   ### Dynamic pages
   get     '/ranks',            to: 'members#ranks'
-  get     '/auto_permissions', to: 'members#auto_permissions'
+  get     '/auto_permissions', to: 'permissions#auto'
 
   ### Functional pages
   get     '/bridge',       to: 'bridge#list'
