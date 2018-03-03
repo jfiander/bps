@@ -132,6 +132,7 @@ class MembersController < ApplicationController
   end
 
   private
+
   def clean_params
     params.permit(:id, :page_name, :save, :preview, :bilge_upload_file, :bilge_remove, issue: ['date(1i)', 'date(2i)'])
   end

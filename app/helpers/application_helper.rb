@@ -1,4 +1,16 @@
 module ApplicationHelper
+  def get_user(id)
+    user = @users.find_all { |u| u.id == id }.first
+
+    return user.bridge_hash if user.present?
+
+    {
+      full_name: 'TBD',
+      simple_name: 'TBD',
+      photo: User.no_photo
+    }
+  end
+
   def editor(partial, options = {})
     content_for :head do
       <<~HTML.html_safe

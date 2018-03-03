@@ -1,101 +1,27 @@
 class PublicController < ApplicationController
   skip_before_action :prerender_for_layout, only: [:register]
 
-  before_action :list_bilges, only: [:newsletter, :get_bilge]
+  before_action :list_bilges, only: %i[newsletter get_bilge]
 
-  before_action only: [:events] { page_title("#{params[:type].to_s.titleize}s") }
-  before_action only: [:catalog] { page_title("#{params[:type].to_s.titleize} Catalog") }
   before_action only: [:bridge] { page_title('Bridge Officers') }
   before_action only: [:newsletter] { page_title('The Bilge Chatter') }
   before_action only: [:store] { page_title("Ship's Store") }
   before_action only: [:calendar] { page_title('Calendar') }
+  before_action only: [:events] do
+    page_title("#{params[:type].to_s.titleize}s")
+  end
+  before_action only: [:catalog] do
+    page_title("#{params[:type].to_s.titleize} Catalog")
+  end
 
   render_markdown_views
 
-  def bridge
-    # Only load roles for editing permissions once
-    @current_user_permitted_users = current_user&.permitted?(:users)
-
-    # Preload all needed data
-    @users = User.unlocked.order(:last_name).includes(:bridge_office, :committees, :standing_committee_offices)
-    all_bridge_officers = BridgeOffice.ordered
-    @all_committees = Committee.sorted
-    standing_committees = StandingCommitteeOffice.current.chair_first.group_by { |s| s.committee_name }
-
-    # Build lists for form selectors
-    @select = {}
-    @select[:departments] = BridgeOffice.departments.map { |b| [b.titleize, b] }
-    @select[:bridge_offices] = BridgeOffice.departments(assistants: true).map { |b| [BridgeOffice.title(b), b] }
-    @select[:standing_committees] = StandingCommitteeOffice.committee_titles
-    @select[:users] = [['TBD', nil]] + @users.to_a.map! do |user|
-      user&.full_name.blank? ? [user.email, user.id] : [user.full_name, user.id]
-    end
-
-    # Assemble data for view
-    @bridge_list = {}
-    department_data = {}
-    standing_committee_data = {}
-    BridgeOffice.departments.each do |dept|
-      head = all_bridge_officers.find_all { |b| b.office == dept }.first
-      assistant = all_bridge_officers.find_all { |b| b.office == "asst_#{dept}" }.first
-      department_data[dept.to_sym] = {}
-      department_data[dept.to_sym][:head] = generate_dept_head(dept, head)
-      department_data[dept.to_sym][:assistant] = generate_dept_asst(dept, assistant) if assistant.present?
-      department_data[dept.to_sym][:committees] = generate_committees(dept)
-    end
-    standing_committees.each do |committee, members|
-      standing_committee_data[committee] = []
-      members.each do |member|
-        user = get_user(member.user_id)
-        standing_committee_data[committee] << {
-          id: member.id,
-          simple_name: user[:simple_name],
-          full_name: user[:full_name],
-          chair: member.chair.present?,
-          term_fraction: member.term_fraction
-        }
-      end
-    end
-
-    @bridge_list = {
-      departments: department_data,
-      standing_committees: standing_committee_data
-    }
-  end
-
-  def get_user(id)
-    user = @users.find_all { |u| u.id == id }.first
-
-    return user.bridge_hash if user.present?
-
-    {
-      full_name: 'TBD',
-      simple_name: 'TBD',
-      photo: User.no_photo
-    }
-  end
-  helper_method :get_user
-
   def newsletter
-    @years = @bilges.map(&:key).map { |b| b.sub('.pdf', '').sub(/\/(s|\d+)$/, '').delete('/') }.uniq.reject { |b| b.blank? }
-
+    @years = bilge_years
     @years = @years.last(2) unless user_signed_in?
-
     @issues = @bilge_links.keys
 
-    @available_issues = {
-      1   => 'Jan',
-      2   => 'Feb',
-      3   => 'Mar',
-      4   => 'Apr',
-      5   => 'May',
-      6   => 'Jun',
-      's' => 'Sum',
-      9   => 'Sep',
-      10  => 'Oct',
-      11  => 'Nov',
-      12  => 'Dec'
-    }
+    @available_issues = available_bilge_issues
   end
 
   def get_bilge
@@ -112,7 +38,12 @@ class PublicController < ApplicationController
     end
 
     begin
-      send_data open(issue_link).read, filename: "Bilge Chatter #{issue_title}.pdf", type: 'application/pdf', disposition: 'inline'
+      send_data(
+        open(issue_link).read,
+        filename: "Bilge Chatter #{issue_title}.pdf",
+        type: 'application/pdf',
+        disposition: 'inline'
+      )
     rescue SocketError
       newsletter
       flash.now[:alert] = 'There was a problem accessing the Bilge Chatter. Please try again later.'
@@ -126,24 +57,29 @@ class PublicController < ApplicationController
   end
 
   def register
-    if params.has_key?(:registration)
+    if params.key?(:registration)
       @event_id = register_params[:event_id]
       registration_attributes = register_params.to_hash.symbolize_keys
     else
       @event_id = clean_params[:event_id]
-      registration_attributes = { event_id: @event_id, email: clean_params[:email] }
+      registration_attributes = {
+        event_id: @event_id,
+        email: clean_params[:email]
+      }
     end
 
     @event = Event.find_by(id: @event_id)
 
     unless @event.allow_public_registrations
       flash.now[:alert] = 'This course is not currently accepting public registrations.'
-      render status: :unprocessable_entity and return
+      render status: :unprocessable_entity
+      return
     end
 
     unless @event.registerable?
       flash.now[:alert] = 'This course is no longer accepting registrations.'
-      render status: :unprocessable_entity and return
+      render status: :unprocessable_entity
+      return
     end
 
     registration = Registration.new(registration_attributes)
@@ -162,29 +98,23 @@ class PublicController < ApplicationController
       end
 
       format.html do
-        event_type = if @event.course?(@event_types)
-          :course
-        elsif @event.seminar?(@event_types)
-          :seminar
-        else
-          :event
-        end
+        event_type = @event.category
+        event_type = :event if event_type == :meeting
 
         if Registration.find_by(registration_attributes)
           flash[:alert] = 'You are already registered for this course.'
-          redirect_to send("show_#{event_type}_path", id: @event_id)
         elsif registration.save
           flash[:success] = 'You have successfully registered!'
-          redirect_to send("show_#{event_type}_path", id: @event_id)
         else
           flash[:alert] = 'We are unable to register you at this time.'
-          redirect_to send("show_#{event_type}_path", id: @event_id)
         end
+        redirect_to send("show_#{event_type}_path", id: @event_id)
       end
     end
   end
 
   private
+
   def clean_params
     params.permit(:year, :month, :email, :event_id)
   end
@@ -201,31 +131,27 @@ class PublicController < ApplicationController
     end.reduce({}, :merge)
   end
 
-  def generate_dept_head(dept, head)
-    {
-      title: BridgeOffice.title(dept),
-      office: dept,
-      email: head&.email,
-      user: get_user(head&.user_id)
-    }
+  def bilge_years
+    @bilges
+      .map(&:key)
+      .map { |b| b.sub('.pdf', '').sub(%r{/(s|\d+)$}, '').delete('/') }
+      .uniq
+      .reject(&:blank?)
   end
 
-  def generate_dept_asst(dept, assistant)
+  def available_bilge_issues
     {
-      title: assistant&.title,
-      office: assistant&.office,
-      email: assistant&.email,
-      user: get_user(assistant&.user_id)
+      1   => 'Jan',
+      2   => 'Feb',
+      3   => 'Mar',
+      4   => 'Apr',
+      5   => 'May',
+      6   => 'Jun',
+      's' => 'Sum',
+      9   => 'Sep',
+      10  => 'Oct',
+      11  => 'Nov',
+      12  => 'Dec'
     }
-  end
-
-  def generate_committees(dept)
-    @all_committees[dept]&.map do |c|
-      {
-        name: c.display_name,
-        user: get_user(c.user_id),
-        id: c.id
-      }
-    end
   end
 end

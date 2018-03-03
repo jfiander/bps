@@ -1,14 +1,25 @@
 class UserController < ApplicationController
+  include UserMethods
+
   before_action :authenticate_user!
-  skip_before_action :verify_authenticity_token, only: [:auto_show, :auto_hide]
-  skip_before_action :prerender_for_layout, only: [:register, :cancel_registration, :remove_committee, :remove_standing_committee]
+  skip_before_action :verify_authenticity_token, only: %i[auto_show auto_hide]
+  skip_before_action :prerender_for_layout, only: %i[
+    register cancel_registration remove_committee remove_standing_committee
+  ]
 
-  before_action                        only: [:assign_photo] { require_permission(:admin) }
-  before_action                      except: [:current, :show, :register, :cancel_registration] { require_permission(:users) }
+  before_action only: [:assign_photo] { require_permission(:admin) }
+  before_action except: %i[current show register cancel_registration] do
+    require_permission(:users)
+  end
+  before_action :can_view_profile?, only: [:show]
+  before_action :find_user, only: [:show]
 
-  before_action :get_users,            only: [:list]
-  before_action :get_users_for_select, only: [:permissions_index, :assign_bridge, :assign_committee]
-  before_action :time_formats,         only: [:show]
+  before_action :get_users, only: [:list]
+  before_action(
+    :get_users_for_select,
+    only: %i[permissions_index assign_bridge assign_committee]
+  )
+  before_action :time_formats, only: [:show]
 
   before_action { page_title('Users') }
 
@@ -17,19 +28,6 @@ class UserController < ApplicationController
   end
 
   def show
-    unless clean_params[:id].to_i == current_user.id || current_user.permitted?(:admin)
-      redirect_to user_path(current_user.id)
-      return
-    end
-
-    @user = User.find_by(id: clean_params[:id])
-
-    if @user.blank?
-      flash[:notice] = "Couldn't find that user." if current_user.permitted?(:admin)
-      redirect_to root_path
-      return
-    end
-
     @registrations = Registration.for_user(@user.id).current.reject do |r|
       r.event.blank?
     end
@@ -46,95 +44,6 @@ class UserController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @users }
-    end
-  end
-
-  def permissions_index
-    @roles = Role.all.map(&:name)
-    @roles.delete("admin")
-    @roles.delete('user') unless current_user&.permitted?(:admin)
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
-  def permissions_add
-    redirect_to permit_path, alert: "User was not selected." and return if clean_params[:user_id].blank?
-    redirect_to permit_path, alert: "Role was not selected." and return if clean_params[:role].blank?
-    redirect_to permit_path, alert: "Cannot add admin permissions." and return if clean_params[:role] == "admin"
-    redirect_to permit_path, alert: 'Must be an admin to add user permissions.' and return if clean_params[:role] == 'user' && !current_user&.permitted?(:admin)
-
-    user = User.find_by(id: clean_params[:user_id])
-    role = Role.find_by(name: clean_params[:role])
-
-    redirect_to permit_path, notice: '#{user.simple_name} already has #{role.name} permissions.' and return if UserRole.find_by(user: user, role: role)
-
-    UserRole.create!(user: user, role: role)
-
-    redirect_to permit_path, success: "Successfully added #{role.name} permission to #{user.simple_name}."
-  end
-
-  def permissions_remove
-    user_role = UserRole.find_by(id: clean_params[:permit_id])
-
-    redirect_to permit_path, alert: "Cannot remove admin permissions." and return if user_role.role.name == "admin"
-
-    user_role.destroy
-
-    redirect_to permit_path, success: "Successfully removed #{user_role.role.name} permission from #{user_role.user.simple_name}."
-  end
-
-  def assign_bridge
-    bridge_office = BridgeOffice.find_by(office: clean_params[:bridge_office]) || BridgeOffice.create(office: clean_params[:bridge_office])
-    if bridge_office.update(user_id: clean_params[:user_id])
-      redirect_to bridge_path, success: "Successfully assigned to bridge office."
-    else
-      redirect_to bridge_path, alert: "Unable to assign to bridge office."
-    end
-  end
-
-  def assign_committee
-    committee = Committee.create(name: clean_params[:committee], department: clean_params[:department], user_id: clean_params[:user_id])
-    if committee.valid?
-      redirect_to bridge_path, success: "Successfully assigned to committee."
-    else
-      redirect_to bridge_path, alert: "Unable to assign to committee."
-    end
-  end
-
-  def remove_committee
-    @committee_id = clean_params[:id]
-    if Committee.find_by(id: @committee_id)&.destroy
-      flash[:success] = "Successfully removed committee assignment."
-      @do_remove = true
-    else
-      flash[:alert] = "Unable to remove committee assignment."
-      @do_remove = false
-    end
-  end
-
-  def assign_standing_committee
-    y = clean_params[:term_start_at]["(1i)"]
-    m = clean_params[:term_start_at]["(2i)"]
-    d = clean_params[:term_start_at]["(3i)"]
-    term_start = "#{y}-#{m}-#{d}"
-    standing_committee = StandingCommitteeOffice.new(committee_name: clean_params[:committee_name], chair: clean_params[:chair], user_id: clean_params[:user_id], term_start_at: term_start, term_length: clean_params[:term_length])
-    if standing_committee.save
-      redirect_to bridge_path, success: "Successfully assigned to standing committee."
-    else
-      redirect_to bridge_path, alert: "Unable to assign to standing committee."
-    end
-  end
-
-  def remove_standing_committee
-    @standing_committee_id = clean_params[:id]
-    if StandingCommitteeOffice.find_by(id: @standing_committee_id)&.destroy
-      flash[:success] = "Successfully removed standing committee assignment."
-      @do_remove = true
-    else
-      flash[:alert] = "Unable to remove from standing committee."
-      @do_remove = false
     end
   end
 
@@ -170,7 +79,9 @@ class UserController < ApplicationController
     r = Registration.find_by(id: @reg_id)
     @event_id = r&.event_id
 
-    redirect_to root_path, status: :unprocessable_entity, alert: "You are not allowed to cancel that registration." and return unless (r&.user == current_user) || current_user&.permitted?(:course, :seminar, :event)
+    unless (r&.user == current_user) || current_user&.permitted?(:course, :seminar, :event)
+      redirect_to root_path, status: :unprocessable_entity, alert: "You are not allowed to cancel that registration."
+    end
 
     @cancel_link = (r&.user == current_user)
 
@@ -280,67 +191,10 @@ class UserController < ApplicationController
 
   private
 
-  def get_users
-    all_users ||= User.alphabetized.with_positions
-    @user_roles ||= UserRole.preload
-    @bridge_offices ||= BridgeOffice.preload
-
-    @users = all_users.unlocked.map { |user| user_hash(user) } + all_users.locked.map { |user| user_hash(user) }
-  end
-
-  def user_hash(user)
-    {
-      id:                 user.id,
-      name:               user.full_name(html: false),
-      certificate:        user.certificate,
-      email:              user.email,
-      granted_roles:      get_granted_roles_for(user),
-      permitted_roles:    get_permitted_roles_for(user),
-      bridge_office:      get_bridge_office_for(user),
-      current_login_at:   user.current_sign_in_at,
-      current_login_from: user.current_sign_in_ip,
-      invited_at:         user.invitation_sent_at,
-      invitable:          user.invitable?,
-      placeholder_email:  user.has_placeholder_email?,
-      invited:            user.invited?,
-      locked:             user.locked?
-    }
-  end
-
-  def get_granted_roles_for(user)
-    user_has_explicit_roles?(user) ? @user_roles[user.id] : []
-  end
-
-  def get_permitted_roles_for(user)
-    user_has_implicit_roles?(user) ? user.permitted_roles : []
-  end
-
-  def get_bridge_office_for(user)
-    @bridge_offices[user.id]
-  end
-
-  def user_has_explicit_roles?(user)
-    @user_roles.has_key? user.id
-  end
-
-  def user_has_implicit_roles?(user)
-    user.id.in? (@users_with_implied_permissions ||= users_with_implied_permissions)
-  end
-
-  def users_with_implied_permissions
-    BridgeOffice.all.map(&:user_id) +
-    StandingCommitteeOffice.current.map(&:user_id) +
-    Committee.all.map(&:user_id)
-  end
-
-  def get_users_for_select
-    @users = User.unlocked.alphabetized.with_positions.map do |user|
-      user.full_name.present? ? [user.full_name(html: false), user.id] : [user.email, user.id]
+  def can_view_profile?
+    unless clean_params[:id].to_i == current_user.id ||
+           current_user.permitted?(:admin)
+      redirect_to user_path(current_user.id)
     end
-  end
-
-  def clean_params
-    params.permit(:id, :user_id, :role, :permit_id, :committee, :department, :bridge_office, :type, :page_name,
-      :committee_name, :chair, :term_length, :import_file, :photo, :redirect_to, term_start_at: ["(1i)", "(2i)", "(3i)"])
   end
 end
