@@ -1,13 +1,13 @@
 module ViewHelper
   def officer_flag(office, mode: :svg)
     rank = case office
-    when 'commander'
-      'CDR'
-    when 'executive', 'educational', 'administrative', 'secretary', 'treasurer'
-      'LTC'
-    when 'asst_educational', 'asst_secretary'
-      '1LT'
-    end
+           when 'commander'
+             'CDR'
+           when %w[executive educational administrative secretary treasurer]
+             'LTC'
+           when %w[asst_educational asst_secretary]
+             '1LT'
+           end
 
     if mode == :svg
       open(static_bucket.link("flags/SVG/#{rank}.svg")).read.html_safe
