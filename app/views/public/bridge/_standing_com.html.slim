@@ -2,4 +2,4 @@
   .table-cell.table-header = "#{committee.titleize} Committee"
   .table-cell
     - members&.each do |member|
-      = render 'standing_com_member', committee: committee, member: member
+      = render 'public/bridge/standing_com_member', committee: committee, member: member

@@ -4,7 +4,7 @@ h2 Bridge Officers
 
 #bridge.table
   - @bridge_list[:departments].each do |dept, data|
-    = render 'bridge_department', dept: dept, data: data
+    = render 'public/bridge/department', dept: dept, data: data
 
 hr
 h2 Standing Committees
@@ -12,4 +12,4 @@ h2 Standing Committees
 
 #standing-committees.table
   - @bridge_list[:standing_committees].each do |(committee, members)|
-    = render 'bridge_standing_com', committee: committee, members: members
+    = render 'public/bridge/standing_com', committee: committee, members: members

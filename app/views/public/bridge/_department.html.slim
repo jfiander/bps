@@ -18,6 +18,6 @@
         .table-cell.table-header.committee Committees
         .table-cell.table-header.committee-chair Chair
       - data[:committees]&.each do |committee|
-        = render 'bridge_committee', committee: committee
+        = render 'public/bridge/committee', committee: committee
 .table-row
   .table-cell.spacer
