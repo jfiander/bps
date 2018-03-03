@@ -26,6 +26,10 @@ a.blue-faded:hover {
   color: lighten($old-glory-blue, 40%);
 }
 
+a.green:hover {
+  color: lighten(green, 10%);
+}
+
 sup {
   font-size: 60%;
 }
