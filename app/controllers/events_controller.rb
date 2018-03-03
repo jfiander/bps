@@ -1,16 +1,37 @@
 class EventsController < ApplicationController
   include EventsHelper
 
-  before_action :authenticate_user!, except: [:show]
-  before_action                      except: [:show, :locations, :remove_location] { require_permission(params[:type]) }
+  before_action :authenticate_user!, except: [:schedule, :catalog, :show]
+  before_action                      except: [:schedule, :catalog, :show, :locations, :remove_location] { require_permission(params[:type]) }
 
   before_action :get_event,       only: [:copy, :edit, :expire]
   before_action :prepare_form,    only: [:new, :copy, :edit]
   before_action :check_for_blank, only: [:create, :update]
 
-  before_action :preload_events,  only: [:show]
+  before_action :time_formats,    only: [:schedule, :catalog]
+  before_action :preload_events,  only: [:schedule, :catalog, :show]
 
   before_action { page_title("#{params[:type].to_s.titleize}s") }
+
+  def schedule
+    @events = get_events(params[:type], :current)
+    @registered = Registration.includes(:user).where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
+
+    @current_user_permitted_event_type = current_user&.permitted?(params[:type])
+
+    if current_user&.permitted?(params[:type])
+      @registered_users = Registration.includes(:user).all.group_by { |r| r.event_id }
+      @expired_events = get_events(params[:type], :expired)
+    end
+  end
+
+  def catalog
+    @event_catalog = if params[:type] == :course
+      @catalog.slice('public', 'advanced_grade', 'elective').symbolize_keys
+    else
+      @catalog[params[:type].to_s]
+    end
+  end
 
   def show
     @event = Event.find_by(id: show_params[:id])

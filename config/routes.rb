@@ -83,8 +83,8 @@ Rails.application.routes.draw do
   delete  '/store/:id/destroy',  to: 'store#destroy',                as: 'destroy_store_item'
 
   [:course, :seminar, :event].each do |event_type|
-    get     "/#{event_type}s",             to: 'public#events',                                   defaults: {type: event_type}
-    get     "/#{event_type}s/catalog",     to: 'public#catalog',     as: "#{event_type}_catalog", defaults: {type: event_type} unless event_type == :event
+    get     "/#{event_type}s",             to: 'events#schedule',                                 defaults: {type: event_type}
+    get     "/#{event_type}s/catalog",     to: 'events#catalog',     as: "#{event_type}_catalog", defaults: {type: event_type} unless event_type == :event
     get     "/#{event_type}s/new",         to: 'events#new',         as: "new_#{event_type}",     defaults: {type: event_type}
     post    "/#{event_type}s/create",      to: 'events#create',      as: "create_#{event_type}",  defaults: {type: event_type}
     patch   "/#{event_type}s/update",      to: 'events#update',      as: "update_#{event_type}",  defaults: {type: event_type}

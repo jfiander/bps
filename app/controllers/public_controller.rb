@@ -1,11 +1,7 @@
 class PublicController < ApplicationController
-  include EventsHelper
-
   skip_before_action :prerender_for_layout, only: [:register]
 
   before_action :list_bilges, only: [:newsletter, :get_bilge]
-  before_action :time_formats, only: [:events, :catalog]
-  before_action :preload_events, only: [:events, :catalog]
 
   before_action only: [:events] { page_title("#{params[:type].to_s.titleize}s") }
   before_action only: [:catalog] { page_title("#{params[:type].to_s.titleize} Catalog") }
@@ -15,32 +11,6 @@ class PublicController < ApplicationController
   before_action only: [:calendar] { page_title('Calendar') }
 
   render_markdown_views
-
-  def events
-    @events = get_events(params[:type], :current)
-    @registered = Registration.includes(:user).where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
-    @locations = Location.searchable
-
-    @current_user_permitted_event_type = current_user&.permitted?(params[:type])
-
-    if current_user&.permitted?(params[:type])
-      @registered_users = Registration.includes(:user).all.group_by { |r| r.event_id }
-      @expired_events = get_events(params[:type], :expired)
-    end
-
-    render 'events/schedule'
-  end
-
-  def catalog
-    @event_catalog = if params[:type] == :course
-      @catalog.slice('public', 'advanced_grade', 'elective').symbolize_keys
-    else
-      @catalog[params[:type].to_s]
-    end
-    @locations = Location.searchable
-
-    render 'events/catalog'
-  end
 
   def bridge
     # Only load roles for editing permissions once
@@ -229,43 +199,6 @@ class PublicController < ApplicationController
     @bilge_links = @bilges.map(&:key).map do |b|
       { b.delete('.pdf') => bilge_bucket.link(b) }
     end.reduce({}, :merge)
-  end
-
-  def get_events(type, scope = :current)
-    @scoped_events ||= {
-      current: @all_events.find_all { |e| !e.expired? },
-      expired: @all_events.find_all(&:expired?)
-    }
-
-    @event_types ||= EventType.all
-    @event_type_ids ||= @event_types.group_by(&:event_category).map do |c, t|
-      { c => t.map(&:id) }
-    end.reduce({}, :merge)
-
-    case type
-    when :course
-      courses = {
-        public: @scoped_events[scope].find_all do |c|
-          c.event_type_id.in?(@event_type_ids['public'])
-        end,
-        advanced_grade: @scoped_events[scope].find_all do |c|
-          c.event_type_id.in?(@event_type_ids['advanced_grade'])
-        end,
-        elective: @scoped_events[scope].find_all do |c|
-          c.event_type_id.in?(@event_type_ids['elective'])
-        end
-      }
-
-      courses.all?(&:blank?) ? [] : courses
-    when :seminar
-      @scoped_events[scope].find_all do |c|
-        c.event_type_id.in?(@event_type_ids['seminar'])
-      end
-    when :event
-      @scoped_events[scope].find_all do |c|
-        c.event_type_id.in?(@event_type_ids['meeting'])
-      end
-    end
   end
 
   def generate_dept_head(dept, head)

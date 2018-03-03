@@ -30,6 +30,7 @@ module EventsHelper
     @course_includes ||= CourseInclude.all
     @event_instructors ||= EventInstructor.all
     @event_types ||= EventType.all
+    @locations ||= Location.searchable
     @catalog ||= @all_events.find_all(&:show_in_catalog).sort_by do |e|
       [event_type(e).order_position, event_type(e).title]
     end.group_by { |e| event_type(e).event_category }
@@ -39,5 +40,42 @@ module EventsHelper
     %i[desktop mobile].map do |t|
       render("events/#{t}/table", events: events)
     end.join.html_safe
+  end
+
+  def get_events(type, scope = :current)
+    @scoped_events ||= {
+      current: @all_events.find_all { |e| !e.expired? },
+      expired: @all_events.find_all(&:expired?)
+    }
+
+    @event_types ||= EventType.all
+    @event_type_ids ||= @event_types.group_by(&:event_category).map do |c, t|
+      { c => t.map(&:id) }
+    end.reduce({}, :merge)
+
+    case type
+    when :course
+      courses = {
+        public: @scoped_events[scope].find_all do |c|
+          c.event_type_id.in?(@event_type_ids['public'])
+        end,
+        advanced_grade: @scoped_events[scope].find_all do |c|
+          c.event_type_id.in?(@event_type_ids['advanced_grade'])
+        end,
+        elective: @scoped_events[scope].find_all do |c|
+          c.event_type_id.in?(@event_type_ids['elective'])
+        end
+      }
+
+      courses.all?(&:blank?) ? [] : courses
+    when :seminar
+      @scoped_events[scope].find_all do |c|
+        c.event_type_id.in?(@event_type_ids['seminar'])
+      end
+    when :event
+      @scoped_events[scope].find_all do |c|
+        c.event_type_id.in?(@event_type_ids['meeting'])
+      end
+    end
   end
 end
