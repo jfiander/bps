@@ -1,16 +1,6 @@
 - if type == :course
-  - if all_events.has_key?(:public) && all_events[:public].present?
-    .events-section-header Public
-    = render "events/desktop/table", events: all_events[:public]
-    = render "events/mobile/table", events: all_events[:public]
-  - if all_events.has_key?(:advanced_grade) && all_events[:advanced_grade].present?
-    .events-section-header Advanced Grades
-    = render "events/desktop/table", events: all_events[:advanced_grade]
-    = render "events/mobile/table", events: all_events[:advanced_grade]
-  - if all_events.has_key?(:elective) && all_events[:elective].present?
-    .events-section-header Electives
-    = render "events/desktop/table", events: all_events[:elective]
-    = render "events/mobile/table", events: all_events[:elective]
+  - all_events.keys.each do |course_type|
+    .events-section-header = "#{course_type.to_s.titleize}"
+    = render_both_tables(all_events[course_type])
 - else
-  = render "events/desktop/table", events: all_events
-  = render "events/mobile/table", events: all_events
+  = render_both_tables(all_events)

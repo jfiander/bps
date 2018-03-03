@@ -34,4 +34,10 @@ module EventsHelper
       [event_type(e).order_position, event_type(e).title]
     end.group_by { |e| event_type(e).event_category }
   end
+
+  def render_both_tables(events)
+    %i[desktop mobile].map do |t|
+      render("events/#{t}/table", events: events)
+    end.join.html_safe
+  end
 end
