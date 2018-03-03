@@ -8,7 +8,7 @@
 - if @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
   br
 = render 'events/mobile/actions', event: event
-= render 'events/mobile/register', event: event
+= render 'events/mobile/register', event: event, long_form: long_form
 - if @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
   br
 .event-mobile-contents = event.start_at.strftime(@long_time_format)
@@ -68,11 +68,11 @@
     - @registered_users[event.id].each do |r|
       = render 'events/register/member', r: r
 
-- if !defined?(@event_catalog) && !defined?(long_form) && !user_signed_in? && event.registerable? && event.allow_public_registrations
+- if !defined?(@event_catalog) && !long_form && !user_signed_in? && event.registerable? && event.allow_public_registrations
   = render 'events/register/public', event_id: event.id, mobile: true
-- elsif !defined?(@event_catalog) && !defined?(long_form) && !user_signed_in? && event.registerable?
+- elsif !defined?(@event_catalog) && !long_form && !user_signed_in? && event.registerable?
   = render 'events/no/public_registrations'
-- elsif !defined?(@event_catalog) && !defined?(long_form) && !user_signed_in?
+- elsif !defined?(@event_catalog) && !long_form && !user_signed_in?
   = render 'events/no/registrations'
 
 .event-mobile-contents.spaced
