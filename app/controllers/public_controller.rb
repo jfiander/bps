@@ -27,6 +27,8 @@ class PublicController < ApplicationController
       @registered_users = Registration.includes(:user).all.group_by { |r| r.event_id }
       @expired_events = get_events(params[:type], :expired)
     end
+
+    render 'events/schedule'
   end
 
   def catalog
@@ -35,6 +37,9 @@ class PublicController < ApplicationController
     else
       @catalog[params[:type].to_s]
     end
+    @locations = Location.searchable
+
+    render 'events/catalog'
   end
 
   def bridge
