@@ -17,5 +17,5 @@ table#users
     th.center.very-narrow ID
     th.center.very-narrow
   - @users.each do |user|
-    = render 'user', user: user, admin: admin
+    = render 'user/list/user', user: user, admin: admin
 
