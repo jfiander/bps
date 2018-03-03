@@ -42,7 +42,7 @@
                 p = simple_format(@locations[event.location_id][:address])
               - else
                 | Location TBD
-            .table-cell = render 'events/desktop/actions', event: event
+            .table-cell = render 'events/desktop/actions', event: event, long_form: long_form
   .table-row
     .table-cell.bottom-left
       = simple_format(event.description)

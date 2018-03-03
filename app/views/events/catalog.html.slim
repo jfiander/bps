@@ -3,6 +3,6 @@ h2 = "Squadron #{params[:type].to_s.titleize} Catalog"
 = render "application/education_menu", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)}, catalog: true if params[:type].in? [:course, :seminar]
 
 - if @event_catalog.present?
-  = render "events/tables", type: params[:type], all_events: @event_catalog
+  = render "events/tables", type: params[:type], all_events: @event_catalog, long_form: false
 - else
   = render "events/no/catalog", type: params[:type]

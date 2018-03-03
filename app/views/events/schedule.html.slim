@@ -2,11 +2,11 @@ h2 = "Squadron #{params[:type].to_s.titleize}s"
 
 = render "application/education_menu", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)} if params[:type].in? [:course, :seminar]
 
-- if @events.count > 0
-  = render "events/tables", type: params[:type], all_events: @events
+- if @events.count.positive?
+  = render "events/tables", type: params[:type], all_events: @events, long_form: false
 - else
   = render "events/no/events", type: params[:type]
 - if @current_user_permitted_event_type && @expired_events.present? && !(params[:type] == :course && @expired_events.all? { |_,v| v.blank? })
   hr
   .events-section-header.red = "Expired #{params[:type]}s"
-  = render "events/tables", type: params[:type], all_events: @expired_events
+  = render "events/tables", type: params[:type], all_events: @expired_events, long_form: false
