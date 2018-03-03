@@ -1,13 +1,6 @@
 module ViewHelper
   def officer_flag(office, mode: :svg)
-    rank = case office
-           when 'commander'
-             'CDR'
-           when %w[executive educational administrative secretary treasurer]
-             'LTC'
-           when %w[asst_educational asst_secretary]
-             '1LT'
-           end
+    rank = office_rank(office)
 
     if mode == :svg
       open(static_bucket.link("flags/SVG/#{rank}.svg")).read.html_safe
@@ -29,5 +22,26 @@ module ViewHelper
       "<option value=\"7\">July</option>\n<option value=\"8\">August</option>\n",
       (mode == :summer ? '<option value="7">* Summer</option>' : '')
     ).html_safe
+  end
+
+  private
+
+  def office_rank(office)
+    case office
+    when 'commander'
+      'CDR'
+    when *dept_heads
+      'LTC'
+    when *asst_dept_heads
+      '1LT'
+    end
+  end
+
+  def dept_heads
+    %w[executive educational administrative secretary treasurer]
+  end
+
+  def asst_dept_heads
+    %w[asst_educational asst_secretary]
   end
 end
