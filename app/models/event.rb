@@ -10,16 +10,20 @@ class Event < ApplicationRecord
 
   before_validation { validate_costs }
 
-  has_attached_file :flyer,
+  has_attached_file(
+    :flyer,
     default_url: nil,
     storage: :s3,
     s3_region: 'us-east-2',
     path: 'event_flyers/:id/:filename',
     s3_permissions: :private,
     s3_credentials: aws_credentials(:files)
+  )
 
-  validates_attachment_content_type :flyer,
+  validates_attachment_content_type(
+    :flyer,
     content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
+  )
 
   scope :current, (lambda do |category|
     includes(:event_type, :course_topics, :course_includes, :prereq)
@@ -43,26 +47,16 @@ class Event < ApplicationRecord
 
   def category(event_types = nil)
     if event_types.present?
-      course_ids = event_types.find_all do |e|
-        e.event_category.to_sym.in? [:public, :advanced_grade, :elective]
-      end.map(&:id)
-
-      seminar_ids = event_types.find_all do |e|
-        e.event_category.to_sym.in? [:seminar]
-      end.map(&:id)
-
-      meeting_ids = event_types.find_all do |e|
-        e.event_category.to_sym.in? [:meeting]
-      end.map(&:id)
+      load_event_type_ids_from_cache(event_types)
     else
-      course_ids = EventType.courses.map(&:id)
-      seminar_ids = EventType.seminars.map(&:id)
-      meeting_ids = EventType.meetings.map(&:id)
+      @course_ids = EventType.courses.map(&:id)
+      @seminar_ids = EventType.seminars.map(&:id)
+      @meeting_ids = EventType.meetings.map(&:id)
     end
 
-    return :course if event_type_id.in? course_ids
-    return :seminar if event_type_id.in? seminar_ids
-    return :meeting if event_type_id.in? meeting_ids
+    return :course if event_type_id.in? @course_ids
+    return :seminar if event_type_id.in? @seminar_ids
+    return :meeting if event_type_id.in? @meeting_ids
   end
 
   def category?(cat, event_types = nil)
@@ -90,9 +84,9 @@ class Event < ApplicationRecord
   end
 
   def get_flyer(event_types = nil)
-    if course?(event_types) && flyer.blank?
+    if use_course_book_cover?(event_types)
       get_book_cover(:courses, event_types)
-    elsif seminar?(event_types) && flyer.blank?
+    elsif use_seminar_book_cover?(event_types)
       get_book_cover(:seminars, event_types)
     elsif flyer.present?
       Event.buckets[:files].link(flyer&.s3_object&.key)
@@ -128,11 +122,37 @@ class Event < ApplicationRecord
     Event.buckets[:static].link("book_covers/#{type}/#{filename}.jpg")
   end
 
+  def use_course_book_cover?(event_types = nil)
+    course?(event_types) && flyer.blank?
+  end
+
+  def use_seminar_book_cover?(event_types = nil)
+    seminar?(event_types) && flyer.blank?
+  end
+
   def validate_costs
     return unless member_cost.present?
     return if cost.present? && cost > member_cost
 
     self.cost = member_cost
     self.member_cost = nil
+  end
+
+  def allow_any_registrations?
+    allow_member_registrations? || allow_public_registrations?
+  end
+
+  def load_event_type_ids_from_cache(event_types)
+    @course_ids = event_types.find_all do |e|
+      e.event_category.to_sym.in? %i[public advanced_grade elective]
+    end.map(&:id)
+
+    @seminar_ids = event_types.find_all do |e|
+      e.event_category.to_sym.in? [:seminar]
+    end.map(&:id)
+
+    @meeting_ids = event_types.find_all do |e|
+      e.event_category.to_sym.in? [:meeting]
+    end.map(&:id)
   end
 end
