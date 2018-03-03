@@ -1,5 +1,8 @@
 - if @current_user_permitted_event_type
   .event-mobile-contents
+    = link_to(send("show_#{params[:type]}_path", event), class: "control green") do
+      = fa_icon('share-square', fa: 'fw', style: :regular)
+      | Share
     = link_to(send("copy_#{params[:type]}_path", event), class: "control blue-faded") do
       = fa_icon('clone', fa: 'fw', style: :regular)
       | Clone
