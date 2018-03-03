@@ -1,6 +1,8 @@
 class PublicController < ApplicationController
   include EventsHelper
 
+  skip_before_action :prerender_for_layout, only: [:register]
+
   before_action :list_bilges, only: [:newsletter, :get_bilge]
   before_action :time_formats, only: [:events, :catalog]
   before_action :preload_events, only: [:events, :catalog]
