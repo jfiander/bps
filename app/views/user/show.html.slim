@@ -32,7 +32,7 @@ h2 = "#{@profile_title} user"
           = (@user.permitted_roles - @user.granted_roles).join('<br>').html_safe
   - if current_user.id == @user.id
     hr.clear
-    .center = link_to(profile_edit_path) { fa_icon('edit') + 'Update your information' }
+    .center = link_to(profile_edit_path(@user.id)) { fa_icon('edit') + 'Update your information' }
   hr.clear
   - if @registrations.present?
     .center

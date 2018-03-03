@@ -23,10 +23,6 @@ class UserController < ApplicationController
 
   before_action { page_title('Users') }
 
-  def current
-    redirect_to user_path(id: current_user.id)
-  end
-
   def show
     @registrations = Registration.for_user(@user.id).current.reject do |r|
       r.event.blank?

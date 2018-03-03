@@ -1,6 +1,7 @@
 module UserMethods
   def find_user
-    @user = User.find_by(id: clean_params[:id])
+    id = clean_params[:id] || current_user&.id
+    @user = User.find_by(id: id)
     unless @user.present?
       if current_user&.permitted?(:admin)
         flash[:notice] = "Couldn't find that user."
