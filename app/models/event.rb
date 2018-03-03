@@ -111,6 +111,7 @@ class Event < ApplicationRecord
     return true if cutoff_at.blank? && expires_at.blank?
     return false if cutoff?
     return false if expired?
+    return false unless allow_any_registrations?
     true
   end
 
