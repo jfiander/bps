@@ -36,9 +36,9 @@ module EventsHelper
     end.group_by { |e| event_type(e).event_category }
   end
 
-  def render_both_tables(events)
+  def render_both_tables(events, long_form: false)
     %i[desktop mobile].map do |t|
-      render("events/#{t}/table", events: events)
+      render("events/#{t}/table", events: events, long_form: long_form)
     end.join.html_safe
   end
 

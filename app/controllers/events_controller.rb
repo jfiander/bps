@@ -8,7 +8,7 @@ class EventsController < ApplicationController
   before_action :prepare_form,    only: [:new, :copy, :edit]
   before_action :check_for_blank, only: [:create, :update]
 
-  before_action :time_formats,    only: [:schedule, :catalog]
+  before_action :time_formats,    only: [:schedule, :catalog, :show]
   before_action :preload_events,  only: [:schedule, :catalog, :show]
 
   before_action { page_title("#{params[:type].to_s.titleize}s") }
@@ -43,11 +43,13 @@ class EventsController < ApplicationController
     @locations = Location.searchable
     @event_title = params[:type].to_s.titleize
     @registration = Registration.new(event_id: show_params[:id])
-    @registered = if user_signed_in?
-      Registration.find_by(
+    if user_signed_in?
+      reg = Registration.find_by(
         event_id: show_params[:id],
         user: current_user
-      )&.id
+      )
+
+      @registered = { reg.event_id => reg.id }
     end
   end
 
