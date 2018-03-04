@@ -28,11 +28,19 @@ module RanksAndGrades
     case bridge_office&.office
     when 'commander'
       'Cdr'
-    when %w[executive administrative educational secretary treasurer]
+    when *ltc_offices
       'Lt/C'
-    when %w[asst_educational asst_secretary]
+    when *first_lt_offices
       html ? '1<sup>st</sup>/Lt'.html_safe : '1st/Lt'
     end
+  end
+
+  def ltc_offices
+    %w[executive administrative educational secretary treasurer]
+  end
+
+  def first_lt_offices
+    %w[asst_educational asst_secretary]
   end
 
   def committee?
