@@ -4,7 +4,7 @@ module Invitable
       current_sign_in_at.blank? &&
       !locked? &&
       sign_in_count.zero? &&
-      !has_placeholder_email?
+      !placeholder_email?
   end
 
   def invited?
@@ -12,7 +12,7 @@ module Invitable
       invitation_accepted_at.blank?
   end
 
-  def has_placeholder_email?
+  def placeholder_email?
     email.match(/nobody-.*@bpsd9\.org\z/) ||
       email.match(/duplicate-.*@bpsd9\.org\z/)
   end

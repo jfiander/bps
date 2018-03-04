@@ -1,5 +1,5 @@
 # Includable accessor for environmented buckets
-module BucketHelpers
+module BucketHelper
   def static_bucket
     ApplicationRecord.buckets[:static]
   end

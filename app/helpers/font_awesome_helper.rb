@@ -15,11 +15,11 @@ module FontAwesomeHelper
                         grow
                       end
 
-      if i.key?(:options)
-        i[:options] = i[:options].merge(grow: combined_grow)
-      else
-        i[:options] = { grow: combined_grow }
-      end
+      i[:options] = if i.key?(:options)
+                      i[:options].merge(grow: combined_grow)
+                    else
+                      { grow: combined_grow }
+                    end
     end
 
     output = span_top + parse_all(icons).join + span_bottom
@@ -30,8 +30,8 @@ module FontAwesomeHelper
     if fa.is_a?(Hash)
       name = fa[:name]
       options = fa[:options]
-    elsif fa.is_a?(String)
-      name = fa
+    elsif fa.is_a?(String) || fa.is_a?(Symbol)
+      name = fa.to_s
     else
       raise ArgumentError, 'Unexpected argument type.'
     end
@@ -44,7 +44,7 @@ module FontAwesomeHelper
       text = fa[:text]
       options = fa[:options]
     elsif fa.is_a?(String) || fa.is_a?(Symbol)
-      type = fa.to_sym
+      type = fa.to_s
     else
       raise ArgumentError, 'Unexpected argument type.'
     end
@@ -72,6 +72,7 @@ module FontAwesomeHelper
     title = options[:title]
 
     @classes << "fa-#{name}"
+    @classes << "fa-#{size_x(options[:size])}" if options[:size].present?
     css = @classes.flatten.join(' ')
     transforms = @transforms.join(' ')
 
@@ -82,11 +83,12 @@ module FontAwesomeHelper
     options.delete(:style)
     options = fa_options(options)
     parse_options(options)
-    position = long_position(options.delete(:position))
+    pos = options.delete(:position)
+    position = long_position(pos) if pos.present?
 
     @classes << "fa-layers-#{type}"
-    @classes << position.present? ? "fa-layers-#{position}" : ''
-    css = @classes.flatten.reject { |c| c.match(/^fa.$/) }.join(' ')
+    @classes << (position.present? ? "fa-layers-#{position}" : '')
+    css = @classes.flatten.reject { |c| c.to_s.match?(/^fa.$/) }.join(' ')
     transforms = @transforms.join(' ')
 
     "<span class='#{css}' data-fa-transform='#{transforms}'>#{text}</span>"

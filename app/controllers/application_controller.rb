@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
 
   include MarkdownHelper
   include FontAwesomeHelper
-  include BucketHelpers
+  include BucketHelper
+  include ApplicationHelper
   helper_method :static_bucket, :files_bucket, :bilge_bucket, :photos_bucket
 
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -97,11 +98,6 @@ class ApplicationController < ActionController::Base
       Power Squadron, United States Power Squadrons, USPS, Safe Boating, VSC, Vessel Exams,
       Vessel Safety Checks, vessel safety
     KEYWORDS
-  end
-
-  def page_title(title = nil)
-    title = "#{title} | " if title.present?
-    @title = "#{title}America's Boating Club – Birmingham Squadron"
   end
 
   def markdown_views?

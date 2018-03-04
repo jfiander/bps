@@ -39,4 +39,9 @@ module ApplicationHelper
   def page_name_in_auto_shows?(partial)
     session[:auto_shows]&.include?(partial)
   end
+
+  def page_title(title = nil)
+    title = "#{title} | " if title.present?
+    @title = "#{title}America's Boating Club – Birmingham Squadron"
+  end
 end

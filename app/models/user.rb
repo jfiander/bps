@@ -59,7 +59,7 @@ class User < ApplicationRecord
     ]
   end)
   scope :invitable, (lambda do
-    unlocked.where('sign_in_count = 0').reject(&:has_placeholder_email?)
+    unlocked.where('sign_in_count = 0').reject(&:placeholder_email?)
   end)
 
   def full_name(html: true)

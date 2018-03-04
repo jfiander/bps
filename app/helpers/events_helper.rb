@@ -23,6 +23,10 @@ module EventsHelper
     @course_includes.find_all { |ci| ci.course_id == event.id }
   end
 
+  def catalog
+    @catalog
+  end
+
   def preload_events
     @users ||= User.all
     @all_events ||= Event.order(:start_at)

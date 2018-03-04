@@ -30,21 +30,24 @@ module MarkdownHelper
 
   def default_markdown(markdown)
     @burgee_html = if markdown&.match?(/%burgee/)
-      center_html('burgee') do
-        USPSFlags::Burgees.new { |b| b.squadron = :birmingham }.svg
-      end
-    else
-      ''
-    end
+                     center_html('burgee') do
+                       USPSFlags::Burgees.new do |b|
+                         b.squadron = :birmingham
+                         b.outfile = ''
+                       end.svg
+                     end
+                   else
+                     ''
+                   end
 
     @education_menu = if markdown&.match?(/%education/)
-      view_context.render(
-        'application/education_menu',
-        active: { courses: false, seminars: false }
-      )
-    else
-      ''
-    end
+                        view_context.render(
+                          'application/education_menu',
+                          active: { courses: false, seminars: false }
+                        )
+                      else
+                        ''
+                      end
   end
 
   def generate_markdown_div
@@ -87,19 +90,18 @@ module MarkdownHelper
     "<div class='center #{classes}'>" + yield + '</div>'
   end
 
-  def static_link(id, title: '')
-    key = get_uploaded_file_name(id)
-    link_title = title || key
-    link_path = static_bucket.link("general/#{key}")
-    view_context.link_to(link_path, target: :_blank) do
-      view_context.fa_icon('download') + link_title
-    end
+  def static_link(id, title: nil)
+    markdown_link(prefix: 'general', id: id, title: title)
   end
 
-  def file_link(id, title: '')
+  def file_link(id, title: nil)
+    markdown_link(prefix: 'uploaded_files', id: id, title: title)
+  end
+
+  def markdown_link(prefix:, id:, title: nil)
     key = get_uploaded_file_name(id)
     link_title = title || key
-    link_path = files_bucket.link("uploaded_files/#{key}")
+    link_path = files_bucket.link("#{prefix}/#{key}")
     view_context.link_to(link_path, target: :_blank) do
       view_context.fa_icon('download') + link_title
     end
