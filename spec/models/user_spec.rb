@@ -41,6 +41,27 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'auto_rank' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+    end
+
+    it 'should correctly detect Cdr' do
+      FactoryBot.create(:bridge_office, office: 'commander', user: @user)
+      expect(@user.auto_rank).to eql('Cdr')
+    end
+
+    it 'should correctly detect Lt/C' do
+      FactoryBot.create(:bridge_office, office: 'executive', user: @user)
+      expect(@user.auto_rank).to eql('Lt/C')
+    end
+
+    it 'should correctly detect 1st/Lt' do
+      FactoryBot.create(:bridge_office, office: 'asst_secretary', user: @user)
+      expect(@user.auto_rank(html: false)).to eql('1st/Lt')
+    end
+  end
+
   describe 'miscellaneous' do
     before(:each) do
       @user = FactoryBot.create(
@@ -69,54 +90,40 @@ RSpec.describe User, type: :model do
         }
       )
     end
-
-    it 'should correctly detect auto_ranks' do
-      FactoryBot.create(
-        :bridge_office,
-        office: 'commander',
-        user: @user
-      )
-
-      expect(@user.auto_rank).to eql('Cdr')
-    end
   end
 
   describe 'invitable' do
     before(:each) do
       @user = FactoryBot.create(:user)
+      @placeholder_user = FactoryBot.create(:user, :placeholder_email)
     end
-    #   !has_placeholder_email?
+
+    it 'should be invitable by default' do
+      expect(@user.invitable?).to be(true)
+    end
 
     it 'should not have accepted an invitation' do
-      expect(@user.invitable?).to be(true)
       @user.update(invitation_accepted_at: Time.now)
       expect(@user.invitable?).to be(false)
     end
 
     it 'should not be logged in' do
-      expect(@user.invitable?).to be(true)
       @user.update(current_sign_in_at: Time.now)
       expect(@user.invitable?).to be(false)
     end
 
     it 'should not be locked' do
-      expect(@user.invitable?).to be(true)
       @user.lock
       expect(@user.invitable?).to be(false)
     end
 
     it 'should not have a sign in count' do
-      expect(@user.invitable?).to be(true)
       @user.update(sign_in_count: 1)
       expect(@user.invitable?).to be(false)
     end
 
     it 'should not have a placeholder email' do
-      expect(@user.invitable?).to be(true)
-      @user.update(email: 'duplicate-12345@bpsd9.org')
-      expect(@user.invitable?).to be(false)
-      @user.update(email: 'nobody-12345@bpsd9.org')
-      expect(@user.invitable?).to be(false)
+      expect(@placeholder_user.invitable?).to be(false)
     end
   end
 
@@ -142,7 +149,11 @@ RSpec.describe User, type: :model do
   describe 'permissions' do
     before(:all) do
       @admin = FactoryBot.build(:role, name: 'admin').save(validate: false)
-      @child = FactoryBot.create(:role, name: 'child', parent: Role.find_by(name: 'admin'))
+      @child = FactoryBot.create(
+        :role,
+        name: 'child',
+        parent: Role.find_by(name: 'admin')
+      )
     end
 
     before(:each) do
@@ -155,19 +166,36 @@ RSpec.describe User, type: :model do
       expect(user_role.role.name).to eql('child')
     end
 
-    it 'should return true when a user has the required permission' do
+    describe 'removal' do
+      before(:each) do
+        @user.permit! :admin
+        @user.permit! :child
+      end
+
+      it 'should remove permissions correctly' do
+        @user.unpermit! :child
+        expect(@user.permitted_roles).to include(:admin)
+      end
+
+      it 'should remove all permissions correctly' do
+        @user.unpermit! :all
+        expect(@user.permitted_roles).to be_blank
+      end
+    end
+
+    it 'should return true when user has the required permission' do
       @user.permit! :child
       @user.reload
       expect(@user.permitted?(:child)).to be(true)
     end
 
-    it 'should return true when a user has a parent of the required permission' do
+    it 'should return true when user has a parent of the required permission' do
       @user.permit! :admin
       @user.reload
       expect(@user.permitted?(:child)).to be(true)
     end
 
-    it 'should return false when a user does not have the required permission' do
+    it 'should return false when user does not have the required permission' do
       @user.reload
       expect(@user.permitted?(:child)).to be(false)
     end
@@ -190,6 +218,21 @@ RSpec.describe User, type: :model do
       expect(@user.granted_roles).to eql([:admin])
       expect(@user.permitted_roles).to eql([:admin, :child])
     end
+
+    describe 'show_admin_menu?' do
+      before(:each) do
+        @page = FactoryBot.create(:role, name: 'page')
+      end
+
+      it 'should show the admin menu for correct users' do
+        @user.permit! :page
+        expect(@user.show_admin_menu?).to be(true)
+      end
+
+      it 'should not show the admin menu for other users' do
+        expect(@user.show_admin_menu?).to be(false)
+      end
+    end
   end
 
   describe 'locking' do
@@ -211,6 +254,30 @@ RSpec.describe User, type: :model do
       expect(@user.locked?).to be(true)
       @user.unlock
       expect(@user.locked?).to be(false)
+    end
+  end
+
+  describe 'store item requesting' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+      @item = FactoryBot.create(:store_item)
+    end
+
+    it 'should correctly request an item from the store' do
+      request = @user.request_from_store(@item.id)
+
+      expect(request.user).to eql(@user)
+      expect(request.store_item.name).to eql(@item.name)
+    end
+  end
+
+  describe 'scopes' do
+    it 'should get only invitable users' do
+      user = FactoryBot.create(:user)
+      FactoryBot.create(:user, :placeholder_email)
+      FactoryBot.create(:user, sign_in_count: 1)
+
+      expect(User.invitable.to_a).to eql([user])
     end
   end
 end
