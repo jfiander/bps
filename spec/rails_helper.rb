@@ -8,6 +8,16 @@ require 'rspec/rails'
 require 'factory_bot'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+include ApplicationHelper
+include BridgeHelper
+include BucketHelper
+include CalendarHelper
+include EventsHelper
+include FontAwesomeHelper
+include MarkdownHelper
+include NavigationHelper
+include ViewHelper
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -26,6 +36,13 @@ require 'factory_bot'
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
+
+Aws.config[:stub_responses] = true
+Aws.config[:s3] = {
+  stub_responses: {
+    get_object: { body: StringIO.new('something goes here') }
+  }
+}
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
