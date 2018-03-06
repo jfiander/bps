@@ -59,13 +59,13 @@ class UserController < ApplicationController
     @registration = current_user.register_for(Event.find_by(id: @event_id))
 
     if @registration.valid?
-      flash[:success] = "Successfully registered!"
+      flash[:success] = 'Successfully registered!'
       RegistrationMailer.confirm(@registration).deliver
     elsif Registration.find_by(@registration.attributes.slice(:user_id, :event_id))
       flash.now[:notice] = 'You are already registered for this course.'
       render status: :unprocessable_entity
     else
-      flash.now[:alert] = "We are unable to register you at this time."
+      flash.now[:alert] = 'We are unable to register you at this time.'
       render status: :unprocessable_entity
     end
   end
@@ -76,16 +76,17 @@ class UserController < ApplicationController
     @event_id = r&.event_id
 
     unless (r&.user == current_user) || current_user&.permitted?(:course, :seminar, :event)
-      redirect_to root_path, status: :unprocessable_entity, alert: "You are not allowed to cancel that registration."
+      flash[:alert] = 'You are not allowed to cancel that registration.'
+      redirect_to root_path, status: :unprocessable_entity
     end
 
     @cancel_link = (r&.user == current_user)
 
     if r&.destroy
-      flash[:success] = "Successfully cancelled registration!"
+      flash[:success] = 'Successfully cancelled registration!'
       RegistrationMailer.cancelled(r).deliver if @cancel_link
     else
-      flash.now[:alert] = "We are unable to cancel your registration at this time."
+      flash.now[:alert] = 'We are unable to cancel your registration at this time.'
       render status: :unprocessable_entity
     end
   end
@@ -93,16 +94,22 @@ class UserController < ApplicationController
   def lock
     user = User.find(params[:id])
 
-    redirect_to users_path, alert: "Cannot lock an admin user." if user.permitted?(:admin)
+    if user.permitted?(:admin)
+      redirect_to(
+        users_path,
+        alert: 'Cannot lock an admin user.'
+      )
+      return
+    end
 
     user.lock
-    redirect_to users_path, success: "Successfully locked user."
+    redirect_to users_path, success: 'Successfully locked user.'
   end
 
   def unlock
     User.find(clean_params[:id]).unlock
 
-    redirect_to users_path, success: "Successfully unlocked user."
+    redirect_to users_path, success: 'Successfully unlocked user.'
   end
 
   def import
@@ -123,10 +130,10 @@ class UserController < ApplicationController
     file.close
     begin
       User.import(import_path)
-      flash.now[:success] = "Successfully imported user data."
+      flash.now[:success] = 'Successfully imported user data.'
       render :import
     rescue => e
-      flash.now[:alert] = "Unable to import user data."
+      flash.now[:alert] = 'Unable to import user data.'
       render :import and return
       raise e
     end
@@ -134,17 +141,20 @@ class UserController < ApplicationController
 
   def invite
     user = User.find_by(id: clean_params[:id])
-    redirect_to users_path, alert: "User not found." if user.blank?
+    redirect_to users_path, alert: 'User not found.' if user.blank?
 
     user.invite!
-    redirect_to users_path, success: "Invitation sent!"
+    redirect_to users_path, success: 'Invitation sent!'
   end
 
   def invite_all
-    redirect_to users_path, alert: "This action is currently disabled." and return unless ENV["ALLOW_BULK_INVITE"] == "true"
+    unless ENV['ALLOW_BULK_INVITE'] == 'true'
+      redirect_to users_path, alert: 'This action is currently disabled.'
+      return
+    end
 
     User.invitable.each(&:invite!)
-    redirect_to users_path, success: "All new users have been sent invitations."
+    redirect_to users_path, success: 'All new users have been sent invitations.'
   end
 
   def assign_photo

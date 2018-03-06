@@ -46,34 +46,22 @@ module MembersMethods
   end
 
   def upload_minutes
-    unless valid_upload?(type: :minutes)
-      redirect_to(
-        minutes_path, alert: 'You must either upload a file or select remove.'
-      )
-      return
-    end
-
-    remove_minutes and return if minutes_params[:minutes_remove].present?
-
-    files_bucket.upload(file: minutes_params[:minutes_upload_file], key: @key)
-    redirect_to(
-      minutes_path, success: "Minutes #{@issue} uploaded successfully."
+    monthly_upload(
+      :minutes,
+      bucket: files_bucket,
+      path: minutes_path,
+      remove: minutes_params[:minutes_remove],
+      file: minutes_params[:minutes_upload_file]
     )
   end
 
   def upload_bilge
-    unless valid_upload?(type: :bilge)
-      redirect_to(
-        newsletter_path,
-        alert: 'You must either upload a file or check the remove box.'
-      )
-      return
-    end
-    remove_bilge and return if bilge_params[:bilge_remove].present?
-
-    bilge_bucket.upload(file: bilge_params[:bilge_upload_file], key: @key)
-    redirect_to(
-      newsletter_path, success: "Bilge Chatter #{@issue} uploaded successfully."
+    monthly_upload(
+      :bilge,
+      bucket: bilge_bucket,
+      path: newsletter_path,
+      remove: bilge_params[:bilge_remove],
+      file: bilge_params[:bilge_upload_file]
     )
   end
 
@@ -90,6 +78,22 @@ module MembersMethods
     params.permit(
       :minutes_upload_file, :minutes_remove, :minutes_excom, :year, :month,
       issue: ['date(1i)', 'date(2i)']
+    )
+  end
+
+  def monthly_upload(type, bucket:, path:, remove: false, file: nil)
+    unless valid_upload?(type: type)
+      flash[:alert] = 'You must either upload a file or select remove.'
+      redirect_to path
+    end
+
+    send("remove_#{type}") and return if remove
+
+    bucket.upload(file: file, key: @key)
+
+    redirect_to(
+      path,
+      success: "#{type.to_s.titleize} #{@issue} uploaded successfully."
     )
   end
 

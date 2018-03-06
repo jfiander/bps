@@ -1,26 +1,34 @@
 class EventsController < ApplicationController
   include EventsHelper
 
-  before_action :authenticate_user!, except: [:schedule, :catalog, :show]
-  before_action                      except: [:schedule, :catalog, :show, :locations, :remove_location] { require_permission(params[:type]) }
+  before_action :authenticate_user!, except: %i[schedule catalog show]
+  before_action except: %i[schedule catalog show locations remove_location] do
+    require_permission(params[:type])
+  end
 
-  before_action :get_event,       only: [:copy, :edit, :expire]
-  before_action :prepare_form,    only: [:new, :copy, :edit]
-  before_action :check_for_blank, only: [:create, :update]
+  before_action :get_event,       only: %i[copy edit expire]
+  before_action :prepare_form,    only: %i[new copy edit]
+  before_action :check_for_blank, only: %i[create update]
 
-  before_action :time_formats,    only: [:schedule, :catalog, :show]
-  before_action :preload_events,  only: [:schedule, :catalog, :show]
+  before_action :time_formats,    only: %i[schedule catalog show]
+  before_action :preload_events,  only: %i[schedule catalog show]
+  before_action :get_locations,   only: %i[new copy edit]
+  before_action :set_create_path, only: %i[new copy]
 
   before_action { page_title("#{params[:type].to_s.titleize}s") }
 
   def schedule
     @events = get_events(params[:type], :current)
-    @registered = Registration.includes(:user).where(user_id: current_user.id).map { |r| {r.event_id => r.id} }.reduce({}, :merge) if user_signed_in?
+    if user_signed_in?
+      @registered = Registration.includes(:user).where(user_id: current_user.id)
+                                .map { |r| { r.event_id => r.id } }
+                                .reduce({}, :merge)
+    end
 
     @current_user_permitted_event_type = current_user&.permitted?(params[:type])
 
-    if current_user&.permitted?(params[:type])
-      @registered_users = Registration.includes(:user).all.group_by { |r| r.event_id }
+    if @current_user_permitted_event_type
+      @registered_users = Registration.includes(:user).all.group_by(&:event_id)
       @expired_events = get_events(params[:type], :expired)
     end
   end
@@ -51,14 +59,10 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @locations = Location.all.map(&:display)
-    @submit_path = send("create_#{params[:type]}_path")
   end
 
   def copy
     @event = Event.new(@event.attributes)
-    @locations = Location.all.map(&:display)
-    @submit_path = send("create_#{params[:type]}_path")
     render :new
   end
 
@@ -66,19 +70,13 @@ class EventsController < ApplicationController
     @event = Event.create(event_params)
 
     if @event.valid?
-      update_attachments
-      redirect_to send("#{params[:type]}s_path"), success: "Successfully added #{params[:type]}."
+      after_save_event(mode: :added)
     else
-      @submit_path = send("update_#{params[:type]}_path")
-      @edit_mode = "Add"
-      flash.now[:alert] = "Unable to add #{params[:type]}."
-      flash.now[:error] = @event.errors.full_messages
-      render :new
+      failed_to_save_event(mode: :add)
     end
   end
 
   def edit
-    @locations = Location.all.map(&:display)
     @submit_path = send("update_#{params[:type]}_path")
     @edit_mode = "Modify"
     render :new
@@ -87,26 +85,28 @@ class EventsController < ApplicationController
   def update
     @event = Event.find_by(id: event_params[:id])
     if @event.update(event_params)
-      update_attachments
-      redirect_to send("#{params[:type]}s_path"), success: "Successfully updated #{params[:type]}."
+      after_save_event(mode: :modified)
     else
-      @submit_path = send("update_#{params[:type]}_path")
-      @edit_mode = "Modify"
-      flash.now[:alert] = "Unable to update #{params[:type]}."
-      flash.now[:error] = @event.errors.full_messages
-      render :edit
+      failed_to_save_event(mode: :modify)
     end
   end
 
   def expire
     if @event.update(expires_at: Time.now)
-      redirect_to send("#{params[:type]}s_path"), success: "Successfully expired #{params[:type]}."
+      redirect_to(
+        send("#{params[:type]}s_path"),
+        success: "Successfully expired #{params[:type]}."
+      )
     else
-      redirect_to send("#{params[:type]}s_path"), alert: "Unable to expire #{params[:type]}."
+      redirect_to(
+        send("#{params[:type]}s_path"),
+        alert: "Unable to expire #{params[:type]}."
+      )
     end
   end
 
   private
+
   def event_params
     params.require(:event).permit(
       %i[
@@ -134,15 +134,43 @@ class EventsController < ApplicationController
     formatted.to_s.downcase.gsub(" ", "_").to_sym
   end
 
+  def after_save_event(mode: :added)
+    update_attachments
+    redirect_to(
+      send("#{params[:type]}s_path"),
+      success: "Successfully #{mode} #{params[:type]}."
+    )
+  end
+
+  def failed_to_save_event(mode: :add)
+    path = case mode
+           when :add
+             :create
+           when :modify
+             :update
+           end
+    flash.now[:alert] = "Unable to #{mode} #{params[:type]}."
+    flash.now[:error] = @event.errors.full_messages
+    @submit_path = send("#{path}_#{params[:type]}_path")
+    @edit_mode = mode.to_s.titleize
+    render :new
+  end
+
   def get_event
-    @event = Event.includes(:event_instructors, :instructors).find_by(id: update_params[:id])
+    @event = Event.includes(:event_instructors, :instructors)
+                  .find_by(id: update_params[:id])
     if @event.course?
-      @course_includes = CourseInclude.where(course_id: @event.id).map(&:text).join("\n")
-      @course_topics = CourseTopic.where(course_id: @event.id).map(&:text).join("\n")
+      @course_includes = CourseInclude.where(course_id: @event.id).map(&:text)
+                                      .join("\n")
+      @course_topics = CourseTopic.where(course_id: @event.id).map(&:text)
+                                  .join("\n")
     end
 
     if @event.course? || @event.seminar?
-      @instructors = EventInstructor.where(event_id: @event.id).map(&:user).map { |u| "#{u.simple_name} / #{u.certificate}" }.join("\n")
+      @instructors = EventInstructor.where(event_id: @event.id).map(&:user)
+                                    .map do |u|
+                                      "#{u.simple_name} / #{u.certificate}"
+                                    end.join("\n")
     end
   end
 
@@ -150,6 +178,14 @@ class EventsController < ApplicationController
     @event_types = EventType.selector(params[:type])
     @event_title = params[:type].to_s.titleize
     @edit_mode = "Add"
+  end
+
+  def get_locations
+    @locations = Location.all.map(&:display)
+  end
+
+  def set_create_path
+    @submit_path = send("create_#{params[:type]}_path")
   end
 
   def update_attachments
@@ -175,9 +211,15 @@ class EventsController < ApplicationController
         EventInstructor.create(event: @event, user: user) if user.present?
       end
 
-      CourseInclude.where(course: @event).where("updated_at < ?", clear_before_time).destroy_all
-      CourseTopic.where(course: @event).where("updated_at < ?", clear_before_time).destroy_all
-      EventInstructor.where(event: @event).where("updated_at < ?", clear_before_time).destroy_all
+      CourseInclude.where(course: @event).where(
+        "updated_at < ?", clear_before_time
+      ).destroy_all
+      CourseTopic.where(course: @event).where(
+        "updated_at < ?", clear_before_time
+      ).destroy_all
+      EventInstructor.where(event: @event).where(
+        "updated_at < ?", clear_before_time
+      ).destroy_all
     end
   end
 

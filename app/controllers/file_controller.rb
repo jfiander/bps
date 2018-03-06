@@ -2,65 +2,42 @@ class FileController < ApplicationController
   before_action :authenticate_user!
   before_action { require_permission(:page) }
 
-  before_action only: [:new, :create, :destroy] { page_title('Files') }
+  before_action only: %i[new create destroy] do
+    page_title('Files')
+  end
 
-  before_action only: [:new_header, :create_header, :destroy_header] { page_title('Headers') }
+  before_action only: %i[new_header create_header destroy_header] do
+    page_title('Headers')
+  end
 
   def new
     @file = MarkdownFile.new
-
     @markdown_files = MarkdownFile.all
   end
 
   def create
-    @file = MarkdownFile.create(file_params)
-
-    if @file.valid?
-      redirect_to file_path, success: 'Successfully uploaded file.'
-    else
-      errors = @file.errors.full_messages
-      redirect_to file_path, alert: 'Unable to upload file.', error: errors
-    end
+    upload_file
   end
 
   def destroy
-    @file = MarkdownFile.find_by(id: destroy_params[:id])
-
-    if @file.destroy
-      redirect_to file_path, success: 'Successfully removed file.'
-    else
-      redirect_to file_path, alert: 'Unable to remove file.'
-    end
+    remove_file
   end
 
   def new_header
     @header = HeaderImage.new
-
     @headers = HeaderImage.all
   end
 
   def create_header
-    @header = HeaderImage.create(header_params)
-
-    if @header.valid?
-      redirect_to header_path, success: 'Successfully uploaded header image.'
-    else
-      errors = @header.errors.full_messages
-      redirect_to header_path, alert: 'Unable to upload header image.', error: errors
-    end
+    upload_file(:header)
   end
 
   def destroy_header
-    @header = HeaderImage.find_by(id: destroy_params[:id])
-
-    if @header.destroy
-      redirect_to header_path, success: 'Successfully removed header image.'
-    else
-      redirect_to header_path, alert: 'Unable to remove header image.'
-    end
+    remove_file(:header)
   end
 
   private
+
   def file_params
     params.require(:markdown_file).permit(:file)
   end
@@ -71,5 +48,38 @@ class FileController < ApplicationController
 
   def destroy_params
     params.permit(:id)
+  end
+
+  def upload_file(type = :file)
+    uploaded_file = if type == :file
+                      MarkdownFile.create(file_params)
+                    elsif type == :header
+                      HeaderImage.create(header_params)
+                    end
+
+    if uploaded_file.valid?
+      redirect_to(
+        send("#{type}_path"), success: "Successfully uploaded #{type}."
+      )
+    else
+      errors = uploaded_file.errors.full_messages
+      redirect_to(
+        send("#{type}_path"), alert: "Unable to upload #{type}.", error: errors
+      )
+    end
+  end
+
+  def remove_file(type = :file)
+    file = if type == :file
+             MarkdownFile.find_by(id: destroy_params[:id])
+           elsif type == :header
+             HeaderImage.find_by(id: destroy_params[:id])
+           end
+
+    if file.destroy
+      redirect_to send("#{type}_path"), success: "Successfully removed #{type}."
+    else
+      redirect_to send("#{type}_path"), alert: "Unable to remove #{type}."
+    end
   end
 end

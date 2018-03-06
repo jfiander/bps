@@ -31,7 +31,7 @@ module UserMethods
       current_login_from: user.current_sign_in_ip,
       invited_at:         user.invitation_sent_at,
       invitable:          user.invitable?,
-      placeholder_email:  user.has_placeholder_email?,
+      placeholder_email:  user.placeholder_email?,
       invited:            user.invited?,
       locked:             user.locked?
     }
@@ -50,7 +50,7 @@ module UserMethods
   end
 
   def user_has_explicit_roles?(user)
-    @user_roles.has_key? user.id
+    @user_roles.key? user.id
   end
 
   def user_has_implicit_roles?(user)

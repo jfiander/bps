@@ -4,6 +4,6 @@
   .table-cell.committee-chair class=("additional" if @last_committee_name == committee[:name])
     - if @current_user_permitted_users
       = link_to(remove_committee_path(committee[:id]), class: "red", method: :delete, remote: true,
-        data: {confirm: "Are you sure you want to remove #{committee[:user][:simple_name]} from #{committee[:name]}?"}) { fa_icon('minus-square') }
+        data: {confirm: "Are you sure you want to remove #{committee[:user][:simple_name].gsub('&nbsp;', ' ')} from #{committee[:name]}?"}) { fa_icon('minus-square') }
     = committee[:user][:full_name]
   - @last_committee_name = committee[:name]
