@@ -1,10 +1,10 @@
 module MembersMethods
   def minutes
     minutes_years = @minutes.map(&:key).map do |b|
-      b.sub(minutes_prefix, '').delete('.pdf').gsub(%r{/(s|\d+)}, '')
+      b.sub("#{minutes_prefix}/", '').delete('.pdf').gsub(%r{/(s|\d+)}, '')
     end
     minutes_excom_years = @minutes_excom.map(&:key).map do |b|
-      b.sub(minutes_prefix(excom: true), '').delete('.pdf')
+      b.sub("#{minutes_prefix(excom: true)}/", '').delete('.pdf')
        .gsub(%r{/(s|\d+)}, '')
     end
 
@@ -29,7 +29,7 @@ module MembersMethods
     key = [
       minutes_prefix, minutes_params[:year], minutes_params[:month]
     ].join('/')
-    issue_link = @minutes_links[key.sub(minutes_prefix, '')]
+    issue_link = @minutes_links[key.sub("#{minutes_prefix}/", '')]
     issue_title = key.tr("/", "-")
 
     send_minutes_file(title: issue_title, link: issue_link)
@@ -39,7 +39,7 @@ module MembersMethods
     key = [
       minutes_prefix(excom: true), minutes_params[:year], minutes_params[:month]
     ].join('/')
-    issue_link = @minutes_excom_links[key.sub(minutes_prefix(excom: true), '')]
+    issue_link = @minutes_excom_links[key.sub("#{minutes_prefix(excom: true)}/", '')]
     issue_title = key.tr('/', '-')
 
     send_minutes_file(title: issue_title, link: issue_link, excom: true)
@@ -128,7 +128,7 @@ module MembersMethods
     month = minutes_params[:issue]['date(2i)']
     @month = month.to_i.in?([7,8]) ? "s" : month
     @issue = "#{@year}/#{@month}"
-    @key = "#{minutes_prefix(excom: excom)}#{@issue}.pdf"
+    @key = "#{minutes_prefix(excom: excom)}/#{@issue}.pdf"
   end
 
   def list_minutes
@@ -137,19 +137,18 @@ module MembersMethods
 
     @minutes_links = @minutes.map do |m|
       key = m.key.dup
-      issue_date = m.key.sub(minutes_prefix, '').delete('.pdf')
+      issue_date = m.key.sub("#{minutes_prefix}/", '').delete('.pdf')
       { issue_date => files_bucket.link(key) }
     end.reduce({}, :merge)
 
     @minutes_excom_links = @minutes_excom.map do |m|
       key = m.key.dup
-      issue_date = m.key.sub(minutes_prefix(excom: true), '').delete('.pdf')
+      issue_date = m.key.sub("#{minutes_prefix(excom: true)}/", '').delete('.pdf')
       { issue_date => files_bucket.link(key) }
     end.reduce({}, :merge)
   end
 
   def minutes_prefix(excom: false)
-    excom_prefix = excom ? 'excom_' : ''
     "#{excom ? 'excom_' : ''}minutes"
   end
 
