@@ -1,5 +1,6 @@
 class PublicController < ApplicationController
   include PublicMethods
+  include CalendarHelper
 
   skip_before_action :prerender_for_layout, only: [:register]
 
