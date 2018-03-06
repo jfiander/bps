@@ -78,6 +78,10 @@ class MembersController < ApplicationController
     params.require(:static_page).permit(:name, :markdown)
   end
 
+  def clean_params
+    params.permit(:page_name, :id, :save, :preview)
+  end
+
   def save_markdown
     page = StaticPage.find_by(name: static_page_params[:name])
 
