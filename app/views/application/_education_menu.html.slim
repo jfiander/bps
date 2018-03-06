@@ -1,13 +1,13 @@
 ul#education
-  - if defined?(catalog)
-    = link 'Courses', path: course_catalog_path, active: active[:courses]
-    = link 'Seminars', path: seminar_catalog_path, active: active[:seminars]
+  - if params[:catalog]
+    = link 'Courses Offered', path: course_catalog_path, active: active[:courses]
+    = link 'Seminars Offered', path: seminar_catalog_path, active: active[:seminars]
     br
-    = link 'Switch to Schedule', path: courses_path, fa: { name: 'calendar-alt', options: { style: :regular } }, css_class: 'catalog-button' if active[:courses]
-    = link 'Switch to Schedule', path: seminars_path, fa: { name: 'calendar-alt', options: { style: :regular } }, css_class: 'catalog-button' if active[:seminars]
+    = link 'Show Course Schedule', path: courses_path, fa: { name: 'calendar-alt', options: { style: :regular } }, css_class: 'catalog-button' if active[:courses]
+    = link 'Show Seminar Schedule', path: seminars_path, fa: { name: 'calendar-alt', options: { style: :regular } }, css_class: 'catalog-button' if active[:seminars]
   - else
-    = link 'Courses', path: courses_path, active: active[:courses]
-    = link 'Seminars', path: seminars_path, active: active[:seminars]
+    = link 'Course Schedule', path: courses_path, active: active[:courses]
+    = link 'Seminar Schedule', path: seminars_path, active: active[:seminars]
     br
-    = link 'Switch to Catalog', path: course_catalog_path, fa: { name: 'list' }, css_class: 'catalog-button' if active[:courses]
-    = link 'Switch to Catalog', path: seminar_catalog_path, fa: { name: 'list' }, css_class: 'catalog-button' if active[:seminars]
+    = link 'List Offered Courses', path: course_catalog_path, fa: { name: 'list' }, css_class: 'catalog-button' if active[:courses]
+    = link 'List Offered Seminars', path: seminar_catalog_path, fa: { name: 'list' }, css_class: 'catalog-button' if active[:seminars]

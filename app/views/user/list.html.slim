@@ -7,6 +7,7 @@ h2 All users
 = editor('photo_editor') if current_user&.permitted?(:admin)
 
 - admin = current_user&.permitted?(:admin)
+- can_lock = current_user&.permitted?(:users)
 
 table#users
   tr
@@ -17,5 +18,5 @@ table#users
     th.center.very-narrow ID
     th.center.very-narrow
   - @users.each do |user|
-    = render 'user/list/user', user: user, admin: admin
+    = render 'user/list/user', user: user, admin: admin, can_lock: can_lock
 

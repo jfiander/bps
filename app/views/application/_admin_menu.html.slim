@@ -20,5 +20,5 @@
   = link 'Invite User', path: new_user_invitation_path, fa: { name: 'user-plus', options: { style: :regular } }
   = link 'Permissions', path: permit_path, fa: { name: 'user-secret', options: { style: :light } }
 
-  - if (controller_name.in?(['user', 'invitations']) || controller.action_name == 'bridge')
+  - if (controller_name.match?(%r{\A(permissions|user|invitations)\z}) || controller.action_name == 'bridge')
     = link 'Help', path: user_help_path, fa: { name: 'question-circle', options: { style: :regular } }

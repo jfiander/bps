@@ -1,4 +1,4 @@
-h2 = "Squadron #{params[:type].to_s.titleize} Catalog"
+h2 = "#{params[:type].to_s.titleize}s Offered"
 
 = render "application/education_menu", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)}, catalog: true if params[:type].in? [:course, :seminar]
 

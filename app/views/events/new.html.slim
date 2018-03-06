@@ -24,7 +24,7 @@ h2 = "#{@edit_mode} #{@event_title}"
     br.clear
 
     - if params[:type].in? [:course, :seminar]
-      .left = f.label :show_in_catalog
+      .left = f.label :show_in_catalog, "Show in Offered #{@event_title}s List"
       .right
         label.switch
           = f.check_box :show_in_catalog, class: "slider round"

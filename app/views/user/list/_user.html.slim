@@ -4,4 +4,4 @@ tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
   td.center = render 'user/list/roles', office: user[:bridge_office], granted: user[:granted_roles], permitted: user[:permitted_roles]
   td.center.small-text = render 'user/list/login_at', current: user[:current_login_at], from: user[:current_login_from], invited_at: user[:invited_at]
   td.center = admin ? link_to(user[:id], user_path(user[:id])) : user[:id]
-  td.center = render 'user/list/actions', admin: admin, locked: user[:locked], id: user[:id], invited: user[:invited], invitable: user[:invitable], placeholder_email: user[:placeholder_email], is_admin: user[:granted_roles].include?(:admin)
+  td.center = render 'user/list/actions', can_lock: can_lock, locked: user[:locked], id: user[:id], invited: user[:invited], invitable: user[:invitable], placeholder_email: user[:placeholder_email], admin: user[:permitted_roles].include?(:admin)

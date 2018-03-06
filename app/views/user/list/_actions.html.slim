@@ -1,7 +1,7 @@
-- if admin
+- if can_lock
   - if locked
     = link_to(unlock_user_path(id), title: 'Unlock', class: 'unlock', method: :patch) { fa_icon('lock', fa: 'fw') }
-  - elsif !is_admin
+  - elsif !admin
     = link_to(lock_user_path(id), title: 'Lock', class: 'lock', method: :patch) { fa_icon('unlock', fa: 'fw') }
 - unless locked
   - if invited

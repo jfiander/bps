@@ -1,8 +1,8 @@
 .registration id=("registration_#{r.id}_mobile")
-  - if r.user.present?
+  - if r.user&.full_name&.present?
     = link_to(r.user.full_name, "mailto:#{r.user.email}")
   - else
-    = link_to(r.email, "mailto:#{r.email}")
+    = mail_to(r.email || r.user&.email)
   |  
   = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true,
     data: {confirm: 'Are you sure you want to cancel this registration?'}) { fa_icon('minus-square') }
