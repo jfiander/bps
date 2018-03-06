@@ -1,5 +1,6 @@
 class HeaderImage < ApplicationRecord
-  has_attached_file :file,
+  has_attached_file(
+    :file,
     default_url: nil,
     storage: :s3,
     s3_region: 'us-east-2',
@@ -8,8 +9,11 @@ class HeaderImage < ApplicationRecord
     s3_credentials: aws_credentials(:files),
     styles: { desktop: '1500x1500', medium: '500x500', thumb: '200x200' },
     convert_options: { thumb: '-quality 75 -strip' }
+  )
 
-  validates_attachment_content_type :file, content_type: %r{\A(image/(jpe?g|png|gif))\z}
+  validates_attachment_content_type(
+    :file, content_type: %r{\A(image/(jpe?g|png|gif))\z}
+  )
   validates :file, presence: true, if: :no_errors_yet?
   validate :correct_image_dimensions, if: :no_errors_yet?
 
@@ -21,17 +25,11 @@ class HeaderImage < ApplicationRecord
 
   def correct_image_dimensions
     image = file.queued_for_write[:original]
-    errors.add(:file, 'is not usable') and return if image.nil?
+    return if image.nil?
 
-    dimensions, ratio = size_info(image)
-    add_errors(dimensions, ratio)
-  end
-
-  def size_info(image = file)
-    dimensions = Paperclip::Geometry.from_file(image)
-    ratio = dimensions.width / dimensions.height
-
-    [dimensions, ratio]
+    dim = Paperclip::Geometry.from_file(file.queued_for_write[:original].path)
+    ratio = dim.width / dim.height
+    add_errors(dim, ratio)
   end
 
   def add_errors(dimensions, ratio)
