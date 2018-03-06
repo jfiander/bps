@@ -62,6 +62,7 @@ group :development, :test do
   gem 'sqlite3',           '~> 1.3.11'
 
   # Specs
+  gem 'database_cleaner',  '~> 1.6.2'
   gem 'factory_bot_rails', '~> 4.8.2'
   gem 'rspec-rails',       '~> 3.7.1'
   gem 'simplecov',         '~> 0.15.1'
