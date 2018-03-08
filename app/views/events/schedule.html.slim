@@ -1,4 +1,4 @@
-h2 = "#{params[:type].to_s.titleize} Schedule"
+h2 = "Currently Scheduled #{params[:type].to_s.titleize}s"
 
 = render "application/education_menu", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)} if params[:type].in? [:course, :seminar]
 
