@@ -74,7 +74,7 @@ RSpec.describe EventsHelper, type: :helper do
 
     describe 'catalog' do
       it 'should return only the catalog events' do
-        expect(EventsHelper.catalog).to eql(
+        expect(EventsHelper.catalog_list).to eql(
           { 'public' => [@catalog_course] }
         )
       end
