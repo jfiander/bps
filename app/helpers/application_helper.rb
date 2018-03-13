@@ -12,6 +12,7 @@ module ApplicationHelper
   end
 
   def editor(partial, options = {})
+    # html_safe: No user content
     content_for :head do
       <<~HTML.html_safe
         <script>#{render('application/show_editor.js', page_name: partial)}</script>
@@ -43,5 +44,9 @@ module ApplicationHelper
   def page_title(title = nil)
     title = "#{title} | " if title.present?
     @title = "#{title}America's Boating Club – Birmingham Squadron"
+  end
+
+  def sanitize(text)
+    ActionController::Base.helpers.sanitize text
   end
 end

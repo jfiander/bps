@@ -1,5 +1,6 @@
 # FontAwesome 5 (Pro) Heler
 module FontAwesomeHelper
+  # html_safe: No user content
   def fa_layer(icons = {}, title: nil, grow: 0, css: '')
     # Add icons to the stack bottom to top
     #

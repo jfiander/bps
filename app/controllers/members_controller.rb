@@ -33,6 +33,7 @@ class MembersController < ApplicationController
   end
 
   def update_markdown
+    clean_params['markdown'] = sanitize(clean_params['markdown'])
     if clean_params['save']
       save_markdown
     elsif clean_params['preview']
@@ -94,10 +95,11 @@ class MembersController < ApplicationController
   end
 
   def preview_markdown
+    # html_safe: Text is sanitized before display
     @page = StaticPage.find_by(name: clean_params[:page_name])
-    @new_markdown = static_page_params[:markdown]
+    @new_markdown = sanitize(static_page_params[:markdown])
     @preview_html = render_markdown_raw(
-      markdown: static_page_params[:markdown]
+      markdown: @new_markdown
     ).html_safe
   end
 end

@@ -34,11 +34,15 @@ class Committee < ApplicationRecord
   end
 
   def display_name
+    # html_safe: Text is sanitized before display
     return name unless name.match?('//')
 
     lines = name.split('//')
-    committee = lines.shift << '<small>'
-    combined = [committee, lines].join('<br>&nbsp;&nbsp;') << '</small>'
+    lines = lines.map { |l| ActionController::Base.helpers.sanitize(l) }
+    committee = lines.shift
+    combined = '<small>' +
+               [committee, lines].join('<br>&nbsp;&nbsp;') +
+               '</small>'
     combined.html_safe
   end
 end

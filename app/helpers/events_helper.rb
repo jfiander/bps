@@ -41,6 +41,7 @@ module EventsHelper
   end
 
   def render_both_tables(events, long_form: false)
+    # html_safe: Properly sanitized by Rails
     %i[desktop mobile].map do |t|
       render("events/#{t}/table", events: events, long_form: long_form)
     end.join.html_safe

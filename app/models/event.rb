@@ -94,6 +94,7 @@ class Event < ApplicationRecord
   end
 
   def formatted_cost
+    # html_safe: User content is restricted to integers
     return nil if cost.blank?
     return "<b>Cost:</b> $#{cost}".html_safe if member_cost.blank?
     "<b>Members:</b> $#{member_cost}, <b>Non-members:</b> $#{cost}".html_safe

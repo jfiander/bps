@@ -57,7 +57,7 @@ module NavigationHelper
       content_tag(:li, class: @css_class) do
         icon_tag + @options[:title]
       end
-    end.html_safe + @options[:suffix]
+    end + @options[:suffix]
   end
 
   def show_menu?(title: nil, permit:, show_when:, path:)

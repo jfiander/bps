@@ -1,4 +1,5 @@
 module ViewHelper
+  # html_safe: No user content
   def officer_flag(office, mode: :svg)
     rank = office_rank(office)
 

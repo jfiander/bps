@@ -25,6 +25,7 @@ module RanksAndGrades
   private
 
   def bridge_rank(html = true)
+    # html_safe: No user content
     case bridge_office&.office
     when 'commander'
       'Cdr'

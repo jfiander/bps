@@ -1,3 +1,10 @@
-= current || (invited_at ? "Invited:<br>#{invited_at}".html_safe : "Never logged in")
-br
-= from
+- if current.present?
+  = current
+  br
+  = from
+- elsif invited_at.present?
+  | Invited:
+  br
+  = invited_at
+- else
+  | Never logged in

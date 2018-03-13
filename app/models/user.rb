@@ -40,6 +40,8 @@ class User < ApplicationRecord
 
   before_validation do
     self.rank = nil if rank.blank?
+    self.first_name = ActionController::Base.helpers.sanitize(first_name)
+    self.last_name = ActionController::Base.helpers.sanitize(last_name)
     self.simple_name = "#{first_name} #{last_name}"
   end
 
@@ -69,6 +71,7 @@ class User < ApplicationRecord
   end
 
   def bridge_hash
+    # html_safe: Text is sanitized before storage
     {
       full_name: full_name.gsub(' ', '&nbsp;').html_safe,
       simple_name: simple_name.gsub(' ', '&nbsp;').html_safe,

@@ -22,17 +22,20 @@ h2 = "#{@profile_title} user"
     hr.clear
     .profile-left Permissions
     .profile-right
-      = @user.granted_roles.join('<br>').html_safe
+      ul.roles
+        - @user.granted_roles.each do |g|
+          = content_tag(:li, g)
       - if @user.granted_roles.present? && @user.permitted_roles.present?
-        br
       .red
         - if @user.permitted?(:admin)
           | All
         - else
-          = (@user.permitted_roles - @user.granted_roles).join('<br>').html_safe
+          ul.roles.red
+            - (@user.permitted_roles - @user.granted_roles).each do |p|
+              = content_tag(:li, p)
   - if current_user.id == @user.id
     hr.clear
-    .center = link_to(profile_edit_path(@user.id)) { fa_icon('edit') + 'Update your information' }
+    .center = link_to(profile_edit_path) { fa_icon('edit') + 'Update your information' }
   hr.clear
   - if @registrations.present?
     .center
