@@ -40,9 +40,10 @@ class Committee < ApplicationRecord
     lines = name.split('//')
     lines = lines.map { |l| ActionController::Base.helpers.sanitize(l) }
     committee = lines.shift
-    combined = '<small>' +
-               [committee, lines].join('<br>&nbsp;&nbsp;') +
-               '</small>'
-    combined.html_safe
+    committee += '<small>'.html_safe
+    lines.each do |line|
+      committee += '<br>&nbsp;&nbsp;'.html_safe + line
+    end
+    committee += '</small>'.html_safe
   end
 end
