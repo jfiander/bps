@@ -127,7 +127,7 @@ h2 = "#{@edit_mode} #{@event_title}"
     hr
 
     .left = f.label :start_at
-    .right = f.datetime_select :start_at, start_year: 2017, end_year: (Time.now.year + 2), default: (0.days.from_now.end_of_day + 9.hours), minute_step: 15, datetime_separator: "<br/>"
+    .right = f.datetime_field :start_at
     br.clear
 
     .left = f.label :length, "Session length"
@@ -141,13 +141,13 @@ h2 = "#{@edit_mode} #{@event_title}"
     hr
 
     .left = f.label :cutoff_at, 'Do not allow registrations after', class: "red"
-    .right = f.datetime_select :cutoff_at, start_year: 2017, end_year: (Time.now.year + 2), default: (0.days.from_now + 3.months), discard_hour: true, discard_minute: true, required: true
+    .right = f.datetime_field :cutoff_at, required: true
     br.clear
 
     hr
 
     .left = f.label :expires_at, "Do not display this #{params[:type]} after", class: "red"
-    .right = f.datetime_select :expires_at, start_year: 2017, end_year: (Time.now.year + 2), default: (0.days.from_now + 3.months), discard_hour: true, discard_minute: true, required: true
+    .right = f.datetime_field :expires_at, required: true
     br.clear
 
     .center
