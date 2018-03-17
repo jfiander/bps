@@ -26,6 +26,7 @@ module MarkdownHelper
 
   def preload_markdown(name)
     @page_markdown ||= StaticPage.find_by(name: name)&.markdown
+    @page_markdown
   end
 
   def default_markdown(markdown)

@@ -1,9 +1,12 @@
 class MembersController < ApplicationController
   include MembersMethods
+  include MemberApplicationMethods
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[apply application applied]
 
-  skip_before_action :prerender_for_layout, only: %i[request_item fulfill_item]
+  skip_before_action :prerender_for_layout, only: %i[
+    request_item fulfill_item apply
+  ]
 
   before_action only: [:admin] { require_permission(:admin) }
   before_action only: [:upload_bilge] { require_permission(:newsletter) }

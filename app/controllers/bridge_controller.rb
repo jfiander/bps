@@ -53,6 +53,7 @@ class BridgeController < ApplicationController
     else
       flash[:alert] = "Unable to remove from#{@standing} committee."
       @do_remove = false
+      render status: :unprocessable_entity
     end
   end
 
