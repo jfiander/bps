@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   get     '/minutes',      to: 'members#minutes'
   post    '/assign_photo', to: 'user#assign_photo'
   get     '/locations',    to: 'locations#list'
+  get     '/apply',        to: 'members#application'
 
   ### Functional page back-ends
 
@@ -107,6 +108,10 @@ Rails.application.routes.draw do
   # Editor auto-show state setters
   post    '/auto_show', to: 'user#auto_show', as: 'auto_show'
   post    '/auto_hide', to: 'user#auto_hide', as: 'auto_hide'
+
+  # Member Applications
+  put     '/apply',         to: 'members#apply',   as: 'submit_application'
+  get     '/applied(/:id)', to: 'members#applied', as: 'applied'
 
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",            to: 'events#schedule',                              defaults: {type: event_type, catalog: false}
