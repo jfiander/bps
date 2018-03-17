@@ -1,0 +1,28 @@
+p
+  b Member type: 
+  = applicant.member_type
+  br
+  b Name: 
+  = [applicant.first_name, applicant.middle_name, applicant.last_name].join(' ')
+  br
+  b Email: 
+  = applicant.email
+
+p
+  b Date of Birth: 
+  = applicant.dob&.strftime("%d %b %Y") || 'n/a'
+  br
+  b Gender: 
+  = applicant.gender.present? ? applicant.gender : 'n/a'
+  br
+  b Sea Scout?: 
+  = applicant.sea_scout ? 'Yes' : 'No'
+  br
+  b Significant other's name: 
+  = applicant.sig_other_name.present? ? applicant.sig_other_name : 'n/a'
+  br
+  b Previous USPS certificate: 
+  = applicant.previous_certificate.present? ? applicant.previous_certificate : 'n/a'
+
+- if primary
+  = render 'member_application_mailer/primary', applicant: applicant

@@ -1,0 +1,61 @@
+h3 Additional Household Applicant
+= ff.hidden_field 'member_type', value: 'Family'
+
+.applicant-section-title Personal Info
+
+.left
+  span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  = ff.label 'first_name', 'First name'
+.right
+  = ff.text_field 'first_name', required: true
+br.clear
+
+.left = ff.label 'middle_name', 'Middle name'
+.right = ff.text_field 'middle_name'
+br.clear
+
+.left
+  span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  = ff.label 'last_name', 'Last name'
+.right = ff.text_field 'last_name', required: true
+br.clear
+
+.left
+  = ff.label 'dob', 'Date of Birth'
+  ul
+    li Your date of birth will not be displayed anywhere.
+.right = ff.date_field 'dob', class: 'date'
+br.clear
+
+.left = ff.label 'gender', 'Gender'
+.right = ff.select 'gender', options_for_select(['Male', 'Female', 'Prefer not to say']), include_blank: true
+br.clear
+
+.left
+  .applicant-section-title Contact Info
+
+  .left
+    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    = ff.label 'email', 'Email'
+  .right = ff.email_field 'email', required: true
+  br.clear
+
+.right
+  .applicant-section-title Additional Info
+
+  .left = ff.label 'sea_scout', 'Sea Scout?'
+  .right = ff.check_box 'sea_scout'
+  br.clear
+
+  .left = ff.label 'sig_other_name', "Significant other's name"
+  .right = ff.text_field 'sig_other_name'
+  br.clear
+
+  .left
+    = ff.label 'previous_certificate', 'Previous USPS Certificate'
+    ul
+      li If you have ever been a member of USPS in the past, enter your prior certificate number here.
+  .right = ff.text_field 'previous_certificate', maxlength: 7
+  br.clear
+br.clear
+= ff.remove_nested_fields_link 'Remove this person from this application', data: { confirm: 'Are you sure you want to remove this person from the application?' }, class: 'red'

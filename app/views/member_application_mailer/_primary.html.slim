@@ -1,0 +1,38 @@
+p
+  b Address:
+  br
+  = applicant.address_1
+  br
+  - if applicant.address_2.present?
+    = applicant.address_2
+    br
+  = applicant.city
+  |  
+  = applicant.state
+  |  
+  = applicant.zip
+
+p
+  - %i[home cell work].each do |type|
+    - if applicant.send("phone_#{type.to_s[0]}").present?
+      b
+        | Phone (
+        = type
+        | ): 
+      = applicant.send("phone_#{type.to_s[0]}")
+      br
+  - if applicant.fax.present?
+    b Fax: 
+    = applicant.fax
+
+h3 Boat Information
+p
+  b Type: 
+  = applicant.boat_type.titleize
+  - unless applicant.boat_type.titleize == 'None'
+    br
+    b Name: 
+    = applicant.boat_name.present? ? applicant.boat_name : 'n/a'
+    br
+    b Length: 
+    = applicant.boat_length.present? ? applicant.boat_length : 'n/a'

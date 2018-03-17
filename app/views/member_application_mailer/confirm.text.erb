@@ -1,0 +1,7 @@
+Hello, <%= @application.primary.first_name %>!
+
+You have successfully applied for membership<%= @application.additional.present? ? " for #{['yourself', @application.additional.map(&:first_name)].flatten.to_sentence}" : '' %>!
+
+We will review your application, and let you know when its status is updated.
+
+If you have any questions, or if you would like to cancel this application, please email me at <%= @signature[:email] %>.

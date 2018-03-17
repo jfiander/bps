@@ -1,0 +1,13 @@
+Member type: <%= applicant.member_type %>
+Name: <%= [applicant.first_name, applicant.middle_name, applicant.last_name].join(' ') %>
+Email: <%= applicant.email %>
+
+Date of Birth: <%= applicant.dob&.strftime("%d %b %Y") || 'n/a' %>
+Gender: <%= applicant.gender.present? ? applicant.gender : 'n/a' %>
+Sea Scout?: <%= applicant.sea_scout ? 'Yes' : 'No' %>
+Significant other's name: <%= applicant.sig_other_name.present? ? applicant.sig_other_name : 'n/a' %>
+Previous USPS certificate: <%= applicant.previous_certificate.present? ? applicant.previous_certificate : 'n/a' %>
+
+<%- if primary %>
+<%= render 'member_application_mailer/primary', applicant: applicant %>
+<%- end %>

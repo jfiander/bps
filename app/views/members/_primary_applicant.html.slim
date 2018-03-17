@@ -1,0 +1,134 @@
+h3 Primary Applicant
+
+.applicant-section-title Personal Info
+
+.left
+  span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  = label_tag 'member_type', 'Member type'
+  ul
+    li Apprentice members are accepted from ages 12-23.
+.right = select_tag 'member_type', options_for_select(%w[Active Apprentice]), required: true
+br.clear
+
+.left
+  span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  = label_tag 'first_name', 'First name'
+.right
+  = text_field_tag 'first_name', '', required: true
+br.clear
+
+.left = label_tag 'middle_name', 'Middle name'
+.right = text_field_tag 'middle_name'
+br.clear
+
+.left
+  span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  = label_tag 'last_name', 'Last name'
+.right = text_field_tag 'last_name', '', required: true
+br.clear
+
+.left
+  = label_tag 'dob', 'Date of Birth'
+  ul
+    li Your date of birth will not be displayed anywhere.
+.right = date_field_tag 'dob', '', class: 'date'
+br.clear
+
+.left = label_tag 'gender', 'Gender'
+.right = select_tag 'gender', options_for_select(['Male', 'Female', 'Prefer not to say']), include_blank: true
+br.clear
+
+.left
+  .applicant-section-title Address
+
+  .left
+    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    = label_tag 'address_1', 'Address'
+  .right = text_field_tag 'address_1', '', required: true
+  br.clear
+
+  .left
+  .right = text_field_tag 'address_2'
+  br.clear
+
+  .left
+    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    = label_tag 'city', 'City'
+  .right = text_field_tag 'city', '', required: true
+  br.clear
+
+  .left
+    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    = label_tag 'state', 'State / Province'
+  .right = text_field_tag 'state', '', required: true
+  br.clear
+
+  .left
+    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    = label_tag 'zip', 'ZIP / Postal Code'
+  .right = text_field_tag 'zip', '', required: true, maxlength: 10
+  br.clear
+
+.right
+  .applicant-section-title Contact Info
+
+  .left
+    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    = label_tag 'email', 'Email'
+  .right = email_field_tag 'email', '', required: true
+  br.clear
+
+  .left = label_tag 'phone_h', 'Phone: home'
+  .right = text_field_tag 'phone_h'
+  br.clear
+
+  .left = label_tag 'phone_c', 'cell'
+  .right = text_field_tag 'phone_c'
+  br.clear
+
+  .left = label_tag 'phone_w', 'work'
+  .right = text_field_tag 'phone_w'
+  br.clear
+
+  .left = label_tag 'fax', 'Fax'
+  .right = text_field_tag 'fax'
+  br.clear
+br.clear
+
+.left
+  .applicant-section-title Boat Info
+
+  .left
+    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    = label_tag 'boat_type', 'Boat type'
+  .right = select_tag 'boat_type', options_for_select(%w[Power Sail Paddle Other Multiple None]), include_blank: true, required: true
+  br.clear
+
+  .left = label_tag 'boat_lentgh', 'Boat length'
+  .right
+    = number_field_tag 'boat_length', '', class: 'number'
+    | feet
+  br.clear
+
+  .left = label_tag 'boat_name', 'Boat name'
+  .right = text_field_tag 'boat_name'
+  br.clear
+
+.right
+  .applicant-section-title Additional Info
+
+  .left = label_tag 'sea_scout', 'Sea Scout?'
+  .right = check_box_tag 'sea_scout'
+  br.clear
+
+  .left = label_tag 'sig_other_name', "Significant other's name"
+  .right = text_field_tag 'sig_other_name'
+  br.clear
+
+  .left
+    = label_tag 'previous_certificate', 'Previous USPS Certificate'
+    ul
+      li If you have ever been a member of USPS in the past, enter your prior certificate number here.
+  .right = text_field_tag 'previous_certificate', '', maxlength: 7
+  br.clear
+br.clear

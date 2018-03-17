@@ -1,0 +1,20 @@
+p
+  | Hello, 
+  = @application.primary.first_name
+  | !
+
+p
+  | You have successfully applied for membership
+  - if @application.additional.blank?
+    | !
+  - else
+    |  for 
+    = ['yourself', @application.additional.map(&:first_name)].flatten.to_sentence
+    | .
+
+p We will review your application, and let you know when its status is updated.
+
+p
+  | If you have any questions, or if you would like to cancel this application, please email me at 
+  = mail_to @signature[:email]
+  | .

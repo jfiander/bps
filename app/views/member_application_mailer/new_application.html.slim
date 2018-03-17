@@ -1,0 +1,25 @@
+= render 'application/mailers/auto'
+
+h1.birmingham Membership Application
+
+p Someone has applied for membership!
+
+- if (@next_excom - Time.now) > 30.days
+  = render 'member_application_mailer/email_vote'
+- else
+  = render 'member_application_mailer/next_excom'
+
+hr
+
+h2 Primary Applicant
+= render 'member_application_mailer/applicant', applicant: @application.primary, primary: true
+
+- if @application.additional.present?
+  h2 Additional Household Applicants
+  - @application.additional.each_with_index do |applicant, index|
+    h3
+      | Additional Applicant #
+      = index + 1
+    = render 'member_application_mailer/applicant', applicant: applicant, primary: false
+
+hr

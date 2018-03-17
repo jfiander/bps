@@ -1,0 +1,23 @@
+Address:
+<%= applicant.address_1 %>
+<%- if applicant.address_2.present? %>
+<%= applicant.address_2 %>
+<%- end %>
+<%= applicant.city %> <%= applicant.state %> <%= applicant.zip %>
+
+<%- %i[home cell work].each do |type| %>
+<%- if applicant.send("phone_#{type.to_s[0]}").present? %>
+Phone (<%= type %>): <%= applicant.send("phone_#{type.to_s[0]}") %>
+<%- end %>
+<%- end %>
+<%- if applicant.fax.present? %>
+Fax: <%= applicant.fax %>
+<%- end %>
+
+Boat Information
+
+Type: <%= applicant.boat_type.titleize %>
+<%- unless applicant.boat_type.titleize == 'None' %>
+Name: <%= applicant.boat_name.present? ? applicant.boat_name : 'n/a' %>
+Length: <%= applicant.boat_length.present? ? applicant.boat_length : 'n/a' %>
+<%- end %>

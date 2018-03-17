@@ -1,0 +1,34 @@
+h2 Membership Application
+
+p Please provide the following information to apply to join our squadron!
+
+p Once submitted, your application will be reviewed for approval, and you will be notified when its status is updated.
+
+p
+  b Annual membership fees:
+  br
+  ul.simple
+    li Individual members are billed $89
+    li Families are billed $134 + $1 / additional member
+    li Individual apprentice members are billed $12
+
+hr
+em
+  | Fields marked with
+  = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  | are required.
+
+hr
+#application
+  = form_for @member_application, url: submit_application_path, method: :put, remote: true do |f|
+    = render 'primary_applicant'
+    = f.nested_fields_for :member_applicants do |ff|
+      = render 'additional_applicant', ff: ff
+    .center = f.add_nested_fields_link :member_applicants, 'Add an additional household member'
+    hr
+    p
+      | I understand that I must be willing to contribute skills, time, and energy to further the objectives of
+      br
+      b America's Boating Club – Birmingham Squadron
+      | .
+    = spinner_button(f, css_class: 'big')
