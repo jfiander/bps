@@ -1,5 +1,6 @@
 module CalendarHelper
-  def render_calendar
+  def render_calendar(calendar_data = ENV['CALENDARS'])
+    @calendar_data = calendar_data
     'https://calendar.google.com/calendar/b/2/embed?' +
       calendar_options +
       '&' +
@@ -28,6 +29,6 @@ module CalendarHelper
   end
 
   def calendars_src
-    ENV['CALENDARS'].split('/').map { |c| c.split(':') }
+    @calendar_data.split('/').map { |c| c.split(':') }
   end
 end
