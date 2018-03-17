@@ -5,6 +5,7 @@ class User < ApplicationRecord
   include User::Invitable
   include User::Import
   include User::ProfilePhoto
+  include User::Address
 
   devise(
     :invitable, :database_authenticatable, :recoverable, :trackable, :lockable,
