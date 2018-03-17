@@ -261,4 +261,24 @@
       }
     }
   }
+
+  div#application {
+    div.left, div.right {
+      float: none;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+
+      div.left, div.right {
+        float: none;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+
+        input[type=checkbox] {
+          width: 1em !important;
+        }
+      }
+    }
+  }
 }
