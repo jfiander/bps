@@ -1,6 +1,6 @@
 class GalleryController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
-  before_action except: [:index] { require_permission(:photos) }
+  before_action :authenticate_user!, except: %i[index show]
+  before_action(except: %i[index show]) { require_permission(:photos) }
 
   before_action { page_title('Photos') }
 
@@ -19,11 +19,13 @@ class GalleryController < ApplicationController
       redirect_to photos_path, success: 'Successfully added album!'
     else
       errors = @album.errors.full_messages
-      redirect_to photos_path, alert: 'There was a problem creating the album.', error: errors
+      flash[:alert] = 'There was a problem creating the album.'
+      flash[:error] = errors
+      redirect_to photos_path
     end
   end
 
-  def edit_album
+  def show
     @album = Album.find_by(id: clean_params[:id])
     @photo = Photo.new
 
@@ -54,7 +56,7 @@ class GalleryController < ApplicationController
     end
 
     if clean_params[:redirect_to_album].present?
-      redirect_to edit_album_path(photo_params[:album_id])
+      redirect_to show_album_path(photo_params[:album_id])
     else
       redirect_to photos_path
     end
@@ -70,7 +72,7 @@ class GalleryController < ApplicationController
       flash[:alert] = 'There was a problem removing the photo.'
     end
 
-    redirect_to edit_album_path(album_id)
+    redirect_to show_album_path(album_id)
   end
 
   def remove_album

@@ -1,0 +1,11 @@
+h2 = @album.name.titleize
+
+= editor('album_editor') if current_user&.permitted?(:photos)
+
+- if @album.photos.present?
+  - if current_user&.permitted?(:photos)
+    = render 'edit_album'
+  - else
+    = render 'album'
+- else
+  h4 There are no photos in this album.

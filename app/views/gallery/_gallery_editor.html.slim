@@ -1,4 +1,6 @@
 #add-album
+  hr
+  h3 Create or remove an album
   = form_for(@album, url: new_album_path, multipart: true) do |f|
     = f.text_field :name, required: true, placeholder: 'Enter album name'
     br
@@ -8,3 +10,5 @@
         .description.create
     br
     = spinner_button(button_text: "Submit", css_class: 'big')
+  = render 'upload_photos'
+  hr

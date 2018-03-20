@@ -1,6 +1,7 @@
 h2 Squadron Photos
 
-= editor('photos_editor') if current_user&.permitted?(:photos)
+- if current_user&.permitted?(:photos)
+  = editor('gallery_editor')
 
 - if @albums.blank?
   h3 We're sorry, but there are currently no photo albums available.
@@ -9,9 +10,5 @@ h2 Squadron Photos
   - @albums.each do |album|
     h3
       = album.name.titleize
-      - if current_user&.permitted?(:photos)
-        small.header = link_to '(edit)', edit_album_path(album)
-    - album.photos.each do |photo|
-      a data-fancybox="album_#{album.id}" href=(photos_bucket.link(photo.photo_file.path))
-        = image_tag photos_bucket.link(photo.photo_file.path(:thumb))
+    = render 'cover', album: album
     hr

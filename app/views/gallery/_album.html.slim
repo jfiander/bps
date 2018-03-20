@@ -1,0 +1,3 @@
+- @album.photos.each do |photo|
+  a data-fancybox="album_#{@album.id}" href=(photos_bucket.link(photo.photo_file.path))
+    = image_tag photos_bucket.link(photo.photo_file.path(:thumb))

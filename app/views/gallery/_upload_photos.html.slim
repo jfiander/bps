@@ -1,0 +1,15 @@
+hr
+h3 Upload photos
+= form_for(@photo, url: upload_photo_path, multipart: true) do |f|
+  - if controller.action_name == 'show'
+    = hidden_field_tag :redirect_to_album, true
+    = f.hidden_field :album_id, value: @album.id
+  - else
+    = f.select :album_id, options_for_select(@albums.map { |a| [a.name, a.id] }), include_blank: true, required: true, prompt: "Please select an album"
+    br
+  = fa_icon('file-image', style: :regular, css: 'file-type')
+  = f.file_field :photo_file, required: true, multiple: true
+  br
+  = spinner_button(button_text: "Submit", css_class: 'big')
+  br
+  small The first photo in an album will be displayed on the gallery page.
