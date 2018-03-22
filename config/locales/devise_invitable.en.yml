@@ -3,7 +3,7 @@ en:
     failure:
       invited: "You have a pending invitation. Please accept it to finish creating your account."
     invitations:
-      send_instructions: "An invitation email has been sent to %{email}."
+      send_instructions: ""
       invitation_token_invalid: "The invitation token provided is not valid!"
       updated: "Your password was set successfully. You are now logged in."
       updated_not_active: "Your password was set successfully."
@@ -17,7 +17,7 @@ en:
         submit_button: "Set my password"
     mailer:
       invitation_instructions:
-        subject: "Birmingham Power Squadron website invitation"
+        subject: "America's Boating Club – Birmingham Squadron website invitation"
         hello: "Hello %{email}"
         someone_invited_you: "Someone has invited you to %{url}. You can accept this invitation and create your account at the link below."
         accept: "Accept invitation"
