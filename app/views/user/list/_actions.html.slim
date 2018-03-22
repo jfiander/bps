@@ -9,4 +9,4 @@
   - elsif invitable
     = link_to(invite_path(id: id), title: 'Send invitation', method: :put) { fa_icon('envelope', fa: 'fw') }
   - elsif placeholder_email
-    = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address.')
+    = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address')
