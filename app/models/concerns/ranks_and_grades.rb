@@ -17,7 +17,7 @@ module RanksAndGrades
 
   def ranks(html: true)
     committee_rank = 'Lt' if committee?
-    committee_rank = 'F/Lt' if 'Flag Lieutenant'.in? committees.map(&:name)
+    committee_rank = 'F/Lt' if 'Flag Lieutenant'.in? cached_committees.map(&:name)
 
     [bridge_rank(html), rank, committee_rank].reject(&:blank?)
   end
@@ -26,7 +26,7 @@ module RanksAndGrades
 
   def bridge_rank(html = true)
     # html_safe: No user content
-    case bridge_office&.office
+    case cached_bridge_office&.office
     when 'commander'
       'Cdr'
     when *ltc_offices
@@ -45,7 +45,7 @@ module RanksAndGrades
   end
 
   def committee?
-    standing_committee_offices.present? || committees.present?
+    cached_standing_committees.present? || cached_committees.present?
   end
 
   def valid_rank

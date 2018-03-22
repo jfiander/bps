@@ -86,4 +86,18 @@ class User < ApplicationRecord
   def request_from_store(item_id)
     ItemRequest.create(user: self, store_item_id: item_id)
   end
+
+  private
+
+  def cached_committees
+    @user_committees ||= committees
+  end
+
+  def cached_standing_committees
+    @user_standing_committees ||= standing_committee_offices
+  end
+
+  def cached_bridge_office
+    @user_bridge_office ||= bridge_office
+  end
 end
