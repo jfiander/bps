@@ -10,7 +10,10 @@ h2 Locations
   - @locations.each do |location|
     .table-row
       .table-cell = simple_format(location[:address])
-      .table-cell = link_to 'Map', location[:map_link]
+      .table-cell
+        - if location[:map_link].present?
+          = link_to(location[:map_link]) do
+            = fa_icon('map-marker-alt')
       .table-cell = simple_format(location[:details])
       .table-cell = image_tag files_bucket.link(location[:picture].path(:thumb)) if location[:picture].present?
       .table-cell.actions.pending
