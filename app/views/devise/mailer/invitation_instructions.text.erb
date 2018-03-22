@@ -1,14 +1,11 @@
-= "Hello, #{@resource.first_name || @resource.email}!"
+<%= render 'devise/mailer/greeting' %>
 
-Birmingham Power Squadron has a new website! Members can now login with their email address and a unique password of their choosing, instead of the previous shared password.
+As a member of America's Boating Club – Birmingham Squadron, you can login with your email address and a unique password of your choosing.
 
-In order to be able to login, please copy the URL below into your browser to go to the new website, where you will be able to choose your password. (This password will only be used on this website.)
+In order to be able to login, please click on the link below to go to the website, where you will be able to choose your password. (This password will only be used on this website.)
 
-= accept_invitation_url(@resource, invitation_token: @token)
+<%= accept_invitation_url(@resource, invitation_token: @token) %>
 
 If you don't want to be able to login and access the members areas of the new website, feel free to disregard this email.
 
-If you have any questions or concerns, please email webmaster@bpsd9.org.
-
-Thank you!
-Birmingham Power Squadron
+<%= render 'devise/mailer/concerns' %>
