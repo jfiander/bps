@@ -84,13 +84,14 @@ module Import
 
   def course_completions(row)
     course_completions_data(row).each do |(key, date)|
-      next unless date.present?
-      date = "#{date}0" while date.to_s.length < 6
-      date = "#{date[0..4]}1" if date.match?(/00$/)
-      date = Date.strptime(date, '%Y%m')
-      unless CourseCompletion.find_by(user: user, course_key: key).present?
-        CourseCompletion.create!(user: user, course_key: key, date: date)
-      end
+      next if date.blank?
+      next if CourseCompletion.find_by(user: user, course_key: key).present?
+
+      CourseCompletion.create!(
+        user: user,
+        course_key: key,
+        date: Date.strptime(date.ljust(5, '0').ljust(6, '1'), '%Y%m')
+      )
     end
   end
 end
