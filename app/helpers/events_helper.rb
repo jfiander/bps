@@ -53,7 +53,7 @@ module EventsHelper
 
     case type
     when :course
-      courses = scoped_courses
+      courses = scoped_courses(scope)
 
       courses.all?(&:blank?) ? [] : courses
     when :seminar
