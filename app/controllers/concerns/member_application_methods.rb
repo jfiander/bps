@@ -34,7 +34,7 @@ module MemberApplicationMethods
   def primary_member_params
     params.permit(
       %i[
-        member_type first_name middle_name last_name dob gender
+        first_name middle_name last_name dob gender
         address_1 address_2 city state zip email phone_h phone_c phone_w fax
         boat_type boat_length boat_name sig_other_name previous_certificate
       ]
@@ -45,7 +45,7 @@ module MemberApplicationMethods
     params.permit(
       member_application: {
         member_applicants_attributes: %i[
-          primary member_type first_name middle_name last_name dob gender
+          primary first_name middle_name last_name dob gender
           address_1 address_2 city state zip phone_h phone_c
           phone_w fax email sea_scout sig_other_name boat_type
           boat_length boat_name previous_certificate _destroy

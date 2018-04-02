@@ -4,14 +4,6 @@ h3 Primary Applicant
 
 .left
   span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
-  = label_tag 'member_type', 'Member type'
-  ul
-    li Apprentice members are accepted from ages 12-23.
-.right = select_tag 'member_type', options_for_select(%w[Active Apprentice]), required: true
-br.clear
-
-.left
-  span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
   = label_tag 'first_name', 'First name'
 .right
   = text_field_tag 'first_name', '', required: true
