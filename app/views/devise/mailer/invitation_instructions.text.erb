@@ -6,6 +6,8 @@ In order to be able to login, please copy the URL below into your address bar to
 
 <%= accept_invitation_url(@resource, invitation_token: @token) %>
 
+This link is valid for two weeks. If it has expired, please contact webmaster@bpsd9.org.
+
 If you don't want to be able to login and access the members areas of the new website, feel free to disregard this email.
 
 <%= render 'devise/mailer/concerns' %>

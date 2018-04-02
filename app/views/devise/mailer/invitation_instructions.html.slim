@@ -6,6 +6,11 @@ p In order to be able to login, please click on the link below to go to the webs
 
 p = link_to "Choose your password and login", accept_invitation_url(@resource, invitation_token: @token), clicktracking: :off
 
+p
+  | This link is valid for two weeks. If it has expired, please contact 
+  = mail_to 'webmaster@bpsd9.org'
+  | .
+
 p If you don't want to be able to login and access the members areas of the new website, feel free to disregard this email.
 
 = render 'devise/mailer/concerns'
