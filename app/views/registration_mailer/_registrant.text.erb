@@ -1,6 +1,6 @@
 Registrant information:
 <%- if @registration.user.present? %>
-  Name: <%= @registration.user.full_name %>
+  Name: <%= @registration.user.full_name(html: false) %>
   <%- if @registration.user.certificate.present? %>
   Certificate: <%= @registration.user.certificate %>
   <%- end %>

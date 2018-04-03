@@ -2,7 +2,7 @@ p
   h3 Registrant information:
   - if @registration.user.present?
     b Name: 
-    = @registration.user.full_name
+    = @registration.user.full_name(html: false)
     - if @registration.user.certificate.present?
       |  (
       = @registration.user.certificate
