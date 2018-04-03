@@ -22,6 +22,10 @@ module RanksAndGrades
     [bridge_rank(html), rank, committee_rank].reject(&:blank?)
   end
 
+  def formatted_grade
+    grade.present? ? ", #{grade}" : ''
+  end
+
   private
 
   def bridge_rank(html = true)
@@ -32,7 +36,7 @@ module RanksAndGrades
     when *ltc_offices
       'Lt/C'
     when *first_lt_offices
-      html ? '1<sup>st</sup>/Lt'.html_safe : '1st/Lt'
+      html ? '1<sup>st</sup>/Lt' : '1st/Lt'
     end
   end
 

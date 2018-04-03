@@ -1,6 +1,7 @@
 .registration id=("registration_#{r.id}_mobile")
   - if r.user&.full_name&.present?
-    = link_to(r.user.full_name, "mailto:#{r.user.email}")
+    = link_to("mailto:#{r.user.email}") do
+      = r.user.full_name
   - else
     = mail_to(r.email || r.user&.email)
   |  

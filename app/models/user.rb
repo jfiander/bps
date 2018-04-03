@@ -65,9 +65,12 @@ class User < ApplicationRecord
   end)
 
   def full_name(html: true)
-    (auto_rank.present? ? "#{auto_rank(html: html)} " : '') +
-      simple_name +
-      (grade.present? ? ", #{grade}" : '')
+    fn = ''.html_safe
+    fn << auto_rank(html: html)&.html_safe
+    fn << ' ' if auto_rank.present?
+    fn << simple_name
+    fn << formatted_grade
+    fn
   end
 
   def bridge_hash
