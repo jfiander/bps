@@ -8,7 +8,10 @@ module BridgeHelper
                                            end
     @select[:standing_committees] = StandingCommitteeOffice.committee_titles
     @select[:users] = [['TBD', nil]] + @users.to_a.map! do |user|
-      user&.full_name.blank? ? [user.email, user.id] : [user.full_name, user.id]
+      [
+        user&.full_name.blank? ? user.email : user.full_name(html: false),
+        user.id
+      ]
     end
     @select
   end
