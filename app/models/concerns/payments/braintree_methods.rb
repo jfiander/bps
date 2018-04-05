@@ -44,7 +44,7 @@ module Payments::BraintreeMethods
     def environment
       return :sandbox unless ENV['ENABLE_BRAINTREE'] == 'enabled'
       return :sandbox unless ENV['ASSET_ENVIRONMENT'] == 'production'
-      :sandbox
+      :production
     end
 
     def customer(user_id = nil)
