@@ -17,6 +17,9 @@
 !/log/.keep
 !/tmp/.keep
 
+# Ignore any key files
+/config/keys/*
+
 # Ignore generated converage
 coverage/*
 
