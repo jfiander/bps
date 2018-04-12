@@ -17,8 +17,8 @@ class BpsS3
     end
   end
 
-  def link(key)
-    "https://#{cf_host}/#{key}"
+  def link(key, signed: false)
+    signed ? signed_link(key) : cf_link(key)
   end
 
   def list(prefix = '')
@@ -48,13 +48,33 @@ class BpsS3
   private
 
   def s3
-    Aws::S3::Resource.new(
+    @s3 ||= Aws::S3::Resource.new(
       region: 'us-east-2',
       credentials: Aws::Credentials.new(
         Rails.application.secrets[:s3_access_key],
         Rails.application.secrets[:s3_secret]
       )
     ).bucket(full_bucket)
+  end
+
+  def cf_link(key)
+    "https://#{cf_host}/#{key}"
+  end
+
+  def signed_link(key)
+    url = cf_link(key)
+    time = Time.now + 3600
+    cf_signer.signed_url(
+      url,
+      expires: time
+    )
+  end
+
+  def cf_signer
+    @cf_signer ||= Aws::CloudFront::UrlSigner.new(
+      key_pair_id: Rails.application.secrets[:cf_keypair_id],
+      private_key_path: Rails.application.secrets[:cf_private_key_path]
+    )
   end
 
   def cf_host

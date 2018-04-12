@@ -23,5 +23,10 @@ module Bps
     config.to_prepare do
       Devise::Mailer.layout 'mailer'
     end
+
+    k = File.open(Rails.application.secrets[:cf_private_key_path], 'w+')
+    File.chmod(0600, k)
+    k.write(ENV['CLOUDFRONT_PRIVATE_KEY'])
+    k.close
   end
 end
