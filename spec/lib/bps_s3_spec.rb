@@ -29,12 +29,12 @@ RSpec.describe BpsS3, type: :lib do
 
   describe 'behaviors' do
     before(:each) do
-      @bps_s3 = BpsS3.new { |b| b.bucket = :files }
+      @bps_s3 = BpsS3.new { |b| b.bucket = :photos }
     end
 
     it 'should generate a correct link' do
       expect(@bps_s3.link('test-key.abc')).to eql(
-        'https://files.development.bpsd9.org/test-key.abc'
+        'https://photos.development.bpsd9.org/test-key.abc'
       )
     end
 
