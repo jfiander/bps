@@ -15,9 +15,13 @@ class BpsS3
     else
       @endpoint = @bucket
     end
+
+    @force_signed = @bucket.in?(%i[files bilge]) && @environment != :static
   end
 
   def link(key, signed: false)
+    signed = true if @force_signed
+
     signed ? signed_link(key) : cf_link(key)
   end
 
