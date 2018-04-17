@@ -8,8 +8,7 @@ h2 = t 'devise.invitations.edit.header'
     .center
       | Welcome! Please choose a password for your account.
       br
-      small
-        em This password is not shared with any other websites.
+      small.italic This password is not shared with any other websites.
     hr
 
     .left = f.label :email, "Your email"
@@ -38,5 +37,5 @@ h2 = t 'devise.invitations.edit.header'
       hr
       small
         | Once you've chosen your password and clicked the 
-        em = t("devise.invitations.edit.submit_button")
+        span.italic = t("devise.invitations.edit.submit_button")
         |  button, you will be automatically logged in and be able view the members areas of the website.

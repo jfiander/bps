@@ -1,7 +1,6 @@
 h2 Locations
 
-p.red
-  em Do not add event-specific information to any location.
+p.red.italic Do not add event-specific information to any location.
 
 .table.locations
   .table-row
@@ -24,4 +23,4 @@ p.red
         - if Event.current(:all).where(location_id: location[:id]).count.zero?
           = link_to(remove_location_path(id: location[:id]), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this location?' }) { fa_icon('minus-square') }
         - else
-          em title="You cannot remove locations currently in use." In Use
+          span.italic title="You cannot remove locations currently in use." In Use
