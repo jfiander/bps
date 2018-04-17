@@ -4,6 +4,8 @@ h2 = "#{@edit_mode} #{@event_title}"
   = f.hidden_field :id if @submit_path.match /\/update/
 
   #new-event
+    h3 General Information
+
     .left = f.label :event_type_id, "#{@event_title} name"
     .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), {include_blank: true, prompt: "Please select a #{params[:type]} type"}, required: true
     br.clear
@@ -12,7 +14,7 @@ h2 = "#{@edit_mode} #{@event_title}"
       = f.label :location
       ul
         li.red If you need to add a new location, do that before continuing.
-        li.red
+        li
           | You can also save this 
           = params[:type]
           | , go create the location, then add it here later.
@@ -34,66 +36,23 @@ h2 = "#{@edit_mode} #{@event_title}"
 
     hr
 
-    .left = f.label :description
-    .right = f.text_area :description
+    h3 Schedule
+
+    .left = f.label :start_at
+    .right = f.datetime_field :start_at
     br.clear
 
-    - if params[:type].in? [:course, :seminar]
-      .left = f.label :requirements, "Student requirements"
-      .right 
-        = f.text_area :requirements
-        small e.g. A computer to run navigation software; a calculator; etc.
-      br.clear
+    .left = f.label :length, "Session length"
+    .right = f.time_select :length, minute_step: 15, end_hour: 8, default: {hour: 2, minute: 0}
+    br.clear
 
-      .left = label_tag :topics, "Course topics"
-      .right
-        = text_area_tag :topics, @course_topics, class: "bulletted"
-        small Put each topic on a separate line.
-      br.clear
-
-      .left = label_tag :includes, "Course materials"
-      .right
-        = text_area_tag :includes, @course_includes, class: "bulletted"
-        small Put each item on a separate line.
-      br.clear
-
-      .left = f.label :prereq_id, "Prerequisite course"
-      .right = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true, prompt: "Please select a prerequisite course, if applicable"
-      br.clear
-
-
-    .left
-      = f.label :flyer
-      ul
-        li An image will display a thumbnail next to the description.
-        li A PDF will display in a box under all other information.
-    .right
-      = fa_icon('file-pdf', style: :regular, css: 'file-type')
-      = fa_icon('file-image', style: :regular, css: 'file-type')
-      = f.file_field :flyer
-      - if @event.flyer.present?
-        br
-        - if @event.get_flyer&.downcase&.match(/\.pdf$/)
-          iframe src=(@event.get_flyer) width="100"
-        - elsif @event.get_flyer&.downcase&.match(/\.(jpe?g|png)$/)
-          = image_tag @event.get_flyer, width: 100
+    .left = f.label :sessions, "Number of sessions"
+    .right = f.number_field :sessions, class: "number", min: 1, max: 100
     br.clear
 
     hr
 
-    - if params[:type].in? [:course, :seminar]
-      .left
-        = label_tag :instructors, "Instructor(s)"
-        ul
-          li Enter the full name of each instructor without rank or grade.
-          li You can also put a slash followed by their certificate number.
-          li.red Invalid instructors will not be saved.
-      .right
-        = text_area_tag :instructors, @instructors, class: "bulletted"
-        small Put each name on a separate line.
-      br.clear
-
-      hr
+    h3 Registrations
 
     .left = f.label :cost, "Cost"
     .right
@@ -101,11 +60,13 @@ h2 = "#{@edit_mode} #{@event_title}"
       = f.number_field :cost, class: "number", min: 0, placeholder: "0.00"
     br.clear
 
-    .left = f.label :member_cost, "Member discounted cost"
+    .left
+      = f.label :member_cost, "Member discounted cost"
+      ul.red
+        li Only enter if applicable
     .right
       = fa_icon("dollar-sign")
       = f.number_field :member_cost, class: "number", min: 0, placeholder: "0.00"
-      small Only enter if applicable
     br.clear
 
     .left = f.label :allow_member_registrations, "Member registrations"
@@ -124,31 +85,76 @@ h2 = "#{@edit_mode} #{@event_title}"
           .description.public_registrations
     br.clear
 
-    hr
-
-    .left = f.label :start_at
-    .right = f.datetime_field :start_at
-    br.clear
-
-    .left = f.label :length, "Session length"
-    .right = f.time_select :length, minute_step: 15, end_hour: 8, default: {hour: 2, minute: 0}
-    br.clear
-
-    .left = f.label :sessions, "Number of sessions"
-    .right = f.number_field :sessions, class: "number", min: 1, max: 100
-    br.clear
-
-    hr
-
     .left = f.label :cutoff_at, 'Do not allow registrations after', class: "red"
     .right = f.datetime_field :cutoff_at, required: true
     br.clear
 
-    hr
-
     .left = f.label :expires_at, "Do not display this #{params[:type]} after", class: "red"
     .right = f.datetime_field :expires_at, required: true
     br.clear
+
+    hr
+
+    h3 Details
+
+    .left = f.label :description
+    .right = f.text_area :description
+    br.clear
+
+    - if params[:type].in? [:course, :seminar]
+      .left
+        = f.label :requirements, "Student requirements"
+        ul
+          li.italic e.g. A computer to run navigation software; a calculator; etc.
+      .right = f.text_area :requirements
+      br.clear
+
+      .left
+        = label_tag :topics, "Course topics"
+        ul
+          li Put each topic on a separate line.
+      .right = text_area_tag :topics, @course_topics, class: "bulletted"
+      br.clear
+
+      .left
+        = label_tag :includes, "Course materials"
+        ul
+          li Put each topic on a separate line.
+      .right = text_area_tag :includes, @course_includes, class: "bulletted"
+      br.clear
+
+      .left = f.label :prereq_id, "Prerequisite course"
+      .right = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true, prompt: "Please select a prerequisite course, if applicable"
+      br.clear
+
+    .left
+      = f.label :flyer
+      ul
+        li An image will display a thumbnail next to the description.
+        li A PDF will display in a box under all other information.
+    .right
+      = fa_icon('file-pdf', style: :regular, css: 'file-type')
+      = fa_icon('file-image', style: :regular, css: 'file-type')
+      = f.file_field :flyer
+      - if @event.flyer.present?
+        br
+        - if @event.get_flyer&.downcase&.match(/\.pdf$/)
+          iframe src=(@event.get_flyer) width="100"
+        - elsif @event.get_flyer&.downcase&.match(/\.(jpe?g|png)$/)
+          = image_tag @event.get_flyer, width: 100
+    br.clear
+
+    - if params[:type].in? [:course, :seminar]
+      .left
+        = label_tag :instructors, "Instructor(s)"
+        ul
+          li Put each topic on a separate line.
+          li &nbsp;
+          li Enter the full name of each instructor without rank or grade.
+          li You can also put a slash followed by their certificate number.
+          li.red Invalid instructors will not be saved.
+      .right = text_area_tag :instructors, @instructors, class: "bulletted"
+      br.clear
 
     .center
       hr
