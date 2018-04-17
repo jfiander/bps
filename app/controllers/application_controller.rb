@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
   def prerender_for_layout
     @nav_links = render_to_string partial: 'application/nav_links'
     @copyright = render_to_string partial: 'application/copyright'
-    @wheel_img = view_context.image_tag(@wheel_logo) if @wheel_logo.present?
+    @wheel_img = view_context.image_tag(@wheel_logo, alt: 'USPS Ensign Wheel') if @wheel_logo.present?
 
     return unless current_user&.show_admin_menu?
     @admin_menu = render_to_string partial: 'application/admin_menu'
