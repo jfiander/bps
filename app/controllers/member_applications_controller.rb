@@ -1,5 +1,9 @@
-module MemberApplicationMethods
-  def application
+class MemberApplicationsController < ApplicationController
+  before_action :authenticate_user!, only: %i[review]
+
+  skip_before_action :prerender_for_layout, only: %i[apply]
+
+  def new
     @member_application = MemberApplication.new
     @member_application_person = MemberApplicant.new(
       member_application: @member_application
@@ -27,6 +31,10 @@ module MemberApplicationMethods
 
   def applied
     @member_application = MemberApplication.find_by(id: applied_params[:id])
+  end
+
+  def review
+    #
   end
 
   private
@@ -66,7 +74,8 @@ module MemberApplicationMethods
         save_application
         return true
       rescue ActiveRecord::RecordInvalid => e
-        flash.now[:error] = e.message.gsub('Validation failed: ', '')
+        flash.now[:error] = e.message.gsub('Member applicants base ', '')
+                             .gsub('Validation failed: ', '') # Validation error flashes are not displaying
         raise ActiveRecord::Rollback
       end
     end
