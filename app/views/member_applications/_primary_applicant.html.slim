@@ -70,7 +70,9 @@ br.clear
   .right = email_field_tag 'email', '', required: true
   br.clear
 
-  .left = label_tag 'phone_h', 'Phone: home'
+  .left
+    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    = label_tag 'phone_h', 'Phone: home'
   .right = text_field_tag 'phone_h'
   br.clear
 
