@@ -6,6 +6,8 @@ class MemberApplication < ApplicationRecord
 
   validates :member_applicants, presence: true
 
+  scope :pending, -> { where(approved_at: nil).includes(:member_applicants) }
+
   def primary
     member_applicants.find_by(primary: true)
   end
@@ -25,12 +27,11 @@ class MemberApplication < ApplicationRecord
   end
 
   def approve!(approving_user)
-    raise 'Only ExCom members may approve members.' unless approving_user.excom?
+    return { requires: :excom } unless approving_user.excom?
 
     update(approved_at: Time.now, approver_id: approving_user.id)
 
-    # Creates User for each member applicant
-    parent = User.create(
+    parent = User.create!(
       certificate: SecureRandom.hex(8),
       first_name: primary.first_name,
       last_name: primary.last_name,
@@ -39,12 +40,13 @@ class MemberApplication < ApplicationRecord
       address_2: primary.address_2,
       city: primary.city,
       state: primary.state,
-      zip: primary.zip
+      zip: primary.zip,
+      password: SecureRandom.hex(32)
     )
     users = [parent]
 
-    additional.each do |member|
-      users << User.create(
+    additional&.each do |member|
+      users << User.create!(
         certificate: SecureRandom.hex(8),
         first_name: member.first_name,
         last_name: member.last_name,
@@ -54,11 +56,13 @@ class MemberApplication < ApplicationRecord
         city: member.city,
         state: member.state,
         zip: member.zip,
-        parent: parent # Associates primary applicant as parent for all children
+        parent_id: parent.id,
+        password: SecureRandom.hex(32)
       )
     end
 
-    MembershipMailer.new(parent).deliver # Sends approval email to primary
-    users.map(&:invite!) # Sends website invitation to all users
+    MemberApplicationMailer.approved(self).deliver
+    MemberApplicationMailer.approval_notice(self).deliver
+    users.map(&:invite!)
   end
 end

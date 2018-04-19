@@ -81,3 +81,18 @@ div#application {
     clear: both;
   }
 }
+
+div.application-review {
+  width: 60%;
+  margin: 5em auto;
+
+  div {
+    margin: 0.5em 0;
+  }
+
+  hr {
+    margin: 0.5em 0;
+    border: 0;
+    border-bottom: 1px dashed $old-glory-blue-faded;
+  }
+}

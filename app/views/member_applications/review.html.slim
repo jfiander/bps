@@ -1,1 +1,22 @@
-| Review applications
+h2 Review Member Applications
+
+p
+  | Approving an application will automatically invite all new members to choose a password on the website.
+
+p.red.italic
+  | Only approve an application here once ExCom has approved the application and dues have been received.
+
+- @applications.each do |app|
+  .application-review id=("application_#{app.id}")
+    .table
+      .table-row
+        .table-cell.table-header Applied: 
+        .table-cell = app.created_at.strftime(@long_time_format)
+      .table-row
+        .table-cell.table-header Applicants: 
+        .table-cell = app.member_applicants.count
+      = render 'review_applicant', applicant: app.member_applicants.select(&:primary).first, css: 'blue-faded'
+      - app.member_applicants.reject(&:primary).each do |applicant|
+        = render 'review_applicant', applicant: applicant
+    = link_to 'Approve this application', approve_application_path(app.id), method: :patch, remote: true, class: 'big',
+      data: { confirm: 'Are you sure you want to approve this application and invite all applicants to the website?', disable_with: (fa_icon('spinner', fa: 'pulse') + 'Approving application...') }

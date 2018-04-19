@@ -111,8 +111,9 @@ Rails.application.routes.draw do
   post    '/auto_hide', to: 'user#auto_hide', as: 'auto_hide'
 
   # Member Applications
-  put     '/apply',         to: 'member_applications#apply',   as: 'submit_application'
-  get     '/applied(/:id)', to: 'member_applications#applied', as: 'applied'
+  put     '/apply',                   to: 'member_applications#apply',   as: 'submit_application'
+  get     '/applied(/:id)',           to: 'member_applications#applied', as: 'applied'
+  patch   '/approve_application/:id', to: 'member_applications#approve', as: 'approve_application'
 
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",            to: 'events#schedule',                              defaults: {type: event_type, catalog: false}

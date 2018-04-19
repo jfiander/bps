@@ -22,3 +22,6 @@
 
   - if (controller_name.match?(%r{\A(permissions|user|invitations)\z}) || controller.action_name == 'bridge')
     = link 'Help', path: user_help_path, fa: { name: 'question-circle', options: { style: :regular } }
+
+- if current_user&.excom?
+  = link 'Applications', path: applications_path, fa: { name: 'user-circle', options: { style: :regular } }

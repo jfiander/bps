@@ -1,7 +1,7 @@
 class MemberApplicationsController < ApplicationController
   before_action :authenticate_user!, only: %i[review]
 
-  skip_before_action :prerender_for_layout, only: %i[apply]
+  skip_before_action :prerender_for_layout, only: %i[apply approve]
 
   def new
     @member_application = MemberApplication.new
@@ -34,7 +34,18 @@ class MemberApplicationsController < ApplicationController
   end
 
   def review
-    #
+    @applications = MemberApplication.pending
+  end
+
+  def approve
+    @member_application = MemberApplication.find_by(id: applied_params[:id])
+
+    if @member_application.approve!(current_user) == { requires: :excom }
+      flash.now[:alert] = 'Only ExCom members can approve applications.'
+      render 'applicaiton/update_flashes'
+    end
+
+    flash.now[:success] = 'Successfully approved application and invited new members!'
   end
 
   private

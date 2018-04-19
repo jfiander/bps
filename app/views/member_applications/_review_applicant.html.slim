@@ -1,0 +1,69 @@
+.table-row
+  .table-cell = tag(:hr)
+  .table-cell = tag(:hr)
+
+.table-row class=(css if defined?(css))
+  .table-header Name:
+  .table-cell = "#{applicant.first_name} #{applicant.middle_name} #{applicant.last_name}"
+
+.table-row class=(css if defined?(css))
+  .table-header Email:
+  .table-cell = applicant.email
+
+.table-row class=(css if defined?(css))
+  .table-header DOB:
+  .table-cell = applicant.dob
+
+.table-row class=(css if defined?(css))
+  .table-header Gender:
+  .table-cell = applicant.gender
+
+- if applicant.primary
+  .table-row class=(css if defined?(css))
+    .table-header Address:
+    .table-cell
+      = applicant.address_1
+      - if applicant.address_2.present?
+        br
+        = applicant.address_2
+      br
+      = "#{applicant.city}, #{applicant.state} #{applicant.zip}"
+
+  .table-row class=(css if defined?(css))
+    .table-header Phone:
+    .table-cell
+      - numbers = []
+      - if applicant.phone_h.present?
+        - numbers << "#{applicant.phone_h} (h)"
+      - if applicant.phone_c.present?
+        - numbers << "#{applicant.phone_c} (c)"
+      - if applicant.phone_w.present?
+        - numbers << "#{applicant.phone_w} (w)"
+      - if applicant.fax.present?
+        - numbers << "#{applicant.fax} (fax)"
+      = safe_join(numbers, tag(:br))
+
+  .table-row class=(css if defined?(css))
+    .table-header Boat Type:
+    .table-cell= applicant.boat_type
+  - unless applicant.boat_type == 'None'
+  .table-row class=(css if defined?(css))
+    .table-header Boat Length:
+    .table-cell= applicant.boat_length
+  .table-row class=(css if defined?(css))
+    .table-header Boat Name:
+    .table-cell= applicant.boat_name
+
+.table-row class=(css if defined?(css))
+  .table-header Sea Scout?:
+  .table-cell = applicant.sea_scout ? 'Yes' : 'No'
+
+- if applicant.sig_other_name.present?
+  .table-row class=(css if defined?(css))
+    .table-header Significant Other's Name:
+    .table-cell = applicant.sig_other_name
+
+- if applicant.previous_certificate.present?
+  .table-row class=(css if defined?(css))
+    .table-header Previous Certificate:
+    .table-cell = applicant.previous_certificate
