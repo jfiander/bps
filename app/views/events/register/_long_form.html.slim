@@ -1,4 +1,4 @@
-- if @event.registerable? || (user_signed_in? && @registered.present?)
+- if (@event.registerable? && @event.allow_public_registrations?) || (user_signed_in? && (@registered.present? || @event.allow_member_registrations?))
   h3 = "Register for #{@event_title}"
 
   - if user_signed_in?

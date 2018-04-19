@@ -28,7 +28,11 @@ class PublicController < ApplicationController
   end
 
   def register
-    return unless allow_registration?
+    unless allow_registration?
+      category = Event.find_by(id: register_params[:event_id]).category
+      redirect_to send("#{category}s_path", id: register_params[:event_id])
+      return
+    end
 
     respond_to do |format|
       format.js { register_js }
@@ -64,18 +68,17 @@ class PublicController < ApplicationController
   end
 
   def find_registration
-    registration = Registration.find_by(@registration_attributes)
-    @registration = registration || Registration.new(@registration_attributes)
+    @registration = Registration.find_by(@registration_attributes.slice(:event_id, :email))
+    @registration ||= Registration.new(@registration_attributes)
   end
 
   def allow_registration?
     return true if @event.allow_public_registrations && @event.registerable?
 
     pub = @event.registerable? ? ' public' : ''
-    flash.now[:alert] = 'This course is not currently accepting' +
-                        pub +
-                        'registrations.'
-    render status: :unprocessable_entity
+    flash[:alert] = 'This course is not currently accepting' +
+                    pub +
+                    ' registrations.'
     false
   end
 

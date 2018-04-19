@@ -109,10 +109,11 @@ class Event < ApplicationRecord
   end
 
   def registerable?
-    return true if cutoff_at.blank? && expires_at.blank?
-    return false if cutoff?
     return false if expired?
-    return false unless allow_any_registrations?
+    return false if cutoff?
+    unless allow_member_registrations? || allow_public_registrations?
+      return false
+    end
     true
   end
 
@@ -140,9 +141,9 @@ class Event < ApplicationRecord
     self.member_cost = nil
   end
 
-  def allow_any_registrations?
-    allow_member_registrations? || allow_public_registrations?
-  end
+  # def allow_any_registrations?
+  #   allow_member_registrations? || allow_public_registrations?
+  # end
 
   def load_event_type_ids_from_cache(event_types)
     @course_ids = event_types.find_all do |e|
