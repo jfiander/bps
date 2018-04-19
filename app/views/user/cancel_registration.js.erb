@@ -3,7 +3,7 @@
 <%- if @cancel_link %>
   $("#event_<%= @event_id %>").html("Cancelled").attr("href", "#");
   $("#event_<%= @event_id %>_mobile").html("Cancelled").attr("href", "#");
-
-  $("#registration_<%= @reg_id %>").fadeOut();
-  $("#registration_<%= @reg_id %>_mobile").fadeOut();
 <% end %>
+
+$("#registration_<%= @reg_id %>").fadeOut();
+$("#registration_<%= @reg_id %>_mobile").fadeOut();
