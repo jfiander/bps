@@ -93,6 +93,13 @@ class User < ApplicationRecord
     ItemRequest.create(user: self, store_item_id: item_id)
   end
 
+  def excom?
+    BridgeOffice.find_by(user_id: id).present? ||
+      StandingCommitteeOffice.find_by(
+        committee_name: :executive, user_id: id
+      ).present?
+  end
+
   private
 
   def cached_committees
