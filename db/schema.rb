@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313181719) do
+ActiveRecord::Schema.define(version: 20180419161011) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name"
@@ -179,9 +179,21 @@ ActiveRecord::Schema.define(version: 20180313181719) do
 
   create_table "member_applications", force: :cascade do |t|
     t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.datetime "approved_at"
+    t.integer  "approver_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.string   "parent_type"
+    t.integer  "parent_id"
+    t.string   "transaction_id"
     t.string   "token"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.boolean  "paid",           default: false
+    t.datetime "deleted_at"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -199,14 +211,11 @@ ActiveRecord::Schema.define(version: 20180313181719) do
     t.integer  "user_id"
     t.string   "email"
     t.integer  "event_id"
-    t.string   "paid"
-    t.datetime "paid_at"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.string   "name"
     t.string   "phone"
-    t.string   "transaction_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -303,6 +312,9 @@ ActiveRecord::Schema.define(version: 20180313181719) do
     t.string   "city"
     t.string   "state"
     t.string   "zip"
+    t.integer  "parent_id"
+    t.datetime "dues_last_paid_at"
+    t.string   "customer_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"

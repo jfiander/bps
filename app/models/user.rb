@@ -19,6 +19,8 @@ class User < ApplicationRecord
 
   has_many :course_completions
 
+  has_many :member_applications, foreign_key: :approver_id
+
   has_many :event_instructors
   has_many :events, through: :event_instructors
 

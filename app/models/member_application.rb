@@ -2,6 +2,8 @@ class MemberApplication < ApplicationRecord
   has_many :member_applicants
   accepts_nested_attributes_for :member_applicants
 
+  has_one :approver, class_name: 'User'
+
   validates :member_applicants, presence: true
 
   def primary
