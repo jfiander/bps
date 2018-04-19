@@ -1,0 +1,22 @@
+h2.birmingham Welcome Aboard!
+
+p
+  | Hello, 
+  = @application.primary.first_name
+  | !
+
+p
+  | I'm pleased to inform you that your membership application has been approved! 
+  - if @application.additional.present?
+    = ['You', @application.additional.map(&:first_name)].flatten.to_sentence
+    |  are now members
+  - else
+    | You are now a member
+  |  of 
+  b America's Boating Club – Birmingham Squadron
+  | !
+
+p
+  | I'll be reaching out to you shortly to help get you started, but in the meantime if you have any questions, please don't hesitate to email me at 
+  = mail_to @signature[:email]
+  | .

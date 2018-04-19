@@ -1,0 +1,22 @@
+<%= render 'application/mailers/auto' %>
+
+Membership Application Approved
+
+This application has been approved!!
+
+**********
+
+Primary Applicant
+
+<%= render 'member_application_mailer/applicant', applicant: @application.primary, primary: true %>
+
+<%- if @application.additional.present? %>
+Additional Household Applicants
+
+<%- @application.additional.each_with_index do |applicant, index| %>
+Additional Applicant #<%= index + 1 %>
+<%= render 'member_application_mailer/applicant', applicant: applicant, primary: false %>
+<%- end %>
+<%- end %>
+
+**********
