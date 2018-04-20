@@ -62,7 +62,7 @@ class Event < ApplicationRecord
 
     return :course if event_type_id.in? @course_ids
     return :seminar if event_type_id.in? @seminar_ids
-    return :meeting if event_type_id.in? @meeting_ids
+    return :event if event_type_id.in? @meeting_ids
   end
 
   def category?(cat, event_types = nil)

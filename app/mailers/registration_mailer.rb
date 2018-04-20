@@ -65,7 +65,7 @@ class RegistrationMailer < ApplicationMailer
   end
 
   def signature_for_confirm
-    if @registration.event.category == :meeting
+    if @registration.event.category == :event
       ao_signature
     else
       seo_signature
