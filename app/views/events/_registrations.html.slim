@@ -1,0 +1,8 @@
+.table-row
+  .table-cell.table-header
+    = link_to event.event_type.display_title, send("show_#{params[:type]}_path", event), class: 'red'
+    br
+    = event.start_at.strftime(@medium_time_format)
+  .table-cell
+    - event.registrations.each do |reg|
+      = render 'events/register/member', r: reg

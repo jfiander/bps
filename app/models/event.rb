@@ -8,6 +8,8 @@ class Event < ApplicationRecord
   has_many :event_instructors
   has_many :instructors, through: :event_instructors, source: :user
 
+  has_many :registrations
+
   before_validation { validate_costs }
 
   has_attached_file(
@@ -35,6 +37,10 @@ class Event < ApplicationRecord
     includes(:event_type, :course_topics, :course_includes, :prereq)
       .where('expires_at <= ?', Time.now)
       .where(event_type: EventType.send(category))
+  end)
+
+  scope :with_registrations, (lambda do
+    includes(:registrations).select { |e| e.registrations.present? }
   end)
 
   def expired?

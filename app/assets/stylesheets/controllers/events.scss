@@ -32,3 +32,12 @@ div#new-event {
 input.map-link {
   width: 20em;
 }
+
+div#registrations {
+  width: 60%;
+  margin: 0 auto;
+
+  div.table-cell {
+    padding: 1em 0;
+  }
+}

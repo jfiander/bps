@@ -116,15 +116,16 @@ Rails.application.routes.draw do
   patch   '/approve_application/:id', to: 'member_applications#approve', as: 'approve_application'
 
   [:course, :seminar, :event].each do |event_type|
-    get     "/#{event_type}s",            to: 'events#schedule',                              defaults: {type: event_type, catalog: false}
-    get     "/#{event_type}s/catalog",    to: 'events#catalog',  as: "#{event_type}_catalog", defaults: {type: event_type, catalog: true} unless event_type == :event
-    get     "/#{event_type}s/new",        to: 'events#new',      as: "new_#{event_type}",     defaults: {type: event_type}
-    post    "/#{event_type}s/create",     to: 'events#create',   as: "create_#{event_type}",  defaults: {type: event_type}
-    patch   "/#{event_type}s/update",     to: 'events#update',   as: "update_#{event_type}",  defaults: {type: event_type}
-    get     "/#{event_type}s/:id",        to: 'events#show',     as: "show_#{event_type}",    defaults: {type: event_type}
-    get     "/#{event_type}s/:id/copy",   to: 'events#copy',     as: "copy_#{event_type}",    defaults: {type: event_type}
-    get     "/#{event_type}s/:id/edit",   to: 'events#edit',     as: "edit_#{event_type}",    defaults: {type: event_type}
-    delete  "/#{event_type}s/:id/expire", to: 'events#expire',   as: "expire_#{event_type}",  defaults: {type: event_type}
+    get     "/#{event_type}s",               to: 'events#schedule',                                         defaults: {type: event_type, catalog: false}
+    get     "/#{event_type}s/catalog",       to: 'events#catalog',       as: "#{event_type}_catalog",       defaults: {type: event_type, catalog: true} unless event_type == :event
+    get     "/#{event_type}s/registrations", to: 'events#registrations', as: "#{event_type}_registrations", defaults: {type: event_type}
+    get     "/#{event_type}s/new",           to: 'events#new',           as: "new_#{event_type}",           defaults: {type: event_type}
+    post    "/#{event_type}s/create",        to: 'events#create',        as: "create_#{event_type}",        defaults: {type: event_type}
+    patch   "/#{event_type}s/update",        to: 'events#update',        as: "update_#{event_type}",        defaults: {type: event_type}
+    get     "/#{event_type}s/:id",           to: 'events#show',          as: "show_#{event_type}",          defaults: {type: event_type}
+    get     "/#{event_type}s/:id/copy",      to: 'events#copy',          as: "copy_#{event_type}",          defaults: {type: event_type}
+    get     "/#{event_type}s/:id/edit",      to: 'events#edit',          as: "edit_#{event_type}",          defaults: {type: event_type}
+    delete  "/#{event_type}s/:id/expire",    to: 'events#expire',        as: "expire_#{event_type}",        defaults: {type: event_type}
   end
 
   ### User management

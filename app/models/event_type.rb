@@ -81,6 +81,10 @@ class EventType < ApplicationRecord
     o.is_a?(Hash) ? o[title] : o
   end
 
+  def self.event
+    meeting
+  end
+
   private
 
   def cleanup_title(title)

@@ -11,8 +11,8 @@ class EventsController < ApplicationController
   before_action :prepare_form,       only: %i[new copy edit]
   before_action :check_for_blank,    only: %i[create update]
 
-  before_action :time_formats,       only: %i[schedule catalog show]
-  before_action :preload_events,     only: %i[schedule catalog show]
+  before_action :time_formats,       only: %i[schedule catalog registrations show]
+  before_action :preload_events,     only: %i[schedule catalog registrations show]
   before_action :location_names,     only: %i[new copy edit]
   before_action :set_create_path,    only: %i[new copy]
   before_action :load_registrations, only: [:schedule], if: :user_signed_in?
@@ -37,6 +37,11 @@ class EventsController < ApplicationController
                      else
                        catalog_list[params[:type].to_s]
                      end
+  end
+
+  def registrations
+    @current = Event.order(:start_at).current(params[:type]).with_registrations
+    @expired = Event.order(:start_at).expired(params[:type]).with_registrations
   end
 
   def show

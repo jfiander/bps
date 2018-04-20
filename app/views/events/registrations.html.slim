@@ -1,0 +1,19 @@
+h2 = "Current #{params[:type].to_s.titleize} Registrations"
+
+= render "application/education_menu", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)} if params[:type].in? [:course, :seminar]
+
+h3 Current
+- if @current.count.positive?
+  #registrations.table
+    - @current.each do |event|
+      = render "events/registrations", type: params[:type], event: event
+- else
+  h4.red There are no current registrations.
+
+h3.red Expired
+- if @expired.count.positive?
+  #registrations.table
+    - @expired.each do |event|
+      = render "events/registrations", type: params[:type], event: event
+- else
+  h4 There are no expired registrations.
