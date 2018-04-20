@@ -12,9 +12,17 @@ class RegistrationMailerPreview < ActionMailer::Preview
     RegistrationMailer.confirm(registration)
   end
 
+  def confirm_event
+    RegistrationMailer.confirm(registration_ao)
+  end
+
   private
 
   def registration
     Registration.last
+  end
+
+  def registration_ao
+    Registration.all.select { |r| r.event.category == :event }.last
   end
 end
