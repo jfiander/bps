@@ -6,13 +6,16 @@ h2 Import user data
   | .
 .center
   | Otherwise, 
-  b SQ_Rank
+  b SQ Rank
   |  will take precedence over 
-  b HQ_Rank
+  b HQ Rank
   | .
 .center
   | (This will not override automatic ranks from bridge offices.)
-hr
+br
+
+.center.red Importing will not change user email addresses, since those are used for logging in.
+br
 
 = form_tag import_path, multipart: true
   = file_field_tag :import_file, required: true

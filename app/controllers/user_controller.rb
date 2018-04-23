@@ -121,7 +121,8 @@ class UserController < ApplicationController
 
     unless uploaded_file.content_type == 'text/csv'
       flash.now[:alert] = 'You can only upload CSV files.'
-      render :import and return
+      render :import
+      return
     end
 
     import_path = "#{Rails.root}/tmp/#{Time.now.to_i}-users_import.csv"
@@ -129,13 +130,13 @@ class UserController < ApplicationController
     file.write(uploaded_file.read)
     file.close
     begin
-      User.import(import_path)
+      ImportUsers.new.call(import_path)
       flash.now[:success] = 'Successfully imported user data.'
       render :import
     rescue => e
       flash.now[:alert] = 'Unable to import user data.'
-      render :import and return
-      raise e
+      flash.now[:error] = e.message
+      render :import
     end
   end
 

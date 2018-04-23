@@ -3,7 +3,6 @@ class User < ApplicationRecord
   include User::RanksAndGrades
   include User::Lockable
   include User::Invitable
-  include User::Import
   include User::ProfilePhoto
   include User::Address
 
