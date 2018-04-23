@@ -84,11 +84,12 @@ Rails.application.routes.draw do
   delete  '/header/:id/destroy', to: 'file#destroy_header', as: 'remove_header'
 
   # Locations
-  get     '/locations/new',        to: 'locations#new',    as: 'new_location'
-  post    '/locations/create',     to: 'locations#create', as: 'create_location'
-  get     '/locations/:id/edit',   to: 'locations#edit',   as: 'edit_location'
-  patch   '/locations/:id/update', to: 'locations#update', as: 'update_location'
-  delete  '/locations/:id/remove', to: 'locations#remove', as: 'remove_location'
+  get     '/locations/new',           to: 'locations#new',    as: 'new_location'
+  post    '/locations/create',        to: 'locations#create', as: 'create_location'
+  get     '/locations/:id/edit',      to: 'locations#edit',   as: 'edit_location'
+  patch   '/locations/:id/update',    to: 'locations#update', as: 'update_location'
+  delete  '/locations/:id/remove',    to: 'locations#remove', as: 'remove_location'
+  put     '/locations/refresh(/:id)', to: 'locations#refresh', as: 'refresh_locations'
 
   # Photo Galleries
   post    '/album/new',       to: 'gallery#add_album',    as: 'new_album'
