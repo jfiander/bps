@@ -45,8 +45,9 @@ gem 'usps_flags',          '~> 0.3.18'
 gem 'usps_flags-burgees',  '~> 0.0.19'
 gem 'usps_flags-grades',   '~> 0.0.4'
 
-# Error Logging
+# Logging
 gem 'bugsnag',             '~> 6.1.0'
+gem 'newrelic_rpm',        '~> 5.0.0.342'
 
 # Inspection
 gem 'awesome_print',       '~> 1.8.0'
