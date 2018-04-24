@@ -6,28 +6,32 @@
 #profile {
   width: 65%;
   margin: 0 auto;
-}
 
-  #profile .profile-left {
+  .profile-left {
     float: left;
     text-align: left;
     font-weight: bold;
     max-width: 30%;
   }
 
-  #profile .profile-right {
+  .profile-right {
     float: right;
     text-align: right;
     max-width: 70%;
   }
 
-  #profile div.password-box {
+  div.password-box {
     border: thin solid $old-glory-red;
   }
 
-  #profile .field {
+  .field {
     margin-bottom: 1.5em;
   }
+
+  .insignia img {
+    margin: 0.5em 0.25em;
+  }
+}
 
 // Users List
 table#users {

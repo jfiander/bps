@@ -30,6 +30,35 @@ class UserController < ApplicationController
 
     @profile_title = @user.id == current_user.id ? 'Current' : 'Selected'
 
+    if @user.grade.present?
+      if @user.ed_pro.present? && @user.grade != 'SN'
+        grade = "#{@user.grade.downcase}_edpro"
+        grade_title = "Grade: #{@user.grade} with Educational Proficiency"
+      else
+        grade = @user.grade.downcase
+        grade_title = "Grade: #{@user.grade}"
+      end
+    end
+
+    if @user.life.present?
+      membership = :life
+      membership_title = 'Life Member'
+    elsif @user.senior.present?
+      membership = :senior
+      membership_title = 'Senior Member'
+    end
+
+    @insignia = {
+      grade: grade,
+      membership: membership
+    }
+
+    @insignia_title = {
+      grade: grade_title,
+      membership: membership_title,
+      mm: @user.mm.positive? ? "#{@user.mm} Merit Marks" : nil
+    }
+
     respond_to do |format|
       format.html
       format.json { render json: @user }
