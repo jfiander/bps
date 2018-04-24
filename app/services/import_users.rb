@@ -2,9 +2,12 @@ class ImportUsers
   def call(path)
     User.transaction do
       parse_csv(path).each do |row|
-        user = user(row) || new_user(row)
-        update_user(user, row)
-        course_completions(row)
+        if (user = find_user(row))
+          update_user(user, row)
+        else
+          user = new_user(row)
+        end
+        course_completions(user, row)
       end
     end
 
@@ -17,44 +20,26 @@ class ImportUsers
     CSV.parse(File.read(path).force_encoding('UTF-8'), headers: true)
   end
 
-  def user(row)
+  def find_user(row)
     User.find_by(certificate: row['Certificate'])
   end
 
   def new_user(row)
     User.create!(
-      certificate: row['Certificate'],
-      first_name: row['First Name'],
-      last_name: row['Last Name'],
-      email: import_email(row),
-      grade: row['Grade'],
-      address_1: row['Address 1'],
-      address_2: row['Address 2'],
-      city: row['City'],
-      state: row['State'],
-      zip: row['Zip Code'],
-      mm: row['MM'],
-      ed_pro: row['EdPro'],
-      id_expr: row['IDEXPR'],
-      password: SecureRandom.hex(16)
+      {
+        certificate: row['Certificate'],
+        first_name: row['First Name'],
+        last_name: row['Last Name'],
+        email: import_email(row),
+        password: SecureRandom.hex(16)
+      }.merge(update_hash(row))
     )
   end
 
   def update_user(user, row)
     # Ignores first name and last name because they are user-editable.
     # Ignores email, because that is used for login.
-    user.update!(
-      rank: import_rank(row),
-      grade: row['Grade'],
-      address_1: row['Address 1'],
-      address_2: row['Address 2'],
-      city: row['City'],
-      state: row['State'],
-      zip: row['Zip Code'],
-      mm: row['MM'],
-      ed_pro: row['EdPro'],
-      id_expr: row['IDEXPR']
-    )
+    user.update!(update_hash(row))
   end
 
   def import_email(row)
@@ -84,16 +69,31 @@ class ImportUsers
     )
   end
 
-  def course_completions(row)
+  def course_completions(user, row)
     course_completions_data(row).each do |(key, date)|
       next if date.blank?
-      next if CourseCompletion.find_by(user: user(row), course_key: key).present?
+      next if CourseCompletion.find_by(user: user, course_key: key).present?
 
       CourseCompletion.create!(
-        user: user(row),
+        user: user,
         course_key: key,
         date: Date.strptime(date.ljust(5, '0').ljust(6, '1'), '%Y%m')
       )
     end
+  end
+
+  def update_hash(row)
+    {
+      rank: import_rank(row),
+      grade: row['Grade'],
+      address_1: row['Address 1'],
+      address_2: row['Address 2'],
+      city: row['City'],
+      state: row['State'],
+      zip: row['Zip Code'],
+      mm: row['MM'],
+      ed_pro: row['EdPro'],
+      id_expr: row['IDEXPR']
+    }
   end
 end
