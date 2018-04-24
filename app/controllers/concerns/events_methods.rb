@@ -38,6 +38,7 @@ module EventsMethods
     flash.now[:error] = @event.errors.full_messages
     @submit_path = send("#{path}_#{params[:type]}_path")
     @edit_mode = mode.to_s.titleize
+    @event_types = EventType.selector(params[:type])
     render :new
   end
 
