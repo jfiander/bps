@@ -42,8 +42,13 @@ table#users {
   	height: 2em;
   }
 
+  img.membership {
+    width: 6em;
+    max-height: 0.75em;
+  }
+
   tr.gray {
-    background-color: $background-blue;
+    background-color: lighten($background-blue, 5%);
     color: $old-glory-blue;
   }
 

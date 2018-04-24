@@ -1,0 +1,9 @@
+= certificate || fa_icon('question-circle', css: 'red', style: :regular)
+
+- if senior || life
+  br
+  - if life
+    = image_tag('insignia/life.png', class: 'membership')
+  - elsif senior
+    = image_tag('insignia/senior.png', class: 'membership')
+  
