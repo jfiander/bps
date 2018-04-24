@@ -41,7 +41,7 @@ h2 = "#{@edit_mode} #{@event_title}"
     h3 Schedule
 
     .left = f.label :start_at
-    .right = f.datetime_field :start_at
+    .right = f.datetime_field :start_at, required: true
     br.clear
 
     .left = f.label :length, "Session length"
