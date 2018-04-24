@@ -33,7 +33,9 @@ module UserMethods
       invitable:          user.invitable?,
       placeholder_email:  user.placeholder_email?,
       invited:            user.invited?,
-      locked:             user.locked?
+      locked:             user.locked?,
+      senior:             user.senior.present?,
+      life:               user.life.present?
     }
   end
 

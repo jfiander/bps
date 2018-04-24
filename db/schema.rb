@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180419161011) do
+ActiveRecord::Schema.define(version: 20180424163022) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name"
@@ -315,6 +315,9 @@ ActiveRecord::Schema.define(version: 20180419161011) do
     t.integer  "parent_id"
     t.datetime "dues_last_paid_at"
     t.string   "customer_id"
+    t.datetime "ed_ach"
+    t.datetime "senior"
+    t.datetime "life"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"

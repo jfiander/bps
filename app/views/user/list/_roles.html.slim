@@ -1,6 +1,12 @@
 - if office.present?
   = officer_flag(office, mode: :png)
   hr
+- if senior || life
+  - if senior
+    | SM
+  - elsif life
+    | LM
+  hr
 - if granted.present?
   ul.roles
     - granted.each do |g|

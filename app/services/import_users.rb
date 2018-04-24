@@ -64,8 +64,8 @@ class ImportUsers
   def course_completions_data(row)
     row.to_hash.except(
       'Certificate', 'HQ Rank', 'SQ Rank', 'Rank', 'First Name', 'Last Name',
-      'Grade', 'Rank', 'E-Mail', 'MM', 'EdPro', 'IDEXPR', 'City', 'State',
-      'Address 1', 'Address 2', 'Zip Code'
+      'Grade', 'Rank', 'E-Mail', 'MM', 'EdPro', 'EdAch', 'Senior', 'Life',
+      'IDEXPR', 'City', 'State', 'Address 1', 'Address 2', 'Zip Code'
     )
   end
 
@@ -77,9 +77,14 @@ class ImportUsers
       CourseCompletion.create!(
         user: user,
         course_key: key,
-        date: Date.strptime(date.ljust(5, '0').ljust(6, '1'), '%Y%m')
+        date: clean_date(date)
       )
     end
+  end
+
+  def clean_date(string)
+    return if string.blank?
+    Date.strptime(string.ljust(5, '0').ljust(6, '1'), '%Y%m')
   end
 
   def update_hash(row)
@@ -92,8 +97,11 @@ class ImportUsers
       state: row['State'],
       zip: row['Zip Code'],
       mm: row['MM'],
-      ed_pro: row['EdPro'],
-      id_expr: row['IDEXPR']
+      ed_pro: clean_date(row['EdPro']),
+      ed_ach: clean_date(row['EdAch']),
+      senior: clean_date(row['Senior']),
+      life: clean_date(row['Life']),
+      id_expr: clean_date(row['IDEXPR'])
     }
   end
 end
