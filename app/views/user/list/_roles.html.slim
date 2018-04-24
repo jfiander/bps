@@ -4,9 +4,9 @@
   hr
 - if senior || life
   - if life
-    .gold.bold LM
+    .gold.bold title=('Life Member') LM
   - elsif senior
-    .gold SM
+    .gold title=('Senior Member') SM
 - if (senior || life) && (granted.present? || permitted.present?)
   hr
 - if granted.present?
