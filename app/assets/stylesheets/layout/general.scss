@@ -90,6 +90,10 @@ input.cancel, button.cancel, a.cancel {
   font-style: italic;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 div#editor {
   background-color: lighten($background-blue, 3%);
   display: none;

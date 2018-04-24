@@ -1,11 +1,13 @@
 - if office.present?
   = officer_flag(office, mode: :png)
+- if office.present? && (senior || life || granted || permitted)
   hr
 - if senior || life
-  - if senior
-    | SM
-  - elsif life
-    | LM
+  - if life
+    .gold.bold LM
+  - elsif senior
+    .gold SM
+- if (senior || life) && (granted.present? || permitted.present?)
   hr
 - if granted.present?
   ul.roles
