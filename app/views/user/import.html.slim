@@ -1,21 +1,47 @@
 h2 Import user data
 
-.center
-  | If you want to specify which rank each user should be assigned by default, enter that in a new column, titled 
-  b Rank
-  | .
-.center
-  | Otherwise, 
-  b SQ Rank
-  |  will take precedence over 
-  b HQ Rank
-  | .
-.center
-  | (This will not override automatic ranks from bridge offices.)
-br
-
-.center.red Importing will not change user email addresses, since those are used for logging in.
-br
+#import-info.center
+  .center This importer accepts the following fields:
+  .table.columns
+    .table-row
+      .table-cell.birmingham-blue Certificate *
+      .table-cell.birmingham-blue First Name *
+      .table-cell.birmingham-blue Last Name *
+      .table-cell.birmingham-blue E-Mail *
+      .table-cell &nbsp;
+    .table-row
+      .table-cell.red Rank **
+      .table-cell.red HQ Rank **
+      .table-cell.red SQ Rank **
+      .table-cell Grade
+      .table-cell &nbsp;
+    .table-row
+      .table-cell MM
+      .table-cell EdPro
+      .table-cell IDEXPR
+      .table-cell &nbsp;
+      .table-cell &nbsp;
+    .table-row
+      .table-cell Address 1
+      .table-cell Address 2
+      .table-cell City
+      .table-cell State
+      .table-cell Zip Code
+  .center.birmingham-blue
+    | * – Not updated if the user already exists.
+  .center.red
+    | ** – Ranks are updated from the first matched field in order:
+  .table.ranks.red
+    .table-row
+      .table-cell
+        | (1) Rank
+      .table-cell
+        | (2) SQ Rank
+      .table-cell
+        | (3) HQ Rank
+  .center.red.italic Automatic ranks from bridge offices will override this rank.
+  .center Any additional columns will be interpreted as educational completion dates.
+hr
 
 = form_tag import_path, multipart: true
   = file_field_tag :import_file, required: true

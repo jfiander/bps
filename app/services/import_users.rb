@@ -41,10 +41,9 @@ class ImportUsers
   end
 
   def update_user(user, row)
-    # Ignores email, because that is used for login
+    # Ignores first name and last name because they are user-editable.
+    # Ignores email, because that is used for login.
     user.update!(
-      first_name: row['First Name'],
-      last_name: row['Last Name'],
       rank: import_rank(row),
       grade: row['Grade'],
       address_1: row['Address 1'],

@@ -114,3 +114,20 @@ ul.roles {
   list-style: none;
   padding: 0;
 }
+
+div#import-info {
+  text-align: center;
+  
+  div {
+    text-align: center;
+    margin: 0.5em 0;
+  }
+
+  .table.columns div {
+    width: 20%;
+  }
+
+  .table.ranks div {
+    width: 33%;
+  }
+}
