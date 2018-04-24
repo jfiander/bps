@@ -67,7 +67,7 @@ class LocationsController < ApplicationController
       @new_locations << '<option value=\"'.html_safe
       @new_locations << id.to_s
       @new_locations << '\"'.html_safe
-      @new_locations << ' selected=\"selected\"'.html_safe if id == event.location_id
+      @new_locations << ' selected=\"selected\"'.html_safe if id == event&.location_id
       @new_locations << '>'.html_safe
       @new_locations << l[:name].strip
       @new_locations << '</option>'.html_safe
