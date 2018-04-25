@@ -56,8 +56,11 @@ class UserController < ApplicationController
     @insignia_title = {
       grade: grade_title,
       membership: membership_title,
-      mm: @user.mm.positive? ? "#{@user.mm} Merit Marks" : nil
+      mm: @user.mm&.positive? ? "#{@user.mm} Merit Marks" : nil
     }
+
+    @rank_flag = @user.rank.delete('/').upcase
+    @rank_flag = 'PRC' if @rank_flag == 'PNFLT'
 
     respond_to do |format|
       format.html
