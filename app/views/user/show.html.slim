@@ -4,11 +4,11 @@ h2 = "#{@profile_title} user"
   .center = image_tag @user.photo, width: 125
   hr.clear
   .center.insignia
-    .center title=(@insignia_title[:grade]) = image_tag("insignia/#{@insignia[:grade]}.png") if @insignia[:grade].present?
-    .center title=(@insignia_title[:membership]) = image_tag("insignia/#{@insignia[:membership]}.png") if @insignia[:membership].present?
+    .center title=(@insignia_title[:grade]) = image_tag(static_bucket.link("insignia/#{@insignia[:grade]}.png")) if @insignia[:grade].present?
+    .center title=(@insignia_title[:membership]) = image_tag(static_bucket.link("insignia/#{@insignia[:membership]}.png")) if @insignia[:membership].present?
     .center title=(@insignia_title[:mm])
       - @user.mm.times do
-        = image_tag("insignia/mm.png")
+        = image_tag(static_bucket.link("insignia/mm.png"))
   hr.clear
   .profile-left Name
   .profile-right = @user.full_name

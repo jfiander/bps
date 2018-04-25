@@ -3,7 +3,7 @@
 - if senior || life
   br
   - if life
-    = image_tag('insignia/life.png', class: 'membership')
+    = image_tag(static_bucket.link('insignia/life.png'), class: 'membership')
   - elsif senior
-    = image_tag('insignia/senior.png', class: 'membership')
+    = image_tag(static_bucket.link('insignia/senior.png'), class: 'membership')
   
