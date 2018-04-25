@@ -1,5 +1,11 @@
 class UserController < ApplicationController
   include UserMethods
+  include User::Lock
+  include User::Register
+  include User::Import
+  include User::Invite
+  include User::Edit
+  include User::Insignia
 
   before_action :authenticate_user!
   skip_before_action :verify_authenticity_token, only: %i[auto_show auto_hide]
@@ -30,37 +36,7 @@ class UserController < ApplicationController
 
     @profile_title = @user.id == current_user.id ? 'Current' : 'Selected'
 
-    if @user.grade.present?
-      if @user.ed_pro.present? && @user.grade != 'SN'
-        grade = "#{@user.grade.downcase}_edpro"
-        grade_title = "Grade: #{@user.grade} with Educational Proficiency"
-      else
-        grade = @user.grade.downcase
-        grade_title = "Grade: #{@user.grade}"
-      end
-    end
-
-    if @user.life.present?
-      membership = :life
-      membership_title = 'Life Member'
-    elsif @user.senior.present?
-      membership = :senior
-      membership_title = 'Senior Member'
-    end
-
-    @insignia = {
-      grade: grade,
-      membership: membership
-    }
-
-    @insignia_title = {
-      grade: grade_title,
-      membership: membership_title,
-      mm: @user.mm&.positive? ? "#{@user.mm} Merit Marks" : nil
-    }
-
-    @rank_flag = @user.rank.delete('/').upcase
-    @rank_flag = 'PRC' if @rank_flag == 'PNFLT'
+    insignia
 
     respond_to do |format|
       format.html
@@ -73,159 +49,6 @@ class UserController < ApplicationController
       format.html
       format.json { render json: @users }
     end
-  end
-
-  def register
-    @event_id = clean_params[:id]
-    @event = Event.find_by(id: @event_id)
-    unless @event.allow_member_registrations
-      flash.now[:alert] = 'This course is not currently accepting member registrations.'
-      render status: :unprocessable_entity and return
-    end
-
-    unless @event.registerable?
-      flash.now[:alert] = 'This course is no longer accepting registrations.'
-      render status: :unprocessable_entity and return
-    end
-
-    @registration = current_user.register_for(Event.find_by(id: @event_id))
-
-    if @registration.valid?
-      flash[:success] = 'Successfully registered!'
-      RegistrationMailer.confirm(@registration).deliver
-    elsif Registration.find_by(@registration.attributes.slice(:user_id, :event_id))
-      flash.now[:notice] = 'You are already registered for this course.'
-      render status: :unprocessable_entity
-    else
-      flash.now[:alert] = 'We are unable to register you at this time.'
-      render status: :unprocessable_entity
-    end
-  end
-
-  def cancel_registration
-    @reg_id = clean_params[:id]
-    r = Registration.find_by(id: @reg_id)
-    @event_id = r&.event_id
-
-    unless (r&.user == current_user) || current_user&.permitted?(:course, :seminar, :event)
-      flash[:alert] = 'You are not allowed to cancel that registration.'
-      redirect_to root_path, status: :unprocessable_entity
-    end
-
-    @cancel_link = (r&.user == current_user)
-
-    if r&.destroy
-      flash[:success] = 'Successfully cancelled registration!'
-      RegistrationMailer.cancelled(r).deliver if @cancel_link
-    else
-      flash.now[:alert] = 'We are unable to cancel your registration at this time.'
-      render status: :unprocessable_entity
-    end
-  end
-
-  def lock
-    user = User.find(params[:id])
-
-    if user.permitted?(:admin)
-      redirect_to(
-        users_path,
-        alert: 'Cannot lock an admin user.'
-      )
-      return
-    end
-
-    user.lock
-    redirect_to users_path, success: 'Successfully locked user.'
-  end
-
-  def unlock
-    User.find(clean_params[:id]).unlock
-
-    redirect_to users_path, success: 'Successfully unlocked user.'
-  end
-
-  def import
-    #
-  end
-
-  def do_import
-    uploaded_file = clean_params[:import_file]
-
-    unless uploaded_file.content_type == 'text/csv'
-      flash.now[:alert] = 'You can only upload CSV files.'
-      render :import
-      return
-    end
-
-    import_path = "#{Rails.root}/tmp/#{Time.now.to_i}-users_import.csv"
-    file = File.open(import_path, 'w+')
-    file.write(uploaded_file.read)
-    file.close
-    begin
-      ImportUsers.new.call(import_path)
-      flash.now[:success] = 'Successfully imported user data.'
-      render :import
-    rescue => e
-      flash.now[:alert] = 'Unable to import user data.'
-      flash.now[:error] = e.message
-      render :import
-    end
-  end
-
-  def invite
-    user = User.find_by(id: clean_params[:id])
-    redirect_to users_path, alert: 'User not found.' if user.blank?
-
-    user.invite!
-    redirect_to users_path, success: 'Invitation sent!'
-  end
-
-  def invite_all
-    unless ENV['ALLOW_BULK_INVITE'] == 'true'
-      redirect_to users_path, alert: 'This action is currently disabled.'
-      return
-    end
-
-    User.invitable.each(&:invite!)
-    redirect_to users_path, success: 'All new users have been sent invitations.'
-  end
-
-  def assign_photo
-    photo = clean_params[:photo]
-
-    if User.find_by(id: clean_params[:id]).assign_photo(local_path: photo.path)
-      flash[:success] = 'Successfully assigned profile photo!'
-    else
-      flash[:alert] = 'Unable to assign profile photo.'
-    end
-
-    dest_path = case clean_params[:redirect_to]
-    when 'show'
-      user_path(clean_params[:id])
-    when 'list'
-      users_path
-    when 'bridge'
-      bridge_path
-    else
-      users_path
-    end
-    redirect_to dest_path
-  end
-
-  def auto_show
-    session[:auto_shows] ||= []
-    unless session[:auto_shows].include? clean_params[:page_name]
-      session[:auto_shows] << clean_params[:page_name]
-    end
-    head :ok
-  end
-
-  def auto_hide
-    session[:auto_shows] ||= []
-    if session[:auto_shows].include? clean_params[:page_name]
-      session[:auto_shows].delete(clean_params[:page_name])
-    end
-    head :ok
   end
 
   private
