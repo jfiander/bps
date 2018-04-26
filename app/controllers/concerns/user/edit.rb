@@ -9,31 +9,31 @@ module User::Edit
     end
 
     dest_path = case clean_params[:redirect_to]
-    when 'show'
-      user_path(clean_params[:id])
-    when 'list'
-      users_path
-    when 'bridge'
-      bridge_path
-    else
-      users_path
-    end
+                when 'show'
+                  user_path(clean_params[:id])
+                when 'list'
+                  users_path
+                when 'bridge'
+                  bridge_path
+                else
+                  users_path
+                end
     redirect_to dest_path
   end
 
   def auto_show
-    session[:auto_shows] ||= []
-    unless session[:auto_shows].include? clean_params[:page_name]
-      session[:auto_shows] << clean_params[:page_name]
-    end
+    auto_shows << clean_params[:page_name]
     head :ok
   end
 
   def auto_hide
-    session[:auto_shows] ||= []
-    if session[:auto_shows].include? clean_params[:page_name]
-      session[:auto_shows].delete(clean_params[:page_name])
-    end
+    auto_shows.delete(clean_params[:page_name])
     head :ok
+  end
+
+  private
+
+  def auto_shows
+    session[:auto_shows] ||= Set.new
   end
 end
