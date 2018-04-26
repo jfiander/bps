@@ -3,6 +3,7 @@
     $('a#hide-editor').click(function(event) {
       event.preventDefault();
       $('div#editor').fadeOut(300, "linear");
+      $('a.editor').fadeOut(300, "linear");
       $('a#show-editor').toggle();
       $('a#hide-editor').toggle();
       $.ajax({

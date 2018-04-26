@@ -99,8 +99,16 @@ div#editor {
   display: none;
 }
 
+a.editor {
+  display: none;
+}
+
 div#editor.auto-show {
   display: block;
+}
+
+a.editor.auto-show {
+  display: inline;
 }
 
 div#editor-buttons {

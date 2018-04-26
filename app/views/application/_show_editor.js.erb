@@ -3,6 +3,7 @@
     $('a#show-editor').click(function(event) {
       event.preventDefault();
       $('div#editor').fadeIn(500, "swing");
+      $('a.editor').fadeIn(500, "swing");
       $('a#show-editor').toggle();
       $('a#hide-editor').toggle();
       $.ajax({

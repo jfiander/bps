@@ -30,12 +30,12 @@ module ApplicationHelper
     HTML
   end
 
-  private
-
   def auto_show(partial)
     return '' unless page_name_in_auto_shows?(partial)
     'auto-show'
   end
+
+  private
 
   def page_name_in_auto_shows?(partial)
     session[:auto_shows]&.include?(partial)
