@@ -5,7 +5,11 @@ RSpec.describe MemberApplicant, type: :model do
     before(:each) do
       @application = FactoryBot.build(:member_application)
       @applicant = FactoryBot.build(
-        :member_applicant, member_application: @application, primary: true
+        :member_applicant,
+        member_application: @application,
+        primary: true,
+        first_name: '',
+        last_name: ''
       )
     end
 
@@ -27,7 +31,10 @@ RSpec.describe MemberApplicant, type: :model do
     before(:each) do
       @application = FactoryBot.build(:member_application)
       @applicant = FactoryBot.build(
-        :member_applicant, member_application: @application
+        :member_applicant,
+        member_application: @application,
+        first_name: '',
+        last_name: ''
       )
     end
 

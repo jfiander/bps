@@ -12,13 +12,13 @@ class MemberApplicationMailer < ApplicationMailer
   def confirm(application)
     prep_external(application)
 
-    mail(to: @to, subject: 'Member application received!')
+    mail(to: @to, from: @signature[:email], subject: 'Member application received!')
   end
 
   def approved(application)
     prep_external(application)
 
-    mail(to: @to, subject: 'Member application approved!')
+    mail(to: @to, from: @signature[:email], subject: 'Member application approved!')
   end
 
   def approval_notice(application)
