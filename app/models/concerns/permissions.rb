@@ -1,11 +1,9 @@
 module Permissions
   def permitted?(*required_roles)
-    required_roles.flatten!
+    required_roles = required_roles.flatten.compact
     return false if required_roles.blank? || required_roles.all?(&:blank?)
 
-    permitted = permitted_roles.any? do |p|
-      p.in? required_roles.reject(&:nil?).map(&:to_sym)
-    end
+    permitted = permitted_roles.any? { |p| p.in?(required_roles.map(&:to_sym)) }
 
     yield if block_given? && permitted
     permitted
@@ -13,22 +11,20 @@ module Permissions
 
   def permit!(role)
     role = Role.find_by(name: role.to_s)
-    UserRole.find_or_create(user: self, role: role)
+    UserRole.find_or_create_by(user: self, role: role)
   end
 
   def unpermit!(role)
+    user_roles = UserRole.where(user: self)
     if role == :all
-      UserRole.where(user: self).destroy_all
+      user_roles.destroy_all
     else
-      UserRole.where(
-        user: self,
-        role: Role.find_by(name: role.to_s)
-      ).destroy_all.present?
+      user_roles.where(role: Role.find_by(name: role.to_s)).destroy_all.present?
     end
   end
 
   def show_admin_menu?
-    permitted? %i[page users course seminar event]
+    excom? || permitted?(%i[page users course seminar event])
   end
 
   def granted_roles
@@ -36,10 +32,7 @@ module Permissions
   end
 
   def permitted_roles
-    [
-      explicit_roles,
-      implicit_roles
-    ].flatten.uniq.reject(&:nil?)
+    [explicit_roles, implicit_roles].flatten.uniq.compact
   end
 
   private
@@ -50,16 +43,12 @@ module Permissions
 
   def office_roles
     [
-      permitted_roles_from_bridge_office,
-      permitted_roles_from_committee
-    ].flatten.uniq.reject(&:nil?)
+      permitted_roles_from_bridge_office, permitted_roles_from_committee
+    ].flatten.uniq.compact
   end
 
   def explicit_roles
-    [
-      granted_roles,
-      office_roles
-    ].flatten.uniq.reject(&:nil?)
+    [granted_roles, office_roles].flatten.uniq.compact
   end
 
   def implicit_roles

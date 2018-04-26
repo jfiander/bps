@@ -3,11 +3,6 @@ class ApplicationRecord < ActiveRecord::Base
   has_paper_trail
   acts_as_paranoid
 
-  def self.find_or_create(attributes)
-    query = find_by(attributes)
-    query.blank? ? create!(attributes) : query
-  end
-
   def self.buckets
     {
       static: BpsS3.new { |b| b.bucket = :static },

@@ -34,25 +34,31 @@ class ApplicationController < ActionController::Base
     redirect_to :back
   end
 
-  def require_permission(*role)
-    redirect_to root_path and return unless current_user&.permitted?(*role)
+  def require_permission(*roles)
+    return if current_user&.permitted?(*roles)
+    redirect_to root_path
     # before_action only: [:method_1] { require_permission(:role_name) }
   end
 
   def authenticate_user!(*args)
     return super(*args) if user_signed_in?
-    redirect_to new_user_session_path, flash: { referrer: request.original_fullpath }
+    flash[:referrer] = request.original_fullpath
+    redirect_to new_user_session_path
   end
 
   def authenticate_inviter!
-    redirect_to root_path and return unless current_user&.permitted?(:users)
+    unless current_user&.permitted?(:users)
+      redirect_to root_path
+      return
+    end
+
     super
   end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(
       :account_update,
-      keys: [:profile_photo, :rank, :first_name, :last_name]
+      keys: %i[profile_photo rank first_name last_name]
     )
   end
 
@@ -74,7 +80,9 @@ class ApplicationController < ActionController::Base
   def prerender_for_layout
     @nav_links = render_to_string partial: 'application/nav_links'
     @copyright = render_to_string partial: 'application/copyright'
-    @wheel_img = view_context.image_tag(@wheel_logo, alt: 'USPS Ensign Wheel') if @wheel_logo.present?
+    if @wheel_logo.present?
+      @wheel_img = view_context.image_tag(@wheel_logo, alt: 'USPS Ensign Wheel')
+    end
 
     return unless current_user&.show_admin_menu?
     @admin_menu = render_to_string partial: 'application/admin_menu'
