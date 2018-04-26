@@ -1,4 +1,4 @@
-module Lockable
+module User::Lockable
   def locked?
     locked_at.present?
   end

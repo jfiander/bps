@@ -1,4 +1,4 @@
-module ProfilePhoto
+module User::ProfilePhoto
   def photo(style: :medium)
     if photo?
       User.buckets[:files].link(profile_photo.s3_object(style).key)

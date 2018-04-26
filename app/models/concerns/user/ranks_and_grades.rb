@@ -1,4 +1,4 @@
-module RanksAndGrades
+module User::RanksAndGrades
   def valid_ranks
     %w[
       P/Lt/C P/C 1/Lt Lt/C Cdr Lt F/Lt

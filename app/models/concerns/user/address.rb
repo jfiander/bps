@@ -1,4 +1,4 @@
-module Address
+module User::Address
   def mailing_address
     [
       full_name,

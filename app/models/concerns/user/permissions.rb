@@ -1,4 +1,4 @@
-module Permissions
+module User::Permissions
   def permitted?(*required_roles)
     required_roles = required_roles.flatten.compact
     return false if required_roles.blank? || required_roles.all?(&:blank?)

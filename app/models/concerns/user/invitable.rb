@@ -1,4 +1,4 @@
-module Invitable
+module User::Invitable
   def invitable?
     invitation_accepted_at.blank? &&
       current_sign_in_at.blank? &&
