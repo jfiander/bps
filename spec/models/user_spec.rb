@@ -280,4 +280,24 @@ RSpec.describe User, type: :model do
       expect(User.invitable.to_a).to eql([user])
     end
   end
+
+  describe 'address' do
+    user = FactoryBot.create(
+      :user,
+      address_1: '123 ABC St',
+      city: 'City',
+      state: 'ST',
+      zip: '12345'
+    )
+
+    it 'should return a correct address array' do
+      expect(user.mailing_address).to eql(
+        [
+          user.full_name,
+          user.address_1,
+          "#{user.city} #{user.state} #{user.zip}"
+        ]
+      )
+    end
+  end
 end

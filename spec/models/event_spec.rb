@@ -105,6 +105,17 @@ RSpec.describe Event, type: :model do
     end
   end
 
+  describe 'registration' do
+    it 'should correctly register a user' do
+      user = FactoryBot.create(:user)
+      event = FactoryBot.create(:event)
+
+      expect(Registration.where(event: event, user: user)).to be_blank
+      event.register_user(user)
+      expect(Registration.where(event: event, user: user)).not_to be_blank
+    end
+  end
+
   describe 'validations' do
     describe 'costs' do
       it 'should store only the cost' do

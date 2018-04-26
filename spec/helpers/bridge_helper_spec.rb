@@ -2,9 +2,12 @@ require 'rails_helper'
 
 RSpec.describe BridgeHelper, type: :helper do
   before(:each) do
-    @bridge_office = FactoryBot.create(:bridge_office)
-    @committee = FactoryBot.create(:committee)
-    @standing_committee_office = FactoryBot.create(:standing_committee_office)
+    cdr = FactoryBot.create(:user, first_name: 'John', last_name: 'Doe')
+    com = FactoryBot.create(:user, first_name: 'Jane', last_name: 'Dore')
+    stand = FactoryBot.create(:user, first_name: 'Jack', last_name: 'Dodd')
+    @bridge_office = FactoryBot.create(:bridge_office, user: cdr)
+    @committee = FactoryBot.create(:committee, user: com)
+    @standing_committee_office = FactoryBot.create(:standing_committee_office, user: stand)
     BridgeHelper.preload_user_data
   end
 
@@ -16,8 +19,8 @@ RSpec.describe BridgeHelper, type: :helper do
           office: 'commander',
           email: 'cdr@bpsd9.org',
           user: {
-            full_name: 'Cdr&nbsp;First_4&nbsp;Last_4,&nbsp;AP',
-            simple_name: 'First_4&nbsp;Last_4',
+            full_name: 'Cdr&nbsp;John&nbsp;Doe,&nbsp;AP',
+            simple_name: 'John&nbsp;Doe',
             photo: 'https://static.bpsd9.org/no_profile.png'
           }
         },
@@ -35,8 +38,8 @@ RSpec.describe BridgeHelper, type: :helper do
           {
             name: 'rendezvous',
             user: {
-              full_name: 'Lt&nbsp;First_5&nbsp;Last_5,&nbsp;AP',
-              simple_name: 'First_5&nbsp;Last_5',
+              full_name: 'Lt&nbsp;Jane&nbsp;Dore,&nbsp;AP',
+              simple_name: 'Jane&nbsp;Dore',
               photo: 'https://static.bpsd9.org/no_profile.png'
             },
             id: 1
@@ -57,8 +60,8 @@ RSpec.describe BridgeHelper, type: :helper do
       'executive' => [
         {
           id: 1,
-          simple_name: 'First_6&nbsp;Last_6',
-          full_name: 'Lt&nbsp;First_6&nbsp;Last_6,&nbsp;AP',
+          simple_name: 'Jack&nbsp;Dodd',
+          full_name: 'Lt&nbsp;Jack&nbsp;Dodd,&nbsp;AP',
           chair: false,
           term_fraction: ''
         }
@@ -90,9 +93,9 @@ RSpec.describe BridgeHelper, type: :helper do
         standing_committees: %w[Executive Auditing Nominating Rules],
         users: [
           ['TBD', nil],
-          ['Cdr First_1 Last_1, AP', 1],
-          ['Lt First_2 Last_2, AP', 2],
-          ['Lt First_3 Last_3, AP', 3]
+          ['Lt Jack Dodd, AP', 3],
+          ['Cdr John Doe, AP', 1],
+          ['Lt Jane Dore, AP', 2]
         ]
       }
     )
