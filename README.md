@@ -15,6 +15,58 @@
 
 All assets are served by CloudFront.
 
+Static files are stored in one bucket.
+
+All other files are stored in environment-specific buckets by purpose.
+
+## Setup
+
+Ensure you have Ruby and RubyGems installed.
+
+Install required gems:
+
+```sh
+gem install bundler
+bundle install
+```
+
+Run migrations to setup the database:
+
+```sh
+bundle exec rails db:setup
+```
+
+Set the minimum required environment variables:
+
+```sh
+S3_ACCESS_KEY
+S3_SECRET
+
+CLOUDFRONT_KEYPAIR_ID
+CLOUDFRONT_PRIVATE_KEY_PATH
+
+ASSET_ENVIRONMENT
+
+CLOUDFRONT_STATIC_ENDPOINT
+CLOUDFRONT_FILES_ENDPOINT
+CLOUDFRONT_BILGE_ENDPOINT
+CLOUDFRONT_PHOTOS_ENDPOINT
+```
+
+And any optional environment variables you want to support:
+
+```sh
+CALENDARS
+
+NEW_RELIC_LICENSE_KEY
+```
+
+Run the server:
+
+```sh
+rails s
+```
+
 ## Testing
 
 Rspec testing is available:
