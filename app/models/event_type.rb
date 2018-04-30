@@ -102,10 +102,12 @@ class EventType < ApplicationRecord
 
     initials = {
       'gps' => 'GPS',
+      'vhf dsc' => 'VHF/DSC',
       'vhf' => 'VHF',
       'dsc' => 'DSC',
       'ais' => 'AIS',
-      'pcoc' => 'PCOC'
+      'pcoc' => 'PCOC',
+      'cpr aed' => 'CPR/AED'
     }
 
     small_words = {
