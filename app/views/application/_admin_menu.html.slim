@@ -20,10 +20,10 @@
   = link 'Headers', path: header_path, fa: { name: 'desktop', options: { style: :regular } }
   = link 'Users List', path: users_path, fa: { name: 'users', options: { style: :regular } }
   = link 'Invite User', path: new_user_invitation_path, fa: { name: 'user-plus', options: { style: :regular } }
-  = link 'Permissions', path: permit_path, fa: { name: 'user-secret', options: { style: :light } }
+  = link 'Permissions', path: permit_path, fa: { name: 'user-shield', options: { style: :regular } }
 
   - if (controller_name.match?(%r{\A(permissions|user|invitations)\z}) || controller.action_name == 'bridge')
     = link 'Help', path: user_help_path, fa: { name: 'question-circle', options: { style: :regular } }
 
 - if current_user&.excom?
-  = link 'Applications', path: applications_path, fa: { name: 'user-circle', options: { style: :regular } }
+  = link 'Applications', path: applications_path, fa: { name: 'user-check', options: { style: :regular } }
