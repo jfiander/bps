@@ -5,7 +5,7 @@ h2 = "#{@profile_title} user"
     .center = image_tag(@user.photo)
   hr.clear
   .center.insignia
-    .center.flag = image_tag(static_bucket.link("flags/PNG/#{@rank_flag}.500.png")) if @user.rank.present?
+    .center.flag = image_tag(static_bucket.link("flags/PNG/#{@rank_flag}.500.png")) if @user.auto_rank.present?
     .center title=(@insignia_title[:grade]) = image_tag(static_bucket.link("insignia/#{@insignia[:grade]}.png")) if @insignia[:grade].present?
     .center title=(@insignia_title[:membership]) = image_tag(static_bucket.link("insignia/#{@insignia[:membership]}.png")) if @insignia[:membership].present?
     .center title=(@insignia_title[:mm])
