@@ -1,0 +1,40 @@
+h2 Transaction Receipt
+
+- if @payment.parent.present?
+  - if @payment.parent_type == 'Registration'
+    p
+      h3
+        = @purchase_model.titleize
+        |  information:
+      = @purchase_info[:type].titleize
+      | : 
+      b = @purchase_info[:name]
+      br
+      | Date: 
+      b = @purchase_info[:date]
+      br
+      | Time: 
+      b = @purchase_info[:time]
+  - elsif @payment.parent_type == 'MemberApplication'
+    p
+      h3 Membership application
+      b Individuals:
+      = @purchase_info[:people]
+
+p
+  h3 Transaction information:
+  | Transaction # 
+  b = @transaction.id
+  br
+  | Date: 
+  = @transaction.created_at.strftime('%Y-%m-%d')
+  br
+  | Total charged: 
+  b = number_to_currency(@transaction.amount)
+  br
+  - if @transaction.credit_card_details.card_type.present?
+    = image_tag @transaction.credit_card_details.image_url, alt: @transaction.credit_card_details.card_type, size: '32x20'
+    |  ending in **
+    b = @transaction.credit_card_details.last_4
+  - else
+    | Paid via PayPal

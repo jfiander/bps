@@ -1,0 +1,39 @@
+<script>
+  var button = document.querySelector('#submit-button');
+
+  braintree.dropin.create({
+    authorization: '<%= @client_token %>',
+    container: '#dropin-container',
+    form: '#checkout',
+    card: {
+      cardholderName: { required: true }
+    },
+    overrides: {
+      fields: {
+        cvv: true
+      }
+    },
+    paypal: {
+      flow: 'vault',
+      buttonStyle: {
+        color: 'blue',
+        shape: 'rect',
+        size: 'medium'
+      }
+    }
+  }, function (createErr, instance) {
+    button.addEventListener('click', function () {
+      instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+        $.ajax({
+          type: "POST",
+          url: '<%= checkout_url %>',
+          data: {
+            'payment_method_nonce': payload.nonce,
+            'token': '<%= @token %>',
+            'email': $("#receipt-email").serialize()
+          }
+        });
+      });
+    });
+  });
+</script>

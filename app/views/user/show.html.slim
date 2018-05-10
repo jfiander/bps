@@ -49,6 +49,9 @@ h2 = "#{@profile_title} user"
   - if current_user.id == @user.id
     hr.clear
     .center = link_to(profile_edit_path) { FA::Icon.p('edit') + 'Update your information' }
+  - if current_user.id == @user.id && current_user.dues_due? && ENV['ENABLE_BRAINTREE'] == 'enabled'
+    hr.clear
+    .center = link_to(dues_path, class: :red) { FA::Icon.p('credit-card') + 'Pay your annual dues online' }
   hr.clear
   - if @registrations.present?
     .center
@@ -58,8 +61,13 @@ h2 = "#{@profile_title} user"
         .profile-left
           = r.event.event_type.display_title
         .profile-right
+          - if r.paid? && ENV['ENABLE_BRAINTREE'] == 'enabled'
+            = FA::Layer.p([{ name: 'credit-card', options: { style: :regular, css: :gray } }, { name: 'check', options: { style: :regular, css: :green, grow: 12 } }], title: 'Paid – Thank you!')
+          - elsif r.payable? && r.event.cost&.positive? && ENV['ENABLE_BRAINTREE'] == 'enabled'
+            = link_to(pay_path(token: r.payment_token)) do
+              = FA::Icon.p('credit-card', style: :regular, title: 'Pay for registration', fa: 'fw')
           = r.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
           = link_to(cancel_registration_path(id: r.id), method: :delete, remote: true, class: 'red control', id: "event_#{r.event_id}",
-            data: {confirm: "Are you sure you want to cancel your registration for #{r.event.event_type.display_title} on #{r.event.start_at.strftime(@short_time_format)}?"}) { FA::Icon.p('minus-square') }
+            data: {confirm: "Are you sure you want to cancel your registration for #{r.event.event_type.display_title} on #{r.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}?"}) { FA::Icon.p('minus-square') }
         br.clear
 = editor('photo_editor', id: @user.id) if current_user&.permitted?(:admin) && current_user.id != @user.id

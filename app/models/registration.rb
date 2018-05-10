@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Registration < ApplicationRecord
+  payable
   belongs_to :user, optional: true
   belongs_to :event
 
@@ -13,7 +14,23 @@ class Registration < ApplicationRecord
   scope :for_user, ->(user_id) { where(user_id: user_id) }
 
   after_create :notify_on_create
-  after_create :confirm_public, if: :public_registration?
+  after_create :confirm_to_registrant
+
+  def payment_amount
+    event&.get_cost(user.present?)
+  end
+
+  def cost?
+    payment_amount&.positive?
+  end
+
+  def user?
+    user.present?
+  end
+
+  def type
+    event.course? ? 'course' : event.event_type.event_category
+  end
 
   private
 
@@ -34,7 +51,7 @@ class Registration < ApplicationRecord
     RegistrationMailer.registered(self).deliver
   end
 
-  def confirm_public
+  def confirm_to_registrant
     RegistrationMailer.confirm(self).deliver
   end
 

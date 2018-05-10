@@ -91,16 +91,41 @@ class PublicController < ApplicationController
   end
 
   def register_html
+    if @registration.persisted?
+      registration_existed
+    elsif @registration.save
+      registration_saved
+    else
+      registration_problem
+    end
+  end
+
+  def registration_existed
+    flash[:alert] = 'You are already registered for this course.'
+    redirect_to send("show_#{register_event_type}_path", id: @event_id)
+  end
+
+  def registration_saved
+    flash[:success] = 'You have successfully registered!'
+    if registration_payable?(registration)
+      redirect_to ask_to_pay_path(model: 'registration', id: registration.token)
+    else
+      redirect_to send("show_#{register_event_type}_path", id: @event_id)
+    end
+  end
+
+  def registration_problem
+    flash[:alert] = 'We are unable to register you at this time.'
+    redirect_to send("show_#{register_event_type}_path", id: @event_id)
+  end
+
+  def register_event_type
     event_type = @event.category
     event_type = :event if event_type == :meeting
+    event_type
+  end
 
-    if @registration.persisted?
-      flash[:alert] = 'You are already registered for this course.'
-    elsif @registration.save
-      flash[:success] = 'You have successfully registered!'
-    else
-      flash[:alert] = 'We are unable to register you at this time.'
-    end
-    redirect_to send("show_#{event_type}_path", id: @event_id)
+  def registration_payable?(registration)
+    registration.has_cost? && ENV['ENABLE_BRAINTREE'] == 'enabled'
   end
 end

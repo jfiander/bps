@@ -1,0 +1,15 @@
+<%= render 'application/mailers/auto' %>
+Paid Registration
+
+
+Someone has paid for a registration!
+
+**********
+
+Amount paid: $<%= @registration.payment_amount %>
+
+**********
+
+<%= render 'registration' %>
+<%= render 'registrant' %>
+**********

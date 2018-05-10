@@ -1,0 +1,10 @@
+= render 'application/mailers/auto'
+
+h1.birmingham Paid Registration
+
+h2.red
+  | Amount paid: $
+  = @registration.payment_amount
+
+= render 'registration'
+= render 'registrant'

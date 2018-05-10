@@ -21,6 +21,14 @@ class MemberApplicationPreview < ActionMailer::Preview
     MemberApplicationMailer.approval_notice(application)
   end
 
+  def paid
+    MemberApplicationMailer.paid(application)
+  end
+
+  def paid_dues
+    MemberApplicationMailer.paid_dues(user)
+  end
+
   private
 
   def application
@@ -29,5 +37,9 @@ class MemberApplicationPreview < ActionMailer::Preview
 
   def large_application
     MemberApplication.all.select { |m| m.member_applicants.count > 2 }.last
+  end
+
+  def user
+    User.first
   end
 end

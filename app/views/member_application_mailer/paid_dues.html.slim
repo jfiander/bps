@@ -1,0 +1,25 @@
+= render 'application/mailers/auto'
+
+h1.birmingham Annual Dues Paid
+
+p Someone has paid their annual dues!
+
+h2.red
+  | Amount paid: $
+  = @user.payment_amount
+
+hr
+
+p
+  h3 Member information:
+  b Name: 
+  = @user.full_name(html: false)
+  - if @user.certificate.present?
+    |  (
+    = @user.certificate
+    | )
+  br
+  b Email: 
+  = @user.email
+
+hr

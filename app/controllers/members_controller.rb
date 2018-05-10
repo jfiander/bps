@@ -3,6 +3,7 @@
 class MembersController < ApplicationController
   include Members::BilgeAndMinutes
   include Members::Roster
+  include BraintreeHelper
 
   secure!
   secure!(:admin, only: :admin)
@@ -13,9 +14,15 @@ class MembersController < ApplicationController
   secure!(:page, only: %i[edit_markdown update_markdown])
   secure!(%i[users newsletter page minutes event education], only: %i[ranks])
 
+  before_action :redirect_to_root, only: :dues, unless: :braintree_enabled?
+  before_action :prepare_dues, only: :dues, if: :current_user_dues_due?
+
   before_action :bilge_issue, only: %i[upload_bilge remove_bilge]
   before_action :get_minutes_issue, only: %i[upload_minutes remove_minutes]
   before_action :list_minutes, only: %i[minutes get_minutes get_minutes_excom]
+
+  before_action :generate_client_token, only: :applied
+  before_action :block_duplicate_payments, only: :applied, if: :already_paid?
 
   title!('Minutes', only: :minutes)
   title!('ExCom Minutes', only: :excom_minutes)
@@ -70,7 +77,38 @@ class MembersController < ApplicationController
     @users = User.unlocked.include_positions.alphabetized.with_any_name
   end
 
+  def dues
+    dues_not_payable unless @payment.present?
+  end
+
   private
+
+  def current_user_dues_due?
+    current_user&.dues_due?
+  end
+
+  def prepare_dues
+    @payment = Payment.where(parent_type: 'User', parent_id: current_user.id)
+                      .where('created_at > ?', 6.months.ago).first
+    @payment ||= Payment.new(parent_type: 'User', parent_id: current_user.id)
+    transaction_details
+    set_dues_instance_variables
+  end
+
+  def set_dues_instance_variables
+    @token = @payment.token
+    @client_token = Payment.client_token(user_id: current_user&.id)
+    @receipt = current_user.email
+  end
+
+  def dues_not_payable
+    if current_user.parent_id.present?
+      flash[:alert] = 'Additional household members cannot pay dues.'
+    else
+      flash[:notice] = 'Your dues for this year are not yet due.'
+    end
+    redirect_to root_path
+  end
 
   def static_page_params
     params.require(:static_page).permit(:name, :markdown)

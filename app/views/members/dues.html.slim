@@ -1,0 +1,9 @@
+h2 Pay Dues
+
+- if current_user.children.present?
+  p
+    | Your dues cover yourself and 
+    = current_user.children.map(&:first_name).to_sentence
+    | .
+
+= render 'braintree/dropin'

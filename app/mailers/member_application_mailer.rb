@@ -32,6 +32,22 @@ class MemberApplicationMailer < ApplicationMailer
     mail(to: @to_list, subject: 'Member application approved')
   end
 
+  def paid(application)
+    @application = application
+    @to_list = new_app_to
+
+    mail(to: @to_list, subject: 'Membership application paid')
+  end
+
+  def paid_dues(user)
+    @user = user
+    @to_list = BridgeOffice.includes(:user).heads.where(
+      office: %w[treasurer administrative]
+    ).map(&:user).map(&:email)
+
+    mail(to: @to_list, subject: 'Annual dues paid')
+  end
+
   private
 
   def new_app_to

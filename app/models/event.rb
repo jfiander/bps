@@ -101,6 +101,12 @@ class Event < ApplicationRecord
     )
   end
 
+  def get_cost(member = false)
+    return member_cost if member && member_cost.present?
+    return cost if cost.present?
+    0
+  end
+
   private
 
   def validate_costs

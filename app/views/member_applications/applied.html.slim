@@ -4,7 +4,29 @@ b You have successfully applied for membership!
 
 p Your application will be reviewed for approval, and you will be notified when its status is updated.
 
-p
-  | Your annual membership dues will be $
-  = @member_application.amount_due
-  | .
+- if @payment.paid
+  p
+    | Thank you for paying your initial annual dues of 
+    = @payment.transaction_amount
+    | !
+- else
+  p
+    | Your annual membership dues will be $
+    = @payment.transaction_amount
+    | .
+  - if ENV['ENABLE_BRAINTREE'] == 'enabled'
+    p If you would like to pay now, you can do so below.
+
+    p If you'd rather pay later, you can close this tab now.
+
+    = render 'braintree/dropin'
+
+    p
+      | You can also mail a check payable to 
+      b Birmingham Power Squadron
+      |  to:
+
+    p
+      = content_tag(:ul, class: 'simple') do
+        - @address.map do |row|
+          = content_tag(:li, row)

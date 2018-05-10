@@ -24,7 +24,9 @@ module User::Register
 
     @cancel_link = (@reg&.user == current_user)
 
-    if @reg&.destroy
+    if @reg&.paid?
+      cannot_cancel_paid
+    elsif @reg&.destroy
       successfully_cancelled
     else
       unable_to_cancel
@@ -83,6 +85,11 @@ module User::Register
 
   def unable_to_cancel
     flash.now[:alert] = 'We are unable to cancel your registration.'
+    render status: :unprocessable_entity
+  end
+
+  def cannot_cancel_paid
+    flash[:alert] = 'That registration has been paid, and cannot be cancelled.'
     render status: :unprocessable_entity
   end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MemberApplicationsController < ApplicationController
+  include BraintreeHelper
+
   secure!(only: :review)
 
   def new
@@ -14,13 +16,9 @@ class MemberApplicationsController < ApplicationController
 
   def apply
     if process_application
-      # When Braintree is available:
-      # ask = ask_to_pay_path(
-      #   model: member_application,
-      #   id: member_application.id
-      # )
-      # render js: "window.location = '#{ask}'"
-      confirm_applied_path = applied_path(id: @member_application.id)
+      confirm_applied_path = applied_path(
+        token: @member_application.payment.token
+      )
       MemberApplicationMailer.new_application(@member_application).deliver
       MemberApplicationMailer.confirm(@member_application).deliver
       render js: "window.location = '#{confirm_applied_path}'"
@@ -30,7 +28,14 @@ class MemberApplicationsController < ApplicationController
   end
 
   def applied
-    @member_application = MemberApplication.find_by(id: applied_params[:id])
+    @token = applied_params[:token]
+    @payment = Payment.find_by(token: @token)
+    transaction_details
+
+    @client_token = Payment.client_token(user_id: current_user&.id)
+    @receipt = @payment.parent.primary.email
+    @address = BridgeOffice.includes(:user).find_by(office: :treasurer).user
+                           .mailing_address
   end
 
   def review
@@ -74,7 +79,7 @@ class MemberApplicationsController < ApplicationController
   end
 
   def applied_params
-    params.permit(:id)
+    params.permit(:token)
   end
 
   def process_application
@@ -86,7 +91,7 @@ class MemberApplicationsController < ApplicationController
         return true
       rescue ActiveRecord::RecordInvalid => e
         flash.now[:error] = e.message.gsub('Member applicants base ', '')
-                             .gsub('Validation failed: ', '') # Validation error flashes are not displaying
+                             .gsub('Validation failed: ', '')
         raise ActiveRecord::Rollback
       end
     end

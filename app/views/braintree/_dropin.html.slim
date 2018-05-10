@@ -1,0 +1,36 @@
+#payment-box
+  #payment-description
+    | You are about to pay 
+    .amount
+      = render 'braintree/sandbox', card: :blue, ban: :orange
+      | $
+      = @transaction_amount
+    .desc for
+    .subject
+      = @purchase_info[:name]
+      - if @purchase_info[:type].present?
+        span.type
+          |  (
+          = @purchase_info[:type].titleize
+          | )
+    - if @purchase_info[:date].present?
+      .desc on
+      .date
+        b = @purchase_info[:date]
+        |  at 
+        b = @purchase_info[:time]
+  = form_tag checkout_path, id: 'checkout', method: :post
+    #dropin-container
+    = label_tag :email, "Send receipt to:"
+    br
+    = email_field_tag :email, @receipt, id: 'receipt-email', placeholder: 'Enter your email address to get a receipt', data: { 'braintree-name' => 'email' }
+  button#submit-button.pay
+    = render 'braintree/sandbox', card: :white, ban: :red
+    | Pay $
+    = @transaction_amount
+  .information Don't worry if you click twice – only the first click will be processed.
+  .information
+    = link_to 'Terms & Conditions', payment_terms_path, target: :_blank
+    |  | 
+    = link_to 'Refund Policy', refunds_path, target: :_blank
+  = render 'braintree/dropin_script'

@@ -3,6 +3,8 @@
 class ApplicationRecord < ActiveRecord::Base
   BUCKETS ||= %i[static files bilge photos floatplans].freeze
 
+  include Payable
+
   self.abstract_class = true
   has_paper_trail
   acts_as_paranoid

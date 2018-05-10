@@ -1,0 +1,17 @@
+<%= render 'application/mailers/auto' %>
+Annual Dues Paid
+
+
+Someone has paidtheir annual dues!
+
+**********
+
+Amount paid: $<%= @user.payment_amount %>
+
+**********
+
+Member information:
+  Name: <%= @user.full_name(html: false) %><%- if @user.certificate.present? %>(<%= @user.certificate %>)<%- end %>
+  Email: <%= @user.email %>
+
+**********

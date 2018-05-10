@@ -41,6 +41,14 @@ class RegistrationMailer < ApplicationMailer
     mail(to: to, from: from, subject: 'Registration reminder')
   end
 
+  def paid(registration)
+    @registration = registration
+    @committee_chairs = load_committee_chairs
+    @to_list = to_list
+
+    mail(to: @to_list, subject: 'Registration paid')
+  end
+
   private
 
   def signature_for_confirm
@@ -85,7 +93,7 @@ class RegistrationMailer < ApplicationMailer
       fallback: fallback,
       fields: {
         'Event name' => @registration.event.event_type.display_title,
-        'Event date' => @registration.event.start_at.strftime('%-m/%-d @ %H%M'),
+        'Event date' => @registration.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT),
         'Registrant name' => @registration&.user&.full_name,
         'Registrant email' => @registration&.user&.email || @registration&.email
       }

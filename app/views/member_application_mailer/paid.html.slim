@@ -1,0 +1,24 @@
+= render 'application/mailers/auto'
+
+h1.birmingham Membership Application Paid
+
+p Someone has paid for their membership application!
+
+h2.red
+  | Amount paid: $
+  = @application.payment_amount
+
+hr
+
+h2 Primary Applicant
+= render 'member_application_mailer/applicant', applicant: @application.primary, primary: true
+
+- if @application.additional.present?
+  h2 Additional Household Applicants
+  - @application.additional.each_with_index do |applicant, index|
+    h3
+      | Additional Applicant #
+      = index + 1
+    = render 'member_application_mailer/applicant', applicant: applicant, primary: false
+
+hr

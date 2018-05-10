@@ -1,0 +1,26 @@
+<%= render 'application/mailers/auto' %>
+Membership Application Paid
+
+
+Someone has paid for their membership application!
+
+**********
+
+Amount paid: $<%= @application.payment_amount %>
+
+**********
+
+Primary Applicant
+
+<%= render 'member_application_mailer/applicant', applicant: @application.primary, primary: true %>
+
+<%- if @application.additional.present? %>
+Additional Household Applicants
+
+<%- @application.additional.each_with_index do |applicant, index| %>
+Additional Applicant #<%= index + 1 %>
+<%= render 'member_application_mailer/applicant', applicant: applicant, primary: false %>
+<%- end %>
+<%- end %>
+
+**********

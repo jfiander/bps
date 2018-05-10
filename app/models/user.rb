@@ -8,6 +8,7 @@ class User < ApplicationRecord
   include User::ProfilePhoto
   include User::Address
   include User::BOC
+  include User::Dues
 
   devise(
     :invitable, :database_authenticatable, :recoverable, :trackable, :lockable,
@@ -18,6 +19,14 @@ class User < ApplicationRecord
   has_one  :bridge_office
   has_many :standing_committee_offices
   has_many :committees
+
+  belongs_to :parent, class_name: 'User', optional: true
+  has_many(
+    :children,
+    class_name: 'User',
+    inverse_of: :parent,
+    foreign_key: :parent_id
+  )
 
   has_many :course_completions
 
@@ -103,6 +112,10 @@ class User < ApplicationRecord
 
   def completions
     course_completions.map(&:to_h).reduce({}, :merge)
+  end
+
+  def payment_amount
+    dues
   end
 
   private
