@@ -24,6 +24,7 @@ table#permissions
     th = "Permission"
     th
   - UserRole.all.order(:user_id).includes(:user, :role).each do |p|
+    - next if p.role.name.in?(%w[admin users]) && !current_user.permitted?(:admin, strict: true)
     tr
       td = display_name = p.user.full_name || p.user.email
       td = p.role.name

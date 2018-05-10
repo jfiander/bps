@@ -8,8 +8,8 @@ class PermissionsController < ApplicationController
 
   def index
     @roles = Role.all.map(&:name)
-    @roles.delete("admin")
-    @roles.delete('user') unless current_user&.permitted?(:admin)
+    @roles.delete('admin')
+    @roles.delete('users') unless current_user&.permitted?(:admin, strict: true)
 
     respond_to do |format|
       format.html
@@ -17,34 +17,66 @@ class PermissionsController < ApplicationController
   end
 
   def add
-    redirect_to permit_path, alert: "User was not selected." and return if clean_params[:user_id].blank?
-    redirect_to permit_path, alert: "Role was not selected." and return if clean_params[:role].blank?
-    redirect_to permit_path, alert: "Cannot add admin permissions." and return if clean_params[:role] == "admin"
-    redirect_to permit_path, alert: 'Must be an admin to add user permissions.' and return if clean_params[:role] == 'user' && !current_user&.permitted?(:admin)
+    process_permissions_errors
+
+    if flash[:alert].present?
+      redirect_to permit_path
+      return
+    end
 
     user = User.find_by(id: clean_params[:user_id])
     role = Role.find_by(name: clean_params[:role])
 
-    redirect_to permit_path, notice: '#{user.simple_name} already has #{role.name} permissions.' and return if UserRole.find_by(user: user, role: role)
+    if UserRole.find_by(user: user, role: role)
+      flash[:notice] = "#{user.simple_name} already has #{role.name} permissions."
+      redirect_to permit_path
+      return
+    end
 
     UserRole.create!(user: user, role: role)
 
-    redirect_to permit_path, success: "Successfully added #{role.name} permission to #{user.simple_name}."
+    flash[:success] = "Successfully added #{role.name} " \
+                      "permission to #{user.simple_name}."
+    redirect_to permit_path
   end
 
   def remove
     user_role = UserRole.find_by(id: clean_params[:permit_id])
 
-    redirect_to permit_path, alert: "Cannot remove admin permissions." and return if user_role.role.name == "admin"
+    if user_role.role.name == 'admin'
+      redirect_to permit_path, alert: 'Cannot remove admin permissions.'
+      return
+    end
 
     user_role.destroy
 
-    redirect_to permit_path, success: "Successfully removed #{user_role.role.name} permission from #{user_role.user.simple_name}."
+    flash[:success] = "Successfully removed #{user_role.role.name} " \
+                      "permission from #{user_role.user.simple_name}."
+    redirect_to permit_path
   end
 
   def auto
     @auto_permissions = YAML.safe_load(
       File.read("#{Rails.root}/config/implicit_permissions.yml")
     )
+  end
+
+  private
+
+  def process_permissions_errors
+    if clean_params[:user_id].blank?
+      flash[:alert] = 'User was not selected.'
+    elsif clean_params[:role].blank?
+      flash[:alert] = 'Permission was not selected.'
+    elsif restricted_permission?(clean_params[:role])
+      flash[:alert] = 'Cannot add that permissions.'
+    end
+  end
+
+  def restricted_permission?(role)
+    return true if role == 'admin'
+    return true if role == 'users' &&
+                   !current_user&.permitted?(:admin, strict: true)
+    false
   end
 end
