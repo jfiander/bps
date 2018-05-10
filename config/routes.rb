@@ -41,6 +41,10 @@ Rails.application.routes.draw do
   get     '/welcome',      to: 'members#welcome'
   get     '/user_help',    to: 'members#user_help'
 
+  ### Static pages
+  get     '/refunds',       to: 'braintree#refunds'
+  get     '/payment_terms', to: 'braintree#terms'
+
   ### Dynamic pages
   get     '/ranks',            to: 'members#ranks'
   get     '/auto_permissions', to: 'permissions#auto'
@@ -56,6 +60,7 @@ Rails.application.routes.draw do
   get     '/event_types',               to: 'event_types#list'
   get     '/apply',                     to: 'member_applications#new'
   get     '/applications',              to: 'member_applications#review'
+  get     '/dues',                      to: 'members#dues'
   get     '/s3',                        to: 'links#s3'
   post    '/s3',                        to: 'links#s3'
   get     '/versions/:model/:id',       to: 'versions#show',      as: 'show_versions'
@@ -131,7 +136,7 @@ Rails.application.routes.draw do
 
   # Member Applications
   put     '/apply',                   to: 'member_applications#apply',   as: 'submit_application'
-  get     '/applied(/:id)',           to: 'member_applications#applied', as: 'applied'
+  get     '/applied(/:token)',        to: 'member_applications#applied', as: 'applied'
   patch   '/approve_application/:id', to: 'member_applications#approve', as: 'approve_application'
 
   # Roster
@@ -174,7 +179,7 @@ Rails.application.routes.draw do
   # Bridge and committee management
   post    '/assign_bridge',                 to: 'bridge#assign_bridge'
   post    '/assign_committee',              to: 'bridge#assign_committee'
-  delete  '/remove_committee/:id',          to: 'bridge#remove_committee', as: 'remove_committee'
+  delete  '/remove_committee/:id',          to: 'bridge#remove_committee',          as: 'remove_committee'
   post    '/assign_standing_committee',     to: 'bridge#assign_standing_committee'
   delete  '/remove_standing_committee/:id', to: 'bridge#remove_standing_committee', as: 'remove_standing_committee'
 
@@ -186,9 +191,15 @@ Rails.application.routes.draw do
   get     '/import', to: 'user#import', as: 'import_users'
   post    '/import', to: 'user#do_import'
 
+  # Payments
+  get     '/pay/:token',          to: 'braintree#index',      as: 'pay'
+  get     '/please_pay(/:token)', to: 'braintree#ask_to_pay', as: 'ask_to_pay'
+  post    '/checkout',            to: 'braintree#checkout'
+  get     '/paid(/:token)',       to: 'braintree#done',       as: 'transaction_complete'
+
   ### Miscellaneous
-  get     '/sitemap.xml',    to: 'sitemap#index', format: 'xml', as: 'sitemap'
-  get     '/robots.:format', to: 'sitemap#robots',               as: 'robots'
+  get     '/sitemap.xml',    to: 'sitemap#index',  as: 'sitemap', format: 'xml'
+  get     '/robots.:format', to: 'sitemap#robots', as: 'robots'
 
   ### Error codes
   match   '/404', to: 'errors#not_found',             via: :all
