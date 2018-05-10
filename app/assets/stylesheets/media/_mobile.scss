@@ -241,4 +241,26 @@
     width: 5em;
     margin: 0 auto;
   }
+
+  div#payment-box {
+    @include border-radius(0);
+    @include shadow-box(0);
+    border: none;
+    border-top: thin solid $old-glory-blue;
+    border-bottom: thin solid $old-glory-blue;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+
+    div#dropin-container {
+      width: 95%;
+    }
+
+    input#receipt-email {
+      max-width: 95%;
+      height: 3em;
+      margin-top: 0.5em;
+    }
+  }
 }

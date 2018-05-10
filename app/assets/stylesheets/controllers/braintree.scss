@@ -1,0 +1,70 @@
+div#payment-box {
+  @include border_radius;
+  @include shadow_box(2, 0);
+  background-color: lighten($background_blue, 5%);
+  width: 90%;
+  max-width: 35em;
+  margin: 1em auto;
+  padding: 1.5em;
+  border: thin solid $old-glory-blue;
+}
+
+div#dropin-container {
+  // max-width: 30em;
+  margin: 1em auto;
+}
+
+input#receipt-email {
+  width: 25em;
+  font-size: 1em;
+  height: 2em;
+  text-align: center;
+}
+
+div#payment-description {
+  color: $old-glory-red;
+  font-size: 1.25em;
+
+  .amount, .subject, .date {
+    margin-top: 0.5em;
+  }
+
+  .amount, .subject {
+    font-weight: bold;
+  }
+
+  span.type {
+    font-size: 0.85em;
+  }
+
+  .amount {
+    font-size: 1.3em;
+  }
+
+  .desc {
+    margin: 0.25em 0;
+  }
+}
+
+button#submit-button.pay {
+  @include big-button;
+  width: 35%;
+}
+
+div.braintree-heading {
+  font-weight: bold;
+}
+
+div.braintree-method__check-container::before {
+  display: none;
+}
+
+div.information {
+  font-style: italic;
+  margin-top: 1em;
+}
+
+.terms {
+  padding: 0 0.5em;
+  text-align: left;
+}
