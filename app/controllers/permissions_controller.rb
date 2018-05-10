@@ -10,6 +10,11 @@ class PermissionsController < ApplicationController
     @roles = Role.all.map(&:name)
     @roles.delete('admin')
     @roles.delete('users') unless current_user&.permitted?(:admin, strict: true)
+    unless current_user&.permitted?(:education)
+      @roles.delete('education')
+      @roles.delete('course')
+      @roles.delete('seminar')
+    end
 
     respond_to do |format|
       format.html
@@ -75,6 +80,8 @@ class PermissionsController < ApplicationController
 
   def restricted_permission?(role)
     return true if role == 'admin'
+    return true if role.in?(%w[education course seminar]) &&
+                   !current_user&.permitted?(:education)
     return true if role == 'users' &&
                    !current_user&.permitted?(:admin, strict: true)
     false
