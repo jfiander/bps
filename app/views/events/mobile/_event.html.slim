@@ -1,14 +1,20 @@
 .events-full-width
   hr
 .event-mobile-title = event_type(event).display_title
-- if @current_user_permitted_event_type && event.show_in_catalog
+- if !defined?(@event_catalog) && @current_user_permitted_event_type && event.show_in_catalog
   .event-mobile-contents.birmingham-blue
     = fa_icon('star', style: :regular)
     | In catalog
-- if @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
+- if !defined?(@event_catalog) && @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
   br
-= render 'events/mobile/actions', event: event
-= render 'events/mobile/register', event: event, long_form: long_form
+- if defined?(@event_catalog)
+  - if @current_user_permitted_event_type
+    = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
+      = fa_icon('edit', fa: 'fw')
+      | Edit
+- else
+  = render 'events/mobile/actions', event: event
+  = render 'events/mobile/register', event: event, long_form: long_form
 - if @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
   br
 .event-mobile-contents = event.start_at.strftime(@long_time_format)
@@ -22,21 +28,22 @@
       = event.length&.strftime(@duration_format)
 - if event.cost.present?
   .event-mobile-contents.spaced = event.formatted_cost
-.event-mobile-contents.spaced
-  - if @locations[event.location_id].present?
-    .event-mobile-contents = simple_format(@locations[event.location_id][:address])
-    - if @locations[event.location_id][:map_link].present?
-      .event-mobile-contents
-        = link_to(@locations[event.location_id][:map_link], target: :_blank) do
-          = fa_icon("map-marker-alt")
-          | Map
-    - unless defined?(@event_catalog)
-      - if @locations[event.location_id][:picture].present?
-        = image_tag files_bucket.link(@locations[event.location_id][:picture].path(:thumb))
-      - if @locations[event.location_id][:details].present?
-        small = simple_format(@locations[event.location_id][:details])
-  - else
-    | Location TBD
+- unless defined?(@event_catalog)
+  .event-mobile-contents.spaced
+    - if @locations[event.location_id].present?
+      .event-mobile-contents = simple_format(@locations[event.location_id][:address])
+      - if @locations[event.location_id][:map_link].present?
+        .event-mobile-contents
+          = link_to(@locations[event.location_id][:map_link], target: :_blank) do
+            = fa_icon("map-marker-alt")
+            | Map
+      - unless defined?(@event_catalog)
+        - if @locations[event.location_id][:picture].present?
+          = image_tag files_bucket.link(@locations[event.location_id][:picture].path(:thumb))
+        - if @locations[event.location_id][:details].present?
+          small = simple_format(@locations[event.location_id][:details])
+    - else
+      | Location TBD
 .event-mobile-contents.spaced = simple_format(event.description)
 - if course_topics(event).present?
   .event-mobile-contents.spaced
@@ -62,18 +69,19 @@
   .event-mobile-contents.spaced
     b Prerequisite course:
     p = event_prereq(event).title.titleize
-- if @current_user_permitted_event_type && @registered_users[event.id].present? && !defined?(@event_catalog)
+- if @current_user_permitted_event_type && !defined?(@event_catalog) && @registered_users[event.id].present?
   .event-mobile-contents.spaced
     b Registered Users:
     - @registered_users[event.id].each do |r|
       = render 'events/register/member', r: r
 
-- if !defined?(@event_catalog) && !long_form && !user_signed_in? && event.registerable? && event.allow_public_registrations
-  = render 'events/register/public', event_id: event.id, mobile: true
-- elsif !defined?(@event_catalog) && !long_form && !user_signed_in? && event.registerable?
-  = render 'events/no/public_registrations'
-- elsif !defined?(@event_catalog) && !long_form && !user_signed_in?
-  = render 'events/no/registrations'
+- if !defined?(@event_catalog) && !long_form
+  - if !user_signed_in? && event.registerable? && event.allow_public_registrations
+    = render 'events/register/public', event_id: event.id, mobile: true
+  - elsif !user_signed_in? && event.registerable?
+    = render 'events/no/public_registrations'
+  - elsif !user_signed_in?
+    = render 'events/no/registrations'
 
 .event-mobile-contents.spaced
   - if event.get_flyer(@event_types).present? && event.flyer_content_type != 'application/pdf'

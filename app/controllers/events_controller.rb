@@ -37,6 +37,8 @@ class EventsController < ApplicationController
                      else
                        catalog_list[params[:type].to_s]
                      end
+
+    @current_user_permitted_event_type = current_user&.permitted?(params[:type])
   end
 
   def registrations

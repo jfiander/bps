@@ -54,7 +54,7 @@
               br
               b Prerequisite course:
               p = event_prereq(event).title.titleize
-            - if @current_user_permitted_event_type && @registered_users[event.id].present? && !defined?(@event_catalog)
+            - if @current_user_permitted_event_type && !defined?(@event_catalog) && @registered_users[event.id].present?
               br
               b Registered Users:
               - @registered_users[event.id].each do |r|
@@ -63,7 +63,12 @@
       .table
         .table-row
           .table-cell.top-right
-            - unless defined?(@event_catalog)
+            - if defined?(@event_catalog)
+              - if @current_user_permitted_event_type
+                = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
+                  = fa_icon('edit', fa: 'fw')
+                  | Edit
+            - else
               .table
                 .table-row
                   .table-cell.location
