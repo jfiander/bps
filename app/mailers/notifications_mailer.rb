@@ -5,35 +5,33 @@ class NotificationsMailer < ApplicationMailer
     @previous = previous
 
     mail(to: 'dev@bpsd9.org', subject: 'Bridge Office Updated')
-    SlackNotifications.notify(
+    SlackNotification.new(
       type: :info,
-      data: {
-        'fallback' => 'A bridge office has been updated.',
-        'title'    => 'Bridge Office Updated',
-        'fields' => [
-          {
-            'title' => 'Office',
-            'value' => @bridge_office.title,
-            'short' => true
-          },
-          {
-            'title' => 'Previous holder',
-            'value' => user_descriptor(@previous),
-            'short' => true
-          },
-          {
-            'title' => 'New holder',
-            'value' => user_descriptor(@bridge_office.user),
-            'short' => true
-          },
-          {
-            'title' => 'Updated by',
-            'value' => user_descriptor(@by),
-            'short' => true
-          }
-        ]
-      }
-    )
+      title: 'Bridge Office Updated',
+      fallback: 'A bridge office has been updated.',
+      fields:  [
+        {
+          'title' => 'Office',
+          'value' => @bridge_office.title,
+          'short' => true
+        },
+        {
+          'title' => 'Previous holder',
+          'value' => user_descriptor(@previous),
+          'short' => true
+        },
+        {
+          'title' => 'New holder',
+          'value' => user_descriptor(@bridge_office.user),
+          'short' => true
+        },
+        {
+          'title' => 'Updated by',
+          'value' => user_descriptor(@by),
+          'short' => true
+        }
+      ]
+    ).notify!
   end
 
   private

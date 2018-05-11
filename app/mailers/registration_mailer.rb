@@ -5,34 +5,32 @@ class RegistrationMailer < ApplicationMailer
     @to_list = to_list
 
     mail(to: @to_list, subject: 'New registration')
-    SlackNotifications.notify(
+    SlackNotification.new(
       type: :info,
-      data: {
-        'fallback' => 'Someone has registered for an event.',
-        'title'    => 'Registration Received',
-        'fields' => [
-          {
-            'title' => 'Event name',
-            'value' => @registration.event.event_type.display_title,
-            'short' => true
-          },
-          {
-            'title' => 'Event date',
-            'value' => @registration.event.start_at.strftime('%-m/%-d @ %H%M'),
-            'short' => true
-          },
-          {
-            'title' => 'Registrant name',
-            'value' => @registration&.user&.full_name,
-            'short' => true
-          },
-          {
-            'title' => 'Registrant email',
-            'value' => @registration&.user&.email || @registration&.email,
-            'short' => true
-          }
-        ]
-      }
+      title: 'Registration Received',
+      fallback: 'Someone has registered for an event.',
+      fields: [
+        {
+          'title' => 'Event name',
+          'value' => @registration.event.event_type.display_title,
+          'short' => true
+        },
+        {
+          'title' => 'Event date',
+          'value' => @registration.event.start_at.strftime('%-m/%-d @ %H%M'),
+          'short' => true
+        },
+        {
+          'title' => 'Registrant name',
+          'value' => @registration&.user&.full_name,
+          'short' => true
+        },
+        {
+          'title' => 'Registrant email',
+          'value' => @registration&.user&.email || @registration&.email,
+          'short' => true
+        }
+      ]
     )
   end
 

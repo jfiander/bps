@@ -7,29 +7,27 @@ class MemberApplicationMailer < ApplicationMailer
     @next_excom = next_excom
 
     mail(to: @to_list, subject: 'New member application')
-    SlackNotifications.notify(
+    SlackNotification.new(
       type: :info,
-      data: {
-        'fallback' => 'Someone has applied for membership.',
-        'title'    => 'Membership Application Received',
-        'fields' => [
-          {
-            'title' => 'Primary applicant name',
-            'value' => "#{@application.primary.first_name} #{@application.primary.last_name}",
-            'short' => true
-          },
-          {
-            'title' => 'Primary applicant email',
-            'value' => @application.primary.email,
-            'short' => true
-          },
-          {
-            'title' => 'Number of applicants',
-            'value' => @application.member_applicants.count,
-            'short' => true
-          }
-        ]
-      }
+      title: 'Membership Application Received',
+      fallback: 'Someone has applied for membership.',
+      fields: [
+        {
+          'title' => 'Primary applicant name',
+          'value' => "#{@application.primary.first_name} #{@application.primary.last_name}",
+          'short' => true
+        },
+        {
+          'title' => 'Primary applicant email',
+          'value' => @application.primary.email,
+          'short' => true
+        },
+        {
+          'title' => 'Number of applicants',
+          'value' => @application.member_applicants.count,
+          'short' => true
+        }
+      ]
     )
   end
 
