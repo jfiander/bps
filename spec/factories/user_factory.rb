@@ -4,7 +4,8 @@ FactoryBot.define do
     sequence(:last_name) { |n| "Last_#{n}" }
     grade 'AP'
     email { "example-#{SecureRandom.hex(8)}@example.com" }
-    password SecureRandom.hex(16)
+    certificate { SecureRandom.hex(4) }
+    password { SecureRandom.hex(16) }
 
     trait :placeholder_email do
       email { "nobody-#{SecureRandom.hex(8)}@bpsd9.org" }
