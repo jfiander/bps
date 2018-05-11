@@ -34,6 +34,7 @@ gem 'paperclip',           '~> 5.2.0'
 # gem 'redis',             '~> 3.0'
 gem 'sendgrid-ruby',       '~> 5.2.0'
 # gem 'sidekiq',           '~> 5.0.5'
+gem 'slack-notifier',      '~> 2.3.2'
 gem 'tickle',              '~> 1.1.1'
 
 # View Management

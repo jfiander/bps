@@ -59,6 +59,8 @@ And any optional environment variables you want to support:
 CALENDARS
 
 NEW_RELIC_LICENSE_KEY
+
+SLACK_NOTIFIER_URL
 ```
 
 Run the server:
