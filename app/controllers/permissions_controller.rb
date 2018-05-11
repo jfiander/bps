@@ -74,7 +74,7 @@ class PermissionsController < ApplicationController
     elsif clean_params[:role].blank?
       flash[:alert] = 'Permission was not selected.'
     elsif restricted_permission?(clean_params[:role])
-      flash[:alert] = 'Cannot add that permissions.'
+      flash[:alert] = 'Unable to add that permission.'
     end
   end
 
