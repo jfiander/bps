@@ -26,8 +26,8 @@ class BridgeController < ApplicationController
       office: clean_params[:bridge_office]
     )
     previous = bridge_office.user
-    if bridge_office.update(user_id: clean_params[:user_id], previous: previous)
-      NotificationsMailer.bridge(bridge_office, by: current_user).deliver
+    if bridge_office.update(user_id: clean_params[:user_id])
+      NotificationsMailer.bridge(bridge_office, by: current_user, previous: previous).deliver
       redirect_to bridge_path, success: "Successfully assigned to bridge office."
     else
       redirect_to bridge_path, alert: "Unable to assign to bridge office."
