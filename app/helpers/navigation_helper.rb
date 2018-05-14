@@ -6,8 +6,8 @@ module NavigationHelper
     @link_options = { class: @options[:permit].to_s }
     @fa = @options[:fa]
 
-    parse_presets
-    parse_classes
+    parse_nav_presets
+    parse_nav_classes
     generate_link
   end
 
@@ -25,7 +25,7 @@ module NavigationHelper
     }
   end
 
-  def parse_presets
+  def parse_nav_presets
     if @options[:title] == :login_or_logout && user_signed_in?
       @options[:title] = 'Logout'
       @options[:path] = destroy_user_session_path
@@ -41,7 +41,7 @@ module NavigationHelper
     end
   end
 
-  def parse_classes
+  def parse_nav_classes
     if @options[:title].is_a?(Symbol)
       @options[:title] = @options[:title].to_s.titleize
     end
@@ -61,15 +61,31 @@ module NavigationHelper
   end
 
   def show_menu?(title: nil, permit:, show_when:, path:)
-    show_when == :always ||                                         # Menu set to always show
-      title.in?([:home, :login_or_logout]) ||                       # Specific menus that always show
-      !hide_menu?(permit: permit, show_when: show_when, path: path) # Menu is not valid for the current situation
+    show_when == :always ||
+      always_show_menu?(title) ||
+      !hide_menu?(permit: permit, show_when: show_when, path: path)
   end
 
   def hide_menu?(permit:, show_when:, path:)
-    path.blank? ||                                           # Do not show empty menus
-      (show_when == :logged_in && !user_signed_in?) ||       # Requires logged in user
-      (show_when == :logged_out && user_signed_in?) ||       # Requires logged out user
-      (permit.present? && !current_user&.permitted?(permit)) # Current user does not have access
+    path.blank? ||
+      requires_signed_in?(show_when) ||
+      requires_signed_out?(show_when) ||
+      user_not_permitted?(permit)
+  end
+
+  def always_show_menu?(title)
+    title.in?(%i[home login_or_logout])
+  end
+
+  def requires_signed_in?(show_when)
+    show_when == :logged_in && !user_signed_in?
+  end
+
+  def requires_signed_out?(show_when)
+    show_when == :logged_out && user_signed_in?
+  end
+
+  def user_not_permitted?(permit)
+    permit.present? && !current_user&.permitted?(permit)
   end
 end

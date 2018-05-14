@@ -9,19 +9,7 @@ module FontAwesomeHelper
     span_top = "<span class='icon fa-layers fa-fw #{css}' title='#{title}'>"
     span_bottom = '</span>'
 
-    icons.each do |i|
-      combined_grow = if i.key?(:options) && i[:options].key?(:grow)
-                        i[:options][:grow] + grow
-                      else
-                        grow
-                      end
-
-      i[:options] = if i.key?(:options)
-                      i[:options].merge(grow: combined_grow)
-                    else
-                      { grow: combined_grow }
-                    end
-    end
+    icons.each { |i| i[:options] = combine_options(i, combine_grows(i, grow)) }
 
     output = span_top + parse_all(icons).join + span_bottom
     output.html_safe
@@ -105,6 +93,22 @@ module FontAwesomeHelper
     end
   end
 
+  def combine_grows(i, grow)
+    if i.key?(:options) && i[:options].key?(:grow)
+      i[:options][:grow] + grow
+    else
+      grow
+    end
+  end
+
+  def combine_options(i, combined_grow)
+    if i.key?(:options)
+      i[:options].merge(grow: combined_grow)
+    else
+      { grow: combined_grow }
+    end
+  end
+
   def size_x(size)
     return '' unless size.present? || size == 1
     "-#{size}x"
@@ -118,30 +122,34 @@ module FontAwesomeHelper
   end
 
   def parse_options(options)
-    @classes = []
-    @transforms = []
+    parse_classes(options)
+    parse_transforms(options)
+  end
 
-    @classes << 'fa' + case options[:style]
-                       when :solid
-                         's'
-                       when :regular
-                         'r'
-                       when :light
-                         'l'
-                       when :brands
-                         'b'
-                       else
-                         's'
-                       end
+  def parse_classes(options)
+    @classes = []
+    @classes << parse_style(options[:style])
     @classes << options[:fa].to_s.split(' ').map { |c| "fa-#{c}" }
     @classes << options[:css].to_s.split(' ')
+  end
 
-    @transforms << "grow-#{options[:grow]}" if options[:grow].present?
-    @transforms << "shrink-#{options[:shrink]}" if options[:shrink].present?
-    @transforms << "rotate-#{options[:rotate]}" if options[:rotate].present?
-    @transforms << "up-#{options[:up]}" if options[:up].present?
-    @transforms << "down-#{options[:down]}" if options[:down].present?
-    @transforms << "rotate-#{options[:left]}" if options[:left].present?
-    @transforms << "right-#{options[:right]}" if options[:right].present?
+  def parse_transforms(options)
+    @transforms = []
+    %i[grow shrink rotate up down left right].each do |transform|
+      if options[transform].present?
+        @transforms << "#{transform}-#{options[transform]}"
+      end
+    end
+  end
+
+  def parse_style(style)
+    return 'fas' unless style.in?(%i[solid regular light brands])
+
+    'fa' + {
+      solid: 's',
+      regular: 'r',
+      light: 'l',
+      brands: 'b'
+    }[style]
   end
 end

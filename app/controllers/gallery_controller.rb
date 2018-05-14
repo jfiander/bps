@@ -29,10 +29,9 @@ class GalleryController < ApplicationController
     @album = Album.find_by(id: clean_params[:id])
     @photo = Photo.new
 
-    if @album.blank?
-      flash[:alert] = 'Album not found.'
-      redirect_to photos_path
-    end
+    return if @album.present?
+    flash[:alert] = 'Album not found.'
+    redirect_to photos_path
   end
 
   def upload_photo
@@ -40,26 +39,13 @@ class GalleryController < ApplicationController
       photo_params[:photo_file].each do |photo_file|
         photo_attributes = photo_params.to_hash.merge(photo_file: photo_file)
         photo = Photo.new(photo_attributes)
-        if photo.valid?
-          photo.save
-        else
-          @failed = true
-          raise ActiveRecord::Rollback
-        end
+        photo.valid? ? photo.save : @failed = true
+        raise ActiveRecord::Rollback if @failed
       end
     end
 
-    if defined?(@failed)
-      flash[:alert] = 'There was a problem creating the photo.'
-    else
-      flash[:success] = 'Successfully added photo!'
-    end
-
-    if clean_params[:redirect_to_album].present?
-      redirect_to show_album_path(photo_params[:album_id])
-    else
-      redirect_to photos_path
-    end
+    upload_flashes
+    upload_redirect
   end
 
   def remove_photo
@@ -101,5 +87,21 @@ class GalleryController < ApplicationController
 
   def clean_params
     params.permit(:id, :remove, :redirect_to_album)
+  end
+
+  def upload_flashes
+    if @failed
+      flash[:alert] = 'There was a problem creating the photo.'
+    else
+      flash[:success] = 'Successfully added photo!'
+    end
+  end
+
+  def upload_redirect
+    if clean_params[:redirect_to_album].present?
+      redirect_to show_album_path(photo_params[:album_id])
+    else
+      redirect_to photos_path
+    end
   end
 end

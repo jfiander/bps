@@ -71,8 +71,7 @@ class ImportUsers
 
   def course_completions(user, row)
     course_completions_data(row).each do |(key, date)|
-      next if date.blank?
-      next if CourseCompletion.find_by(user: user, course_key: key).present?
+      next if skip_course_completion?(user, key, date)
 
       CourseCompletion.create!(
         user: user,
@@ -80,6 +79,11 @@ class ImportUsers
         date: clean_date(date)
       )
     end
+  end
+
+  def skip_course_completion?(user, key, date)
+    date.blank? ||
+      CourseCompletion.find_by(user: user, course_key: key).present?
   end
 
   def clean_date(string)
