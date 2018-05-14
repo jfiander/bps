@@ -18,21 +18,12 @@ class NotificationsMailer < ApplicationMailer
     SlackNotification.new(
       type: :info, title: 'Bridge Office Updated',
       fallback: 'A bridge office has been updated.',
-      fields:  bridge_slack_fields(
-        @bridge_office.title,
-        @previous,
-        @bridge_office.user,
-        @by
-      )
+      fields: {
+        'Office' => @bridge_office.title,
+        'Previous holder' => @previous,
+        'New holder' => @bridge_office.user,
+        'Updated by' => @by
+      }
     ).notify!
-  end
-
-  def bridge_slack_fields(office, previous, new, by)
-    [
-      { 'title' => 'Office', 'value' => office, 'short' => true },
-      { 'title' => 'Previous holder', 'value' => previous, 'short' => true },
-      { 'title' => 'New holder', 'value' => new, 'short' => true },
-      { 'title' => 'Updated by', 'value' => by, 'short' => true }
-    ]
   end
 end

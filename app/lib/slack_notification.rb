@@ -8,7 +8,7 @@ class SlackNotification
     @title = title
     @fallback = fallback
     @dryrun = dryrun || Rails.env.test?
-    @fields = fields
+    @fields = fields.is_a?(Hash) ? fields_from_hash(fields) : fields
     @data = {}
   end
 
@@ -43,6 +43,16 @@ class SlackNotification
       @fields = []
     elsif !@fields.is_a?(Array)
       raise 'Unsupported fields format.'
+    end
+  end
+
+  def fields_from_hash(hash)
+    hash.map do |title, value|
+      {
+        'title' => title,
+        'value' => value,
+        'short' => true
+      }
     end
   end
 

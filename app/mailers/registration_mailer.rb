@@ -72,21 +72,12 @@ class RegistrationMailer < ApplicationMailer
     SlackNotification.new(
       type: type, title: title,
       fallback: fallback,
-      fields: registered_slack_fields(
-        @registration.event.event_type.display_title,
-        @registration.event.start_at.strftime('%-m/%-d @ %H%M'),
-        @registration&.user&.full_name,
-        @registration&.user&.email || @registration&.email
-      )
+      fields: {
+        'Event name' => @registration.event.event_type.display_title,
+        'Event date' => @registration.event.start_at.strftime('%-m/%-d @ %H%M'),
+        'Registrant name' => @registration&.user&.full_name,
+        'Registrant email' => @registration&.user&.email || @registration&.email
+      }
     ).notify!
-  end
-
-  def registered_slack_fields(name, date, reg_name, reg_email)
-    [
-      { 'title' => 'Event name', 'value' => name, 'short' => true },
-      { 'title' => 'Event date', 'value' => date, 'short' => true },
-      { 'title' => 'Registrant name', 'value' => reg_name, 'short' => true },
-      { 'title' => 'Registrant email', 'value' => reg_email, 'short' => true }
-    ]
   end
 end
