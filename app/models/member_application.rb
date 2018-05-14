@@ -31,36 +31,41 @@ class MemberApplication < ApplicationRecord
 
     update(approved_at: Time.now, approver_id: approving_user.id)
 
-    parent = User.create!(
-      certificate: SecureRandom.hex(8),
-      first_name: primary.first_name,
-      last_name: primary.last_name,
-      email: primary.email,
-      address_1: primary.address_1,
-      address_2: primary.address_2,
-      city: primary.city,
-      state: primary.state,
-      zip: primary.zip,
-      password: SecureRandom.hex(32)
-    )
+    parent = create_primary_user(primary)
     users = [parent]
 
     additional&.each do |member|
-      users << User.create!(
-        certificate: SecureRandom.hex(8),
-        first_name: member.first_name,
-        last_name: member.last_name,
-        email: member.email,
-        address_1: member.address_1,
-        address_2: member.address_2,
-        city: member.city,
-        state: member.state,
-        zip: member.zip,
-        parent_id: parent.id,
-        password: SecureRandom.hex(32)
-      )
+      users << User.create!(user_hash(member).merge(parent_id: parent.id))
     end
 
+    send_approval_notices(users)
+  end
+
+  private
+
+  def user_hash(applicant)
+    {
+      certificate: SecureRandom.hex(8),
+      first_name: applicant.first_name,
+      last_name: applicant.last_name,
+      email: applicant.email,
+      password: SecureRandom.hex(32)
+    }
+  end
+
+  def create_primary_user(primary)
+    User.create!(
+      user_hash(primary).merge(
+        address_1: primary.address_1,
+        address_2: primary.address_2,
+        city: primary.city,
+        state: primary.state,
+        zip: primary.zip
+      )
+    )
+  end
+
+  def send_approval_notices(users)
     MemberApplicationMailer.approved(self).deliver
     MemberApplicationMailer.approval_notice(self).deliver
     users.map(&:invite!)

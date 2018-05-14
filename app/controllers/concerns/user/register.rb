@@ -1,49 +1,86 @@
 module User::Register
   def register
-    @event_id = clean_params[:id]
-    @event = Event.find_by(id: @event_id)
-    unless @event.allow_member_registrations
-      flash.now[:alert] = 'This course is not currently accepting member registrations.'
-      render status: :unprocessable_entity and return
-    end
+    @event = Event.find_by(id: clean_params[:id])
 
-    unless @event.registerable?
-      flash.now[:alert] = 'This course is no longer accepting registrations.'
-      render status: :unprocessable_entity and return
-    end
+    return if no_member_registrations? || no_registrations?
 
-    @registration = current_user.register_for(Event.find_by(id: @event_id))
+    register_for_event!
 
     if @registration.valid?
-      flash[:success] = 'Successfully registered!'
-      RegistrationMailer.confirm(@registration).deliver
+      successfully_registered
     elsif Registration.find_by(@registration.attributes.slice(:user_id, :event_id))
-      flash.now[:notice] = 'You are already registered for this course.'
-      render status: :unprocessable_entity
+      already_registered
     else
-      flash.now[:alert] = 'We are unable to register you at this time.'
-      render status: :unprocessable_entity
+      unable_to_register
     end
   end
 
   def cancel_registration
-    @reg_id = clean_params[:id]
-    r = Registration.find_by(id: @reg_id)
-    @event_id = r&.event_id
+    @reg = Registration.find_by(id: clean_params[:id])
 
-    unless (r&.user == current_user) || current_user&.permitted?(:course, :seminar, :event)
-      flash[:alert] = 'You are not allowed to cancel that registration.'
-      redirect_to root_path, status: :unprocessable_entity
-    end
+    return if cannot_cancel_registration?
 
-    @cancel_link = (r&.user == current_user)
+    @cancel_link = (@reg&.user == current_user)
 
-    if r&.destroy
-      flash[:success] = 'Successfully cancelled registration!'
-      RegistrationMailer.cancelled(r).deliver if @cancel_link
+    if @reg&.destroy
+      successfully_cancelled
     else
-      flash.now[:alert] = 'We are unable to cancel your registration at this time.'
-      render status: :unprocessable_entity
+      unable_to_cancel
     end
+  end
+
+  private
+
+  def no_member_registrations?
+    return false if @event.allow_member_registrations
+
+    flash.now[:alert] = 'This course is not accepting member registrations.'
+    render status: :unprocessable_entity
+    true
+  end
+
+  def no_registrations?
+    return false if @event.registerable?
+
+    flash.now[:alert] = 'This course is no longer accepting registrations.'
+    render status: :unprocessable_entity
+    true
+  end
+
+  def register_for_event!
+    @registration = current_user.register_for(@event)
+  end
+
+  def successfully_registered
+    flash[:success] = 'Successfully registered!'
+    RegistrationMailer.confirm(@registration).deliver
+  end
+
+  def already_registered
+    flash.now[:notice] = 'You are already registered for this course.'
+    render status: :unprocessable_entity
+  end
+
+  def unable_to_register
+    flash.now[:alert] = 'We are unable to register you at this time.'
+    render status: :unprocessable_entity
+  end
+
+  def cannot_cancel_registration?
+    return false if (@reg&.user == current_user) || current_user&.permitted?(:course, :seminar, :event)
+
+    flash[:alert] = 'You are not allowed to cancel that registration.'
+    redirect_to root_path, status: :unprocessable_entity
+    true
+  end
+
+  def successfully_cancelled
+    flash[:success] = 'Successfully cancelled registration!'
+    RegistrationMailer.cancelled(@reg).deliver if @cancel_link
+  end
+
+  def unable_to_cancel
+    flash.now[:alert] = 'We are unable to cancel your registration.'
+    render status: :unprocessable_entity
   end
 end

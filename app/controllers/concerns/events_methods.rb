@@ -29,10 +29,7 @@ module EventsMethods
   end
 
   def failed_to_save_event(mode: :add)
-    path = {
-      add: :create,
-      modify: :update
-    }[mode]
+    path = { add: :create, modify: :update }[mode]
 
     flash.now[:alert] = "Unable to #{mode} #{params[:type]}."
     flash.now[:error] = @event.errors.full_messages
@@ -46,7 +43,11 @@ module EventsMethods
     @event = Event.includes(:event_instructors, :instructors)
                   .find_by(id: clean_params[:id])
 
-    load_attachments if @event.course? || @event.seminar?
+    return unless @event.course? || @event.seminar?
+
+    load_includes
+    load_topics
+    load_instructors
   end
 
   def prepare_form
@@ -69,24 +70,34 @@ module EventsMethods
     Event.transaction do
       clear_before_time = Time.now
 
-      clean_params[:includes].split("\n").map(&:squish).each do |i|
-        CourseInclude.create(course: @event, text: i)
-      end
-
-      clean_params[:topics].split("\n").map(&:squish).each do |t|
-        CourseTopic.create(course: @event, text: t)
-      end
-
-      clean_params[:instructors].split("\n").map(&:squish).each do |u|
-        user = if u.match?(%r{/})
-                 User.find_by(certificate: u.split('/').last.squish.upcase)
-               else
-                 User.with_name(u).first
-               end
-        EventInstructor.create(event: @event, user: user) if user.present?
-      end
+      update_includes
+      update_topics
+      update_instructors
 
       remove_old_attachments(clear_before_time)
+    end
+  end
+
+  def update_includes
+    clean_params[:includes].split("\n").map(&:squish).each do |i|
+      CourseInclude.create(course: @event, text: i)
+    end
+  end
+
+  def update_topics
+    clean_params[:topics].split("\n").map(&:squish).each do |t|
+      CourseTopic.create(course: @event, text: t)
+    end
+  end
+
+  def update_instructors
+    clean_params[:instructors].split("\n").map(&:squish).each do |u|
+      user = if u.match?(%r{/})
+               User.find_by(certificate: u.split('/').last.squish.upcase)
+             else
+               User.with_name(u).first
+             end
+      EventInstructor.create(event: @event, user: user) if user.present?
     end
   end
 
@@ -107,8 +118,6 @@ module EventsMethods
   def check_for_blank
     return unless event_params['event_type_id'].blank?
 
-    # This doesn't handle missing event_type on update correctly.
-
     prepare_form
     @submit_path = send("create_#{params[:type]}_path")
     @event = Event.new(event_params)
@@ -125,13 +134,17 @@ module EventsMethods
                               .reduce({}, :merge)
   end
 
-  def load_attachments
+  def load_includes
     @course_includes = CourseInclude.where(course_id: @event.id).map(&:text)
                                     .join("\n")
+  end
 
+  def load_topics
     @course_topics = CourseTopic.where(course_id: @event.id).map(&:text)
                                 .join("\n")
+  end
 
+  def load_instructors
     @instructors = EventInstructor.where(event_id: @event.id).map(&:user)
                                   .map do |u|
                                     "#{u.simple_name} / #{u.certificate}"

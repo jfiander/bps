@@ -11,6 +11,9 @@ class UserController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[auto_show auto_hide]
   skip_before_action :prerender_for_layout, only: %i[
     register cancel_registration remove_committee remove_standing_committee
+    no_member_registrations? no_registrations? register_for_event
+    successfully_registered already_registered unable_to_register
+    cannot_cancel_registration? successfully_cancelled unable_to_cancel
   ]
 
   before_action only: [:assign_photo] { require_permission(:admin) }

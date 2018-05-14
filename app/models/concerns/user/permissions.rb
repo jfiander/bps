@@ -1,10 +1,11 @@
 module User::Permissions
   def permitted?(*required_roles, strict: false)
-    required_roles = required_roles.flatten.compact
-    return false if required_roles.blank? || required_roles.all?(&:blank?)
+    required = required_roles.flatten.compact
+    return false if required.blank? || required.all?(&:blank?)
 
-    searchable_roles = strict ? granted_roles : permitted_roles
-    permitted = searchable_roles.any? { |p| p.in?(required_roles.map(&:to_sym)) }
+    permitted = searchable_roles(strict).any? do |p|
+      p.in?(required.map(&:to_sym))
+    end
 
     yield if block_given? && permitted
     permitted
@@ -37,6 +38,10 @@ module User::Permissions
   end
 
   private
+
+  def searchable_roles(strict = false)
+    strict ? granted_roles : permitted_roles
+  end
 
   def cached_roles
     @cached_roles ||= roles

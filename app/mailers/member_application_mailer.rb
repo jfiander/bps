@@ -1,5 +1,6 @@
 class MemberApplicationMailer < ApplicationMailer
   include DateHelper
+  include MailerSignatures
 
   def new_application(application)
     @application = application
@@ -7,28 +8,7 @@ class MemberApplicationMailer < ApplicationMailer
     @next_excom = next_excom
 
     mail(to: @to_list, subject: 'New member application')
-    SlackNotification.new(
-      type: :info,
-      title: 'Membership Application Received',
-      fallback: 'Someone has applied for membership.',
-      fields: [
-        {
-          'title' => 'Primary applicant name',
-          'value' => "#{@application.primary.first_name} #{@application.primary.last_name}",
-          'short' => true
-        },
-        {
-          'title' => 'Primary applicant email',
-          'value' => @application.primary.email,
-          'short' => true
-        },
-        {
-          'title' => 'Number of applicants',
-          'value' => @application.member_applicants.count,
-          'short' => true
-        }
-      ]
-    )
+    new_application_slack_notification
   end
 
   def confirm(application)
@@ -63,11 +43,26 @@ class MemberApplicationMailer < ApplicationMailer
   def prep_external(application)
     @application = application
     @to = @application.primary.email
-    ao = BridgeOffice.includes(:user).find_by(office: 'administrative')
-    @signature = {
-      office: ao.office.titleize,
-      email: ao.email,
-      name: ao.user.full_name
-    }
+    @signature = ao_signature
+  end
+
+  def new_application_slack_notification
+    SlackNotification.new(
+      type: :info, title: 'Membership Application Received',
+      fallback: 'Someone has applied for membership.',
+      fields: new_application_slack_fields(
+        "#{@application.primary.first_name} #{@application.primary.last_name}",
+        @application.primary.email,
+        @application.member_applicants.count,
+      )
+    )
+  end
+
+  def new_application_slack_fields(name, email, number)
+    [
+      { 'title' => 'Primary applicant name', 'value' => name, 'short' => true },
+      { 'title' => 'Primary applicant email', 'value' => email, 'short' => true },
+      { 'title' => 'Number of applicants', 'value' => number, 'short' => true }
+    ]
   end
 end
