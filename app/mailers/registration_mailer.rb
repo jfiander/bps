@@ -17,6 +17,7 @@ class RegistrationMailer < ApplicationMailer
     @to_list = to_list
 
     mail(to: @to_list, subject: 'Cancelled registration')
+    cancelled_slack_notification
   end
 
   def confirm(registration)
@@ -52,9 +53,25 @@ class RegistrationMailer < ApplicationMailer
   end
 
   def registered_slack_notification
+    slack_notification(
+      :info,
+      'Registration Received',
+      'Someone has registered for an event.'
+    )
+  end
+
+  def cancelled_slack_notification
+    slack_notification(
+      :warning,
+      'Registration Cancelled',
+      'Someone has cancelled their registration for an event.'
+    )
+  end
+
+  def slack_notification(type, title, fallback)
     SlackNotification.new(
-      type: :info, title: 'Registration Received',
-      fallback: 'Someone has registered for an event.',
+      type: type, title: title,
+      fallback: fallback,
       fields: registered_slack_fields(
         @registration.event.event_type.display_title,
         @registration.event.start_at.strftime('%-m/%-d @ %H%M'),
