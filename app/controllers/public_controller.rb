@@ -13,19 +13,8 @@ class PublicController < ApplicationController
   before_action only: [:newsletter] { page_title('The Bilge Chatter') }
   before_action only: [:store] { page_title("Ship's Store") }
   before_action only: [:calendar] { page_title('Calendar') }
-  before_action only: [:events] do
-    page_title("#{params[:type].to_s.titleize}s")
-  end
-  before_action only: [:catalog] do
-    page_title("#{params[:type].to_s.titleize} Catalog")
-  end
 
   render_markdown_views
-
-  def store
-    @store_items = StoreItem.all
-    @store_item_requests = ItemRequest.outstanding
-  end
 
   def register
     unless allow_registration?
