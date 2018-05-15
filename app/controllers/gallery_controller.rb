@@ -36,12 +36,7 @@ class GalleryController < ApplicationController
 
   def upload_photo
     Photo.transaction do
-      photo_params[:photo_file].each do |photo_file|
-        photo_attributes = photo_params.to_hash.merge(photo_file: photo_file)
-        photo = Photo.new(photo_attributes)
-        photo.valid? ? photo.save : @failed = true
-        raise ActiveRecord::Rollback if @failed
-      end
+      photo_params[:photo_file].each { |photo| process_photo_upload(photo) }
     end
 
     upload_flashes
@@ -87,6 +82,13 @@ class GalleryController < ApplicationController
 
   def clean_params
     params.permit(:id, :remove, :redirect_to_album)
+  end
+
+  def process_photo_upload(photo_file)
+    photo_attributes = photo_params.to_hash.merge(photo_file: photo_file)
+    photo = Photo.new(photo_attributes)
+    photo.valid? ? photo.save! : @failed = true
+    raise ActiveRecord::Rollback if @failed
   end
 
   def upload_flashes

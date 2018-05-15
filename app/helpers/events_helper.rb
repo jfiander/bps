@@ -22,14 +22,21 @@ module EventsHelper
   end
 
   def preload_events
+    preload_event_data
+    preload_attachments
+    catalog_list
+  end
+
+  def preload_event_data
     @all_events ||= Event.order(:start_at)
     @locations ||= Location.searchable
-    # @users ||= User.all
+    @event_types ||= EventType.all
+  end
+
+  def preload_attachments
     @course_topics ||= CourseTopic.all
     @course_includes ||= CourseInclude.all
     @event_instructors ||= EventInstructor.includes(:user).all
-    @event_types ||= EventType.all
-    catalog_list
   end
 
   def catalog_list
