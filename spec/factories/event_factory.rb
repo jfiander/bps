@@ -29,5 +29,9 @@ FactoryBot.define do
         FactoryBot.create_list(:course_include, 3, course: event)
       end
     end
+
+    trait :not_public_registerable do
+      allow_public_registrations false
+    end
   end
 end
