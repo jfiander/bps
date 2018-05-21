@@ -24,7 +24,7 @@
                       - if event.multiple_sessions? || event.length?
                         br
                   span.costs = event.formatted_cost
-              - if @current_user_permitted_event_type && event.show_in_catalog
+              - if !defined?(@event_catalog) && @current_user_permitted_event_type && event.show_in_catalog
                 .table-row
                   .table.cell.birmingham-blue
                       = fa_icon('star', style: :regular)
