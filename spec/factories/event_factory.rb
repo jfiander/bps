@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :event do
     association :event_type
     start_at Time.now + 1.week
+    cutoff_at Time.now + 2.weeks
+    expires_at Time.now + 3.weeks
     show_in_catalog false
 
     trait :with_instructor do
