@@ -27,6 +27,8 @@ class Event < ApplicationRecord
     content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
   )
 
+  validates :start_at, presence: true
+
   scope :current, (lambda do |category|
     includes(:event_type, :course_topics, :course_includes, :prereq)
       .where('expires_at > ?', Time.now)

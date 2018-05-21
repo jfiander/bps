@@ -36,6 +36,7 @@ module EventsMethods
     @submit_path = send("#{path}_#{params[:type]}_path")
     @edit_mode = mode.to_s.titleize
     @event_types = EventType.selector(params[:type])
+    @event_title = params[:type].to_s.titleize
     render :new
   end
 
