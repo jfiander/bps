@@ -1,12 +1,19 @@
 h2 = "#{@edit_mode} #{@event_title}"
 
+em
+  | Fields marked with
+  = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  | are required.
+
 = form_for(@event, url: @submit_path, multipart: true) do |f|
   = f.hidden_field :id if @submit_path.match /\/update/
 
   #new-event
     h3 General Information
 
-    .left = f.label :event_type_id, "#{@event_title} name"
+    .left
+      span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+      = f.label :event_type_id, "#{@event_title} name"
     .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), {include_blank: true, prompt: "Please select a #{params[:type]} type"}, required: true
     br.clear
 
@@ -40,7 +47,9 @@ h2 = "#{@edit_mode} #{@event_title}"
 
     h3 Schedule
 
-    .left = f.label :start_at
+    .left
+      span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+      = f.label :start_at
     .right = f.datetime_field :start_at, required: true
     br.clear
 
@@ -87,11 +96,15 @@ h2 = "#{@edit_mode} #{@event_title}"
           .description.public_registrations
     br.clear
 
-    .left = f.label :cutoff_at, 'Do not allow registrations after', class: "red"
+    .left
+      span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+      = f.label :cutoff_at, 'Do not allow registrations after', class: "red"
     .right = f.datetime_field :cutoff_at, required: true
     br.clear
 
-    .left = f.label :expires_at, "Do not display this #{params[:type]} after", class: "red"
+    .left
+      span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+      = f.label :expires_at, "Do not display this #{params[:type]} after", class: "red"
     .right = f.datetime_field :expires_at, required: true
     br.clear
 
