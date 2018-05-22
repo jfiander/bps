@@ -5,24 +5,17 @@ class BpsS3
   attr_accessor :bucket
   # bilge, files, photos
 
-  def initialize
+  def initialize(bucket = nil)
     @environment = ENV['ASSET_ENVIRONMENT']
+    @bucket = bucket
     yield self if block_given?
+    prepare_bucket
 
-    if @bucket == :static
-      @endpoint = @environment = :static
-      @bucket = :files
-    else
-      @endpoint = @bucket
-    end
-
-    @force_signed = @bucket.in?(%i[files bilge]) && @environment != :static
+    @force_signed = @bucket.in?(%i[seo files bilge]) && @environment != :static
   end
 
-  def link(key, signed: false)
-    signed = true if @force_signed
-
-    signed ? signed_link(key) : cf_link(key)
+  def link(key, signed: false, time: nil)
+    sign?(signed) ? signed_link(key, time) : cf_link(key)
   end
 
   def list(prefix = '')
@@ -46,6 +39,8 @@ class BpsS3
   end
 
   def full_bucket
+    return 'bps-seo' if @bucket == :seo
+
     "bps-#{@environment}-#{@bucket}"
   end
 
@@ -65,12 +60,22 @@ class BpsS3
     "https://#{cf_host}/#{key}"
   end
 
-  def signed_link(key)
-    url = cf_link(key)
-    time = Time.now + 3600
+  def prepare_bucket
+    case @bucket
+    when :static
+      @endpoint = @environment = :static
+      @bucket = :files
+    when :seo
+      @endpoint = @environment = :seo
+      @bucket = :seo
+    else
+      @endpoint = @bucket
+    end
+  end
 
-    return 'http://example.com/some/path.abc' if Rails.env.test?
-    cf_signer.signed_url(url, expires: time)
+  def signed_link(key, time = nil)
+    time ||= Time.now + 1.hour
+    cf_signer.signed_url(cf_link(key), expires: time)
   end
 
   def cf_signer
@@ -82,5 +87,11 @@ class BpsS3
 
   def cf_host
     ENV["CLOUDFRONT_#{@endpoint.upcase}_ENDPOINT"]
+  end
+
+  def sign?(signed)
+    return false if Rails.env.test?
+    return true if @force_signed
+    signed
   end
 end
