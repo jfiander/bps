@@ -259,20 +259,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'store item requesting' do
-    before(:each) do
-      @user = FactoryBot.create(:user)
-      @item = FactoryBot.create(:store_item)
-    end
-
-    it 'should correctly request an item from the store' do
-      request = @user.request_from_store(@item.id)
-
-      expect(request.user).to eql(@user)
-      expect(request.store_item.name).to eql(@item.name)
-    end
-  end
-
   describe 'scopes' do
     it 'should get only invitable users' do
       user = FactoryBot.create(:user)

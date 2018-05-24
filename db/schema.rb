@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180424163022) do
+ActiveRecord::Schema.define(version: 20180524200301) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name"
@@ -113,15 +113,6 @@ ActiveRecord::Schema.define(version: 20180424163022) do
     t.datetime "deleted_at"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-  end
-
-  create_table "item_requests", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "store_item_id"
-    t.boolean  "fulfilled",     default: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.datetime "deleted_at"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -243,21 +234,6 @@ ActiveRecord::Schema.define(version: 20180424163022) do
     t.string   "markdown"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-  end
-
-  create_table "store_items", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
-    t.decimal  "price",              precision: 5, scale: 2
-    t.integer  "stock"
-    t.text     "options"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
     t.datetime "deleted_at"
   end
 
