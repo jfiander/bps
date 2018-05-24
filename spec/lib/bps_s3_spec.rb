@@ -3,25 +3,25 @@ require 'rails_helper'
 RSpec.describe BpsS3, type: :lib do
   describe 'bucket namess' do
     it 'should generate the correct static bucket name' do
-      expect(BpsS3.new { |b| b.bucket = :static }.full_bucket).to eql(
+      expect(BpsS3.new(:static).full_bucket).to eql(
         'bps-static-files'
       )
     end
 
     it 'should generate the correct files bucket name' do
-      expect(BpsS3.new { |b| b.bucket = :files }.full_bucket).to eql(
+      expect(BpsS3.new(:files).full_bucket).to eql(
         'bps-development-files'
       )
     end
 
     it 'should generate the correct bilge bucket name' do
-      expect(BpsS3.new { |b| b.bucket = :bilge }.full_bucket).to eql(
+      expect(BpsS3.new(:bilge).full_bucket).to eql(
         'bps-development-bilge'
       )
     end
 
     it 'should generate the correct photos bucket name' do
-      expect(BpsS3.new { |b| b.bucket = :photos }.full_bucket).to eql(
+      expect(BpsS3.new(:photos).full_bucket).to eql(
         'bps-development-photos'
       )
     end
@@ -29,7 +29,7 @@ RSpec.describe BpsS3, type: :lib do
 
   describe 'behaviors' do
     before(:each) do
-      @bps_s3 = BpsS3.new { |b| b.bucket = :photos }
+      @bps_s3 = BpsS3.new(:photos)
     end
 
     it 'should generate a correct link' do

@@ -1,17 +1,11 @@
 # Helper for accessing environmented S3 buckets and CloudFront links
 class BpsS3
-  # usage:  BpsS3.new { |b| b.bucket = :files }
-
-  attr_accessor :bucket
-  # bilge, files, photos
+  attr_reader :bucket
 
   def initialize(bucket = nil)
-    @environment = ENV['ASSET_ENVIRONMENT']
-    @bucket = bucket
-    yield self if block_given?
+    @environment = ENV['ASSET_ENVIRONMENT'].to_sym
+    @bucket = bucket.to_sym
     prepare_bucket
-
-    @force_signed = @bucket.in?(%i[seo files bilge]) && @environment != :static
   end
 
   def link(key, signed: false, time: nil)
@@ -39,12 +33,14 @@ class BpsS3
   end
 
   def full_bucket
-    return 'bps-seo' if @bucket == :seo
-
-    "bps-#{@environment}-#{@bucket}"
+    @full_bucket ||= ['bps', @environment, @bucket].compact.join('-')
   end
 
   private
+
+  def valid_buckets
+    %i[files photos bilge static seo]
+  end
 
   def s3
     @s3 ||= Aws::S3::Resource.new(
@@ -56,21 +52,16 @@ class BpsS3
     ).bucket(full_bucket)
   end
 
-  def cf_link(key)
-    "https://#{cf_host}/#{key}"
-  end
-
   def prepare_bucket
-    case @bucket
-    when :static
-      @endpoint = @environment = :static
-      @bucket = :files
-    when :seo
-      @endpoint = @environment = :seo
-      @bucket = :seo
-    else
-      @endpoint = @bucket
-    end
+    raise 'Invalid bucket.' unless @bucket.in?(valid_buckets)
+
+    @endpoint = @bucket
+
+    @environment = nil if @bucket == :seo
+
+    return unless @bucket == :static
+    @endpoint = @environment = :static
+    @bucket = :files
   end
 
   def signed_link(key, time = nil)
@@ -85,13 +76,17 @@ class BpsS3
     )
   end
 
+  def cf_link(key)
+    "https://#{cf_host}/#{key}"
+  end
+
   def cf_host
-    ENV["CLOUDFRONT_#{@endpoint.upcase}_ENDPOINT"]
+    @cf_host ||= ENV["CLOUDFRONT_#{@endpoint.upcase}_ENDPOINT"]
   end
 
   def sign?(signed)
     return false if Rails.env.test?
-    return true if @force_signed
+    return true if @bucket.in?(%i[seo files bilge]) && @environment != :static
     signed
   end
 end

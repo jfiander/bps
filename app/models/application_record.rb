@@ -5,13 +5,14 @@ class ApplicationRecord < ActiveRecord::Base
 
   def self.buckets
     {
-      static: BpsS3.new { |b| b.bucket = :static },
-      files:  BpsS3.new { |b| b.bucket = :files },
-      bilge:  BpsS3.new { |b| b.bucket = :bilge },
-      photos: BpsS3.new { |b| b.bucket = :photos }
+      static: BpsS3.new(:static),
+      files:  BpsS3.new(:files),
+      bilge:  BpsS3.new(:bilge),
+      photos: BpsS3.new(:photos)
     }
   end
 
+  # Used by Paperclip
   def self.aws_credentials(bucket)
     {
       bucket: buckets[bucket].full_bucket,
