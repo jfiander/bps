@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LocationsController < ApplicationController
   before_action :authenticate_user!
   before_action { require_permission(:event, :course, :seminar, :page) }
@@ -56,7 +58,7 @@ class LocationsController < ApplicationController
   end
 
   def refresh
-    @new_locations = ''.html_safe
+    @new_locations = (+'').html_safe
     @new_locations << '<option value=\"\">Please select a location</option>'.html_safe
     @new_locations << '<option value=\"\"></option>'.html_safe
     @new_locations << '<option value=\"TBD\">TBD</option>'.html_safe

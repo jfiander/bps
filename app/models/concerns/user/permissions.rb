@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module User::Permissions
   def permitted?(*required_roles, strict: false)
     required = required_roles.flatten.compact

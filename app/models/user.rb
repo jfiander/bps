@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   include User::Permissions
   include User::RanksAndGrades
@@ -67,7 +69,7 @@ class User < ApplicationRecord
   end)
 
   def full_name(html: true)
-    fn = ''.html_safe
+    fn = (+'').html_safe
     fn << auto_rank(html: html)&.html_safe
     fn << ' ' if auto_rank.present?
     fn << simple_name

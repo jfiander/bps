@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::InvitationsController < Devise::InvitationsController
   before_action :redirect_if_no_invitations, except: %i[edit update]
   before_action :block_inviting_invalid_users, only: :create

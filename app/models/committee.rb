@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Committee < ApplicationRecord
   belongs_to :user, optional: true
 

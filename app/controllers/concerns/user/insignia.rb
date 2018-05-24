@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module User::Insignia
   def insignia
     grade, grade_title = grade_and_title

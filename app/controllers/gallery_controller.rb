@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GalleryController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action(except: %i[index show]) { require_permission(:photos) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UserMethods
   def find_user
     id = clean_params[:id] || current_user&.id

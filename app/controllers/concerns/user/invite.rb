@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module User::Invite
   def invite
     user = User.find_by(id: clean_params[:id])

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NavigationHelper
   def link(title = nil, options = {})
     @options = default_options.merge(options).merge(title: title)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module User::Lockable
   def locked?
     locked_at.present?

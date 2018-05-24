@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event < ApplicationRecord
   belongs_to :event_type
   has_many   :course_topics,   foreign_key: :course_id

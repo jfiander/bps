@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BridgeController < ApplicationController
   include UserMethods
   include ApplicationHelper

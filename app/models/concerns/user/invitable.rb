@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module User::Invitable
   def invitable?
     invitation_accepted_at.blank? &&

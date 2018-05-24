@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module User::ProfilePhoto
   def photo(style: :medium)
     if photo?

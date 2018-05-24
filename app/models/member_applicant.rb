@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MemberApplicant < ApplicationRecord
   belongs_to :member_application
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 SanitizeEmail::Config.configure do |config|
   config[:sanitized_to] = 'dev@bpsd9.org'
   config[:activation_proc] = Proc.new { ENV['ASSET_ENVIRONMENT'] != 'production' }

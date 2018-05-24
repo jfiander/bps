@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 class StandingCommitteeOffice < ApplicationRecord
   belongs_to :user
 
   before_validation { self.chair = false if executive? }
-  before_create { self.term_expires_at = self.term_start_at + self.term_length.years unless executive? }
-  before_create { self.committee_name = self.committee_name.downcase }
+  before_create { self.term_expires_at = term_start_at + term_length.years unless executive? }
+  before_create { self.committee_name = committee_name.downcase }
 
   validate :valid_committee_name, :only_one_chair
   validates :user_id, uniqueness: { scope: :committee_name }
 
-  scope :current,     -> { where("term_expires_at IS NULL OR term_expires_at > ?", Time.now) }
+  scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.now) }
   scope :chair_first, -> { order(chair: :asc) }
-  scope :ordered,     (lambda do
+  scope :ordered, (lambda do
     order <<~SQL
       CASE
         WHEN committee_name = 'executive'  THEN '1'
@@ -59,6 +61,6 @@ class StandingCommitteeOffice < ApplicationRecord
   end
 
   def executive?
-    committee_name.casecmp('executive') == 0
+    committee_name.casecmp('executive').zero?
   end
 end

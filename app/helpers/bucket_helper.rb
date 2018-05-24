@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Includable accessor for environmented buckets
 module BucketHelper
   def static_bucket

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PublicMethods
   def newsletter
     @years = bilge_years

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # FontAwesome 5 (Pro) Heler
 module FontAwesomeHelper
   # html_safe: No user content
@@ -47,7 +49,7 @@ module FontAwesomeHelper
       name = icon[:name]
       options = icon[:options] || {}
 
-      if name.in? [:counter, :text]
+      if name.in? %i[counter text]
         parse_span(name, icon[:text], options)
       else
         parse_icon(name, options)

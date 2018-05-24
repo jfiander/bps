@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DateHelper
   def next_excom
     month = excom_in_session? ? 'the month' : 'September'
@@ -10,7 +12,7 @@ module DateHelper
 
   def excom_date(month)
     Tickle.parse(
-      "the 1st Tuesday of #{month}",
+      +"the 1st Tuesday of #{month}",
       now: Date.today,
       next_only: true
     )

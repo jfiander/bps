@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MemberApplication < ApplicationRecord
   has_many :member_applicants
   accepts_nested_attributes_for :member_applicants

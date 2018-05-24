@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MembersMethods
   def minutes
     minutes_years = @minutes.map(&:key).map do |b|

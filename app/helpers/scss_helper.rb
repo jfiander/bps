@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ScssHelper
   def render_scss(file)
     text = render(file) # "#{Rails.root}/app/assets/stylesheets/#{file}.scss"

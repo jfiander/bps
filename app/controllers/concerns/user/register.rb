@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module User::Register
   def register
     @event = Event.find_by(id: clean_params[:id])

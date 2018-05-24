@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ViewHelper
   # html_safe: No user content
   def officer_flag(office, mode: :svg)

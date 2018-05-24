@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module User::Edit
   def assign_photo
     photo = clean_params[:photo]

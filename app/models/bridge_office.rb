@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BridgeOffice < ApplicationRecord
   belongs_to :user, optional: true
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CalendarHelper
   def render_calendar(calendar_data = ENV['CALENDARS'])
     @calendar_data = calendar_data

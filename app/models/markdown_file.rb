@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MarkdownFile < ApplicationRecord
   has_attached_file :file,
     default_url: nil,

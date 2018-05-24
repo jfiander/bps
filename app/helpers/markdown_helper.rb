@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MarkdownHelper
   VIEWS ||= {
     'public' => %w[home about join requirements vsc education civic history links],
@@ -52,7 +54,7 @@ module MarkdownHelper
   end
 
   def generate_markdown_div
-    @markdown_div = '<div class="markdown">'
+    @markdown_div = +'<div class="markdown">'
     @markdown_div << redcarpet.render(@page_markdown.to_s.gsub(/(#+)/, '#\1'))
     @markdown_div << '</div>'
 

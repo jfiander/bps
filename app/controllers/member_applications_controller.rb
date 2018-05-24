@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MemberApplicationsController < ApplicationController
   before_action :authenticate_user!, only: %i[review]
 

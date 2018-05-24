@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module User::Lock
   def lock
     user = User.find(params[:id])

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 admin = Role.create!(name: "admin")
 education = Role.create!(name: "education", parent: admin)
 event = Role.create!(name: "event", parent: admin)

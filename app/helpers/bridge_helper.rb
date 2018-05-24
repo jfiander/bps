@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BridgeHelper
   def bridge_selectors
     @select = {}

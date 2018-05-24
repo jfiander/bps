@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StaticPage < ApplicationRecord
   def self.names
     all.map(&:name)

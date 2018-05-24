@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def get_user(id)
     user = @users.find_all { |u| u.id == id }.first

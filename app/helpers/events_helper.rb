@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EventsHelper
   def event_type(event)
     @event_types.find_all { |e| e.id == event.event_type_id }.first
