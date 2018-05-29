@@ -30,3 +30,4 @@
 
 - if current_user&.permitted?(:admin, strict: true)
   = link 'S3 Links', path: s3_path, fa: { name: 'link', options: { style: :regular, css: :red } }
+  = link 'Versions', path: versions_path, fa: { name: 'code-branch', options: { style: :regular, css: :red } }

@@ -46,17 +46,21 @@ Rails.application.routes.draw do
   get     '/auto_permissions', to: 'permissions#auto'
 
   ### Functional pages
-  get     '/bridge',       to: 'bridge#list'
-  get     '/newsletter',   to: 'public#newsletter'
-  get     '/store',        to: 'public#store'
-  get     '/photos',       to: 'gallery#index'
-  get     '/minutes',      to: 'members#minutes'
-  post    '/assign_photo', to: 'user#assign_photo'
-  get     '/locations',    to: 'locations#list'
-  get     '/apply',        to: 'member_applications#new'
-  get     '/applications', to: 'member_applications#review'
-  get     '/s3',           to: 'links#s3'
-  post    '/s3',           to: 'links#s3'
+  get     '/bridge',                    to: 'bridge#list'
+  get     '/newsletter',                to: 'public#newsletter'
+  get     '/store',                     to: 'public#store'
+  get     '/photos',                    to: 'gallery#index'
+  get     '/minutes',                   to: 'members#minutes'
+  post    '/assign_photo',              to: 'user#assign_photo'
+  get     '/locations',                 to: 'locations#list'
+  get     '/apply',                     to: 'member_applications#new'
+  get     '/applications',              to: 'member_applications#review'
+  get     '/s3',                        to: 'links#s3'
+  post    '/s3',                        to: 'links#s3'
+  get     '/versions/:model/:id',       to: 'versions#show',             as: 'show_versions'
+  get     '/versions/:model/:id/:a/:b', to: 'versions#diff',             as: 'diff_versions'
+  patch   '/versions/:model/:id/:a',    to: 'versions#revert',           as: 'revert_version'
+  get     '/versions(/:model)',         to: 'versions#index',            as: 'versions'
 
   ### Functional page back-ends
 

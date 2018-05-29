@@ -1,0 +1,10 @@
+h2 = admin_header("Version Diff of #{@model} ##{@id} – #{@a}:#{@b}")
+p.birmingham-blue
+  | You can set the ?mode parameter to any of the following:
+  br
+  | word (default), line, char
+hr
+- if @diff.blank?
+  p Diff not available.
+- else
+  = @diff

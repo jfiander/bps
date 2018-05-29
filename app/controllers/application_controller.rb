@@ -36,8 +36,8 @@ class ApplicationController < ActionController::Base
     redirect_to :back
   end
 
-  def require_permission(*roles)
-    return if current_user&.permitted?(*roles)
+  def require_permission(*roles, strict: false)
+    return if current_user&.permitted?(*roles, strict: strict)
     redirect_to root_path
     # before_action only: [:method_1] { require_permission(:role_name) }
   end

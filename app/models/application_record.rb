@@ -22,4 +22,10 @@ class ApplicationRecord < ActiveRecord::Base
       secret_access_key: ENV['S3_SECRET']
     }
   end
+
+  def versions_path
+    Rails.application.routes.url_helpers.show_versions_path(
+      model: self.class.name, id: id
+    )
+  end
 end

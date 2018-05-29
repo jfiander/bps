@@ -1,0 +1,27 @@
+h2 = admin_header("Versions of #{@model} ##{@id}")
+
+.instructions
+  | Blue diff
+  = fa_icon('exchange', style: :regular, css: 'birmingham-blue', fa: :fw)
+  | is between that version and its parent.
+.instructions
+  | Green diff
+  = fa_icon('exchange', style: :regular, css: :green, fa: :fw)
+  | is between current and that version.
+.instructions
+  | Revert
+  = fa_icon('undo', style: :regular, css: :red, fa: :fw)
+  | returns the object to that version.
+hr
+
+.table.versions
+  .table-row
+    .table-cell.table-header Event
+    .table-cell.table-header Who
+    .table-cell.table-header Previous Version
+    .table-cell.table-header Date
+    .table-cell.table-header Diff
+    .table-cell.table-header Revert
+  = render 'versions/current_version', version: @current_version, no_versions: @versions&.count == 0 || @versions.blank?
+  - @versions&.each_with_index do |version, index|
+    = render 'versions/version', version: version, index: index

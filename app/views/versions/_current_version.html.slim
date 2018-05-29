@@ -1,0 +1,7 @@
+.table-row
+  .table-cell current
+  .table-cell
+  .table-cell = version.to_json
+  .table-cell
+  .table-cell = link_to(diff_versions_path(a: 0, b: 1)) { fa_icon('exchange', style: :regular) } unless no_versions
+  .table-cell
