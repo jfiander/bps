@@ -55,6 +55,8 @@ Rails.application.routes.draw do
   get     '/locations',    to: 'locations#list'
   get     '/apply',        to: 'member_applications#new'
   get     '/applications', to: 'member_applications#review'
+  get     '/s3',           to: 'links#s3'
+  post    '/s3',           to: 'links#s3'
 
   ### Functional page back-ends
 
