@@ -37,6 +37,11 @@ module ApplicationHelper
     'auto-show'
   end
 
+  def admin_header(header_text)
+    admin_icon = fa_icon('shield-check', style: :regular)
+    admin_icon + header_text + admin_icon
+  end
+
   private
 
   def page_name_in_auto_shows?(partial)
