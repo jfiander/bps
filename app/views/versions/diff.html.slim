@@ -1,8 +1,8 @@
 h2 = admin_header("Version Diff of #{@model} ##{@id} – #{@a}:#{@b}")
-p.birmingham-blue
-  | You can set the ?mode parameter to any of the following:
-  br
-  | word (default), line, char
+= form_tag do
+  = label_tag :mode, 'Diff Mode: '
+  = select_tag :mode, options_for_select(%w[word line char], @mode), required: true
+  = submit_tag 'Reload'
 hr
 - if @diff.blank?
   p Diff not available.

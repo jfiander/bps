@@ -22,6 +22,7 @@ class VersionsController < ApplicationController
     fix_version_order
     return unless version_jsons.compact.count == 2
 
+    @mode = clean_params[:mode]
     @diff = sanitize(
       Differ.send(diff_method, *version_jsons).format_as(:html)
     ).html_safe
