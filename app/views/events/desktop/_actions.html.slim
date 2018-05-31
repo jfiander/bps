@@ -24,9 +24,10 @@
 - elsif !long_form && !event.registerable? && !event.expired? && user_signed_in? && event.allow_member_registrations
   = fa_layer([{ name: 'calendar-check', options: { style: :regular } }, { name: 'ban', options: { style: :solid, css: :red } }])
   span.red Too late to register
-- elsif !long_form && event.registerable? && event.allow_public_registrations
-  = render "events/register/public", event_id: event.id
-- elsif event.registerable? && !user_signed_in?
-  = render "events/no/public_registrations"
-- elsif !event.registerable?
-  = render 'events/no/registrations'
+- elsif !long_form && !defined?(@event_catalog)
+  - if event.registerable? && event.allow_public_registrations
+    = render "events/register/public", event_id: event.id
+  - elsif !user_signed_in? && event.registerable?
+    = render "events/no/public_registrations"
+  - elsif !event.registerable?
+    = render 'events/no/registrations'
