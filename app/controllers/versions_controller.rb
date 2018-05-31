@@ -16,8 +16,8 @@ class VersionsController < ApplicationController
 
   def diff
     # html_safe: Text is sanitized before display
-    @a = clean_params[:a]
-    @b = clean_params[:b]
+    @a = clean_params[:a].to_i
+    @b = clean_params[:b].to_i
     return if @a == @b
     fix_version_order
     return unless version_jsons.compact.count == 2
@@ -28,7 +28,7 @@ class VersionsController < ApplicationController
   end
 
   def revert
-    @version = @versions.last(clean_params[:a]).first
+    @version = @versions.first(clean_params[:a].to_i).last
     if @version.reify
       @version.reify.save!
     else
@@ -58,7 +58,8 @@ class VersionsController < ApplicationController
   def load_versions
     @model = clean_params[:model]
     @id = clean_params[:id]
-    @versions = model_class&.find_by(id: @id)&.versions
+    @versions = model_class&.find_by(id: @id)&.versions&.to_a
+                           &.sort_by(&:id)&.reverse
   end
 
   def clean_params
@@ -66,13 +67,13 @@ class VersionsController < ApplicationController
   end
 
   def version_jsons
-    a = if @a == '0'
+    a = if @a.zero?
           model_class.find_by(id: clean_params[:id]).to_json
         else
-          @versions.last(@a)&.first&.reify&.to_json
+          @versions.first(@a)&.last&.reify&.to_json
         end
 
-    b = @versions.last(@b)&.first&.reify&.to_json
+    b = @versions.first(@b)&.last&.reify&.to_json
 
     [a, b].map { |v| v&.gsub(',"', ', "')&.gsub('":', '": ') }
   end
