@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class Location < ApplicationRecord
-  has_attached_file :picture,
-    storage: :s3,
-    s3_region: 'us-east-2',
-    path: 'location_images/:id/:style/:filename',
-    s3_permissions: :private,
-    s3_credentials: aws_credentials(:files),
-    styles: { large: '1000x1000', medium: '500x500', thumb: '200x200' }
+  has_attached_file(
+    :picture,
+    paperclip_defaults(:files).merge(
+      path: 'location_images/:id/:style/:filename',
+      styles: { large: '1000x1000', medium: '500x500', thumb: '200x200' }
+    )
+  )
 
   before_validation { prefix_map_link }
 

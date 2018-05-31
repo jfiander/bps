@@ -3,14 +3,11 @@
 class HeaderImage < ApplicationRecord
   has_attached_file(
     :file,
-    default_url: nil,
-    storage: :s3,
-    s3_region: 'us-east-2',
-    path: 'header_images/:id/:style/:filename',
-    s3_permissions: :private,
-    s3_credentials: aws_credentials(:files),
-    styles: { desktop: '1500x1500', medium: '500x500', thumb: '200x200' },
-    convert_options: { thumb: '-quality 75 -strip' }
+    paperclip_defaults(:files).merge(
+      path: 'header_images/:id/:style/:filename',
+      styles: { desktop: '1500x1500', medium: '500x500', thumb: '200x200' },
+      convert_options: { thumb: '-quality 75 -strip' }
+    )
   )
 
   validates_attachment_content_type(

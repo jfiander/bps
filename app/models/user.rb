@@ -33,13 +33,11 @@ class User < ApplicationRecord
 
   has_attached_file(
     :profile_photo,
-    default_url: User.no_photo,
-    storage: :s3,
-    s3_region: 'us-east-2',
-    path: 'profile_photos/:id/:style/:filename',
-    s3_permissions: :private,
-    s3_credentials: aws_credentials(:files),
-    styles: { medium: '500x500', thumb: '200x200' }
+    paperclip_defaults(:files).merge(
+      path: 'profile_photos/:id/:style/:filename',
+      styles: { medium: '500x500', thumb: '200x200' },
+      default_url: User.no_photo
+    )
   )
 
   before_validation do

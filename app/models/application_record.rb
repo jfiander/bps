@@ -15,11 +15,14 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   # Used by Paperclip
-  def self.aws_credentials(bucket)
+  def self.paperclip_defaults(bucket)
     {
-      bucket: buckets[bucket].full_bucket,
-      access_key_id: ENV['S3_ACCESS_KEY'],
-      secret_access_key: ENV['S3_SECRET']
+      storage: :s3, s3_region: 'us-east-2', s3_permissions: :private,
+      s3_credentials: {
+        bucket: buckets[bucket].full_bucket,
+        access_key_id: ENV['S3_ACCESS_KEY'],
+        secret_access_key: ENV['S3_SECRET']
+      }
     }
   end
 

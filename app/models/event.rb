@@ -16,12 +16,7 @@ class Event < ApplicationRecord
 
   has_attached_file(
     :flyer,
-    default_url: nil,
-    storage: :s3,
-    s3_region: 'us-east-2',
-    path: 'event_flyers/:id/:filename',
-    s3_permissions: :private,
-    s3_credentials: aws_credentials(:files)
+    paperclip_defaults(:files).merge(path: 'event_flyers/:id/:filename')
   )
 
   validates_attachment_content_type(
