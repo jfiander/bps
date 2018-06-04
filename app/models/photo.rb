@@ -3,7 +3,7 @@
 class Photo < ApplicationRecord
   belongs_to :album
 
-  has_attached_fle(
+  has_attached_file(
     :photo_file,
     paperclip_defaults(:files).merge(
       path: 'uploaded_files/:id/:filename',
