@@ -27,6 +27,7 @@ gem 'sanitize_email',      '~> 1.2.2'
 # App Functionality
 gem 'aws-sdk',             '~> 2.10.86'
 gem 'aws-sdk-rails',       '~> 1.0.1'
+gem 'chronic',             '~> 0.2.3'
 gem 'devise',              '~> 4.2.0'
 gem 'devise_invitable',    '~> 1.7.2'
 gem 'mini_magick',         '~> 4.8.0'
@@ -35,7 +36,6 @@ gem 'paperclip',           '~> 5.2.0'
 gem 'sendgrid-ruby',       '~> 5.2.0'
 # gem 'sidekiq',           '~> 5.0.5'
 gem 'slack-notifier',      '~> 2.3.2'
-gem 'tickle',              '~> 1.1.1'
 
 # View Management
 gem 'inline_svg',          '~> 1.3.0'

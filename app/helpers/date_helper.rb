@@ -11,10 +11,6 @@ module DateHelper
   end
 
   def excom_date(month)
-    Tickle.parse(
-      +"the 1st Tuesday of #{month}",
-      now: Date.today,
-      next_only: true
-    )
+    Chronic.parse("first Tuesday of #{month}")
   end
 end
