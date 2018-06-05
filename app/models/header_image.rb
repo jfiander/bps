@@ -6,7 +6,11 @@ class HeaderImage < ApplicationRecord
     paperclip_defaults(:files).merge(
       path: 'header_images/:id/:style/:filename',
       styles: { desktop: '1500x1500', medium: '500x500', thumb: '200x200' },
-      convert_options: { thumb: '-quality 75 -strip' }
+      convert_options: {
+        desktop: '-quality 60 -strip',
+        medium: '-quality 50 -strip',
+        thumb: '-quality 40 -strip'
+      }
     )
   )
 
