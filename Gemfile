@@ -55,7 +55,7 @@ gem 'awesome_print',       '~> 1.8.0'
 gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
-gem 'sinatra',             '~> 2.0.1'
+gem 'sinatra',             '~> 2.0.2'
 
 group :production do
   gem 'pg',                '~> 0.18.4'
