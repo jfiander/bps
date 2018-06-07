@@ -17,6 +17,11 @@ module User::RanksAndGrades
     highest_rank(*ranks(html: html))
   end
 
+  def html_rank
+    # html_safe: No user content
+    auto_rank(html: true)&.html_safe
+  end
+
   def ranks(html: true)
     committee_rank = 'Lt' if committee?
     committee_rank = 'F/Lt' if 'Flag Lieutenant'.in? cached_committees.map(&:name)
@@ -31,7 +36,6 @@ module User::RanksAndGrades
   private
 
   def bridge_rank(html = true)
-    # html_safe: No user content
     case cached_bridge_office&.office
     when 'commander'
       'Cdr'
