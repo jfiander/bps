@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SlackNotification
   attr_accessor :type, :dryrun, :title, :fallback, :fields, :channel
 

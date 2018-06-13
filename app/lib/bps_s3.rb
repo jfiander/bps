@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Helper for accessing environmented S3 buckets and CloudFront links
 class BpsS3
   attr_reader :bucket
