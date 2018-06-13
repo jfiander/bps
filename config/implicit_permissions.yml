@@ -45,3 +45,5 @@ committee:
     - events
   membership:
     - users
+  roster_/_database:
+    - roster

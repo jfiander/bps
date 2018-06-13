@@ -17,7 +17,7 @@ RSpec.describe NavigationHelper, type: :helper do
     end
 
     it 'should generate the correct profile link' do
-      expect(link(:profile, path: '/profile')).to eql(
+      expect(link(:profile, path: '/profile', show_when: :logged_in)).to eql(
         '<a class="members" title="Profile" href="/profile"><li class="">' \
         'Profile</li></a>'
       )

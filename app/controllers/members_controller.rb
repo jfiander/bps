@@ -2,15 +2,20 @@
 
 class MembersController < ApplicationController
   include MembersMethods
+  include Members::Roster
 
   skip_before_action :prerender_for_layout, only: %i[
     request_item fulfill_item
   ]
 
+  before_action :authenticate_user!
   before_action only: [:admin] { require_permission(:admin) }
   before_action only: [:upload_bilge] { require_permission(:newsletter) }
   before_action only: [:upload_minutes] { require_permission(:minutes) }
   before_action only: [:fulfill_item] { require_permission(:store) }
+  before_action(only: %i[update_roster upload_roster]) do
+    require_permission(:roster)
+  end
   before_action(only: %i[edit_markdown update_markdown]) do
     require_permission(:page)
   end

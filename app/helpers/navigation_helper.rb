@@ -38,7 +38,7 @@ module NavigationHelper
       @options[:path] = new_user_session_path
       @link_options = { class: 'members' }
       @fa = { name: 'sign-in', options: { style: :regular } }
-    elsif @options[:title].in? %i[members_area profile admin]
+    elsif @options[:show_when] == :logged_in
       @link_options = { class: 'members' }
     end
   end

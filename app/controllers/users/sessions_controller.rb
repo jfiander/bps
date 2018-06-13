@@ -34,6 +34,7 @@ class Users::SessionsController < Devise::SessionsController
     simple_paths = %w[
       members minutes users permit invitation/new header file import
       user_help profile profile/edit ranks auto_permissions locations
+      roster update_roster
     ]
     profile_paths = '(users/(\d+|current))'
     minutes_paths = '((minutes|excom)/\d{4}/\d{1,2})'

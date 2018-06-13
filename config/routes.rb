@@ -125,6 +125,11 @@ Rails.application.routes.draw do
   get     '/applied(/:id)',           to: 'member_applications#applied', as: 'applied'
   patch   '/approve_application/:id', to: 'member_applications#approve', as: 'approve_application'
 
+  # Roster
+  get  '/roster', to: 'members#roster'
+  get  '/update_roster', to: 'members#update_roster', as: 'update_roster'
+  post '/update_roster', to: 'members#upload_roster'
+
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",               to: 'events#schedule',                                         defaults: {type: event_type, catalog: false}
     get     "/#{event_type}s/catalog",       to: 'events#catalog',       as: "#{event_type}_catalog",       defaults: {type: event_type, catalog: true} unless event_type == :event
