@@ -2,7 +2,13 @@
 
 module Members::Roster
   def roster
-    #
+    respond_to do |format|
+      format.html
+      format.pdf do
+        roster_file = files_bucket.download('roster/Birmingham_Power_Squadron_Roster.pdf')
+        send_data(roster_file, filename: 'Birmingham Power Squadron Roster.pdf', disposition: :inline)
+      end
+    end
   end
 
   def update_roster
