@@ -22,6 +22,10 @@ class BpsS3
     s3.object(key)
   end
 
+  def has?(key)
+    s3.object(key).exists?
+  end
+
   def download(key)
     object(key).get.body.read
   end

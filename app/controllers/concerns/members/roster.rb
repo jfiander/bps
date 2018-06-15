@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
 module Members::Roster
+  FILENAME ||= 'roster/Birmingham_Power_Squadron_Roster.pdf'
+
   def roster
+    redirect_to root_path and return unless files_bucket.has?(FILENAME)
+
     respond_to do |format|
       format.html
       format.pdf do
-        roster_file = files_bucket.download('roster/Birmingham_Power_Squadron_Roster.pdf')
-        send_data(roster_file, filename: 'Birmingham Power Squadron Roster.pdf', disposition: :inline)
+        roster_file = files_bucket.download(FILENAME)
+        send_data(roster_file, filename: FILENAME.dup.tr('_', ' '), disposition: :inline)
       end
     end
   end
@@ -22,10 +26,7 @@ module Members::Roster
       return
     end
 
-    files_bucket.upload(
-      file: roster_params[:roster],
-      key: 'roster/Birmingham_Power_Squadron_Roster.pdf'
-    )
+    files_bucket.upload(file: roster_params[:roster], key: FILENAME)
 
     flash[:success] = 'Roster file succesfully updated!'
     flash[:notice] = 'There may be a ~24 hour delay in the live file changing.'

@@ -1,6 +1,6 @@
 = link :home,                path: root_path
 = link :about_us,            path: about_path
-= link "Join Us",            path: join_path
+= link :join_us,             path: join_path
 = link :vessel_safety_check, path: vsc_path
 = link :education,           path: education_path
 = link :calendar,            path: calendar_path
@@ -13,6 +13,6 @@
 = link "Ship's Store",       path: store_path
 = link "Links of Interest",  path: links_path
 = link :members_area,        path: members_path, show_when: :logged_in
-= link :roster,              path: roster_path,  show_when: :logged_in, fa: { name: "clipboard-list", options: { style: :regular } }
+= link :roster,              path: roster_path,  show_when: :logged_in, fa: { name: "clipboard-list", options: { style: :regular } } if files_bucket.has?(Members::Roster::FILENAME)
 = link :profile,             path: profile_path, show_when: :logged_in, fa: { name: "id-card", options: { style: :regular } }
 = link :login_or_logout
