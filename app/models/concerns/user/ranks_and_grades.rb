@@ -66,6 +66,7 @@ module User::RanksAndGrades
 
   def valid_grade
     return true if grade.nil?
+    self.grade = grade.to_s.upcase
     return true if grade.in? valid_grades
     errors.add(:grade, 'must be nil or in valid_grades')
   end
