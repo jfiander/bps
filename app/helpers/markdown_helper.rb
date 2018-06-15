@@ -45,7 +45,7 @@ module MarkdownHelper
 
     @education_menu = if markdown&.match?(/%education/)
                         view_context.render(
-                          'application/education_menu',
+                          'application/navigation/education',
                           active: { courses: false, seminars: false }
                         )
                       else

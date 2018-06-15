@@ -10,15 +10,15 @@ html
     meta name='viewport' content='width=device-width, initial-scale=1.0'
     script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'
     = favicon_link_tag static_bucket.link('favicon.ico')
-    = render 'application/trackers'
+    = render 'application/trackers/trackers'
     = yield :head
   body
     #main.flex
       header
         #main-header = render 'application/header'
         #print-header = render 'application/print_header'
-      #navigation-mobile = render 'application/navigation_mobile'
-      #navigation = render 'application/navigation'
+      #navigation-mobile = render 'application/navigation/mobile'
+      #navigation = render 'application/navigation/desktop'
       #content
         #content-top = render 'application/content_top'
         #content-main = yield
