@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BridgeController < ApplicationController
-  include UserMethods
+  include User::Load
   include ApplicationHelper
   include BridgeHelper
 
@@ -13,7 +13,7 @@ class BridgeController < ApplicationController
     remove_committee remove_standing_committee
   ]
 
-  before_action :get_users_for_select, only: %i[assign_bridge assign_committee]
+  before_action :users_for_select, only: %i[assign_bridge assign_committee]
 
   def list
     @current_user_permitted_users = current_user&.permitted?(:users)
@@ -85,6 +85,13 @@ class BridgeController < ApplicationController
   end
 
   private
+
+  def clean_params
+    params.permit(
+      :id, :user_id, :bridge_office, :committee, :department, :committee_name,
+      :chair, :term_length, term_start_at: []
+    )
+  end
 
   def prep_for_committee_removal(type = :general)
     if type == :general

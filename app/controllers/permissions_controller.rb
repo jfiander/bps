@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class PermissionsController < ApplicationController
-  include UserMethods
+  include User::Load
 
   before_action :authenticate_user!
   before_action { require_permission(:users) }
 
-  before_action :get_users_for_select, only: %i[index]
+  before_action :users_for_select, only: %i[index]
 
   def index
     @roles = Role.all.map(&:name)
@@ -69,6 +69,10 @@ class PermissionsController < ApplicationController
   end
 
   private
+
+  def clean_params
+    params.permit(:user_id, :role, :permit_id)
+  end
 
   def process_permissions_errors
     if clean_params[:user_id].blank?

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module EventsMethods
+module Events::Edit
   private
 
   def event_params
@@ -67,57 +67,6 @@ module EventsMethods
     @submit_path = send("create_#{params[:type]}_path")
   end
 
-  def update_attachments
-    return nil unless params[:type].in? %i[course seminar]
-
-    Event.transaction do
-      clear_before_time = Time.now
-
-      update_includes
-      update_topics
-      update_instructors
-
-      remove_old_attachments(clear_before_time)
-    end
-  end
-
-  def update_includes
-    clean_params[:includes].split("\n").map(&:squish).each do |i|
-      CourseInclude.create(course: @event, text: i)
-    end
-  end
-
-  def update_topics
-    clean_params[:topics].split("\n").map(&:squish).each do |t|
-      CourseTopic.create(course: @event, text: t)
-    end
-  end
-
-  def update_instructors
-    clean_params[:instructors].split("\n").map(&:squish).each do |u|
-      user = if u.match?(%r{/})
-               User.find_by(certificate: u.split('/').last.squish.upcase)
-             else
-               User.with_name(u).first
-             end
-      EventInstructor.create(event: @event, user: user) if user.present?
-    end
-  end
-
-  def remove_old_attachments(clear_before_time)
-    CourseInclude.where(course: @event).where(
-      'updated_at < ?', clear_before_time
-    ).destroy_all
-
-    CourseTopic.where(course: @event).where(
-      'updated_at < ?', clear_before_time
-    ).destroy_all
-
-    EventInstructor.where(event: @event).where(
-      'updated_at < ?', clear_before_time
-    ).destroy_all
-  end
-
   def check_for_blank
     return unless event_params['event_type_id'].blank?
 
@@ -129,28 +78,5 @@ module EventsMethods
     @instructors = clean_params[:instructors]
     flash[:alert] = "You must select a valid #{params[:type]} name."
     render :new
-  end
-
-  def load_registrations
-    @registered = Registration.includes(:user).where(user_id: current_user.id)
-                              .map { |r| { r.event_id => r.id } }
-                              .reduce({}, :merge)
-  end
-
-  def load_includes
-    @course_includes = CourseInclude.where(course_id: @event.id).map(&:text)
-                                    .join("\n")
-  end
-
-  def load_topics
-    @course_topics = CourseTopic.where(course_id: @event.id).map(&:text)
-                                .join("\n")
-  end
-
-  def load_instructors
-    @instructors = EventInstructor.where(event_id: @event.id).map(&:user)
-                                  .map do |u|
-                                    "#{u.simple_name} / #{u.certificate}"
-                                  end.join("\n")
   end
 end

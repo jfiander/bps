@@ -2,7 +2,9 @@
 
 class EventsController < ApplicationController
   include EventsHelper
-  include EventsMethods
+  include Events::Preload
+  include Events::Edit
+  include Events::Update
 
   before_action :authenticate_user!, except: %i[schedule catalog show]
   before_action except: %i[schedule catalog show locations remove_location] do

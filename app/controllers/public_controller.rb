@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PublicController < ApplicationController
-  include PublicMethods
+  include Public::Bilge
   include CalendarHelper
 
   skip_before_action :prerender_for_layout, only: [:register]
@@ -29,6 +29,14 @@ class PublicController < ApplicationController
       format.js { register_js }
       format.html { register_html }
     end
+  end
+
+  def newsletter
+    @years = bilge_years
+    @years = @years.last(2) unless user_signed_in?
+    @issues = @bilge_links.keys
+
+    @available_issues = available_bilge_issues
   end
 
   private

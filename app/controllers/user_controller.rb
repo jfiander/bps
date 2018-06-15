@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserController < ApplicationController
-  include UserMethods
+  include User::Load
   include User::Lock
   include User::Register
   include User::Import
@@ -25,9 +25,9 @@ class UserController < ApplicationController
   before_action :can_view_profile?, only: [:show]
   before_action :find_user, only: [:show]
 
-  before_action :get_users, only: [:list]
+  before_action :load_users, only: [:list]
   before_action(
-    :get_users_for_select,
+    :users_for_select,
     only: %i[permissions_index assign_bridge assign_committee]
   )
   before_action :time_formats, only: [:show]
@@ -63,5 +63,9 @@ class UserController < ApplicationController
            current_user.permitted?(:admin)
       redirect_to user_path(current_user.id)
     end
+  end
+
+  def clean_params
+    params.permit(:id, :type, :page_name, :import_file, :photo, :redirect_to)
   end
 end

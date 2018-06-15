@@ -1,14 +1,6 @@
 # frozen_string_literal: true
 
-module PublicMethods
-  def newsletter
-    @years = bilge_years
-    @years = @years.last(2) unless user_signed_in?
-    @issues = @bilge_links.keys
-
-    @available_issues = available_bilge_issues
-  end
-
+module Public::Bilge
   def get_bilge
     key = "#{clean_params[:year]}/#{clean_params[:month]}"
     issue_link = @bilge_links[key]

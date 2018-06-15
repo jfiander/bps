@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module MembersMethods
+module Members::BilgeAndMinutes
   def minutes
     minutes_years = @minutes.map(&:key).map do |b|
       b.sub("#{minutes_prefix}/", '').delete('.pdf').gsub(%r{/(s|\d+)}, '')

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MembersController < ApplicationController
-  include MembersMethods
+  include Members::BilgeAndMinutes
   include Members::Roster
 
   skip_before_action :prerender_for_layout, only: %i[
