@@ -1,6 +1,6 @@
 h2 = "Currently Scheduled #{params[:type].to_s.titleize}s"
 
-= render "application/education_menu", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)} if params[:type].in? [:course, :seminar]
+= render "application/navigation/education", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)} if params[:type].in? [:course, :seminar]
 
 - if @events.count.positive?
   = render "events/tables", type: params[:type], all_events: @events, long_form: false

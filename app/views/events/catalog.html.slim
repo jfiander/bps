@@ -1,6 +1,6 @@
 h2 = "Catalog of All #{params[:type].to_s.titleize}s"
 
-= render "application/education_menu", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)}, catalog: true if params[:type].in? [:course, :seminar]
+= render "application/navigation/education", active: {courses: (params[:type] == :course), seminars: (params[:type] == :seminar)}, catalog: true if params[:type].in? [:course, :seminar]
 
 - if @event_catalog.present?
   = render "events/tables", type: params[:type], all_events: @event_catalog, long_form: false
