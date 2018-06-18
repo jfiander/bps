@@ -2,6 +2,10 @@
 
 class ImportUsers
   def call(path)
+    @created = []
+    @updated = []
+    @completions = []
+
     User.transaction do
       parse_csv(path).each do |row|
         if (user = find_user(row))
@@ -14,6 +18,12 @@ class ImportUsers
     end
 
     File.unlink(path) if File.exist?(path)
+
+    {
+      created: @created.map(&:id),
+      updated: @updated.reduce({}, :merge),
+      completions: @completions.map(&:id)
+    }
   end
 
   private
@@ -27,7 +37,7 @@ class ImportUsers
   end
 
   def new_user(row)
-    User.create!(
+    user = User.create!(
       {
         certificate: row['Certificate'],
         first_name: row['First Name'],
@@ -36,12 +46,19 @@ class ImportUsers
         password: SecureRandom.hex(16)
       }.merge(update_hash(row))
     )
+    @created << user
+    user
   end
 
   def update_user(user, row)
     # Ignores first name and last name because they are user-editable.
     # Ignores email, because that is used for login.
-    user.update!(update_hash(row))
+    user.assign_attributes(update_hash(row))
+    unless user.changed.blank?
+      @updated << { user.id => user.changes }
+      user.save!
+    end
+    user
   end
 
   def import_email(row)
@@ -60,7 +77,7 @@ class ImportUsers
     return row['Rank']    if row['Rank']
     return row['SQ Rank'] if row['SQ Rank']
     return row['HQ Rank'] if row['HQ Rank']
-    ''
+    nil
   end
 
   def course_completions_data(row)
@@ -75,11 +92,12 @@ class ImportUsers
     course_completions_data(row).each do |(key, date)|
       next if skip_course_completion?(user, key, date)
 
-      CourseCompletion.create!(
+      completion = CourseCompletion.create!(
         user: user,
         course_key: key,
         date: clean_date(date)
       )
+      @completions << completion
     end
   end
 

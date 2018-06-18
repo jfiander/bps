@@ -19,7 +19,7 @@ module User::Import
     file.write(uploaded_file.read)
     file.close
     begin
-      ImportUsers.new.call(import_path)
+      @import_results = ImportUsers.new.call(import_path)
       flash.now[:success] = 'Successfully imported user data.'
       render :import
     rescue => e

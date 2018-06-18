@@ -47,3 +47,9 @@ hr
   = file_field_tag :import_file, required: true
   br
   = spinner_button button_text: 'Upload', css_class: 'big'
+
+- if defined?(@import_results)
+  p = "Created #{@import_results[:created].count} new users."
+  p = "Updated #{@import_results[:updated].count} existing users."
+  p = "Added #{@import_results[:completions].count} completion dates."
+  p = @import_results.inspect
