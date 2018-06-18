@@ -32,7 +32,7 @@ module User::Permissions
   end
 
   def show_admin_menu?
-    excom? || permitted?(%i[page users course seminar event])
+    excom? || permitted?(%i[page users course seminar event roster])
   end
 
   def granted_roles
