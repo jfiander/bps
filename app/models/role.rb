@@ -4,6 +4,7 @@ class Role < ApplicationRecord
   has_many :user_roles, dependent: :destroy
   has_many :users, through: :user_roles
   belongs_to :parent, class_name: 'Role', optional: true
+  has_many :children, class_name: 'Role', foreign_key: :parent_id
 
   before_validation { self.parent ||= Role.find_by(name: 'admin') }
 
@@ -20,12 +21,6 @@ class Role < ApplicationRecord
       parent_role = parent_role.parent
     end
     parents_array
-  end
-
-  def children
-    child_roles = Role.all.to_a.find_all { |r| r.parent_id == id }.to_a
-    child_roles << child_roles&.map(&:children)
-    child_roles.flatten
   end
 
   private
