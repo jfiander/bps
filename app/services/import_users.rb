@@ -1,5 +1,14 @@
 # frozen_string_literal: true
 
+# Export all columns in the following list:
+#
+# 'Certificate', 'HQ Rank', 'SQ Rank', 'First Name', 'Last Name',
+# 'Grade', 'Rank', 'E-Mail', 'MM', 'EdPro', 'EdAch', 'Senior', 'Life',
+# 'IDEXPR', 'Address 1', 'Address 2', 'City', 'State', 'Zip Code',
+# 'Home Phone', 'Cell Phone', 'Bus. Phone'
+#
+# As well as all educational columns. You can also add a manual 'Rank' column.
+#
 class ImportUsers
   def call(path)
     @created = []
@@ -84,7 +93,8 @@ class ImportUsers
     row.to_hash.except(
       'Certificate', 'HQ Rank', 'SQ Rank', 'Rank', 'First Name', 'Last Name',
       'Grade', 'Rank', 'E-Mail', 'MM', 'EdPro', 'EdAch', 'Senior', 'Life',
-      'IDEXPR', 'City', 'State', 'Address 1', 'Address 2', 'Zip Code'
+      'IDEXPR', 'City', 'State', 'Address 1', 'Address 2', 'Zip Code',
+      'Home Phone', 'Cell Phone', 'Bus. Phone'
     )
   end
 
@@ -125,7 +135,10 @@ class ImportUsers
       ed_ach: clean_date(row['EdAch']),
       senior: clean_date(row['Senior']),
       life: clean_date(row['Life']),
-      id_expr: clean_date(row['IDEXPR'])
+      id_expr: clean_date(row['IDEXPR']),
+      # phone_h: row['Home Phone'],
+      # phone_c: row['Cell Phone'],
+      # phone_w: row['Bus. Phone']
     }
   end
 end
