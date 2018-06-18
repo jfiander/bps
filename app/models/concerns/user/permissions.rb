@@ -2,6 +2,7 @@
 
 module User::Permissions
   def permitted?(*required_roles, strict: false)
+    return false if locked?
     required = required_roles.flatten.compact
     return false if required.blank? || required.all?(&:blank?)
 
@@ -14,17 +15,20 @@ module User::Permissions
   end
 
   def permit!(role)
-    role = Role.find_by(name: role.to_s)
-    UserRole.find_or_create_by(user: self, role: role)
+    return false if locked?
+
+    UserRole.find_or_create_by(
+      user: self,
+      role: Role.find_by(name: role.to_s)
+    )
   end
 
   def unpermit!(role)
     user_roles = UserRole.where(user: self)
-    if role == :all
-      user_roles.destroy_all
-    else
-      user_roles.where(role: Role.find_by(name: role.to_s)).destroy_all.present?
+    unless role == :all
+      user_roles = user_roles.where(role: Role.find_by(name: role.to_s))
     end
+    user_roles.destroy_all.present?
   end
 
   def show_admin_menu?
