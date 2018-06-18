@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
 module User::Permissions
+  class << self
+    def reload_implicit_roles_hash
+      @implicit_roles_hash = Role.includes(:children).map do |role|
+        { role.name.to_sym => role.children.map { |r| r.name.to_sym } }
+      end.reduce({}, :merge).freeze
+    end
+
+    def implicit_roles_hash
+      @implicit_roles_hash ||= reload_implicit_roles_hash
+    end
+  end
+
   def permitted?(*required_roles, strict: false)
     return false if locked?
     required = required_roles.flatten.compact
@@ -64,27 +76,9 @@ module User::Permissions
   end
 
   def implicit_roles
-    collected_roles = []
-    loop do
-      new_roles = collect_roles
-      break if (new_roles.flatten - collected_roles.flatten).blank?
-
-      collected_roles.push(new_roles)
-    end
-
-    collected_roles.flatten.map(&:name).map(&:to_sym)
-  end
-
-  def explicit_role_objs
     explicit_roles.map do |role|
-      all_roles.find_all { |r| r.name == role.to_s }
-    end.flatten
-  end
-
-  def collect_roles
-    explicit_role_objs.map do |role|
-      all_roles.find_all { |r| r.parent_id == role.id }
-    end.flatten.uniq
+      User::Permissions.implicit_roles_hash[role]
+    end.flatten.uniq.compact
   end
 
   def implicit_permissions

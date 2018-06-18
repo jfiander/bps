@@ -218,7 +218,7 @@ RSpec.describe User, type: :model do
     it 'should return the correct lists of permissions' do
       @user.permit! :admin
       expect(@user.granted_roles).to eql([:admin])
-      expect(@user.permitted_roles).to eql([:admin, :child])
+      expect(@user.permitted_roles).to eql(%i[admin child])
     end
 
     describe 'show_admin_menu?' do

@@ -10,6 +10,8 @@ class Role < ApplicationRecord
   validate :descends_from_admin?
   validates :name, uniqueness: true
 
+  after_create { User::Permissions.reload_implicit_roles_hash }
+
   def parents
     parent_role = parent
     parents_array = []
