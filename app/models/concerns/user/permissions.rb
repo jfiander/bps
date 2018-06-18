@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module User::Permissions
+  SIMPLIFY = proc { |roles| roles.flatten.uniq.compact }
+
   class << self
     def reload_implicit_roles_hash
       @implicit_roles_hash = Role.includes(:children).map do |role|
@@ -15,7 +17,7 @@ module User::Permissions
 
   def permitted?(*required_roles, strict: false)
     return false if locked?
-    required = required_roles.flatten.compact
+    required = SIMPLIFY.call(required_roles)
     return false if required.blank? || required.all?(&:blank?)
 
     permitted = searchable_roles(strict).any? do |p|
@@ -52,7 +54,7 @@ module User::Permissions
   end
 
   def permitted_roles
-    [explicit_roles, implicit_roles].flatten.uniq.compact
+    SIMPLIFY.call([explicit_roles, implicit_roles])
   end
 
   private
@@ -66,19 +68,21 @@ module User::Permissions
   end
 
   def office_roles
-    [
-      permitted_roles_from_bridge_office, permitted_roles_from_committee
-    ].flatten.uniq.compact
+    SIMPLIFY.call(
+      [
+        permitted_roles_from_bridge_office, permitted_roles_from_committee
+      ]
+    )
   end
 
   def explicit_roles
-    [granted_roles, office_roles].flatten.uniq.compact
+    SIMPLIFY.call([granted_roles, office_roles])
   end
 
   def implicit_roles
-    explicit_roles.map do |role|
+    SIMPLIFY.call(explicit_roles.map do |role|
       User::Permissions.implicit_roles_hash[role]
-    end.flatten.uniq.compact
+    end)
   end
 
   def implicit_permissions
