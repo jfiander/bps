@@ -20,5 +20,60 @@ table#users
     th.center.very-narrow ID
     th.center.very-narrow
   - @users.each do |user|
-    = render 'user/list/user', user: user, admin: admin, can_lock: can_lock
+    tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
+      td
+        - if user[:name].blank?
+          = user[:email]
+        - elsif user[:placeholder_email]
+          = user[:name]
+        - else
+          = mail_to(user[:email], user[:name])
+      td.center
+        = user[:certificate] || fa_icon('question-circle', css: 'red', style: :regular)
+        - if user[:senior] || user[:life]
+          br
+          - if user[:life]
+            = image_tag(static_bucket.link('insignia/life.png'), class: 'membership')
+          - elsif user[:senior]
+            = image_tag(static_bucket.link('insignia/senior.png'), class: 'membership')
+      td.center
+        - if user[:bridge_office].present?
+          = officer_flag(user[:bridge_office], mode: :png)
+        - if user[:bridge_office].present? && (user[:granted_roles] || user[:permitted_roles])
+          hr
+        - if user[:granted_roles].present?
+          ul.roles
+            - user[:granted_roles].each do |g|
+              = content_tag(:li, g)
+        - if user[:permitted_roles].include? :admin
+          span.red All
+        - else
+          ul.roles.red
+            - (user[:permitted_roles] - user[:granted_roles]).each do |p|
+              = content_tag(:li, p)
+      td.center.small-text
+        - if user[:current_login_at].present?
+          = user[:current_login_at]
+          br
+          = user[:current_login_from]
+        - elsif user[:invited_at].present?
+          | Invited:
+          br
+          = user[:invited_at]
+        - else
+          | Never logged in
+      td.center = admin ? link_to(user[:id], user_path(user[:id])) : user[:id]
+      td.center
+        - if can_lock
+          - if user[:locked]
+            = link_to(unlock_user_path(user[:id]), title: 'Unlock', class: 'unlock', method: :patch) { fa_icon('lock', fa: 'fw') }
+          - elsif !user[:permitted_roles].include?(:admin)
+            = link_to(lock_user_path(user[:id]), title: 'Lock', class: 'lock', method: :patch) { fa_icon('unlock', fa: 'fw') }
+        - unless user[:locked]
+          - if user[:invited]
+            = link_to(invite_path(id: user[:id]), title: 'Re-send invitation', method: :put) { fa_icon('envelope-open', css: 'pending', fa: 'fw') }
+          - elsif user[:invitable]
+            = link_to(invite_path(id: user[:id]), title: 'Send invitation', method: :put) { fa_icon('envelope', fa: 'fw') }
+          - elsif user[:placeholder_email]
+            = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address')
 
