@@ -20,9 +20,9 @@ class NotificationsMailer < ApplicationMailer
       fallback: 'A bridge office has been updated.',
       fields: {
         'Office' => @bridge_office.title,
-        'Previous holder' => @previous,
-        'New holder' => @bridge_office.user,
-        'Updated by' => @by
+        'Previous holder' => @previous.full_name,
+        'New holder' => @bridge_office.user.full_name,
+        'Updated by' => @by.full_name
       }
     ).notify!
   end
