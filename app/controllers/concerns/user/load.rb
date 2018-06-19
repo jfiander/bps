@@ -73,7 +73,7 @@ module User::Load
 
   def users_for_select
     @users = User.unlocked.alphabetized.with_positions.map do |user|
-      [(user.full_name(html: false) || user.email), user.id]
+      [(user.full_name.present? ? user.full_name(html: false) : user.email), user.id]
     end
   end
 end
