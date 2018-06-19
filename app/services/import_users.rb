@@ -14,6 +14,7 @@ class ImportUsers
     @created = []
     @updated = []
     @completions = []
+    certificates = []
 
     User.transaction do
       parse_csv(path).each do |row|
@@ -23,16 +24,15 @@ class ImportUsers
           user = new_user(row)
         end
         course_completions(user, row)
+        certificates << row['Certificate']
       end
+      @removed_users = User.where.not(certificate: certificates).to_a
+      auto_lock_removed_users
     end
 
     File.unlink(path) if File.exist?(path)
 
-    {
-      created: @created.map(&:id),
-      updated: @updated.reduce({}, :merge),
-      completions: @completions.map(&:id)
-    }
+    results_hash
   end
 
   private
@@ -140,5 +140,24 @@ class ImportUsers
       # phone_c: row['Cell Phone'],
       # phone_w: row['Bus. Phone']
     }
+  end
+
+  def results_hash
+    {
+      created: @created.map(&:id),
+      updated: @updated.reduce({}, :merge),
+      completions: @completions.map(&:id),
+      locked: @removed_users.map(&:id)
+    }
+  end
+
+  def auto_lock_removed_users
+    # Do not auto-lock any current Bridge Officers.
+    @removed_users.reject! { |u| u.in? BridgeOffice.all.map(&:user) }
+
+    # Do not report previously-locked users.
+    @removed_users.reject!(&:locked?)
+
+    @removed_users.map(&:lock)
   end
 end
