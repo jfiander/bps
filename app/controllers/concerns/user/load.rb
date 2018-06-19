@@ -19,8 +19,9 @@ module User::Load
     @user_roles ||= UserRole.preload
     @bridge_offices ||= BridgeOffice.preload
 
-    @users = all_users.unlocked.map { |user| user_hash(user) } +
-             all_users.locked.map { |user| user_hash(user) }
+    @unlocked = all_users.unlocked.map { |user| user_hash(user) }
+    @locked = all_users.locked.map { |user| user_hash(user) }
+    @users = @unlocked + @locked
   end
 
   def user_hash(user)
