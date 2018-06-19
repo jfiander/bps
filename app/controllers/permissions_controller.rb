@@ -40,7 +40,8 @@ class PermissionsController < ApplicationController
       return
     end
 
-    UserRole.create!(user: user, role: role)
+    user_role = UserRole.create!(user: user, role: role)
+    permission_notification(user_role, :added, current_user)
 
     flash[:success] = "Successfully added #{role.name} " \
                       "permission to #{user.simple_name}."
@@ -56,6 +57,7 @@ class PermissionsController < ApplicationController
     end
 
     user_role.destroy
+    permission_notification(user_role, :removed, current_user)
 
     flash[:success] = "Successfully removed #{user_role.role.name} " \
                       "permission from #{user_role.user.simple_name}."
@@ -91,5 +93,17 @@ class PermissionsController < ApplicationController
     return true if role == 'users' &&
                    !current_user&.permitted?(:admin, strict: true)
     false
+  end
+
+  def permission_notification(user_role, mode, by)
+    SlackNotification.new(
+      type: :info, title: "Permission #{mode.to_s.titleize}",
+      fallback: "A permission was #{mode}.",
+      fields: [
+        { title: 'User', value: user_role.user.full_name,  short: true },
+        { title: 'Permission', value: user_role.role.name, short: true },
+        { title: 'By', value: by.full_name, short: true }
+      ]
+    ).notify!
   end
 end
