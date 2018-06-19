@@ -47,6 +47,7 @@ h2 Import user data
         | (3) HQ Rank
   .center.red.italic Automatic ranks from bridge offices will override this rank.
   .center Any additional columns will be interpreted as educational completion dates.
+  .center.bold Users who are not included in the import file (except current bridge officers) will be locked.
 hr
 
 = form_tag import_path, multipart: true
@@ -58,4 +59,5 @@ hr
   p = "Created #{@import_results[:created].count} new users."
   p = "Updated #{@import_results[:updated].count} existing users."
   p = "Added #{@import_results[:completions].count} completion dates."
+  p = "Locked #{@import_results[:locked].count} missing users."
   p = @import_results.inspect
