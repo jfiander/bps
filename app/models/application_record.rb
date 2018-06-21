@@ -7,10 +7,11 @@ class ApplicationRecord < ActiveRecord::Base
 
   def self.buckets
     {
-      static: BpsS3.new(:static),
-      files:  BpsS3.new(:files),
-      bilge:  BpsS3.new(:bilge),
-      photos: BpsS3.new(:photos)
+      static:     BpsS3.new(:static),
+      files:      BpsS3.new(:files),
+      bilge:      BpsS3.new(:bilge),
+      photos:     BpsS3.new(:photos),
+      floatplans: BpsS3.new(:floatplans)
     }
   end
 

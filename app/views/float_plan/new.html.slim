@@ -1,0 +1,250 @@
+h2 File a Float Plan
+
+p Please fill out the following form to generate a float plan for your trip.
+
+p
+  | Fields marked with
+  span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  | are required.
+
+= form_for(@float_plan, url: submit_float_plan_path, multipart: true) do |f|
+  #float-plan
+    h3 Primary Contact
+    .table
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :name
+        .table-cell.field = f.text_field :name, required: true
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :phone
+        .table-cell.field = f.text_field :phone, required: true
+
+    h3 Boat Information
+    .table
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :boat_type
+        .table-cell
+          = f.select :boat_type, options_for_select(%w[Power Sail Paddle Other]), include_blank: true, required: true
+          = f.text_field :subtype, class: 'shorter'
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :hull_color
+        .table-cell.field = f.text_field :hull_color, required: true
+      .table-row
+        .table-cell.table-header = f.label :trim_color
+        .table-cell.field = f.text_field :trim_color
+      .table-row
+        .table-cell.table-header = f.label :registration_number
+        .table-cell.field = f.text_field :registration_number
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :length
+        .table-cell.field
+          = f.number_field :length, required: true
+          |  feet
+      .table-row
+        .table-cell.table-header = f.label :boat_name, 'Name'
+        .table-cell.field = f.text_field :boat_name
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :make
+        .table-cell.field = f.text_field :make, required: true
+      .table-row
+        .table-cell.table-header = f.label :model
+        .table-cell.field = f.text_field :model
+      .table-row
+        .table-cell.table-header = f.label :year
+        .table-cell.field = f.text_field :year
+      .table-row
+        .table-cell.table-header = f.label :engine_type_1, 'Engine type(s)'
+        .table-cell.field
+          = f.text_field :engine_type_1, class: 'short left'
+          = f.text_field :engine_type_2, class: 'short right'
+      .table-row
+        .table-cell.table-header = f.label :horse_power, 'Horsepower'
+        .table-cell.field = f.number_field :horse_power
+      .table-row
+        .table-cell.table-header = f.label :number_of_engines
+        .table-cell.field = f.number_field :number_of_engines
+      .table-row
+        .table-cell.table-header = f.label :fuel_capacity
+        .table-cell.field
+          = f.number_field :fuel_capacity
+          |  gallons
+
+    h3 Safety Equipment
+    .table
+      .table-row
+        .table-cell.table-header Emergency Equipment
+        .table-cell.field
+          .table
+            .table-row
+              .table-cell
+                = f.check_box :pfds
+                = f.label :pfds, 'PFDs'
+              .table-cell
+                = f.check_box :flares
+                = f.label :flares
+              .table-cell
+                = f.check_box :mirror
+                = f.label :mirror
+            .table-row
+              .table-cell
+                = f.check_box :horn
+                = f.label :horn
+              .table-cell
+                = f.check_box :smoke
+                = f.label :smoke
+              .table-cell
+                = f.check_box :flashlight
+                = f.label :flashlight
+            .table-row
+              .table-cell
+                = f.check_box :raft
+                = f.label :raft, 'Raft / Dinghy'
+              .table-cell
+                = f.check_box :epirb
+                = f.label :epirb, 'EPIRB'
+              .table-cell
+                = f.check_box :paddles
+                = f.label :paddles
+            .table-row
+              .table-cell
+                = f.check_box :food
+                = f.label :food
+              .table-cell
+                = f.check_box :water
+                = f.label :water
+              .table-cell
+                = f.check_box :anchor
+                = f.label :anchor
+
+    h3 Radio
+    .table
+      .table-row
+        .table-cell.table-header EPIRB channels
+        .table-cell
+          .table
+            .table-row
+              .table-cell
+                = f.check_box :epirb_16
+                = f.label :epirb_16, 'Ch 15/16'
+              .table-cell
+                = f.check_box :epirb_1215
+                = f.label :epirb_1215, '121.5 MHz'
+              .table-cell
+                = f.check_box :epirb_406
+                = f.label :epirb_406, '406 MHz'
+      .table-row
+        .table-cell.table-header = f.label :radio
+        .table-cell.field = f.text_field :radio
+      .table-row
+        .table-cell.table-header Radio types
+        .table-cell
+          .table
+            .table-row
+              .table-cell
+                = f.check_box :radio_vhf
+                = f.label :radio_vhf, 'VHF'
+              .table-cell
+                = f.check_box :radio_ssb
+                = f.label :radio_ssb, 'SSB'
+              .table-cell
+                = f.check_box :radio_cb
+                = f.label :radio_cb, 'CB'
+              .table-cell
+                = f.check_box :radio_cell_phone
+                = f.label :radio_cell_phone, 'Cell phone'
+      .table-row
+        .table-cell.table-header = f.label :channels_monitored
+        .table-cell.field = f.text_field :channels_monitored
+      .table-row
+        .table-cell.table-header = f.label :call_sign
+        .table-cell.field = f.text_field :call_sign
+
+    h3 Route Plan
+    .table
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :leave_from
+        .table-cell.field = f.text_field :leave_from, required: true
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :going_to
+        .table-cell.field = f.text_field :going_to, required: true
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :leave_at
+        .table-cell.field = f.datetime_field :leave_at, required: true
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :return_at
+        .table-cell.field = f.datetime_field :return_at, required: true
+
+    h3.red Alert
+    p.red.italic If not returned or contacted by this time, report missing.
+    .table
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :alert_at, 'Alert time'
+        .table-cell.field = f.datetime_field :alert_at, required: true
+      .table-row
+        .table-cell.table-header
+          span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :alert_name, 'Who to alert'
+        .table-cell.field = f.text_field :alert_name, value: 'US Coast Guard', required: true
+      .table-row
+        .table-cell.table-header = f.label :alert_phone, 'Phone'
+        .table-cell.field = f.text_field :alert_phone
+
+    h3 Transportation Ashore
+    .table
+      .table-row
+        .table-cell.table-header = f.label :car_make, 'Make'
+        .table-cell.field = f.text_field :car_make
+      .table-row
+        .table-cell.table-header = f.label :car_model, 'Model'
+        .table-cell.field = f.text_field :car_model
+      .table-row
+        .table-cell.table-header = f.label :car_year, 'Year'
+        .table-cell.field = f.text_field :car_year
+      .table-row
+        .table-cell.table-header = f.label :car_color, 'Color'
+        .table-cell.field = f.text_field :car_color
+      .table-row
+        .table-cell.table-header = f.label :car_license_plate, 'License plate'
+        .table-cell.field = f.text_field :car_license_plate
+      .table-row
+        .table-cell.table-header = f.label :trailer_license_plate
+        .table-cell.field = f.text_field :trailer_license_plate
+      .table-row
+        .table-cell.table-header = f.label :car_parked_at, 'Parked at'
+        .table-cell.field = f.text_field :car_parked_at
+
+    h3 Misc
+    .table
+      .table-row
+        .table-cell.table-header = f.label :comments
+        .table-cell.field = f.text_area :comments
+
+    h3 Persons Onboard
+    p.italic You must report at least one person onboard.
+    #persons-onboard
+      = f.nested_fields_for :float_plan_onboards do |ff|
+        = render 'person_onboard', ff: ff
+      .center = f.add_nested_fields_link :float_plan_onboards, 'Add a person to this float plan'
+
+    = spinner_button(f, css_class: 'big')

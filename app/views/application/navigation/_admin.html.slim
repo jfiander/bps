@@ -31,6 +31,9 @@
 - if current_user&.permitted?(:roster)
   = link 'Update Roster', path: update_roster_path, fa: { name: 'clipboard-list', options: { style: :regular } }
 
+- if current_user&.permitted?(:float)
+  = link 'Float Plans', path: float_plans_path, fa: { name: 'ship', options: { style: :regular } }
+
 - if current_user&.permitted?(:admin, strict: true)
   = link 'S3 Links', path: s3_path, fa: { name: 'link', options: { style: :regular, css: :red } }
   = link 'Versions', path: versions_path, fa: { name: 'code-branch', options: { style: :regular, css: :red } }

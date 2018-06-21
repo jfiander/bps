@@ -45,7 +45,7 @@ class BpsS3
   private
 
   def valid_buckets
-    %i[files photos bilge static seo]
+    %i[files photos bilge static seo floatplans]
   end
 
   def s3

@@ -17,4 +17,8 @@ module BucketHelper
   def photos_bucket
     ApplicationRecord.buckets[:photos]
   end
+
+  def floatplans_bucket
+    ApplicationRecord.buckets[:floatplans]
+  end
 end

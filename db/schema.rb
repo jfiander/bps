@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180524200301) do
+ActiveRecord::Schema.define(version: 20180621031330) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name"
@@ -103,6 +103,81 @@ ActiveRecord::Schema.define(version: 20180524200301) do
     t.datetime "cutoff_at"
     t.integer  "location_id"
     t.boolean  "show_in_catalog"
+  end
+
+  create_table "float_plan_onboards", force: :cascade do |t|
+    t.integer  "float_plan_id"
+    t.string   "name"
+    t.integer  "age"
+    t.string   "address"
+    t.string   "phone"
+    t.datetime "deleted_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "float_plans", force: :cascade do |t|
+    t.string   "name"
+    t.string   "phone"
+    t.string   "boat_type"
+    t.string   "subtype"
+    t.string   "hull_color"
+    t.string   "trim_color"
+    t.string   "registration_number"
+    t.integer  "length"
+    t.string   "boat_name"
+    t.string   "make"
+    t.string   "model"
+    t.string   "year"
+    t.string   "engine_type_1"
+    t.string   "engine_type_2"
+    t.integer  "horse_power"
+    t.integer  "number_of_engines"
+    t.integer  "fuel_capacity"
+    t.boolean  "pfds"
+    t.boolean  "flares"
+    t.boolean  "mirror"
+    t.boolean  "horn"
+    t.boolean  "smoke"
+    t.boolean  "flashlight"
+    t.boolean  "raft"
+    t.boolean  "epirb"
+    t.boolean  "paddles"
+    t.boolean  "food"
+    t.boolean  "water"
+    t.boolean  "anchor"
+    t.boolean  "epirb_16"
+    t.boolean  "epirb_1215"
+    t.boolean  "epirb_406"
+    t.string   "radio"
+    t.boolean  "radio_vhf"
+    t.boolean  "radio_ssb"
+    t.boolean  "radio_cb"
+    t.boolean  "radio_cell_phone"
+    t.string   "channels_monitored"
+    t.string   "call_sign"
+    t.string   "leave_from"
+    t.string   "going_to"
+    t.datetime "leave_at"
+    t.datetime "return_at"
+    t.datetime "alert_at"
+    t.text     "comments"
+    t.string   "car_make"
+    t.string   "car_model"
+    t.string   "car_year"
+    t.string   "car_color"
+    t.string   "car_license_plate"
+    t.string   "trailer_license_plate"
+    t.string   "car_parked_at"
+    t.string   "alert_name"
+    t.string   "alert_phone"
+    t.datetime "deleted_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "pdf_file_name"
+    t.string   "pdf_content_type"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
   end
 
   create_table "header_images", force: :cascade do |t|

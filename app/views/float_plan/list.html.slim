@@ -1,0 +1,14 @@
+h2 Submitted Float Plans
+
+- @float_plans.each do |float_plan|
+  = "#{float_plan.id}: "
+  = float_plan.name
+  |  filed a float plan for 
+  = float_plan.leave_at
+  |  with an alert time of 
+  = float_plan.alert_at
+  | .
+  - if float_plan.pdf.present?
+    |  
+    = link_to 'PDF', float_plan.link
+  hr
