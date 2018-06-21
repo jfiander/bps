@@ -8,6 +8,16 @@ class NotificationsMailer < ApplicationMailer
     bridge_slack_notification
   end
 
+  def float_plan(float_plan)
+    @float_plan = float_plan
+    to = if float_plan_monitor_emails.present?
+           float_plan_monitor_emails
+         else
+           ['"No Monitors" <dev@bpsd9.org>']
+         end
+    mail(to: to, subject: 'Float Plan Submitted')
+  end
+
   private
 
   def user_descriptor(user)
@@ -25,5 +35,9 @@ class NotificationsMailer < ApplicationMailer
         'Updated by' => @by.full_name
       }
     ).notify!
+  end
+
+  def float_plan_monitor_emails
+    Committee.get(:administrative, 'float_plan_monitor').map { |c| c.user.email }
   end
 end

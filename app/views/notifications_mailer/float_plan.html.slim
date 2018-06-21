@@ -1,0 +1,22 @@
+h2 Float Plan Submitted
+
+p The following float plan has been submitted.
+
+p Please check the dates and times and plan to follow up on this plan as appropriate.
+
+p = link_to 'Float Plan PDF', @float_plan.link
+
+h3 Contact
+p = @float_plan.name
+p = @float_plan.phone
+
+h3 Travel Times
+p
+  | Leave at: 
+  = @float_plan.leave_at
+p
+  | Return at: 
+  = @float_plan.return_at
+p
+  | Alert at: 
+  = @float_plan.alert_at

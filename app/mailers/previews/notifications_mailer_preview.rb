@@ -4,6 +4,10 @@ class NotificationsMailerPreview < ActionMailer::Preview
     NotificationsMailer.bridge(bridge_office, by: by, previous: previous)
   end
 
+  def float_plan
+    NotificationsMailer.float_plan(last_float_plan)
+  end
+
   private
 
   def bridge_office
@@ -16,5 +20,9 @@ class NotificationsMailerPreview < ActionMailer::Preview
 
   def by
     User.first
+  end
+
+  def last_float_plan
+    FloatPlan.last
   end
 end

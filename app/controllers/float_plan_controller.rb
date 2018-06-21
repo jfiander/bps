@@ -19,6 +19,7 @@ class FloatPlanController < ApplicationController
 
     @float_plan.save!
 
+    NotificationsMailer.float_plan(@float_plan).deliver
     SlackNotification.new(
       channel: 'floatplans',
       type: :info, title: 'Float Plan Submitted',
