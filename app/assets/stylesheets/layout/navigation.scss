@@ -58,3 +58,148 @@ ul#education {
     background-color: darken($old-glory-red, 20%);
   }
 }
+
+ul#admin-menu {
+  width: 100%;
+  background-color: lighten($old-glory-blue, 68%);
+  border-bottom: thin solid lighten($old-glory-blue, 35%);
+  padding: 0;
+  list-style: none;
+  margin: 0;
+
+  li {
+    width: 10em;
+    display: inline-block;
+    padding: 0.5em;
+  }
+
+  a li.submenu {
+    display: none;
+  }
+
+  li:hover {
+    background-color: lighten($old-glory-blue, 65%);
+  }
+
+  a {
+    color: lighten($old-glory-blue, 20%);
+  }
+
+  a:hover {
+    color: lighten($old-glory-blue, 40%);
+  }
+
+  a.red {
+    color: lighten($old-glory-red, 10%);
+  }
+
+  a.red:hover {
+    color: $old-glory-red;
+  }
+}
+
+#nested-navigation {
+  text-align: center;
+  background-color: lighten($old-glory-blue, 68%);
+  border-bottom: thin solid lighten($old-glory-blue, 35%);
+}
+
+#nested-navigation a div.arrow {
+  float: right;
+}
+
+#nested-navigation ul {
+  list-style: none;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+  #nested-navigation ul a {
+    display: block;
+    text-decoration: none;
+    line-height: 1.5em;
+    padding: 0 0.5em;
+    width: 10em;
+    color: darken($birmingham-blue, 20%);
+    @include border-radius(0.5em);
+  }
+
+  #nested-navigation ul li {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    @include border-radius(0.25em 0.25em 0 0);
+  }
+
+    #nested-navigation ul li.menu a:hover {
+      text-decoration: none;
+    }
+
+    #nested-navigation ul li.menu.red a {
+      color: $old-glory-red;
+    }
+
+    #nested-navigation ul li:hover {
+      background: lighten($old-glory-blue, 65%);
+    }
+
+    #nested-navigation ul li:hover > ul {
+      display: block;
+    }
+
+  #nested-navigation ul ul {
+    display: none;
+    position: absolute;
+    list-style: none;
+    text-align: left;
+    top: 100%;
+    left: 0;
+    background: none;
+    padding: 0;
+    padding-top: 5%;
+    color: darken($birmingham-blue, 20%);
+    background: lighten($old-glory-blue, 65%);
+    @include border-radius(0 0 0.5em 0.5em);
+  }
+
+    #nested-navigation ul ul a {
+      display: inline-block;
+      color: darken($birmingham-blue, 20%);
+    }
+
+    #nested-navigation ul ul a:hover {
+      background: lighten($old-glory-blue, 60%);
+    }
+
+    #nested-navigation ul ul li {
+      float: none;
+      min-width: 10em;
+      margin: 0;
+      @include border-radius(0.5em);
+    }
+
+    #nested-navigation ul ul li:hover {
+      background: lighten($old-glory-blue, 60%);
+    }
+
+    #nested-navigation ul ul li.sub-menu ul {
+      padding-top: 0;
+    }
+
+    #nested-navigation ul ul a {
+      line-height: 1.2em;
+      padding: 0.7em 1em;
+    }
+
+    #nested-navigation ul ul ul {
+      top: 0;
+      left: 100%;
+      padding: 0;
+      @include border-radius(0 0.5em 0.5em 0.5em);
+    }
+
+    #nested-navigation ul ul ul li {
+      min-width: 10em;
+    }

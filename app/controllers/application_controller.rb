@@ -87,7 +87,10 @@ class ApplicationController < ActionController::Base
     end
 
     return unless current_user&.show_admin_menu?
-    @admin_menu = render_to_string partial: 'application/navigation/admin'
+    @admin_menu = {
+      desktop: render_to_string(partial: 'application/navigation/admin/desktop'),
+      mobile: render_to_string(partial: 'application/navigation/admin/mobile')
+    }
   end
 
   def meta_tags

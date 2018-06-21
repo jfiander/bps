@@ -173,6 +173,15 @@
   div#small-titles h4 {
     display: none;
   }
+
+  #nested-navigation ul a {
+    width: 7.5em;
+    font-size: smaller;
+  }
+
+  #nested-navigation ul ul a {
+    width: 10em;
+  }
 }
 
 @media all and (min-width: 501px) and (max-width: 850px) {
