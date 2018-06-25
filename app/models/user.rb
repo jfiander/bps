@@ -7,6 +7,7 @@ class User < ApplicationRecord
   include User::Invitable
   include User::ProfilePhoto
   include User::Address
+  include User::BOC
 
   devise(
     :invitable, :database_authenticatable, :recoverable, :trackable, :lockable,
@@ -66,12 +67,13 @@ class User < ApplicationRecord
     unlocked.where('sign_in_count = 0').reject(&:placeholder_email?)
   end)
 
-  def full_name(html: true)
+  def full_name(html: true, show_boc: false)
     fn = (+'').html_safe
     fn << auto_rank(html: html)&.html_safe
     fn << ' ' if auto_rank.present?
     fn << simple_name
     fn << formatted_grade
+    fn << boc_display if show_boc
     fn
   end
 
