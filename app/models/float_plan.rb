@@ -50,6 +50,10 @@ class FloatPlan < ApplicationRecord
     end
   end
 
+  def boat_type_display
+    "#{boat_type}#{subtype.present? ? " (#{subtype})" : ''}"
+  end
+
   private
 
   def engines?

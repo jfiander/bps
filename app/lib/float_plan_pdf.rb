@@ -30,8 +30,7 @@ class FloatPlanPDF < Prawn::Document
 
     draw_text 'Boat Information', size: 16, at: [300, 600]
     draw_text 'Type:', size: 14, at: [300, 580]
-    draw_text float_plan.boat_type, size: 12, at: [360, 580]
-    draw_text "(#{float_plan.subtype})", size: 12, at: [380, 580] if float_plan.subtype.present?
+    draw_text float_plan.boat_type_display, size: 12, at: [360, 580]
     draw_text 'Name:', size: 14, at: [300, 560]
     draw_text float_plan.boat_name, size: 12, at: [360, 560]
     draw_text 'Length:', size: 14, at: [300, 540]
