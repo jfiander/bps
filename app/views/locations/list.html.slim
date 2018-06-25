@@ -7,7 +7,7 @@ p.red.italic Do not add event-specific information to any location.
     .table-cell.table-header Address
     .table-cell.table-header Map link
     .table-cell.table-header Details
-    .table-cell.table-header Picture
+    .table-cell.table-header.picture Picture
     .table-cell
   - @locations.each do |location|
     .table-row
@@ -16,8 +16,13 @@ p.red.italic Do not add event-specific information to any location.
         - if location[:map_link].present?
           = link_to(location[:map_link]) do
             = fa_icon('map-marker-alt')
-      .table-cell = simple_format(location[:details])
-      .table-cell = image_tag files_bucket.link(location[:picture].path(:thumb)) if location[:picture].present?
+      .table-cell
+        = simple_format(location[:details])
+        - if location[:picture].present?
+          br.mobile
+          = link_to(files_bucket.link(location[:picture].path(:medium)), class: 'mobile') do
+            = image_tag(files_bucket.link(location[:picture].path(:thumb)), class: 'mobile')
+      .table-cell.picture = image_tag(files_bucket.link(location[:picture].path(:thumb))) if location[:picture].present?
       .table-cell.actions.pending
         = link_to(edit_location_path(id: location[:id])) { fa_icon('edit') }
         - if Event.current(:all).where(location_id: location[:id]).count.zero?

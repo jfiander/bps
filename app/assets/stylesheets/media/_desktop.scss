@@ -195,7 +195,7 @@
 }
 
 @media all and (min-width: 501px) {
-  div#navigation-mobile, div#user-ranks-mobile {
+  div#navigation-mobile, div#user-ranks-mobile, img.mobile, a.mobile, br.mobile {
     display: none;
   }
 
