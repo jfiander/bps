@@ -8,9 +8,7 @@ class FloatPlan < ApplicationRecord
 
   has_attached_file(
     :pdf,
-    paperclip_defaults(:files).merge(
-      path: 'float_plans/:id/float_plan.pdf'
-    )
+    paperclip_defaults(:files).merge(path: 'float_plans/:id/float_plan.pdf')
   )
 
   validates_attachment_content_type(:pdf, content_type: %r{\Aapplication/pdf\z})
@@ -37,14 +35,10 @@ class FloatPlan < ApplicationRecord
 
   def engines
     if engines?
-      engine_types = [engine_type_1, engine_type_2].reject(&:blank?).join(' / ')
-      engine_types = engine_types.present? ? "(#{engine_types})" : nil
-
-      hp = horse_power.present? ? "#{horse_power} HP" : nil
-
-      details = [engine_types, hp].reject(&:blank?).join(' – ')
-
-      [number_of_engines, details].join(' ')
+      [
+        number_of_engines,
+        [engine_types, hp].reject(&:blank?).join(' – ')
+      ].join(' ')
     else
       'n/a'
     end
@@ -61,5 +55,14 @@ class FloatPlan < ApplicationRecord
       engine_type_1.present? ||
       engine_type_2.present? ||
       horse_power.present?
+  end
+
+  def engine_types
+    engine_types = [engine_type_1, engine_type_2].reject(&:blank?).join(' / ')
+    engine_types.present? ? "(#{engine_types})" : nil
+  end
+
+  def hp
+    horse_power.present? ? "#{horse_power} HP" : nil
   end
 end
