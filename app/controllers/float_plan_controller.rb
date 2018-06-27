@@ -19,44 +19,7 @@ class FloatPlanController < ApplicationController
 
     @float_plan.save!
 
-    NotificationsMailer.float_plan(@float_plan).deliver
-    SlackNotification.new(
-      channel: 'floatplans',
-      type: :info, title: 'Float Plan Submitted',
-      fallback: 'Someone has submitted a float plan.',
-      fields: [
-        {
-          title: 'Name',
-          value: @float_plan.name,
-          short: true
-        },
-        {
-          title: 'Phone',
-          value: @float_plan.phone,
-          short: true
-        },
-        {
-          title: 'Depart',
-          value: @float_plan.leave_at.strftime(@long_time_format),
-          short: true
-        },
-        {
-          title: 'Return',
-          value: @float_plan.return_at.strftime(@long_time_format),
-          short: true
-        },
-        {
-          title: 'Alert',
-          value: @float_plan.alert_at.strftime(@long_time_format),
-          short: true
-        },
-        {
-          title: 'Float Plan PDF',
-          value: @float_plan.link,
-          short: false
-        }
-      ]
-    ).notify!
+    slack_notification
   end
 
   def list
@@ -79,5 +42,33 @@ class FloatPlanController < ApplicationController
       ] <<
       { float_plan_onboards_attributes: %i[name age address phone _destroy] }
     )[:float_plan]
+  end
+
+  def slack_notification
+    NotificationsMailer.float_plan(@float_plan).deliver
+    SlackNotification.new(
+      channel: 'floatplans', type: :info, title: 'Float Plan Submitted',
+      fallback: 'Someone has submitted a float plan.',
+      fields: [
+        { title: 'Name', value: @float_plan.name, short: true },
+        { title: 'Phone', value: @float_plan.phone, short: true },
+        {
+          title: 'Depart',
+          value: @float_plan.leave_at.strftime(@long_time_format),
+          short: true
+        },
+        {
+          title: 'Return',
+          value: @float_plan.return_at.strftime(@long_time_format),
+          short: true
+        },
+        {
+          title: 'Alert',
+          value: @float_plan.alert_at.strftime(@long_time_format),
+          short: true
+        },
+        { title: 'Float Plan PDF', value: @float_plan.link, short: false }
+      ]
+    ).notify!
   end
 end
