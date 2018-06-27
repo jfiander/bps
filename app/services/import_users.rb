@@ -17,7 +17,10 @@ class ImportUsers
     certificates = []
 
     User.transaction do
-      parse_csv(path).each do |row|
+      parsed_csv = parse_csv(path)
+      raise 'Blank header(s) detected.' if parsed_csv.headers.any?(&:blank?)
+
+      parsed_csv.each do |row|
         if (user = find_user(row))
           update_user(user, row)
         else
