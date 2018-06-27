@@ -2,7 +2,7 @@
 
 class FloatPlanController < ApplicationController
   before_action :authenticate_user!
-  before_action only: [:list] { require_permission(:users, :float) }
+  before_action(only: %i[list refresh]) { require_permission(:users, :float) }
 
   def new
     @float_plan = FloatPlan.new
@@ -20,6 +20,14 @@ class FloatPlanController < ApplicationController
     @float_plan.save!
 
     slack_notification
+  end
+
+  def refresh
+    float_plan = FloatPlan.find_by(id: refresh_params[:id])
+    verb = float_plan.pdf.exists? ? 'Refreshed' : 'Generated'
+    float_plan.generate_pdf
+    flash[:success] = "#{verb} float plan ##{float_plan.id}"
+    redirect_to float_plans_path
   end
 
   def list
@@ -42,6 +50,10 @@ class FloatPlanController < ApplicationController
       ] <<
       { float_plan_onboards_attributes: %i[name age address phone _destroy] }
     )[:float_plan]
+  end
+
+  def refresh_params
+    params.permit(:id)
   end
 
   def slack_notification

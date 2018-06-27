@@ -8,7 +8,11 @@ h2 Submitted Float Plans
   |  with an alert time of 
   = float_plan.alert_at
   | .
+  |  
   - if float_plan.pdf.present?
-    |  
     = link_to 'PDF', float_plan.link
+    |  - 
+    = link_to 'Refresh', refresh_float_plan_path(id: float_plan.id), method: :patch
+  - else
+    = link_to 'Generate', refresh_float_plan_path(id: float_plan.id), method: :patch
   hr
