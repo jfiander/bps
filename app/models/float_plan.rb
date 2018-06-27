@@ -8,7 +8,7 @@ class FloatPlan < ApplicationRecord
 
   has_attached_file(
     :pdf,
-    paperclip_defaults(:files).merge(path: 'float_plans/:id/float_plan.pdf')
+    paperclip_defaults(:files).merge(path: 'float_plans/:id.pdf')
   )
 
   validates_attachment_content_type(:pdf, content_type: %r{\Aapplication/pdf\z})
@@ -22,7 +22,7 @@ class FloatPlan < ApplicationRecord
   end
 
   def link
-    FloatPlan.buckets[:floatplans].link("#{id}/float_plan.pdf")
+    FloatPlan.buckets[:floatplans].link("#{id}.pdf")
   end
 
   def fuel
