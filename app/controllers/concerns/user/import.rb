@@ -27,5 +27,20 @@ module User::Import
       flash.now[:error] = e.message
       render :import
     end
+
+    import_notification
+  end
+
+  private
+
+  def import_notification
+    SlackNotification.new(
+      type: :info, title: 'User Data Import Complete',
+      fallback: 'User information has been successfully imported.',
+      fields: [
+        { title: 'By', value: current_user.full_name, short: true },
+        { title: 'Results', value: @import_results.to_s, short: false }
+      ]
+    ).notify!
   end
 end
