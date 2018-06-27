@@ -53,12 +53,13 @@ class User < ApplicationRecord
   validates_attachment_file_name :profile_photo, matches: /(\.png|\.jpe?g)\z/
   validates :certificate, uniqueness: true, allow_nil: true
 
-  scope :locked,         -> { where.not(locked_at: nil) }
-  scope :unlocked,       -> { where.not(id: locked) }
-  scope :alphabetized,   -> { order(:last_name) }
-  scope :with_name,      ->(name) { where(simple_name: name) }
-  scope :with_a_name,    -> { where.not(simple_name: [nil, '', ' ']) }
-  scope :with_positions, (lambda do
+  scope :locked,            -> { where.not(locked_at: nil) }
+  scope :unlocked,          -> { where.not(id: locked) }
+  scope :alphabetized,      -> { order(:last_name) }
+  scope :with_name,         ->(name) { where(simple_name: name) }
+  scope :with_any_name,     -> { where.not(simple_name: [nil, '', ' ']) }
+  scope :valid_instructors, -> { where('id_expr > ?', Time.now) }
+  scope :include_positions, (lambda do
     includes %i[
       bridge_office standing_committee_offices committees user_roles roles
     ]

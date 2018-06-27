@@ -15,7 +15,7 @@ module User::Load
   end
 
   def load_users
-    all_users = User.alphabetized.with_positions
+    all_users = User.alphabetized.include_positions
     @user_roles = UserRole.preload
     @bridge_offices = BridgeOffice.preload
 
@@ -72,7 +72,7 @@ module User::Load
   end
 
   def users_for_select
-    @users = User.unlocked.alphabetized.with_positions.map do |user|
+    @users = User.unlocked.alphabetized.include_positions.map do |user|
       [(user.full_name.present? ? user.full_name(html: false) : user.email), user.id]
     end
   end

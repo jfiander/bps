@@ -77,7 +77,7 @@ class MembersController < ApplicationController
   end
 
   def ranks
-    @users = User.unlocked.with_positions.alphabetized.with_a_name
+    @users = User.unlocked.include_positions.alphabetized.with_any_name
   end
 
   private
