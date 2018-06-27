@@ -118,7 +118,20 @@ class ImportUsers
 
   def clean_date(string)
     return if string.blank?
-    Date.strptime(string.ljust(5, '0').ljust(6, '1'), '%Y%m')
+
+    begin
+      datestring = string.ljust(5, '0').ljust(6, '1')
+      datestring[datestring.length - 1] = '1' if datestring.last(2) == '00'
+      if datestring.length == 6
+        Date.strptime(datestring, '%Y%m')
+      elsif datestring.length == 8
+        Date.strptime(datestring, '%Y%m%d')
+      end
+    rescue StandardError
+      puts "Invalid date: #{datestring}"
+      sleep 1
+      return
+    end
   end
 
   def update_hash(row)
