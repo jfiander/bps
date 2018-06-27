@@ -11,25 +11,14 @@
 #
 class ImportUsers
   def call(path)
-    @created = []
-    @updated = []
-    @completions = []
-    certificates = []
+    initialize_blank_variables
 
     User.transaction do
       parsed_csv = parse_csv(path)
       raise 'Blank header(s) detected.' if parsed_csv.headers.any?(&:blank?)
 
-      parsed_csv.each do |row|
-        if (user = find_user(row))
-          update_user(user, row)
-        else
-          user = new_user(row)
-        end
-        course_completions(user, row)
-        certificates << row['Certificate']
-      end
-      @removed_users = User.where.not(certificate: certificates).to_a
+      parsed_csv.each { |row| parse_row(row) }
+      @removed_users = User.where.not(certificate: @certificates).to_a
       auto_lock_removed_users
     end
 
@@ -40,8 +29,25 @@ class ImportUsers
 
   private
 
+  def initialize_blank_variables
+    @created = []
+    @updated = []
+    @completions = []
+    @certificates = []
+  end
+
   def parse_csv(path)
     CSV.parse(File.read(path).force_encoding('UTF-8'), headers: true)
+  end
+
+  def parse_row(row)
+    if (user = find_user(row))
+      update_user(user, row)
+    else
+      user = new_user(row)
+    end
+    course_completions(user, row)
+    @certificates << row['Certificate']
   end
 
   def find_user(row)
