@@ -6,8 +6,7 @@ module FloatPlanPDF::GroundTransportation
     if car_fields(float_plan).any?(&:present?)
       car_details(float_plan)
       trailer_plate(float_plan)
-      draw_text 'Parked At:', size: 14, at: [25, (120 + @left_vertical_offset)]
-      draw_text float_plan.car_parked_at, size: 12, at: [120, (120 + @left_vertical_offset)]
+      labeled_text('Parked At', float_plan.car_parked_at, x1: 25, x2: 120, y: (120 + @left_vertical_offset))
     else
       draw_text 'n/a', size: 14, at: [25, (180 + @left_vertical_offset)]
     end
@@ -23,21 +22,21 @@ module FloatPlanPDF::GroundTransportation
   end
 
   def car_details(float_plan)
-    draw_text 'Car:', size: 14, at: [25, (180 + @left_vertical_offset)]
-    draw_text [
-      float_plan.car_make,
-      float_plan.car_model,
-      float_plan.car_year,
-      float_plan.car_color
-    ].reject(&:blank?).join(' / '), size: 12, at: [120, (180 + @left_vertical_offset)]
-    draw_text 'License:', size: 14, at: [25, (160 + @left_vertical_offset)]
-    draw_text float_plan.car_license_plate, size: 12, at: [120, (160 + @left_vertical_offset)]
+    labeled_text(
+      'Car',
+      [
+        float_plan.car_make, float_plan.car_model,
+        float_plan.car_year, float_plan.car_color
+      ].reject(&:blank?).join(' / '),
+      x1: 25, x2: 120, y: (180 + @left_vertical_offset)
+    )
+
+    labeled_text('License', float_plan.car_license_plate, x1: 25, x2: 120, y: (160 + @left_vertical_offset))
   end
 
   def trailer_plate(float_plan)
     if float_plan.trailer_license_plate.present?
-      draw_text 'Trailer License:', size: 14, at: [25, (140 + @left_vertical_offset)]
-      draw_text float_plan.trailer_license_plate, size: 12, at: [120, (140 + @left_vertical_offset)]
+      labeled_text('Trailer License', float_plan.trailer_license_plate, x1: 25, x2: 120, y: (140 + @left_vertical_offset))
     else
       @left_vertical_offset += 20
     end

@@ -10,16 +10,12 @@ module FloatPlanPDF::RoutePlan
   private
 
   def locations(float_plan)
-    draw_text 'Leave From:', size: 14, at: [25, (360 + @left_vertical_offset)]
-    draw_text float_plan.leave_from, size: 12, at: [120, (360 + @left_vertical_offset)]
-    draw_text 'Going To:', size: 14, at: [25, (340 + @left_vertical_offset)]
-    draw_text float_plan.going_to, size: 12, at: [120, (340 + @left_vertical_offset)]
+    labeled_text('Leave From', float_plan.leave_from, x1: 25, x2: 120, y: (360 + @left_vertical_offset))
+    labeled_text('Going To', float_plan.going_to, x1: 25, x2: 120, y: (340 + @left_vertical_offset))
   end
 
   def dates(float_plan)
-    draw_text 'Leave At:', size: 14, at: [25, (320 + @left_vertical_offset)]
-    draw_text float_plan.leave_at, size: 12, at: [120, (320 + @left_vertical_offset)]
-    draw_text 'Return At:', size: 14, at: [25, (300 + @left_vertical_offset)]
-    draw_text float_plan.return_at, size: 12, at: [120, (300 + @left_vertical_offset)]
+    labeled_text('Leave At', float_plan.leave_at, x1: 25, x2: 120, y: (320 + @left_vertical_offset))
+    labeled_text('Return At', float_plan.return_at, x1: 25, x2: 120, y: (300 + @left_vertical_offset))
   end
 end

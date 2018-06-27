@@ -32,4 +32,9 @@ class FloatPlanPDF < Prawn::Document
           .tr('-', '_')
           .downcase
   end
+
+  def labeled_text(label, value, x1:, x2:, y:)
+    draw_text "#{label}:", size: 14, at: [x1, y]
+    draw_text value, size: 12, at: [x2, y]
+  end
 end
