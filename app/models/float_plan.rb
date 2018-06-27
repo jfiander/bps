@@ -51,7 +51,7 @@ class FloatPlan < ApplicationRecord
   private
 
   def engines?
-    number_of_engines.present? || 
+    number_of_engines.present? ||
       engine_type_1.present? ||
       engine_type_2.present? ||
       horse_power.present?
@@ -64,5 +64,22 @@ class FloatPlan < ApplicationRecord
 
   def hp
     horse_power.present? ? "#{horse_power} HP" : nil
+  end
+
+  def radio_bands
+    [
+      (radio_vhf ? 'VHF' : nil),
+      (radio_ssb ? 'SSB' : nil),
+      (radio_cb ? 'CB' : nil),
+      (radio_cell_phone ? 'Cell Phone' : nil)
+    ].compact.join(' / ')
+  end
+
+  def epirb_freqs
+    [
+      (epirb_16 ? 'Ch 15/16' : nil),
+      (epirb_1215 ? '121.5 MHz' : nil),
+      (epirb_406 ? '406 MHz' : nil)
+    ].compact.join(' / ')
   end
 end
