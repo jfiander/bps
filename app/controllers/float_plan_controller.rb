@@ -2,7 +2,7 @@
 
 class FloatPlanController < ApplicationController
   before_action :authenticate_user!
-  before_action(only: %i[list refresh]) { require_permission(:users, :float) }
+  before_action(only: %i[list refresh]) { require_permission(:float) }
 
   def new
     @float_plan = FloatPlan.new
