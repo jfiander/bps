@@ -80,9 +80,23 @@ module User::Permissions
   end
 
   def implicit_roles
-    SIMPLIFY.call(explicit_roles.map do |role|
-      User::Permissions.implicit_roles_hash[role]
-    end)
+    i_roles = []
+    new_roles = child_roles(explicit_roles)
+
+    while (new_roles - i_roles).present?
+      i_roles << new_roles
+      i_roles.flatten!
+      new_roles = child_roles(i_roles)
+    end
+    i_roles << new_roles
+
+    SIMPLIFY.call(i_roles)
+  end
+
+  def child_roles(parent_roles)
+    SIMPLIFY.call(
+      parent_roles.map { |role| User::Permissions.implicit_roles_hash[role] }
+    )
   end
 
   def implicit_permissions
