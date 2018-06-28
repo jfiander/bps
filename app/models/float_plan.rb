@@ -66,20 +66,24 @@ class FloatPlan < ApplicationRecord
     horse_power.present? ? "#{horse_power} HP" : nil
   end
 
+  def flag(bool, string)
+    bool ? string : nil
+  end
+
   def radio_bands
     [
-      (radio_vhf ? 'VHF' : nil),
-      (radio_ssb ? 'SSB' : nil),
-      (radio_cb ? 'CB' : nil),
-      (radio_cell_phone ? 'Cell Phone' : nil)
+      flag(radio_vhf, 'VHF'),
+      flag(radio_ssb, 'SSB'),
+      flag(radio_cb, 'CB'),
+      flag(radio_cell_phone, 'Cell Phone')
     ].compact.join(' / ')
   end
 
   def epirb_freqs
     [
-      (epirb_16 ? 'Ch 15/16' : nil),
-      (epirb_1215 ? '121.5 MHz' : nil),
-      (epirb_406 ? '406 MHz' : nil)
+      flag(epirb_16, 'Ch 15/16'),
+      flag(epirb_1215, '121.5 MHz'),
+      flag(epirb_406, '406 MHz')
     ].compact.join(' / ')
   end
 end
