@@ -48,6 +48,23 @@ class FloatPlan < ApplicationRecord
     "#{boat_type}#{subtype.present? ? " (#{subtype})" : ''}"
   end
 
+  def radio_bands
+    [
+      flag(radio_vhf, 'VHF'),
+      flag(radio_ssb, 'SSB'),
+      flag(radio_cb, 'CB'),
+      flag(radio_cell_phone, 'Cell Phone')
+    ].compact.join(' / ')
+  end
+
+  def epirb_freqs
+    [
+      flag(epirb_16, 'Ch 15/16'),
+      flag(epirb_1215, '121.5 MHz'),
+      flag(epirb_406, '406 MHz')
+    ].compact.join(' / ')
+  end
+
   private
 
   def engines?
@@ -68,22 +85,5 @@ class FloatPlan < ApplicationRecord
 
   def flag(bool, string)
     bool ? string : nil
-  end
-
-  def radio_bands
-    [
-      flag(radio_vhf, 'VHF'),
-      flag(radio_ssb, 'SSB'),
-      flag(radio_cb, 'CB'),
-      flag(radio_cell_phone, 'Cell Phone')
-    ].compact.join(' / ')
-  end
-
-  def epirb_freqs
-    [
-      flag(epirb_16, 'Ch 15/16'),
-      flag(epirb_1215, '121.5 MHz'),
-      flag(epirb_406, '406 MHz')
-    ].compact.join(' / ')
   end
 end
