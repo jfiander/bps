@@ -16,6 +16,9 @@ class Event < ApplicationRecord
 
   before_validation { validate_costs }
 
+  after_create { book! if ENV['ASSET_ENVIRONMENT'] == 'production' }
+  before_destroy { unbook! if ENV['ASSET_ENVIRONMENT'] == 'production' }
+
   has_attached_file(
     :flyer,
     paperclip_defaults(:files).merge(path: 'event_flyers/:id/:filename')
