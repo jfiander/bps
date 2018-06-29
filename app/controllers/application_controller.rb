@@ -45,6 +45,7 @@ class ApplicationController < ActionController::Base
   def authenticate_user!(*args)
     return super(*args) if user_signed_in?
     flash[:referrer] = request.original_fullpath
+    flash[:notice] = 'You must login to continue.'
     redirect_to new_user_session_path
   end
 
