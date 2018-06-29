@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180621031330) do
+ActiveRecord::Schema.define(version: 20180629200244) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20180621031330) do
     t.datetime "cutoff_at"
     t.integer  "location_id"
     t.boolean  "show_in_catalog"
+    t.string   "google_calendar_event_id"
   end
 
   create_table "float_plan_onboards", force: :cascade do |t|

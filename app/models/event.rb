@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+  include Concerns::Event::Calendar
+
   belongs_to :event_type
   has_many   :course_topics,   foreign_key: :course_id
   has_many   :course_includes, foreign_key: :course_id
