@@ -10,6 +10,7 @@ class StandingCommitteeOffice < ApplicationRecord
   validate :valid_committee_name, :only_one_chair
   validates :user_id, uniqueness: { scope: :committee_name }
 
+  default_scope { ordered }
   scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.now) }
   scope :chair_first, -> { order(chair: :asc) }
   scope :ordered, (lambda do
