@@ -1,7 +1,7 @@
 .table-row id=("committee_row_#{committee[:id]}")
   .table-cell.committee class=("additional" if @last_committee_name == committee[:name])
     = committee[:name] unless committee[:name] == @last_committee_name
-  .table-cell.committee-chair class=("additional" if @last_committee_name == committee[:name])
+  .table-cell.committee-chair class=("additional" if @last_committee_name == committee[:name]) id=("committee_cell_#{committee[:id]}")
     - if @current_user_permitted_users
       = link_to(remove_committee_path(committee[:id]), class: "red editor #{auto_show('bridge_editor')}", method: :delete, remote: true,
         data: {confirm: "Are you sure you want to remove #{committee[:user][:simple_name].gsub('&nbsp;', ' ')} from #{committee[:name]}?"}) { fa_icon('minus-square') }
