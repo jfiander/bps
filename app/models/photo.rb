@@ -5,7 +5,7 @@ class Photo < ApplicationRecord
 
   has_attached_file(
     :photo_file,
-    paperclip_defaults(:files).merge(
+    paperclip_defaults(:photos).merge(
       path: ':id/:style/:filename',
       styles: { medium: '500x500', thumb: '200x200' }
     )
