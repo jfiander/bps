@@ -10,8 +10,8 @@
     }
   }
 
-  div#editor-buttons, .big {
-    overflow: visible;
+  div#editor-buttons, input[type=submit].big {
+    overflow-x: visible;
   }
 
   .desktop {
