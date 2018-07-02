@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   include Events::Update
   include Concerns::Application::RedirectWithStatus
 
-  before_action :find_event, only: %i[copy edit expire]
+  before_action :find_event, only: %i[copy edit update expire remind]
   before_action :prepare_form, only: %i[new copy edit]
   before_action :check_for_blank, only: %i[create update]
   before_action :time_formats, only: %i[schedule catalog registrations show]
@@ -90,7 +90,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find_by(id: event_params[:id])
     if @event.update(event_params)
       after_save_event(mode: :modified)
     else
@@ -102,6 +101,19 @@ class EventsController < ApplicationController
     redirect_with_status(send("#{event_type_param}s_path"), object: event_type_param, verb: 'expire') do
       @event.update(expires_at: Time.now)
     end
+  end
+
+  def remind
+    if @event.reminded?
+      flash[:alert] = "Reminders have already been sent for that #{event_type_param}."
+      redirect_to send("#{event_type_param}s_path")
+      return
+    end
+
+    @event.registrations.each { |reg| RegistrationMailer.remind(reg).deliver }
+    @event.update(reminded_at: Time.now)
+    flash[:success] = 'Successfully sent reminder emails.'
+    redirect_to send("#{event_type_param}s_path")
   end
 
   private

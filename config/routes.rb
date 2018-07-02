@@ -148,6 +148,7 @@ Rails.application.routes.draw do
     get     "/#{event_type}s/:id/copy",      to: "events/#{event_type}s#copy",          as: "copy_#{event_type}"
     get     "/#{event_type}s/:id/edit",      to: "events/#{event_type}s#edit",          as: "edit_#{event_type}"
     delete  "/#{event_type}s/:id/expire",    to: "events/#{event_type}s#expire",        as: "expire_#{event_type}"
+    put     "/#{event_type}s/:id/remind",    to: "events/#{event_type}s#remind",        as: "remind_#{event_type}"
   end
 
   ### User management

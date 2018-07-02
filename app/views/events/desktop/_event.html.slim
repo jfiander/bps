@@ -29,10 +29,11 @@
                 .table.row
                   .table-cell
                     span.costs = event.formatted_cost
-              .table.row
-                .table-cell.catalog
-                  = fa_icon('star', style: :regular)
-                  | In catalog
+              - if !defined?(@event_catalog) && @current_user_permitted_event_type && event.show_in_catalog
+                .table.row
+                  .table-cell.catalog
+                    = fa_icon('star', style: :regular)
+                    | In catalog
         .table-cell.top-middle
           - unless defined?(@event_catalog)
             .table
