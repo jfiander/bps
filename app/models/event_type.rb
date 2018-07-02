@@ -16,7 +16,8 @@ class EventType < ApplicationRecord
   scope :course,          -> { courses }
   scope :seminar,         -> { seminars }
   scope :meeting,         -> { meetings }
-  scope :ordered,         (lambda do
+
+  def self.ordered
     order <<~SQL
       CASE
         WHEN event_category = 'public'     THEN '1' || title
@@ -32,7 +33,7 @@ class EventType < ApplicationRecord
         WHEN event_category = 'meeting'    THEN '9' || title
       END
     SQL
-  end)
+  end
 
   validates :event_category, inclusion: %w[advanced_grade elective public seminar meeting]
 

@@ -13,7 +13,8 @@ class StandingCommitteeOffice < ApplicationRecord
   default_scope { ordered }
   scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.now) }
   scope :chair_first, -> { order(chair: :asc) }
-  scope :ordered, (lambda do
+
+  def self.ordered
     order <<~SQL
       CASE
         WHEN committee_name = 'executive'  THEN '1'
@@ -22,7 +23,7 @@ class StandingCommitteeOffice < ApplicationRecord
         WHEN committee_name = 'rules'      THEN '4'
       END
     SQL
-  end)
+  end
 
   def self.committees
     %w[executive auditing nominating rules]

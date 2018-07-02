@@ -59,14 +59,16 @@ class User < ApplicationRecord
   scope :with_name,         ->(name) { where(simple_name: name) }
   scope :with_any_name,     -> { where.not(simple_name: [nil, '', ' ']) }
   scope :valid_instructors, -> { where('id_expr > ?', Time.now) }
-  scope :include_positions, (lambda do
+
+  def self.include_positions
     includes %i[
       bridge_office standing_committee_offices committees user_roles roles
     ]
-  end)
-  scope :invitable, (lambda do
+  end
+
+  def self.invitable
     unlocked.where('sign_in_count = 0').reject(&:placeholder_email?)
-  end)
+  end
 
   def full_name(html: true, show_boc: false)
     fn = (+'').html_safe

@@ -21,7 +21,8 @@ class BridgeOffice < ApplicationRecord
   scope :other_than, ->(office) { where.not(office: office) }
   scope :heads,      -> { where.not('office LIKE ?', 'asst_%') }
   scope :assistants, -> { where('office LIKE ?', 'asst_%') }
-  scope :ordered,    (lambda do
+
+  def self.ordered
     order <<~SQL
       CASE
         WHEN office = 'commander'        THEN '1'
@@ -34,7 +35,7 @@ class BridgeOffice < ApplicationRecord
         WHEN office = 'asst_secretary'   THEN '8'
       END
     SQL
-  end)
+  end
 
   def self.preload
     all.map { |b| {b.user_id => b.office} }.reduce({}, :merge)

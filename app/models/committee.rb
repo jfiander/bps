@@ -12,14 +12,13 @@ class Committee < ApplicationRecord
   }
 
   scope :for_department, ->(department) { where(department: department.to_s) }
-  scope :get, (lambda do |department, *names|
+
+  def self.get(department, *names)
     includes(:user).for_department(department).where(name: names.map(&:to_s))
-  end)
-  scope :sorted, (lambda do
-    all
-    .order(:name)
-    .group_by(&:department)
-    .map do |dept, coms|
+  end
+
+  def self.sorted
+    all.order(:name).group_by(&:department).map do |dept, coms|
       {
         dept => coms.sort_by do |c|
           c.name.downcase.gsub(
@@ -29,7 +28,7 @@ class Committee < ApplicationRecord
         end
       }
     end.reduce({}, :merge)
-  end)
+  end
 
   def search_name
     name.downcase.tr(' ', '_').delete("'\"").gsub('assistant_', '')
