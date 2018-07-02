@@ -13,5 +13,5 @@ p
 - if @registration&.user.present?
   p 
     | You can also cancel this registration from 
-    = link_to 'your profile page', user_url(@registration.user.id)
+    = link_to 'your profile page', profile_url
     |  on the website. (You'll need to be logged in first.)

@@ -12,6 +12,6 @@ If you have any questions, or if you would like to cancel this registration,
 please email me at <%= @signature[:email] %>.
 <%- if @registration&.user.present? %>
 
-You can also cancel this registration from your profile page on the website: <%= user_url(@registration.user.id) %>
+You can also cancel this registration from your profile page on the website: <%= profile_url %>
 (You'll need to login first.)
 <%- end %>
