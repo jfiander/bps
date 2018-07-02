@@ -4,7 +4,7 @@ h1.birmingham Membership Application
 
 p Someone has applied for membership!
 
-- if (@next_excom - Time.now) > 30.days
+- if next_excom_over_30_days?
   = render 'member_application_mailer/email_vote'
 - else
   = render 'member_application_mailer/next_excom'
