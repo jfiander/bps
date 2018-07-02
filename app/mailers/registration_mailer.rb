@@ -30,6 +30,15 @@ class RegistrationMailer < ApplicationMailer
     mail(to: to, from: from, subject: 'Registration confirmation')
   end
 
+  def remind(registration)
+    @registration = registration
+    @signature = signature_for_confirm
+    to = @registration&.user&.email || @registration.email
+    from = "\"#{@signature[:name]}\" <#{@signature[:email]}>"
+
+    mail(to: to, from: from, subject: 'Registration reminder')
+  end
+
   private
 
   def signature_for_confirm

@@ -16,6 +16,10 @@ class RegistrationMailerPreview < ActionMailer::Preview
     RegistrationMailer.confirm(registration_ao)
   end
 
+  def remind
+    RegistrationMailer.remind(registration)
+  end
+
   private
 
   def registration
