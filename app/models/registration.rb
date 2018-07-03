@@ -18,11 +18,16 @@ class Registration < ApplicationRecord
   private
 
   def email_or_user_present
-    errors.add(:base, 'Must have a user or event') unless user.present? || email.present?
+    return if user.present? || email.present?
+
+    errors.add(:base, 'Must have a user or event')
   end
 
   def no_duplicate_registrations
-    errors.add(:base, 'Duplicate') unless Registration.where(user: user, email: email, event: event).where.not(id: id).blank?
+    return if Registration.where(user: user, email: email, event: event)
+                          .where.not(id: id).blank?
+
+    errors.add(:base, 'Duplicate')
   end
 
   def notify_on_create

@@ -1,22 +1,18 @@
 # frozen_string_literal: true
 
 class StaticPage < ApplicationRecord
+  CUSTOM_TITLES ||= {
+    'about' => 'About Us',
+    'join' => 'Join Us',
+    'civic' => 'Civic Services',
+    'vsc' => 'Vessel Safety Check'
+  }.freeze
+
   def self.names
     all.map(&:name)
   end
 
   def title
-    case name
-    when 'about'
-      'About Us'
-    when 'join'
-      'Join Us'
-    when 'civic'
-      'Civic Services'
-    when 'vsc'
-      'Vessel Safety Check'
-    else
-      name.titleize
-    end
+    CUSTOM_TITLES[name] || name.titleize
   end
 end

@@ -18,28 +18,23 @@ class Location < ApplicationRecord
   def display
     return { id: 0, address: 'TBD' } unless address.present?
 
+    { id: id }.merge(details_hash)
+  end
+
+  def self.searchable
+    all.map do |l|
+      { l.id => l.details_hash }
+    end.reduce({}, :merge)
+  end
+
+  def details_hash
     {
-      id: id,
       name: address.split("\n").first,
       address: address,
       map_link: map_link,
       details: details,
       picture: picture
     }
-  end
-
-  def self.searchable
-    all.map do |l|
-      {
-        l.id => {
-          name: l.address.split("\n").first,
-          address: l.address,
-          map_link: l.map_link,
-          details: l.details,
-          picture: l.picture
-        }
-      }
-    end.reduce({}, :merge)
   end
 
   private
