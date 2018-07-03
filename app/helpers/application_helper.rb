@@ -48,11 +48,6 @@ module ApplicationHelper
     session[:auto_shows]&.include?(partial)
   end
 
-  def page_title(title = nil)
-    title = "#{title} | " if title.present?
-    @title = "#{title}America's Boating Club – Birmingham Squadron"
-  end
-
   def sanitize(text)
     ActionController::Base.helpers.sanitize text
   end
