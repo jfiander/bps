@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
 class ApplicationRecord < ActiveRecord::Base
+  BUCKETS ||= %i[static files bilge photos floatplans].freeze
+
   self.abstract_class = true
   has_paper_trail
   acts_as_paranoid
 
   def self.buckets
-    {
-      static:     BpsS3.new(:static),
-      files:      BpsS3.new(:files),
-      bilge:      BpsS3.new(:bilge),
-      photos:     BpsS3.new(:photos),
-      floatplans: BpsS3.new(:floatplans)
-    }
+    BUCKETS.map do |bucket|
+      { bucket => BpsS3.new(bucket) }
+    end.reduce({}, :merge)
   end
 
   # Used by Paperclip
