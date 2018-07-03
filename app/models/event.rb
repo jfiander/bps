@@ -31,16 +31,25 @@ class Event < ApplicationRecord
 
   validates :event_type, :start_at, :expires_at, :cutoff_at, presence: true
 
-  def self.current(category)
+  def self.include_details
     includes(:event_type, :course_topics, :course_includes, :prereq)
-      .where('expires_at > ?', Time.now)
-      .where(event_type: EventType.send(category))
+  end
+
+  def self.for_category(category)
+    where(event_type: EventType.send(category))
+  end
+
+  def self.current(category)
+    include_details.for_category(category).where('expires_at > ?', Time.now)
+  end
+
+  def self.all_expired(category)
+    include_details.for_category(category).where('expires_at <= ?', Time.now)
   end
 
   def self.expired(category)
-    includes(:event_type, :course_topics, :course_includes, :prereq)
-      .where('expires_at <= ?', Time.now)
-      .where(event_type: EventType.send(category))
+    all_expired(category)
+      .where('start_at >= ?', Date.today.last_year.beginning_of_year)
   end
 
   def self.with_registrations
