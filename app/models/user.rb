@@ -100,6 +100,10 @@ class User < ApplicationRecord
       ).present?
   end
 
+  def completions
+    course_completions.map(&:to_h).reduce({}, :merge)
+  end
+
   private
 
   def cached_committees

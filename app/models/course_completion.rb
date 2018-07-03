@@ -2,4 +2,10 @@
 
 class CourseCompletion < ApplicationRecord
   belongs_to :user
+
+  default_scope { order('date ASC') }
+
+  def to_h
+    { course_key => date.strftime('%Y-%m-%d') }
+  end
 end
