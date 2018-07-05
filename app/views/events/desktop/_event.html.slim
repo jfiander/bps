@@ -2,20 +2,21 @@
   hr
 .table.events
   .table-row
-    .table-cell.top-left
-      .table
-        .table-row
-          .table-cell.top-left
-            .table
-              .table-row
-                .table-cell.table-header.event-title = event_type(event).display_title
+    .table
+      .table-row
+        .table-cell.top-left
+          .table
+            .table.row
+              .table-cell.table-header.event-title = event_type(event).display_title
+            - unless defined?(@event_catalog)
+              .table.row
                 .table-cell.date-details
-                  - unless defined?(@event_catalog)
-                    - if event.multiple_sessions?
-                      b Starts: 
-                    = event.start_at.strftime(@long_time_format)
-                    - if (event.multiple_sessions? || event.length?)
-                      br
+                  - if event.multiple_sessions?
+                    b Starts: 
+                  = event.start_at.strftime(@long_time_format)
+              - if event.multiple_sessions? || event.length?
+                .table.row
+                  .table-cell
                     - if event.multiple_sessions?
                       b = "#{event.sessions} sessions"
                       - if event.length?
@@ -24,79 +25,101 @@
                       = event.formatted_length
                       - if event.multiple_sessions?
                         |  each
-                    - if event.cost.present?
-                      - if event.multiple_sessions? || event.length?
-                        br
-                  span.costs = event.formatted_cost
-              - if !defined?(@event_catalog) && @current_user_permitted_event_type && event.show_in_catalog
-                .table-row
-                  .table.cell.birmingham-blue
-                      = fa_icon('star', style: :regular)
-                      | In catalog
-        .table-row
-          .table-cell.bottom-left
-            = simple_format(event.description)
+              - if event.cost.present?
+                .table.row
+                  .table-cell
+                    span.costs = event.formatted_cost
+              .table.row
+                .table-cell.catalog
+                  = fa_icon('star', style: :regular)
+                  | In catalog
+        .table-cell.top-middle
+          - unless defined?(@event_catalog)
+            .table
+              - if @locations[event.location_id].present?
+                .table.row
+                  .table-cell
+                    b
+                      | Location: 
+                      - if @locations[event.location_id][:map_link].present?
+                        = link_to(@locations[event.location_id][:map_link], target: :_blank) do
+                          = fa_icon("map-marker-alt")
+                          | Map
+                .table.row
+                  .table-cell = simple_format(@locations[event.location_id][:address])
+              - else
+                .table.row
+                  .table-cell Location TBD
+        .table-cell.top-right
+          .table
+            .table.row
+              .table-cell
+                - if defined?(@event_catalog)
+                  - if @current_user_permitted_event_type
+                    = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
+                      = fa_icon('edit', fa: 'fw')
+                      | Edit
+                - else
+                  = render 'events/desktop/actions', event: event, long_form: long_form
+  .table-row
+    .table
+      .table-row
+        .table-cell.bottom-left
+          .table
+            .table.row
+              .table-cell = simple_format(event.description)
             - if course_topics(event).present?
-              b Topics include:
-              ul
-                - course_topics(event).each do |t|
-                  li = t.text
+              .table.row
+                .table-cell
+                  b Topics include:
+                  ul
+                    - course_topics(event).each do |t|
+                      li = t.text
             - if course_includes(event).present?
-              b Materials include:
-              ul
-                - course_includes(event).each do |i|
-                  li = i.text
+              .table.row
+                .table-cell
+                  b Materials include:
+                  ul
+                    - course_includes(event).each do |i|
+                      li = i.text
             - if event.requirements.present?
-              br
-              b Student requirements:
-              = simple_format(event.requirements)
+              .table.row
+                .table-cell
+                  b Student requirements:
+                  = simple_format(event.requirements)
             - if event_instructors(event).present? && !defined?(@event_catalog)
-              br
-              b = "Instructor".pluralize(event_instructors(event).count) + ":"
-              = simple_format(event_instructors(event).map(&:full_name).join("\n"))
+              .table.row
+                .table-cell
+                  b = "Instructor".pluralize(event_instructors(event).count) + ":"
+                  = simple_format(event_instructors(event).map(&:full_name).join("\n"))
             - if event_prereq(event).present?
-              br
-              b Prerequisite course:
-              p = event_prereq(event).title.titleize
+              .table.row
+                .table-cell
+                  b Prerequisite course:
+                  p = event_prereq(event).title.titleize
             - if @current_user_permitted_event_type && !defined?(@event_catalog) && @registered_users[event.id].present?
-              br
-              b Registered Users:
-              - @registered_users[event.id].each do |r|
-                = render 'events/register/member', r: r
-    .table-cell.top-right
-      .table
-        .table-row
-          .table-cell.top-right
-            - if defined?(@event_catalog)
-              - if @current_user_permitted_event_type
-                = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
-                  = fa_icon('edit', fa: 'fw')
-                  | Edit
-            - else
-              .table
-                .table-row
-                  .table-cell.location
-                    - if @locations[event.location_id].present?
-                      b
-                        | Location: 
-                        - if @locations[event.location_id][:map_link].present?
-                          = link_to(@locations[event.location_id][:map_link], target: :_blank) do
-                            = fa_icon("map-marker-alt")
-                            | Map
-                      br
-                      p = simple_format(@locations[event.location_id][:address])
-                    - else
-                      | Location TBD
-                  .table-cell = render 'events/desktop/actions', event: event, long_form: long_form
-        .table-row
-          .table-cell.bottom-right.flyer
-            - if event.get_flyer(@event_types).present? && event.flyer_content_type != 'application/pdf'
-              = image_tag event.get_flyer(@event_types)
-            - unless defined?(@event_catalog)
-              - if @locations[event.location_id].present? && @locations[event.location_id][:details].present?
-                = simple_format(@locations[event.location_id][:details])
-              - if @locations[event.location_id].present? && @locations[event.location_id][:picture].present?
-                = image_tag files_bucket.link(@locations[event.location_id][:picture].path(:thumb))
+              .table.row
+                .table-cell
+                  b Registered Users:
+                  ul.simple
+                    - @registered_users[event.id].each do |r|
+                      li = render 'events/register/member', r: r
+        .table-cell.bottom-right
+          .table
+            .table.row
+              .table-cell
+                - if event.get_flyer(@event_types).present? && event.flyer_content_type != 'application/pdf'
+                  = image_tag event.get_flyer(@event_types)
+            .table.row
+              .table-cell
+                - unless defined?(@event_catalog)
+                  - if @locations[event.location_id].present? && @locations[event.location_id][:details].present?
+                    = simple_format(@locations[event.location_id][:details])
+            .table.row
+              .table-cell
+                - unless defined?(@event_catalog)
+                  - if @locations[event.location_id].present? && @locations[event.location_id][:picture].present?
+                    = image_tag files_bucket.link(@locations[event.location_id][:picture].path(:thumb))
 - if event.get_flyer(@event_types).present? && event.flyer_content_type == 'application/pdf'
   .events-full-width
     iframe src=(event.get_flyer(@event_types))

@@ -142,27 +142,16 @@ div.assign-bridge small {
   .table-cell {
     vertical-align: top;
   }
-  
-  .top-left {
-    width: 60%;
 
-    .event-title {
-      font-size: 120%;
-      color: $old-glory-red;
-      width: 45%;
-    }
+  .event-title {
+    font-size: 120%;
+    color: $old-glory-red;
+    padding-bottom: 1em;
   }
 
-  .top-right {
-  }
-  
-  .bottom-left {
-    p, div.registration {
-      margin-top: 1em;
-    }
-  }
-
-  .bottom-right {
+  .catalog {
+    padding-top: 1em;
+    color: $birmingham-blue;
   }
 
   a.control {
@@ -175,13 +164,29 @@ div.assign-bridge small {
     color: lighten($old-glory-blue, 10%);
   }
 
-  .location {
-    width: 65%;
+  .top-left {
+    width: 40%;
   }
 
-  .flyer {
-    text-align: center;
+  .top-middle {
+  }
+
+  .top-right {
+    width: 25%;
+  }
+
+  .bottom-left {
+    width: 60%;
     padding-top: 1em;
+  }
+
+  .bottom-right {
+    width: 30%;
+    padding-top: 1.5em;
+
+    div {
+      text-align: center;
+    }
 
     img {
       max-width: 10em;
