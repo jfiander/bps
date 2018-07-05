@@ -4,17 +4,16 @@ class PublicController < ApplicationController
   include Public::Bilge
   include CalendarHelper
 
-  skip_before_action :prerender_for_layout, only: [:register]
+  ajax!(only: :register)
 
   before_action :list_bilges, only: %i[newsletter get_bilge]
   before_action :registration_attributes, only: [:register]
   before_action :find_event,              only: [:register]
   before_action :find_registration,       only: [:register]
 
-  before_action only: [:bridge] { page_title('Bridge Officers') }
-  before_action only: [:newsletter] { page_title('The Bilge Chatter') }
-  before_action only: [:store] { page_title("Ship's Store") }
-  before_action only: [:calendar] { page_title('Calendar') }
+  title!('The Bilge Chatter', only: :newsletter)
+  title!("Ship's Store", only: :store)
+  title!('Calendar', only: :calendar)
 
   render_markdown_views
 

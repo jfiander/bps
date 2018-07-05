@@ -16,7 +16,7 @@ RSpec.describe EventsHelper, type: :helper do
 
     describe 'courses' do
       before(:each) do
-        @events = EventsHelper.get_events(:course)
+        @events = EventsHelper.get_events('course')
         @course = FactoryBot.create(:event)
       end
 

@@ -11,7 +11,7 @@ RSpec.describe EventType, type: :model do
       jn = FactoryBot.create(:event_type, title: 'Junior Navigation', event_category: 'advanced_grade')
       sail = FactoryBot.create(:event_type, title: 'Sail', event_category: 'elective')
 
-      select_data = EventType.selector(:course)
+      select_data = EventType.selector('course')
 
       expect(select_data).to eql(
         [

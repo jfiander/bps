@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class MemberApplicationsController < ApplicationController
-  before_action :authenticate_user!, only: %i[review]
+  secure!(only: :review)
 
-  skip_before_action :prerender_for_layout, only: %i[apply approve]
+  ajax!(only: %i[apply approve])
 
   def new
     @member_application = MemberApplication.new

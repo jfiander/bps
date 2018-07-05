@@ -1,6 +1,5 @@
 class VersionsController < ApplicationController
-  before_action :authenticate_user!
-  before_action { require_permission(:admin, strict: true) }
+  secure!(:admin, strict: true)
 
   before_action :load_versions, only: %i[show diff revert]
 

@@ -42,9 +42,9 @@ module Concerns::Event::Calendar
   end
 
   def calendar_summary
-    if category == :course
+    if category == 'course'
       "Course: #{event_type.display_title}"
-    elsif category == :seminar
+    elsif category == 'seminar'
       "Seminar: #{event_type.display_title}"
     else
       event_type.display_title

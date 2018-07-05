@@ -5,13 +5,11 @@ class BridgeController < ApplicationController
   include ApplicationHelper
   include BridgeHelper
 
-  before_action :authenticate_user!, except: [:list]
-  before_action except: [:list] { require_permission(:users) }
-  skip_before_action :verify_authenticity_token, only: %i[auto_show auto_hide]
+  secure!(:users, except: :list)
 
-  skip_before_action :prerender_for_layout, only: %i[
-    remove_committee remove_standing_committee
-  ]
+  title!('Officers')
+
+  ajax!(only: %i[remove_committee remove_standing_committee])
 
   before_action :users_for_select, only: %i[assign_bridge assign_committee]
 

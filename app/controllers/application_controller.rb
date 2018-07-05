@@ -21,6 +21,8 @@ class ApplicationController < ActionController::Base
   before_action :time_formats
   before_action :prerender_for_layout
 
+  skip_before_action :verify_authenticity_token, only: %i[auto_show auto_hide]
+
   after_action { flash.discard if request.xhr? }
 
   def self.render_markdown_views
@@ -36,6 +38,12 @@ class ApplicationController < ActionController::Base
   def self.ajax!(only: nil, except: nil)
     skip_before_action(:prerender_for_layout, only: only, except: except)
   end
+
+  # Overwritten by Events controllers
+  def event_type_param
+    nil
+  end
+  helper_method :event_type_param
 
   private
 

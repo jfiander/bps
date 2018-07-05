@@ -10,7 +10,7 @@ RSpec.describe Event, type: :model do
   describe 'flags' do
     describe 'event_type' do
       it 'should return the category group of the event_type' do
-        expect(@event.category).to eql(:course)
+        expect(@event.category).to eql('course')
       end
     end
 

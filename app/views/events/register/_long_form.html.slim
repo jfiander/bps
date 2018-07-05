@@ -8,7 +8,7 @@
           = fa_icon('minus-square', fa: 'fw')
           | Cancel Registration
       - elsif @event.registerable?
-        = link_to(register_path(params[:type], @event.id), method: :put, remote: true, class: 'control', id: "event_#{@event.id}") do
+        = link_to(register_path(event_type_param, @event.id), method: :put, remote: true, class: 'control', id: "event_#{@event.id}") do
           = fa_icon('calendar-check', fa: 'fw', style: :regular)
           | Register
       - else

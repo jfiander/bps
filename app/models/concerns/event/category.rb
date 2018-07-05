@@ -6,25 +6,25 @@ module Concerns::Event::Category
     @seminar_ids = seminars_from_cache(event_types).map(&:id)
     @meeting_ids = meetings_from_cache(event_types).map(&:id)
 
-    return :course if event_type_id.in? @course_ids
-    return :seminar if event_type_id.in? @seminar_ids
-    return :event if event_type_id.in? @meeting_ids
+    return 'course' if event_type_id.in? @course_ids
+    return 'seminar' if event_type_id.in? @seminar_ids
+    return 'meeting' if event_type_id.in? @meeting_ids
   end
 
   def category?(cat, event_types = nil)
-    category(event_types) == cat.to_sym
+    category(event_types) == cat.to_s
   end
 
   def course?(event_types = nil)
-    category?(:course, event_types)
+    category?('course', event_types)
   end
 
   def seminar?(event_types = nil)
-    category?(:seminar, event_types)
+    category?('seminar', event_types)
   end
 
   def meeting?(event_types = nil)
-    category?(:meeting, event_types)
+    category?('meeting', event_types)
   end
 
   private
@@ -40,12 +40,12 @@ module Concerns::Event::Category
   def seminars_from_cache(event_types)
     return EventType.seminars if event_types.nil?
 
-    event_types.find_all { |e| e.event_category.to_sym.in?([:seminar]) }
+    event_types.find_all { |e| e.event_category.to_sym.in?(['seminar']) }
   end
 
   def meetings_from_cache(event_types)
     return EventType.meetings if event_types.nil?
 
-    event_types.find_all { |e| e.event_category.to_sym.in?([:meeting]) }
+    event_types.find_all { |e| e.event_category.to_sym.in?(['meeting']) }
   end
 end

@@ -23,6 +23,6 @@ class RegistrationMailerPreview < ActionMailer::Preview
   end
 
   def registration_ao
-    Registration.all.select { |r| r.event.category == :event }.last
+    Registration.all.select { |r| r.event.category == 'meeting' }.last
   end
 end

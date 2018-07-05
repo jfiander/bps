@@ -1,6 +1,5 @@
 class LinksController < ApplicationController
-  before_action :authenticate_user!
-  before_action { require_permission(:admin, strict: true) }
+  secure!(:admin, strict: true)
 
   def s3
     @link_keys = links.keys

@@ -1,65 +1,65 @@
 # frozen_string_literal: true
 
+# This is the base class for the separate controllers for each category:
+# Events::EventsController
+# Events::CoursesController
+# Events::SeminarsController
+#
+# No route should point to this controller directly. Security is handled by each
+# sub-controller, as appropriate.
 class EventsController < ApplicationController
   include EventsHelper
   include Events::Preload
   include Events::Edit
   include Events::Update
 
-  before_action :authenticate_user!, except: %i[schedule catalog show]
-  before_action except: %i[schedule catalog show locations remove_location] do
-    require_permission(params[:type])
-  end
-
-  before_action :find_event,         only: %i[copy edit expire]
-  before_action :prepare_form,       only: %i[new copy edit]
-  before_action :check_for_blank,    only: %i[create update]
-
-  before_action :time_formats,       only: %i[schedule catalog registrations show]
-  before_action :preload_events,     only: %i[schedule catalog registrations show]
-  before_action :location_names,     only: %i[new copy edit]
-  before_action :set_create_path,    only: %i[new copy]
+  before_action :find_event, only: %i[copy edit expire]
+  before_action :prepare_form, only: %i[new copy edit]
+  before_action :check_for_blank, only: %i[create update]
+  before_action :time_formats, only: %i[schedule catalog registrations show]
+  before_action :preload_events, only: %i[schedule catalog registrations show]
+  before_action :location_names, only: %i[new copy edit]
+  before_action :set_create_path, only: %i[new copy]
   before_action :load_registrations, only: [:schedule], if: :user_signed_in?
 
-  before_action { page_title("#{params[:type].to_s.titleize}s") }
-
   def schedule
-    @events = get_events(params[:type], :current)
+    @events = get_events(event_type_param, :current)
 
-    @current_user_permitted_event_type = current_user&.permitted?(params[:type])
+    @current_user_permitted_event_type = current_user&.permitted?(event_type_param)
 
     return unless @current_user_permitted_event_type
     @registered_users = Registration.includes(:user).all.group_by(&:event_id)
-    @expired_events = get_events(params[:type], :expired)
+    @expired_events = get_events(event_type_param, :expired)
   end
 
   def catalog
-    @event_catalog = if params[:type] == :course
+    @event_catalog = if event_type_param == 'course'
                        catalog_list.slice(
                          'public', 'advanced_grade', 'elective'
                        ).symbolize_keys
                      else
-                       catalog_list[params[:type].to_s]
+                       catalog_list[event_type_param]
                      end
 
-    @current_user_permitted_event_type = current_user&.permitted?(params[:type])
+    @current_user_permitted_event_type = current_user&.permitted?(event_type_param)
   end
 
   def registrations
-    @current = Event.order(:start_at).current(params[:type]).with_registrations
-    @expired = Event.order(:start_at).expired(params[:type]).with_registrations
+    @current = Event.order(:start_at).current(event_type_param).with_registrations
+    @expired = Event.order(:start_at).expired(event_type_param).with_registrations
   end
 
   def show
     @event = Event.find_by(id: clean_params[:id])
-    if @event.blank? || @event.category != params[:type]
-      flash[:notice] = "Couldn't find that #{params[:type]}."
-      redirect_to send("#{params[:type]}s_path")
+    category = event_type_param == 'event' ? 'meeting' : event_type_param
+    if @event.blank? || @event.category != category
+      flash[:notice] = "Couldn't find that #{event_type_param}."
+      redirect_to send("#{event_type_param}s_path")
       return
     end
 
     @locations = Location.searchable
-    @event_title = params[:type].to_s.titleize
+    @event_title = event_type_param.titleize
     @registration = Registration.new(event_id: clean_params[:id])
 
     return unless user_signed_in?
@@ -88,7 +88,7 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @submit_path = send("update_#{params[:type]}_path")
+    @submit_path = send("update_#{event_type_param}_path")
     @edit_mode = 'Modify'
     render :new
   end
@@ -104,11 +104,11 @@ class EventsController < ApplicationController
 
   def expire
     if @event.update(expires_at: Time.now)
-      flash[:success] = "Successfully expired #{params[:type]}."
+      flash[:success] = "Successfully expired #{event_type_param}."
     else
-      flash[:alert] = "Unable to expire #{params[:type]}."
+      flash[:alert] = "Unable to expire #{event_type_param}."
     end
 
-    redirect_to send("#{params[:type]}s_path")
+    redirect_to send("#{event_type_param}s_path")
   end
 end

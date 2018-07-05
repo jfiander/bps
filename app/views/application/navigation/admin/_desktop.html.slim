@@ -1,15 +1,15 @@
-- if (current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)) || current_user&.permitted?(params[:type]) || (current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events locations]))
+- if (current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)) || current_user&.permitted?(event_type_param) || (current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events courses seminars locations]))
   li.menu onclick=""
     a Current Page
     ul
       - if current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)
         = link 'Edit This Page', path: edit_page_path(controller.action_name), fa: { name: 'edit', options: { fa: :fw } }
 
-      - if current_user&.permitted?(params[:type])
-        = link "Add #{params[:type].to_s.titleize}", path: send("new_#{params[:type]}_path"), fa: { name: 'calendar-plus', options: { style: :regular, fa: :fw } }
-        = link 'Registrations', path: send("#{params[:type]}_registrations_path"), fa: { name: 'calendar-check', options: { style: :regular, fa: :fw } } unless controller.action_name == 'registrations'
+      - if current_user&.permitted?(event_type_param)
+        = link "Add #{event_type_param.titleize}", path: send("new_#{event_type_param}_path"), fa: { name: 'calendar-plus', options: { style: :regular, fa: :fw } }
+        = link 'Registrations', path: send("#{event_type_param}_registrations_path"), fa: { name: 'calendar-check', options: { style: :regular, fa: :fw } } unless controller.action_name == 'registrations'
 
-      - if current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events locations])
+      - if current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events courses seminars locations])
         = link 'Add Location', path: new_location_path, fa: { name: 'plus-square', options: { fa: :fw } }
 
 - if current_user&.permitted?(:page)

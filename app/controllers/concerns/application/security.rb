@@ -3,7 +3,9 @@
 module Application::Security
   module ClassMethods
     def secure!(*roles, strict: false, only: nil, except: nil)
-      before_action(:authenticate_user!, only: only, except: except)
+      before_action(only: only, except: except) do
+        authenticate_user!
+      end
 
       return unless only.present? || except.present?
       before_action(only: only, except: except) do

@@ -4,34 +4,26 @@ class MembersController < ApplicationController
   include Members::BilgeAndMinutes
   include Members::Roster
 
-  skip_before_action :prerender_for_layout, only: %i[
-    request_item fulfill_item
-  ]
+  ajax!(only: %i[request_item fulfill_item])
 
-  before_action :authenticate_user!
-  before_action only: [:admin] { require_permission(:admin) }
-  before_action only: [:upload_bilge] { require_permission(:newsletter) }
-  before_action only: [:upload_minutes] { require_permission(:minutes) }
-  before_action only: [:fulfill_item] { require_permission(:store) }
-  before_action(only: %i[update_roster upload_roster]) do
-    require_permission(:roster)
-  end
-  before_action(only: %i[edit_markdown update_markdown]) do
-    require_permission(:page)
-  end
-  before_action only: [:ranks] do
-    require_permission(%i[users newsletter page minutes event education])
-  end
+  secure!
+  secure!(:admin, only: :admin)
+  secure!(:newsletter, only: :upload_bilge)
+  secure!(:minutes, only: :upload_minutes)
+  secure!(:store, only: :fulfill_item)
+  secure!(:roster, only: %i[update_roster upload_roster])
+  secure!(:page, only: %i[edit_markdown update_markdown])
+  secure!(%i[users newsletter page minutes event education], only: %i[ranks])
 
   before_action :bilge_issue, only: %i[upload_bilge remove_bilge]
   before_action :get_minutes_issue, only: %i[upload_minutes remove_minutes]
   before_action :list_minutes, only: %i[minutes get_minutes get_minutes_excom]
 
-  before_action only: [:minutes] { page_title('Minutes') }
-  before_action only: [:excom_minutes] { page_title('ExCom Minutes') }
-  before_action only: [:edit_markdown] { page_title('Edit Page') }
-  before_action only: [:ranks] { page_title('Member Ranks and Grades') }
-  before_action only: [:auto_permits] { page_title('Automatic Permissions') }
+  title!('Minutes', only: :minutes)
+  title!('ExCom Minutes', only: :excom_minutes)
+  title!('Edit Page', only: :edit_markdown)
+  title!('Member Ranks and Grades', only: :ranks)
+  title!('Automatic Permissions', only: :auto_permits)
 
   render_markdown_views
 

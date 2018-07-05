@@ -14,7 +14,7 @@ em
     .left
       span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
       = f.label :event_type_id, "#{@event_title} name"
-    .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), {include_blank: true, prompt: "Please select a #{params[:type]} type"}, required: true
+    .right = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), {include_blank: true, prompt: "Please select a #{event_type_param} type"}, required: true
     br.clear
 
     .left 
@@ -23,7 +23,7 @@ em
         li.red If you need to add a new location, do that before continuing.
         li
           | You can also save this 
-          = params[:type]
+          = event_type_param
           | , go create the location, then add it here later.
     .right
       - if @locations.present?
@@ -34,7 +34,7 @@ em
         li = link_to(refresh_locations_path(id: @event&.id), method: :put, remote: true, class: 'green') { fa_icon('sync-alt') + 'Reload Locations' }
     br.clear
 
-    - if params[:type].in? [:course, :seminar]
+    - if event_type_param.in? %w[course seminar]
       .left = f.label :show_in_catalog, "Show in #{@event_title} Catalog"
       .right
         label.switch
@@ -104,7 +104,7 @@ em
 
     .left
       span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
-      = f.label :expires_at, "Do not display this #{params[:type]} after", class: "red"
+      = f.label :expires_at, "Do not display this #{event_type_param} after", class: "red"
     .right = f.datetime_field :expires_at, required: true
     br.clear
 
@@ -116,7 +116,7 @@ em
     .right = f.text_area :description
     br.clear
 
-    - if params[:type].in? [:course, :seminar]
+    - if event_type_param.in? %w[course seminar]
       .left
         = f.label :requirements, "Student requirements"
         ul
@@ -159,7 +159,7 @@ em
           = image_tag @event.get_flyer, width: 100
     br.clear
 
-    - if params[:type].in? [:course, :seminar]
+    - if event_type_param.in? %w[course seminar]
       .left
         = label_tag :instructors, "Instructor(s)"
         ul

@@ -33,7 +33,7 @@ class RegistrationMailer < ApplicationMailer
   private
 
   def signature_for_confirm
-    if @registration.event.category == :event
+    if @registration.event.category == 'meeting'
       ao_signature
     else
       seo_signature

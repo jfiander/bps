@@ -3,8 +3,7 @@
 class PermissionsController < ApplicationController
   include User::Load
 
-  before_action :authenticate_user!
-  before_action { require_permission(:users) }
+  secure!(:users)
 
   before_action :users_for_select, only: %i[index]
 

@@ -9,7 +9,7 @@
   br
 - if defined?(@event_catalog)
   - if @current_user_permitted_event_type
-    = link_to(send("edit_#{params[:type]}_path", event), class: "control blue-faded") do
+    = link_to(send("edit_#{event_type_param}_path", event), class: "control blue-faded") do
       = fa_icon('edit', fa: 'fw')
       | Edit
 - else

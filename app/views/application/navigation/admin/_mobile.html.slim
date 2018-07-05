@@ -1,9 +1,9 @@
-- if current_user&.permitted?(params[:type])
-  = link "Add #{params[:type].to_s.titleize}", path: send("new_#{params[:type]}_path"), fa: { name: 'calendar-plus', options: { style: :regular } }
+- if current_user&.permitted?(event_type_param)
+  = link "Add #{event_type_param.titleize}", path: send("new_#{event_type_param}_path"), fa: { name: 'calendar-plus', options: { style: :regular } }
   - if controller.action_name != 'registrations'
-    = link 'Registrations', path: send("#{params[:type]}_registrations_path"), fa: { name: 'calendar-check', options: { style: :regular } }
+    = link 'Registrations', path: send("#{event_type_param}_registrations_path"), fa: { name: 'calendar-check', options: { style: :regular } }
 
-- if current_user&.permitted?(:event, :course, :seminar, :page) && controller_name == 'locations'
+- if current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events courses seminars locations])
   = link 'Add Location', path: new_location_path, fa: { name: 'plus-square' }
 
 - if current_user&.permitted?(:store) && controller.action_name == 'store'

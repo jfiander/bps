@@ -9,22 +9,21 @@ class UserController < ApplicationController
   include User::Edit
   include User::Insignia
 
-  before_action :authenticate_user!
-  skip_before_action :verify_authenticity_token, only: %i[auto_show auto_hide]
-  skip_before_action :prerender_for_layout, only: %i[
-    register cancel_registration remove_committee remove_standing_committee
-    no_member_registrations? no_registrations? register_for_event
-    successfully_registered already_registered unable_to_register
-    cannot_cancel_registration? successfully_cancelled unable_to_cancel
-  ]
+  secure!
+  secure!(:admin, only: :assign_photo)
+  secure!(:users, except: %i[current show register cancel_registration])
 
-  before_action only: [:assign_photo] { require_permission(:admin) }
-  before_action except: %i[current show register cancel_registration] do
-    require_permission(:users)
-  end
+  ajax!(
+    only: %i[
+      register cancel_registration no_member_registrations? no_registrations?
+      register_for_event successfully_registered already_registered
+      unable_to_register cannot_cancel_registration? successfully_cancelled
+      unable_to_cancel
+    ]
+  )
+
   before_action :can_view_profile?, only: [:show]
   before_action :find_user, only: [:show]
-
   before_action :load_users, only: [:list]
   before_action(
     :users_for_select,
@@ -32,7 +31,8 @@ class UserController < ApplicationController
   )
   before_action :time_formats, only: [:show]
 
-  before_action { page_title('Users') }
+  title!('Users', except: :show)
+  title!('User', only: :show)
 
   def show
     @registrations = Registration.for_user(@user.id).current.reject do |r|
@@ -60,7 +60,7 @@ class UserController < ApplicationController
 
   def can_view_profile?
     unless clean_params[:id].to_i == current_user.id ||
-           current_user.permitted?(:admin)
+           current_user&.permitted?(:admin)
       redirect_to user_path(current_user.id)
     end
   end

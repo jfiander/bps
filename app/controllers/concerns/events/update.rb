@@ -4,7 +4,7 @@ module Events::Update
   private
 
   def update_attachments
-    return nil unless params[:type].in? %i[course seminar]
+    return nil unless event_type_param.in? %i[course seminar]
 
     Event.transaction do
       clear_before_time = Time.now

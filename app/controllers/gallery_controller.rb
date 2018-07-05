@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class GalleryController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
-  before_action(except: %i[index show]) { require_permission(:photos) }
+  secure!(except: %i[index show])
+  secure!(:photos, except: %i[index show])
 
-  before_action { page_title('Photos') }
+  title!('Photos')
 
   def index
     @albums = Album.includes(:photos).all

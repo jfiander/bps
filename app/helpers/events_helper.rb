@@ -60,14 +60,14 @@ module EventsHelper
   def get_events(type, scope = :current)
     @event_types ||= EventType.all
 
-    case type
-    when :course
+    case type.to_s
+    when 'course'
       courses = scoped_courses(scope)
 
       courses.all?(&:blank?) ? [] : courses
-    when :seminar
+    when 'seminar'
       filter_scoped('seminar', scope)
-    when :event
+    when 'event'
       filter_scoped('meeting', scope)
     end
   end

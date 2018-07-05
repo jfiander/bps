@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class LocationsController < ApplicationController
-  before_action :authenticate_user!
-  before_action { require_permission(:event, :course, :seminar, :page) }
+  secure!(:event, :course, :seminar, :page)
 
-  before_action { page_title('Locations') }
+  title!('Locations')
 
-  skip_before_action :prerender_for_layout, only: :refresh
+  ajax!(only: :refresh)
 
   def list
     @locations = Location.all.order(:id).map(&:display)

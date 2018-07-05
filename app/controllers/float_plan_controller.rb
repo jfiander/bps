@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class FloatPlanController < ApplicationController
-  before_action :authenticate_user!
-  before_action(only: %i[list refresh]) { require_permission(:float) }
+  secure!
+  secure!(:float, only: %i[list refresh])
+
+  title!('Float Plans')
 
   def new
     @float_plan = FloatPlan.new

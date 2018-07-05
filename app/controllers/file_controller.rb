@@ -1,16 +1,10 @@
 # frozen_string_literal: true
 
 class FileController < ApplicationController
-  before_action :authenticate_user!
-  before_action { require_permission(:page) }
+  secure!(:page)
 
-  before_action only: %i[new create destroy] do
-    page_title('Files')
-  end
-
-  before_action only: %i[new_header create_header destroy_header] do
-    page_title('Headers')
-  end
+  title!('Files', only: %i[new create destroy])
+  title!('Headers', only: %i[new_header create_header destroy_header])
 
   def new
     @file = MarkdownFile.new
