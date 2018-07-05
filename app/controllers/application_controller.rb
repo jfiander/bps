@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   include Application::Meta
   include Application::LayoutAndFormatting
+  include Application::Security
   include MarkdownHelper
   include FontAwesomeHelper
   include BucketHelper
@@ -27,45 +28,16 @@ class ApplicationController < ActionController::Base
     MarkdownHelper::VIEWS[controller_name]&.each { |m| define_method(m) {} }
   end
 
+  def self.title!(title = nil, only: nil, except: nil)
+    title = yield if block_given?
+    before_action(only: only, except: except) { page_title(title) }
+  end
+
+  def self.ajax!(only: nil, except: nil)
+    skip_before_action(:prerender_for_layout, only: only, except: except)
+  end
+
   private
-
-  def ssl_configured?
-    Rails.env.production?
-  end
-
-  def handle_unverified_request
-    flash[:alert] = 'Sorry, please try that again.'
-    redirect_to :back
-  end
-
-  def require_permission(*roles, strict: false)
-    return if current_user&.permitted?(*roles, strict: strict)
-    redirect_to root_path
-    # before_action only: [:method_1] { require_permission(:role_name) }
-  end
-
-  def authenticate_user!(*args)
-    return super(*args) if user_signed_in?
-    flash[:referrer] = request.original_fullpath
-    flash[:notice] = 'You must login to continue.'
-    redirect_to new_user_session_path
-  end
-
-  def authenticate_inviter!
-    unless current_user&.permitted?(:users)
-      redirect_to root_path
-      return
-    end
-
-    super
-  end
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(
-      :account_update,
-      keys: %i[profile_photo rank first_name last_name]
-    )
-  end
 
   def markdown_views?
     defined?(MARKDOWN_EDITABLE_VIEWS)
