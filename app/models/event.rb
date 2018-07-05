@@ -68,10 +68,12 @@ class Event < ApplicationRecord
 
   def formatted_length
     return nil if length.blank?
-    string = "#{length.hour} hours"
-    remainder = length.to_i % 3600
-    string += " #{60 * remainder / 3600} mins" unless remainder.zero?
-    string
+
+    hour = length.hour
+    min = length.min
+    hours = "#{hour} #{'hour'.pluralize(hour)}"
+    mins = " #{min} #{'min'.pluralize(min)}" unless min.zero?
+    "#{hours}#{mins}"
   end
 
   def register_user(user)

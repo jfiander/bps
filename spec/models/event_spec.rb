@@ -165,6 +165,24 @@ RSpec.describe Event, type: :model do
           '<b>Members:</b> $5, <b>Non-members:</b> $10'
         )
       end
+
+      it 'should correctly format a nil length' do
+        expect(@event.formatted_length).to be_nil
+      end
+
+      it 'should correctly format a whole-hour length' do
+        @event.length = Time.now.beginning_of_day + 1.hour
+        @event.save
+
+        expect(@event.formatted_length).to eql('1 hour')
+      end
+
+      it 'should correctly format a length with minutes' do
+        @event.length = Time.now.beginning_of_day + 2.hours + 15.minutes
+        @event.save
+
+        expect(@event.formatted_length).to eql('2 hours 15 mins')
+      end
     end
   end
 end
