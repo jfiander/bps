@@ -17,11 +17,14 @@
   = render 'events/mobile/register', event: event, long_form: long_form
 - if @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
   br
-.event-mobile-contents = event.start_at.strftime(@long_time_format)
+.event-mobile-contents
+  - if event.multiple_sessions?
+    b Starts: 
+  = event.start_at.strftime(@long_time_format)
 - if (event.multiple_sessions? || event.length?)
   .event-mobile-contents
     - if event.multiple_sessions?
-      = "#{event.sessions} sessions"
+      b = "#{event.sessions} sessions"
       - if event.length?
         | , 
     - if event.length?

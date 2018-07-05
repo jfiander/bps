@@ -11,11 +11,13 @@
                 .table-cell.table-header.event-title = event_type(event).display_title
                 .table-cell.date-details
                   - unless defined?(@event_catalog)
+                    - if event.multiple_sessions?
+                      b Starts: 
                     = event.start_at.strftime(@long_time_format)
                     - if (event.multiple_sessions? || event.length?)
                       br
                     - if event.multiple_sessions?
-                      = "#{event.sessions} sessions"
+                      b = "#{event.sessions} sessions"
                       - if event.length?
                         | , 
                     - if event.length?
