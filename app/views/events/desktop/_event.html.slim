@@ -19,7 +19,9 @@
                       - if event.length?
                         | , 
                     - if event.length?
-                      = event.length&.strftime(@duration_format)
+                      = event.formatted_length
+                      - if event.multiple_sessions?
+                        |  each
                     - if event.cost.present?
                       - if event.multiple_sessions? || event.length?
                         br

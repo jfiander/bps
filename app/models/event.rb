@@ -66,6 +66,14 @@ class Event < ApplicationRecord
     "<b>Members:</b> $#{member_cost}, <b>Non-members:</b> $#{cost}".html_safe
   end
 
+  def formatted_length
+    return nil if length.blank?
+    string = "#{length.hour} hours"
+    remainder = length.to_i % 3600
+    string += " #{60 * remainder / 3600} mins" unless remainder.zero?
+    string
+  end
+
   def register_user(user)
     Registration.create(user: user, event: self)
   end
