@@ -185,4 +185,28 @@ RSpec.describe Event, type: :model do
       end
     end
   end
+
+  describe 'flyers' do
+    it 'should get the correct course book cover' do
+      event_type = FactoryBot.create(:event_type, event_category: 'public')
+      event = FactoryBot.create(:event, event_type: event_type)
+      expect(event.get_flyer).to eql(
+        'https://static.bpsd9.org/book_covers/courses/americas_boating_course.jpg'
+      )
+    end
+
+    it 'should get the correct seminar book cover' do
+      event_type = FactoryBot.create(:event_type, event_category: 'seminar', title: 'vhf_dsc')
+      event = FactoryBot.create(:event, event_type: event_type)
+      expect(event.get_flyer).to eql(
+        'https://static.bpsd9.org/book_covers/seminars/vhf_dsc.jpg'
+      )
+    end
+
+    it 'should check if the event has a flyer' do
+      event_type = FactoryBot.create(:event_type, event_category: 'meeting')
+      event = FactoryBot.create(:event, event_type: event_type)
+      expect(event.get_flyer).to be_nil
+    end
+  end
 end
