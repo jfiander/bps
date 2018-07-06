@@ -137,8 +137,7 @@ class ImportUsers
         Date.strptime(datestring, '%Y%m%d')
       end
     rescue StandardError
-      puts "Invalid date: #{datestring}"
-      sleep 1
+      puts "Invalid date: #{datestring}" unless Rails.env.test?
       return
     end
   end
