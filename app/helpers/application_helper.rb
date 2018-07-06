@@ -33,8 +33,7 @@ module ApplicationHelper
   end
 
   def auto_show(partial)
-    return '' unless page_name_in_auto_shows?(partial)
-    'auto-show'
+    session[:auto_shows]&.include?(partial) ? 'auto-show' : ''
   end
 
   def admin_header(header_text)
@@ -43,10 +42,6 @@ module ApplicationHelper
   end
 
   private
-
-  def page_name_in_auto_shows?(partial)
-    session[:auto_shows]&.include?(partial)
-  end
 
   def sanitize(text)
     ActionController::Base.helpers.sanitize text
