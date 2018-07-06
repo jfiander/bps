@@ -17,8 +17,16 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
 SimpleCov.start do
+  # Not application code
   add_filter '/spec'
   add_filter '/config'
+  add_filter '/app/mailers/previews'
+
+  # Invariant code, used for configuring API access
+  add_filter 'app/lib/google_calendar_api.rb'
+
+  # Config code located in app directory
+  add_filter 'app/helpers/devise_helper.rb'
 end
 
 RSpec.configure do |config|
