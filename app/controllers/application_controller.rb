@@ -44,10 +44,4 @@ class ApplicationController < ActionController::Base
     nil
   end
   helper_method :event_type_param
-
-  private
-
-  def markdown_views?
-    defined?(MARKDOWN_EDITABLE_VIEWS)
-  end
 end
