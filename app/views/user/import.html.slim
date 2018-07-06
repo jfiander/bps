@@ -56,8 +56,8 @@ hr
   = spinner_button button_text: 'Upload', css_class: 'big'
 
 - if defined?(@import_results)
-  p = "Created #{@import_results[:created].count} new users."
-  p = "Updated #{@import_results[:updated].count} existing users."
-  p = "Added #{@import_results[:completions].count} completion dates."
-  p = "Locked #{@import_results[:locked].count} missing users."
+  p = "Created #{@import_results[:created].count} new #{'user'.pluralize(@import_results[:created].count)}."
+  p = "Updated #{@import_results[:updated].count} existing #{'user'.pluralize(@import_results[:updated].count)}."
+  p = "Added #{@import_results[:completions].count} completion #{'date'.pluralize(@import_results[:completions].count)}."
+  p = "Locked #{@import_results[:locked].count} missing #{'user'.pluralize(@import_results[:locked].count)}."
   p = @import_results.inspect
