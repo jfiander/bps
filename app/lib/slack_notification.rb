@@ -41,7 +41,7 @@ class SlackNotification
       @title = fields
       fields = []
     elsif !fields.is_a?(Array)
-      raise 'Unsupported fields format.'
+      raise ArgumentError, 'Unsupported fields format.'
     end
 
     fields.is_a?(Hash) ? fields_from_hash(fields) : fields

@@ -64,7 +64,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'miscellaneous' do
+  describe 'formatting' do
     before(:each) do
       @user = FactoryBot.create(
         :user,
@@ -81,6 +81,37 @@ RSpec.describe User, type: :model do
 
     it 'should have the correct full_name' do
       expect(@user.full_name).to eql('Lt/C John Doe, AP')
+    end
+
+    describe 'BOC' do
+      it 'should return nil for no BOC level' do
+        expect(FactoryBot.create(:user).boc).to be_nil
+      end
+
+      describe 'with BOC level' do
+        before(:each) do
+          @user = FactoryBot.create(:user)
+          FactoryBot.create(:course_completion, user: @user, course_key: 'BOC_IN')
+        end
+
+        it 'should return the correct BOC level' do
+          expect(@user.boc).to eql('IN')
+        end
+
+        describe 'with endorsements' do
+          before(:each) do
+            FactoryBot.create(:course_completion, user: @user, course_key: 'BOC_CAN')
+          end
+
+          it 'should return the correct BOC level with endorsements' do
+            expect(@user.boc).to eql('IN (CAN)')
+          end
+
+          it 'should generate the correct grade suffix' do
+            expect(@user.boc_display).to eql('-IN')
+          end
+        end
+      end
     end
 
     it 'should return the correct bridge_hash' do
