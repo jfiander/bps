@@ -51,12 +51,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find_by(id: clean_params[:id])
-    category = event_type_param == 'event' ? 'meeting' : event_type_param
-    if @event.blank? || @event.category != category
-      flash[:notice] = "Couldn't find that #{event_type_param}."
-      redirect_to send("#{event_type_param}s_path")
-      return
-    end
+    return if event_not_found?
 
     @locations = Location.searchable
     @event_title = event_type_param.titleize
@@ -110,5 +105,16 @@ class EventsController < ApplicationController
     end
 
     redirect_to send("#{event_type_param}s_path")
+  end
+
+  private
+
+  def event_not_found?
+    category = event_type_param == 'event' ? 'meeting' : event_type_param
+    return false unless @event.blank? || @event.category != category
+
+    flash[:notice] = "Couldn't find that #{event_type_param}."
+    redirect_to send("#{event_type_param}s_path")
+    true
   end
 end
