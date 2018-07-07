@@ -103,14 +103,11 @@ class EventType < ApplicationRecord
       'commanders' => "Commander's"
     }
 
-    initials = {
-      'gps' => 'GPS',
-      'vhf dsc' => 'VHF/DSC',
-      'vhf' => 'VHF',
-      'dsc' => 'DSC',
-      'ais' => 'AIS',
-      'pcoc' => 'PCOC',
-      'cpr aed' => 'CPR/AED'
+    # Configure acronyms in config/initializers/inflections.rb
+
+    slashes = {
+      'VHF DSC' => 'VHF/DSC',
+      'CPR AED' => 'CPR/AED'
     }
 
     small_words = {
@@ -124,6 +121,6 @@ class EventType < ApplicationRecord
       ' For ' => ' for '
     }
 
-    [possessives, initials, small_words].inject(&:merge)
+    [possessives, slashes, small_words].inject(&:merge)
   end
 end

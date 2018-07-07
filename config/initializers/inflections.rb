@@ -11,6 +11,18 @@
 # end
 
 # These inflection rules are supported but not enabled by default:
-# ActiveSupport::Inflector.inflections(:en) do |inflect|
-#   inflect.acronym 'RESTful'
-# end
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.acronym 'AED'
+  inflect.acronym 'CPR'
+  inflect.acronym 'USPS'
+  inflect.acronym 'BPS'
+  inflect.acronym 'ABC'
+  inflect.acronym 'VSC'
+  inflect.acronym 'GPS'
+  inflect.acronym 'VHF'
+  inflect.acronym 'DSC'
+  inflect.acronym 'AIS'
+  inflect.acronym 'PCOC'
+  inflect.acronym 'VHF DSC'
+  inflect.acronym 'CPR AED'
+end
