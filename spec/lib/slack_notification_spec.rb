@@ -26,35 +26,49 @@ RSpec.describe SlackNotification, type: :lib do
 
   let(:notification_with_string) do
     notification = notification_with_short_three.dup
-    notification['title'] = 'Just one field here'
+    notification['title'] = 'Just one field'
     notification.delete('fields')
     notification
   end
 
   before(:all) do
-    @hash_notification = SlackNotification.new(
+    base_notification_details = {
       type: :info, title: 'Test Notification',
       fallback: 'This is a test notification',
-      fields: { 'One' => 'one', 'Two' => 'two', 'Three' => 'three' },
+      fields: nil,
       dryrun: true
+    }
+
+    @hash_notification = SlackNotification.new(
+      base_notification_details.merge(
+        fields: {
+          'One' => 'one', 'Two' => 'two', 'Three' => 'three'
+        }
+      )
     )
 
     @array_notification = SlackNotification.new(
-      type: :info, title: 'Test Notification',
-      fallback: 'This is a test notification',
-      fields: [
-        { 'title' => 'One', 'value' => 'one', 'short' => true },
-        { 'title' => 'Two', 'value' => 'two', 'short' => true },
-        { 'title' => 'Three', 'value' => 'three is long', 'short' => false }
-      ],
-      dryrun: true
+      base_notification_details.merge(
+        fields: [
+          { 'title' => 'One', 'value' => 'one', 'short' => true },
+          { 'title' => 'Two', 'value' => 'two', 'short' => true },
+          { 'title' => 'Three', 'value' => 'three is long', 'short' => false }
+        ]
+      )
     )
 
     @string_notification = SlackNotification.new(
-      type: :info, title: 'Test Notification',
-      fallback: 'This is a test notification',
-      fields: 'Just one field here',
-      dryrun: true
+      base_notification_details.merge(
+        fields: 'Just one field'
+      )
+    )
+
+    @live_notification = SlackNotification.new(
+      base_notification_details.merge(
+        fields: 'Just one field',
+        dryrun: false,
+        channel: :test
+      )
     )
   end
 
@@ -117,7 +131,6 @@ RSpec.describe SlackNotification, type: :lib do
   end
 
   it 'should successfully send a notification' do
-    @hash_notification.dryrun = false
-    expect { @hash_notification.notify! }.not_to raise_error
+    expect { @live_notification.notify! }.not_to raise_error
   end
 end
