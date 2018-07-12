@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   get     '/minutes',                   to: 'members#minutes'
   post    '/assign_photo',              to: 'user#assign_photo'
   get     '/locations',                 to: 'locations#list'
+  get     '/event_types',               to: 'event_types#list'
   get     '/apply',                     to: 'member_applications#new'
   get     '/applications',              to: 'member_applications#review'
   get     '/s3',                        to: 'links#s3'
@@ -96,13 +97,15 @@ Rails.application.routes.draw do
   post    '/header/upload',      to: 'file#create_header',  as: 'upload_header'
   delete  '/header/:id/destroy', to: 'file#destroy_header', as: 'remove_header'
 
-  # Locations
-  get     '/locations/new',           to: 'locations#new',    as: 'new_location'
-  post    '/locations/create',        to: 'locations#create', as: 'create_location'
-  get     '/locations/:id/edit',      to: 'locations#edit',   as: 'edit_location'
-  patch   '/locations/:id/update',    to: 'locations#update', as: 'update_location'
-  delete  '/locations/:id/remove',    to: 'locations#remove', as: 'remove_location'
-  put     '/locations/refresh(/:id)', to: 'locations#refresh', as: 'refresh_locations'
+  # Locations and Event Types
+  %i[location event_type].each do |model|
+    get     "/#{model}s/new",           to: "#{model}s#new",     as: "new_#{model}"
+    post    "/#{model}s/create",        to: "#{model}s#create",  as: "create_#{model}"
+    get     "/#{model}s/:id/edit",      to: "#{model}s#edit",    as: "edit_#{model}"
+    patch   "/#{model}s/:id/update",    to: "#{model}s#update",  as: "update_#{model}"
+    delete  "/#{model}s/:id/remove",    to: "#{model}s#remove",  as: "remove_#{model}"
+    get     "/#{model}s/refresh(/:id)", to: "#{model}s#refresh", as: "refresh_#{model}s"
+  end
 
   # Photo Galleries
   post    '/album/new',       to: 'gallery#add_album',    as: 'new_album'

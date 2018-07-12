@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LocationsController < ApplicationController
-  secure!(:event, :course, :seminar, :page)
+  secure!(:event, :course, :seminar)
 
   title!('Locations')
 

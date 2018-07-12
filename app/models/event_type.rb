@@ -37,6 +37,8 @@ class EventType < ApplicationRecord
 
   validates :event_category, inclusion: %w[advanced_grade elective public seminar meeting]
 
+  before_save { self.title = title.downcase.tr(' ', '_') }
+
   def self.selector(type)
     return seminars.ordered.map(&:to_select_array) if type == 'seminar'
     return meetings.ordered.map(&:to_select_array) if type == 'event'
@@ -46,6 +48,12 @@ class EventType < ApplicationRecord
     courses += select_array_section(:advanced_grade)
     courses += select_array_section(:elective)
     courses
+  end
+
+  def self.searchable
+    all.map do |event_type|
+      [event_type.event_category, event_type.title]
+    end
   end
 
   def self.select_array_section(scope, blank: true)

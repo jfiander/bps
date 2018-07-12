@@ -1,4 +1,4 @@
-- if (current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)) || current_user&.permitted?(event_type_param) || (current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events courses seminars locations]))
+- if (current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)) || current_user&.permitted?(event_type_param) || (current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events courses seminars locations event_types]))
   li.menu onclick=""
     a Current Page
     ul
@@ -11,6 +11,9 @@
 
       - if current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events courses seminars locations])
         = link 'Add Location', path: new_location_path, fa: { name: 'plus-square', options: { fa: :fw } }
+
+      - if current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events courses seminars event_types])
+        = link 'Add Event Type', path: new_event_type_path, fa: { name: 'plus-square', options: { fa: :fw } }
 
 - if current_user&.permitted?(:page)
   li.menu onclick=""

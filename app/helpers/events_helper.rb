@@ -32,7 +32,7 @@ module EventsHelper
   def preload_event_data
     @all_events ||= Event.order(:start_at)
     @locations ||= Location.searchable
-    @event_types ||= EventType.all
+    @event_types ||= EventType.ordered
   end
 
   def preload_attachments
@@ -58,7 +58,7 @@ module EventsHelper
   end
 
   def get_events(type, scope = :current)
-    @event_types ||= EventType.all
+    @event_types ||= EventType.ordered
 
     case type.to_s
     when 'course'

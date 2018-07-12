@@ -1,0 +1,17 @@
+h2 Event Types
+
+- @event_types.each do |category, event_types|
+  h3 = category.titleize.pluralize
+  .table.locations
+    .table-row
+      .table-cell.table-header Title
+      .table-cell
+    - event_types.each do |event_type|
+      .table-row
+        .table-cell = event_type[:title]
+        .table-cell.actions.pending
+          = link_to(edit_event_type_path(id: event_type[:id])) { fa_icon('edit') }
+          - if Event.where(event_type_id: event_type[:id]).count.zero?
+            = link_to(remove_event_type_path(id: event_type[:id]), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this event type?' }) { fa_icon('minus-square') }
+          - else
+            span.italic title="You cannot remove event types currently in use." In Use
