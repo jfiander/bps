@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class LocationsController < ApplicationController
+  include Locations::Refresh
+
   secure!(:event, :course, :seminar)
 
   title!('Locations')
@@ -53,25 +55,6 @@ class LocationsController < ApplicationController
       flash[:alert] = 'Unable to remove location.'
       flash[:errors] = @location.errors.full_messages
       redirect_to locations_path
-    end
-  end
-
-  def refresh
-    @new_locations = (+'').html_safe
-    @new_locations << '<option value=\"\">Please select a location</option>'.html_safe
-    @new_locations << '<option value=\"\"></option>'.html_safe
-    @new_locations << '<option value=\"TBD\">TBD</option>'.html_safe
-
-    event = Event.find_by(id: update_params[:id].to_i)
-
-    Location.searchable.each do |id, l|
-      @new_locations << '<option value=\"'.html_safe
-      @new_locations << id.to_s
-      @new_locations << '\"'.html_safe
-      @new_locations << ' selected=\"selected\"'.html_safe if id == event&.location_id
-      @new_locations << '>'.html_safe
-      @new_locations << l[:name].strip
-      @new_locations << '</option>'.html_safe
     end
   end
 

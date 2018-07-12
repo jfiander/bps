@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class EventTypesController < ApplicationController
+  include EventTypes::Refresh
+
   secure!(:event, :course, :seminar)
 
   title!('Event Types')
@@ -66,30 +68,6 @@ class EventTypesController < ApplicationController
     end
   end
 
-  def refresh
-    # html_safe: No user content
-    article = refresh_params[:category] == 'event' ? 'an' : 'a'
-    prompt = "Please select #{article} #{refresh_params[:category]} type"
-
-    @new_event_types = (+'').html_safe
-    @new_event_types << '<option value=\"\">'.html_safe
-    @new_event_types << prompt
-    @new_event_types << '</option>'.html_safe
-    @new_event_types << '<option value=\"\"></option>'.html_safe
-
-    event = Event.find_by(id: update_params[:id].to_i)
-
-    EventType.selector(refresh_params[:category]).each do |title, id|
-      @new_event_types << '<option value=\"'.html_safe
-      @new_event_types << id.to_s
-      @new_event_types << '\"'.html_safe
-      @new_event_types << ' selected=\"selected\"'.html_safe if id == event&.event_type_id
-      @new_event_types << '>'.html_safe
-      @new_event_types << title.titleize
-      @new_event_types << '</option>'.html_safe
-    end
-  end
-
   private
 
   def event_type_params
@@ -98,9 +76,5 @@ class EventTypesController < ApplicationController
 
   def update_params
     params.permit(:id)
-  end
-
-  def refresh_params
-    params.permit(:category)
   end
 end
