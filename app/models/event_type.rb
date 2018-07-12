@@ -38,8 +38,8 @@ class EventType < ApplicationRecord
   validates :event_category, inclusion: %w[advanced_grade elective public seminar meeting]
 
   def self.selector(type)
-    return seminars.ordered.map(&:to_select_array) if type == :seminar
-    return meetings.ordered.map(&:to_select_array) if type == :event
+    return seminars.ordered.map(&:to_select_array) if type == 'seminar'
+    return meetings.ordered.map(&:to_select_array) if type == 'event'
 
     courses = []
     courses += select_array_section(:public_course, blank: false)
