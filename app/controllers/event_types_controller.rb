@@ -81,13 +81,11 @@ class EventTypesController < ApplicationController
   def clean_event_types
     %w[event course seminar].each do |role|
       next if current_user&.permitted?(role)
-      if role == 'course'
-        @event_types.reject! { |et| et[:category].in? %w[advanced_grade elective public] }
-      elsif role == 'event'
-        @event_types.reject! { |et| et[:category] == 'meeting' }
-      else
-        @event_types.reject! { |et| et[:category] == role }
-      end
+
+      role = 'meeting' if role == 'event'
+      roles = role == 'course' ? %w[advanced_grade elective public] : [role]
+
+      @event_types.reject! { |et| et[:category].in?(roles) }
     end
   end
 end
