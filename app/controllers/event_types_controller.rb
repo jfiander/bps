@@ -15,7 +15,8 @@ class EventTypesController < ApplicationController
       { id: et.id, category: et.event_category, title: et.display_title }
     end
 
-    clean_event_types
+    remove_events_unless_permitted
+    remove_education_unless_permitted
 
     @event_types = @event_types.group_by { |h| h[:category] }
   end
@@ -78,14 +79,15 @@ class EventTypesController < ApplicationController
       event_type_params[:event_category] == 'meeting'
   end
 
-  def clean_event_types
-    %w[event course seminar].each do |role|
-      next if current_user&.permitted?(role)
+  def remove_events_unless_permitted
+    return if current_user&.permitted?(:event)
 
-      role = 'meeting' if role == 'event'
-      roles = role == 'course' ? %w[advanced_grade elective public] : [role]
+    @event_types.reject! { |et| et[:category] == 'meeting' }
+  end
 
-      @event_types.reject! { |et| et[:category].in?(roles) }
-    end
+  def remove_education_unless_permitted
+    return if current_user&.permitted?(:education)
+
+    @event_types.select! { |et| et[:category] == 'meeting' }
   end
 end
