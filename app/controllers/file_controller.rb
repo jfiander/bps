@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class FileController < ApplicationController
+  include Concerns::Application::RedirectWithStatus
+
   secure!(:page)
 
   title!('Files', only: %i[new create destroy])
@@ -47,35 +49,26 @@ class FileController < ApplicationController
   end
 
   def upload_file(type = :file)
-    uploaded_file = if type == :file
-                      MarkdownFile.create(file_params)
-                    elsif type == :header
-                      HeaderImage.create(header_params)
-                    end
+    @uploaded_file = if type == :file
+                       MarkdownFile.create(file_params)
+                     elsif type == :header
+                       HeaderImage.create(header_params)
+                     end
 
-    if uploaded_file.valid?
-      redirect_to(
-        send("#{type}_path"), success: "Successfully uploaded #{type}."
-      )
-    else
-      errors = uploaded_file.errors.full_messages
-      redirect_to(
-        send("#{type}_path"), alert: "Unable to upload #{type}.", error: errors
-      )
+    redirect_with_status(send("#{type}_path"), object: type, verb: 'upload', past: 'uploaded', ivar: @uploaded_file) do
+      @uploaded_file.valid?
     end
   end
 
   def remove_file(type = :file)
-    file = if type == :file
-             MarkdownFile.find_by(id: destroy_params[:id])
-           elsif type == :header
-             HeaderImage.find_by(id: destroy_params[:id])
-           end
+    @file = if type == :file
+              MarkdownFile.find_by(id: destroy_params[:id])
+            elsif type == :header
+              HeaderImage.find_by(id: destroy_params[:id])
+            end
 
-    if file.destroy
-      redirect_to send("#{type}_path"), success: "Successfully removed #{type}."
-    else
-      redirect_to send("#{type}_path"), alert: "Unable to remove #{type}."
+    redirect_with_status(send("#{type}_path"), object: type, verb: 'remove', ivar: @file) do
+      @file.destroy
     end
   end
 end

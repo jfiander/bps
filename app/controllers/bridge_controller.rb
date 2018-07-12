@@ -4,6 +4,7 @@ class BridgeController < ApplicationController
   include User::Load
   include ApplicationHelper
   include BridgeHelper
+  include Concerns::Application::RedirectWithStatus
 
   secure!(:users, except: :list)
 
@@ -26,24 +27,22 @@ class BridgeController < ApplicationController
       office: clean_params[:bridge_office]
     )
     previous = bridge_office.user
-    if bridge_office.update(user_id: clean_params[:user_id])
+
+    redirect_with_status(bridge_path, object: 'bridge office', verb: 'assign', past: 'assigned') do
+      bridge_office.update(user_id: clean_params[:user_id])
       NotificationsMailer.bridge(bridge_office, by: current_user, previous: previous).deliver
-      redirect_to bridge_path, success: "Successfully assigned to bridge office."
-    else
-      redirect_to bridge_path, alert: "Unable to assign to bridge office."
     end
   end
 
   def assign_committee
-    committee = Committee.create(
+    committee = Committee.new(
       name: clean_params[:committee],
       department: clean_params[:department],
       user_id: clean_params[:user_id]
     )
-    if committee.valid?
-      redirect_to bridge_path, success: "Successfully assigned to committee."
-    else
-      redirect_to bridge_path, alert: "Unable to assign to committee."
+
+    redirect_with_status(bridge_path, object: 'committee', verb: 'assign', past: 'assigned') do
+      committee.save
     end
   end
 
@@ -60,9 +59,9 @@ class BridgeController < ApplicationController
   end
 
   def assign_standing_committee
-    y = clean_params[:term_start_at]["(1i)"]
-    m = clean_params[:term_start_at]["(2i)"]
-    d = clean_params[:term_start_at]["(3i)"]
+    y = clean_params[:term_start_at]['(1i)']
+    m = clean_params[:term_start_at]['(2i)']
+    d = clean_params[:term_start_at]['(3i)']
     term_start = "#{y}-#{m}-#{d}"
     standing_committee = StandingCommitteeOffice.new(
       committee_name: clean_params[:committee_name],
@@ -71,10 +70,9 @@ class BridgeController < ApplicationController
       term_start_at: term_start,
       term_length: clean_params[:term_length]
     )
-    if standing_committee.save
-      redirect_to bridge_path, success: "Successfully assigned to standing committee."
-    else
-      redirect_to bridge_path, alert: "Unable to assign to standing committee."
+
+    redirect_with_status(bridge_path, object: 'standing committee', verb: 'assign', past: 'assigned') do
+      standing_committee.save
     end
   end
 
@@ -87,7 +85,7 @@ class BridgeController < ApplicationController
   def clean_params
     params.permit(
       :id, :user_id, :bridge_office, :committee, :department, :committee_name,
-      :chair, :term_length, term_start_at: []
+      :chair, :term_length, term_start_at: ['(1i)', '(2i)', '(3i)']
     )
   end
 

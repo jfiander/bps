@@ -2,6 +2,7 @@
 
 class LocationsController < ApplicationController
   include Locations::Refresh
+  include Concerns::Application::RedirectWithStatus
 
   secure!(:event, :course, :seminar)
 
@@ -20,12 +21,8 @@ class LocationsController < ApplicationController
   end
 
   def create
-    if (@location = Location.create(location_params))
-      redirect_to locations_path, success: 'Successfully created location.'
-    else
-      flash[:alert] = 'Unable to create location.'
-      flash[:errors] = @location.errors.full_messages
-      redirect_to locations_path
+    redirect_with_status(locations_path, object: 'location', verb: 'create') do
+      @location = Location.create(location_params)
     end
   end
 
@@ -39,22 +36,14 @@ class LocationsController < ApplicationController
   def update
     @location = Location.find_by(id: update_params[:id])
 
-    if @location.update(location_params)
-      redirect_to locations_path, success: 'Successfully updated location.'
-    else
-      flash[:alert] = 'Unable to update location.'
-      flash[:errors] = @location.errors.full_messages
-      redirect_to locations_path
+    redirect_with_status(locations_path, object: 'location', verb: 'update') do
+      @location.update(location_params)
     end
   end
 
   def remove
-    if Location.find_by(id: update_params[:id])&.destroy
-      redirect_to locations_path, success: 'Successfully removed location.'
-    else
-      flash[:alert] = 'Unable to remove location.'
-      flash[:errors] = @location.errors.full_messages
-      redirect_to locations_path
+    redirect_with_status(locations_path, object: 'location', verb: 'remove') do
+      Location.find_by(id: update_params[:id])&.destroy
     end
   end
 

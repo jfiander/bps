@@ -2,6 +2,7 @@
 
 class EventTypesController < ApplicationController
   include EventTypes::Refresh
+  include Concerns::Application::RedirectWithStatus
 
   secure!(:admin, :education, strict: true)
 
@@ -14,16 +15,7 @@ class EventTypesController < ApplicationController
       { id: et.id, category: et.event_category, title: et.display_title }
     end
 
-    %w[event course seminar].each do |role|
-      next if current_user&.permitted?(role)
-      if role == 'course'
-        @event_types.reject! { |et| et[:category].in? %w[advanced_grade elective public] }
-      elsif role == 'event'
-        @event_types.reject! { |et| et[:category] == 'meeting' }
-      else
-        @event_types.reject! { |et| et[:category] == role }
-      end
-    end
+    clean_event_types
 
     @event_types = @event_types.group_by { |h| h[:category] }
   end
@@ -45,12 +37,8 @@ class EventTypesController < ApplicationController
       return
     end
 
-    if (@event_type = EventType.create(event_type_params))
-      redirect_to event_types_path, success: 'Successfully created event type.'
-    else
-      flash[:alert] = 'Unable to create event type.'
-      flash[:errors] = @event_type.errors.full_messages
-      redirect_to event_types_path
+    redirect_with_status(event_types_path, object: 'event_type', verb: 'create') do
+      @event_type = EventType.create(event_type_params)
     end
   end
 
@@ -64,22 +52,14 @@ class EventTypesController < ApplicationController
   def update
     @event_type = EventType.find_by(id: update_params[:id])
 
-    if @event_type.update(event_type_params)
-      redirect_to event_types_path, success: 'Successfully updated event type.'
-    else
-      flash[:alert] = 'Unable to update event type.'
-      flash[:errors] = @event_type.errors.full_messages
-      redirect_to event_types_path
+    redirect_with_status(event_types_path, object: 'event_type', verb: 'update') do
+      @event_type.update(event_type_params)
     end
   end
 
   def remove
-    if EventType.find_by(id: update_params[:id])&.destroy
-      redirect_to event_types_path, success: 'Successfully removed event type.'
-    else
-      flash[:alert] = 'Unable to remove event type.'
-      flash[:errors] = @event_type.errors.full_messages
-      redirect_to event_types_path
+    redirect_with_status(event_types_path, object: 'event_type', verb: 'remove') do
+      EventType.find_by(id: update_params[:id])&.destroy
     end
   end
 
@@ -96,5 +76,18 @@ class EventTypesController < ApplicationController
   def restricted?
     !current_user&.permitted?(:admin, strict: true) &&
       event_type_params[:event_category] == 'meeting'
+  end
+
+  def clean_event_types
+    %w[event course seminar].each do |role|
+      next if current_user&.permitted?(role)
+      if role == 'course'
+        @event_types.reject! { |et| et[:category].in? %w[advanced_grade elective public] }
+      elsif role == 'event'
+        @event_types.reject! { |et| et[:category] == 'meeting' }
+      else
+        @event_types.reject! { |et| et[:category] == role }
+      end
+    end
   end
 end

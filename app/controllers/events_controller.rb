@@ -12,6 +12,7 @@ class EventsController < ApplicationController
   include Events::Preload
   include Events::Edit
   include Events::Update
+  include Concerns::Application::RedirectWithStatus
 
   before_action :find_event, only: %i[copy edit expire]
   before_action :prepare_form, only: %i[new copy edit]
@@ -98,13 +99,9 @@ class EventsController < ApplicationController
   end
 
   def expire
-    if @event.update(expires_at: Time.now)
-      flash[:success] = "Successfully expired #{event_type_param}."
-    else
-      flash[:alert] = "Unable to expire #{event_type_param}."
+    redirect_with_status(send("#{event_type_param}s_path"), object: event_type_param, verb: 'expire') do
+      @event.update(expires_at: Time.now)
     end
-
-    redirect_to send("#{event_type_param}s_path")
   end
 
   private

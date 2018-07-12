@@ -129,16 +129,20 @@ class ImportUsers
     return if string.blank?
 
     begin
-      datestring = string.ljust(5, '0').ljust(6, '1')
-      datestring[datestring.length - 1] = '1' if datestring.last(2) == '00'
-      if datestring.length == 6
-        Date.strptime(datestring, '%Y%m')
-      elsif datestring.length == 8
-        Date.strptime(datestring, '%Y%m%d')
-      end
+      fix_date(string)
     rescue StandardError
-      puts "Invalid date: #{datestring}" unless Rails.env.test?
+      puts "Invalid date: #{string}" unless Rails.env.test?
       return
+    end
+  end
+
+  def fix_date(string)
+    datestring = string.ljust(5, '0').ljust(6, '1')
+    datestring[datestring.length - 1] = '1' if datestring.last(2) == '00'
+    if datestring.length == 6
+      Date.strptime(datestring, '%Y%m')
+    elsif datestring.length == 8
+      Date.strptime(datestring, '%Y%m%d')
     end
   end
 
