@@ -3,7 +3,7 @@
 class EventTypesController < ApplicationController
   include EventTypes::Refresh
 
-  secure!(:event, :course, :seminar)
+  secure!(:admin, :education, strict: true)
 
   title!('Event Types')
 
@@ -14,9 +14,15 @@ class EventTypesController < ApplicationController
       { id: et.id, category: et.event_category, title: et.display_title }
     end
 
-    %i[event course seminar].each do |role|
+    %w[event course seminar].each do |role|
       next if current_user&.permitted?(role)
-      @event_types.reject! { |et| et.send("#{role}?") }
+      if role == 'course'
+        @event_types.reject! { |et| et[:category].in? %w[advanced_grade elective public] }
+      elsif role == 'event'
+        @event_types.reject! { |et| et[:category] == 'meeting' }
+      else
+        @event_types.reject! { |et| et[:category] == role }
+      end
     end
 
     @event_types = @event_types.group_by { |h| h[:category] }
@@ -26,10 +32,19 @@ class EventTypesController < ApplicationController
     @event_type = EventType.new
     @edit_action = 'Add'
     @submit_path = create_event_type_path
+
+    @event_types = EventType.all
+    return if current_user&.permitted?(:admin, strict: true)
+    @event_types = @event_types.where.not(event_category: 'meeting')
   end
 
   def create
     event_type_params[:title] = event_type_params[:title].underscore
+    if restricted?
+      redirect_to event_types_path, alert: 'You cannot add that type of event.'
+      return
+    end
+
     if (@event_type = EventType.create(event_type_params))
       redirect_to event_types_path, success: 'Successfully created event type.'
     else
@@ -76,5 +91,10 @@ class EventTypesController < ApplicationController
 
   def update_params
     params.permit(:id)
+  end
+
+  def restricted?
+    !current_user&.permitted?(:admin, strict: true) &&
+      event_type_params[:event_category] == 'meeting'
   end
 end

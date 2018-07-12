@@ -16,10 +16,11 @@ em
       = f.label :event_type_id, "#{@event_title} name"
     .right
       = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), {include_blank: true, prompt: "Please select #{event_type_param == 'event' ? 'an' : 'a'} #{event_type_param} type"}, required: true
-      ul
-        li = link_to(event_types_path, target: :_blank) { fa_icon('edit') + 'Manage Event Types' }
-        li &nbsp;
-        li = link_to(refresh_event_types_path(category: event_type_param), remote: true, class: 'green') { fa_icon('sync-alt') + 'Reload Event Types' }
+      - if current_user&.permitted?(:admin, :education, strict: true)
+        ul
+          li = link_to(event_types_path, target: :_blank) { fa_icon('edit') + 'Manage Event Types' }
+          li &nbsp;
+          li = link_to(refresh_event_types_path(category: event_type_param), remote: true, class: 'green') { fa_icon('sync-alt') + 'Reload Event Types' }
     br.clear
 
     .left 
