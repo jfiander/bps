@@ -2,16 +2,4 @@ p = render 'greeting'
 
 p This is a quick reminder that you registered for the following:
 
-= render 'registration'
-= render 'location' if @registration.event.location.present?
-
-p
-  | If you have any questions, or if you would like to cancel this registration, please email me at 
-  = mail_to @signature[:email]
-  | .
-
-- if @registration&.user.present?
-  p 
-    | You can also cancel this registration from 
-    = link_to 'your profile page', profile_url
-    |  on the website. (You'll need to be logged in first.)
+= render 'reg_info'

@@ -10,7 +10,7 @@ p
   br
   b Time:  
   = @registration.event.start_at.strftime('%-k:%M %P')
-  - if @registration.event.location.present? && controller.action_name != 'confirm'
+  - if @registration.event.location.present? && !controller.action_name.in?(%w[confirm remind])
     br
     b Location: 
     = @registration.event.location.address.split("\n").first
