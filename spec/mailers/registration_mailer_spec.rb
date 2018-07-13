@@ -178,5 +178,23 @@ RSpec.describe RegistrationMailer, type: :mailer do
         expect(mail.body.encoded).to include('Educational Officer')
       end
     end
+
+    describe 'remind' do
+      let(:mail) { RegistrationMailer.remind(ed_email_reg) }
+
+      it 'renders the headers' do
+        expect(mail.subject).to eql('Registration reminder')
+        expect(mail.to).to eql([ed_email_reg.email])
+        expect(mail.from).to eql(['seo@bpsd9.org'])
+      end
+
+      it 'renders the body' do
+        expect(mail.body.encoded).to include('This is a quick reminder')
+        expect(mail.body.encoded).to include('Registration information')
+        expect(mail.body.encoded).to include('If you have any questions')
+        expect(mail.body.encoded).not_to include('You can also cancel')
+        expect(mail.body.encoded).to include('Educational Officer')
+      end
+    end
   end
 end
