@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
+  before(:each) { generic_seo_and_ao }
+
   describe 'scopes' do
     it 'should filter by category' do
       seminar_type = FactoryBot.create(:event_type, event_category: 'seminar')
@@ -14,23 +16,24 @@ RSpec.describe Event, type: :model do
 
     it 'should filter by current' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
-      FactoryBot.create_list(:event, 3, event_type: event_type)
-      Event.last.update(expires_at: Time.now)
+      FactoryBot.create_list(:event, 2, event_type: event_type)
+      FactoryBot.create(:event, event_type: event_type, expires_at: Time.now)
       expect(Event.current('seminar').to_a).to eql(Event.first(2))
     end
 
     it 'should filter by expired' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
-      FactoryBot.create_list(:event, 3, event_type: event_type)
-      Event.last.update(expires_at: Time.now)
+      FactoryBot.create_list(:event, 2, event_type: event_type)
+      FactoryBot.create(:event, event_type: event_type, expires_at: Time.now)
       expect(Event.expired('seminar').to_a).to eql([Event.last])
     end
 
     it 'should filter with registrations' do
       FactoryBot.create_list(:event, 2)
       user = FactoryBot.create(:user)
-      FactoryBot.create(:registration, event: Event.last, user: user)
-      expect(Event.with_registrations.to_a).to eql([Event.last])
+      event = Event.last
+      FactoryBot.create(:registration, event: event, user: user)
+      expect(Event.with_registrations.to_a).to eql([event])
     end
   end
 

@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe PublicController, type: :controller do
+  before(:each) { generic_seo_and_ao }
   render_views
 
   it 'should correctly render the general structure' do
@@ -45,7 +46,6 @@ RSpec.describe PublicController, type: :controller do
     context 'accepting registrations' do
       before(:each) do
         @event = FactoryBot.create(:event)
-        FactoryBot.create(:bridge_office, office: 'educational')
       end
 
       it 'allows registering to a registerable event' do

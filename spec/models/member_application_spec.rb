@@ -13,11 +13,11 @@ RSpec.describe MemberApplication, type: :model do
     end
 
     it 'should have the single member cost' do
-      expect(single_application.amount_due).to eql(89)
+      expect(single_application.payment_amount).to eql(89)
     end
 
     it 'should have the apprentice member cost' do
-      expect(apprentice_application.amount_due).to eql(12)
+      expect(apprentice_application.payment_amount).to eql(12)
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe MemberApplication, type: :model do
     end
 
     it 'should have the family member cost' do
-      expect(family_application.amount_due).to eql(135)
+      expect(family_application.payment_amount).to eql(135)
     end
   end
 
@@ -37,8 +37,7 @@ RSpec.describe MemberApplication, type: :model do
   end
 
   it 'should approve a new member' do
-    approver = FactoryBot.create(:user)
-    FactoryBot.create(:bridge_office, user: approver, office: 'administrative')
+    approver = generic_seo_and_ao[:ao].user
     expect { family_application.approve!(approver) }.not_to raise_error
   end
 end

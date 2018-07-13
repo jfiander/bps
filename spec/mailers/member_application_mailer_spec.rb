@@ -5,18 +5,15 @@ require 'rails_helper'
 RSpec.describe MemberApplicationMailer, type: :mailer do
   let(:single_application) { FactoryBot.create(:single_application) }
   let(:family_application) { FactoryBot.create(:family_application) }
+  before(:each) { generic_seo_and_ao }
 
   context 'single application' do
-    before(:each) do
-      @ao = FactoryBot.create(:bridge_office, office: 'administrative')
-    end
-
     describe 'new_application' do
       let(:mail) { MemberApplicationMailer.new_application(single_application) }
 
       it 'renders the headers' do
         expect(mail.subject).to eql('New member application')
-        expect(mail.to).to eql([@ao.user.email])
+        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 
@@ -72,7 +69,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
 
       it 'renders the headers' do
         expect(mail.subject).to eql('Member application approved')
-        expect(mail.to).to eql([@ao.user.email])
+        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 
@@ -82,19 +79,46 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
         expect(mail.body.encoded).not_to include('Additional Applicant #')
       end
     end
+
+    describe 'paid' do
+      let(:mail) { MemberApplicationMailer.paid(single_application) }
+
+      it 'renders the headers' do
+        expect(mail.subject).to eql('Membership application paid')
+        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
+        expect(mail.from).to eql(['support@bpsd9.org'])
+      end
+
+      it 'renders the body' do
+        expect(mail.body.encoded).to include('Membership Application Paid')
+        expect(mail.body.encoded).to include('Primary Applicant')
+      end
+    end
+
+    describe 'paid_dues' do
+      let(:user) { FactoryBot.create(:user) }
+      let(:mail) { MemberApplicationMailer.paid_dues(user) }
+
+      it 'renders the headers' do
+        expect(mail.subject).to eql('Annual dues paid')
+        expect(mail.to).to eql([generic_seo_and_ao[:ao].user.email])
+        expect(mail.from).to eql(['support@bpsd9.org'])
+      end
+
+      it 'renders the body' do
+        expect(mail.body.encoded).to include('Annual Dues Paid')
+        expect(mail.body.encoded).to include('Member information')
+      end
+    end
   end
 
   context 'family application' do
-    before(:each) do
-      @ao = FactoryBot.create(:bridge_office, office: 'administrative')
-    end
-
     describe 'new_application' do
       let(:mail) { MemberApplicationMailer.new_application(family_application) }
 
       it 'renders the headers' do
         expect(mail.subject).to eql('New member application')
-        expect(mail.to).to eql([@ao.user.email])
+        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 
@@ -150,7 +174,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
 
       it 'renders the headers' do
         expect(mail.subject).to eql('Member application approved')
-        expect(mail.to).to eql([@ao.user.email])
+        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 

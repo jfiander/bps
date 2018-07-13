@@ -6,10 +6,63 @@ RSpec.describe Registration, type: :model do
   before(:each) do
     @user = FactoryBot.create(:user)
     @event = FactoryBot.create(:event)
-    @ao = FactoryBot.create(:user)
-    FactoryBot.create(:bridge_office, user: @ao, office: 'administrative')
-    @seo = FactoryBot.create(:user)
-    FactoryBot.create(:bridge_office, user: @seo, office: 'educational')
+    generic_seo_and_ao
+  end
+
+  describe 'payable' do
+    describe 'class.payable?' do
+      it 'should return true for a payable class' do
+        expect(Registration.payable?).to be(true)
+      end
+
+      it 'should return false for a non-payable class' do
+        expect(HeaderImage.payable?).to be(false)
+      end
+    end
+
+    describe 'instance.paid?' do
+      it 'should return nil for a non-payable object' do
+        expect(FactoryBot.create(:static_page).paid?).to be(nil)
+      end
+
+      it 'should return the paid flag for a payable object' do
+        user = FactoryBot.create(:user)
+        reg = FactoryBot.create(:event_registration, user: user)
+        expect(reg.paid?).to eql(reg.payment.paid)
+      end
+    end
+
+    context 'with a registration' do
+      before(:each) do
+        user = FactoryBot.create(:user)
+        event = FactoryBot.create(:event, cost: 15)
+        @reg = FactoryBot.create(:registration, event: event, user: user)
+      end
+
+      it 'should return the payable amount' do
+        expect(@reg.payment_amount).to eql(15)
+      end
+
+      it 'should return the payable token' do
+        expect(@reg.payment_token).to eql(@reg.payment.token)
+      end
+
+      it 'should detect if a payment object is present' do
+        expect(@reg.payable?).to be(true)
+      end
+
+      it 'should allow destroying an unpaid object' do
+        expect { @reg.destroy }.not_to raise_error
+      end
+
+      it 'should not allow destroying a paid object' do
+        @reg.payment.paid!('1234567890')
+        expect { @reg.destroy }.to raise_error(
+          RuntimeError,
+          'This Registration has been paid, and cannot be destroyed.'
+        )
+      end
+    end
   end
 
   it 'should convert a public registration user email to user' do
@@ -43,7 +96,7 @@ RSpec.describe Registration, type: :model do
   end
 
   it 'should notify the chair of registrations' do
-    FactoryBot.create(:committee, user: @ao, name: 'rendezvous')
+    FactoryBot.create(:committee, user: generic_seo_and_ao[:ao].user, name: 'rendezvous')
     event_type = FactoryBot.create(:event_type, event_category: 'meeting', title: 'rendezvous')
     event = FactoryBot.create(:event, event_type: event_type)
     expect do
@@ -54,8 +107,70 @@ RSpec.describe Registration, type: :model do
   it 'should include an attached PDF if present' do
     @event.flyer = File.open(File.join(Rails.root, 'spec', 'Blank.pdf'), 'r')
     @event.save
-    registration = FactoryBot.create(:registration, event: @event, user: @user)
+    reg = FactoryBot.create(:registration, event: @event, user: @user)
 
-    expect { RegistrationMailer.confirm(registration).deliver }.not_to raise_error
+    expect { RegistrationMailer.confirm(reg).deliver }.not_to raise_error
+  end
+
+  describe 'cost?' do
+    it 'should return false without a cost' do
+      reg = FactoryBot.create(:registration, event: @event, user: @user)
+      expect(reg.cost?).to be(false)
+    end
+
+    it 'should return true with a cost' do
+      @event.update(cost: 10)
+      reg = FactoryBot.create(:registration, event: @event, user: @user)
+      expect(reg.cost?).to be(true)
+    end
+  end
+
+  describe 'user?' do
+    it 'should return false without a user' do
+      reg = FactoryBot.create(:registration, event: @event, email: 'nobody@example.com')
+      expect(reg.user?).to be(false)
+    end
+
+    it 'should return true with a user' do
+      reg = FactoryBot.create(:registration, event: @event, user: @user)
+      expect(reg.user?).to be(true)
+    end
+  end
+
+  describe 'type' do
+    it 'should return course for public courses' do
+      event_type = FactoryBot.create(:event_type, event_category: 'public')
+      event = FactoryBot.create(:event, event_type: event_type)
+      reg = FactoryBot.create(:registration, event: event, user: @user)
+      expect(reg.type).to eql('course')
+    end
+
+    it 'should return course for advanced grade courses' do
+      event_type = FactoryBot.create(:event_type, event_category: 'advanced_grade')
+      event = FactoryBot.create(:event, event_type: event_type)
+      reg = FactoryBot.create(:registration, event: event, user: @user)
+      expect(reg.type).to eql('course')
+    end
+
+    it 'should return course for elective courses' do
+      event_type = FactoryBot.create(:event_type, event_category: 'elective')
+      event = FactoryBot.create(:event, event_type: event_type)
+      reg = FactoryBot.create(:registration, event: event, user: @user)
+      expect(reg.type).to eql('course')
+    end
+
+    it 'dhould return seminar for seminars' do
+      event_type = FactoryBot.create(:event_type, event_category: 'seminar')
+      event = FactoryBot.create(:event, event_type: event_type)
+      reg = FactoryBot.create(:registration, event: event, user: @user)
+      expect(reg.type).to eql('seminar')
+    end
+
+    it 'dhould return meeting for meetings' do
+      event_type = FactoryBot.create(:event_type, event_category: 'meeting')
+      event = FactoryBot.create(:event, event_type: event_type)
+      reg = FactoryBot.create(:registration, event: event, user: @user)
+      expect(reg.type).to eql('meeting')
+    end
   end
 end

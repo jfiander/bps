@@ -8,12 +8,9 @@ RSpec.describe RegistrationMailer, type: :mailer do
   let(:event_user_reg) { FactoryBot.create(:event_registration, :with_user) }
   let(:event_email_reg) { FactoryBot.create(:event_registration, :with_email) }
 
-  context 'with user' do
-    before(:each) do
-      @seo = FactoryBot.create(:bridge_office, office: 'educational')
-      @ao = FactoryBot.create(:bridge_office, office: 'administrative')
-    end
+  before(:each) { generic_seo_and_ao }
 
+  context 'with user' do
     describe 'registered' do
       let(:mail) { RegistrationMailer.registered(ed_user_reg) }
 
@@ -112,14 +109,24 @@ RSpec.describe RegistrationMailer, type: :mailer do
         expect(mail.body.encoded).to include('Administrative Officer')
       end
     end
+
+    describe 'paid' do
+      let(:mail) { RegistrationMailer.paid(event_user_reg) }
+
+      it 'renders the headers' do
+        expect(mail.subject).to eql('Registration paid')
+        expect(mail.to).to eql(['ao@bpsd9.org'])
+        expect(mail.from).to eql(['support@bpsd9.org'])
+      end
+
+      it 'renders the body' do
+        expect(mail.body.encoded).to include('Paid Registration')
+        expect(mail.body.encoded).to include('Amount paid: $')
+      end
+    end
   end
 
   context 'with email' do
-    before(:each) do
-      @seo = FactoryBot.create(:bridge_office, office: 'educational')
-      @ao = FactoryBot.create(:bridge_office, office: 'administrative')
-    end
-
     describe 'registered' do
       let(:mail) { RegistrationMailer.registered(ed_email_reg) }
 

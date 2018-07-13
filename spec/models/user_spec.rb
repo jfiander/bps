@@ -49,17 +49,17 @@ RSpec.describe User, type: :model do
     end
 
     it 'should correctly detect Cdr' do
-      FactoryBot.create(:bridge_office, office: 'commander', user: @user)
+      assign_bridge_office('commander', @user)
       expect(@user.auto_rank).to eql('Cdr')
     end
 
     it 'should correctly detect Lt/C' do
-      FactoryBot.create(:bridge_office, office: 'executive', user: @user)
+      assign_bridge_office('executive', @user)
       expect(@user.auto_rank).to eql('Lt/C')
     end
 
     it 'should correctly detect 1st/Lt' do
-      FactoryBot.create(:bridge_office, office: 'asst_secretary', user: @user)
+      assign_bridge_office('asst_secretary', @user)
       expect(@user.auto_rank(html: false)).to eql('1st/Lt')
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe User, type: :model do
     describe 'html_rank' do
       it 'should return the correct string for a simple rank' do
         @user.rank = nil
-        FactoryBot.create(:bridge_office, user: @user, office: 'asst_educational')
+        assign_bridge_office('asst_educational', @user)
         expect(@user.html_rank).to eql('1<sup>st</sup>/Lt')
       end
 
@@ -178,19 +178,26 @@ RSpec.describe User, type: :model do
   end
 
   describe 'registration' do
-    before(:each) do
+    it 'should create a valid registration' do
       @user = FactoryBot.create(
         :user,
         first_name: 'John',
         last_name: 'Doe',
         rank: 'Lt/C',
-        grade: 'AP'
+        grade: 'AP',
+        email: "registrant-#{SecureRandom.hex(8)}@example.com"
       )
-
       @event = FactoryBot.create(:event)
-    end
+      seo = FactoryBot.create(
+        :user,
+        first_name: 'Ed',
+        last_name: 'Ucation',
+        rank: 'Lt/C',
+        grade: 'SN',
+        email: "seo-#{SecureRandom.hex(8)}@example.com"
+      )
+      assign_bridge_office('educational', seo)
 
-    it 'should create a valid registration' do
       reg = @user.register_for(@event)
       expect(reg).to be_valid
     end
@@ -361,6 +368,51 @@ RSpec.describe User, type: :model do
       expect(@user.photo).to eql(
         User.buckets[:files].link(@user.profile_photo.s3_object(:medium).key)
       )
+    end
+  end
+
+  describe 'dues' do
+    before(:each) do
+      @parent = FactoryBot.create(:user)
+    end
+
+    it 'should return the correct single member amount' do
+      expect(@parent.dues).to eql(89)
+    end
+
+    context 'family' do
+      before(:each) do
+        @child = FactoryBot.create(:user, parent: @parent)
+      end
+
+      it 'should return the correct family amount' do
+        expect(@parent.dues).to eql(134)
+      end
+
+      it 'should return the parent_id hash if a parent is assigned' do
+        expect(@child.dues).to eql(user_id: @parent.id)
+      end
+    end
+  end
+
+  describe 'dues_due' do
+    before(:each) do
+      @parent = FactoryBot.create(:user)
+      @child = FactoryBot.create(:user, parent: @parent)
+    end
+
+    it 'should return false with if not the head of a family' do
+      expect(@child.dues_due?).to be(false)
+    end
+
+    it 'should return false with dues paid within 11 months' do
+      @parent.update(dues_last_paid_at: 3.months.ago)
+      expect(@parent.dues_due?).to be(false)
+    end
+
+    it 'should return true with dues paid over 11 months ago' do
+      @parent.update(dues_last_paid_at: 11.months.ago)
+      expect(@parent.dues_due?).to be(true)
     end
   end
 end

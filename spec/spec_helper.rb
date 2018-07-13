@@ -32,10 +32,13 @@ SimpleCov.start('rails') do
   add_filter '/app/helpers/application_helper.rb'
   add_filter '/app/helpers/view_helper.rb'
   add_filter '/app/helpers/markdown_helper.rb'
+  add_filter '/app/helpers/braintree_helper.rb'
 
   # Invariant code
   ## used for configuring API access
   add_filter 'app/lib/google_calendar_api.rb'
+  add_filter 'app/models/concerns/payments/braintree_methods.rb'
+  add_filter 'app/models/concerns/payments/model_configs.rb'
   ## used for fetching git information
   add_filter 'app/lib/git_info.rb'
   ## user to improve markdown formatting
@@ -56,7 +59,33 @@ def test_image(width, height)
   'tmp/run/test_image.jpg'
 end
 
+# Put the officers in scope before the expect call with:
+# before(:each) { generic_seo_and_ao }
+# then refer to the appropriate officer as:
+# generic_seo_and_ao[:seo] # .user
+def generic_seo_and_ao
+  unless (seo = BridgeOffice.find_by(office: 'educational')).present?
+    seo = FactoryBot.create(:bridge_office, office: 'educational')
+  end
+
+  unless (ao = BridgeOffice.find_by(office: 'administrative')).present?
+    ao = FactoryBot.create(:bridge_office, office: 'administrative')
+  end
+
+  { seo: seo, ao: ao }
+end
+
+def assign_bridge_office(office, user)
+  unless (bridge_office = BridgeOffice.find_by(office: office)).present?
+    bridge_office = FactoryBot.create(:bridge_office, office: office)
+  end
+
+  bridge_office.update(user: user)
+end
+
 RSpec.configure do |config|
+  config.example_status_persistence_file_path = 'tmp/run/failures.txt'
+
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
     FileUtils.mkdir_p("#{Rails.root}/tmp/run")

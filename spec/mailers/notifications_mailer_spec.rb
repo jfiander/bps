@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe NotificationsMailer, type: :mailer do
   describe 'bridge office updated' do
     before(:each) do
-      @ao = FactoryBot.create(:bridge_office, office: 'administrative')
+      generic_seo_and_ao
       @previous = FactoryBot.create(:user)
       @by = FactoryBot.create(:user)
-      @mail = NotificationsMailer.bridge(@ao, by: @by, previous: @previous)
+      @mail = NotificationsMailer.bridge(generic_seo_and_ao[:ao], by: @by, previous: @previous)
     end
 
     it 'renders the headers' do
@@ -30,7 +30,7 @@ RSpec.describe NotificationsMailer, type: :mailer do
           #{@previous.full_name} (#{@previous.certificate}, ##{@previous.id})
 
           New holder:
-          #{@ao.user.full_name} (#{@ao.user.certificate}, ##{@ao.user.id})
+          #{generic_seo_and_ao[:ao].user.full_name} (#{generic_seo_and_ao[:ao].user.certificate}, ##{generic_seo_and_ao[:ao].user.id})
 
           Updated by:
           #{@by.full_name} (#{@by.certificate}, ##{@by.id})

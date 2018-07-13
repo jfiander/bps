@@ -73,39 +73,37 @@ RSpec.describe BridgeHelper, type: :helper do
 
   it 'should generate the correct values for the bridge selectors' do
     expect(BridgeHelper.bridge_selectors).to eql(
-      {
-        departments: [
-          %w[Commander commander],
-          %w[Executive executive],
-          %w[Educational educational],
-          %w[Administrative administrative],
-          %w[Secretary secretary],
-          %w[Treasurer treasurer]
-        ],
-        bridge_offices: [
-          %w[Commander commander],
-          ['Executive Officer', 'executive'],
-          ['Educational Officer', 'educational'],
-          ['Administrative Officer', 'administrative'],
-          %w[Secretary secretary],
-          %w[Treasurer treasurer],
-          ['Assistant Educational Officer', 'asst_educational'],
-          ['Assistant Secretary', 'asst_secretary']
-        ],
-        standing_committees: %w[Executive Auditing Nominating Rules],
-        users: [
-          ['TBD', nil],
-          ['Lt Jack Dodd, AP', 3],
-          ['Cdr John Doe, AP', 1],
-          ['Lt Jane Dore, AP', 2]
-        ]
-      }
+      departments: [
+        %w[Commander commander],
+        %w[Executive executive],
+        %w[Educational educational],
+        %w[Administrative administrative],
+        %w[Secretary secretary],
+        %w[Treasurer treasurer]
+      ],
+      bridge_offices: [
+        %w[Commander commander],
+        ['Executive Officer', 'executive'],
+        ['Educational Officer', 'educational'],
+        ['Administrative Officer', 'administrative'],
+        %w[Secretary secretary],
+        %w[Treasurer treasurer],
+        ['Assistant Educational Officer', 'asst_educational'],
+        ['Assistant Secretary', 'asst_secretary']
+      ],
+      standing_committees: %w[Executive Auditing Nominating Rules],
+      users: [
+        ['TBD', nil],
+        ['Lt Jack Dodd, AP', 3],
+        ['Cdr John Doe, AP', 1],
+        ['Lt Jane Dore, AP', 2]
+      ]
     )
   end
 
   it 'should build the correct bridge list' do
     expect(BridgeHelper.build_bridge_list).to eql(
-      { departments: departments, standing_committees: standing_committees }
+      departments: departments, standing_committees: standing_committees
     )
   end
 end
