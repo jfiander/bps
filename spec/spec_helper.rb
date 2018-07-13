@@ -22,6 +22,9 @@ SimpleCov.start do
   add_filter '/config'
   add_filter '/app/mailers/previews'
 
+  # Exclude controller code from specs
+  add_filter '/app/controllers'
+
   # Invariant code, used for configuring API access
   add_filter 'app/lib/google_calendar_api.rb'
 
