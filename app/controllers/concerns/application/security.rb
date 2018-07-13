@@ -7,7 +7,7 @@ module Application::Security
         authenticate_user!
       end
 
-      return unless only.present? || except.present?
+      return if roles.blank?
       before_action(only: only, except: except) do
         require_permission(*roles, strict: strict)
       end
