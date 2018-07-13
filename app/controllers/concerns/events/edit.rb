@@ -44,7 +44,7 @@ module Events::Edit
 
   def find_event
     @event = Event.includes(:event_instructors, :instructors)
-                  .find_by(id: clean_params[:id])
+                  .find_by(id: event_params[:id])
 
     return unless @event.course? || @event.seminar?
 
