@@ -24,11 +24,15 @@ RSpec.describe PublicController, type: :controller do
     end
 
     it 'should render the description tag' do
-      #
+      get :home
+
+      expect(response.body).to match(%r{<meta[^>]*?name="description" />})
     end
 
     it 'should render the keywords tag' do
-      #
+      get :home
+
+      expect(response.body).to match(%r{<meta[^>]*?name="keywords" />})
     end
   end
 
