@@ -51,16 +51,17 @@ CLOUDFRONT_STATIC_ENDPOINT
 CLOUDFRONT_FILES_ENDPOINT
 CLOUDFRONT_BILGE_ENDPOINT
 CLOUDFRONT_PHOTOS_ENDPOINT
+CLOUDFRONT_FLOATPLANS_ENDPOINT
 ```
 
 And any optional environment variables you want to support:
 
 ```sh
-CALENDARS
+CALENDARS # calendar_id_1:99FF99/calendar_id_2:3399FF
 
 NEW_RELIC_LICENSE_KEY
 
-SLACK_NOTIFIER_URL
+SLACK_URL_<CHANNEL>
 ```
 
 Run the server:
@@ -74,6 +75,8 @@ rails s
 Rspec testing is available:
 
 `bundle exec rspec`
+
+Controller specs will be run, but aren't included in coverage stats.
 
 ## Licensing
 
