@@ -3,6 +3,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+# require 'active_storage'
 require 'csv'
 require 'differ/string'
 
