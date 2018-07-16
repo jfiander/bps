@@ -27,6 +27,9 @@ class Event < ApplicationRecord
     paperclip_defaults(:files).merge(path: 'event_flyers/:id/:filename')
   )
 
+  attr_accessor :delete_attachment
+  before_validation { flyer.clear if delete_attachment == '1' }
+
   validates_attachment_content_type(
     :flyer,
     content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}

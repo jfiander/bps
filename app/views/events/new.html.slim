@@ -156,13 +156,16 @@ em
     .right
       = fa_icon('file-pdf', style: :regular, css: 'file-type')
       = fa_icon('file-image', style: :regular, css: 'file-type')
-      = f.file_field :flyer
+      = f.file_field :flyer, id: 'event_flyer_file'
       - if @event.flyer.present?
         br
-        - if @event.get_flyer&.downcase&.match(/\.pdf$/)
-          iframe src=(@event.get_flyer) width="100"
+        - if @event.get_flyer&.downcase&.match(/\.pdf/)
+          iframe src=(@event.get_flyer) width="200"
         - elsif @event.get_flyer&.downcase&.match(/\.(jpe?g|png)$/)
           = image_tag @event.get_flyer, width: 100
+        p
+          | Remove flyer: 
+          = f.check_box :delete_attachment, id: 'event_flyer_remove'
     br.clear
 
     - if event_type_param.in? %w[course seminar]

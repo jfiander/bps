@@ -26,7 +26,14 @@ h2 = "#{@edit_action} Location"
       ul
         li Include a picture to help people find the location.
         li.red This is not intended to be decorative.
-    .right = f.file_field :picture
+    .right
+      = f.file_field :picture, id: 'location_picture_file'
+      - if @location.picture.present?
+        br
+        = image_tag(files_bucket.link(@location.picture.s3_object(:thumb).key))
+        p
+          | Remove picture: 
+          = f.check_box :delete_attachment, id: 'location_picture_remove'
     br.clear
 
     .center = f.submit "#{@edit_action} Location", class: 'big'
