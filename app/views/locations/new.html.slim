@@ -6,7 +6,14 @@ h2 = "#{@edit_action} Location"
     .right = f.text_area :address, class: "location"
     br.clear
 
-    .left = f.label :map_link
+    .left
+      = f.label :map_link
+      ul
+        li Include a link to a verified map of the location.
+        li
+          | Use 
+          = link_to('Google Maps', 'https://maps.google.com')
+          | , if possible.
     .right = f.text_field :map_link, class: "map-link", placeholder: "https://maps.google.com/..."
     br.clear
 
@@ -14,7 +21,11 @@ h2 = "#{@edit_action} Location"
     .right = f.text_area :details, placeholder: 'Location of door, which parking lot to use, etc.'
     br.clear
 
-    .left = f.label :picture
+    .left
+      = f.label :picture
+      ul
+        li Include a picture to help people find the location.
+        li.red This is not intended to be decorative.
     .right = f.file_field :picture
     br.clear
 
