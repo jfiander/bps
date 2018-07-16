@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   include Events::Update
   include Concerns::Application::RedirectWithStatus
 
-  before_action :find_event, only: %i[copy edit update expire remind]
+  before_action :find_event, only: %i[show copy edit update expire remind]
   before_action :prepare_form, only: %i[new copy edit]
   before_action :check_for_blank, only: %i[create update]
   before_action :time_formats, only: %i[schedule catalog registrations show]
@@ -51,7 +51,6 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find_by(id: clean_params[:id])
     return if event_not_found?
 
     @locations = Location.searchable
