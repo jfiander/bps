@@ -15,6 +15,8 @@ class Location < ApplicationRecord
   validates :address, presence: true
   validates :address, uniqueness: true
 
+  validate :valid_map_link?
+
   def display
     return { id: 0, address: 'TBD' } unless address.present?
 
@@ -43,5 +45,15 @@ class Location < ApplicationRecord
     return if map_link.blank? || map_link.match(%r{https?://})
 
     self.map_link = "http://#{map_link}"
+  end
+
+  def valid_map_link?
+    return if map_link.blank?
+
+    uri = URI.parse(map_link)
+    uri.is_a?(URI::HTTP) && !uri.host.nil?
+  rescue URI::InvalidURIError
+    errors.add(:map_link, 'is not a valid URL.')
+    false
   end
 end
