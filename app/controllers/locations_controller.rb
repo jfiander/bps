@@ -10,6 +10,8 @@ class LocationsController < ApplicationController
 
   ajax!(only: :refresh)
 
+  before_action :update_form_data, only: %i[edit update]
+
   def list
     @locations = Location.all.order(:id).map(&:display)
   end
@@ -28,15 +30,13 @@ class LocationsController < ApplicationController
 
   def edit
     @location = Location.find_by(id: update_params[:id])
-    @edit_action = 'Modify'
-    @submit_path = update_location_path
     render :new
   end
 
   def update
     @location = Location.find_by(id: update_params[:id])
 
-    redirect_with_status(locations_path, object: 'location', verb: 'update') do
+    redirect_or_render_error(locations_path, render_method: :new, object: 'location', verb: 'update') do
       @location.update(location_params)
     end
   end
@@ -55,5 +55,10 @@ class LocationsController < ApplicationController
 
   def update_params
     params.permit(:id)
+  end
+
+  def update_form_data
+    @edit_action = 'Modify'
+    @submit_path = update_location_path
   end
 end
