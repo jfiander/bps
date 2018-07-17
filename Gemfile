@@ -6,12 +6,12 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails',               '~> 5.1.6'
+gem 'rails',               '~> 5.2'
 
 gem 'puma',                '~> 3.12'
 
 # Rails Plugins
-gem 'activestorage',       '~> 0.1'
+gem 'activestorage',       '~> 5.2.0'
 gem 'coffee-rails',        '~> 4.2'
 gem 'jbuilder',            '~> 2.5'
 gem 'jquery-rails',        '~> 4.3'
@@ -21,8 +21,8 @@ gem 'sass-rails',          '~> 5.0'
 gem 'uglifier',            '~> 1.3.0'
 
 # Model Behavior
-gem 'paper_trail',         '~> 8.1'
-gem 'paranoia',            '~> 2.2'
+gem 'paper_trail',         '~> 9.2.0'
+gem 'paranoia',            '~> 2.4.1'
 gem 'sanitize_email',      '~> 1.2'
 
 # App Functionality

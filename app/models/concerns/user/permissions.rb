@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module User::Permissions
-  SIMPLIFY = proc { |roles| roles.flatten.uniq.compact }
+  SIMPLIFY ||= proc { |roles| roles.flatten.uniq.compact }
 
   class << self
     def reload_implicit_roles_hash
