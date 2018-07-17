@@ -1,5 +1,5 @@
 ul#education
-  - if params[:catalog]
+  - if defined?(@event_catalog)
     = link 'Course Catalog', path: course_catalog_path, active: active[:courses]
     = link 'Seminar Catalog', path: seminar_catalog_path, active: active[:seminars]
     br
