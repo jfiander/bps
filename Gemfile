@@ -6,38 +6,37 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails',               '~> 5.0.6'
+gem 'rails',               '~> 5.2'
 
-gem 'puma',                '~> 3.4.0'
+gem 'puma',                '~> 3.12'
 
 # Rails Plugins
 gem 'coffee-rails',        '~> 4.2'
 gem 'jbuilder',            '~> 2.5'
-gem 'jquery-rails',        '~> 4.3.1'
-gem 'jquery-ui-rails',     '~> 6.0.1'
-gem 'rack-cors',           '~> 1.0.2'
+gem 'jquery-rails',        '~> 4.3'
+gem 'jquery-ui-rails',     '~> 6.0'
+gem 'rack-cors',           '~> 1.0'
 gem 'sass-rails',          '~> 5.0'
-gem 'uglifier',            '>= 1.3.0'
+gem 'uglifier',            '~> 4.1'
 
 # Model Behavior
-gem 'paper_trail',         '~> 8.1.0'
-gem 'paranoia',            '~> 2.2'
-gem 'sanitize_email',      '~> 1.2.2'
+gem 'paper_trail',         '~> 9.2.0'
+gem 'paranoia',            '~> 2.4.1'
+gem 'sanitize_email',      '~> 1.2'
 
 # App Functionality
-gem 'aws-sdk',             '~> 2.10.86'
-gem 'aws-sdk-rails',       '~> 1.0.1'
-gem 'chronic',             '~> 0.2.3'
-gem 'devise',              '~> 4.2.0'
-gem 'devise_invitable',    '~> 1.7.2'
-gem 'google-api-client',   '~> 0.23.0'
-gem 'mini_magick',         '~> 4.8.0'
-gem 'paperclip',           '~> 5.2.0'
-gem 'prawn',               '~> 2.1.0'
+gem 'aws-sdk',             '~> 2.11.89'
+gem 'aws-sdk-rails',       '~> 1.0'
+gem 'devise',              '~> 4.4.3'
+gem 'devise_invitable',    '~> 1.7'
+gem 'google-api-client',   '~> 0.23.4'
+gem 'mini_magick',         '~> 4.8'
+gem 'paperclip',           '~> 5.3.0'
+gem 'prawn',               '~> 2.2.2'
 # gem 'redis',             '~> 3.0'
-gem 'sendgrid-ruby',       '~> 5.2.0'
-# gem 'sidekiq',           '~> 5.0.5'
-gem 'slack-notifier',      '~> 2.3.2'
+gem 'sendgrid-ruby',       '~> 5.2'
+# gem 'sidekiq',           '~> 5.0'
+gem 'slack-notifier',      '~> 2.3'
 
 # View Management
 gem 'inline_svg',          '~> 1.3.0'
@@ -57,7 +56,7 @@ gem 'awesome_print',       '~> 1.8.0'
 gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
-gem 'sinatra',             '~> 2.0.2'
+gem 'sinatra',             '~> 2.0.3'
 
 group :production do
   gem 'pg',                '~> 0.18.4'

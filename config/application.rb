@@ -24,6 +24,8 @@ module Bps
     config.active_record.default_timezone = :local
     config.active_record.time_zone_aware_types = [:datetime]
 
+    config.active_record.sqlite3.represent_boolean_as_integer = true
+
     config.to_prepare do
       Devise::Mailer.layout 'mailer'
     end
