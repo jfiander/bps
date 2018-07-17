@@ -48,9 +48,10 @@ module Events::Edit
 
     return unless @event.course? || @event.seminar?
 
-    load_includes
-    load_topics
-    load_instructors
+    map_to_text = action_name != 'show'
+    load_includes(map_to_text: map_to_text)
+    load_topics(map_to_text: map_to_text)
+    load_instructors(map_to_text: map_to_text)
   end
 
   def prepare_form
