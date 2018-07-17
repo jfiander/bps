@@ -3,28 +3,28 @@
 module Concerns::Application::RedirectWithStatus
   private
 
-  def redirect_with_status(path, object:, verb:, past: nil, ivar: nil)
-    redirect_if(yield, path, verb, past, object) do
+  def redirect_with_status(path, options = {})
+    redirect_if(yield, path, options) do
       redirect_to(
         path,
-        alert: "Unable to #{verb} #{object}.",
-        error: errors(ivar, object)
+        alert: "Unable to #{options[:verb]} #{options[:object]}.",
+        error: errors(options[:ivar], options[:object])
       )
     end
   end
 
-  def redirect_or_render_error(path, render_method:, object:, verb:, past: nil, ivar: nil)
-    redirect_if(yield, path, verb, past, object) do
-      flash.now[:alert] = "Unable to #{verb} #{object}."
-      flash.now[:error] = errors(ivar, object)
-      render render_method
+  def redirect_or_render_error(path, options = {})
+    redirect_if(yield, path, options) do
+      flash.now[:alert] = "Unable to #{options[:verb]} #{options[:object]}."
+      flash.now[:error] = errors(options[:ivar], options[:object])
+      render(options[:render_method])
     end
   end
 
-  def redirect_if(condition, path, verb, past, object)
+  def redirect_if(condition, path, options)
     if condition
-      past ||= "#{verb}d"
-      redirect_to(path, success: "Successfully #{past} #{object}.")
+      past ||= "#{options[:verb]}d"
+      redirect_to(path, success: "Successfully #{past} #{options[:object]}.")
     else
       yield
     end
