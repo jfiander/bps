@@ -30,11 +30,6 @@ class GoogleCalendarAPI
 
   def authorize
     @user_id = 'default'
-    File.open('config/keys/google_calendar_token.yaml', 'w+') do |f|
-      f.write("---\ndefault: '")
-      f.write(ENV['GOOGLE_CALENDAR_TOKEN'])
-      f.write("'\n")
-    end
     @credentials = authorizer.get_credentials(@user_id)
     return @credentials unless @credentials.nil?
 
@@ -48,7 +43,7 @@ class GoogleCalendarAPI
 
   def authorizer
     @authorizer ||= Google::Auth::UserAuthorizer.new(
-      Google::Auth::ClientId.from_hash(JSON.parse(ENV['GOOGLE_CALENDAR_API_CLIENT'])),
+      Google::Auth::ClientId.from_hash(JSON.parse(File.read('config/keys/google_calendar_api_client.json'))),
       Google::Apis::CalendarV3::AUTH_CALENDAR,
       Google::Auth::Stores::FileTokenStore.new(file: 'config/keys/google_calendar_token.yaml')
     )
