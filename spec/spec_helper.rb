@@ -32,6 +32,16 @@ SimpleCov.start do
   add_filter 'app/helpers/devise_helper.rb'
 end
 
+def test_image(width, height)
+  MiniMagick::Tool::Convert.new do |i|
+    i.size "#{width}x#{height}"
+    i.xc 'white'
+    i << 'tmp/test_image.jpg'
+  end
+
+  'tmp/test_image.jpg'
+end
+
 RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

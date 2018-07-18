@@ -16,7 +16,15 @@ FactoryBot.define do
       end
     end
 
+    trait :apprentice do
+      before(:create) do |app|
+        primary = FactoryBot.build(:primary_applicant, member_application: app, member_type: 'Apprentice')
+        app.member_applicants << primary
+      end
+    end
+
     factory :single_application, traits: %i[with_primary]
     factory :family_application, traits: %i[with_primary with_family]
+    factory :apprentice_application, traits: %i[apprentice]
   end
 end

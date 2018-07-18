@@ -319,4 +319,31 @@ RSpec.describe User, type: :model do
       )
     end
   end
+
+  describe 'profile photo' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+      @photo = File.new(test_image(500, 750))
+      @key = 'profile_photos/0/original/blank.jpg'
+    end
+
+    it 'should return the default photo if not present' do
+      expect(@user.photo).to eql(User.no_photo)
+    end
+
+    it 'should require a file path' do
+      expect { @user.assign_photo }.to raise_error(
+        ArgumentError, 'missing keyword: local_path'
+      )
+
+      expect { @user.assign_photo(local_path: @photo.path) }.not_to raise_error
+    end
+
+    it 'should have a photo after attaching' do
+      @user.assign_photo(local_path: @photo.path)
+      expect(@user.photo).to eql(
+        User.buckets[:files].link(@user.profile_photo.s3_object(:medium).key)
+      )
+    end
+  end
 end

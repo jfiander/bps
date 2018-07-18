@@ -2,16 +2,6 @@
 
 require 'rails_helper'
 
-def test_image(width, height)
-  MiniMagick::Tool::Convert.new do |i|
-    i.size "#{width}x#{height}"
-    i.xc 'white'
-    i << 'tmp/test_image.jpg'
-  end
-
-  'tmp/test_image.jpg'
-end
-
 RSpec.describe FloatPlan, type: :model do
   it 'should reject a too-wide image' do
     header = HeaderImage.new(file: File.new(test_image(1500, 300)))
