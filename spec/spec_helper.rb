@@ -25,6 +25,11 @@ SimpleCov.start do
   # Exclude controller code from specs
   add_filter '/app/controllers'
 
+  # Exclude static view-oriented helper code from specs
+  add_filter '/app/helpers/application_helper.rb'
+  add_filter '/app/helpers/view_helper.rb'
+  add_filter '/app/helpers/markdown_helper.rb'
+
   # Invariant code, used for configuring API access
   add_filter 'app/lib/google_calendar_api.rb'
 
