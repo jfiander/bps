@@ -4,6 +4,8 @@
     | Birmingham
     br
     | Squadron
+  - if current_user&.permitted?(:admin, strict: true) && ::GIT_INFORMATION.local_ref.present?
+    p.gray = ::GIT_INFORMATION.local_ref
 
 #header-right
   = image_tag @header_image if @header_image.present?

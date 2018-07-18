@@ -33,6 +33,9 @@ SimpleCov.start do
   # Invariant code, used for configuring API access
   add_filter 'app/lib/google_calendar_api.rb'
 
+  # Invariant code, used for fetching git information
+  add_filter 'app/lib/git_info.rb'
+
   # Config code located in app directory
   add_filter 'app/helpers/devise_helper.rb'
 end
