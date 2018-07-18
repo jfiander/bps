@@ -52,6 +52,20 @@ CLOUDFRONT_FILES_ENDPOINT
 CLOUDFRONT_BILGE_ENDPOINT
 CLOUDFRONT_PHOTOS_ENDPOINT
 CLOUDFRONT_FLOATPLANS_ENDPOINT
+
+GOOGLE_CALENDAR_API_CLIENT
+GOOGLE_CALENDAR_TOKEN
+```
+
+Set Google Calendar IDs as appropriate:
+
+```sh
+# Production
+GOOGLE_CALENDAR_ID_GEN
+GOOGLE_CALENDAR_ID_EDUC
+
+# All other environments
+GOOGLE_CALENDAR_ID_TEST
 ```
 
 And any optional environment variables you want to support:
@@ -61,7 +75,7 @@ CALENDARS # calendar_id_1:99FF99/calendar_id_2:3399FF
 
 NEW_RELIC_LICENSE_KEY
 
-SLACK_URL_<CHANNEL>
+SLACK_URL_<CHANNEL> # Each channel needs a separate variable
 ```
 
 Run the server:
