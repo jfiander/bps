@@ -26,6 +26,10 @@ class Location < ApplicationRecord
     { id: id }.merge(details_hash)
   end
 
+  def name
+    address&.split(/\R/)&.first
+  end
+
   def self.searchable
     all.map do |l|
       { l.id => l.details_hash }
@@ -33,13 +37,9 @@ class Location < ApplicationRecord
   end
 
   def details_hash
-    {
-      name: address.split("\n").first,
-      address: address,
-      map_link: map_link,
-      details: details,
-      picture: picture
-    }
+    %i[name address map_link details picture].map do |method|
+      { method => send(method) }
+    end.reduce({}, :merge)
   end
 
   private

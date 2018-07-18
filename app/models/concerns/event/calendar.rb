@@ -24,20 +24,22 @@ module Concerns::Event::Calendar
   end
 
   def calendar_id
-    if category.in?(%i[course seminar])
-      ENV['GOOGLE_CALENDAR_ID_EDUC']
-    else
-      ENV['GOOGLE_CALENDAR_ID_GEN']
-    end
+    id = if category.in?(%w[course seminar])
+           ENV['GOOGLE_CALENDAR_ID_EDUC']
+         else
+           ENV['GOOGLE_CALENDAR_ID_GEN']
+         end
+
+    Rails.env.production? ? id : ENV['GOOGLE_CALENDAR_ID_TEST']
   end
 
   def calendar_hash
     {
       start: start_at.to_datetime,
-      end: start_at.to_datetime + length.hour.hours,
+      end: start_at.to_datetime + (length.hour.hours || 1.hour),
       summary: calendar_summary,
       description: calendar_description,
-      location: location&.address&.split(/\R/)&.first
+      location: location&.name
     }
   end
 

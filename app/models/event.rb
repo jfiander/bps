@@ -19,8 +19,8 @@ class Event < ApplicationRecord
 
   before_validation { validate_costs }
 
-  after_create { book! if ENV['ASSET_ENVIRONMENT'] == 'production' }
-  before_destroy { unbook! if ENV['ASSET_ENVIRONMENT'] == 'production' }
+  after_create { book! }
+  before_destroy { unbook! }
 
   has_attached_file(
     :flyer,

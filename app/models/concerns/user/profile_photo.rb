@@ -9,16 +9,7 @@ module User::ProfilePhoto
     end
   end
 
-  def assign_photo(s3_path: nil, local_path: nil)
-    unless s3_path.present? || local_path.present?
-      raise ArgumentError, 'One argument is required.'
-    end
-
-    if s3_path.present?
-      local_path = "tmp/#{simple_name}.jpg"
-      get_photo_from_s3(key, local_path)
-    end
-
+  def assign_photo(local_path:)
     attach_photo(File.open(local_path))
     save!
   end
@@ -28,12 +19,6 @@ module User::ProfilePhoto
   def photo?
     profile_photo.present? &&
       User.buckets[:files].object(profile_photo.s3_object.key).exists?
-  end
-
-  def get_photo_from_s3(key, path)
-    file = File.open(path, 'wb+')
-    file.write(User.buckets[:files].download(key))
-    file.close
   end
 
   def attach_photo(file)
