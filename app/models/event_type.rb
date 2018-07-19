@@ -94,9 +94,7 @@ class EventType < ApplicationRecord
     o.is_a?(Hash) ? o[title] : o
   end
 
-  def self.event
-    meeting
-  end
+  singleton_class.send(:alias_method, :event, :meeting)
 
   private
 
