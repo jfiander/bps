@@ -88,13 +88,7 @@ module FontAwesomeHelper
   def fa_options(options)
     default = { style: :solid, css: '', fa: '' }
 
-    begin
-      default.merge(options)
-    # :nocov:
-    rescue StandardError
-      default
-    end
-    # :nocov:
+    default.merge(options.to_h)
   end
 
   def combine_grows(i, grow)

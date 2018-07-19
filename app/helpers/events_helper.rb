@@ -50,15 +50,6 @@ module EventsHelper
     @catalog = catalog.group_by { |e| event_type(e).event_category }
   end
 
-  # :nocov:
-  def render_both_tables(events, long_form: false)
-    # html_safe: Properly sanitized by Rails
-    %i[desktop mobile].map do |t|
-      render("events/#{t}/table", events: events, long_form: long_form)
-    end.join.html_safe
-  end
-  # :nocov:
-
   def get_events(type, scope = :current)
     @event_types ||= EventType.ordered
 

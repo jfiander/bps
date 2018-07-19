@@ -10,8 +10,8 @@ class BpsS3
     prepare_bucket
   end
 
-  def link(key, signed: false, time: nil)
-    sign?(signed) ? signed_link(key, time) : cf_link(key)
+  def link(key, signed: false, time: nil, bypass: false)
+    sign?(signed, bypass: bypass) ? signed_link(key, time) : cf_link(key)
   end
 
   def list(prefix = '')
@@ -78,9 +78,8 @@ class BpsS3
     @cf_host ||= ENV["CLOUDFRONT_#{@endpoint.upcase}_ENDPOINT"]
   end
 
-  # :nocov:
-  def sign?(signed)
-    return false if Rails.env.test?
+  def sign?(signed = false, bypass: false)
+    return false if Rails.env.test? && !bypass
     return true if @bucket.in?(%i[seo files bilge]) && @environment != :static
     signed
   end
@@ -96,5 +95,4 @@ class BpsS3
       private_key_path: Rails.application.secrets[:cf_private_key_path]
     )
   end
-  # :nocov:
 end
