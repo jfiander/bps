@@ -30,11 +30,13 @@ SimpleCov.start do
   add_filter '/app/helpers/view_helper.rb'
   add_filter '/app/helpers/markdown_helper.rb'
 
-  # Invariant code, used for configuring API access
+  # Invariant code
+  ## used for configuring API access
   add_filter 'app/lib/google_calendar_api.rb'
-
-  # Invariant code, used for fetching git information
+  ## used for fetching git information
   add_filter 'app/lib/git_info.rb'
+  ## user to improve Redcarpet links
+  add_filter 'app/lib/target_blank_renderer.rb'
 
   # Config code located in app directory
   add_filter 'app/helpers/devise_helper.rb'
