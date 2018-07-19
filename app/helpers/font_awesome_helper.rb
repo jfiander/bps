@@ -90,9 +90,11 @@ module FontAwesomeHelper
 
     begin
       default.merge(options)
-    rescue
+    # :nocov:
+    rescue StandardError
       default
     end
+    # :nocov:
   end
 
   def combine_grows(i, grow)
@@ -113,7 +115,7 @@ module FontAwesomeHelper
 
   def size_x(size)
     return '' unless size.present? || size == 1
-    "-#{size}x"
+    "#{size}x"
   end
 
   def long_position(position)
