@@ -66,10 +66,10 @@ RSpec.describe SlackNotification, type: :lib do
     @live_notification = SlackNotification.new(
       base_notification_details.merge(
         fields: 'Just one field',
-        dryrun: false,
         channel: :test
       )
     )
+    @live_notification.dryrun = false
   end
 
   it 'should generate a valid notification with fields hash' do
