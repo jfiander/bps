@@ -90,8 +90,12 @@ Rspec testing is available:
 
 `bundle exec rspec`
 
-Controller specs will be run, but aren't included in coverage stats.
-Link signing is not included in coverage stats.
+Not included in coverage stats:
+Controller specs
+View-oriented helper code
+Link signing
+Events partial desktop/mobile renderer
+Code used to configure gems or API access
 
 ## Licensing
 
