@@ -125,7 +125,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'invitable' do
+  describe 'inviting' do
     before(:each) do
       @user = FactoryBot.create(:user)
       @placeholder_user = FactoryBot.create(:user, :placeholder_email)
@@ -157,6 +157,11 @@ RSpec.describe User, type: :model do
 
     it 'should not have a placeholder email' do
       expect(@placeholder_user.invitable?).to be(false)
+    end
+
+    it 'should have received but not accepted an invitation' do
+      @user.update(invitation_sent_at: Time.now)
+      expect(@user.invited?).to be(true)
     end
   end
 

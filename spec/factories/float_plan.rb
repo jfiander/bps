@@ -43,13 +43,6 @@ FactoryBot.define do
     return_at '2019-07-01 12:00:00'
     alert_at '2019-07-20 12:00:00'
     comments 'Ocean voyage -- will advise shore of plan changes regularly.'
-    car_make 'BMW'
-    car_model '550 xi'
-    car_year '2018'
-    car_color 'Black'
-    car_license_plate 'SCHOON'
-    trailer_license_plate nil
-    car_parked_at 'DYC'
     alert_name 'US Coast Guard'
     alert_phone nil
 
@@ -59,5 +52,21 @@ FactoryBot.define do
         float_plan.onboard << onboard
       end
     end
+
+    trait :with_a_car do
+      car_make 'BMW'
+      car_model '550 xi'
+      car_year '2018'
+      car_color 'Black'
+      car_license_plate 'SCHOON'
+      car_parked_at 'DYC'
+    end
+
+    trait :with_a_trailer do
+      trailer_license_plate 'A123456'
+    end
+
+    factory :float_plan_with_car, traits: %i[one_onboard with_a_car]
+    factory :float_plan_with_trailer, traits: %i[one_onboard with_a_trailer]
   end
 end

@@ -27,6 +27,12 @@ RSpec.describe BpsS3, type: :lib do
         'bps-development-photos'
       )
     end
+
+    it 'should generate the correct float plans bucket name' do
+      expect(BpsS3.new(:floatplans).full_bucket).to eql(
+        'bps-development-floatplans'
+      )
+    end
   end
 
   describe 'behaviors' do
@@ -48,7 +54,7 @@ RSpec.describe BpsS3, type: :lib do
       expect(@bps_s3.object('something.abc')).to be_a(Aws::S3::Object)
     end
 
-    it 'should download the first file from the bucket' do
+    it 'should download a file from the bucket' do
       expect(@bps_s3.download('something.abc')).to eql(
         'something goes here'
       )
@@ -61,6 +67,10 @@ RSpec.describe BpsS3, type: :lib do
           key: 'something.abc'
         )
       ).to be(true)
+    end
+
+    it 'should remove a file to the bucket' do
+      expect { @bps_s3.remove_object('something.abc') }.not_to raise_error
     end
   end
 end

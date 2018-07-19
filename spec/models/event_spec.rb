@@ -3,6 +3,37 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
+  describe 'scopes' do
+    it 'should filter by category' do
+      seminar_type = FactoryBot.create(:event_type, event_category: 'seminar')
+      course_type = FactoryBot.create(:event_type, event_category: 'public')
+      seminar = FactoryBot.create(:event, event_type: seminar_type)
+      FactoryBot.create(:event, event_type: course_type)
+      expect(Event.for_category('seminar').to_a).to eql([seminar])
+    end
+
+    it 'should filter by current' do
+      event_type = FactoryBot.create(:event_type, event_category: 'seminar')
+      FactoryBot.create_list(:event, 3, event_type: event_type)
+      Event.last.update(expires_at: Time.now)
+      expect(Event.current('seminar').to_a).to eql(Event.first(2))
+    end
+
+    it 'should filter by expired' do
+      event_type = FactoryBot.create(:event_type, event_category: 'seminar')
+      FactoryBot.create_list(:event, 3, event_type: event_type)
+      Event.last.update(expires_at: Time.now)
+      expect(Event.expired('seminar').to_a).to eql([Event.last])
+    end
+
+    it 'should filter with registrations' do
+      FactoryBot.create_list(:event, 2)
+      user = FactoryBot.create(:user)
+      FactoryBot.create(:registration, event: Event.last, user: user)
+      expect(Event.with_registrations.to_a).to eql([Event.last])
+    end
+  end
+
   describe 'types' do
     it 'should create a course' do
       event_type = FactoryBot.create(:event_type, event_category: 'public')
@@ -35,12 +66,6 @@ RSpec.describe Event, type: :model do
     end
 
     describe 'flags' do
-      describe 'event_type' do
-        it 'should return the category group of the event_type' do
-          expect(@event.category).to eql('course')
-        end
-      end
-
       describe 'expiration' do
         it 'should return true when expired' do
           @event.update(expires_at: Time.now - 1.day)
@@ -65,7 +90,36 @@ RSpec.describe Event, type: :model do
         end
       end
 
+      describe 'reminding' do
+        it 'should set the reminded flag after sending reminders' do
+          expect(@event.reminded?).to be(false)
+          expect(@event.remind!).to be(true)
+          expect(@event.reminded?).to be(true)
+        end
+
+        it 'should not allow duplicate reminders' do
+          expect(@event.remind!).to be(true)
+          expect(@event.remind!).to be(nil)
+        end
+      end
+
+      describe 'within a week' do
+        it 'should return false if the start date is more than 1 week away' do
+          @event.start_at = Time.now + 2.weeks
+          expect(@event.within_a_week?).to be(false)
+        end
+
+        it 'should return true if the start date is less than 1 week away' do
+          @event.start_at = Time.now + 3.days
+          expect(@event.within_a_week?).to be(true)
+        end
+      end
+
       describe 'category' do
+        it 'should return the category group of the event_type' do
+          expect(@event.category).to eql('course')
+        end
+
         it 'should return true for the correct category' do
           expect(@event.course?).to be(true)
         end
@@ -73,6 +127,15 @@ RSpec.describe Event, type: :model do
         it 'should return false for all other categories' do
           expect(@event.seminar?).to be(false)
           expect(@event.meeting?).to be(false)
+        end
+
+        it 'should check the category from cache' do
+          FactoryBot.create(:event_type, event_category: 'public')
+          FactoryBot.create(:event_type, event_category: 'seminar')
+          FactoryBot.create(:event_type, event_category: 'meeting')
+          event_types = EventType.all
+
+          expect(@event.category(event_types)).to eql('course')
         end
       end
 
