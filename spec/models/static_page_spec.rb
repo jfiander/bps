@@ -36,4 +36,10 @@ RSpec.describe StaticPage, type: :model do
       expect(page.title).to eql(page.name.titleize)
     end
   end
+
+  it 'should have the correct versions path' do
+    page = FactoryBot.create(:static_page)
+
+    expect(page.versions_path).to eql('/versions/StaticPage/1')
+  end
 end

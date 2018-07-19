@@ -83,6 +83,18 @@ RSpec.describe User, type: :model do
       expect(@user.full_name).to eql('Lt/C John Doe, AP')
     end
 
+    describe 'html_rank' do
+      it 'should return the correct string for a simple rank' do
+        @user.rank = nil
+        FactoryBot.create(:bridge_office, user: @user, office: 'asst_educational')
+        expect(@user.html_rank).to eql('1<sup>st</sup>/Lt')
+      end
+
+      it 'should return the correct string for a formatted rank' do
+        expect(@user.html_rank).to eql('Lt/C')
+      end
+    end
+
     describe 'BOC' do
       it 'should return nil for no BOC level' do
         expect(FactoryBot.create(:user).boc).to be_nil
@@ -301,7 +313,7 @@ RSpec.describe User, type: :model do
       FactoryBot.create(:user, :placeholder_email)
       FactoryBot.create(:user, sign_in_count: 1)
 
-      expect(User.invitable.to_a).to eql([user])
+      expect(User.include_positions.invitable.to_a).to eql([user])
     end
   end
 

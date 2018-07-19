@@ -3,6 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe EventType, type: :model do
+  it 'should generate a valid searchable array' do
+    FactoryBot.create(:event_type, event_category: 'public', title: 'ABC')
+    FactoryBot.create(:event_type, event_category: 'seminar', title: '123')
+
+    expect(EventType.searchable).to eql([%w[public abc], %w[seminar 123]])
+  end
+
   describe 'form selectors' do
     it 'should generate the correct form select field data' do
       abc = FactoryBot.create(:event_type)

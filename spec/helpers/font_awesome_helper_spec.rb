@@ -15,9 +15,9 @@ RSpec.describe FontAwesomeHelper, type: :helper do
     end
 
     it 'should generate the correct icon from a configuration hash' do
-      fa = { name: 'help', options: { style: :light } }
+      fa = { name: 'help', options: { style: :light, size: 2 } }
       expect(fa_icon(fa)).to eql(
-        "<i class='fal fa-help' data-fa-transform='' title=''></i>"
+        "<i class='fal fa-help fa-2x' data-fa-transform='' title=''></i>"
       )
     end
 

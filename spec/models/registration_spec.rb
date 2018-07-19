@@ -6,6 +6,10 @@ RSpec.describe Registration, type: :model do
   before(:each) do
     @user = FactoryBot.create(:user)
     @event = FactoryBot.create(:event)
+    @ao = FactoryBot.create(:user)
+    FactoryBot.create(:bridge_office, user: @ao, office: 'administrative')
+    @seo = FactoryBot.create(:user)
+    FactoryBot.create(:bridge_office, user: @seo, office: 'educational')
   end
 
   it 'should convert a public registration user email to user' do
@@ -33,10 +37,25 @@ RSpec.describe Registration, type: :model do
   end
 
   it 'should send a confirmation email for public registrations' do
-    seo = FactoryBot.create(:user)
-    FactoryBot.create(:bridge_office, user: seo, office: 'educational')
     expect do
       FactoryBot.create(:registration, email: 'nobody@example.com', event: @event)
     end.not_to raise_error
+  end
+
+  it 'should notify the chair of registrations' do
+    FactoryBot.create(:committee, user: @ao, name: 'rendezvous')
+    event_type = FactoryBot.create(:event_type, event_category: 'meeting', title: 'rendezvous')
+    event = FactoryBot.create(:event, event_type: event_type)
+    expect do
+      FactoryBot.create(:registration, user: @user, event: event)
+    end.not_to raise_error
+  end
+
+  it 'should include an attached PDF if present' do
+    @event.flyer = File.open(File.join(Rails.root, 'spec', 'Blank.pdf'), 'r')
+    @event.save
+    registration = FactoryBot.create(:registration, event: @event, user: @user)
+
+    expect { RegistrationMailer.confirm(registration).deliver }.not_to raise_error
   end
 end

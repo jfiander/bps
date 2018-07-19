@@ -14,11 +14,6 @@ FactoryBot.define do
     make 'Awesome'
     model 'Schoonsome'
     year '2175'
-    engine_type_1 'Diesel'
-    engine_type_2 nil
-    horse_power 150
-    number_of_engines 1
-    fuel_capacity 250
     pfds true
     flares true
     mirror true
@@ -53,6 +48,14 @@ FactoryBot.define do
       end
     end
 
+    trait :with_engines do
+      number_of_engines 1
+      engine_type_1 'Diesel'
+      engine_type_2 nil
+      horse_power 150
+      fuel_capacity 250
+    end
+
     trait :with_a_car do
       car_make 'BMW'
       car_model '550 xi'
@@ -68,5 +71,6 @@ FactoryBot.define do
 
     factory :float_plan_with_car, traits: %i[one_onboard with_a_car]
     factory :float_plan_with_trailer, traits: %i[one_onboard with_a_trailer]
+    factory :float_plan_with_engines, traits: %i[one_onboard with_engines]
   end
 end

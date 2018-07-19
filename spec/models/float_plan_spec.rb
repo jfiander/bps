@@ -17,11 +17,21 @@ RSpec.describe FloatPlan, type: :model do
       expect { @float_plan.generate_pdf }.not_to raise_error
     end
 
+    it 'should successfully generate a PDF with an alert phone' do
+      @float_plan.alert_phone = '555-555-5555'
+      expect { @float_plan.generate_pdf }.not_to raise_error
+    end
+
     it 'should generate a correct link' do
       expect(@float_plan.link).to match(
         %r{https://floatplans.development.bpsd9.org/\d+.pdf}
       )
     end
+  end
+
+  it 'should successfully generate a PDF with engines' do
+    @float_plan = FactoryBot.create(:float_plan_with_engines)
+    expect { @float_plan.generate_pdf }.not_to raise_error
   end
 
   it 'should successfully generate a PDF with a trailer plate' do
