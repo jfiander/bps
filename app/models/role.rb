@@ -28,6 +28,6 @@ class Role < ApplicationRecord
   def descends_from_admin?
     return true if name == 'admin'
     return true if parents.map(&:name).include? 'admin'
-    false
+    errors.add(:parent, 'must descend from :admin')
   end
 end
