@@ -87,6 +87,12 @@ class Event < ApplicationRecord
     EventInstructor.create(event: self, user: user)
   end
 
+  def remind!
+    return if reminded?
+    registrations.each { |reg| RegistrationMailer.remind(reg).deliver }
+    update(reminded_at: Time.now)
+  end
+
   private
 
   def validate_costs

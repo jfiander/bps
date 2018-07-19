@@ -109,8 +109,7 @@ class EventsController < ApplicationController
       return
     end
 
-    @event.registrations.each { |reg| RegistrationMailer.remind(reg).deliver }
-    @event.update(reminded_at: Time.now)
+    @event.remind!
     flash[:success] = 'Successfully sent reminder emails.'
     redirect_to send("#{event_type_param}s_path")
   end
