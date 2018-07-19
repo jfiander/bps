@@ -114,8 +114,4 @@ module User::Permissions
       k.in? cached_committees.map(&:search_name)
     end&.values&.flatten&.map(&:to_sym)
   end
-
-  def all_roles
-    @all_roles ||= Role.all.to_a
-  end
 end
