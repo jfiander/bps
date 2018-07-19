@@ -91,6 +91,7 @@ Rspec testing is available:
 `bundle exec rspec`
 
 Controller specs will be run, but aren't included in coverage stats.
+Link signing is not included in coverage stats.
 
 ## Licensing
 

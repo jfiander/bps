@@ -70,6 +70,21 @@ class BpsS3
     @bucket = :files
   end
 
+  def cf_link(key)
+    "https://#{cf_host}/#{key}"
+  end
+
+  def cf_host
+    @cf_host ||= ENV["CLOUDFRONT_#{@endpoint.upcase}_ENDPOINT"]
+  end
+
+  # :nocov:
+  def sign?(signed)
+    return false if Rails.env.test?
+    return true if @bucket.in?(%i[seo files bilge]) && @environment != :static
+    signed
+  end
+
   def signed_link(key, time = nil)
     time ||= Time.now + 1.hour
     cf_signer.signed_url(cf_link(key), expires: time)
@@ -81,18 +96,5 @@ class BpsS3
       private_key_path: Rails.application.secrets[:cf_private_key_path]
     )
   end
-
-  def cf_link(key)
-    "https://#{cf_host}/#{key}"
-  end
-
-  def cf_host
-    @cf_host ||= ENV["CLOUDFRONT_#{@endpoint.upcase}_ENDPOINT"]
-  end
-
-  def sign?(signed)
-    return false if Rails.env.test?
-    return true if @bucket.in?(%i[seo files bilge]) && @environment != :static
-    signed
-  end
+  # :nocov:
 end
