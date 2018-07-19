@@ -71,6 +71,7 @@ class User < ApplicationRecord
   end
 
   def full_name(html: true, show_boc: false)
+    # html_safe: No user content
     fn = (+'').html_safe
     fn << auto_rank(html: html)&.html_safe
     fn << ' ' if auto_rank.present?
