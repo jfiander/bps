@@ -85,10 +85,21 @@ RSpec.describe ImportUsers, type: :service do
       expect(user).to be_present
       expect(user.locked?).to be(false)
 
-      ImportUsers.new.call(import)
+      ImportUsers.new.call(import, lock: true)
       user = User.find_by(certificate: 'E001234')
       expect(user).to be_present
       expect(user.locked?).to be(true)
+    end
+
+    it 'should correctly not lock users' do
+      user = User.find_by(certificate: 'E001234')
+      expect(user).to be_present
+      expect(user.locked?).to be(false)
+
+      ImportUsers.new.call(import, lock: false)
+      user = User.find_by(certificate: 'E001234')
+      expect(user).to be_present
+      expect(user.locked?).to be(false)
     end
   end
 

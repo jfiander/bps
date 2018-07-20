@@ -10,7 +10,7 @@
 # As well as all educational columns. You can also add a manual 'Rank' column.
 #
 class ImportUsers
-  def call(path)
+  def call(path, lock: false)
     initialize_blank_variables
 
     User.transaction do
@@ -18,8 +18,7 @@ class ImportUsers
       raise 'Blank header(s) detected.' if parsed_csv.headers.any?(&:blank?)
 
       parsed_csv.each { |row| parse_row(row) }
-      @removed_users = User.where.not(certificate: @certificates).to_a
-      auto_lock_removed_users
+      lock_users?(lock)
     end
 
     File.unlink(path) if File.exist?(path)
@@ -172,8 +171,16 @@ class ImportUsers
       created: @created.map(&:id),
       updated: @updated.reduce({}, :merge),
       completions: @completions.map(&:id),
-      locked: @removed_users.map(&:id)
+      locked: @removed_users == :skipped ? :skipped : @removed_users.map(&:id)
     }
+  end
+
+  def lock_users?(lock)
+    @removed_users = :skipped
+    return unless lock
+
+    @removed_users = User.where.not(certificate: @certificates).to_a
+    auto_lock_removed_users
   end
 
   def auto_lock_removed_users

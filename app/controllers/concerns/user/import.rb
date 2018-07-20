@@ -19,10 +19,12 @@ module User::Import
     file.write(uploaded_file.read)
     file.close
     begin
-      @import_results = ImportUsers.new.call(import_path)
+      @import_results = ImportUsers.new.call(
+        import_path, lock: clean_params[:lock_missing]
+      )
       flash.now[:success] = 'Successfully imported user data.'
       render :import
-    rescue => e
+    rescue StandardError => e
       flash.now[:alert] = 'Unable to import user data.'
       flash.now[:error] = e.message
       render :import

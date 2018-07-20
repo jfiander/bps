@@ -129,8 +129,13 @@ input:checked + .slider div.description.excom:after {
   content: "Create";
 }
 
-.slider div.description.catalog:after {
+.slider div.description.catalog:after,
+.slider div.description.lock-missing:after {
   content: "Ignore";
+}
+
+input:checked + .slider div.description.lock-missing:after {
+  content: "Lock";
 }
 
 input:checked + .slider div.description.catalog:after {

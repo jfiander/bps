@@ -66,6 +66,8 @@ class UserController < ApplicationController
   end
 
   def clean_params
-    params.permit(:id, :type, :page_name, :import_file, :photo, :redirect_to)
+    params.permit(
+      :id, :type, :page_name, :import_file, :lock_missing, :photo, :redirect_to
+    )
   end
 end

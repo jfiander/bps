@@ -47,11 +47,17 @@ h2 Import user data
         | (3) HQ Rank
   .center.red.italic Automatic ranks from bridge offices will override this rank.
   .center Any additional columns will be interpreted as educational completion dates.
-  .center.bold Users who are not included in the import file (except current bridge officers) will be locked.
+  .center.bold Users who are not included in the import file (except current bridge officers) can be automatically locked.
 hr
 
 = form_tag import_path, multipart: true
   = file_field_tag :import_file, required: true
+  br
+  p For users not in import file:
+  label.switch
+    = check_box_tag :lock_missing, class: "slider round"
+    span.slider.round.red
+      .description.lock-missing
   br
   = spinner_button button_text: 'Upload', css_class: 'big'
 
@@ -59,5 +65,6 @@ hr
   p = "Created #{@import_results[:created].count} new #{'user'.pluralize(@import_results[:created].count)}."
   p = "Updated #{@import_results[:updated].count} existing #{'user'.pluralize(@import_results[:updated].count)}."
   p = "Added #{@import_results[:completions].count} completion #{'date'.pluralize(@import_results[:completions].count)}."
-  p = "Locked #{@import_results[:locked].count} missing #{'user'.pluralize(@import_results[:locked].count)}."
+  - unless @import_results[:locked] == :skipped
+    p = "Locked #{@import_results[:locked].count} missing #{'user'.pluralize(@import_results[:locked].count)}."
   p = @import_results.inspect
