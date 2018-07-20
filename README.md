@@ -91,11 +91,12 @@ Rspec testing is available:
 `bundle exec rspec`
 
 Not included in coverage stats:
-Controller specs
-View-oriented helper code
-Link signing
-Events partial desktop/mobile renderer
-Code used to configure gems or API access
+
+- Controller specs
+- View-oriented helper code
+- Link signing
+- Events partial desktop/mobile renderer
+- Code used to configure gems or API access
 
 ## Licensing
 
