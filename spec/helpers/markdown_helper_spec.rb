@@ -53,7 +53,8 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(MarkdownHelper.render_markdown_raw(markdown: 'test@bpsd9.org')).to(
         eql(
           "<div class=\"markdown\"><p><a target='_blank' " \
-          "href='mailto:test@bpsd9.org' title=''>test@bpsd9.org</a></p>\n</div>"
+          'href="mailto:test@bpsd9.org" ' \
+          "title=''>test@bpsd9.org</a></p>\n</div>"
         )
       )
     end

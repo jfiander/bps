@@ -35,8 +35,9 @@ SimpleCov.start do
   add_filter 'app/lib/google_calendar_api.rb'
   ## used for fetching git information
   add_filter 'app/lib/git_info.rb'
-  ## user to improve Redcarpet links
+  ## user to improve markdown formatting
   add_filter 'app/lib/target_blank_renderer.rb'
+  add_filter '/app/lib/parsed_markdown.rb'
 
   # Config code located in app directory
   add_filter 'app/helpers/devise_helper.rb'
