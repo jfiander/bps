@@ -4,7 +4,7 @@
     = link 'Registrations', path: send("#{event_type_param}_registrations_path"), fa: { name: 'calendar-check', options: { style: :regular } }
 
 - if current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events courses seminars locations])
-  = link 'Add Location', path: new_location_path, fa: { name: 'plus-square' }
+  = link 'Add Location', path: new_location_path, fa: { name: 'map-marker-plus' }
 
 - if current_user&.permitted?(:event, :course, :seminar, :page) && controller_name.in?(%w[events courses seminars event_types])
   = link 'Add Event Type', path: new_event_type_path, fa: { name: 'plus-square', options: { fa: :fw } }
