@@ -154,8 +154,9 @@ Rails.application.routes.draw do
   ### User management
 
   # Profiles
-  get     '/users',     to: 'user#list'
-  get     '/users/:id', to: 'user#show', as: 'user'
+  get     '/users',                 to: 'user#list'
+  get     '/users/:id',             to: 'user#show',        as: 'user'
+  get     '/users/:id/certificate', to: 'user#certificate', as: 'user_certificate'
 
   # Locking
   patch   '/users/:id/lock',   to: 'user#lock',   as: 'lock_user'

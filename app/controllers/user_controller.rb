@@ -23,6 +23,7 @@ class UserController < ApplicationController
   )
 
   before_action :can_view_profile?, only: [:show]
+  before_action :can_view_profile?, only: [:certificate]
   before_action :find_user, only: [:show]
   before_action :load_users, only: [:list]
   before_action(
@@ -56,6 +57,27 @@ class UserController < ApplicationController
     end
   end
 
+  def certificate
+    @user = User.find_by(id: clean_params[:id])
+
+    @membership_date = clean_params[:member_date] || @user.membership_date
+    @last_mm = clean_params[:last_mm] || @user.last_mm
+
+    respond_to do |format|
+      format.pdf do
+        send_file(
+          EducationCertificatePDF.for(
+            @user, membership_date: @membership_date, last_mm: @last_mm
+          ), disposition: :inline
+        )
+      end
+
+      format.html do
+        redirect_to user_certificate_path(id: @user.id, format: :pdf)
+      end
+    end
+  end
+
   private
 
   def can_view_profile?
@@ -65,9 +87,17 @@ class UserController < ApplicationController
     end
   end
 
+  def can_view_certificate?
+    unless clean_params[:id].to_i == current_user.id ||
+           current_user&.permitted?(:admin)
+      redirect_to user_certificate_path(current_user.id)
+    end
+  end
+
   def clean_params
     params.permit(
-      :id, :type, :page_name, :import_file, :lock_missing, :photo, :redirect_to
+      :id, :type, :page_name, :import_file, :lock_missing, :photo, :redirect_to,
+      :member_date, :last_mm
     )
   end
 end

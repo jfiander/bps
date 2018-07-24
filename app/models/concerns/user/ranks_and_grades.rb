@@ -33,6 +33,17 @@ module User::RanksAndGrades
     grade.present? ? ", #{grade}" : ''
   end
 
+  def long_grade
+    {
+      'S' => 'Seaman',
+      'P' => 'Pilot',
+      'AP' => 'Advanced Pilot',
+      'JN' => 'Junior Navigator',
+      'N' => 'Navigator',
+      'SN' => 'Senior Navigator'
+    }[grade]
+  end
+
   private
 
   def bridge_rank(html = true)
