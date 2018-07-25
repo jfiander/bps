@@ -6,7 +6,7 @@ h3 Assign Profile Photo
     = hidden_field_tag :id, id
   - else
     br.mobile
-    = label_tag :id, 'User ID: '
-    = number_field_tag :id, '', required: true, class: 'number'
+    = label_tag :id, 'User: '
+    = select_tag :id, options_for_select(@users.map { |u| [(u[:name].present? ? u[:name] : u[:email]), u[:id]] }), required: true
   br
   = spinner_button(button_text: "Assign photo", disable_text: "Assigning photo", css_class: 'big')
