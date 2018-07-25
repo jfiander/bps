@@ -62,7 +62,7 @@ class ParsedMarkdown < String
 
   def parse_link
     match_replace(%r{%file/(\d+)/([^/]*?)/}) do |match|
-      file_link(match[1])
+      file_link(match[1], title: match[2])
     end
   end
 
