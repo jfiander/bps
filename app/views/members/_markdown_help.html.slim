@@ -6,79 +6,95 @@ h2 Formatting Help
 
   p.bold General notes
   p Adjacent lines will be combined into a single paragraph.
-  p To start a new paragraph, enter a blank line.
+  p To start a new paragraph, separate it with a blank line above it.
   p To enter a manual line break within a paragraph, end a line with two spaces.
   hr
 
   #markdown-details
+    p
+      b Paragraph Formatting
+      br
+      small These control symbols must be the first character of a paragraph.
+      br
+      small Heading symbols must be separated from their text by a space.
+
     h1
-      span.red #
+      span.bold.red #
       |  Heading
     h2
-      span.red ##
+      span.bold.red ##
       |  Sub-heading
     h3
-      span.red ###
+      span.bold.red ###
       |  Sub-sub-heading
+    p
+      span.bold.red @
+      | Center align
     hr
 
     p
-      b Text formatting
+      b Inline Text Formatting
+      br
+      small These control symbols must surround and be in contact with the text to be affected, and must then be separated by blank space on either side.
     p
-      span.red @
-      | Center align
-
-    p
-      span.red
+      span.bold.red
         | *
       span.italic Italic
-      span.red
+      span.bold.red
         | *
 
     p
-      span.red
+      span.bold.red
         | **
       b Bold
-      span.red
+      span.bold.red
         | **
 
     p
-      span.red
+      span.bold.red
         | ***
       b.italic Bold Italic
-      span.red
+      span.bold.red
         | ***
 
     p
-      span.red _
+      span.bold.red _
       u Underline
-      span.red _
+      span.bold.red _
 
     p
       | Text with
-      span.red ^
+      span.bold.red ^
       sup superscript
     hr
 
     p
       b Links
     p
-      span.red
+      span.bold.red
         | [
       | Page Name
-      span.red
+      span.bold.red
         | ](
       | http://example.com/some/path
-      span.red )
+      span.bold.red )
+    p
+      span.bold.red
+        | [
+      | Local Page
+      span.bold.red
+        | ](
+      | /some/path
+      span.bold.red )
 
     p
-      span.red
+      span.bold.red
         | [
       | Email Name
-      span.red
+      span.bold.red
         | ](
       | example@example.com
-      span.red )
+      span.bold.red )
 
     p
       small
@@ -90,26 +106,26 @@ h2 Formatting Help
     p
       b Image
     p
-      span.red ![
+      span.bold.red ![
       | Image description
-      span.red ](
+      span.bold.red ](
       | http://example.com/some/path/image.png
-      span.red )
+      span.bold.red )
     hr
 
     p
       b Horizontal line
     p
-      span.red ---
+      span.bold.red ---
     hr
 
     p
       b Bulleted list
     p
-      span.red -
+      span.bold.red -
       |  Item 1
       br
-      span.red -
+      span.bold.red -
       |  Item 2
 
     p
@@ -120,7 +136,7 @@ h2 Formatting Help
       br
       small
         | You can indent items one level by preceeding the 
-        span.red -
+        span.bold.red -
         |  with two spaces
     hr
 
@@ -128,25 +144,25 @@ h2 Formatting Help
       b Table
     p
       pre
-        span.red | 
+        span.bold.red | 
         | Header 1
-        span.red  | 
+        span.bold.red  | 
         | Header 2
-        span.red  |
+        span.bold.red  |
         br
-        span.red |----------|----------|
+        span.bold.red |----------|----------|
         br
-        span.red | 
+        span.bold.red | 
         | Item 1.1
-        span.red  | 
+        span.bold.red  | 
         | Item 2.1
-        span.red  |
+        span.bold.red  |
         br
-        span.red | 
+        span.bold.red | 
         | Item 1.2
-        span.red  | 
+        span.bold.red  | 
         | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        span.red  |
+        span.bold.red  |
     hr
 
     p
@@ -160,46 +176,83 @@ h2 Formatting Help
     p
       small The format of these keys follows this pattern:
     p
-      span.red %file/7/
+      span.bold.red %file/
+      | 7
+      span.bold.red
+        | /
       | Customizable link text
-      span.red
+      span.bold.red
         | /
     hr
 
     p
-      b FontAwesome
+      b FontAwesome Pro Icons
     p
       small
         | The 
-        = link_to "FontAwesome", "http://fontawesome.io/icons", target: :_blank
-        |  icon set is available, if you want to use a particular icon somewhere in a page.
+        = link_to "FontAwesome Pro", "http://fontawesome.io/icons", target: :_blank
+        |   icon library is available, if you want to use a particular icon somewhere in a page.
+      br
+      small You can specify arbitrary CSS classes on each icon.
     p
-      span.red %fa/
+      small
+        | Some useful classes:
+        ul
+          li.bold.birmingham-blue birmingham-blue
+          li.bold.blue blue
+          li.bold.red red
+          li.bold.green green
+          li.bold.gray gray
+          li
+            span.bold far
+            |   (hollow)
+          li
+            span.bold fal
+            |  (thin)
+          li
+            span.bold fa-fw
+            |  (fixed width)
+    p
+      span.bold.red %fa/
       | icon-name
-      span.red
+      span.bold.red
         | /
     p
-      span.red %fa/
+      span.bold.red %fa/
       | icon-name
-      span.red
+      span.bold.red
         | :
       | css
-      span.red
+      span.bold.red
         | /
     p
-      span.red %fal/
+      small You can also specify layered icons, specified from bottom up, with optional CSS classes as well.
+    p
+      span.bold.red %fal/
       | icon-name
-      span.red
-        | :
-      | css
-      span.red
+      span.bold.red
         | ;
       | icon-name
-      span.red
+      span.bold.red
         | :
       | css
-      span.red
+      span.bold.red
         | /
+
+    p
+      small These icons can also be used in links.
+    p
+      span.bold.red
+        | [%fa/
+      | users
+      span.bold.red
+        | :
+      | red
+      span.bold.red
+        | /](
+      | /users
+      span.bold.red
+        | )
     hr
 
     p
@@ -211,9 +264,9 @@ h2 Formatting Help
       ul
         li
           | Birmingham burgee: 
-          span.red %burgee
+          span.bold.red %burgee
         li 
           | Education menu: 
-          span.red %education
+          span.bold.red %education
 
 = link_to "Show formatting help", "#", id: "show-markdown-help"
