@@ -17,8 +17,7 @@ table#users
     th.center.narrow Certificate
     th.center.narrow Roles
     th.medium Current Login
-    th.center.very-narrow ID
-    th.center.very-narrow
+    th.center.narrow
   - @users.each do |user|
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
       td
@@ -62,19 +61,27 @@ table#users
           = user[:invited_at]
         - else
           | Never logged in
-      td.center = admin ? link_to(user[:id], user_path(user[:id])) : user[:id]
       td.center
-        - if can_lock
-          - if user[:locked]
+        - if user[:locked]
+          - if can_lock
             = link_to(unlock_user_path(user[:id]), title: 'Unlock', class: 'unlock', method: :patch) { fa_icon('lock', fa: 'fw') }
-          - elsif !user[:permitted_roles].include?(:admin)
-            = link_to(lock_user_path(user[:id]), title: 'Lock', class: 'lock', method: :patch) { fa_icon('unlock', fa: 'fw') }
-        - unless user[:locked]
+          - else
+            = fa_icon('lock', fa: 'fw')
+        - else
+          - if admin
+            = link_to(user_path(user[:id])) do
+              = fa_icon('user', title: user[:id])
+          - else
+            = fa_icon('user', title: user[:id])
+          = link_to(user_certificate_path(id: user[:id]), title: 'Educational certificate', target: :_blank) { fa_icon('file-certificate', style: :regular, fa: 'fw') }
           - if user[:invited]
             = link_to(invite_path(id: user[:id]), title: 'Re-send invitation', method: :put) { fa_icon('envelope-open', css: 'pending', fa: 'fw') }
           - elsif user[:invitable]
             = link_to(invite_path(id: user[:id]), title: 'Send invitation', method: :put) { fa_icon('envelope', fa: 'fw') }
           - elsif user[:placeholder_email]
             = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address')
-        = link_to(user_certificate_path(id: user[:id]), title: 'Educational certificate', target: :_blank) { fa_icon('file-certificate', style: :regular, fa: 'fw') }
+          - else
+            = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'check', options: { css: :green } }], title: 'Logged in successfully')
+          - if can_lock && !user[:permitted_roles].include?(:admin)
+            = link_to(lock_user_path(user[:id]), title: 'Lock', class: 'lock', method: :patch) { fa_icon('unlock', fa: 'fw') }
 
