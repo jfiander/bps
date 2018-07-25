@@ -82,6 +82,8 @@ Rails.application.routes.draw do
 
   # Minutes
   post    '/minutes',         to: 'members#upload_minutes',  as: 'upload_minutes'
+
+  # Markdown page editors
   get     '/edit/:page_name', to: 'members#edit_markdown',   as: 'edit_page'
   patch   '/edit/:page_name', to: 'members#update_markdown', as: 'update_page'
 
