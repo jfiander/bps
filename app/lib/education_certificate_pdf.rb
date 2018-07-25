@@ -5,6 +5,9 @@ class EducationCertificatePDF < Prawn::Document
     Heading NameAndGrade Details Completions Seminars
   ].freeze
 
+  ROW_HEIGHT ||= 36
+  COLUMN_WIDTH ||= 90
+
   MODULES.each { |c| include "EducationCertificatePDF::#{c}".constantize }
 
   def self.for(*args)
@@ -45,25 +48,28 @@ class EducationCertificatePDF < Prawn::Document
   end
 
   def completion_row(row)
-    y = 370 - (40 * (row - 1))
-    bounding_box([0, y], width: 510, height: 40) { yield }
+    y = 370 - (ROW_HEIGHT * (row - 1))
+    bounding_box([0, y], width: 510, height: ROW_HEIGHT) { yield }
   end
 
   def completion_box(column, label, date = nil, color: 'FFFFCC')
-    x = 90 * (column - 1) + 1
-    bounding_box([x, 39], width: 88, height: 38) do
+    x = COLUMN_WIDTH * (column - 1) + 1
+    bounding_box([x, (ROW_HEIGHT - 1)], width: (COLUMN_WIDTH - 2), height: (ROW_HEIGHT - 2)) do
       stroke_bounds
       date.present? ? completed_rectangle(color) : configure_colors('CCCCCC')
-
-      text_box label, at: [2, 35], width: 84, size: 7, align: :center, style: :bold, inline_format: true
-      text_box date.to_s, at: [2, 10], width: 84, size: 7, align: :center
+      completion_contents(label, date)
     end
     configure_colors
   end
 
+  def completion_contents(label, date)
+    text_box label, at: [2, (ROW_HEIGHT - 5)], width: (COLUMN_WIDTH - 6), size: 7, align: :center, style: :bold, inline_format: true
+    text_box date.to_s, at: [2, 10], width: (COLUMN_WIDTH - 6), size: 7, align: :center
+  end
+
   def completed_rectangle(color)
     fill_color(color)
-    fill_rectangle([1, 37], 86, 36)
+    fill_rectangle([1, (ROW_HEIGHT - 3)], (COLUMN_WIDTH - 4), (ROW_HEIGHT - 4))
     configure_colors
   end
 end
