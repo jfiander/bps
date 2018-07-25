@@ -18,7 +18,7 @@ module EducationCertificatePDF::Completions
       completion_box(3, 'Merit Marks', user.mm, color: color)
       completion_box(4, 'Last MM', last_mm, color: color)
       completion_box(5, *member_level(user), color: color)
-      completion_box(6, 'GB Member Emeritus', gb_emeritus(user), color: color)
+      completion_box(6, 'Governing Board Member Emeritus', gb_emeritus(user), color: color)
     end
   end
 
