@@ -19,7 +19,6 @@ class ParsedMarkdown < String
     parse_education
     parse_image
     parse_link
-    parse_static_file
     parse_fa
   end
 
@@ -63,12 +62,6 @@ class ParsedMarkdown < String
   def parse_link
     match_replace(%r{%file/(\d+)/([^/]*?)/}) do |match|
       file_link(match[1], title: match[2])
-    end
-  end
-
-  def parse_static_file
-    match_replace(%r{%static_file/(.*?)/([^/]*?)/}) do |match|
-      static_link(match[1], title: match[2])
     end
   end
 
