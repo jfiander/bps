@@ -19,6 +19,7 @@ class ParsedMarkdown < String
     parse_education
     parse_image
     parse_link
+    parse_fal
     parse_fa
   end
 
@@ -65,8 +66,23 @@ class ParsedMarkdown < String
     end
   end
 
+  def parse_fal
+    return self unless match?(%r{%fal/[^/]*/})
+
+    while match?(%r{%fal/[^/]*/})
+      original = match(%r{%fal/[^/]*/})[0]
+
+      icons = original.scan(%r{([^/:;]+)(?::([^/:;]+))?}).map do |(icon, css)|
+        next if icon == '%fal'
+        { name: icon, options: { css: css } }
+      end.compact
+
+      gsub!(original, @view_context.fa_layer(icons))
+    end
+  end
+
   def parse_fa
-    match_replace(%r{%fa/([^/:]+):([^/]*)?/}) do |match|
+    match_replace(%r{%fa/([^/:]+):([^/]*)/}) do |match|
       @view_context.fa_icon(match[1], css: match[2])
     end
 
