@@ -26,7 +26,7 @@ class GitInfo
   private
 
   def load_json(url)
-    JSON.parse(open(url).read)
+    JSON.parse(URI.parse(url).open.read)
   end
 
   def shorten(sha)
