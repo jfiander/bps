@@ -50,35 +50,35 @@ class ParsedMarkdown < String
   end
 
   def match_replace(pattern)
-    match(pattern) { |m| gsub!(pattern, yield(m)) }
+    match(pattern) { |m| gsub!(m[0], yield(m)) } while match?(pattern)
     self
   end
 
   def parse_image
-    match_replace(%r{(.*?)%image/(\d+)/(.*?)$}) do |match|
-      match[1] + image(match[2]) + match[3]
+    match_replace(%r{%image/(\d+)/}) do |match|
+      image(match[1])
     end
   end
 
   def parse_link
-    match_replace(%r{(.*?)%file/(\d+)/(.*?)/(.*?)$}) do |match|
-      match[1] + file_link(match[2]) + match[3]
+    match_replace(%r{%file/(\d+)/([^/]*?)/}) do |match|
+      file_link(match[1])
     end
   end
 
   def parse_static_file
-    match_replace(%r{(.*?)%static_file/(.*?)/(.*?)/(.*?)$}) do |match|
-      match[1] + static_link(match[2], title: match[3]) + match[4]
+    match_replace(%r{%static_file/(.*?)/([^/]*?)/}) do |match|
+      static_link(match[1], title: match[2])
     end
   end
 
   def parse_fa
-    match_replace(%r{(.*?)%fa/(.*?):(.*?)?/(.*?)$}) do |match|
-      match[1] + @view_context.fa_icon(match[2], css: match[3]) + match[4]
+    match_replace(%r{%fa/([^/:]+):([^/]*)?/}) do |match|
+      @view_context.fa_icon(match[1], css: match[2])
     end
 
-    match_replace(%r{(.*?)%fa/(.*?)/(.*?)$}) do |match|
-      match[1] + @view_context.fa_icon(match[2]) + match[3]
+    match_replace(%r{%fa/([^/]+)/}) do |match|
+      @view_context.fa_icon(match[1])
     end
   end
 
