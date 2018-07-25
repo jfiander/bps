@@ -73,8 +73,12 @@ class ParsedMarkdown < String
   end
 
   def parse_fa
-    match_replace(%r{(.*?)%fa/(.*?):?(.*?)?/(.*?)$}) do |match|
-      match[1] + view_context.fa_icon(match[2], css: match[3]) + match[4]
+    match_replace(%r{(.*?)%fa/(.*?):(.*?)?/(.*?)$}) do |match|
+      match[1] + @view_context.fa_icon(match[2], css: match[3]) + match[4]
+    end
+
+    match_replace(%r{(.*?)%fa/(.*?)/(.*?)$}) do |match|
+      match[1] + @view_context.fa_icon(match[2]) + match[3]
     end
   end
 
