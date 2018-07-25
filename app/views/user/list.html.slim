@@ -76,4 +76,5 @@ table#users
             = link_to(invite_path(id: user[:id]), title: 'Send invitation', method: :put) { fa_icon('envelope', fa: 'fw') }
           - elsif user[:placeholder_email]
             = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address')
+        = link_to(user_certificate_path(id: user[:id]), title: 'Educational certificate', target: :_blank) { fa_icon('file-certificate', style: :regular, fa: 'fw') }
 

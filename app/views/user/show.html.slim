@@ -28,6 +28,9 @@ h2 = "#{@profile_title} user"
     br.clear
     .profile-left From
     .profile-right = @user.last_sign_in_at.blank? ? '' : @user.last_sign_in_ip
+    br.clear
+    .profile-left Educational Certificate
+    .profile-right = link_to 'View Certificate', user_certificate_path(@user.id), target: :_blank
   - if @user.permitted_roles.present?
     hr.clear
     .profile-left Permissions
