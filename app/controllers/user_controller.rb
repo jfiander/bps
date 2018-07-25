@@ -60,8 +60,8 @@ class UserController < ApplicationController
   def certificate
     @user = User.find_by(id: clean_params[:id])
 
-    @membership_date = clean_params[:member_date] || @user.membership_date
-    @last_mm = clean_params[:last_mm] || @user.last_mm
+    @membership_date = @user.membership_date&.strftime('%Y-%m-%d') || clean_params[:member_date]
+    @last_mm = @user.last_mm&.strftime('%Y') || clean_params[:last_mm]
 
     respond_to do |format|
       format.pdf do
