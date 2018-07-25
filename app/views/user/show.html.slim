@@ -17,7 +17,7 @@ h2 = "#{@profile_title} user"
   .profile-right = @user.full_name
   br.clear
   .profile-left Certificate
-  .profile-right = @user.certificate || '?'
+  .profile-right = @user.certificate || fa_icon('question-circle', css: 'red', style: :regular)
   br.clear
   .profile-left Email
   .profile-right = @user.email
