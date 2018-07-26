@@ -71,14 +71,16 @@ class ParsedMarkdown < String
 
     while match?(%r{%fal/[^/]*/})
       original = match(%r{%fal/[^/]*/})[0]
-
-      icons = original.scan(%r{([^/:;]+)(?::([^/:;]+))?}).map do |(icon, css)|
-        next if icon == '%fal'
-        { name: icon, options: { css: css } }
-      end.compact
-
+      icons = scan_layer_icons(original)
       gsub!(original, @view_context.fa_layer(icons))
     end
+  end
+
+  def scan_layer_icons(original)
+    original.scan(%r{([^/:;]+)(?::([^/:;]+))?}).map do |(icon, css)|
+      next if icon == '%fal'
+      { name: icon, options: { css: css } }
+    end.compact
   end
 
   def parse_fa
