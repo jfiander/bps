@@ -27,6 +27,8 @@ module Application::Security
   def handle_unverified_request
     flash[:alert] = 'Sorry, please try that again.'
     redirect_to :back
+  rescue StandardError
+    redirect_to root_path
   end
 
   def require_permission(*roles, strict: false)
