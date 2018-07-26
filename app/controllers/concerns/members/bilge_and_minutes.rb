@@ -159,16 +159,27 @@ module Members::BilgeAndMinutes
   end
 
   def send_minutes_file(title:, link:, excom: false)
+    raise ArgumentError, 'Issue does not exist.' if link.nil?
+
     send_data(
-      open(link).read,
+      URI.parse(link).open.read,
       filename: "BPS#{excom ? ' ExCom' : ''} Minutes #{title}.pdf",
       type: 'application/pdf',
       disposition: 'inline'
     )
   rescue SocketError
+    rescue_minutes(
+      'There was a problem accessing the minutes. ' \
+      'Please try again later.'
+    )
+  rescue ArgumentError => e
+    raise e unless e.message == 'Issue does not exist.'
+    rescue_minutes('That issue does not exist. ')
+  end
+
+  def rescue_minutes(alert)
     minutes
-    flash.now[:alert] = 'There was a problem accessing the minutes. ' \
-                        'Please try again later.'
+    flash.now[:alert] = alert
     render :minutes
   end
 end
