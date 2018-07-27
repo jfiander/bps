@@ -34,9 +34,9 @@
       - if current_user&.permitted?(:float) || current_user&.excom?
         li.menu onclick=""
           a
-            = fa_icon('list', style: :regular, fa: :fw)
+            = FA::Icon.new('list', style: :regular, fa: :fw).safe
             | Review
-            .arrow = fa_icon('chevron-right', style: :regular, fa: :fw)
+            .arrow = FA::Icon.new('chevron-right', style: :regular, fa: :fw).safe
           ul
             = link 'Applications', path: applications_path, fa: { name: 'user-check', options: { style: :regular, fa: :fw } } if current_user&.excom?
             = link 'Float Plans', path: float_plans_path, fa: { name: 'ship', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:float)
@@ -44,9 +44,9 @@
       - if current_user&.permitted?(:users, :roster)
         li.menu onclick=""
           a
-            = fa_icon('upload', style: :regular, fa: :fw)
+            = FA::Icon.new('upload', style: :regular, fa: :fw).safe
             | Upload
-            .arrow = fa_icon('chevron-right', style: :regular, fa: :fw)
+            .arrow = FA::Icon.new('chevron-right', style: :regular, fa: :fw).safe
           ul
             = link 'Update Roster', path: update_roster_path, fa: { name: 'clipboard-list', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:roster)
             = link 'Import user data', path: import_users_path, fa: { name: 'upload', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users)

@@ -54,7 +54,7 @@ module NavigationHelper
   end
 
   def generate_link
-    icon_tag = @fa.present? ? fa_icon(@fa) : ''
+    icon_tag = @fa.present? ? FA::Icon.new(@fa).safe : ''
     @link_options = @link_options.merge(title: @options[:title])
     link_to(@options[:path], @link_options) do
       content_tag(:li, class: @css_class) do

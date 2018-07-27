@@ -8,7 +8,7 @@ p
     li jpg, png, or gif
 small Header images will be automatically scaled to a maximum of 1500 px wide for display. (The original file will be kept.)
 = form_for(@header, url: upload_header_path, multipart: true) do |f|
-  = fa_icon('file-image', style: :regular, css: 'file-type')
+  = FA::Icon.new('file-image', style: :regular, css: 'file-type').safe
   = f.file_field :file, required: true
   br
   = spinner_button(f, button_text: 'Upload file', disable_text: 'Uploading', css_class: 'big')

@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   include Application::LayoutAndFormatting
   include Application::Security
   include MarkdownHelper
-  include FontAwesomeHelper
   include BucketHelper
   include ApplicationHelper
   helper_method :static_bucket, :files_bucket, :bilge_bucket, :photos_bucket

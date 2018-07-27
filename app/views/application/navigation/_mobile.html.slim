@@ -1,11 +1,11 @@
 h3
-  = fa_icon('bars')
+  = FA::Icon.new('bars').safe
   .nav-heading Navigation
 .collapsible
   ul = @nav_links
 - if current_user&.show_admin_menu?
   h3.admin
-    = fa_icon('cogs', style: :regular)
+    = FA::Icon.new('cogs', style: :regular).safe
     .nav-heading Admin
   .collapsible
     ul#admin-menu = @admin_menu[:mobile]

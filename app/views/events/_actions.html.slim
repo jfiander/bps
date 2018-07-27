@@ -1,20 +1,20 @@
 = link_to(send("show_#{event_type_param}_path", event), class: "control green") do
-  = fa_icon('share-square', fa: 'fw', style: :regular)
+  = FA::Icon.new('share-square', fa: 'fw', style: :regular).safe
   | Share
 - if event.reminded?
-  = fa_icon('bell-slash', fa: 'fw', style: :regular)
+  = FA::Icon.new('bell-slash', fa: 'fw', style: :regular).safe
   | Reminded
 - else
   = link_to(send("remind_#{event_type_param}_path", event), class: "control birmingham-blue", method: :put) do
-    = fa_icon('bell', fa: 'fw', style: :regular)
+    = FA::Icon.new('bell', fa: 'fw', style: :regular).safe
     | Remind
 = link_to(send("copy_#{event_type_param}_path", event), class: "control blue-faded") do
-  = fa_icon('clone', fa: 'fw', style: :regular)
+  = FA::Icon.new('clone', fa: 'fw', style: :regular).safe
   | Clone
 = link_to(send("edit_#{event_type_param}_path", event), class: "control blue-faded") do
-  = fa_icon('edit', fa: 'fw')
+  = FA::Icon.new('edit', fa: 'fw').safe
   | Edit
 - unless event.expired?
   = link_to(send("expire_#{event_type_param}_path", event), method: :delete, class: "control red", data: {confirm: "Are you sure you want to force this #{event_type_param} to expire?"}) do
-    = fa_icon('eye-slash', fa: 'fw', style: :regular)
+    = FA::Icon.new('eye-slash', fa: 'fw', style: :regular).safe
     | Expire

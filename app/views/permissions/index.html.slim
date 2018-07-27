@@ -28,4 +28,4 @@ table#permissions
     tr
       td = display_name = p.user.full_name || p.user.email
       td = p.role.name
-      td = link_to(permit_path(permit_id: p.id), method: :delete, class: "red", data: { confirm: "Are you sure you want to remove the #{p.role.name} permission from #{display_name}?" }) { fa_icon('minus-square') } if current_user.permitted?(:users) && p.role.name != "admin"
+      td = link_to(permit_path(permit_id: p.id), method: :delete, class: "red", data: { confirm: "Are you sure you want to remove the #{p.role.name} permission from #{display_name}?" }) { FA::Icon.new('minus-square').safe } if current_user.permitted?(:users) && p.role.name != "admin"

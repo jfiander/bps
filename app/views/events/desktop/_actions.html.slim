@@ -3,14 +3,14 @@
 - if !long_form && event.registerable? && user_signed_in? && event.allow_member_registrations
   - if @registered&.has_key?(event.id)
     = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
-      = fa_icon('minus-square', fa: 'fw')
+      = FA::Icon.new('minus-square', fa: 'fw').safe
       | Cancel Registration
   - else
     = link_to(register_path(event_type_param, event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
-      = fa_icon('calendar-check', fa: 'fw', style: :regular)
+      = FA::Icon.new('calendar-check', fa: 'fw', style: :regular).safe
       | Register
 - elsif !long_form && !event.registerable? && !event.expired? && user_signed_in? && event.allow_member_registrations
-  = fa_layer([{ name: 'calendar-check', options: { style: :regular } }, { name: 'ban', options: { style: :solid, css: :red } }])
+  = FA::Layer.new([{ name: 'calendar-check', options: { style: :regular } }, { name: 'ban', options: { style: :solid, css: :red } }]).safe
   span.red Too late to register
 - elsif !long_form && !defined?(@event_catalog)
   - if event.registerable? && event.allow_public_registrations

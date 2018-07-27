@@ -28,7 +28,7 @@ table#users
         - else
           = mail_to(user[:email], user[:name])
       td.center
-        = user[:certificate] || fa_icon('question-circle', css: 'red', style: :regular)
+        = user[:certificate] || FA::Icon.new('question-circle', css: 'red', style: :regular).safe
         - if user[:senior] || user[:life]
           br
           - if user[:life]
@@ -64,24 +64,24 @@ table#users
       td.center
         - if user[:locked]
           - if can_lock
-            = link_to(unlock_user_path(user[:id]), title: 'Unlock', class: 'unlock', method: :patch) { fa_icon('lock', fa: 'fw') }
+            = link_to(unlock_user_path(user[:id]), title: 'Unlock', class: 'unlock', method: :patch) { FA::Icon.new('lock', fa: 'fw').safe }
           - else
-            = fa_icon('lock', fa: 'fw')
+            = FA::Icon.new('lock', fa: 'fw').safe
         - else
           - if admin
             = link_to(user_path(user[:id])) do
-              = fa_icon('user', title: user[:id])
+              = FA::Icon.new('user', title: user[:id]).safe
           - else
-            = fa_icon('user', title: user[:id])
-          = link_to(user_certificate_path(id: user[:id]), title: 'Educational certificate', target: :_blank) { fa_icon('file-certificate', style: :regular, fa: 'fw') }
+            = FA::Icon.new('user', title: user[:id]).safe
+          = link_to(user_certificate_path(id: user[:id]), title: 'Educational certificate', target: :_blank) { FA::Icon.new('file-certificate', style: :regular, fa: 'fw').safe }
           - if user[:invited]
-            = link_to(invite_path(id: user[:id]), title: 'Re-send invitation', method: :put) { fa_icon('envelope-open', css: 'pending', fa: 'fw') }
+            = link_to(invite_path(id: user[:id]), title: 'Re-send invitation', method: :put) { FA::Icon.new('envelope-open', css: 'pending', fa: 'fw').safe }
           - elsif user[:invitable]
-            = link_to(invite_path(id: user[:id]), title: 'Send invitation', method: :put) { fa_icon('envelope', fa: 'fw') }
+            = link_to(invite_path(id: user[:id]), title: 'Send invitation', method: :put) { FA::Icon.new('envelope', fa: 'fw').safe }
           - elsif user[:placeholder_email]
-            = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address')
+            = FA::Layer.new([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address').safe
           - else
-            = fa_layer([{ name: 'envelope', options: { css: :gray } }, { name: 'check', options: { css: :green } }], title: 'Logged in successfully')
+            = FA::Layer.new([{ name: 'envelope', options: { css: :gray } }, { name: 'check', options: { css: :green } }], title: 'Logged in successfully').safe
           - if can_lock && !user[:permitted_roles].include?(:admin)
-            = link_to(lock_user_path(user[:id]), title: 'Lock', class: 'lock', method: :patch) { fa_icon('unlock', fa: 'fw') }
+            = link_to(lock_user_path(user[:id]), title: 'Lock', class: 'lock', method: :patch) { FA::Icon.new('unlock', fa: 'fw').safe }
 

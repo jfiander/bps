@@ -17,7 +17,7 @@ h2 = "#{@profile_title} user"
   .profile-right = @user.full_name
   br.clear
   .profile-left Certificate
-  .profile-right = @user.certificate || fa_icon('question-circle', css: 'red', style: :regular)
+  .profile-right = @user.certificate || FA::Icon.new('question-circle', css: 'red', style: :regular).safe
   br.clear
   .profile-left Email
   .profile-right = @user.email
@@ -48,7 +48,7 @@ h2 = "#{@profile_title} user"
               = content_tag(:li, p)
   - if current_user.id == @user.id
     hr.clear
-    .center = link_to(profile_edit_path) { fa_icon('edit') + 'Update your information' }
+    .center = link_to(profile_edit_path) { FA::Icon.new('edit').safe + 'Update your information' }
   hr.clear
   - if @registrations.present?
     .center
@@ -60,6 +60,6 @@ h2 = "#{@profile_title} user"
         .profile-right
           = r.event.start_at.strftime(@medium_time_format)
           = link_to(cancel_registration_path(id: r.id), method: :delete, remote: true, class: 'red control', id: "event_#{r.event_id}",
-            data: {confirm: "Are you sure you want to cancel your registration for #{r.event.event_type.display_title} on #{r.event.start_at.strftime(@short_time_format)}?"}) { fa_icon('minus-square') }
+            data: {confirm: "Are you sure you want to cancel your registration for #{r.event.event_type.display_title} on #{r.event.start_at.strftime(@short_time_format)}?"}) { FA::Icon.new('minus-square').safe }
         br.clear
 = editor('photo_editor', id: @user.id) if current_user&.permitted?(:admin) && current_user.id != @user.id

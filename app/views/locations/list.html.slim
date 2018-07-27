@@ -15,7 +15,7 @@ p.red.italic Do not add event-specific information to any location.
       .table-cell
         - if location[:map_link].present?
           = link_to(location[:map_link]) do
-            = fa_icon('map-marker-alt')
+            = FA::Icon.new('map-marker-alt').safe
       .table-cell
         = simple_format(location[:details])
         - if location[:picture].present?
@@ -24,8 +24,8 @@ p.red.italic Do not add event-specific information to any location.
             = image_tag(files_bucket.link(location[:picture].path(:thumb)), class: 'mobile')
       .table-cell.picture = image_tag(files_bucket.link(location[:picture].path(:thumb))) if location[:picture].present?
       .table-cell.actions.pending
-        = link_to(edit_location_path(id: location[:id])) { fa_icon('edit') }
+        = link_to(edit_location_path(id: location[:id])) { FA::Icon.new('edit').safe }
         - if Event.current(:all).where(location_id: location[:id]).count.zero?
-          = link_to(remove_location_path(id: location[:id]), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this location?' }) { fa_icon('minus-square') }
+          = link_to(remove_location_path(id: location[:id]), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this location?' }) { FA::Icon.new('minus-square').safe }
         - else
           span.italic title="You cannot remove locations currently in use." In Use

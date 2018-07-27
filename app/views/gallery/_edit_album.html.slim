@@ -5,4 +5,4 @@
   - @album.photos.each do |photo|
     .table-row
       .table-cell.left = image_tag photos_bucket.link(photo.photo_file.path(:thumb))
-      .table-cell.right = link_to(remove_photo_path(id: photo.id), method: :delete, data: {confirm: 'Are you sure you want to remove this photo from the album?'}) { fa_icon('minus-square', css: 'red') }
+      .table-cell.right = link_to(remove_photo_path(id: photo.id), method: :delete, data: {confirm: 'Are you sure you want to remove this photo from the album?'}) { FA::Icon.new('minus-square', css: 'red').safe }

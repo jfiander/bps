@@ -32,16 +32,16 @@ h3.red This page is currently under construction.
 /             span.red Requested
 /           - else
 /             = link_to(request_store_item_path(item.id), method: :put, remote: true, id: "request_item_#{item.id}") do
-/               = fa_icon("cart-plus")
+/               = FA::Icon.new("cart-plus").safe
 /               | Request
 /         - if current_user&.permitted?(:store)
 /           br.mobile
 /           = link_to(edit_store_item_path(item.id), class: "blue-faded") do
-/             = fa_icon("edit")
+/             = FA::Icon.new("edit").safe
 /             | Edit
 /           br.mobile
 /           = link_to(destroy_store_item_path(item.id), method: :delete, class: "red") do
-/             = fa_icon("minus-square")
+/             = FA::Icon.new("minus-square").safe
 /             | Remove
 /     tr
 /       td colspan=3

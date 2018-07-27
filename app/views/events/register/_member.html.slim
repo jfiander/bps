@@ -6,4 +6,4 @@
     = mail_to(r.email || r.user&.email)
   |  
   = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true,
-    data: {confirm: 'Are you sure you want to cancel this registration?'}) { fa_icon('minus-square') }
+    data: {confirm: 'Are you sure you want to cancel this registration?'}) { FA::Icon.new('minus-square').safe }

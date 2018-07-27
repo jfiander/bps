@@ -2,7 +2,7 @@ h2 = "#{@edit_mode} #{@event_title}"
 
 em
   | Fields marked with
-  = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
   | are required.
 
 = form_for(@event, url: @submit_path, multipart: true) do |f|
@@ -12,15 +12,15 @@ em
     h3 General Information
 
     .left
-      span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+      span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
       = f.label :event_type_id, "#{@event_title} name"
     .right
       = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), {include_blank: true, prompt: "Please select #{event_type_param == 'event' ? 'an' : 'a'} #{event_type_param} type"}, required: true
       - if current_user&.permitted?(:admin, :education, strict: true)
         ul
-          li = link_to(event_types_path, target: :_blank) { fa_icon('edit') + 'Manage Event Types' }
+          li = link_to(event_types_path, target: :_blank) { FA::Icon.new('edit').safe + 'Manage Event Types' }
           li &nbsp;
-          li = link_to(refresh_event_types_path(category: event_type_param), remote: true, class: 'green') { fa_icon('sync-alt') + 'Reload Event Types' }
+          li = link_to(refresh_event_types_path(category: event_type_param), remote: true, class: 'green') { FA::Icon.new('sync-alt').safe + 'Reload Event Types' }
     br.clear
 
     .left 
@@ -35,9 +35,9 @@ em
       - if @locations.present?
         = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: "Please select a location", required: true
       ul
-        li = link_to(locations_path, target: :_blank) { fa_icon('edit') + 'Manage Locations' }
+        li = link_to(locations_path, target: :_blank) { FA::Icon.new('edit').safe + 'Manage Locations' }
         li &nbsp;
-        li = link_to(refresh_locations_path(id: @event&.id), remote: true, class: 'green') { fa_icon('sync-alt') + 'Reload Locations' }
+        li = link_to(refresh_locations_path(id: @event&.id), remote: true, class: 'green') { FA::Icon.new('sync-alt').safe + 'Reload Locations' }
     br.clear
 
     - if event_type_param.in? %w[course seminar]
@@ -54,7 +54,7 @@ em
     h3 Schedule
 
     .left
-      span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+      span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
       = f.label :start_at
     .right = f.datetime_field :start_at, required: true
     br.clear
@@ -73,7 +73,7 @@ em
 
     .left = f.label :cost, "Cost"
     .right
-      = fa_icon("dollar-sign")
+      = FA::Icon.new("dollar-sign").safe
       = f.number_field :cost, class: "number", min: 0, placeholder: "0.00"
     br.clear
 
@@ -82,7 +82,7 @@ em
       ul.red
         li Only enter if applicable
     .right
-      = fa_icon("dollar-sign")
+      = FA::Icon.new("dollar-sign").safe
       = f.number_field :member_cost, class: "number", min: 0, placeholder: "0.00"
     br.clear
 
@@ -103,13 +103,13 @@ em
     br.clear
 
     .left
-      span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+      span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
       = f.label :cutoff_at, 'Do not allow registrations after', class: "red"
     .right = f.datetime_field :cutoff_at, required: true
     br.clear
 
     .left
-      span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+      span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
       = f.label :expires_at, "Do not display this #{event_type_param} after", class: "red"
     .right = f.datetime_field :expires_at, required: true
     br.clear
@@ -154,8 +154,8 @@ em
         li An image will display a thumbnail next to the description.
         li A PDF will display in a box under all other information.
     .right
-      = fa_icon('file-pdf', style: :regular, css: 'file-type')
-      = fa_icon('file-image', style: :regular, css: 'file-type')
+      = FA::Icon.new('file-pdf', style: :regular, css: 'file-type').safe
+      = FA::Icon.new('file-image', style: :regular, css: 'file-type').safe
       = f.file_field :flyer, id: 'event_flyer_file'
       - if @event.flyer.present?
         br

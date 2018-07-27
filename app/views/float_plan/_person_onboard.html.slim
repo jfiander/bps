@@ -1,12 +1,12 @@
 .table
   .table-row
     .table-cell.table-header
-      span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+      span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
       = ff.label :name
     .table-cell.field = ff.text_field :name, required: true
   .table-row
     .table-cell.table-header
-      span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+      span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
       = ff.label :age
     .table-cell.field = ff.number_field :age, required: true
   .table-row

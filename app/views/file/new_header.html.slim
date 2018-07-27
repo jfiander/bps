@@ -9,4 +9,4 @@ p Every time the site is loaded, a random image listed from this page will be di
           .table-cell.left
             a data-fancybox="album_headers" href=(files_bucket.link(header.file.path))
               = image_tag files_bucket.link(header.file.path(:thumb))
-          .table-cell.right = link_to(remove_header_path(header.id), method: :delete, class: 'red', data: {confirm: 'Are you sure you want to remove this header image?'}) { fa_icon('minus-square') }
+          .table-cell.right = link_to(remove_header_path(header.id), method: :delete, class: 'red', data: {confirm: 'Are you sure you want to remove this header image?'}) { FA::Icon.new('minus-square').safe }

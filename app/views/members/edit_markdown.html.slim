@@ -1,6 +1,6 @@
 h2
   | Edit Page
-  = fa_icon('markdown', style: :brands, title: 'Markdown')
+  = FA::Icon.new('markdown', style: :brands, title: 'Markdown').safe
 h3 = @page.name.titleize
 
 = render "edit_markdown_form"

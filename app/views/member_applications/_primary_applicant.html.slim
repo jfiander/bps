@@ -3,7 +3,7 @@ h3 Primary Applicant
 .applicant-section-title Personal Info
 
 .left
-  span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
   = label_tag 'first_name', 'First name'
 .right
   = text_field_tag 'first_name', '', required: true
@@ -14,7 +14,7 @@ br.clear
 br.clear
 
 .left
-  span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+  span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
   = label_tag 'last_name', 'Last name'
 .right = text_field_tag 'last_name', '', required: true
 br.clear
@@ -34,7 +34,7 @@ br.clear
   .applicant-section-title Address
 
   .left
-    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
     = label_tag 'address_1', 'Address'
   .right = text_field_tag 'address_1', '', required: true
   br.clear
@@ -44,19 +44,19 @@ br.clear
   br.clear
 
   .left
-    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
     = label_tag 'city', 'City'
   .right = text_field_tag 'city', '', required: true
   br.clear
 
   .left
-    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
     = label_tag 'state', 'State / Province'
   .right = text_field_tag 'state', '', required: true
   br.clear
 
   .left
-    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
     = label_tag 'zip', 'ZIP / Postal Code'
   .right = text_field_tag 'zip', '', required: true, maxlength: 10
   br.clear
@@ -65,13 +65,13 @@ br.clear
   .applicant-section-title Contact Info
 
   .left
-    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
     = label_tag 'email', 'Email'
   .right = email_field_tag 'email', '', required: true
   br.clear
 
   .left
-    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
     = label_tag 'phone_h', 'Phone: home'
   .right = text_field_tag 'phone_h'
   br.clear
@@ -93,7 +93,7 @@ br.clear
   .applicant-section-title Boat Info
 
   .left
-    span.red = fa_icon('dot-circle', style: :regular, css: 'red', shrink: 4)
+    span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
     = label_tag 'boat_type', 'Boat type'
   .right = select_tag 'boat_type', options_for_select(%w[Power Sail Paddle Other Multiple None]), include_blank: true, required: true
   br.clear

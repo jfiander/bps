@@ -16,7 +16,6 @@ include BucketHelper
 include CalendarHelper
 include DateHelper
 include EventsHelper
-include FontAwesomeHelper
 include MarkdownHelper
 include NavigationHelper
 include ViewHelper

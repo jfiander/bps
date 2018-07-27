@@ -1,12 +1,12 @@
 #flashes
   #success class=(success ? '' : 'hide')
-    = fa_icon('check-circle')
+    = FA::Icon.new('check-circle').safe
     = success
   #notice class=(notice ? '' : 'hide')
-    = fa_icon('info-circle')
+    = FA::Icon.new('info-circle').safe
     = notice
   #alert class=(alert ? '' : 'hide')
-    = fa_icon('exclamation-circle')
+    = FA::Icon.new('exclamation-circle').safe
     = alert
   #error class=(error ? '' : 'hide')
     - if error.present? && error&.is_a?(String)
