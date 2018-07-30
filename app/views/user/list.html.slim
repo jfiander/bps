@@ -70,9 +70,9 @@ table#users
         - else
           - if admin
             = link_to(user_path(user[:id])) do
-              = FA::Icon.new('user', title: user[:id]).safe
+              = FA::Icon.new('user', title: user[:id], fa: 'fw').safe
           - else
-            = FA::Icon.new('user', title: user[:id]).safe
+            = FA::Icon.new('user', title: user[:id], fa: 'fw').safe
           = link_to(user_certificate_path(id: user[:id]), title: 'Educational certificate', target: :_blank) { FA::Icon.new('file-certificate', style: :regular, fa: 'fw').safe }
           - if user[:invited]
             = link_to(invite_path(id: user[:id]), title: 'Re-send invitation', method: :put) { FA::Icon.new('envelope-open', css: 'pending', fa: 'fw').safe }
