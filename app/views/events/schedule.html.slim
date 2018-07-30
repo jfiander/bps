@@ -2,7 +2,7 @@ h2 = "Currently Scheduled #{event_type_param.titleize}s"
 
 = render "application/navigation/education", active: {courses: (event_type_param == 'course'), seminars: (event_type_param == 'seminar')} if event_type_param.in? %w[course seminar]
 
-- if @events.count.positive?
+- if (@events.is_a?(Array) && @events.count.positive?) || (@events.is_a?(Hash) && (@events[:public].count.positive? || @events[:advanced_grade].count.positive? || @events[:elective].count.positive?))
   = render "events/tables", type: event_type_param, all_events: @events, long_form: false
 - else
   = render "events/no/events", type: event_type_param
