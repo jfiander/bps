@@ -10,8 +10,9 @@
     margin: 0 0.25em;
     padding: 0;
 
-    .fa {
-      margin-left: 0;
+    .far, .fas, .fal, .fab {
+      display: inline-block;
+      margin-right: 0.5em;
     }
   }
 

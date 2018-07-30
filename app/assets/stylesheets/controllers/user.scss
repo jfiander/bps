@@ -74,8 +74,16 @@ table#users {
     margin: 0;
   }
 
-  a .svg-inline--fa, span.icon {
+  span.icon, i.fas, i.far, i.fal, i.fab {
     margin: 0.5em;
+  }
+
+  span.fa-layers {
+    margin: 0;
+
+    span.icon, i.fas, i.far, i.fal, i.fab {
+      margin: 0;
+    }
   }
 
   .very-narrow {
