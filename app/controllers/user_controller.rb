@@ -13,15 +13,6 @@ class UserController < ApplicationController
   secure!(:admin, only: :assign_photo)
   secure!(:users, except: %i[current show register cancel_registration])
 
-  ajax!(
-    only: %i[
-      register cancel_registration no_member_registrations? no_registrations?
-      register_for_event successfully_registered already_registered
-      unable_to_register cannot_cancel_registration? successfully_cancelled
-      unable_to_cancel
-    ]
-  )
-
   before_action :can_view_profile?, only: [:show]
   before_action :can_view_profile?, only: [:certificate]
   before_action :find_user, only: [:show]

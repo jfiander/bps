@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
   before_action :meta_tags
   before_action :set_paper_trail_whodunnit
   before_action :time_formats
-  before_action :prerender_for_layout
 
   skip_before_action :verify_authenticity_token, only: %i[auto_show auto_hide]
 
@@ -34,10 +33,6 @@ class ApplicationController < ActionController::Base
   def self.title!(title = nil, only: nil, except: nil)
     title = yield if block_given?
     before_action(only: only, except: except) { page_title(title) }
-  end
-
-  def self.ajax!(only: nil, except: nil)
-    skip_before_action(:prerender_for_layout, only: only, except: except)
   end
 
   # Overwritten by Events controllers

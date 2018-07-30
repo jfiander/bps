@@ -4,8 +4,6 @@ class MembersController < ApplicationController
   include Members::BilgeAndMinutes
   include Members::Roster
 
-  ajax!(only: %i[request_item fulfill_item])
-
   secure!
   secure!(:admin, only: :admin)
   secure!(:newsletter, only: :upload_bilge)

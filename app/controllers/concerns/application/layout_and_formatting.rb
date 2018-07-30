@@ -17,18 +17,4 @@ module Application::LayoutAndFormatting
     @wheel_logo = static_bucket.link('flags/PNG/WHEEL.thumb.png')
     @dca_award = static_bucket.link('logos/DCA_web_2016.png')
   end
-
-  def prerender_for_layout
-    @nav_links = render_to_string partial: 'application/navigation/links'
-    @copyright = render_to_string partial: 'application/copyright'
-    if @wheel_logo.present?
-      @wheel_img = view_context.image_tag(@wheel_logo, alt: 'USPS Ensign Wheel')
-    end
-
-    return unless current_user&.show_admin_menu?
-    @admin_menu = {
-      desktop: render_to_string(partial: 'application/navigation/admin/desktop'),
-      mobile: render_to_string(partial: 'application/navigation/admin/mobile')
-    }
-  end
 end

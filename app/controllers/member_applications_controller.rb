@@ -3,8 +3,6 @@
 class MemberApplicationsController < ApplicationController
   secure!(only: :review)
 
-  ajax!(only: %i[apply approve])
-
   def new
     @member_application = MemberApplication.new
     @member_application_person = MemberApplicant.new(

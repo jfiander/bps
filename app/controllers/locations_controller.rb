@@ -8,8 +8,6 @@ class LocationsController < ApplicationController
 
   title!('Locations')
 
-  ajax!(only: :refresh)
-
   before_action :update_form_data, only: %i[edit update]
 
   def list

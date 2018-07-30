@@ -1,5 +1,0 @@
-- if ENV['ASSET_ENVIRONMENT'].in? ['production', 'staging']
-  = render 'application/trackers/analytics', key: ENV['GA_TRACKING_ID']
-
-- if ENV['ASSET_ENVIRONMENT'].in? ['production']
-  = render 'application/trackers/facebook_pixel', key: ENV['FACEBOOK_PIXEL_ID']

@@ -8,8 +8,6 @@ class EventTypesController < ApplicationController
 
   title!('Event Types')
 
-  ajax!(only: :refresh)
-
   def list
     @event_types = EventType.ordered.map do |et|
       { id: et.id, category: et.event_category, title: et.display_title }
