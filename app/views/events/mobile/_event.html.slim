@@ -3,14 +3,14 @@
 .event-mobile-title = event_type(event).display_title
 - if !defined?(@event_catalog) && @current_user_permitted_event_type && event.show_in_catalog
   .event-mobile-contents.birmingham-blue
-    = FA::Icon.new('star', style: :regular).safe
+    = FA::Icon.p('star', style: :regular)
     | In catalog
 - if !defined?(@event_catalog) && @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
   br
 - if defined?(@event_catalog)
   - if @current_user_permitted_event_type
     = link_to(send("edit_#{event_type_param}_path", event), class: "control blue-faded") do
-      = FA::Icon.new('edit', fa: 'fw').safe
+      = FA::Icon.p('edit', fa: 'fw')
       | Edit
 - else
   = render 'events/mobile/actions', event: event
@@ -40,7 +40,7 @@
       - if @locations[event.location_id][:map_link].present?
         .event-mobile-contents
           = link_to(@locations[event.location_id][:map_link], target: :_blank) do
-            = FA::Icon.new("map-marker-alt").safe
+            = FA::Icon.p("map-marker-alt")
             | Map
       - unless defined?(@event_catalog)
         - if @locations[event.location_id][:picture].present?

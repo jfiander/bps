@@ -1,6 +1,6 @@
 hr
 = form_tag upload_minutes_path, multipart: true
-  = FA::Icon.new("file-pdf", style: :regular, css: "file-type").safe
+  = FA::Icon.p("file-pdf", style: :regular, css: "file-type")
   = file_field_tag :minutes_upload_file, accept: 'application/pdf', required: true
   = summer_months(date_select(:issue, :date, start_year: 2014, discard_day: true, required: true), mode: :hide)
   br

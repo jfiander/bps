@@ -5,11 +5,11 @@
     .center
       - if @registered.present?
         = link_to(cancel_registration_path(id: @registered[@event.id]), method: :delete, remote: true, class: "red control", id: "event_#{@event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
-          = FA::Icon.new('minus-square', fa: 'fw').safe
+          = FA::Icon.p('minus-square', fa: 'fw')
           | Cancel Registration
       - elsif @event.registerable?
         = link_to(register_path(event_type_param, @event.id), method: :put, remote: true, class: 'control', id: "event_#{@event.id}") do
-          = FA::Icon.new('calendar-check', fa: 'fw', style: :regular).safe
+          = FA::Icon.p('calendar-check', fa: 'fw', style: :regular)
           | Register
       - else
         = render 'events/no/registrations'

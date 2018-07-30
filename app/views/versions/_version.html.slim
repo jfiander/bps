@@ -5,6 +5,6 @@
   .table-cell = JSON.parse(version.reify.to_json).to_s.gsub(',"', ', "').gsub('":', '": ')
   .table-cell = version.created_at
   .table-cell
-    = link_to(diff_versions_path(a: index + 1, b: index + 2)) { FA::Icon.new('exchange', style: :regular).safe } unless version == @versions.last
-    = link_to(diff_versions_path(a: 0, b: index + 2)) { FA::Icon.new('exchange', style: :regular, css: :green).safe }
-  .table-cell = link_to(revert_version_path(a: index + 1), method: :patch, data: { confirm: "Are you sure you want to go back #{index + 1} #{'version'.pluralize(index + 1)}?" }, class: 'red') { FA::Icon.new('undo', style: :regular).safe }
+    = link_to(diff_versions_path(a: index + 1, b: index + 2)) { FA::Icon.p('exchange', style: :regular) } unless version == @versions.last
+    = link_to(diff_versions_path(a: 0, b: index + 2)) { FA::Icon.p('exchange', style: :regular, css: :green) }
+  .table-cell = link_to(revert_version_path(a: index + 1), method: :patch, data: { confirm: "Are you sure you want to go back #{index + 1} #{'version'.pluralize(index + 1)}?" }, class: 'red') { FA::Icon.p('undo', style: :regular) }

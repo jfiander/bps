@@ -10,7 +10,7 @@ html
     meta name='viewport' content='width=device-width, initial-scale=1.0'
     script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'
     = favicon_link_tag static_bucket.link('favicon.ico')
-    = FA::Link.new(version: 'v5.2.0', integrity: 'sha384-TXfwrfuHVznxCssTxWoPZjhcss/hp38gEOH8UPZG/JcXonvBQ6SlsIF49wUzsGno').safe
+    = FA::Link.p(version: 'v5.2.0', integrity: 'sha384-TXfwrfuHVznxCssTxWoPZjhcss/hp38gEOH8UPZG/JcXonvBQ6SlsIF49wUzsGno')
     - if ENV['ASSET_ENVIRONMENT'].in? ['production', 'staging']
       = render 'application/trackers/analytics', key: ENV['GA_TRACKING_ID']
     - if ENV['ASSET_ENVIRONMENT'].in? ['production']
@@ -50,13 +50,13 @@ html
       - nav_links = render 'application/navigation/links'
       #navigation-mobile
         h3
-          = FA::Icon.new('bars').safe
+          = FA::Icon.p('bars')
           .nav-heading Navigation
         .collapsible
           ul = nav_links
         - if current_user&.show_admin_menu?
           h3.admin
-            = FA::Icon.new('cogs', style: :regular).safe
+            = FA::Icon.p('cogs', style: :regular)
             .nav-heading Admin
           .collapsible
             ul#admin-menu = render 'application/navigation/admin/mobile'
@@ -69,13 +69,13 @@ html
               ul.desktop = render 'application/navigation/admin/desktop'
           #flashes
             #success class=(success ? '' : 'hide')
-              = FA::Icon.new('check-circle').safe
+              = FA::Icon.p('check-circle')
               = success
             #notice class=(notice ? '' : 'hide')
-              = FA::Icon.new('info-circle').safe
+              = FA::Icon.p('info-circle')
               = notice
             #alert class=(alert ? '' : 'hide')
-              = FA::Icon.new('exclamation-circle').safe
+              = FA::Icon.p('exclamation-circle')
               = alert
             #error class=(error ? '' : 'hide')
               - if error.present? && error&.is_a?(String)

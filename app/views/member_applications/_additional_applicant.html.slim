@@ -4,7 +4,7 @@ h3 Additional Household Applicant
 .applicant-section-title Personal Info
 
 .left
-  span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
+  span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
   = ff.label 'first_name', 'First name'
 .right
   = ff.text_field 'first_name', required: true
@@ -15,7 +15,7 @@ br.clear
 br.clear
 
 .left
-  span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
+  span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
   = ff.label 'last_name', 'Last name'
 .right = ff.text_field 'last_name', required: true
 br.clear
@@ -35,7 +35,7 @@ br.clear
   .applicant-section-title Contact Info
 
   .left
-    span.red = FA::Icon.new('dot-circle', style: :regular, css: 'red', shrink: 4).safe
+    span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
     = ff.label 'email', 'Email'
   .right = ff.email_field 'email', required: true
   br.clear

@@ -72,7 +72,7 @@ class ParsedMarkdown < String
     while match?(%r{%fal/[^/]*/})
       original = match(%r{%fal/[^/]*/})[0]
       icons = scan_layer_icons(original)
-      gsub!(original, FA::Layer.new(icons).safe)
+      gsub!(original, FA::Layer.p(icons))
     end
   end
 
@@ -85,11 +85,11 @@ class ParsedMarkdown < String
 
   def parse_fa
     match_replace(%r{%fa/([^/:]+):([^/]*)/}) do |match|
-      FA::Icon.new(match[1], css: match[2]).safe
+      FA::Icon.p(match[1], css: match[2])
     end
 
     match_replace(%r{%fa/([^/]+)/}) do |match|
-      FA::Icon.new(match[1]).safe
+      FA::Icon.p(match[1])
     end
   end
 
@@ -110,7 +110,7 @@ class ParsedMarkdown < String
     link_title = title || key
     link_path = @files_bucket.link("#{prefix}/#{key}")
     @view_context.link_to(link_path, target: :_blank) do
-      FA::Icon.new('download').safe + link_title
+      FA::Icon.p('download') + link_title
     end
   end
 

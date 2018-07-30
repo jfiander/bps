@@ -3,5 +3,5 @@
   .table-cell
   .table-cell = version.to_json
   .table-cell
-  .table-cell = link_to(diff_versions_path(a: 0, b: 1)) { FA::Icon.new('exchange', style: :regular).safe } unless no_versions
+  .table-cell = link_to(diff_versions_path(a: 0, b: 1)) { FA::Icon.p('exchange', style: :regular) } unless no_versions
   .table-cell
