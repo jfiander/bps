@@ -100,7 +100,7 @@ module EventsHelper
     confirm = options.delete(:confirm)
     options[:data][:confirm] = confirm if confirm.present?
 
-    icon = FA::Icon.p(options[:icon], **options[:icon_options]) + options[:text].titleize
+    icon = FA::Icon.p(options[:icon], **options.delete(:icon_options)) + options[:text].titleize
 
     path.present? ? link_to(send(path, event), **options) { icon } : icon
   end

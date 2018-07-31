@@ -77,7 +77,27 @@ RSpec.describe EventsHelper, type: :helper do
     describe 'catalog' do
       it 'should return only the catalog events' do
         expect(EventsHelper.catalog_list).to eql(
-          { 'public' => [@catalog_course] }
+          'public' => [@catalog_course]
+        )
+      end
+    end
+
+    describe 'action link' do
+      it 'should generate a correct action link' do
+        @course = FactoryBot.create(:event, event_type: @ag)
+
+        link = event_action_link(
+          @course, 'book_course_path',
+          icon: 'calendar-check', text: 'Post to Calendar',
+          css: 'birmingham-blue', method: :put
+        )
+
+        expect(link).to eql(
+          '<a icon="calendar-check" text="Post to Calendar" ' \
+          'class="control birmingham-blue" css="birmingham-blue" ' \
+          'rel="nofollow" data-method="put" href="/courses/2/book">' \
+          '<i class=\'far fa-fw fa-calendar-check fa-1x\' ' \
+          'data-fa-transform=\'\' title=\'\'></i>Post To Calendar</a>'
         )
       end
     end

@@ -103,6 +103,21 @@ RSpec.describe Event, type: :model do
         end
       end
 
+      describe 'booked' do
+        it 'should set the booked flag after booking' do
+          @event.unbook!
+          expect(@event.booked?).to be(false)
+          expect(@event.book!).to be(true)
+          expect(@event.booked?).to be(true)
+        end
+
+        it 'should unset the booked flag after unbooking' do
+          expect(@event.booked?).to be(true)
+          expect(@event.unbook!).to be(true)
+          expect(@event.booked?).to be(false)
+        end
+      end
+
       describe 'within a week' do
         it 'should return false if the start date is more than 1 week away' do
           @event.start_at = Time.now + 2.weeks
