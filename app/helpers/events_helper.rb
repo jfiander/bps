@@ -91,4 +91,17 @@ module EventsHelper
       c.event_type_id.in?(event_type_ids[type])
     end
   end
+
+  def event_action_link(event, path, **options)
+    options = {
+      icon: '', text: '', method: :get, class: "control #{options[:css]}",
+      confirm: '', data: {}, icon_options: { fa: :fw, style: :regular }
+    }.merge(options)
+    confirm = options.delete(:confirm)
+    options[:data][:confirm] = confirm if confirm.present?
+
+    icon = FA::Icon.p(options[:icon], **options[:icon_options]) + options[:text].titleize
+
+    path.present? ? link_to(send(path, event), **options) { icon } : icon
+  end
 end

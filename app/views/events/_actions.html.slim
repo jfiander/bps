@@ -1,28 +1,13 @@
-= link_to(send("show_#{event_type_param}_path", event), class: "control green") do
-  = FA::Icon.p('share-square', fa: 'fw', style: :regular)
-  | Share
+= event_action_link(event, "show_#{event_type_param}_path", icon: 'share-square', text: 'Share', css: 'green')
 - if event.reminded?
-  = FA::Icon.p('bell-slash', fa: 'fw', style: :regular)
-  | Reminded
+  = event_action_link(nil, nil, icon: 'bell-slash', text: 'Reminded')
 - else
-  = link_to(send("remind_#{event_type_param}_path", event), class: "control birmingham-blue", method: :put) do
-    = FA::Icon.p('bell', fa: 'fw', style: :regular)
-    | Remind
+  = event_action_link(event, "remind_#{event_type_param}_path", icon: 'bell', text: 'Remind', css: 'birmingham-blue', method: :put)
 - if current_user&.permitted?(event_type_param) && event.booked?
-  = link_to(send("unbook_#{event_type_param}_path", event), class: 'control red', method: :delete) do
-    = FA::Icon.p('calendar-times', style: :regular, fa: 'fw')
-    | Remove from Calendar
+  = event_action_link(event, "unbook_#{event_type_param}_path", icon: 'calendar-times', text: 'Remove from Calendar', css: 'red', method: :delete)
 - elsif current_user&.permitted?(event_type_param) && !event.expired?
-  = link_to(send("book_#{event_type_param}_path", event), class: 'control birmingham-blue', method: :put) do
-    = FA::Icon.p('calendar-check', style: :regular, fa: 'fw')
-    | Post to Calendar
-= link_to(send("copy_#{event_type_param}_path", event), class: "control blue-faded") do
-  = FA::Icon.p('clone', fa: 'fw', style: :regular)
-  | Clone
-= link_to(send("edit_#{event_type_param}_path", event), class: "control blue-faded") do
-  = FA::Icon.p('edit', fa: 'fw')
-  | Edit
+  = event_action_link(event, "book_#{event_type_param}_path", icon: 'calendar-check', text: 'Post to Calendar', css: 'birmingham-blue', method: :put)
+= event_action_link(event, "copy_#{event_type_param}_path", icon: 'clone', text: 'Clone', css: 'blue-faded')
+= event_action_link(event, "edit_#{event_type_param}_path", icon: 'edit', text: 'Edit', css: 'blue-faded')
 - unless event.expired?
-  = link_to(send("expire_#{event_type_param}_path", event), method: :delete, class: "control red", data: {confirm: "Are you sure you want to force this #{event_type_param} to expire?"}) do
-    = FA::Icon.p('eye-slash', fa: 'fw', style: :regular)
-    | Expire
+  = event_action_link(event, "expire_#{event_type_param}_path", icon: 'eye-slash', text: 'Expire', css: 'red', method: :delete, confirm: "Are you sure you want to force this #{event_type_param} to expire?")
