@@ -23,6 +23,13 @@ RSpec.describe NavigationHelper, type: :helper do
       )
     end
 
+    it 'should generate the correct admin link' do
+      expect(link(:something, path: '/something', admin: true)).to eql(
+        '<a class="admin" title="Something" href="/something">' \
+        '<li class="admin">Something</li></a>'
+      )
+    end
+
     it 'should not show an unpermitted link' do
       expect(
         link(

@@ -23,7 +23,8 @@ module NavigationHelper
       suffix: '',
       active: false,
       fa: nil,
-      css_class: ''
+      css_class: '',
+      admin: false
     }
   end
 
@@ -40,6 +41,9 @@ module NavigationHelper
       @fa = { name: 'sign-in', options: { style: :regular } }
     elsif @options[:show_when] == :logged_in
       @link_options = { class: 'members' }
+    elsif @options[:admin]
+      @options[:css_class] = 'admin'
+      @link_options = { class: 'admin' }
     end
   end
 
@@ -56,6 +60,7 @@ module NavigationHelper
   def generate_link
     icon_tag = @fa.present? ? FA::Icon.p(@fa) : ''
     @link_options = @link_options.merge(title: @options[:title])
+    @link_options[:class] = @css_class unless @link_options[:class].present?
     link_to(@options[:path], @link_options) do
       content_tag(:li, class: @css_class) do
         icon_tag + @options[:title]
@@ -63,17 +68,20 @@ module NavigationHelper
     end + @options[:suffix]
   end
 
-  def show_menu?(title: nil, permit:, show_when:, path:)
-    show_when == :always ||
-      always_show_menu?(title) ||
-      !hide_menu?(permit: permit, show_when: show_when, path: path)
+  def show_menu?(**options)
+    options[:show_when] == :always ||
+      always_show_menu?(options[:title]) ||
+      !hide_menu?(
+        permit: options[:permit], show_when: options[:show_when],
+        path: options[:path]
+      )
   end
 
-  def hide_menu?(permit:, show_when:, path:)
-    path.blank? ||
-      requires_signed_in?(show_when) ||
-      requires_signed_out?(show_when) ||
-      user_not_permitted?(permit)
+  def hide_menu?(**options)
+    options[:path.blank?] ||
+      requires_signed_in?(options[:show_when]) ||
+      requires_signed_out?(options[:show_when]) ||
+      user_not_permitted?(options[:permit])
   end
 
   def always_show_menu?(title)

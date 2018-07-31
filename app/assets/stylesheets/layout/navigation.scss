@@ -37,6 +37,11 @@
     @include blue-button(0.5em, lighten($old-glory-blue, 20%));
     padding: 0;
   }
+
+  ul a.admin li {
+    @include blue-button(0.5em, purple);
+    padding: 0;
+  }
 }
 
 ul#education {
@@ -125,6 +130,10 @@ ul#admin-menu {
     width: 10em;
     color: darken($birmingham-blue, 20%);
     @include border-radius(0.5em);
+  }
+
+  #nested-navigation ul a.admin {
+    color: purple;
   }
 
   #nested-navigation ul li {
@@ -264,7 +273,7 @@ div#navigation-mobile {
       display: inline-block;
     }
 
-    a li, a.red li, a.members li {
+    a li, a.red li, a.members li, a.admin li {
       @include shadow-box(0);
       @include border-radius(0);
       margin: 0.1em;
