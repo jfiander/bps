@@ -8,7 +8,7 @@ class GitInfo
   def local_ref
     return last_tag if ENV['DOMAIN'] == 'www.bpsd9.org'
     return staging_commit if ENV['DOMAIN'] == 'staging.bpsd9.org'
-    nil
+    local_commit
   end
 
   def master_commit
@@ -17,6 +17,10 @@ class GitInfo
 
   def staging_commit
     @staging_commit ||= shorten(load_json(STAGING_URL)['commit']['sha'])
+  end
+
+  def local_commit
+    @local_commit ||= shorten(`git rev-parse HEAD`)
   end
 
   def last_tag

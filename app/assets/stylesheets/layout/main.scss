@@ -25,80 +25,47 @@ div#main {
     height: auto;
     border-bottom: thin solid $old-glory-blue-faded;
 
-    div.logo {
-      padding-top: 1em;
+    div#desktop-header {
+      position: relative;
 
       img {
-        width: 13em;
-      }
-    }
-
-    div#main-header {
-      width: 100%;
-      margin: 0;
-      text-align: center;
-
-      div#header-left {
-        float: left;
-        width: 20%;
-        max-width: 10em;
-        padding: 0 1em;
-
-        svg {
-          width: 100%;
-          max-width: 10em;
-          height: auto;
-          margin-top: 1em;
-        }
-
-        h2 {
-          color: white;
-          text-shadow: 3px 3px $old-glory-blue-faded;
-        }
+        width: 100%;
+        @include border-radius(1em 1em 0 0);
       }
 
-      div#header-right {
-        float: right;
-        width: 75%;
-        margin: 0;
+      .logo {
+        width: 100%;
+        position: absolute; 
+        top: 0;
+        left: 0;
+        background-color: rgba(255, 255, 255, 0.6);
+        @include border-radius(1em 1em 0 0);
 
         img {
-          width: 100%;
-          border-top-right-radius: 1em;
-          border-bottom-left-radius: 1em;
+          max-width: 800px;
         }
+      }
 
-        h1 {
-          position: absolute;
-          top: 0;
-          left: 38%;
-          color: white;
-          text-shadow: 3px 3px $old-glory-blue-faded;
-          font-size: 2.5em;
-          width: 39%;
-          -webkit-text-stroke: 1px $old-glory-blue;
-        }
+      .slogan {
+        width: 100%;
+        position: absolute; 
+        bottom: 0.6em;
+        left: 0;
+        text-align: center;
+        color: white;
+        text-shadow: 3px 3px $old-glory-blue-faded;
+        font-size: 120%;
+        font-style: italic;
+      }
 
-        h4 {
-          color: white;
-          text-shadow: 2px 2px $old-glory-blue-faded;
-          font-style: italic;
-        }
+      .header {
+        min-height: 12em;
 
-        div#small-titles {
-          h2, h3 {
-            -webkit-text-stroke: 1px $old-glory-blue;
-          }
+        img {
+          display: block;
         }
       }
     }
-
-    // div#wave {
-    //   width: 100%;
-    //   position: absolute;
-    //   top: 26.75%;
-    //   z-index: 10;
-    // }
   }
 
   div#navigation {

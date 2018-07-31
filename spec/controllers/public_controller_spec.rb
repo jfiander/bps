@@ -10,7 +10,7 @@ RSpec.describe PublicController, type: :controller do
     expect(response).to have_http_status(:ok)
 
     expect(response.body).to match(
-      %r{<h1>America's Boating Club<sup>&reg;</sup></h1>}
+      /Come for the Boating Education/
     )
   end
 

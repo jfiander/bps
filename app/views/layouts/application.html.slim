@@ -19,34 +19,11 @@ html
   body
     #main.flex
       header
-        #main-header
-          #header-left
-            .logo = image_tag @header_logo, alt: "America's Boating Club" if @header_logo.present?
-            h2
-              | Birmingham
-              br
-              | Squadron
-            - if current_user&.permitted?(:admin, strict: true) && ::GIT_INFORMATION.local_ref.present?
-              p.gray = ::GIT_INFORMATION.local_ref
-
-          #header-right
-            = image_tag @header_image if @header_image.present?
-            #large-titles
-              h1
-                | America's Boating Club
-                sup &reg;
-              h4 Come for the boating education... Stay for the friends.℠
-            #small-titles
-              h2
-                | America's Boating Club
-                sup &reg;
-              h3 Birmingham Squadron
-              h4
-                | Come for the boating education...
-                br
-                | Stay for the friends.℠
-        #print-header
-          #header-right = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
+        #desktop-header
+          .header = image_tag @header_image, class: 'header' if @header_image.present?
+          .logo = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
+          .slogan Come for the Boating Education... Stay for the Friends.℠
+        #print-header = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
       - nav_links = render 'application/navigation/links'
       #navigation-mobile
         h3
@@ -74,6 +51,8 @@ html
             #error class=(error ? '' : 'hide') = formatted_error_flash(error)
         #content-main = yield
       footer
+        - if ::GIT_INFORMATION.local_ref.present?
+          .gray = ::GIT_INFORMATION.local_ref
         #main-footer
           .table
             .table-row

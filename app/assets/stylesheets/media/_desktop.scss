@@ -1,7 +1,4 @@
 @media all and (min-width: 1251px) and (max-width: 1500px) {
-  div.logo img {
-    max-width: 10em;
-  }
 }
 
 @media all and (min-width: 1251px) and (max-width: 1400px) {
@@ -67,10 +64,6 @@
   }
 
   div#main-header {
-    div.logo img {
-      max-width: 9em;
-    }
-
     div#header-left {
       float: left;
       max-width: 20%;
