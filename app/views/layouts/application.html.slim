@@ -68,24 +68,10 @@ html
             #nested-navigation
               ul.desktop = render 'application/navigation/admin/desktop'
           #flashes
-            #success class=(success ? '' : 'hide')
-              = FA::Icon.p('check-circle')
-              = success
-            #notice class=(notice ? '' : 'hide')
-              = FA::Icon.p('info-circle')
-              = notice
-            #alert class=(alert ? '' : 'hide')
-              = FA::Icon.p('exclamation-circle')
-              = alert
-            #error class=(error ? '' : 'hide')
-              - if error.present? && error&.is_a?(String)
-                = error
-              - elsif error.present? && error&.count == 1
-                = error.first
-              - elsif error.present?
-                ul
-                  - error&.each do |error|
-                    li = error
+            #success class=(success ? '' : 'hide') = FA::Icon.p('check-circle') + success
+            #notice class=(notice ? '' : 'hide') = FA::Icon.p('info-circle') + notice
+            #alert class=(alert ? '' : 'hide') = FA::Icon.p('exclamation-circle') + alert
+            #error class=(error ? '' : 'hide') = formatted_error_flash(error)
         #content-main = yield
       footer
         #main-footer
