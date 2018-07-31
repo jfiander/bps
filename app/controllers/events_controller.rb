@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   include Events::Update
   include Concerns::Application::RedirectWithStatus
 
-  before_action :find_event, only: %i[show copy edit update expire remind]
+  before_action :find_event, only: %i[show copy edit update expire remind book unbook]
   before_action :prepare_form, only: %i[new copy edit]
   before_action :check_for_blank, only: %i[create update]
   before_action :time_formats, only: %i[schedule catalog registrations show]
@@ -111,6 +111,18 @@ class EventsController < ApplicationController
 
     @event.remind!
     flash[:success] = 'Successfully sent reminder emails.'
+    redirect_to send("#{event_type_param}s_path")
+  end
+
+  def book
+    @event.book!
+    flash[:success] = "Successfully booked #{event_type_param}."
+    redirect_to send("#{event_type_param}s_path")
+  end
+
+  def unbook
+    @event.unbook!
+    flash[:success] = "Successfully unbooked #{event_type_param}."
     redirect_to send("#{event_type_param}s_path")
   end
 

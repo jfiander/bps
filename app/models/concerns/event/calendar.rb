@@ -13,6 +13,10 @@ module Concerns::Event::Calendar
     update(google_calendar_event_id: nil)
   end
 
+  def booked?
+    google_calendar_event_id.present?
+  end
+
   private
 
   def calendar

@@ -151,6 +151,8 @@ Rails.application.routes.draw do
     get     "/#{event_type}s/:id/edit",      to: "events/#{event_type}s#edit",          as: "edit_#{event_type}"
     delete  "/#{event_type}s/:id/expire",    to: "events/#{event_type}s#expire",        as: "expire_#{event_type}"
     put     "/#{event_type}s/:id/remind",    to: "events/#{event_type}s#remind",        as: "remind_#{event_type}"
+    put     "/#{event_type}s/:id/book",      to: "events/#{event_type}s#book",          as: "book_#{event_type}"
+    delete  "/#{event_type}s/:id/unbook",    to: "events/#{event_type}s#unbook",        as: "unbook_#{event_type}"
   end
 
   ### User management

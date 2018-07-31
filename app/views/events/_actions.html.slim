@@ -8,6 +8,14 @@
   = link_to(send("remind_#{event_type_param}_path", event), class: "control birmingham-blue", method: :put) do
     = FA::Icon.p('bell', fa: 'fw', style: :regular)
     | Remind
+- if current_user&.permitted?(event_type_param) && event.booked?
+  = link_to(send("unbook_#{event_type_param}_path", event), class: 'control red', method: :delete) do
+    = FA::Icon.p('calendar-times', style: :regular, fa: 'fw')
+    | Remove from Calendar
+- elsif current_user&.permitted?(event_type_param) && !event.expired?
+  = link_to(send("book_#{event_type_param}_path", event), class: 'control birmingham-blue', method: :put) do
+    = FA::Icon.p('calendar-check', style: :regular, fa: 'fw')
+    | Post to Calendar
 = link_to(send("copy_#{event_type_param}_path", event), class: "control blue-faded") do
   = FA::Icon.p('clone', fa: 'fw', style: :regular)
   | Clone
