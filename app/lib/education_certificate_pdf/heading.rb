@@ -4,7 +4,7 @@ module EducationCertificatePDF::Heading
   def heading(_, **_)
     begin
       load_header_image
-      image 'tmp/Wheel.500.png', at: [0, 730], width: 125
+      image 'tmp/run/Wheel.500.png', at: [0, 730], width: 125
     rescue StandardError
       nil
     end
@@ -15,7 +15,7 @@ module EducationCertificatePDF::Heading
 
   def load_header_image
     header = BpsS3.new(:static).download('flags/PNG/WHEEL.500.png')
-    File.open('tmp/Wheel.500.png', 'w+') { |f| f.write(header) }
+    File.open('tmp/run/Wheel.500.png', 'w+') { |f| f.write(header) }
   end
 
   def title_text

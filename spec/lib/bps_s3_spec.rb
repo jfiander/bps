@@ -73,7 +73,7 @@ RSpec.describe BpsS3, type: :lib do
     it 'should upload a file to the bucket' do
       expect(
         @bps_s3.upload(
-          file: File.new('tmp/something.abc', 'w+'),
+          file: File.new('tmp/run/something.abc', 'w+'),
           key: 'something.abc'
         )
       ).to be(true)

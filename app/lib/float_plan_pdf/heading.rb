@@ -4,7 +4,7 @@ module FloatPlanPDF::Heading
   def heading(_)
     begin
       load_header_image
-      image 'tmp/ABC.long.birmingham.1000.png', at: [0, 740], width: 550
+      image 'tmp/run/ABC.png', at: [0, 740], width: 550
     rescue StandardError
       nil
     end
@@ -15,6 +15,6 @@ module FloatPlanPDF::Heading
 
   def load_header_image
     header = BpsS3.new(:static).download('logos/ABC.long.birmingham.1000.png')
-    File.open('tmp/ABC.long.birmingham.1000.png', 'w+') { |f| f.write(header) }
+    File.open('tmp/run/ABC.png', 'w+') { |f| f.write(header) }
   end
 end

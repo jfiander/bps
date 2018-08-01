@@ -33,7 +33,7 @@ module EducationCertificatePDF::Details
     decrypt_signature
     bounding_box([150, 460], width: 200, height: 50) do
       # seo = BridgeOffice.find_by(office: :educational).user
-      image 'tmp/signature.png', width: 150, position: :center
+      image 'tmp/run/signature.png', width: 150, position: :center
     end
     stroke_line([150, 425], [350, 425])
     bounding_box([150, 420], width: 200, height: 30) do
@@ -50,7 +50,7 @@ module EducationCertificatePDF::Details
     cipher.iv = Base64.decode64(ENV['SIGNATURE_IV'])
 
     buf = +''
-    File.open('tmp/signature.png', 'wb') do |outf|
+    File.open('tmp/run/signature.png', 'wb') do |outf|
       File.open(signature_enc, 'rb') do |inf|
         while inf.read(4096, buf)
           outf << cipher.update(buf)

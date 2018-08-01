@@ -47,19 +47,21 @@ def test_image(width, height)
   MiniMagick::Tool::Convert.new do |i|
     i.size "#{width}x#{height}"
     i.xc 'white'
-    i << 'tmp/test_image.jpg'
+    i << 'tmp/run/test_image.jpg'
   end
 
-  'tmp/test_image.jpg'
+  'tmp/run/test_image.jpg'
 end
 
 RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
+    FileUtils.mkdir_p("#{Rails.root}/tmp/run")
   end
 
   config.after(:suite) do
     DatabaseCleaner.clean_with(:truncation)
+    Dir["#{Rails.root}/tmp/run/**/*"].each { |file| File.delete(file) }
   end
 
   # rspec-expectations config goes here. You can use an alternate

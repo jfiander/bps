@@ -11,13 +11,13 @@ class EducationCertificatePDF < Prawn::Document
   MODULES.each { |c| include "EducationCertificatePDF::#{c}".constantize }
 
   def self.for(*args)
-    EducationCertificatePDF.generate('tmp/Education_Certificate.pdf') do
+    EducationCertificatePDF.generate('tmp/run/Education_Certificate.pdf') do
       specify_font
       configure_colors
       MODULES.each { |m| send(underscore(m), *args) }
     end
 
-    File.open('tmp/Education_Certificate.pdf', 'r+')
+    File.open('tmp/run/Education_Certificate.pdf', 'r+')
   end
 
   private

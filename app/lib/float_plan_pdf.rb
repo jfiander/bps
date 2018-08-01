@@ -10,12 +10,12 @@ class FloatPlanPDF < Prawn::Document
   MODULES.each { |c| include "FloatPlanPDF::#{c}".constantize }
 
   def self.for(float_plan)
-    FloatPlanPDF.generate('tmp/Float_Plan.pdf') do
+    FloatPlanPDF.generate('tmp/run/Float_Plan.pdf') do
       configure_colors
       MODULES.each { |m| send(underscore(m), float_plan) }
     end
 
-    File.open('tmp/Float_Plan.pdf', 'r+')
+    File.open('tmp/run/Float_Plan.pdf', 'r+')
   end
 
   private

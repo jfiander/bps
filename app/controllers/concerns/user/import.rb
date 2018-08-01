@@ -14,7 +14,7 @@ module User::Import
       return
     end
 
-    import_path = "#{Rails.root}/tmp/#{Time.now.to_i}-users_import.csv"
+    import_path = "#{Rails.root}/tmp/run/#{Time.now.to_i}-users_import.csv"
     file = File.open(import_path, 'w+')
     file.write(uploaded_file.read)
     file.close
