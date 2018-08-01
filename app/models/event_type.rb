@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 class EventType < ApplicationRecord
+  NEW_TITLES ||= {
+    'Seamanship' => 'Boat Handling',
+    'Piloting' => 'Marine Navigation',
+    'Advanced Piloting' => 'Advanced Marine Navigation',
+    'Junior Navigation' => 'Offshore Navigation',
+    'Navigation' => 'Celestial Navigation'
+  }.freeze
+
   has_many :events
 
   scope :advanced_grades, -> { where(event_category: :advanced_grade) }
@@ -70,7 +78,14 @@ class EventType < ApplicationRecord
   end
 
   def display_title
-    cleanup_title(title.titleize)
+    t = cleanup_title(title.titleize)
+    new_title(t)
+  end
+
+  def new_title(title)
+    return title unless title.in?(NEW_TITLES.keys)
+    return title unless ENV['USE_NEW_AG_TITLES'] == 'enabled'
+    NEW_TITLES[title]
   end
 
   def self.order_positions
