@@ -3,6 +3,12 @@
 module Application::LayoutAndFormatting
   private
 
+  def main_layout
+    return 'application_new' if ENV['NEW_HEADER'] == 'enabled'
+    return 'application_new' if current_user&.new_layout
+    'application_old'
+  end
+
   def time_formats
     @long_time_format = '%a %d %b %Y @ %H%M %Z'
     @medium_time_format = '%-m/%-d/%Y @ %H%M'

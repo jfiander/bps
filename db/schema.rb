@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_24_223344) do
+ActiveRecord::Schema.define(version: 2018_08_01_164314) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -377,6 +377,7 @@ ActiveRecord::Schema.define(version: 2018_07_24_223344) do
     t.string "phone_w"
     t.datetime "membership_date"
     t.datetime "last_mm"
+    t.boolean "new_layout"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"

@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   helper_method :static_bucket, :files_bucket, :bilge_bucket, :photos_bucket
 
+  layout :main_layout
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :pick_header_image
   before_action :meta_tags

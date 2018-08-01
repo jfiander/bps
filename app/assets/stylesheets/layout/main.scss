@@ -25,6 +25,7 @@ div#main {
     height: auto;
     border-bottom: thin solid $old-glory-blue-faded;
 
+    // New Desktop Header
     div#desktop-header {
       position: relative;
 
@@ -63,6 +64,75 @@ div#main {
 
         img {
           display: block;
+        }
+      }
+    }
+
+    // Old Desktop Header
+    div#main-header {
+      div.logo {
+        padding-top: 1em;
+
+        img {
+          width: 13em;
+        }
+      }
+
+      width: 100%;
+      margin: 0;
+      text-align: center;
+
+      div#header-left {
+        float: left;
+        width: 20%;
+        max-width: 10em;
+        padding: 0 1em;
+
+        svg {
+          width: 100%;
+          max-width: 10em;
+          height: auto;
+          margin-top: 1em;
+        }
+
+        h2 {
+          color: white;
+          text-shadow: 3px 3px $old-glory-blue-faded;
+        }
+      }
+
+      div#header-right {
+        float: right;
+        width: 75%;
+        margin: 0;
+
+        img {
+          width: 100%;
+          border-top-right-radius: 1em;
+          border-bottom-left-radius: 1em;
+        }
+
+        h1 {
+          position: absolute;
+          top: 0;
+          left: 38%;
+          color: white;
+          text-shadow: 3px 3px $old-glory-blue-faded;
+          font-size: 2.5em;
+          width: 39%;
+          -webkit-text-stroke: 1px $old-glory-blue;
+        }
+
+        h4 {
+          color: white;
+          text-shadow: 2px 2px $old-glory-blue-faded;
+          font-style: italic;
+        }
+
+        div#small-titles {
+          h2, h3 {
+            -webkit-text-stroke: 1px $old-glory-blue;
+          }
         }
       }
     }
