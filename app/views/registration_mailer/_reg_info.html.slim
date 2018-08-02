@@ -1,6 +1,12 @@
 = render 'registration'
 = render 'location' if @registration.event.location.present?
 
+- if @registration.event.google_calendar_link.present?
+  h3 Google Calendar:
+  p
+    = link_to 'View this event on Google Calendar', @registration.event.google_calendar_link
+  br
+
 p
   | If you have any questions, or if you would like to cancel this registration, please email me at 
   = mail_to @signature[:email]

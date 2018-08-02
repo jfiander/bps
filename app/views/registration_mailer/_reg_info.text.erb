@@ -2,6 +2,11 @@
 
 <%= render 'registration' %>
 <%= render 'location' %>
+<%- if @registration.event.google_calendar_link.present? -%>
+View this event on Google Calendar: <%= @registration.event.google_calendar_link %>
+
+**********
+<%- end %>
 
 If you have any questions, or if you would like to cancel this registration,
 please email me at <%= @signature[:email] %>.
