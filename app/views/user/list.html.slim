@@ -28,7 +28,7 @@ table#users
         - else
           = mail_to(user[:email], user[:name])
       td.center
-        = user[:certificate] || FA::Icon.p('question-circle', css: 'red', style: :regular)
+        = user[:certificate] || FA::Icon.p('question-circle', css: 'red', style: :regular, title: 'Invalid certificate')
         - if user[:senior] || user[:life]
           br
           - if user[:life]
@@ -38,8 +38,8 @@ table#users
       td.center
         - if user[:bridge_office].present?
           = officer_flag(user[:bridge_office], mode: :png)
-        - if user[:bridge_office].present? && (user[:granted_roles] || user[:permitted_roles])
-          hr
+          - if user[:granted_roles] || user[:permitted_roles]
+            hr
         - if user[:granted_roles].present?
           ul.roles
             - user[:granted_roles].each do |g|
@@ -52,15 +52,22 @@ table#users
               = content_tag(:li, p)
       td.center.small-text
         - if user[:current_login_at].present?
-          = user[:current_login_at]
+          = user[:current_login_at].strftime('%a %d %b %Y @ %H%M %Z')
           br
+          | from: 
           = user[:current_login_from]
         - elsif user[:invited_at].present?
           | Invited:
           br
-          = user[:invited_at]
+          = user[:invited_at].strftime('%a %d %b %Y @ %H%M %Z')
         - else
           | Never logged in
+        - if admin
+          br
+          - if user[:new_layout]
+            = FA::Icon.p('desktop', css: 'green', title: 'New layout')
+          - else
+            = FA::Icon.p('desktop', css: 'gray', title: 'Old layout')
       td.center
         - if user[:locked]
           - if can_lock
@@ -69,8 +76,7 @@ table#users
             = FA::Icon.p('lock', fa: 'fw', title: 'Lock')
         - else
           - if admin
-            = link_to(user_path(user[:id])) do
-              = FA::Icon.p('user', title: user[:id], fa: 'fw')
+            = link_to(user_path(user[:id])) { FA::Icon.p('user', title: user[:id], fa: 'fw') }
           - else
             = FA::Icon.p('user', title: user[:id], fa: 'fw')
           = link_to(user_certificate_path(id: user[:id]), target: :_blank) { FA::Icon.p('file-certificate', style: :regular, fa: 'fw', title: 'Educational certificate') }
