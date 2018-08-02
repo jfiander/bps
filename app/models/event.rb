@@ -21,6 +21,7 @@ class Event < ApplicationRecord
 
   after_create { book! }
   before_destroy { unbook! }
+  before_save :refresh_calendar!, if: :calendar_details_updated?
 
   has_attached_file(
     :flyer,
@@ -91,6 +92,13 @@ class Event < ApplicationRecord
     return if reminded?
     registrations.each { |reg| RegistrationMailer.remind(reg).deliver }
     update(reminded_at: Time.now)
+  end
+
+  def link
+    route = category == 'meeting' ? 'event' : category
+    Rails.application.routes.url_helpers.send(
+      "show_#{route}_url", id, host: ENV['DOMAIN']
+    )
   end
 
   private

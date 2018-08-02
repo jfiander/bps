@@ -59,4 +59,9 @@ RSpec.describe Location, type: :model do
       )
     end
   end
+
+  it 'should return the correct one-line address' do
+    location = FactoryBot.create(:location, address: "123\n456\n789")
+    expect(location.one_line).to eql('123, 456, 789')
+  end
 end

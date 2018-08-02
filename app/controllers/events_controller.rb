@@ -75,7 +75,7 @@ class EventsController < ApplicationController
     @event = Event.create(event_params)
 
     if @event.valid?
-      flash[:notice] = 'Calendar event added. Add a repeat pattern, if needed.'
+      flash[:notice] = 'Calendar event added.'
       after_save_event(mode: :added)
     else
       failed_to_save_event(mode: :add)

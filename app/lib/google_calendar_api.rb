@@ -13,13 +13,13 @@ class GoogleCalendarAPI
   end
 
   def create(calendar, event_options = {})
-    event_options.assert_valid_keys(%i[summary start end description location])
-    event_options[:start] = datetime(event_options[:start])
-    event_options[:end] = datetime(event_options[:end])
-
     response = service.insert_event(calendar, event(event_options))
 
-    response.id
+    response
+  end
+
+  def update(calendar, event_id, event_options = {})
+    service.update_event(calendar, event_id, event(event_options))
   end
 
   def delete(calendar, event_id)
@@ -53,11 +53,15 @@ class GoogleCalendarAPI
     @service ||= Google::Apis::CalendarV3::CalendarService.new
   end
 
-  def event(*args)
-    Google::Apis::CalendarV3::Event.new(*args)
+  def event(event_options)
+    event_options.assert_valid_keys(%i[summary start end description location recurrence])
+    event_options[:start] = datetime(event_options[:start])
+    event_options[:end] = datetime(event_options[:end])
+
+    Google::Apis::CalendarV3::Event.new(event_options.reject { |_, v| v.nil? })
   end
 
   def datetime(date)
-    Google::Apis::CalendarV3::EventDateTime.new(date_time: date)
+    Google::Apis::CalendarV3::EventDateTime.new(date_time: date, time_zone: 'America/Detroit')
   end
 end

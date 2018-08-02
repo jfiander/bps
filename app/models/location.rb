@@ -30,6 +30,10 @@ class Location < ApplicationRecord
     address&.split(/\R/)&.first
   end
 
+  def one_line
+    address&.gsub(/\R/, ', ')
+  end
+
   def self.searchable
     all.map do |l|
       { l.id => l.details_hash }
