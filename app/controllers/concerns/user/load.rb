@@ -41,7 +41,8 @@ module User::Load
       invited:            user.invited?,
       locked:             user.locked?,
       senior:             user.senior.present?,
-      life:               user.life.present?
+      life:               user.life.present?,
+      new_layout:         user.new_layout?
     }
   end
 
