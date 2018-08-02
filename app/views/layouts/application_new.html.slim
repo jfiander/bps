@@ -24,33 +24,22 @@ html
           .logo = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
           .slogan Come for the Boating Education... Stay for the Friends.℠
         #print-header = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
-      - nav_links = render 'application/navigation/links'
-      - admin_links = {}
-      - admin_links[:current] = render 'application/navigation/admin/current'
-      - admin_links[:files] = render 'application/navigation/admin/files'
-      - admin_links[:users_top] = render 'application/navigation/admin/users_top'
-      - admin_links[:review] = render 'application/navigation/admin/review'
-      - admin_links[:upload] = render 'application/navigation/admin/upload'
-      - admin_links[:users_bottom] = render 'application/navigation/admin/users_bottom'
-      - admin_links[:admin] = render 'application/navigation/admin/admin'
       #navigation-mobile
         h3
           = FA::Icon.p('bars')
           .nav-heading Navigation
-        .collapsible
-          ul = nav_links
+        .collapsible = main_menu
         - if current_user&.show_admin_menu?
           h3.admin
             = FA::Icon.p('cogs', style: :regular)
             .nav-heading Admin
           .collapsible
-            ul = safe_join(admin_links.values)
-      #navigation
-        ul = nav_links
+            ul = safe_join(admin_menu.values)
+      #navigation = main_menu
       #content
         #content-top
           - if current_user&.show_admin_menu?
-            #nested-navigation = render 'application/navigation/admin/nested', admin_links: admin_links
+            #nested-navigation = render 'application/navigation/admin/nested', admin_links: admin_menu
           #flashes
             #success class=(success ? '' : 'hide') = FA::Icon.p('check-circle') + success
             #notice class=(notice ? '' : 'hide') = FA::Icon.p('info-circle') + notice

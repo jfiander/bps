@@ -44,26 +44,24 @@ html
                 | Stay for the friends.℠
         #print-header
           #header-right = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
-      - nav_links = render 'application/navigation/links'
       #navigation-mobile
         h3
           = FA::Icon.p('bars')
           .nav-heading Navigation
         .collapsible
-          ul = nav_links
+          ul = main_menu
         - if current_user&.show_admin_menu?
           h3.admin
             = FA::Icon.p('cogs', style: :regular)
             .nav-heading Admin
           .collapsible
-            ul#admin-menu = render 'application/navigation/admin/mobile'
+            ul = safe_join(admin_menu.values)
       #navigation
-        ul = nav_links
+        ul = main_menu
       #content
         #content-top
-          - if current_user&.show_admin_menu?
-            #nested-navigation
-              ul.desktop = render 'application/navigation/admin/desktop'
+          - if current_user&.show_admin_menu? && admin_menu.values.any?
+            #nested-navigation = render 'application/navigation/admin/nested', admin_links: admin_menu
           #flashes
             #success class=(success ? '' : 'hide') = FA::Icon.p('check-circle') + success
             #notice class=(notice ? '' : 'hide') = FA::Icon.p('info-circle') + notice

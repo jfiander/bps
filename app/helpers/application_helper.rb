@@ -53,6 +53,22 @@ module ApplicationHelper
     admin_icon + header_text + admin_icon
   end
 
+  def main_menu
+    @main_menu ||= content_tag(:ul, render('application/navigation/links'))
+  end
+
+  def admin_menu
+    @admin_menu ||= {
+      current: render('application/navigation/admin/current'),
+      files: render('application/navigation/admin/files'),
+      users_top: render('application/navigation/admin/users_top'),
+      review: render('application/navigation/admin/review'),
+      upload: render('application/navigation/admin/upload'),
+      users_bottom: render('application/navigation/admin/users_bottom'),
+      admin: render('application/navigation/admin/admin')
+    }
+  end
+
   private
 
   def sanitize(text)
