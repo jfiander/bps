@@ -2,29 +2,13 @@
 
 module Members::BilgeAndMinutes
   def minutes
-    minutes_years = @minutes.map(&:key).map do |b|
-      b.sub("#{minutes_prefix}/", '').delete('.pdf').gsub(%r{/(s|\d+)}, '')
-    end
-    minutes_excom_years = @minutes_excom.map(&:key).map do |b|
-      b.sub("#{minutes_prefix(excom: true)}/", '').delete('.pdf')
-       .gsub(%r{/(s|\d+)}, '')
-    end
+    minutes_years = minutes_years(excom: false)
+    minutes_excom_years = minutes_years(excom: true)
 
     @years = [minutes_years, minutes_excom_years].flatten.uniq
     @issues = @minutes_links.keys
     @issues_excom = @minutes_excom_links.keys
-    @available_issues = {
-      1   => 'Jan',
-      2   => 'Feb',
-      3   => 'Mar',
-      4   => 'Apr',
-      5   => 'May',
-      6   => 'Jun',
-      9   => 'Sep',
-      10  => 'Oct',
-      11  => 'Nov',
-      12  => 'Dec'
-    }
+    @available_issues = available_minutes_issues
   end
 
   def get_minutes
@@ -68,6 +52,22 @@ module Members::BilgeAndMinutes
   end
 
   private
+
+  def minutes_years(excom: false)
+    minutes = excom ? @minutes_excom : @minutes
+
+    minutes.map(&:key).map do |b|
+      b.sub("#{minutes_prefix(excom: excom)}/", '').delete('.pdf')
+       .gsub(%r{/(s|\d+)}, '')
+    end
+  end
+
+  def available_minutes_issues
+    {
+      1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',
+      9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec'
+    }
+  end
 
   def bilge_params
     params.permit(
@@ -141,15 +141,16 @@ module Members::BilgeAndMinutes
     @minutes = files_bucket.list(minutes_prefix)
     @minutes_excom = files_bucket.list(minutes_prefix(excom: true))
 
-    @minutes_links = @minutes.map do |m|
-      key = m.key.dup
-      issue_date = m.key.sub("#{minutes_prefix}/", '').delete('.pdf')
-      { issue_date => files_bucket.link(key) }
-    end.reduce({}, :merge)
+    @minutes_links = minutes_links
+    @minutes_excom_links = minutes_links(excom: true)
+  end
 
-    @minutes_excom_links = @minutes_excom.map do |m|
+  def minutes_links(excom: false)
+    minutes = excom ? @minutes_excom : @minutes
+
+    minutes.map do |m|
       key = m.key.dup
-      issue_date = m.key.sub("#{minutes_prefix(excom: true)}/", '').delete('.pdf')
+      issue_date = m.key.sub("#{minutes_prefix(excom: excom)}/", '').delete('.pdf')
       { issue_date => files_bucket.link(key) }
     end.reduce({}, :merge)
   end
