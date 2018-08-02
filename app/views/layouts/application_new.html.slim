@@ -29,7 +29,7 @@ html
           = FA::Icon.p('bars')
           .nav-heading Navigation
         .collapsible = main_menu
-        - if current_user&.show_admin_menu?
+        - if current_user&.show_admin_menu? && admin_menu.values.any?
           h3.admin
             = FA::Icon.p('cogs', style: :regular)
             .nav-heading Admin
@@ -38,7 +38,7 @@ html
       #navigation = main_menu
       #content
         #content-top
-          - if current_user&.show_admin_menu?
+          - if current_user&.show_admin_menu? && admin_menu.values.any?
             #nested-navigation = render 'application/navigation/admin/nested', admin_links: admin_menu
           #flashes
             #success class=(success ? '' : 'hide') = FA::Icon.p('check-circle') + success

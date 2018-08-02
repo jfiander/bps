@@ -59,17 +59,63 @@ module ApplicationHelper
 
   def admin_menu
     @admin_menu ||= {
-      current: render('application/navigation/admin/current'),
-      files: render('application/navigation/admin/files'),
-      users_top: render('application/navigation/admin/users_top'),
-      review: render('application/navigation/admin/review'),
-      upload: render('application/navigation/admin/upload'),
-      users_bottom: render('application/navigation/admin/users_bottom'),
-      admin: render('application/navigation/admin/admin')
+      current: admin_current,
+      files: admin_files,
+      users_top: admin_users_top,
+      review: admin_review,
+      upload: admin_upload,
+      users_bottom: admin_users_bottom,
+      admin: admin_admin
     }
   end
 
   private
+
+  def admin_current
+    return unless
+      (current_user&.permitted?(:page) &&
+      controller.action_name.in?(StaticPage.names)) ||
+      current_user&.permitted?(event_type_param)
+
+    render('application/navigation/admin/current')
+  end
+
+  def admin_files
+    return unless current_user&.permitted?(:page)
+
+    render('application/navigation/admin/files')
+  end
+
+  def admin_users_top
+    return unless current_user&.permitted?(:users)
+
+    render('application/navigation/admin/users_top')
+  end
+
+  def admin_review
+    return unless
+      current_user&.permitted?(:users, :float, :roster) || current_user&.excom?
+
+    render('application/navigation/admin/review')
+  end
+
+  def admin_upload
+    return unless current_user&.permitted?(:users, :roster)
+
+    render('application/navigation/admin/upload')
+  end
+
+  def admin_users_bottom
+    return unless current_user&.permitted?(:users)
+
+    render('application/navigation/admin/users_bottom')
+  end
+
+  def admin_admin
+    return unless current_user&.permitted?(:admin, strict: true)
+
+    render('application/navigation/admin/admin')
+  end
 
   def sanitize(text)
     ActionController::Base.helpers.sanitize text
