@@ -1,0 +1,2 @@
+= link 'Update Roster',    path: update_roster_path, fa: { name: 'clipboard-list', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:roster)
+= link 'Import user data', path: import_users_path,  fa: { name: 'upload',         options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users)

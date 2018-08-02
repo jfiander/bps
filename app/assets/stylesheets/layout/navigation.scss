@@ -257,16 +257,14 @@ div#navigation-mobile {
     background-color: $background-blue;
   }
 
-  ul#admin-menu {
-    background-color: inherit;
-    border-bottom: none;
-    padding: 0;
-  }
-
   ul {
     margin: 0;
     width: 100%;
     display: table;
+
+    // li {
+    //   float: none;
+    // }
 
     a {
       width: 33%;

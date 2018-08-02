@@ -1,0 +1,34 @@
+ul.desktop
+  - if (current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)) || current_user&.permitted?(event_type_param)
+    li.menu onclick=""
+      a.menu-header Current Page
+      ul = admin_links[:current]
+
+  - if current_user&.permitted?(:page)
+    li.menu onclick=""
+      a.menu-header Files
+      ul = admin_links[:files]
+
+  - if current_user&.permitted?(:users, :float, :roster) || current_user&.excom?
+    li.menu onclick=""
+      a.menu-header Users
+      ul
+        = admin_links[:users_top]
+        - if current_user&.permitted?(:float) || current_user&.excom?
+          li.menu onclick=""
+            a.menu-header
+              = FA::Icon.p('list', style: :regular, fa: :fw) + 'Review'
+              .arrow = FA::Icon.p('chevron-right', style: :regular, fa: :fw)
+            ul = admin_links[:review]
+        - if current_user&.permitted?(:users, :roster)
+          li.menu onclick=""
+            a.menu-header
+              = FA::Icon.p('upload', style: :regular, fa: :fw) + 'Upload'
+              .arrow = FA::Icon.p('chevron-right', style: :regular, fa: :fw)
+            ul = admin_links[:upload]
+        = admin_links[:users_bottom]
+
+  - if current_user&.permitted?(:admin, strict: true)
+    li.menu.admin onclick=""
+      a.menu-header.admin Admin
+      ul = admin_links[:admin]

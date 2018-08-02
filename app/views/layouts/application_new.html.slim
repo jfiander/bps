@@ -25,6 +25,14 @@ html
           .slogan Come for the Boating Education... Stay for the Friends.℠
         #print-header = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
       - nav_links = render 'application/navigation/links'
+      - admin_links = {}
+      - admin_links[:current] = render 'application/navigation/admin/current'
+      - admin_links[:files] = render 'application/navigation/admin/files'
+      - admin_links[:users_top] = render 'application/navigation/admin/users_top'
+      - admin_links[:review] = render 'application/navigation/admin/review'
+      - admin_links[:upload] = render 'application/navigation/admin/upload'
+      - admin_links[:users_bottom] = render 'application/navigation/admin/users_bottom'
+      - admin_links[:admin] = render 'application/navigation/admin/admin'
       #navigation-mobile
         h3
           = FA::Icon.p('bars')
@@ -36,14 +44,13 @@ html
             = FA::Icon.p('cogs', style: :regular)
             .nav-heading Admin
           .collapsible
-            ul#admin-menu = render 'application/navigation/admin/mobile'
+            ul = safe_join(admin_links.values)
       #navigation
         ul = nav_links
       #content
         #content-top
           - if current_user&.show_admin_menu?
-            #nested-navigation
-              ul.desktop = render 'application/navigation/admin/desktop'
+            #nested-navigation = render 'application/navigation/admin/nested', admin_links: admin_links
           #flashes
             #success class=(success ? '' : 'hide') = FA::Icon.p('check-circle') + success
             #notice class=(notice ? '' : 'hide') = FA::Icon.p('info-circle') + notice
