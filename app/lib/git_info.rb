@@ -9,6 +9,8 @@ class GitInfo
     return last_tag if ENV['DOMAIN'] == 'www.bpsd9.org'
     return staging_commit if ENV['DOMAIN'] == 'staging.bpsd9.org'
     local_commit
+  rescue StandardError
+    nil
   end
 
   def master_commit
