@@ -1,4 +1,5 @@
 = event_action_link(event, "show_#{event_type_param}_path", icon: 'share-square', text: 'Share', css: 'green')
+= event_action_link(event, event.google_calendar_link, icon: 'calendar-alt', text: 'Calendar Event', css: 'green') if event.google_calendar_link.present?
 - if event.reminded?
   = event_action_link(nil, nil, icon: 'bell-slash', text: 'Reminded')
 - else

@@ -100,6 +100,39 @@ RSpec.describe EventsHelper, type: :helper do
           'data-fa-transform=\'\' title=\'\'></i>Post To Calendar</a>'
         )
       end
+
+      it 'should generate a correct action link with a non-method path' do
+        @course = FactoryBot.create(:event, event_type: @ag)
+
+        link = event_action_link(
+          @course, 'http://example.com',
+          icon: 'calendar-check', text: 'Post to Calendar',
+          css: 'birmingham-blue', method: :put
+        )
+
+        expect(link).to eql(
+          '<a icon="calendar-check" text="Post to Calendar" ' \
+          'class="control birmingham-blue" css="birmingham-blue" ' \
+          'rel="nofollow" data-method="put" href="http://example.com">' \
+          '<i class=\'far fa-fw fa-calendar-check fa-1x\' ' \
+          'data-fa-transform=\'\' title=\'\'></i>Post To Calendar</a>'
+        )
+      end
+
+      it 'should generate just an icon with a nil path' do
+        @course = FactoryBot.create(:event, event_type: @ag)
+
+        link = event_action_link(
+          @course, nil,
+          icon: 'calendar-check', text: 'Post to Calendar',
+          css: 'birmingham-blue', method: :put
+        )
+
+        expect(link).to eql(
+          '<i class=\'far fa-fw fa-calendar-check fa-1x\' ' \
+          'data-fa-transform=\'\' title=\'\'></i>Post To Calendar'
+        )
+      end
     end
   end
 end

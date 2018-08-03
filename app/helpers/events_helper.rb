@@ -102,6 +102,12 @@ module EventsHelper
 
     icon = FA::Icon.p(options[:icon], **options.delete(:icon_options)) + options[:text].titleize
 
-    path.present? ? link_to(send(path, event), **options) { icon } : icon
+    if path.present? && path.match?(/_path/)
+      link_to(send(path, event), **options) { icon }
+    elsif path.present?
+      link_to(path, **options) { icon }
+    else
+      icon
+    end
   end
 end
