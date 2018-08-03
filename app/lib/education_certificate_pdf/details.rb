@@ -20,23 +20,23 @@ module EducationCertificatePDF::Details
   end
 
   def date
-    bounding_box([0, 440], width: 100, height: 30) do
+    bounding_box([0, 440], width: 160, height: 20) do
       text Date.today.strftime('%-d %B %Y'), align: :center, size: 14
     end
-    stroke_line([0, 425], [100, 425])
-    bounding_box([0, 420], width: 100, height: 30) do
+    stroke_line([0, 425], [160, 425])
+    bounding_box([0, 420], width: 160, height: 15) do
       text 'Date', align: :center, size: 10
     end
   end
 
   def signature
     decrypt_signature
-    bounding_box([150, 460], width: 200, height: 50) do
+    bounding_box([200, 460], width: 200, height: 50) do
       # seo = BridgeOffice.find_by(office: :educational).user
       image 'tmp/run/signature.png', width: 150, position: :center
     end
-    stroke_line([150, 425], [350, 425])
-    bounding_box([150, 420], width: 200, height: 30) do
+    stroke_line([200, 425], [400, 425])
+    bounding_box([200, 420], width: 200, height: 15) do
       text 'Squadron Educational Officer', align: :center, size: 10
     end
   end
