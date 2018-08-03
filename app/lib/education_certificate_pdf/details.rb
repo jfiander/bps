@@ -50,6 +50,7 @@ module EducationCertificatePDF::Details
     cipher.iv = Base64.decode64(ENV['SIGNATURE_IV'])
 
     buffer = +''
+    FileUtils.mkdir_p(File.join(Rails.root, 'tmp', 'run'))
     File.open('tmp/run/signature.png', 'wb') do |outfile|
       File.open(signature_enc, 'rb') do |inf|
         outfile << cipher.update(buffer) while inf.read(4096, buffer)
