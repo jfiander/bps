@@ -79,5 +79,7 @@ module Bps
       f.write('"expiration_time_millis":1530304405000}')
       f.write("'\n")
     end
+
+    FileUtils.mkdir_p("#{Rails.root}/tmp/run")
   end
 end
