@@ -17,7 +17,6 @@ class EventsController < ApplicationController
   before_action :find_event, only: %i[show copy edit update expire remind book unbook]
   before_action :prepare_form, only: %i[new copy edit]
   before_action :check_for_blank, only: %i[create update]
-  before_action :time_formats, only: %i[schedule catalog registrations show]
   before_action :preload_events, only: %i[schedule catalog registrations show]
   before_action :location_names, only: %i[new copy edit]
   before_action :set_create_path, only: %i[new copy]
