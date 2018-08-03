@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserMailerPreview < ActionMailer::Preview
   def invitation_instructions
     UserMailer.invitation_instructions(User.first, 'fake-token')

@@ -1,4 +1,5 @@
-# Preview all emails at http://localhost:3000/rails/mailers/notifications_mailer
+# frozen_string_literal: true
+
 class NotificationsMailerPreview < ActionMailer::Preview
   def bridge
     NotificationsMailer.bridge(bridge_office, by: by, previous: previous)

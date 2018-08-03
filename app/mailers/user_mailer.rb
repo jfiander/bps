@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserMailer < Devise::Mailer
   helper :application
   helper ScssHelper

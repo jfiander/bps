@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MemberApplicationMailer < ApplicationMailer
   include DateHelper
   include MailerSignatures

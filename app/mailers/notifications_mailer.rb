@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NotificationsMailer < ApplicationMailer
   def bridge(bridge_office, by: nil, previous: nil)
     @bridge_office = bridge_office

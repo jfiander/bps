@@ -1,4 +1,5 @@
-# Preview all emails at http://localhost:3000/rails/mailers/registration_mailer
+# frozen_string_literal: true
+
 class RegistrationMailerPreview < ActionMailer::Preview
   def registered
     RegistrationMailer.registered(registration)
