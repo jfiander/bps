@@ -13,9 +13,11 @@ class GoogleCalendarAPI
   end
 
   def create(calendar, event_options = {})
-    response = service.insert_event(calendar, event(event_options))
+    service.insert_event(calendar, event(event_options))
+  end
 
-    response
+  def get(calendar, event_id)
+    service.get_event(calendar, event_id)
   end
 
   def update(calendar, event_id, event_options = {})
