@@ -35,7 +35,7 @@
 .event-mobile-contents
   - if event.multiple_sessions?
     b Starts: 
-  = event.start_at.strftime(@long_time_format)
+  = event.start_at.strftime(ApplicationController::LONG_TIME_FORMAT)
 - if (event.multiple_sessions? || event.length?)
   .event-mobile-contents
     - if event.multiple_sessions?

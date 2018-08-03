@@ -2,7 +2,7 @@
   .table-cell.table-header
     = link_to event.event_type.display_title, send("show_#{event_type_param}_path", event), class: 'red'
     br
-    = event.start_at.strftime(@medium_time_format)
+    = event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
   .table-cell
     - event.registrations.each do |reg|
       = render 'events/register/member', r: reg

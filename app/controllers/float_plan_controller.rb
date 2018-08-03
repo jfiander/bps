@@ -68,17 +68,17 @@ class FloatPlanController < ApplicationController
         { title: 'Phone', value: @float_plan.phone, short: true },
         {
           title: 'Depart',
-          value: @float_plan.leave_at.strftime(@long_time_format),
+          value: @float_plan.leave_at.strftime(ApplicationController::LONG_TIME_FORMAT),
           short: true
         },
         {
           title: 'Return',
-          value: @float_plan.return_at.strftime(@long_time_format),
+          value: @float_plan.return_at.strftime(ApplicationController::LONG_TIME_FORMAT),
           short: true
         },
         {
           title: 'Alert',
-          value: @float_plan.alert_at.strftime(@long_time_format),
+          value: @float_plan.alert_at.strftime(ApplicationController::LONG_TIME_FORMAT),
           short: true
         },
         { title: 'Float Plan PDF', value: @float_plan.link, short: false }

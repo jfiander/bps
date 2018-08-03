@@ -13,7 +13,7 @@
                 .table-cell.date-details
                   - if event.multiple_sessions?
                     b Starts: 
-                  = event.start_at.strftime(@long_time_format)
+                  = event.start_at.strftime(ApplicationController::LONG_TIME_FORMAT)
               - if event.multiple_sessions? || event.length?
                 .table.row
                   .table-cell

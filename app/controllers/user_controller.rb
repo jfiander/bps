@@ -21,7 +21,6 @@ class UserController < ApplicationController
     :users_for_select,
     only: %i[permissions_index assign_bridge assign_committee]
   )
-  before_action :time_formats, only: [:show]
 
   title!('Users', except: :show)
   title!('User', only: :show)

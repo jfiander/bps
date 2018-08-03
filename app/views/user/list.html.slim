@@ -52,14 +52,14 @@ table#users
               = content_tag(:li, p)
       td.center.small-text
         - if user[:current_login_at].present?
-          = user[:current_login_at].strftime('%a %d %b %Y @ %H%M %Z')
+          = user[:current_login_at].strftime(ApplicationController::LONG_TIME_FORMAT)
           br
           | from: 
           = user[:current_login_from]
         - elsif user[:invited_at].present?
           | Invited:
           br
-          = user[:invited_at].strftime('%a %d %b %Y @ %H%M %Z')
+          = user[:invited_at].strftime(ApplicationController::LONG_TIME_FORMAT)
         - else
           | Never logged in
         - if admin

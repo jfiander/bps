@@ -9,13 +9,6 @@ module Application::LayoutAndFormatting
     'application_old'
   end
 
-  def time_formats
-    @long_time_format = '%a %d %b %Y @ %H%M %Z'
-    @medium_time_format = '%-m/%-d/%Y @ %H%M'
-    @short_time_format = '%-m/%-d @ %H%M'
-    @duration_format = '%-kh %Mm'
-  end
-
   def pick_header_image
     @header_image = files_bucket.link(HeaderImage.random&.path(:desktop))
     @header_logo = static_bucket.link('logos/ABC.tr.300.png')

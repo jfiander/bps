@@ -10,7 +10,7 @@ h2 Review Member Applications
       .table
         .table-row
           .table-cell.table-header Applied: 
-          .table-cell = app.created_at.strftime(@long_time_format)
+          .table-cell = app.created_at.strftime(ApplicationController::LONG_TIME_FORMAT)
         .table-row
           .table-cell.table-header Applicants: 
           .table-cell = app.member_applicants.count
