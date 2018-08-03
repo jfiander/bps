@@ -16,7 +16,10 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
-SimpleCov.start do
+SimpleCov.start('rails') do
+  add_group 'Services', 'app/services'
+  add_group 'Channels', 'app/channels'
+
   # Not application code
   add_filter '/spec'
   add_filter '/config'
