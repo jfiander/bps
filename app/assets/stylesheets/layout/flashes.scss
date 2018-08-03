@@ -23,7 +23,7 @@ div#flashes {
   div#alert {
     margin-bottom: 0;
     font-weight: bold;
-    color: lighten($old-glory-red, 10%);
+    color: $old-glory-red;
     background-color: lighten($old-glory-red, 45%);
     border-top: thin solid lighten($old-glory-red, 10%);
     border-bottom: thin solid lighten($old-glory-red, 10%);
