@@ -49,13 +49,11 @@ module EducationCertificatePDF::Details
     cipher.key = Base64.decode64(ENV['SIGNATURE_KEY'])
     cipher.iv = Base64.decode64(ENV['SIGNATURE_IV'])
 
-    buf = +''
-    File.open('tmp/run/signature.png', 'wb') do |outf|
+    buffer = +''
+    File.open('tmp/run/signature.png', 'wb') do |outfile|
       File.open(signature_enc, 'rb') do |inf|
-        while inf.read(4096, buf)
-          outf << cipher.update(buf)
-        end
-        outf << cipher.final
+        outfile << cipher.update(buffer) while inf.read(4096, buffer)
+        outfile << cipher.final
       end
     end
   end
