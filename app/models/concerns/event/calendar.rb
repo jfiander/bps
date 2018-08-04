@@ -34,13 +34,19 @@ module Concerns::Event::Calendar
   end
 
   def calendar_id
-    id = if category.in?(%w[course seminar])
-           ENV['GOOGLE_CALENDAR_ID_EDUC']
-         else
-           ENV['GOOGLE_CALENDAR_ID_GEN']
-         end
+    if ENV['ASSET_ENVIRONMENT'] == 'production'
+      production_calendar_id(category)
+    else
+      ENV['GOOGLE_CALENDAR_ID_TEST']
+    end
+  end
 
-    Rails.env.production? ? id : ENV['GOOGLE_CALENDAR_ID_TEST']
+  def production_calendar_id(category)
+    if category.in?(%w[course seminar])
+      ENV['GOOGLE_CALENDAR_ID_EDUC']
+    else
+      ENV['GOOGLE_CALENDAR_ID_GEN']
+    end
   end
 
   def calendar_hash
