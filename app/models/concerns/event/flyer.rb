@@ -20,7 +20,7 @@ module Concerns::Event::Flyer
 
   def cover_file_name(event_types = nil)
     event_types ||= EventType.all
-    event_types.select { |e| e.id == event_type_id }.first.title.delete("'")
+    event_types.select { |e| e.id == event_type_id }.first.title.delete("',")
   end
 
   def use_course_book_cover?(event_types = nil)
