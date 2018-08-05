@@ -3,7 +3,7 @@
 class BraintreeController < ApplicationController
   include BraintreeHelper
 
-  before_action :redirect_to_root, unless: :braintree_enabled?
+  before_action :redirect_to_root, except: %i[refunds terms], unless: :braintree_enabled?
 
   before_action :transaction_details, only: %i[index ask_to_pay done]
   before_action :generate_client_token, only: %i[index ask_to_pay]
