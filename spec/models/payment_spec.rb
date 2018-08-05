@@ -1,34 +1,43 @@
 require 'rails_helper'
 
 RSpec.describe Payment, type: :model do
+  let(:token) { Payment.client_token }
+  let(:user_token) { Payment.client_token(user_id: @user.id) }
+
   describe 'general methods' do
     it 'should return a Braintree gateway' do
       expect(Payment.gateway).to be_a(Braintree::Gateway)
     end
 
     it 'should return a valid client_token' do
-      token = Payment.client_token
+      expect { token }.to output(
+        %r{POST /merchants/8h7zv35t49x6khds/client_token 201}
+      ).to_stdout_from_any_process
+
       expect(token).to be_a(String)
       expect(token.length).to eql(1800)
     end
 
     it 'should return a valid client_token when given a user_id' do
-      user = FactoryBot.create(:user)
-      token = Payment.client_token(user_id: user.id)
-      expect(token).to be_a(String)
-      expect(token.length).to eql(1836)
+      @user = FactoryBot.create(:user)
+      expect { user_token }.to output(
+        %r{POST /merchants/8h7zv35t49x6khds/client_token 201}
+      ).to_stdout_from_any_process
+
+      expect(user_token).to be_a(String)
+      expect(user_token.length).to eql(1836)
     end
 
     it 'should post the client_token request' do
-      user = FactoryBot.create(:user)
-      expect { Payment.client_token(user_id: user.id) }.to output(
+      @user = FactoryBot.create(:user)
+      expect { user_token }.to output(
         %r{POST /merchants/8h7zv35t49x6khds/client_token 201}
       ).to_stdout_from_any_process
     end
 
     it 'should post customer data' do
-      user = FactoryBot.create(:user)
-      expect { Payment.client_token(user_id: user.id) }.to output(
+      @user = FactoryBot.create(:user)
+      expect { user_token }.to output(
         %r{POST /merchants/8h7zv35t49x6khds/customers 201}
       ).to_stdout_from_any_process
     end

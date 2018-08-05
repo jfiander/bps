@@ -2,32 +2,52 @@
 
 require 'rails_helper'
 
+def transaction_for(payment, user)
+  payment.sale!(
+    'fake-valid-nonce', email: user.email, user_id: user.id
+  ).transaction
+end
+
 RSpec.describe ReceiptMailer, type: :mailer do
-  before(:each) do
-    generic_seo_and_ao
-    @user = FactoryBot.create(:user)
-    event = FactoryBot.create(:event, cost: 10)
-    @reg = FactoryBot.create(:registration, user: @user, event: event)
-    @member_application = FactoryBot.create(:member_application, :with_primary)
-  end
+  let(:user) { FactoryBot.create(:user) }
+  let(:event) { FactoryBot.create(:event, cost: 10) }
+  let(:reg) { FactoryBot.create(:registration, user: user, event: event) }
+  let(:member_application) { FactoryBot.create(:family_application) }
+
+  let(:payment_reg) { FactoryBot.create(:payment, parent: reg) }
+  let(:payment_app) { FactoryBot.create(:payment, parent: member_application) }
+  let(:payment_user) { FactoryBot.create(:payment, parent: user) }
+
+  let(:transaction_reg) { transaction_for(payment_reg, user) }
+  let(:transaction_app) { transaction_for(payment_app, user) }
+  let(:transaction_user) { transaction_for(payment_user, user) }
+
+  before(:each) { generic_seo_and_ao }
 
   describe 'receipt' do
+    # For each describe block, the transaction will be submitted twice.
+    # The first time, it should succeed (201).
+    # The second time, it should be rejected as a duplicate (422).
     describe 'registration' do
-      let(:mail) do
-        payment = FactoryBot.create(:payment, parent: @reg)
-        transaction = payment.sale!(
-          'fake-valid-nonce', email: @user.email, user_id: @user.id
-        ).transaction
-        ReceiptMailer.receipt(transaction, payment)
-      end
+      let(:mail) { ReceiptMailer.receipt(transaction_reg, payment_reg) }
 
       it 'renders the headers' do
+        expect { transaction_reg }.to output(
+          %r{POST /merchants/8h7zv35t49x6khds/transactions 201}
+        ).to_stdout_from_any_process
+        expect(transaction_reg.status).to eql('submitted_for_settlement')
+
         expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
-        expect(mail.to).to eql([@user.email])
+        expect(mail.to).to eql([user.email])
         expect(mail.from).to eql(['receipts@bpsd9.org'])
       end
 
       it 'renders the body' do
+        expect { transaction_reg }.to output(
+          %r{POST /merchants/8h7zv35t49x6khds/transactions 422}
+        ).to_stdout_from_any_process
+        expect(transaction_reg.status).to eql('gateway_rejected')
+
         expect(mail.body.encoded).to include('Transaction Receipt')
         expect(mail.body.encoded).to include('Transaction information')
         expect(mail.body.encoded).to match(/(ending in \*\*)|(Paid via PayPal)/)
@@ -35,21 +55,25 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'member application' do
-      let(:mail) do
-        payment = FactoryBot.create(:payment, parent: @member_application)
-        transaction = payment.sale!(
-          'fake-valid-nonce', email: @user.email, user_id: @user.id
-        ).transaction
-        ReceiptMailer.receipt(transaction, payment)
-      end
+      let(:mail) { ReceiptMailer.receipt(transaction_app, payment_app) }
 
       it 'renders the headers' do
+        expect { transaction_app }.to output(
+          %r{POST /merchants/8h7zv35t49x6khds/transactions 201}
+        ).to_stdout_from_any_process
+        expect(transaction_app.status).to eql('submitted_for_settlement')
+
         expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
-        expect(mail.to).to eql([@user.email])
+        expect(mail.to).to eql([user.email])
         expect(mail.from).to eql(['receipts@bpsd9.org'])
       end
 
       it 'renders the body' do
+        expect { transaction_app }.to output(
+          %r{POST /merchants/8h7zv35t49x6khds/transactions 422}
+        ).to_stdout_from_any_process
+        expect(transaction_app.status).to eql('gateway_rejected')
+
         expect(mail.body.encoded).to include('Transaction Receipt')
         expect(mail.body.encoded).to include('Transaction information')
         expect(mail.body.encoded).to match(/(ending in \*\*)|(Paid via PayPal)/)
@@ -57,21 +81,25 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'dues' do
-      let(:mail) do
-        payment = FactoryBot.create(:payment, parent: @user)
-        transaction = payment.sale!(
-          'fake-valid-nonce', email: @user.email, user_id: @user.id
-        ).transaction
-        ReceiptMailer.receipt(transaction, payment)
-      end
+      let(:mail) { ReceiptMailer.receipt(transaction_user, payment_user) }
 
       it 'renders the headers' do
+        expect { transaction_user }.to output(
+          %r{POST /merchants/8h7zv35t49x6khds/transactions 201}
+        ).to_stdout_from_any_process
+        expect(transaction_user.status).to eql('submitted_for_settlement')
+
         expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
-        expect(mail.to).to eql([@user.email])
+        expect(mail.to).to eql([user.email])
         expect(mail.from).to eql(['receipts@bpsd9.org'])
       end
 
       it 'renders the body' do
+        expect { transaction_user }.to output(
+          %r{POST /merchants/8h7zv35t49x6khds/transactions 422}
+        ).to_stdout_from_any_process
+        expect(transaction_user.status).to eql('gateway_rejected')
+
         expect(mail.body.encoded).to include('Transaction Receipt')
         expect(mail.body.encoded).to include('Transaction information')
         expect(mail.body.encoded).to match(/(ending in \*\*)|(Paid via PayPal)/)
@@ -81,12 +109,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
   describe 'paid' do
     describe 'registration' do
-      let(:mail) do
-        payment = FactoryBot.create(
-          :payment, parent_id: @reg.id, parent_type: 'Registration'
-        )
-        ReceiptMailer.paid(payment)
-      end
+      let(:mail) { ReceiptMailer.paid(payment_reg) }
 
       it 'renders the headers' do
         expect(mail.subject).to eql('Registration paid')
@@ -104,13 +127,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'member application' do
-      let(:mail) do
-        payment = FactoryBot.create(
-          :payment,
-          parent_id: @member_application.id, parent_type: 'MemberApplication'
-        )
-        ReceiptMailer.paid(payment)
-      end
+      let(:mail) { ReceiptMailer.paid(payment_app) }
 
       it 'renders the headers' do
         expect(mail.subject).to eql('Membership application paid')
@@ -133,13 +150,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'dues' do
-      let(:mail) do
-        @user = FactoryBot.create(:user)
-        payment = FactoryBot.create(
-          :payment, parent_id: @user.id, parent_type: 'User'
-        )
-        ReceiptMailer.paid(payment)
-      end
+      let(:mail) { ReceiptMailer.paid(payment_user) }
 
       it 'renders the headers' do
         expect(mail.subject).to eql('Annual dues paid')
