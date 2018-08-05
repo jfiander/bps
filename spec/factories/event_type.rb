@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :event_type do
     event_category 'public'
-    title "americas_boating_course"
+    title "america's_boating_course"
   end
 end

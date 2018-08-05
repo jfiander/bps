@@ -12,7 +12,7 @@ RSpec.describe EventType, type: :model do
 
   describe 'form selectors' do
     it 'should generate the correct form select field data' do
-      abc = FactoryBot.create(:event_type)
+      abc = FactoryBot.create(:event_type, title: "America's Boating Course")
       FactoryBot.create(:event_type, title: 'Emergencies on Board', event_category: 'seminar')
       n = FactoryBot.create(:event_type, title: 'Navigation', event_category: 'advanced_grade')
       jn = FactoryBot.create(:event_type, title: 'Junior Navigation', event_category: 'advanced_grade')

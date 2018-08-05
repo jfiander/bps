@@ -78,14 +78,8 @@ class EventType < ApplicationRecord
   end
 
   def display_title
-    t = cleanup_title(title.titleize)
+    t = cleanup_title(title)
     new_title(t)
-  end
-
-  def new_title(title)
-    return title unless title.in?(NEW_TITLES.keys)
-    return title unless ENV['USE_NEW_AG_TITLES'] == 'enabled'
-    NEW_TITLES[title]
   end
 
   def self.order_positions
@@ -114,18 +108,20 @@ class EventType < ApplicationRecord
   private
 
   def cleanup_title(title)
+    title = title.split('-').map(&:titleize).join('-')
     title_subs.each do |pattern, replacement|
       title.gsub!(/#{pattern}/i, replacement)
     end
     title
   end
 
-  def title_subs
-    possessives = {
-      'americas' => "America's",
-      'commanders' => "Commander's"
-    }
+  def new_title(title)
+    return title unless title.in?(NEW_TITLES.keys)
+    return title unless ENV['USE_NEW_AG_TITLES'] == 'enabled'
+    NEW_TITLES[title]
+  end
 
+  def title_subs
     # Configure acronyms in config/initializers/inflections.rb
 
     slashes = {
@@ -136,7 +132,7 @@ class EventType < ApplicationRecord
     small_words = {
       ' A ' => ' a ',
       ' To ' => ' to ',
-      ' The ' => ' the ',
+      '([- ])The([- ])' => '\1the\2',
       ' Of ' => ' of ',
       ' And ' => ' and ',
       ' On ' => ' on ',
@@ -144,6 +140,6 @@ class EventType < ApplicationRecord
       ' For ' => ' for '
     }
 
-    [possessives, slashes, small_words].inject(&:merge)
+    [slashes, small_words].inject(&:merge)
   end
 end
