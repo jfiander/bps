@@ -21,7 +21,7 @@
         b = @purchase_info[:time]
   = form_tag checkout_path, id: 'checkout', method: :post
     #dropin-container
-    = label_tag :email, "Send receipt to:"
+    = label_tag :email, 'Send receipt to:'
     br
     = email_field_tag :email, @receipt, id: 'receipt-email', placeholder: 'Enter your email address to get a receipt', data: { 'braintree-name' => 'email' }
   button#submit-button.pay
@@ -29,8 +29,7 @@
     | Pay $
     = @transaction_amount
   .information Don't worry if you click twice – only the first click will be processed.
-  .information
-    = link_to 'Terms & Conditions', payment_terms_path, target: :_blank
-    |  | 
-    = link_to 'Refund Policy', refunds_path, target: :_blank
+  ul.policies
+    li = link_to(payment_terms_path, target: :_blank) { FA::Icon.p('file-alt', style: :regular) + 'Terms & Conditions' }
+    li = link_to(refunds_path, target: :_blank) { FA::Icon.p('file-invoice-dollar', style: :regular) + 'Refund Policy' }
   = render 'braintree/dropin_script'
