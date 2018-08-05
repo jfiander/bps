@@ -6,6 +6,8 @@ class EventTypesController < ApplicationController
 
   secure!(:admin, :education, strict: true)
 
+  before_action :load_event_types, only: %i[new edit]
+
   title!('Event Types')
 
   def list
@@ -24,7 +26,6 @@ class EventTypesController < ApplicationController
     @edit_action = 'Add'
     @submit_path = create_event_type_path
 
-    @event_types = EventType.all
     return if current_user&.permitted?(:admin, strict: true)
     @event_types = @event_types.where.not(event_category: 'meeting')
   end
@@ -75,6 +76,10 @@ class EventTypesController < ApplicationController
   def restricted?
     !current_user&.permitted?(:admin, strict: true) &&
       event_type_params[:event_category] == 'meeting'
+  end
+
+  def load_event_types
+    @event_types = EventType.all
   end
 
   def remove_events_unless_permitted
