@@ -12,7 +12,7 @@ class FloatPlanPDF < Prawn::Document
   def self.for(float_plan)
     FloatPlanPDF.generate('tmp/run/Float_Plan.pdf') do
       configure_colors
-      MODULES.each { |m| send(underscore(m), float_plan) }
+      MODULES.each { |m| send(m.underscore, float_plan) }
     end
 
     File.open('tmp/run/Float_Plan.pdf', 'r+')
@@ -23,14 +23,6 @@ class FloatPlanPDF < Prawn::Document
   def configure_colors(color = '232D62')
     stroke_color(color)
     fill_color(color)
-  end
-
-  def underscore(string)
-    string.gsub(/::/, '/')
-          .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-          .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-          .tr('-', '_')
-          .downcase
   end
 
   def labeled_text(label, value, x1:, x2:, y:)

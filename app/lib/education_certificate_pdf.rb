@@ -14,7 +14,7 @@ class EducationCertificatePDF < Prawn::Document
     EducationCertificatePDF.generate('tmp/run/Education_Certificate.pdf') do
       specify_font
       configure_colors
-      MODULES.each { |m| send(underscore(m), *args) }
+      MODULES.each { |m| send(m.underscore, *args) }
     end
 
     File.open('tmp/run/Education_Certificate.pdf', 'r+')
@@ -37,14 +37,6 @@ class EducationCertificatePDF < Prawn::Document
   def configure_colors(color = '232D62')
     stroke_color(color)
     fill_color(color)
-  end
-
-  def underscore(string)
-    string.gsub(/::/, '/')
-          .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-          .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-          .tr('-', '_')
-          .downcase
   end
 
   def completion_row(row)
