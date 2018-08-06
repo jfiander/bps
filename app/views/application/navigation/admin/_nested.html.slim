@@ -9,7 +9,7 @@ ul.desktop
       a.menu-header Files
       ul = admin_links[:files]
 
-  - if current_user&.permitted?(:users, :float, :roster) || current_user&.excom?
+  - if current_user&.permitted?(:users, :float, :roster, :education) || current_user&.excom?
     li.menu onclick=""
       a.menu-header Users
       ul

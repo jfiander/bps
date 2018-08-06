@@ -8,10 +8,12 @@ class UserController < ApplicationController
   include User::Invite
   include User::Edit
   include User::Insignia
+  include User::Instructors
 
   secure!
   secure!(:admin, only: :assign_photo)
-  secure!(:users, except: %i[current show register cancel_registration])
+  secure!(:users, except: %i[current show register cancel_registration instructors])
+  secure!(:education, only: :instructors)
 
   before_action :can_view_profile?, only: [:show]
   before_action :can_view_profile?, only: [:certificate]
@@ -22,8 +24,9 @@ class UserController < ApplicationController
     only: %i[permissions_index assign_bridge assign_committee]
   )
 
-  title!('Users', except: :show)
+  title!('Users', except: %i[show instructors])
   title!('User', only: :show)
+  title!('Instructors', only: :show)
 
   def show
     @registrations = Registration.for_user(@user.id).current.reject do |r|
@@ -87,7 +90,7 @@ class UserController < ApplicationController
   def clean_params
     params.permit(
       :id, :type, :page_name, :import_file, :lock_missing, :photo, :redirect_to,
-      :member_date, :last_mm
+      :member_date, :last_mm, :key, :only
     )
   end
 end

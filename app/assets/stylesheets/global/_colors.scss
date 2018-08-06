@@ -58,3 +58,7 @@ $background-blue: #C5D1E1;
   color: $old-glory-red;
   background-color: lighten($old-glory-red, 40%);
 }
+
+.highlight {
+  background-color: lighten(green, 60%) !important;
+}

@@ -166,6 +166,8 @@ Rails.application.routes.draw do
   get     '/users',                 to: 'user#list'
   get     '/users/:id',             to: 'user#show',        as: 'user'
   get     '/users/:id/certificate', to: 'user#certificate', as: 'user_certificate'
+  get     '/instructors',           to: 'user#instructors', as: 'instructors'
+  post    '/instructors',           to: 'user#instructors'
 
   # Locking
   patch   '/users/:id/lock',   to: 'user#lock',   as: 'lock_user'

@@ -165,3 +165,14 @@ div#import-info {
     width: 33%;
   }
 }
+
+div#instructors {
+  div.table-cell {
+    line-height: 2em;
+  }
+
+  div.table-row.gray div.table-cell {
+    color: $old-glory-blue;
+    background-color: $background-blue;
+  }
+}
