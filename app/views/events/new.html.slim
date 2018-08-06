@@ -15,7 +15,10 @@ em
       span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
       = f.label :event_type_id, "#{@event_title} name"
     .right
-      = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), {include_blank: true, prompt: "Please select #{event_type_param == 'event' ? 'an' : 'a'} #{event_type_param} type"}, required: true
+      - if event_type_param == 'course'
+        = f.select :event_type_id, grouped_options_for_select(@event_types, @event.event_type_id), prompt: "Please select #{event_type_param == 'event' ? 'an' : 'a'} #{event_type_param} type", required: true
+      - else
+        = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), include_blank: true, prompt: "Please select #{event_type_param == 'event' ? 'an' : 'a'} #{event_type_param} type", required: true
       - if current_user&.permitted?(:admin, :education, strict: true)
         ul
           li = link_to(event_types_path, target: :_blank) { FA::Icon.p('edit') + 'Manage Event Types' }
@@ -144,8 +147,9 @@ em
       .right = text_area_tag :includes, @course_includes, class: "bulletted"
       br.clear
 
-      .left = f.label :prereq_id, "Prerequisite course"
-      .right = f.select :prereq_id, options_for_select(@event_types, @event.prereq_id), include_blank: true, prompt: "Please select a prerequisite course, if applicable"
+      - if event_type_param == 'course'
+        .left = f.label :prereq_id, "Prerequisite course"
+        .right = f.select :prereq_id, grouped_options_for_select(@event_types, @event.prereq_id), prompt: "Please select a prerequisite course, if applicable"
       br.clear
 
     .left

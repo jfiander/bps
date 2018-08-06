@@ -11,31 +11,34 @@ RSpec.describe EventType, type: :model do
   end
 
   describe 'form selectors' do
-    it 'should generate the correct form select field data' do
-      abc = FactoryBot.create(:event_type, title: "America's Boating Course")
-      FactoryBot.create(:event_type, title: 'Emergencies on Board', event_category: 'seminar')
-      n = FactoryBot.create(:event_type, title: 'Navigation', event_category: 'advanced_grade')
-      jn = FactoryBot.create(:event_type, title: 'Junior Navigation', event_category: 'advanced_grade')
-      sail = FactoryBot.create(:event_type, title: 'Sail', event_category: 'elective')
+    before(:each) do
+      @abc = FactoryBot.create(:event_type, title: "America's Boating Course")
+      @eob = FactoryBot.create(:event_type, title: 'Emergencies on Board', event_category: 'seminar')
+      @n = FactoryBot.create(:event_type, title: 'Navigation', event_category: 'advanced_grade')
+      @jn = FactoryBot.create(:event_type, title: 'Junior Navigation', event_category: 'advanced_grade')
+      @sail = FactoryBot.create(:event_type, title: 'Sail', event_category: 'elective')
+    end
 
+    it 'should generate the correct course select field data' do
       allow(ENV).to receive(:[]).with('USE_NEW_AG_TITLES').and_return('disabled')
       select_data = EventType.selector('course')
 
       expect(select_data).to eql(
-        [
-          ['Public Course Courses', ''],
-          ['-----------------------', ''],
-          ["America's Boating Course", abc.id],
-          ['', ''],
-          ['Advanced Grade Courses', ''],
-          ['------------------------', ''],
-          ['Junior Navigation', jn.id],
-          ['Navigation', n.id],
-          ['', ''],
-          ['Elective Courses', ''],
-          ['------------------', ''],
-          ['Sail', sail.id]
-        ]
+        'Public' => [["America's Boating Course", @abc.id]],
+        'Advanced Grade' => [
+          ['Junior Navigation', @jn.id],
+          ['Navigation', @n.id]
+        ],
+        'Elective' => [['Sail', @sail.id]]
+      )
+    end
+
+    it 'should generate the correct seminar select field data' do
+      allow(ENV).to receive(:[]).with('USE_NEW_AG_TITLES').and_return('disabled')
+      select_data = EventType.selector('seminar')
+
+      expect(select_data).to eql(
+        [['Emergencies on Board', @eob.id]]
       )
     end
   end

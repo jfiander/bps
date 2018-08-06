@@ -52,12 +52,7 @@ class EventType < ApplicationRecord
   def self.selector(type)
     return seminars.ordered.map(&:to_select_array) if type == 'seminar'
     return meetings.ordered.map(&:to_select_array) if type == 'event'
-
-    courses = []
-    courses += select_array_section(:public_course, blank: false)
-    courses += select_array_section(:advanced_grade)
-    courses += select_array_section(:elective)
-    courses
+    course_selector_hash
   end
 
   def self.searchable
@@ -66,11 +61,12 @@ class EventType < ApplicationRecord
     end
   end
 
-  def self.select_array_section(scope, blank: true)
-    (blank ? [['', '']] : []) +
-      [["#{scope.to_s.titleize} Courses", '']] +
-      [['-' * (scope.to_s.size + 10), '']] +
-      send(scope).ordered.map(&:to_select_array)
+  def self.course_selector_hash
+    {
+      'Public' => public_course.ordered.map(&:to_select_array),
+      'Advanced Grade' => advanced_grade.ordered.map(&:to_select_array),
+      'Elective' => elective.ordered.map(&:to_select_array)
+    }
   end
 
   def to_select_array
