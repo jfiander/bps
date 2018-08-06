@@ -4,19 +4,16 @@ h2 Squadron Meeting Minutes
 
 h4 Click on a button below to view or download that issue.
 
-table#bilge
+.table#bilge
   - @years.sort { |a,b| b <=> a }.each do |year|
-    tr
-      th = year
+    .table-row
+      .table-cell.table-header = year
       - @available_issues.each do |issue, month|
-        td = @issues.include?("#{year}/#{issue}") ? link_to(month, files_bucket.link("minutes/#{year}/#{issue}.pdf"), target: :_blank) : "-"
-    tr
-      th ExCom
+        .table-cell = @issues.include?("#{year}/#{issue}") ? link_to(month, files_bucket.link("minutes/#{year}/#{issue}.pdf"), target: :_blank) : "-"
+    .table-row
+      .table-cell.table-header ExCom
       - @available_issues.each do |issue, month|
-        td.excom = @issues_excom.include?("#{year}/#{issue}") ? link_to(month, files_bucket.link("excom_minutes/#{year}/#{issue}.pdf"), target: :_blank) : "-"
-    tr
-      td colspan=11
-        hr
+        .table-cell.excom = @issues_excom.include?("#{year}/#{issue}") ? link_to(month, files_bucket.link("excom_minutes/#{year}/#{issue}.pdf"), target: :_blank) : "-"
 
 hr
 = link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag static_bucket.link("acrobat_reader.png") }
