@@ -3,7 +3,7 @@
 module EducationCertificatePDF::NameAndGrade
   def name_and_grade(user, **_)
     name(user)
-    achieved
+    achieved(user)
     grade(user)
   end
 
@@ -15,7 +15,8 @@ module EducationCertificatePDF::NameAndGrade
     end
   end
 
-  def achieved
+  def achieved(user)
+    return unless user.long_grade.present?
     bounding_box([0, 540], width: 540, height: 30) do
       text 'has achieved the grade of', align: :center, size: 14, style: :italic
     end

@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe EducationCertificatePDF, type: :lib do
   context 'default user' do
     before(:each) do
-      @user = FactoryBot.create(:user)
+      @user = FactoryBot.create(:user, grade: 'N')
     end
 
     it 'should successfully generate a base certificate PDF' do
