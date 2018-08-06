@@ -11,7 +11,7 @@ RSpec.describe Payment, type: :model do
 
     it 'should return a valid client_token' do
       expect { token }.to output(
-        %r{POST /merchants/8h7zv35t49x6khds/client_token 201}
+        %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/client_token 201}
       ).to_stdout_from_any_process
 
       expect(token).to be_a(String)
@@ -21,7 +21,7 @@ RSpec.describe Payment, type: :model do
     it 'should return a valid client_token when given a user_id' do
       @user = FactoryBot.create(:user)
       expect { user_token }.to output(
-        %r{POST /merchants/8h7zv35t49x6khds/client_token 201}
+        %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/client_token 201}
       ).to_stdout_from_any_process
 
       expect(user_token).to be_a(String)
@@ -31,14 +31,14 @@ RSpec.describe Payment, type: :model do
     it 'should post the client_token request' do
       @user = FactoryBot.create(:user)
       expect { user_token }.to output(
-        %r{POST /merchants/8h7zv35t49x6khds/client_token 201}
+        %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/client_token 201}
       ).to_stdout_from_any_process
     end
 
     it 'should post customer data' do
       @user = FactoryBot.create(:user)
       expect { user_token }.to output(
-        %r{POST /merchants/8h7zv35t49x6khds/customers 201}
+        %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/customers 201}
       ).to_stdout_from_any_process
     end
   end

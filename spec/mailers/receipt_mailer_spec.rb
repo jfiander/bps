@@ -33,7 +33,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
       it 'renders the headers' do
         expect { transaction_reg }.to output(
-          %r{POST /merchants/8h7zv35t49x6khds/transactions 201}
+          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 201}
         ).to_stdout_from_any_process
         expect(transaction_reg.status).to eql('submitted_for_settlement')
 
@@ -44,7 +44,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
       it 'renders the body' do
         expect { transaction_reg }.to output(
-          %r{POST /merchants/8h7zv35t49x6khds/transactions 422}
+          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 422}
         ).to_stdout_from_any_process
         expect(transaction_reg.status).to eql('gateway_rejected')
 
@@ -59,7 +59,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
       it 'renders the headers' do
         expect { transaction_app }.to output(
-          %r{POST /merchants/8h7zv35t49x6khds/transactions 201}
+          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 201}
         ).to_stdout_from_any_process
         expect(transaction_app.status).to eql('submitted_for_settlement')
 
@@ -70,7 +70,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
       it 'renders the body' do
         expect { transaction_app }.to output(
-          %r{POST /merchants/8h7zv35t49x6khds/transactions 422}
+          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 422}
         ).to_stdout_from_any_process
         expect(transaction_app.status).to eql('gateway_rejected')
 
@@ -85,7 +85,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
       it 'renders the headers' do
         expect { transaction_user }.to output(
-          %r{POST /merchants/8h7zv35t49x6khds/transactions 201}
+          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 201}
         ).to_stdout_from_any_process
         expect(transaction_user.status).to eql('submitted_for_settlement')
 
@@ -96,7 +96,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
       it 'renders the body' do
         expect { transaction_user }.to output(
-          %r{POST /merchants/8h7zv35t49x6khds/transactions 422}
+          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 422}
         ).to_stdout_from_any_process
         expect(transaction_user.status).to eql('gateway_rejected')
 
