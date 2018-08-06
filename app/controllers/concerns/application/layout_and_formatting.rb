@@ -19,12 +19,12 @@ module Application::LayoutAndFormatting
 
   def pick_header_image
     header = if new_header_params[:header].present?
-               HeaderImage.find_by(id: new_header_params[:header])&.file
+               HeaderImage.find_by(id: new_header_params[:header])
              else
-               HeaderImage.random
+               HeaderImage.all.sample
              end
 
-    @header_image = files_bucket.link(header&.path(:desktop))
+    @header_image = files_bucket.link(header&.file&.path(:desktop))
   end
 
   def new_header_params

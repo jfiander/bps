@@ -20,10 +20,6 @@ class HeaderImage < ApplicationRecord
   validates :file, presence: true, if: :no_errors_yet?
   validate :correct_image_dimensions, if: :no_errors_yet?
 
-  def self.random
-    all&.map(&:file)&.sample
-  end
-
   private
 
   def correct_image_dimensions
