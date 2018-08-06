@@ -72,12 +72,19 @@ module ApplicationHelper
   private
 
   def admin_current
-    return unless
-      (current_user&.permitted?(:page) &&
-      controller.action_name.in?(StaticPage.names)) ||
-      current_user&.permitted?(event_type_param)
+    return unless admin_current?
 
     render('application/navigation/admin/current')
+  end
+
+  def admin_current?
+    (current_user&.permitted?(:page) &&
+      controller.action_name.in?(StaticPage.names)) ||
+      current_user&.permitted?(event_type_param) ||
+      (
+        current_user&.permitted?(:event, :seminar, :course) &&
+        controller_name.in?(%w[event_types locations])
+      )
   end
 
   def admin_files
