@@ -49,13 +49,16 @@ class FileController < ApplicationController
   end
 
   def upload_file(type = :file)
+    options = {}
     @uploaded_file = if type == :file
                        MarkdownFile.create(file_params)
                      elsif type == :header
                        HeaderImage.create(header_params)
                      end
 
-    redirect_with_status(send("#{type}_path"), object: type, verb: 'upload', past: 'uploaded', ivar: @uploaded_file) do
+    options[:header] = @uploaded_file.id if type == :header
+
+    redirect_with_status(send("#{type}_path", options), object: type, verb: 'upload', past: 'uploaded', ivar: @uploaded_file) do
       @uploaded_file.valid?
     end
   end

@@ -9,11 +9,25 @@ module Application::LayoutAndFormatting
     'application_old'
   end
 
-  def pick_header_image
-    @header_image = files_bucket.link(HeaderImage.random&.path(:desktop))
+  def load_layout_images
+    pick_header_image
     @header_logo = static_bucket.link('logos/ABC.tr.300.png')
     @print_logo = static_bucket.link('logos/ABC.long.birmingham.1000.png')
     @wheel_logo = static_bucket.link('flags/PNG/WHEEL.thumb.png')
     @dca_award = static_bucket.link('logos/DCA_web_2016.png')
+  end
+
+  def pick_header_image
+    header = if new_header_params[:header].present?
+               HeaderImage.find_by(id: new_header_params[:header])&.file
+             else
+               HeaderImage.random
+             end
+
+    @header_image = files_bucket.link(header&.path(:desktop))
+  end
+
+  def new_header_params
+    params.permit(:header)
   end
 end
