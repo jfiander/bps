@@ -144,6 +144,17 @@ Rails.application.routes.draw do
   get  '/update_roster', to: 'members#update_roster', as: 'update_roster'
   post '/update_roster', to: 'members#upload_roster'
 
+  # OTW Trainings
+  get     '/otw',            to: 'otw_trainings#user'
+  get     '/otw/requests',   to: 'otw_trainings#list_requests'
+  get     '/otw/list',       to: 'otw_trainings#list'
+  get     '/otw/new',        to: 'otw_trainings#new',          as: 'new_otw'
+  post    '/otw/new',        to: 'otw_trainings#create',       as: 'create_otw'
+  put     '/otw/:id',        to: 'otw_trainings#user_request', as: 'otw_request'
+  get     '/otw/:id/edit',   to: 'otw_trainings#edit',         as: 'edit_otw'
+  patch   '/otw/:id/edit',   to: 'otw_trainings#update',       as: 'update_otw'
+  delete  '/otw/:id/remove', to: 'otw_trainings#destroy',      as: 'remove_otw'
+
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",               to: "events/#{event_type}s#schedule"
     get     "/#{event_type}s/catalog",       to: "events/#{event_type}s#catalog",       as: "#{event_type}_catalog" unless event_type == :event

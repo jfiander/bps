@@ -16,6 +16,8 @@ class User < ApplicationRecord
   )
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
+  has_many :otw_training_users, dependent: :destroy
+  has_many :otw_trainings, through: :otw_training_users
   has_one  :bridge_office
   has_many :standing_committee_offices
   has_many :committees

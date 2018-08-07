@@ -65,6 +65,7 @@ module ApplicationHelper
       review: admin_review,
       upload: admin_upload,
       users_bottom: admin_users_bottom,
+      education: admin_education,
       admin: admin_admin
     }
   end
@@ -116,6 +117,12 @@ module ApplicationHelper
     return unless current_user&.permitted?(:users)
 
     render('application/navigation/admin/users_bottom')
+  end
+
+  def admin_education
+    return unless current_user&.permitted?(:education)
+
+    render('application/navigation/admin/education')
   end
 
   def admin_admin

@@ -1,0 +1,14 @@
+h2 = @otw_title
+
+= form_for(@otw_training, url: @otw_route) do |f|
+  #new-event
+    .left = f.label :name
+    .right = f.text_field :name, required: true
+    br.clear
+    .left = f.label :description
+    .right = f.text_area :description, required: true
+    br.clear
+    .left = f.label :course_key
+    .right = f.text_field :course_key, required: true
+    br.clear
+    = spinner_button(f, button_text: 'Add OTW Training', disable_text: 'Adding OTW Training', css_class: 'big')

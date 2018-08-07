@@ -1,0 +1,20 @@
+h2 Request On-the-Water Training
+
+.information Click the blue box next to any trainings you would like to participate in.
+
+hr
+
+- requested = FA::Icon.p('check', css: 'green', size: 2)
+- request = FA::Icon.p('square', style: :regular, css: 'birmingham-blue')
+- spinner = FA::Icon.p('spinner', style: :regular, fa: 'pulse')
+
+.table
+  .table-row
+    .table-cell.table-header Name
+    .table-cell.table-header Description
+    .table-cell.table-header.center Request
+  - @otw_trainings.each do |otw|
+    .table-row class=(cycle('', 'gray'))
+      .table-cell = otw.name
+      .table-cell = simple_format(otw.description)
+      .table-cell.center id=("request_button_#{otw.id}") = otw.in?(@otw_requests) ? requested : button_to(otw_request_path(id: otw.id), method: :put, remote: true, data: { disable_with: spinner }, class: 'otw') { request }
