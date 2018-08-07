@@ -157,3 +157,20 @@ div.red-background {
     margin: 0.75em;
   }
 }
+
+button.otw {
+  border: none;
+  background-color: lighten($background-blue, 8%);
+  font-size: 1.5em;
+}
+
+div.table-row.gray {
+  div.table-cell {
+    color: $old-glory-blue;
+    background-color: $background-blue;
+  }
+
+  button.otw {
+    background-color: $background-blue;
+  }
+}

@@ -146,6 +146,10 @@ div#main {
     background-color: lighten($background-blue, 8%);
     padding-bottom: 0.5em;
 
+    div#content-main {
+      padding: 0 0.5em;
+    }
+
     h2 {
       font-size: 1.75em;
     }
