@@ -3,6 +3,9 @@
 class CourseCompletion < ApplicationRecord
   belongs_to :user
 
+  validates :course_key, presence: true
+  validates :date, presence: true
+
   default_scope { order('date ASC') }
 
   def to_h
