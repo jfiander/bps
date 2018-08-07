@@ -1,4 +1,3 @@
-= link 'Users List',  path: users_path,               fa: { name: 'users',          options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users)
-= link 'Instructors', path: instructors_path,         fa: { name: 'graduation-cap', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:education)
-= link 'Invite User', path: new_user_invitation_path, fa: { name: 'user-plus',      options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users)
-= link 'Permissions', path: permit_path,              fa: { name: 'user-shield',    options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users)
+= link 'Users List',   path: users_path,               fa: { name: 'users',       options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users)
+= link 'Invite User',  path: new_user_invitation_path, fa: { name: 'user-plus',   options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users)
+= link 'Permissions',  path: permit_path,              fa: { name: 'user-shield', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users)

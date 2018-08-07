@@ -81,7 +81,7 @@ module ApplicationHelper
   def admin_current?
     (current_user&.permitted?(:page) &&
       controller.action_name.in?(StaticPage.names)) ||
-      current_user&.permitted?(event_type_param) ||
+      current_user&.permitted?(event_type_param, :education) ||
       (
         current_user&.permitted?(:event, :seminar, :course) &&
         controller_name.in?(%w[event_types locations])

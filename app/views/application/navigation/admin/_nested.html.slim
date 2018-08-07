@@ -1,5 +1,5 @@
 ul.desktop
-  - if (current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)) || current_user&.permitted?(event_type_param) || (current_user&.permitted?(:event, :seminar, :course) && controller_name.in?(%w[event_types locations]))
+  - if (current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)) || current_user&.permitted?(event_type_param, :education) || (current_user&.permitted?(:event, :seminar, :course) && controller_name.in?(%w[event_types locations]))
     li.menu onclick=""
       a.menu-header Current Page
       ul = admin_links[:current]
@@ -14,7 +14,7 @@ ul.desktop
       a.menu-header Users
       ul
         = admin_links[:users_top]
-        - if current_user&.permitted?(:float) || current_user&.excom?
+        - if current_user&.permitted?(:float, :education) || current_user&.excom?
           li.menu onclick=""
             a.menu-header
               = FA::Icon.p('list', style: :regular, fa: :fw) + 'Review'
@@ -27,6 +27,12 @@ ul.desktop
               .arrow = FA::Icon.p('chevron-right', style: :regular, fa: :fw)
             ul = admin_links[:upload]
         = admin_links[:users_bottom]
+
+
+  - if current_user&.permitted?(:education)
+    li.menu onclick=""
+      a.menu-header Education
+      ul = admin_links[:education]
 
   - if current_user&.permitted?(:admin, strict: true)
     li.menu.admin onclick=""
