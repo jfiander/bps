@@ -66,6 +66,7 @@ module ApplicationHelper
       upload: admin_upload,
       users_bottom: admin_users_bottom,
       education: admin_education,
+      otw: admin_otw,
       admin: admin_admin
     }
   end
@@ -123,6 +124,12 @@ module ApplicationHelper
     return unless current_user&.permitted?(:education)
 
     render('application/navigation/admin/education')
+  end
+
+  def admin_otw
+    return unless current_user&.permitted?(:education)
+
+    render('application/navigation/admin/otw')
   end
 
   def admin_admin

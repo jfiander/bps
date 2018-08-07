@@ -1,8 +1,1 @@
-= link 'Instructors',      path: instructors_path,      fa: { name: 'graduation-cap', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:education)
-li.menu onclick=""
-  a.menu-header
-    = FA::Icon.p('ship', style: :regular, fa: :fw) + 'OTW Training'
-    .arrow = FA::Icon.p('chevron-right', style: :regular, fa: :fw)
-  ul
-    = link 'List Trainings',    path: otw_list_path,     fa: { name: 'ship',           options: { style: :regular, fa: :fw } } if current_user&.permitted?(:education)
-    = link 'Requests',     path: otw_requests_path,     fa: { name: 'list',           options: { style: :regular, fa: :fw } } if current_user&.permitted?(:education)
+= link 'Instructors', path: instructors_path, fa: { name: 'graduation-cap', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:education)

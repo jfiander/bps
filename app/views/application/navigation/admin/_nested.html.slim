@@ -32,7 +32,13 @@ ul.desktop
   - if current_user&.permitted?(:education)
     li.menu onclick=""
       a.menu-header Education
-      ul = admin_links[:education]
+      ul
+        = admin_links[:education]
+        li.menu onclick=""
+          a.menu-header
+            = FA::Icon.p('ship', style: :regular, fa: :fw) + 'OTW Training'
+            .arrow = FA::Icon.p('chevron-right', style: :regular, fa: :fw)
+          ul
 
   - if current_user&.permitted?(:admin, strict: true)
     li.menu.admin onclick=""
