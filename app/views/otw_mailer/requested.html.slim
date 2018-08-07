@@ -1,0 +1,19 @@
+= render 'application/mailers/auto'
+
+h1.birmingham New Training Request
+
+p
+  h3 Training requested:
+  = @otw.name
+
+p
+  h3 Requested by:
+  b Name: 
+  = @user.full_name
+  br
+  b Email: 
+  = @user.email
+
+p
+  br
+  | If necessary, please reach out to this member for any more information.

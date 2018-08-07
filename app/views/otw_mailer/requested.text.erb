@@ -1,0 +1,15 @@
+<%= render 'application/mailers/auto' %>
+New Training Request
+
+
+**********
+
+Training requested:
+  <%= @otw.name %>
+
+Requested by:
+  <%= @user.full_name %> (<%= @user.email %>)
+
+**********
+
+If necessary, please reach out to this member for any more information.

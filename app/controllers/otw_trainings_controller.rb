@@ -20,6 +20,7 @@ class OTWTrainingsController < ApplicationController
 
     if (otw_request = OTWTrainingUser.find_or_create_by(otw_training: @otw, user: current_user))
       flash[:success] = 'Successfully requested training.'
+      OTWMailer.requested(otw_request).deliver
       @check = FA::Icon.p('check', css: 'green', size: 2)
     else
       flash[:alert] = 'Unable to request training.'
