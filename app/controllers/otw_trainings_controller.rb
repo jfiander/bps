@@ -13,19 +13,16 @@ class OTWTrainingsController < ApplicationController
   def user
     @otw_trainings = OTWTraining.all
     @otw_requests = current_user&.otw_trainings
+    @otw_credits = @otw_trainings.select { |o| o.course_key.in?(current_user.completions.keys) }
   end
 
   def user_request
     @otw = OTWTraining.find_by(id: otw_user_params[:id])
 
     if (otw_request = OTWTrainingUser.find_or_create_by(otw_training: @otw, user: current_user))
-      flash[:success] = 'Successfully requested training.'
-      OTWMailer.requested(otw_request).deliver
-      @check = FA::Icon.p('check', css: 'green', size: 2)
+      user_request_succeeded(otw_request)
     else
-      flash[:alert] = 'Unable to request training.'
-      flash[:alert] = otw_request.errors.full_messages
-      render status: :unprocessable_entity
+      user_request_failed(otw_request)
     end
   end
 
@@ -97,5 +94,17 @@ class OTWTrainingsController < ApplicationController
   def edit_formatting
     @otw_title = 'Edit OTW Training'
     @otw_route = update_otw_path
+  end
+
+  def user_request_succeeded(otw_request)
+    flash[:success] = 'Successfully requested training.'
+    OTWMailer.requested(otw_request).deliver
+    @check = FA::Icon.p('check', css: 'green', size: 2)
+  end
+
+  def user_request_failed(otw_request)
+    flash[:alert] = 'Unable to request training.'
+    flash[:alert] = otw_request.errors.full_messages
+    render status: :unprocessable_entity
   end
 end
