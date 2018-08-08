@@ -88,9 +88,8 @@ class MembersController < ApplicationController
   end
 
   def prepare_dues
-    @payment = Payment.where(parent_type: 'User', parent_id: current_user.id)
-                      .where('created_at > ?', 6.months.ago).first
-    @payment ||= Payment.new(parent_type: 'User', parent_id: current_user.id)
+    @payment = Payment.recent.for_user(current_user).first
+    @payment ||= Payment.create(parent_type: 'User', parent_id: current_user.id)
     transaction_details
     set_dues_instance_variables
   end
