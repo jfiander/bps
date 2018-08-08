@@ -47,3 +47,5 @@ committee:
     - users
   roster_/_database:
     - roster
+  on-the-water_training:
+    - otw
