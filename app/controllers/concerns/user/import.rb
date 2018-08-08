@@ -7,38 +7,52 @@ module User::Import
 
   def do_import
     uploaded_file = clean_params[:import_file]
+    return only_csv unless uploaded_file.content_type == 'text/csv'
 
-    unless uploaded_file.content_type == 'text/csv'
-      flash.now[:alert] = 'You can only upload CSV files.'
-      render :import
-      return
-    end
-
-    import_path = "#{Rails.root}/tmp/run/#{Time.now.to_i}-users_import.csv"
-    file = File.open(import_path, 'w+')
-    file.write(uploaded_file.read)
-    file.close
     begin
       @import_results = ImportUsers.new.call(
-        import_path, lock: clean_params[:lock_missing]
+        upload_import_file(uploaded_file), lock: clean_params[:lock_missing]
       )
-      flash.now[:success] = 'Successfully imported user data.'
-      render :import
+      import_success
     rescue StandardError => e
-      flash.now[:alert] = 'Unable to import user data.'
-      flash.now[:error] = e.message
-      render :import
+      import_failure(e)
     end
-
-    import_notification
   end
 
   private
 
-  def import_notification
+  def only_csv
+    flash.now[:alert] = 'You can only upload CSV files.'
+    render :import
+  end
+
+  def upload_import_file(uploaded_file)
+    import_path = "#{Rails.root}/tmp/run/#{Time.now.to_i}-users_import.csv"
+    file = File.open(import_path, 'w+')
+    file.write(uploaded_file.read)
+    file.close
+    import_path
+  end
+
+  def import_success
+    flash.now[:success] = 'Successfully imported user data.'
+    render :import
+    import_notification(:success)
+  end
+
+  def import_failure(error)
+    flash.now[:alert] = 'Unable to import user data.'
+    flash.now[:error] = error.message
+    render :import
+    import_notification(:failure)
+  end
+
+  def import_notification(type)
+    title = type == :success ? 'Complete' : 'Failed'
+    fallback = type == :success ? 'successfully imported' : 'failed to import'
     SlackNotification.new(
-      type: :info, title: 'User Data Import Complete',
-      fallback: 'User information has been successfully imported.',
+      type: type, title: "User Data Import #{title}",
+      fallback: "User information has #{fallback}.",
       fields: [
         { title: 'By', value: current_user.full_name, short: true },
         { title: 'Results', value: @import_results.to_s, short: false }
