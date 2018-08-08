@@ -15,8 +15,8 @@ hr
     .table-cell.table-header Name
     .table-cell.table-header Description
     .table-cell.table-header Required For
-    .table-cell.table-header.center Completed
-    .table-cell.table-header.center Request
+    .table-cell.table-header.center.padded Completed
+    .table-cell.table-header.center.padded Request
   - @otw_trainings.each do |otw|
     .table-row class=(cycle('', 'gray'))
       .table-cell = otw.name
