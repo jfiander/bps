@@ -26,12 +26,14 @@ module BraintreeHelper
     @payment = Payment.find_by(token: @token)
 
     if @payment.nil?
-      redirect_to root_path, alert: 'Payment not found.'
+      flash[:alert] = 'Payment not found.'
+      render js: "window.location='#{root_path}'"
       return
     end
 
-    return unless @payment.parent.payment_amount.positive?
-    redirect_to root_path, notice: 'That has no cost.'
+    return if @payment.parent.payment_amount.positive?
+    flash[:notice] = 'That has no cost.'
+    render js: "window.location='#{root_path}'"
   end
 
   def already_paid?
@@ -49,19 +51,19 @@ module BraintreeHelper
 
   def block_duplicate_payments
     flash[:notice] = 'That has already been paid.'
-    redirect_to root_path
+    render js: "window.location='#{root_path}'"
   end
 
   def not_payable
     flash[:alert] = "Sorry – that isn't payable."
-    redirect_to root_path
+    render js: "window.location='#{root_path}'"
   end
 
   def require_user
     return if @payable&.user == current_user
 
     flash[:alert] = "Sorry – that wasn't your registration."
-    redirect_to root_path
+    render js: "window.location='#{root_path}'"
   end
 
   def valid_payable_models
