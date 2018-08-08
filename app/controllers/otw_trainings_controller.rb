@@ -1,6 +1,6 @@
 class OTWTrainingsController < ApplicationController
   secure!
-  secure!(:education, except: :user)
+  secure!(:otw, except: %i[user user_request])
 
   before_action :load_otw_training, only: %i[edit update destroy]
   before_action :add_formatting, only: %i[new create]

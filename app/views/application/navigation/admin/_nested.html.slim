@@ -1,5 +1,5 @@
 ul.desktop
-  - if (current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)) || current_user&.permitted?(event_type_param, :education) || (current_user&.permitted?(:event, :seminar, :course) && controller_name.in?(%w[event_types locations]))
+  - if (current_user&.permitted?(:page) && controller.action_name.in?(StaticPage.names)) || current_user&.permitted?(event_type_param, :otw) || (current_user&.permitted?(:event, :seminar, :course) && controller_name.in?(%w[event_types locations]))
     li.menu onclick=""
       a.menu-header Current Page
       ul = admin_links[:current]
@@ -29,7 +29,7 @@ ul.desktop
         = admin_links[:users_bottom]
 
 
-  - if current_user&.permitted?(:education)
+  - if current_user&.permitted?(:otw)
     li.menu onclick=""
       a.menu-header Education
       ul

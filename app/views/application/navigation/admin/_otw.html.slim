@@ -1,2 +1,2 @@
-= link 'List Trainings', path: otw_list_path,     fa: { name: 'ship', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:education)
-= link 'Requests',       path: otw_requests_path, fa: { name: 'list', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:education)
+= link 'List Trainings', path: otw_list_path,     fa: { name: 'ship', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:otw)
+= link 'Requests',       path: otw_requests_path, fa: { name: 'list', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:otw)
