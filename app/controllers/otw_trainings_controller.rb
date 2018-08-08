@@ -2,6 +2,7 @@ class OTWTrainingsController < ApplicationController
   secure!
   secure!(:otw, except: %i[user user_request])
 
+  before_action :boc_levels, only: %i[new create edit update]
   before_action :load_otw_training, only: %i[edit update destroy]
   before_action :add_formatting, only: %i[new create]
   before_action :edit_formatting, only: %i[edit update]
@@ -75,7 +76,7 @@ class OTWTrainingsController < ApplicationController
   private
 
   def otw_training_params
-    params.require(:otw_training).permit(:name, :description, :course_key)
+    params.require(:otw_training).permit(:name, :description, :course_key, :boc_level)
   end
 
   def otw_user_params
@@ -94,6 +95,15 @@ class OTWTrainingsController < ApplicationController
   def edit_formatting
     @otw_title = 'Edit OTW Training'
     @otw_route = update_otw_path
+  end
+
+  def boc_levels
+    @boc_levels = [
+      'Inland Navigator',
+      'Coastal Navigator',
+      'Advanced Coastal Navigator',
+      'Offshore Navigator'
+    ]
   end
 
   def user_request_succeeded(otw_request)

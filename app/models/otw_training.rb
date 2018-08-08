@@ -3,4 +3,13 @@ class OTWTraining < ApplicationRecord
   has_many :users, through: :otw_training_users
 
   validates :name, uniqueness: true
+
+  validates :boc_level, inclusion: [
+    'Inland Navigator',
+    'Coastal Navigator',
+    'Advanced Coastal Navigator',
+    'Offshore Navigator',
+    '',
+    nil
+  ]
 end

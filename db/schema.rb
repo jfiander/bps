@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_07_183233) do
+ActiveRecord::Schema.define(version: 2018_08_08_014444) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -269,6 +269,7 @@ ActiveRecord::Schema.define(version: 2018_08_07_183233) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "boc_level"
   end
 
   create_table "payments", force: :cascade do |t|

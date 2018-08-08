@@ -14,11 +14,13 @@ hr
   .table-row
     .table-cell.table-header Name
     .table-cell.table-header Description
+    .table-cell.table-header Required For
     .table-cell.table-header.center Completed
     .table-cell.table-header.center Request
   - @otw_trainings.each do |otw|
     .table-row class=(cycle('', 'gray'))
       .table-cell = otw.name
       .table-cell = simple_format(otw.description)
+      .table-cell = otw.boc_level
       .table-cell.center.vcenter = otw.in?(@otw_credits) ? credited : not_credited
       .table-cell.center.vcenter id=("request_button_#{otw.id}") = otw.in?(@otw_requests) ? requested : button_to(otw_request_path(id: otw.id), method: :put, remote: true, data: { disable_with: spinner }, class: 'otw') { request }
