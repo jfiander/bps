@@ -38,7 +38,7 @@ ul.desktop
           a.menu-header
             = FA::Icon.p('ship', style: :regular, fa: :fw) + 'OTW Training'
             .arrow = FA::Icon.p('chevron-right', style: :regular, fa: :fw)
-          ul
+          ul = admin_links[:otw]
 
   - if current_user&.permitted?(:admin, strict: true)
     li.menu.admin onclick=""
