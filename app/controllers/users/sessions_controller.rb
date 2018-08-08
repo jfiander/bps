@@ -29,7 +29,7 @@ class Users::SessionsController < Devise::SessionsController
     simple_paths = %w[
       members minutes profile permit invitation/new header file import
       user_help profile profile/edit ranks auto_permissions locations
-      roster update_roster float_plan float_plans
+      roster update_roster float_plan float_plans otw(/list)?
     ]
     users_paths = 'users(/\d+(/certificate(.pdf)?)?)?'
     minutes_paths = '(minutes|excom)/\d{4}/\d{1,2}'
