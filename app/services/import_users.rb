@@ -108,21 +108,18 @@ class ImportUsers
 
   def course_completions(user, row)
     course_completions_data(row).each do |(key, date)|
-      next if course_completion_exists?(user, key)
       date = clean_date(date)
-      next if date.blank?
+      next if course_completion_exists?(user, key, date)
 
-      completion = CourseCompletion.create!(
-        user: user,
-        course_key: key,
-        date: date
+      @completions << CourseCompletion.create!(
+        user: user, course_key: key, date: date
       )
-      @completions << completion
     end
   end
 
-  def course_completion_exists?(user, key)
-    CourseCompletion.find_by(user: user, course_key: key).present?
+  def course_completion_exists?(user, key, date)
+    date.blank? ||
+      CourseCompletion.find_by(user: user, course_key: key).present?
   end
 
   def clean_date(string)
