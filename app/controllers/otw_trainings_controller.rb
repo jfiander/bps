@@ -2,17 +2,17 @@ class OTWTrainingsController < ApplicationController
   secure!
   secure!(:otw, except: %i[user user_request])
 
+  before_action :load_all_trainings, only: %i[list user]
   before_action :boc_levels, only: %i[new create edit update]
   before_action :load_otw_training, only: %i[edit update destroy]
   before_action :add_formatting, only: %i[new create]
   before_action :edit_formatting, only: %i[edit update]
 
   def list
-    @otw_trainings = OTWTraining.all
+    #
   end
 
   def user
-    @otw_trainings = OTWTraining.all
     @otw_requests = current_user&.otw_trainings&.where('otw_training_users.created_at > ?', Date.today - 6.months)
     @otw_credits = @otw_trainings.select { |o| o.course_key.in?(current_user.completions.keys) }
   end
@@ -74,6 +74,10 @@ class OTWTrainingsController < ApplicationController
   end
 
   private
+
+  def load_all_trainings
+    @otw_trainings = OTWTraining.all.order(:name)
+  end
 
   def otw_training_params
     params.require(:otw_training).permit(:name, :description, :course_key, :boc_level)
