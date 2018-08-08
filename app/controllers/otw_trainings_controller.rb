@@ -12,7 +12,7 @@ class OTWTrainingsController < ApplicationController
 
   def user
     @otw_trainings = OTWTraining.all
-    @otw_requests = current_user&.otw_trainings
+    @otw_requests = current_user&.otw_trainings&.where('otw_training_users.created_at > ?', Date.today - 6.months)
     @otw_credits = @otw_trainings.select { |o| o.course_key.in?(current_user.completions.keys) }
   end
 
