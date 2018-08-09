@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dues
+module User::Dues
   def dues
     if parent.present?
       { user_id: parent_id }
