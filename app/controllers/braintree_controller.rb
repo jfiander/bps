@@ -40,6 +40,7 @@ class BraintreeController < ApplicationController
       @payment.paid!(@result.transaction.id)
       ReceiptMailer.receipt(@result.transaction, @payment).deliver
       ReceiptMailer.paid(@payment).deliver
+      slack_notification(@payment)
       render js: "window.location='#{transaction_complete_path(token: @token)}'"
     else
       render js: <<~JS
@@ -65,5 +66,16 @@ class BraintreeController < ApplicationController
 
   def generate_client_token
     @client_token = Payment.client_token(user_id: current_user&.id)
+  end
+
+  def slack_notification(payment)
+    SlackNotification.new(
+      type: :info, title: 'Payment Received',
+      fallback: 'A payment was successfully completed.',
+      fields: {
+        'Amount' => "$#{payment.transaction_amount}",
+        'Payment Token' => payment.token
+      }
+    ).notify!
   end
 end
