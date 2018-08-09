@@ -198,15 +198,17 @@ class ImportUsers
   def set_parents(parsed_csv)
     parsed_csv.each do |row|
       next if row['Prim.Cert'].blank?
+      next unless (parent = User.find_by(certificate: row['Prim.Cert']))
 
-      parent = User.find_by(certificate: row['Prim.Cert'])
-      next unless parent.present?
-
-      user = User.find_by(certificate: row['Certificate'])
-      user&.update(parent_id: parent.id)
-
-      @families[user.parent_id] ||= []
-      @families[user.parent_id] << user.id
+      assign_parent(row, parent)
     end
+  end
+
+  def assign_parent(row, parent)
+    user = User.find_by(certificate: row['Certificate'])
+    user&.update(parent_id: parent.id)
+
+    @families[user.parent_id] ||= []
+    @families[user.parent_id] << user.id
   end
 end

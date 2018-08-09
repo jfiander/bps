@@ -1,6 +1,6 @@
-Certificate,First Name,Last Name,E-Mail,Rank,HQ Rank,SQ Rank,Grade,MM,IDEXPR,EdPro,EdAch,Senior,Life,Address 1,Address 2,City,State,Zip Code,S,P,AP,JN,N
-E123456,New,Member,new.member@example.com,,P/D/C,P/C,,,,,,,,,,,,,,,,200055,
-E012345,Updated,Person,updated.person+change@example.com,P/Lt/C,Stf/C,Lt/C,AP,4,,,,,,,,,,,201401,201401,201401,
-E135792,No,Email,,P/Lt/C,Stf/C,Lt/C,AP,4,,,,,,,,,,,201401,201401,201401,
-E987654,Senior,Award,,P/Lt/C,Stf/C,Lt/C,AP,5,,,,20180101,,,,,,,201401,201401,201401,
-E567890,Dup,EmailAddress,updated.person@example.com,,R/C,,AP,5,,,,20180101,,,,,,,201401,201401,201401,
+Certificate,First Name,Last Name,E-Mail,Prim.Cert,Rank,HQ Rank,SQ Rank,Grade,MM,IDEXPR,EdPro,EdAch,Senior,Life,Address 1,Address 2,City,State,Zip Code,S,P,AP,JN,N
+E123456,New,Member,new.member@example.com,E135792,,P/D/C,P/C,,,,,,,,,,,,,,,,200055,
+E012345,Updated,Person,updated.person+change@example.com,,P/Lt/C,Stf/C,Lt/C,AP,4,,,,,,,,,,,201401,201401,201401,
+E135792,No,Email,,,P/Lt/C,Stf/C,Lt/C,AP,4,,,,,,,,,,,201401,201401,201401,
+E987654,Senior,Award,,,P/Lt/C,Stf/C,Lt/C,AP,5,,,,20180101,,,,,,,201401,201401,201401,
+E567890,Dup,EmailAddress,updated.person@example.com,,,R/C,,AP,5,,,,20180101,,,,,,,201401,201401,201401,
