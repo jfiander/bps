@@ -26,7 +26,7 @@ module BraintreeHelper
     @payment = Payment.find_by(token: @token)
 
     return payment_not_found(js) if @payment.nil?
-    return payment_no_cost(js) if @payment.parent.payment_amount.positive?
+    return payment_no_cost(js) unless @payment.parent.payment_amount.positive?
   end
 
   def payment_not_found(js)
