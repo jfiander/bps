@@ -76,7 +76,7 @@ class OTWTrainingsController < ApplicationController
   private
 
   def load_all_trainings
-    @otw_trainings = OTWTraining.all.order(:name)
+    @otw_trainings = OTWTraining.all.ordered
   end
 
   def otw_training_params
