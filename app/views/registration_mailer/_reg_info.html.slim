@@ -7,6 +7,12 @@
     = link_to 'View this event on Google Calendar', @registration.event.google_calendar_link
   br
 
+- if @registration.payable? && @registration.event.cost?
+  p
+    | If you would like to, you can 
+    = link_to 'pay for this registration now', pay_url(token: @registration.payment.token)
+    | . You can also pay later.
+
 p
   | If you have any questions, or if you would like to cancel this registration, please email me at 
   = mail_to @signature[:email]
