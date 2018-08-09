@@ -26,7 +26,9 @@ module Payments::BraintreeMethods
 
     def client_token(user_id: nil)
       customer = customer(user_id)
-      gateway.client_token.generate(customer_id: customer&.id)
+      opts = { customer_id: customer&.id }
+      opts[:options] = { verify_card: true } if opts[:customer_id].present?
+      gateway.client_token.generate(opts)
     end
 
     def create_result_hash(transaction)
@@ -97,13 +99,15 @@ module Payments::BraintreeMethods
     end
   end
 
-  def sale!(nonce, email: nil, user_id: nil)
+  def sale!(nonce, email: nil, user_id: nil, postal_code: nil)
     self.class.gateway.transaction.sale(
-      transaction_options(nonce, email: email, user_id: user_id)
+      transaction_options(
+        nonce, email: email, user_id: user_id, postal_code: postal_code
+      )
     )
   end
 
-  def transaction_options(nonce, email: nil, user_id: nil)
+  def transaction_options(nonce, email: nil, user_id: nil, postal_code: nil)
     options = {
       amount: parent.payment_amount,
       payment_method_nonce: nonce,
@@ -111,6 +115,7 @@ module Payments::BraintreeMethods
       custom_fields: custom_fields(user_id)
     }
     options[:customer] = { email: email } if email.present?
+    options[:billing] = { postal_code: postal_code } if postal_code.present?
 
     options
   end

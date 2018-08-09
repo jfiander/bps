@@ -25,7 +25,7 @@ RSpec.describe Payment, type: :model do
       ).to_stdout_from_any_process
 
       expect(user_token).to be_a(String)
-      expect(user_token.length).to eql(1836)
+      expect(user_token.length).to eql(1880)
     end
 
     it 'should post the client_token request' do
