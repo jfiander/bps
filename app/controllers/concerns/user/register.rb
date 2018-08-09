@@ -57,7 +57,6 @@ module User::Register
 
   def successfully_registered
     flash[:success] = 'Successfully registered!'
-    RegistrationMailer.confirm(@registration).deliver
   end
 
   def already_registered
