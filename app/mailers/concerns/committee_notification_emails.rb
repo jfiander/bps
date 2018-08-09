@@ -37,12 +37,12 @@ module CommitteeNotificationEmails
 
   def get_chair_email(name)
     name = {
-      seminar: 'Seminars',
-      public: 'ABC',
-      advanced_grade: 'Advanced Grades',
-      elective: 'Electives',
-      rendezvous: 'Rendezvous',
-      meetings: 'Meetings & Programs'
+      'seminar' => 'Seminars',
+      'public' => 'ABC',
+      'advanced_grade' => 'Advanced Grades',
+      'elective' => 'Electives',
+      'rendezvous' => 'Rendezvous',
+      'meetings' => 'Meetings & Programs'
     }[name]
 
     @committee_chairs.find_all { |c| c.name == name }&.map { |c| c&.user&.email }
