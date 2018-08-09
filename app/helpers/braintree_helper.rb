@@ -25,14 +25,17 @@ module BraintreeHelper
     @token = clean_params[:token]
     @payment = Payment.find_by(token: @token)
 
-    if @payment.nil?
-      flash[:alert] = 'Payment not found.'
-      render js: "window.location='#{root_path}'" if js
-      redirect_to root_path unless js
-      return
-    end
+    return payment_not_found(js) if @payment.nil?
+    return payment_no_cost(js) if @payment.parent.payment_amount.positive?
+  end
 
-    return if @payment.parent.payment_amount.positive?
+  def payment_not_found(js)
+    flash[:alert] = 'Payment not found.'
+    render js: "window.location='#{root_path}'" if js
+    redirect_to root_path unless js
+  end
+
+  def payment_no_cost(js)
     flash[:notice] = 'That has no cost.'
     render js: "window.location='#{root_path}'" if js
     redirect_to root_path unless js
