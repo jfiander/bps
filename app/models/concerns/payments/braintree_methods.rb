@@ -42,9 +42,13 @@ module Payments::BraintreeMethods
     private
 
     def environment
-      return :sandbox unless ENV['ENABLE_BRAINTREE'] == 'enabled'
-      return :sandbox unless ENV['ASSET_ENVIRONMENT'] == 'production'
-      :production
+      allow_live_transactions? ? :production : :sandbox
+    end
+
+    def allow_live_transactions?
+      ENV['ASSET_ENVIRONMENT'] == 'production' &&
+        ENV['ENABLE_BRAINTREE'].present? &&
+        ENV['ENABLE_BRAINTREE'] != 'disabled'
     end
 
     def customer(user_id = nil)
