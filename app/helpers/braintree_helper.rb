@@ -21,19 +21,21 @@ module BraintreeHelper
     params.permit(:payment_method_nonce, :token, :email)
   end
 
-  def load_payment
+  def load_payment(js: false)
     @token = clean_params[:token]
     @payment = Payment.find_by(token: @token)
 
     if @payment.nil?
       flash[:alert] = 'Payment not found.'
-      render js: "window.location='#{root_path}'"
+      render js: "window.location='#{root_path}'" if js
+      redirect_to root_path unless js
       return
     end
 
     return if @payment.parent.payment_amount.positive?
     flash[:notice] = 'That has no cost.'
-    render js: "window.location='#{root_path}'"
+    render js: "window.location='#{root_path}'" if js
+    redirect_to root_path unless js
   end
 
   def already_paid?
