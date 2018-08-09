@@ -32,7 +32,7 @@ h2 Import user data
       .table-cell Cell Phone
       .table-cell Bus. Phone
       .table-cell Tot.Years
-      .table-cell &nbsp;
+      .table-cell Prim.Cert
   .center.birmingham-blue
     | * – Not updated if the user already exists.
   .center.red
@@ -65,6 +65,7 @@ hr
   p = "Created #{@import_results[:created].count} new #{'user'.pluralize(@import_results[:created].count)}."
   p = "Updated #{@import_results[:updated].count} existing #{'user'.pluralize(@import_results[:updated].count)}."
   p = "Added #{@import_results[:completions].count} completion #{'date'.pluralize(@import_results[:completions].count)}."
+  p = "Set #{@import_results[:families].count} new #{'family'.pluralize(@import_results[:families].count)}."
   - unless @import_results[:locked] == :skipped
     p = "Locked #{@import_results[:locked].count} missing #{'user'.pluralize(@import_results[:locked].count)}."
   p = @import_results.inspect

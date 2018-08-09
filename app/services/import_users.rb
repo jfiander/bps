@@ -5,7 +5,7 @@
 # 'Certificate', 'HQ Rank', 'SQ Rank', 'First Name', 'Last Name',
 # 'Grade', 'Rank', 'E-Mail', 'MM', 'EdPro', 'EdAch', 'Senior', 'Life',
 # 'IDEXPR', 'Address 1', 'Address 2', 'City', 'State', 'Zip Code',
-# 'Home Phone', 'Cell Phone', 'Bus. Phone', 'Tot.Years'
+# 'Home Phone', 'Cell Phone', 'Bus. Phone', 'Tot.Years', 'Prim.Cert'
 #
 # As well as all educational columns. You can also add a manual 'Rank' column.
 #
@@ -18,6 +18,7 @@ class ImportUsers
       raise 'Blank header(s) detected.' if parsed_csv.headers.any?(&:blank?)
 
       parsed_csv.each { |row| parse_row(row) }
+      set_parents(parsed_csv)
       lock_users?(lock)
     end
 
@@ -32,6 +33,7 @@ class ImportUsers
     @created = []
     @updated = []
     @completions = []
+    @families = {}
     @certificates = []
   end
 
@@ -102,7 +104,7 @@ class ImportUsers
       'Certificate', 'HQ Rank', 'SQ Rank', 'Rank', 'First Name', 'Last Name',
       'Grade', 'Rank', 'E-Mail', 'MM', 'EdPro', 'EdAch', 'Senior', 'Life',
       'IDEXPR', 'City', 'State', 'Address 1', 'Address 2', 'Zip Code',
-      'Home Phone', 'Cell Phone', 'Bus. Phone', 'Tot.Years'
+      'Home Phone', 'Cell Phone', 'Bus. Phone', 'Tot.Years', 'Prim.Cert'
     )
   end
 
@@ -170,6 +172,7 @@ class ImportUsers
       created: @created.map(&:id),
       updated: @updated.reduce({}, :merge),
       completions: @completions.map(&:id),
+      families: @families,
       locked: @removed_users == :skipped ? :skipped : @removed_users.map(&:id)
     }
   end
@@ -190,5 +193,20 @@ class ImportUsers
     @removed_users.reject!(&:locked?)
 
     @removed_users.map(&:lock)
+  end
+
+  def set_parents(parsed_csv)
+    parsed_csv.each do |row|
+      next if row['Prim.Cert'].blank?
+
+      parent = User.find_by(certificate: row['Prim.Cert'])
+      next unless parent.present?
+
+      user = User.find_by(certificate: row['Certificate'])
+      user&.update(parent_id: parent.id)
+
+      @families[user.parent_id] ||= []
+      @families[user.parent_id] << user.id
+    end
   end
 end
