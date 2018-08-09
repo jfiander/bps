@@ -57,7 +57,7 @@ div#payment-description {
   }
 }
 
-button#submit-button.pay {
+button#pay-button {
   @include big-button;
   width: 35%;
 }

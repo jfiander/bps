@@ -24,7 +24,7 @@
     = label_tag :email, 'Send receipt to:'
     br
     = email_field_tag :email, @receipt, id: 'receipt-email', placeholder: 'Enter your email address to get a receipt', data: { 'braintree-name' => 'email' }
-  button#submit-button.pay
+  button#pay-button
     = render 'braintree/sandbox', card: :white, ban: :red
     | Pay $
     = @transaction_amount
