@@ -27,6 +27,8 @@ module MarkdownHelper
     preload_markdown(name)
     generate_markdown_div
     parse_markdown_div
+    parse_external_links if ENV['MARK_EXTERNAL_LINKS'] == 'enabled'
+    @markdown_div
   end
 
   private
@@ -87,5 +89,14 @@ module MarkdownHelper
       burgee: burgee_html(@page_markdown),
       education: education_menu(@page_markdown)
     ).parse
+  end
+
+  def parse_external_links
+    @ext ||= FA::Icon.p('external-link')
+
+    @markdown_div = @markdown_div.gsub(
+      %r{(<a.*?href=['"]https?://.*?['"].*?>.*?)</a>},
+      '\1' + "<sup>#{@ext}</sup></a>"
+    )
   end
 end
