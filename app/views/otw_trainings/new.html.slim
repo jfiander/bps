@@ -12,6 +12,6 @@ h2 = @otw_title
     .right = f.text_field :course_key, required: true
     br.clear
     .left = f.label :boc_level, 'Required for BOC level'
-    .right = f.select :boc_level, options_for_select(@boc_levels), include_blank: '(None)'
+    .right = f.select :boc_level, options_for_select(@boc_levels, @otw_training.boc_level), include_blank: '(None)'
     br.clear
     = spinner_button(f, button_text: 'Add OTW Training', disable_text: 'Adding OTW Training', css_class: 'big')
