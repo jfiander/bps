@@ -94,7 +94,7 @@ module EventsHelper
 
   def event_action_link(event, path, **options)
     options = {
-      icon: '', text: '', method: :get, class: "control #{options[:css]}",
+      icon: '', text: '', class: "control #{options[:css]}",
       confirm: '', data: {}, icon_options: { fa: :fw, style: :regular }
     }.merge(options)
     confirm = options.delete(:confirm)
