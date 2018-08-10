@@ -1,10 +1,15 @@
 h2 Ex Officio Permissions
 
+.information Committee names must exactly match those on this page to grant permissions.
+
 - @auto_permissions.each do |group, permissions|
   h3 = group.to_s.titleize
   .table.auto-permissions
     - permissions.each do |permission, roles|
-      .table-row
-        .table-cell.left = permission.to_s.titleize
-        .table-cell.right = roles.join(', ')
+      .table-row class=(cycle('gray', ''))
+        .table-cell.left = group == 'bridge_office' ? permission.titleize : permission
+        .table-cell.right
+          ul.simple
+            - roles.each do |r|
+              li = r
 

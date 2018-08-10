@@ -25,27 +25,27 @@ bridge_office:
     - minutes
     - page
 committee:
-  seminars:
+  Seminars:
     - seminar
-  vessel_safety_check:
+  Vessel Safety Check:
     - vsc
-  ships_store:
+  Ship's Store:
     - store
-  webmaster:
+  Webmaster:
     - page
     - calendar
     - photos
-  newsletter_editor:
+  Newsletter Editor:
     - newsletter
-  meetings_&_programs:
+  Meetings & Programs:
     - events
-  rendezvous:
+  Rendezvous:
     - events
-  change_of_watch:
+  Change of Watch:
     - events
-  membership:
+  Membership:
     - users
-  roster_/_database:
+  Roster / Database:
     - roster
-  on-the-water_training:
+  On-the-Water Training:
     - otw

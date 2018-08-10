@@ -111,7 +111,7 @@ module User::Permissions
 
   def permitted_roles_from_committee
     implicit_permissions['committee']&.select do |k, _|
-      k.in? cached_committees.map(&:search_name)
+      k.in? cached_committees.map(&:name)
     end&.values&.flatten&.map(&:to_sym)
   end
 end
