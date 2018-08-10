@@ -39,13 +39,13 @@ bundle exec rails db:setup
 Set the minimum required environment variables:
 
 ```sh
+ASSET_ENVIRONMENT
+
 S3_ACCESS_KEY
 S3_SECRET
 
 CLOUDFRONT_KEYPAIR_ID
 CLOUDFRONT_PRIVATE_KEY_PATH
-
-ASSET_ENVIRONMENT
 
 CLOUDFRONT_STATIC_ENDPOINT
 CLOUDFRONT_FILES_ENDPOINT
@@ -55,10 +55,6 @@ CLOUDFRONT_FLOATPLANS_ENDPOINT
 
 GOOGLE_CALENDAR_API_CLIENT
 GOOGLE_CALENDAR_TOKEN
-
-BRAINTREE_MERCHANT_ID
-BRAINTREE_PUBLIC_KEY
-BRAINTREE_PRIVATE_KEY
 ```
 
 Set Google Calendar IDs as appropriate:
@@ -77,9 +73,18 @@ And any optional environment variables you want to support:
 ```sh
 CALENDARS # calendar_id_1:99FF99/calendar_id_2:3399FF
 
+SLACK_URL_<CHANNEL> # Each channel needs a separate variable
+
 NEW_RELIC_LICENSE_KEY
 
-SLACK_URL_<CHANNEL> # Each channel needs a separate variable
+ENABLE_BRAINTREE # enabled
+BRAINTREE_MERCHANT_ID
+BRAINTREE_PUBLIC_KEY
+BRAINTREE_PRIVATE_KEY
+
+USE_NEW_AG_TITLES # enabled
+NEW_HEADER # enabled
+MARK_EXTERNAL_LINKS # enabled
 ```
 
 Run the server:
