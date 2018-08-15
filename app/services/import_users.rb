@@ -200,6 +200,7 @@ class ImportUsers
       next unless (parent = parent(row))
 
       user = User.find_by(certificate: row['Certificate'])
+      next if user.parent_id == parent.id
 
       user&.update(parent_id: parent.id)
       @families[user&.parent_id] ||= []
