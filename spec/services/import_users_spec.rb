@@ -22,21 +22,21 @@ RSpec.describe ImportUsers, type: :service do
       it 'should correctly add new users' do
         expect(User.find_by(certificate: 'E123456')).to be_blank
 
-        ImportUsers.new.call(import)
+        ImportUsers::Import.new(import).call
         user = User.find_by(certificate: 'E123456')
         expect(user).to be_present
         expect(user.locked?).to be(false)
       end
 
       it 'should detect duplicate email addresses' do
-        ImportUsers.new.call(import)
+        ImportUsers::Import.new(import).call
         expect(User.find_by(certificate: 'E567890').email).to match(
           /duplicate-.*?@bpsd9.org/
         )
       end
 
       it 'should handle missing email addresses' do
-        ImportUsers.new.call(import)
+        ImportUsers::Import.new(import).call
         expect(User.find_by(certificate: 'E135792').email).to match(
           /nobody-.*?@bpsd9.org/
         )
@@ -47,35 +47,35 @@ RSpec.describe ImportUsers, type: :service do
       it 'should not remove the user' do
         expect(User.find_by(certificate: 'E012345')).to be_present
 
-        ImportUsers.new.call(import)
+        ImportUsers::Import.new(import).call
         expect(User.find_by(certificate: 'E012345')).to be_present
       end
 
       it 'should not lock the user' do
         expect(User.find_by(certificate: 'E012345').locked?).to be(false)
 
-        ImportUsers.new.call(import)
+        ImportUsers::Import.new(import).call
         expect(User.find_by(certificate: 'E012345').locked?).to be(false)
       end
 
       it 'should not update the email address' do
         expect(User.find_by(certificate: 'E012345').email).to eql('updated.person@example.com')
 
-        ImportUsers.new.call(import)
+        ImportUsers::Import.new(import).call
         expect(User.find_by(certificate: 'E012345').email).to eql('updated.person@example.com')
       end
 
       it 'should update the rank' do
         expect(User.find_by(certificate: 'E012345').rank).to be_nil
 
-        ImportUsers.new.call(import)
+        ImportUsers::Import.new(import).call
         expect(User.find_by(certificate: 'E012345').rank).to be_present
       end
 
       it 'should add course completions' do
         expect(User.find_by(certificate: 'E012345').course_completions).to be_blank
 
-        ImportUsers.new.call(import)
+        ImportUsers::Import.new(import).call
         expect(User.find_by(certificate: 'E012345').course_completions).to be_present
       end
     end
@@ -85,7 +85,7 @@ RSpec.describe ImportUsers, type: :service do
       expect(user).to be_present
       expect(user.locked?).to be(false)
 
-      ImportUsers.new.call(import, lock: true)
+      ImportUsers::Import.new(import, lock: true).call
       user = User.find_by(certificate: 'E001234')
       expect(user).to be_present
       expect(user.locked?).to be(true)
@@ -96,7 +96,7 @@ RSpec.describe ImportUsers, type: :service do
       expect(user).to be_present
       expect(user.locked?).to be(false)
 
-      ImportUsers.new.call(import, lock: false)
+      ImportUsers::Import.new(import, lock: false).call
       user = User.find_by(certificate: 'E001234')
       expect(user).to be_present
       expect(user.locked?).to be(false)
@@ -105,7 +105,7 @@ RSpec.describe ImportUsers, type: :service do
 
   describe 'ranks' do
     before(:each) do
-      ImportUsers.new.call(import)
+      ImportUsers::Import.new(import).call
     end
 
     it 'should use SQ_Rank over HQ_Rank' do

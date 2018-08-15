@@ -10,9 +10,9 @@ module User::Import
     return only_csv unless uploaded_file.content_type == 'text/csv'
 
     begin
-      @import_results = ImportUsers.new.call(
+      @import_results = ImportUsers::Import.new(
         upload_import_file(uploaded_file), lock: clean_params[:lock_missing]
-      )
+      ).call
       import_success
     rescue StandardError => e
       import_failure(e)
