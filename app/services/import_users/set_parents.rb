@@ -10,12 +10,10 @@ module ImportUsers
 
     def call
       @csv.each do |row|
-        next unless (parent = parent(row))
+        user, user_parent = user_and_parent(row)
+        next unless user_parent.present?
 
-        user = User.find_by(certificate: row['Certificate'])
-        next if user.parent_id == parent.id
-
-        update_parent_for(user, parent)
+        update_parent_for(user, user_parent)
       end
 
       @families
@@ -29,9 +27,14 @@ module ImportUsers
       @families[user&.parent_id] << user&.id
     end
 
-    def parent(row)
+    def user_and_parent(row)
       return if row['Prim.Cert'].blank?
-      User.find_by(certificate: row['Prim.Cert'])
+
+      user = User.find_by(certificate: row['Certificate'])
+      parent = User.find_by(certificate: row['Prim.Cert'])
+      return if user.parent_id == parent.id
+
+      [user, parent]
     end
   end
 end

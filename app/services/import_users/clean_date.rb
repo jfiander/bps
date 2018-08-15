@@ -9,8 +9,8 @@ module ImportUsers
 
     def call
       clean_date unless @string.blank?
-    rescue StandardError
-      puts "Invalid date: #{@string}" unless Rails.env.test?
+    rescue ArgumentError => e
+      raise e unless e.message == 'invalid date'
     end
 
     private
