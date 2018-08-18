@@ -1,5 +1,7 @@
 h2 Current Instructors
 
+= image_tag static_bucket.link('insignia/CI/CI.350.png'), class: 'lamp'
+
 = form_tag do
   = label_tag :key, 'Find instructors for '
   = select_tag :key, options_for_select(@keys, @highlight), required: true
