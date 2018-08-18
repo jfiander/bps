@@ -7,17 +7,9 @@
   width: 65%;
   margin: 0 auto;
 
-  .profile-left {
-    float: left;
-    text-align: left;
-    font-weight: bold;
-    max-width: 30%;
-  }
-
-  .profile-right {
-    float: right;
+  .table-header {
     text-align: right;
-    max-width: 70%;
+    padding-right: 1em;
   }
 
   div.password-box {
@@ -28,17 +20,46 @@
     margin-bottom: 1.5em;
   }
 
-  .profile-photo img {
-    max-width: 12em
+  .profile-photo {
+    text-align: center;
+    vertical-align: middle;
+
+    img {
+      max-width: 15em;
+      @include border-radius(2em);
+    }
   }
 
-  .flag img {
+  img.flag {
     width: 12em;
   }
 
-  .insignia img {
-    margin: 0.5em 0.25em;
-    max-width: 50vw;
+  .insignia {
+    text-align: center;
+    vertical-align: middle;
+
+    img {
+      margin: 0.5em 0.25em;
+      max-width: 50vw;
+    }
+
+    img.pin {
+      max-width: 8em;
+      max-height: 5em;
+    }
+  }
+}
+
+ul#profile-actions li {
+  padding: 0.5em 0;
+}
+
+#profile-registrations {
+  max-width: 85%;
+
+  .table-cell.name {
+    text-align: right;
+    padding-right: 2em;
   }
 }
 
@@ -170,4 +191,9 @@ div#instructors {
   div.table-cell {
     line-height: 2em;
   }
+}
+
+img.lamp {
+  max-width: 10em;
+  margin-bottom: 1em;
 }

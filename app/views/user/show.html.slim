@@ -1,73 +1,66 @@
-h2 = "#{@profile_title} user"
+h2 = @user.full_name
 
-#profile
-  .profile-photo
-    .center = image_tag(@user.photo)
-  hr.clear
-  .center.insignia
-    .center.flag = image_tag(static_bucket.link("flags/PNG/#{@rank_flag}.500.png")) if @user.auto_rank.present?
-    .center title=(@insignia_title[:grade]) = image_tag(static_bucket.link("insignia/#{@insignia[:grade]}.png")) if @insignia[:grade].present?
-    .center title=(@insignia_title[:membership]) = image_tag(static_bucket.link("insignia/#{@insignia[:membership]}.png")) if @insignia[:membership].present?
-    .center title=(@insignia_title[:mm])
-      - @user.mm&.times do
-        = image_tag(static_bucket.link("insignia/mm.png"))
-  - if @user.rank.present? || @insignia[:grade].present? || @insignia[:membership].present? || @user.mm&.positive?
-    hr.clear
-  .profile-left Name
-  .profile-right = @user.full_name
-  br.clear
-  .profile-left Certificate
-  .profile-right = @user.certificate || FA::Icon.p('question-circle', css: 'red', style: :regular)
-  br.clear
-  .profile-left Email
-  .profile-right = @user.email
-  - if @user.permitted?(:users)
-    br.clear
-    .profile-left Last login
-    .profile-right = @user.last_sign_in_at.blank? ? 'Never logged in' : @user.last_sign_in_at
-    br.clear
-    .profile-left From
-    .profile-right = @user.last_sign_in_at.blank? ? '' : @user.last_sign_in_ip
-    br.clear
-    .profile-left Educational Certificate
-    .profile-right = link_to 'View Certificate', user_certificate_path(@user.id), target: :_blank
+#profile.table
+  .table-row
+    .table-cell.profile-photo = image_tag(@user.photo)
+    .table-cell.insignia
+      p = image_tag(static_bucket.link("flags/PNG/#{@rank_flag}.500.png"), class: 'flag') if @user.auto_rank.present?
+      p = image_tag(static_bucket.link("insignia/#{@insignia[:grade]}.png"), title: @insignia_title[:grade]) if @insignia[:grade].present?
+      p = image_tag(static_bucket.link("insignia/#{@insignia[:membership]}.png"), title: @insignia_title[:membership]) if @insignia[:membership].present?
+      #merit-marks title=(@insignia_title[:mm])
+        - @user.mm&.times do
+          = image_tag(static_bucket.link('insignia/mm.png'))
+      p
+        = image_tag(static_bucket.link('insignia/CI/CI.350.png'), class: 'pin', title: 'Certified Instructor') if @user.valid_instructor?
+        = image_tag(static_bucket.link('insignia/VE/VE.350.png'), class: 'pin', title: 'Certified Vessel Examiner') if @user.vessel_examiner?
+  .table-row
+    .table-cell.table-header Certificate
+    .table-cell = @user.certificate || FA::Icon.p('question-circle', css: 'red', style: :regular)
+  .table-row
+    .table-cell.table-header Email
+    .table-cell = @user.email
   - if @user.permitted_roles.present?
-    hr.clear
-    .profile-left Permissions
-    .profile-right
-      ul.roles
-        - @user.granted_roles.each do |g|
-          = content_tag(:li, g)
-      - if @user.granted_roles.present? && @user.permitted_roles.present?
-      .red
-        - if @user.permitted?(:admin)
-          | All
-        - else
-          ul.roles.red
-            - (@user.permitted_roles - @user.granted_roles).each do |p|
-              = content_tag(:li, p)
-  - if current_user.id == @user.id
-    hr.clear
-    .center = link_to(profile_edit_path) { FA::Icon.p('edit') + 'Update your information' }
-  - if current_user.id == @user.id && current_user.dues_due? && ENV['ENABLE_BRAINTREE'] == 'enabled'
-    hr.clear
-    .center = link_to(dues_path, class: :red) { FA::Icon.p('credit-card') + 'Pay your annual dues online' }
-  hr.clear
-  - if @registrations.present?
-    .center
-      b Current registrations
-    br.clear
-      - @registrations.each do |r|
-        .profile-left
-          = r.event.event_type.display_title
-        .profile-right
+    .table-row
+      .table-cell.table-header Permissions
+      .table-cell
+        ul.roles
+          - @user.granted_roles.each do |g|
+            = content_tag(:li, g)
+        - if @user.granted_roles.present? && @user.permitted_roles.present?
+        .red
+          - if @user.permitted?(:admin)
+            | All
+          - else
+            ul.roles.red
+              - (@user.permitted_roles - @user.granted_roles).each do |p|
+                = content_tag(:li, p)
+
+- if current_user.id == @user.id
+  hr
+  h3 Profile Actions
+  ul#profile-actions.simple
+    li = link_to(profile_edit_path) { FA::Icon.p('edit') + 'Update your information' }
+    - if current_user.id == @user.id && current_user.dues_due? && ENV['ENABLE_BRAINTREE'] == 'enabled'
+      li = link_to(dues_path, class: :red) { FA::Icon.p('credit-card') + 'Pay your annual dues online' }
+    li = link_to(user_certificate_path(@user.id), target: :_blank, class: 'green') { FA::Icon.p('file-certificate', style: :regular) + 'View Educational Certificate' }
+
+- if @registrations.present?
+  hr
+  h3 Current Registrations
+  #profile-registrations.table
+    - @registrations.each do |r|
+      .table-row
+        .table-cell.name = r.event.event_type.display_title
+        .table-cell
           - if r.paid? && ENV['ENABLE_BRAINTREE'] == 'enabled'
             = FA::Layer.p([{ name: 'credit-card', options: { style: :regular, css: :gray } }, { name: 'check', options: { style: :regular, css: :green, grow: 12 } }], title: 'Paid – Thank you!')
           - elsif r.payable? && r.event.cost&.positive? && ENV['ENABLE_BRAINTREE'] == 'enabled'
             = link_to(pay_path(token: r.payment_token)) do
               = FA::Icon.p('credit-card', style: :regular, title: 'Pay for registration', fa: 'fw')
-          = r.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+        .table-cell = r.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+        .table-cell
           = link_to(cancel_registration_path(id: r.id), method: :delete, remote: true, class: 'red control', id: "event_#{r.event_id}",
             data: {confirm: "Are you sure you want to cancel your registration for #{r.event.event_type.display_title} on #{r.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}?"}) { FA::Icon.p('minus-square') }
-        br.clear
+
+hr
 = editor('photo_editor', id: @user.id) if current_user&.permitted?(:admin) && current_user.id != @user.id
