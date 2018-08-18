@@ -44,6 +44,11 @@
   .department {
     width: 22%;
     text-align: center;
+
+    img {
+      width: 8em;
+      @include border-radius(1em);
+    }
   }
 
   .table-row.assistant .table-cell {
