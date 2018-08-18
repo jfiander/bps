@@ -415,4 +415,24 @@ RSpec.describe User, type: :model do
       expect(@parent.dues_due?).to be(true)
     end
   end
+
+  describe 'valid_instructor?' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+    end
+
+    it 'should return false for a nil id_expr' do
+      expect(@user.valid_instructor?).to be(false)
+    end
+
+    it 'should return false for a past id_expr' do
+      @user.update(id_expr: Time.now - 1.month)
+      expect(@user.valid_instructor?).to be(false)
+    end
+
+    it 'should return true for a future id_expr' do
+      @user.update(id_expr: Time.now + 1.month)
+      expect(@user.valid_instructor?).to be(true)
+    end
+  end
 end

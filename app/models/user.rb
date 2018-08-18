@@ -120,6 +120,10 @@ class User < ApplicationRecord
     dues
   end
 
+  def valid_instructor?
+    id_expr.present? && id_expr > Time.now
+  end
+
   private
 
   def cached_committees
