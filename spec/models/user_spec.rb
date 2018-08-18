@@ -435,4 +435,19 @@ RSpec.describe User, type: :model do
       expect(@user.valid_instructor?).to be(true)
     end
   end
+
+  describe 'vessel_examiner?' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+    end
+
+    it 'should return false without VSC training' do
+      expect(@user.vessel_examiner?).to be(false)
+    end
+
+    it 'should return true with VSC training' do
+      FactoryBot.create(:course_completion, user: @user, course_key: 'VSC_01', date: Date.today)
+      expect(@user.vessel_examiner?).to be(true)
+    end
+  end
 end

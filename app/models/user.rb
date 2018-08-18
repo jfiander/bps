@@ -124,6 +124,10 @@ class User < ApplicationRecord
     id_expr.present? && id_expr > Time.now
   end
 
+  def vessel_examiner?
+    completions&.key?('VSC_01')
+  end
+
   private
 
   def cached_committees
