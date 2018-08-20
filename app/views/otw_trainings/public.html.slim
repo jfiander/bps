@@ -2,7 +2,28 @@ h2 Jump Start Training
 
 p If you recently purchased a new boat and would like someone experienced to show you how to operate it safely, our Jump Start program is for you!
 
-p Fill out the form below, and we'll reach out to you to schedule your training.
+p
+  | Jump Start sessions take about 2 hours, and are 
+  b offered at no charge
+  | !
+
+hr
+
+p The Jump Start program provides one-on-one training session for you on your own boat, customized to fit your individual needs.
+
+p
+  | The goal is to help you as a new boat owner to develop essential skills for safe operation of your boat,
+  br
+  | and to break through any barriers that may limit your boating enjoyment.
+
+p
+  | If you haven't already received one, you will first get a 
+  = link_to 'vessel safety check', vsc_path
+  |  to ensure that your boat is fully prepared for safe operation.
+
+hr
+
+p To request Jump Start training, please fill out the form below, and we'll reach out to you to schedule your training.
 
 = form_tag jumpstart_path, method: :post do
   #jumpstart.table
@@ -21,4 +42,4 @@ p Fill out the form below, and we'll reach out to you to schedule your training.
     .table-row
       .table-cell.table-header.left.half = label_tag :availability
       .table-cell = text_area_tag :availability, '', placeholder: 'Describe your availability for training'
-  .center = submit_tag 'Submit Request'
+  .center = submit_tag 'Submit Request', class: 'big'
