@@ -3,3 +3,14 @@ div.table#otw {
     color: darken($birmingham-blue, 20%);
   }
 }
+
+div#jumpstart.table {
+  input {
+    width: 20em;
+  }
+
+  textarea {
+    width: 20em;
+    height: 5em;
+  }
+}

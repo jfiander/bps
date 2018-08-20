@@ -14,6 +14,7 @@ div.table-header {
 
 div.table-row {
   display: table-row;
+  width: 100%;
 }
 
 div.table-cell {
@@ -22,4 +23,15 @@ div.table-cell {
 
 .table-cell.spacer {
   height: 2em;
+}
+
+.table-cell.half {
+  width: 50%;
+}
+
+.table-cell.left {
+  text-align: right;
+  padding-right: 1em;
+  height: 1.5em;
+  vertical-align: middle;
 }

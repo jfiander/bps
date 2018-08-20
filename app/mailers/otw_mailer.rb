@@ -7,6 +7,13 @@ class OTWMailer < ApplicationMailer
     mail(to: @to_list, subject: 'On-the-Water training requested')
   end
 
+  def jumpstart(options = {})
+    @options = options.symbolize_keys!
+    @to_list = to_list
+
+    mail(to: @to_list, subject: 'Jump Start training requested')
+  end
+
   private
 
   def to_list

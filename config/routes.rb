@@ -72,6 +72,8 @@ Rails.application.routes.draw do
   post    '/float_plan',                to: 'float_plan#submit',  as: 'submit_float_plan'
   patch   '/float_plan',                to: 'float_plan#refresh', as: 'refresh_float_plan'
   get     '/float_plans',               to: 'float_plan#list'
+  get     '/jumpstart',                 to: 'otw_trainings#public'
+  post    '/jumpstart',                 to: 'otw_trainings#public_request'
 
   ### Functional page back-ends
 

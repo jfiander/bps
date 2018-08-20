@@ -1,0 +1,35 @@
+= render 'application/mailers/auto'
+
+h1.birmingham Jump Start Training Request
+
+p Someone has requested Jump Start training!
+
+p
+  h3 Contact info
+  b Name: 
+  = @options[:name]
+  br
+  b Email: 
+  = @options[:email]
+  - if @options[:phone].present?
+    br
+    b Phone: 
+    = @options[:phone]
+
+- if @options[:details].present? || @options[:availability].present?
+  p
+    h3 Details
+    - if @options[:details].present?
+      p
+        b Boat, location, or knowledge:
+        br
+        = @options[:details]
+    - if @options[:availability].present?
+      p
+        b Availability:
+        br
+        = @options[:availability]
+
+p
+  br
+  | Please reach out to schedule this training, or to discuss any other details.

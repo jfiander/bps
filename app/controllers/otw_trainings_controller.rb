@@ -1,5 +1,5 @@
 class OTWTrainingsController < ApplicationController
-  secure!
+  secure!(except: %i[public public_request])
   secure!(:otw, except: %i[user user_request])
 
   before_action :load_all_trainings, only: %i[list user]
@@ -10,6 +10,14 @@ class OTWTrainingsController < ApplicationController
 
   def list
     #
+  end
+
+  def public
+    #
+  end
+
+  def public_request
+    OTWMailer.jumpstart(otw_public_params)
   end
 
   def user
@@ -85,6 +93,10 @@ class OTWTrainingsController < ApplicationController
 
   def otw_user_params
     params.permit(:id)
+  end
+
+  def otw_public_params
+    params.permit(:name, :email, :phone, :details, :availability)
   end
 
   def load_otw_training

@@ -1,0 +1,30 @@
+<%= render 'application/mailers/auto' %>
+Jump Start Training Request
+
+
+Someone has requested Jump Start training!
+
+**********
+
+Contact info
+  Name: <%= @options[:name] %>
+  Email: <%= @options[:email] %>
+  <%- if @options[:phone].present? %>
+  Phone: <%= @options[:phone] %>
+  <%- end %>
+
+<%- if @options[:details].present? || @options[:availability].present? %>
+Details
+  <%- if @options[:details].present? %>
+  Boat, location, or knowledge:
+    <%= @options[:details] %>
+  <%- end %>
+  <%- if @options[:availability].present? %>
+  Availability:
+    <%= @options[:availability] %>
+  <%- end %>
+<%- end %>
+
+**********
+
+Please reach out to schedule this training, or to discuss any other details.
