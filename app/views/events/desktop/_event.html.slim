@@ -18,10 +18,13 @@
                 .table.row
                   .table-cell
                     - if event.multiple_sessions?
-                      b = "#{event.sessions} sessions"
-                      - if event.length?
-                        | , 
-                    - if event.length?
+                      - if event.all_day
+                        b = "#{event.sessions} days"
+                      - else
+                        b = "#{event.sessions} sessions"
+                        - if event.length?
+                          | , 
+                    - if event.length? && !event.all_day
                       = event.formatted_length
                       - if event.multiple_sessions?
                         |  each
