@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
 class OTWTrainingsController < ApplicationController
+  include OTWTrainings::Public
+  include OTWTrainings::User
+
   secure!(except: %i[public public_request])
   secure!(:otw, except: %i[user user_request])
 
@@ -10,29 +15,6 @@ class OTWTrainingsController < ApplicationController
 
   def list
     #
-  end
-
-  def public
-    #
-  end
-
-  def public_request
-    OTWMailer.jumpstart(otw_public_params)
-  end
-
-  def user
-    @otw_requests = current_user&.otw_trainings&.where('otw_training_users.created_at > ?', Date.today - 6.months)
-    @otw_credits = @otw_trainings.select { |o| o.course_key.in?(current_user.completions.keys) }
-  end
-
-  def user_request
-    @otw = OTWTraining.find_by(id: otw_user_params[:id])
-
-    if (otw_request = OTWTrainingUser.find_or_create_by(otw_training: @otw, user: current_user))
-      user_request_succeeded(otw_request)
-    else
-      user_request_failed(otw_request)
-    end
   end
 
   def list_requests
@@ -89,14 +71,6 @@ class OTWTrainingsController < ApplicationController
 
   def otw_training_params
     params.require(:otw_training).permit(:name, :description, :course_key, :boc_level)
-  end
-
-  def otw_user_params
-    params.permit(:id)
-  end
-
-  def otw_public_params
-    params.permit(:name, :email, :phone, :details, :availability)
   end
 
   def load_otw_training
