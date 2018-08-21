@@ -56,6 +56,14 @@ em
 
     h3 Schedule
 
+    .left = f.label :all_day
+    .right
+      label.switch
+        = f.check_box :all_day, class: "slider round", id: 'all-day-check'
+        span.slider.round.blue.inverse
+          .description.all_day
+    br.clear
+
     .left
       span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
       = f.label :start_at

@@ -129,6 +129,10 @@ input:checked + .slider div.description.excom:after {
   content: "Create";
 }
 
+.slider div.description.all_day:after {
+  content: "Regular";
+}
+
 .slider div.description.catalog:after,
 .slider div.description.lock-missing:after {
   content: "Ignore";
@@ -145,6 +149,10 @@ input:checked + .slider div.description.catalog:after {
 input:checked + .slider div.description.remove:after,
 input:checked + .slider div.description.create:after {
   content: "Remove";
+}
+
+input:checked + .slider div.description.all_day:after {
+  content: "All-Day";
 }
 
 .slider div.description.member_registrations:after,
