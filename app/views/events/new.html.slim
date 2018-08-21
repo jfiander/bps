@@ -59,24 +59,36 @@ em
     .left = f.label :all_day
     .right
       label.switch
-        = f.check_box :all_day, class: "slider round", id: 'all-day-check'
+        = f.check_box :all_day, class: "slider round", id: 'all_day_check'
         span.slider.round.blue.inverse
           .description.all_day
     br.clear
 
-    .left
-      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
-      = f.label :start_at
-    .right = f.datetime_field :start_at, required: true
-    br.clear
+    #regular_start_time class=(@event.all_day ? 'hide' : '')
+      .left
+        span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+        = f.label :start_at
+      .right = f.datetime_field :start_at, required: !@event.all_day, disabled: @event.all_day
+      br.clear
 
-    .left = f.label :length, "Session length"
-    .right = f.time_select :length, minute_step: 15, end_hour: 8, default: {hour: 2, minute: 0}
-    br.clear
+      .left = f.label :length, "Session length"
+      .right = f.time_select :length, minute_step: 15, end_hour: 8, default: {hour: 2, minute: 0}, disabled: @event.all_day
+      br.clear
 
-    .left = f.label :sessions, "Number of sessions"
-    .right = f.number_field :sessions, class: "number", min: 1, max: 100
-    br.clear
+      .left = f.label :sessions, "Number of sessions"
+      .right = f.number_field :sessions, class: "number", min: 1, max: 100, disabled: @event.all_day
+      br.clear
+    
+    #all_day_start_time class=(@event.all_day ? '' : 'hide')
+      .left
+        span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+        = f.label :start_at
+      .right = f.date_field :start_at, required: @event.all_day, disabled: !@event.all_day
+      br.clear
+
+      .left = f.label :sessions, "Number of days"
+      .right = f.number_field :sessions, class: "number", min: 1, max: 100, disabled: !@event.all_day
+      br.clear
 
     hr
 

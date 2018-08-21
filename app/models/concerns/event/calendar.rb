@@ -60,8 +60,8 @@ module Concerns::Event::Calendar
 
   def recurrence(all_day: false)
     return unless sessions.present?
-    return ["RRULE:FREQ=DAILY;COUNT=#{sessions}"] if all_day
-    ["RRULE:FREQ=WEEKLY;COUNT=#{sessions}"]
+
+    ["RRULE:FREQ=WEEKLY;COUNT=#{sessions}"] unless all_day
   end
 
   def end_date(all_day: false)
