@@ -365,4 +365,10 @@ RSpec.describe Event, type: :model do
       end
     end
   end
+
+  describe 'all day' do
+    it 'should create a valid event with the all_day flag set' do
+      expect { FactoryBot.create(:event, all_day: true) }.not_to raise_error
+    end
+  end
 end
