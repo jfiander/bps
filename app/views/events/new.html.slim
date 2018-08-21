@@ -114,15 +114,17 @@ em
     br.clear
 
     .left
-      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
       = f.label :cutoff_at, 'Do not allow registrations after', class: "red"
-    .right = f.datetime_field :cutoff_at, required: true
+      ul.red
+        li Defaults to start time
+    .right = f.datetime_field :cutoff_at
     br.clear
 
     .left
-      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
       = f.label :expires_at, "Do not display this #{event_type_param} after", class: "red"
-    .right = f.datetime_field :expires_at, required: true
+      ul.red
+        li Defaults to one week after start time
+    .right = f.datetime_field :expires_at
     br.clear
 
     hr

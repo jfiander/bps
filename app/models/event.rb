@@ -18,6 +18,7 @@ class Event < ApplicationRecord
   has_many :registrations
 
   before_validation { validate_costs }
+  before_validation { validate_dates }
 
   after_create { book! }
   before_destroy { unbook! }
@@ -115,5 +116,10 @@ class Event < ApplicationRecord
 
     self.cost = member_cost
     self.member_cost = nil
+  end
+
+  def validate_dates
+    self.cutoff_at = start_at if cutoff_at.blank?
+    self.expires_at = start_at + 1.week if expires_at.blank?
   end
 end
