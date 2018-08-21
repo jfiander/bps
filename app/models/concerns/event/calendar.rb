@@ -50,16 +50,24 @@ module Concerns::Event::Calendar
   def calendar_hash
     {
       start: start_at.to_datetime,
-      end: start_at.to_datetime + (length.hour.hours || 1.hour),
+      end: end_date(all_day: all_day),
       summary: calendar_summary,
       description: calendar_description,
       location: location&.one_line,
-      recurrence: recurrence
+      recurrence: recurrence(all_day: all_day)
     }
   end
 
-  def recurrence
-    ["RRULE:FREQ=WEEKLY;COUNT=#{sessions}"] if sessions.present?
+  def recurrence(all_day: false)
+    return unless sessions.present?
+    return ["RRULE:FREQ=DAILY;COUNT=#{sessions}"] if all_day
+    ["RRULE:FREQ=WEEKLY;COUNT=#{sessions}"]
+  end
+
+  def end_date(all_day: false)
+    return start_at.to_datetime + (length.hour.hours || 1.hour) unless all_day
+
+    start_at.to_datetime + ((sessions.days || 1) - 1)
   end
 
   def calendar_summary
