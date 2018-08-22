@@ -73,7 +73,7 @@ module Concerns::Event::Calendar
   def end_date(all_day: false)
     return start_at.to_datetime + (length.hour.hours || 1.hour) unless all_day
 
-    (start_at.to_datetime + ((sessions&.days || 1) - 1)).strftime('%Y-%m-%d')
+    (start_at.to_datetime + (sessions&.days || 1)).strftime('%Y-%m-%d')
   end
 
   def calendar_summary
