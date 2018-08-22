@@ -57,13 +57,14 @@ class GoogleCalendarAPI
 
   def event(event_options)
     event_options.assert_valid_keys(%i[summary start end description location recurrence])
-    event_options[:start] = datetime(event_options[:start])
-    event_options[:end] = datetime(event_options[:end])
+    event_options[:start] = date(event_options[:start])
+    event_options[:end] = date(event_options[:end])
 
     Google::Apis::CalendarV3::Event.new(event_options.reject { |_, v| v.nil? })
   end
 
-  def datetime(date)
-    Google::Apis::CalendarV3::EventDateTime.new(date_time: date, time_zone: 'America/Detroit')
+  def date(date)
+    key = date&.is_a?(String) ? :date : :date_time
+    Google::Apis::CalendarV3::EventDateTime.new(key => date, time_zone: 'America/Detroit')
   end
 end

@@ -49,7 +49,7 @@ module Concerns::Event::Calendar
 
   def calendar_hash
     {
-      start: start_at.to_datetime,
+      start: start_date(all_day: all_day),
       end: end_date(all_day: all_day),
       summary: calendar_summary,
       description: calendar_description,
@@ -64,10 +64,16 @@ module Concerns::Event::Calendar
     ["RRULE:FREQ=WEEKLY;COUNT=#{sessions}"] unless all_day
   end
 
+  def start_date(all_day: false)
+    return start_at.to_datetime unless all_day
+
+    start_at.to_datetime.strftime('%Y-%m-%d')
+  end
+
   def end_date(all_day: false)
     return start_at.to_datetime + (length.hour.hours || 1.hour) unless all_day
 
-    start_at.to_datetime + ((sessions&.days || 1) - 1)
+    (start_at.to_datetime + ((sessions&.days || 1) - 1)).strftime('%Y-%m-%d')
   end
 
   def calendar_summary
