@@ -41,7 +41,7 @@ em
           | , go create the location, then add it here later.
     .right
       - if @locations.present?
-        = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: "Please select a location", required: true
+        = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: 'Please select a location', required: true
       ul
         li = link_to(locations_path, target: :_blank) { FA::Icon.p('edit') + 'Manage Locations' }
         li &nbsp;
@@ -52,7 +52,7 @@ em
       .left = f.label :show_in_catalog, "Show in #{@event_title} Catalog"
       .right
         label.switch
-          = f.check_box :show_in_catalog, class: "slider round"
+          = f.check_box :show_in_catalog, class: 'slider round'
           span.slider.round.blue.inverse
             .description.catalog
       br.clear
@@ -64,7 +64,7 @@ em
     .left = f.label :all_day
     .right
       label.switch
-        = f.check_box :all_day, class: "slider round", id: 'all_day_check'
+        = f.check_box :all_day, class: 'slider round', id: 'all_day_check'
         span.slider.round.blue.inverse
           .description.all_day
     br.clear
@@ -76,12 +76,12 @@ em
       .right = f.datetime_field :start_at, required: !@event.all_day, disabled: @event.all_day
       br.clear
 
-      .left = f.label :length, "Session length"
+      .left = f.label :length, 'Session length'
       .right = f.time_select :length, minute_step: 15, end_hour: 8, default: {hour: 2, minute: 0}, disabled: @event.all_day
       br.clear
 
-      .left = f.label :sessions, "Number of sessions"
-      .right = f.number_field :sessions, class: "number", min: 1, max: 100, disabled: @event.all_day
+      .left = f.label :sessions, 'Number of sessions'
+      .right = f.number_field :sessions, class: 'number', min: 1, max: 100, placeholder: '1', disabled: @event.all_day
       br.clear
     
     #all_day_start_time class=(@event.all_day ? '' : 'hide')
@@ -91,54 +91,54 @@ em
       .right = f.date_field :start_at, required: @event.all_day, disabled: !@event.all_day
       br.clear
 
-      .left = f.label :sessions, "Number of days"
-      .right = f.number_field :sessions, class: "number", min: 1, max: 100, disabled: !@event.all_day
+      .left = f.label :sessions, 'Number of days'
+      .right = f.number_field :sessions, class: 'number', min: 1, max: 100, disabled: !@event.all_day
       br.clear
 
     hr
 
     h3 Registrations
 
-    .left = f.label :cost, "Cost"
+    .left = f.label :cost, 'Cost'
     .right
-      = FA::Icon.p("dollar-sign")
-      = f.number_field :cost, class: "number", min: 0, placeholder: "0.00"
+      = FA::Icon.p('dollar-sign')
+      = f.number_field :cost, class: 'number', min: 0, placeholder: '0.00'
     br.clear
 
     .left
-      = f.label :member_cost, "Member discounted cost"
+      = f.label :member_cost, 'Member discounted cost'
       ul.red
         li Only enter if applicable
     .right
-      = FA::Icon.p("dollar-sign")
-      = f.number_field :member_cost, class: "number", min: 0, placeholder: "0.00"
+      = FA::Icon.p('dollar-sign')
+      = f.number_field :member_cost, class: 'number', min: 0, placeholder: '0.00'
     br.clear
 
-    .left = f.label :allow_member_registrations, "Member registrations"
+    .left = f.label :allow_member_registrations, 'Member registrations'
     .right
       label.switch
-        = f.check_box :allow_member_registrations, class: "slider round"
+        = f.check_box :allow_member_registrations, class: 'slider round'
         span.slider.round.inverse
           .description.member_registrations
     br.clear
 
-    .left = f.label :allow_public_registrations, "Public registrations"
+    .left = f.label :allow_public_registrations, 'Public registrations'
     .right
       label.switch
-        = f.check_box :allow_public_registrations, class: "slider round"
+        = f.check_box :allow_public_registrations, class: 'slider round'
         span.slider.round.inverse
           .description.public_registrations
     br.clear
 
     .left
-      = f.label :cutoff_at, 'Do not allow registrations after', class: "red"
+      = f.label :cutoff_at, 'Do not allow registrations after', class: 'red'
       ul.red
         li Defaults to start time
     .right = f.datetime_field :cutoff_at
     br.clear
 
     .left
-      = f.label :expires_at, "Do not display this #{event_type_param} after", class: "red"
+      = f.label :expires_at, "Do not display this #{event_type_param} after", class: 'red'
       ul.red
         li Defaults to one week after start time
     .right = f.datetime_field :expires_at
@@ -154,29 +154,29 @@ em
 
     - if event_type_param.in? %w[course seminar]
       .left
-        = f.label :requirements, "Student requirements"
+        = f.label :requirements, 'Student requirements'
         ul
           li.italic e.g. A computer to run navigation software; a calculator; etc.
       .right = f.text_area :requirements
       br.clear
 
       .left
-        = label_tag :topics, "Course topics"
+        = label_tag :topics, 'Course topics'
         ul
           li Put each topic on a separate line.
-      .right = text_area_tag :topics, @course_topics, class: "bulletted"
+      .right = text_area_tag :topics, @course_topics, class: 'bulletted'
       br.clear
 
       .left
-        = label_tag :includes, "Course materials"
+        = label_tag :includes, 'Course materials'
         ul
           li Put each topic on a separate line.
-      .right = text_area_tag :includes, @course_includes, class: "bulletted"
+      .right = text_area_tag :includes, @course_includes, class: 'bulletted'
       br.clear
 
       - if event_type_param == 'course'
-        .left = f.label :prereq_id, "Prerequisite course"
-        .right = f.select :prereq_id, grouped_options_for_select(@event_types, @event.prereq_id), prompt: "Please select a prerequisite course, if applicable"
+        .left = f.label :prereq_id, 'Prerequisite course'
+        .right = f.select :prereq_id, grouped_options_for_select(@event_types, @event.prereq_id), prompt: 'Please select a prerequisite course, if applicable'
       br.clear
 
     .left
@@ -191,7 +191,7 @@ em
       - if @event.flyer.present?
         br
         - if @event.get_flyer&.downcase&.match(/\.pdf/)
-          iframe src=(@event.get_flyer) width="200"
+          iframe src=(@event.get_flyer) width='200'
         - elsif @event.get_flyer&.downcase&.match(/\.(jpe?g|png)$/)
           = image_tag @event.get_flyer, width: 100
         p
@@ -201,14 +201,14 @@ em
 
     - if event_type_param.in? %w[course seminar]
       .left
-        = label_tag :instructors, "Instructor(s)"
+        = label_tag :instructors, 'Instructor(s)'
         ul
           li Put each topic on a separate line.
           li &nbsp;
           li Enter the full name of each instructor without rank or grade.
           li You can also put a slash followed by their certificate number.
           li.red Invalid instructors will not be saved.
-      .right = text_area_tag :instructors, @instructors, class: "bulletted"
+      .right = text_area_tag :instructors, @instructors, class: 'bulletted'
       br.clear
 
     .center
