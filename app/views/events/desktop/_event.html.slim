@@ -7,7 +7,11 @@
         .table-cell.top-left
           .table
             .table.row
-              .table-cell.table-header.event-title = event.display_title(event_type(event))
+              .table-cell.table-header.event-title
+                = event.display_title(event_type(event))
+                - if event.summary.present?
+                  br
+                  small = event_type(event).display_title
             - unless defined?(@event_catalog)
               .table.row
                 .table-cell.date-details

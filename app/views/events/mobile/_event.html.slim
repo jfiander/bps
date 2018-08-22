@@ -1,6 +1,10 @@
 .events-full-width
   hr
-.event-mobile-title = event.display_title(event_type(event))
+.event-mobile-title
+  = event.display_title(event_type(event))
+  - if event.summary.present?
+    br
+    small = event_type(event).display_title
 - if !defined?(@event_catalog) && @current_user_permitted_event_type && event.show_in_catalog
   .event-mobile-contents.birmingham-blue
     = FA::Icon.p('star', style: :regular)
