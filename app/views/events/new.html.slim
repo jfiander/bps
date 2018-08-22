@@ -13,7 +13,7 @@ em
 
     .left
       span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
-      = f.label :event_type_id, "#{@event_title} name"
+      = f.label :event_type_id, "#{@event_title} type"
     .right
       - if event_type_param == 'course'
         = f.select :event_type_id, grouped_options_for_select(@event_types, @event.event_type_id), prompt: "Please select #{event_type_param == 'event' ? 'an' : 'a'} #{event_type_param} type", required: true
@@ -25,6 +25,11 @@ em
           li &nbsp;
           li = link_to(refresh_event_types_path(category: event_type_param), remote: true, class: 'green') { FA::Icon.p('sync-alt') + 'Reload Event Types' }
     br.clear
+
+    - if event_type_param == 'event'
+      .left = f.label :summary, 'Event name'
+      .right = f.text_field :summary, placeholder: 'optional'
+      br.clear
 
     .left 
       = f.label :location

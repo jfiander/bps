@@ -7,7 +7,7 @@
         .table-cell.top-left
           .table
             .table.row
-              .table-cell.table-header.event-title = event_type(event).display_title
+              .table-cell.table-header.event-title = event.display_title(event_type(event))
             - unless defined?(@event_catalog)
               .table.row
                 .table-cell.date-details

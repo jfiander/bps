@@ -77,6 +77,8 @@ module Concerns::Event::Calendar
   end
 
   def calendar_summary
+    return summary if summary.present?
+
     if category == 'course'
       "Course: #{event_type.display_title}"
     elsif category == 'seminar'

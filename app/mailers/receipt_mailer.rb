@@ -43,7 +43,7 @@ class ReceiptMailer < ApplicationMailer
     type = 'event' unless type.in?(%w[course seminar])
 
     {
-      name: @payable.event.event_type.display_title,
+      name: @payable.event.display_title,
       type: type,
       date: @payable.event.start_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT),
       time: @payable.event.start_at.strftime(ApplicationController::PUBLIC_TIME_FORMAT)

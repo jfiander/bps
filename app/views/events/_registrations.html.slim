@@ -1,6 +1,6 @@
 .table-row
   .table-cell.table-header
-    = link_to event.event_type.display_title, send("show_#{event_type_param}_path", event), class: 'red'
+    = link_to event.display_title, send("show_#{event_type_param}_path", event), class: 'red'
     br
     = event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
   .table-cell

@@ -62,7 +62,7 @@ class RegistrationMailer < ApplicationMailer
   def attach_pdf
     flyer = @registration.event.flyer
     data = Paperclip.io_adapters.for(flyer).read
-    name = @registration.event.event_type.display_title.delete("' ")
+    name = @registration.event.display_title.delete("' ")
     attachments["#{name}.pdf"] = data
   end
 
@@ -92,7 +92,7 @@ class RegistrationMailer < ApplicationMailer
       type: type, title: title,
       fallback: fallback,
       fields: {
-        'Event name' => @registration.event.event_type.display_title,
+        'Event name' => @registration.event.display_title,
         'Event date' => @registration.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT),
         'Registrant name' => @registration&.user&.full_name,
         'Registrant email' => @registration&.user&.email || @registration&.email

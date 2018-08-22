@@ -108,6 +108,13 @@ class Event < ApplicationRecord
     0
   end
 
+  def display_title(event_type_cache = nil)
+    return summary if summary.present?
+
+    event_type_cache ||= event_type
+    event_type_cache.display_title
+  end
+
   private
 
   def validate_costs

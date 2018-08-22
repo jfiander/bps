@@ -3,7 +3,7 @@ p
   b
     = @registration.event.category.to_s.titleize
     | : 
-  = @registration.event.event_type.display_title
+  = @registration.event.display_title
   br
   b Date: 
   = @registration.event.start_at.strftime('%-d %B %Y')

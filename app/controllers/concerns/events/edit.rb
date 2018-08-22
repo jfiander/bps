@@ -6,7 +6,7 @@ module Events::Edit
   def event_params
     params.require(:event).permit(
       %i[
-        id event_type_id description cost member_cost requirements
+        id event_type_id description cost member_cost requirements summary
         location_id map_link start_at length sessions flyer all_day
         cutoff_at expires_at prereq_id allow_member_registrations
         allow_public_registrations show_in_catalog delete_attachment

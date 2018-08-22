@@ -371,4 +371,18 @@ RSpec.describe Event, type: :model do
       expect { FactoryBot.create(:event, all_day: true) }.not_to raise_error
     end
   end
+
+  describe 'display_title' do
+    it 'should use the event_type display_title without a summary' do
+      event_type = FactoryBot.create(:event_type)
+      event = FactoryBot.create(:event, event_type: event_type)
+      expect(event.display_title).to eql(event_type.display_title)
+    end
+
+    it 'should use the summary when present' do
+      event_type = FactoryBot.create(:event_type)
+      event = FactoryBot.create(:event, event_type: event_type, summary: 'Name')
+      expect(event.display_title).to eql('Name')
+    end
+  end
 end

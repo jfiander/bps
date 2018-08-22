@@ -20,7 +20,7 @@ module Payments::ModelConfigs
   def purchase_subject
     case parent_type
     when 'Registration'
-      "#{parent.event.event_type.display_title} on " \
+      "#{parent.event.display_title} on " \
       "#{parent.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}"
     when 'MemberApplication'
       'Membership application'
@@ -37,7 +37,7 @@ module Payments::ModelConfigs
 
   def registration_info(type = nil)
     {
-      name: parent.event.event_type.display_title,
+      name: parent.event.display_title,
       type: type,
       date: parent.event.start_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT),
       time: parent.event.start_at.strftime(ApplicationController::PUBLIC_TIME_FORMAT)
