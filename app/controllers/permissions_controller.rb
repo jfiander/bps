@@ -64,7 +64,7 @@ class PermissionsController < ApplicationController
   end
 
   def auto
-    @auto_permissions = YAML.safe_load(
+    @auto ||= YAML.safe_load(
       File.read("#{Rails.root}/config/implicit_permissions.yml")
     )
   end

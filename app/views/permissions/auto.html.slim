@@ -2,7 +2,7 @@ h2 Ex Officio Permissions
 
 .information Committee names must exactly match those on this page to grant permissions.
 
-- @auto_permissions.each do |group, permissions|
+- @auto.each do |group, permissions|
   h3 = group.to_s.titleize
   .table.auto-permissions
     - permissions.each do |permission, roles|

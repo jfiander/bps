@@ -20,9 +20,7 @@ module ImportUsers
   require 'import_users/hash'
 
   FIELDS ||= YAML.safe_load(
-    File.read(
-      File.join(Rails.root, 'app', 'services', 'import_users', 'fields.yml')
-    )
+    File.read("#{Rails.root}/app/services/import_users/fields.yml")
   )
 
   IMPORTED_FIELDS ||= ImportUsers::FIELDS['import'].freeze

@@ -100,8 +100,9 @@ module User::Permissions
   end
 
   def implicit_permissions
-    permissions = File.read("#{Rails.root}/config/implicit_permissions.yml")
-    @implicit_permissions ||= YAML.safe_load(permissions)
+    @implicit_permissions ||= YAML.safe_load(
+      File.read("#{Rails.root}/config/implicit_permissions.yml")
+    )
   end
 
   def permitted_roles_from_bridge_office

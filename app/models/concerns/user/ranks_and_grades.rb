@@ -3,11 +3,7 @@
 module User::RanksAndGrades
   def valid_ranks
     @valid_ranks ||= YAML.safe_load(
-      File.read(
-        File.join(
-          Rails.root, 'app', 'models', 'concerns', 'user', 'valid_ranks.yml'
-        )
-      )
+      File.read("#{Rails.root}/app/models/concerns/user/valid_ranks.yml")
     )
   end
 
@@ -91,12 +87,16 @@ module User::RanksAndGrades
   end
 
   def highest_rank(*ranks)
-    rank_priority = YAML.safe_load("#{Rails.root}/lib/rank_priorities.yml")
-
     rp = ranks.map do |r|
       { r => (rank_priority[r] || 100) }
     end
 
     rp.reduce({}, :merge).min_by { |_, p| p }&.first
+  end
+
+  def rank_priority
+    @rank_priority ||= YAML.safe_load(
+      File.read("#{Rails.root}/app/lib/rank_priority.yml")
+    )
   end
 end
