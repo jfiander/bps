@@ -38,6 +38,7 @@ module User::Import
     flash.now[:success] = 'Successfully imported user data.'
     render :import
     import_notification(:success)
+    log_import
   end
 
   def import_failure(error)
@@ -58,5 +59,14 @@ module User::Import
         { title: 'Results', value: @import_results.to_s, short: false }
       ]
     ).notify!
+  end
+
+  def log_import
+    log = File.open("#{Rails.root}/log/user_import.log", 'a')
+
+    log.write("[#{Time.now}] User import by: #{current_user.full_name}\n")
+    log.write(@import_results)
+    log.write("\n\n")
+    log.close
   end
 end
