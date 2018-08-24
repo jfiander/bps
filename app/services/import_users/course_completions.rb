@@ -25,13 +25,12 @@ module ImportUsers
 
     private
 
+    def completion_ignored_columns
+      ImportUsers::IMPORTED_FIELDS + ImportUsers::IGNORED_FIELDS
+    end
+
     def course_completions_data
-      @row.to_hash.except(
-        'Certificate', 'HQ Rank', 'SQ Rank', 'Rank', 'First Name', 'Last Name',
-        'Grade', 'Rank', 'E-Mail', 'MM', 'EdPro', 'EdAch', 'Senior', 'Life',
-        'IDEXPR', 'City', 'State', 'Address 1', 'Address 2', 'Zip Code',
-        'Home Phone', 'Cell Phone', 'Bus. Phone', 'Tot.Years', 'Prim.Cert'
-      )
+      @row.to_hash.except(*completion_ignored_columns)
     end
 
     def course_completion_exists?(key, date)
