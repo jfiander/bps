@@ -450,4 +450,10 @@ RSpec.describe User, type: :model do
       expect(@user.vessel_examiner?).to be(true)
     end
   end
+
+  it 'should return the correct associations to include' do
+    expect(User.position_associations).to eql(
+      %i[bridge_office standing_committee_offices committees user_roles roles]
+    )
+  end
 end

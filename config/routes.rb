@@ -157,6 +157,10 @@ Rails.application.routes.draw do
   patch   '/otw/:id/edit',   to: 'otw_trainings#update',       as: 'update_otw'
   delete  '/otw/:id/remove', to: 'otw_trainings#destroy',      as: 'remove_otw'
 
+  # Course Completions
+  get     '/completions',     to: 'completions#list'
+  get     '/completions/ytd', to: 'completions#ytd'
+
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",               to: "events/#{event_type}s#schedule"
     get     "/#{event_type}s/catalog",       to: "events/#{event_type}s#catalog",       as: "#{event_type}_catalog" unless event_type == :event

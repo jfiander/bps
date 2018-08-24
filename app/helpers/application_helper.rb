@@ -58,17 +58,14 @@ module ApplicationHelper
   end
 
   def admin_menu
-    @admin_menu ||= {
-      current: admin_current,
-      files: admin_files,
-      users_top: admin_users_top,
-      review: admin_review,
-      upload: admin_upload,
-      users_bottom: admin_users_bottom,
-      education: admin_education,
-      otw: admin_otw,
-      admin: admin_admin
-    }
+    menus = %i[
+      current files users_top review upload users_bottom education otw
+      completions admin
+    ]
+
+    @admin_menu ||= menus.map do |menu|
+      { menu => send("admin_#{menu}") }
+    end.reduce({}, :merge)
   end
 
   private
@@ -130,6 +127,12 @@ module ApplicationHelper
     return unless current_user&.permitted?(:education)
 
     render('application/navigation/admin/otw')
+  end
+
+  def admin_completions
+    return unless current_user&.permitted?(:education)
+
+    render('application/navigation/admin/completions')
   end
 
   def admin_admin

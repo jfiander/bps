@@ -1,0 +1,19 @@
+h2
+  | Completions
+  = @ytd ? ' – YTD' : nil
+
+.table#completions
+  .table-row
+    .table-cell.table-header Member
+    .table-cell.table-header Certificate
+    .table-cell.table-header Course
+    .table-cell.table-header Date
+  - @completions.each do |user, comp|
+    - comp.each_with_index do |c, i|
+      .table-row class=(cycle('gray', ''))
+        .table-cell = user.full_name
+        .table-cell = user.certificate
+        .table-cell = c.course_key
+        .table-cell = c.date.strftime(ApplicationController::SIMPLE_DATE_FORMAT)
+    .table-row
+      .table-cell style="height: 1em;"

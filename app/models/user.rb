@@ -43,6 +43,10 @@ class User < ApplicationRecord
     )
   end
 
+  def self.position_associations
+    %i[bridge_office standing_committee_offices committees user_roles roles]
+  end
+
   has_attached_file(
     :profile_photo,
     paperclip_defaults(:files).merge(
@@ -70,12 +74,7 @@ class User < ApplicationRecord
   scope :with_name,         ->(name) { where(simple_name: name) }
   scope :with_any_name,     -> { where.not(simple_name: [nil, '', ' ']) }
   scope :valid_instructors, -> { where('id_expr > ?', Time.now) }
-
-  def self.include_positions
-    includes %i[
-      bridge_office standing_committee_offices committees user_roles roles
-    ]
-  end
+  scope :include_positions, -> { includes(position_associations) }
 
   def self.invitable
     unlocked.where('sign_in_count = 0').reject(&:placeholder_email?)
