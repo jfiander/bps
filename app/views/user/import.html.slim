@@ -8,30 +8,30 @@ h2 Import user data
       .table-cell.birmingham-blue First Name *
       .table-cell.birmingham-blue Last Name *
       .table-cell.birmingham-blue E-Mail *
-      .table-cell &nbsp;
+      .table-cell Cert. Date
     .table-row
       .table-cell.red Rank **
       .table-cell.red HQ Rank **
       .table-cell.red SQ Rank **
       .table-cell Grade
-      .table-cell MM
+      .table-cell Tot.Years
     .table-row
       .table-cell IDEXPR
       .table-cell EdPro
       .table-cell EdAch
+      .table-cell MM
       .table-cell Senior
-      .table-cell Life
     .table-row
       .table-cell Address 1
       .table-cell Address 2
       .table-cell City
       .table-cell State
-      .table-cell Zip Code
+      .table-cell Life
     .table-row
+      .table-cell Zip Code
       .table-cell Home Phone
       .table-cell Cell Phone
       .table-cell Bus. Phone
-      .table-cell Tot.Years
       .table-cell Prim.Cert
   .center.birmingham-blue
     | * – Not updated if the user already exists.
@@ -46,8 +46,78 @@ h2 Import user data
       .table-cell
         | (3) HQ Rank
   .center.red.italic Automatic ranks from bridge offices will override this rank.
+
+  hr
+
+  .gray
+    .center This importer ignores the following fields:
+    .table.columns
+      .table-row
+        .table-cell DA
+        .table-cell H/A
+        .table-cell Birthday
+        .table-cell Sex
+        .table-cell Spouse
+      .table-row
+        .table-cell Spo Cert.
+        .table-cell Spo Sex
+        .table-cell Wedding
+        .table-cell Nickname
+        .table-cell NN Prf
+      .table-row
+        .table-cell Seascout
+        .table-cell Affiliation
+        .table-cell Squadron 1
+        .table-cell Squadron 2
+        .table-cell
+      .table-row
+        .table-cell Org.Sqd
+        .table-cell Org.Dst
+        .table-cell Pre.Sqd
+        .table-cell Pre.Dst
+        .table-cell
+      .table-row
+        .table-cell Last BDU
+        .table-cell Last HQ
+        .table-cell Type / Status Desc.
+        .table-cell Type / Status Code
+        .table-cell Transfer
+      .table-row
+        .table-cell Telephone
+        .table-cell Fax Phone
+        .table-cell < Test
+        .table-cell Ext
+        .table-cell OK
+      .table-row
+        .table-cell MMSI
+        .table-cell Call Sign
+        .table-cell Boat Name
+        .table-cell Boat Type
+        .table-cell Home Port
+      .table-row
+        .table-cell OAL
+        .table-cell Beam
+        .table-cell Draft
+        .table-cell Power
+        .table-cell Fuel Capacity
+      .table-row
+        .table-cell Speed
+        .table-cell Range
+        .table-cell Clearance
+        .table-cell Berths
+        .table-cell
+      .table-row
+        .table-cell Dist No
+        .table-cell Squad No.
+        .table-cell Squad. Code
+        .table-cell Squad. Name
+        .table-cell
+
+  hr
+
   .center Any additional columns will be interpreted as educational completion dates.
   .center.bold Users who are not included in the import file (except current bridge officers) can be automatically locked.
+
 hr
 
 = form_tag import_path, multipart: true
