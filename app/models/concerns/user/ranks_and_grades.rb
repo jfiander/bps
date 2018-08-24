@@ -2,11 +2,13 @@
 
 module User::RanksAndGrades
   def valid_ranks
-    %w[
-      P/Lt/C P/C 1/Lt Lt/C Cdr Lt F/Lt
-      P/D/Lt/C P/D/C D/1/Lt D/Lt/C D/C D/Lt D/Aide D/F/Lt
-      P/Stf/C P/R/C P/V/C P/C/C N/Aide N/F/Lt P/N/F/Lt Stf/C R/C V/C C/C
-    ]
+    @valid_ranks ||= YAML.safe_load(
+      File.read(
+        File.join(
+          Rails.root, 'app', 'models', 'concerns', 'user', 'valid_ranks.yml'
+        )
+      )
+    )
   end
 
   def valid_grades
