@@ -51,7 +51,8 @@ module ImportUsers
         mm: @row['MM'],
         senior: ImportUsers::CleanDate.new(@row['Senior']).call,
         life: ImportUsers::CleanDate.new(@row['Life']).call,
-        total_years: @row['Tot.Years']
+        total_years: @row['Tot.Years'],
+        membership_date: ImportUsers::CleanDate.new(@row['Cert. Date']).call
       }
     end
 
