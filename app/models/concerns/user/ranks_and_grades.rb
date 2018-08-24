@@ -26,7 +26,7 @@ module User::RanksAndGrades
     committee_rank = 'Lt' if committee?
     committee_rank = 'F/Lt' if 'Flag Lieutenant'.in? cached_committees.map(&:name)
 
-    [bridge_rank(html), rank, committee_rank].reject(&:blank?)
+    [bridge_rank(html), override_rank, committee_rank].reject(&:blank?)
   end
 
   def formatted_grade
@@ -45,6 +45,12 @@ module User::RanksAndGrades
   end
 
   private
+
+  def override_rank
+    return '' if rank_override == 'none'
+    return rank_override if rank_override.present?
+    rank
+  end
 
   def bridge_rank(html = true)
     case cached_bridge_office&.office
