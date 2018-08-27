@@ -34,13 +34,12 @@ div#user-ranks {
   text-align: center;
 
   .member {
-    float: left;
-    margin: 1.5em 4em;
+    margin: 1em auto;
   }
 
   .rank, .grade {
     float: left;
-    width: 2em;
+    width: 25%;
     min-height: 1em;
   }
 
@@ -54,7 +53,9 @@ div#user-ranks {
 
   .name {
     float: left;
-    width: 15em;
+    width: 50%;
+    min-width: 5em;
+    font-weight: bold;
   }
 }
 

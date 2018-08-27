@@ -7,13 +7,3 @@ div#user-ranks
       .name = user.simple_name
       .grade = user.grade
       br.clear
-
-div#user-ranks-mobile
-  - @users.each do |user|
-    .member-container.table
-      .member.table-row
-        .rank.table-cell = user.auto_rank
-        .name.table-cell = user.simple_name
-        .grade.table-cell = user.grade
-        br.clear
-      br.clear
