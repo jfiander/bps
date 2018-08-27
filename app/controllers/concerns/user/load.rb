@@ -27,7 +27,7 @@ module User::Load
   def user_hash(user)
     {
       id:                 user.id,
-      name:               user.full_name(html: false),
+      name:               user.full_name,
       certificate:        user.certificate,
       email:              user.email,
       granted_roles:      granted_roles_for(user),

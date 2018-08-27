@@ -15,16 +15,8 @@ module User::RanksAndGrades
     highest_rank(*ranks(html: html))
   end
 
-  def html_rank
-    # html_safe: No user content
-    auto_rank(html: true)&.html_safe
-  end
-
   def ranks(html: true)
-    committee_rank = 'Lt' if committee?
-    committee_rank = 'F/Lt' if 'Flag Lieutenant'.in? cached_committees.map(&:name)
-
-    [bridge_rank(html), override_rank, committee_rank].reject(&:blank?)
+    [bridge_rank(html), override_rank(html), committee_rank].reject(&:blank?)
   end
 
   def formatted_grade
@@ -33,31 +25,32 @@ module User::RanksAndGrades
 
   def long_grade
     {
-      'S' => 'Seaman',
-      'P' => 'Pilot',
+      'S'  => 'Seaman',
+      'P'  => 'Pilot',
       'AP' => 'Advanced Pilot',
       'JN' => 'Junior Navigator',
-      'N' => 'Navigator',
+      'N'  => 'Navigator',
       'SN' => 'Senior Navigator'
     }[grade]
   end
 
   private
 
-  def override_rank
+  def override_rank(html = true)
     return '' if rank_override == 'none'
     return rank_override if rank_override.present?
-    rank
+    cleanup_1st(rank, html)
   end
 
   def bridge_rank(html = true)
+    # html_safe: No user content
     case cached_bridge_office&.office
     when 'commander'
       'Cdr'
     when *ltc_offices
       'Lt/C'
     when *first_lt_offices
-      html ? '1<sup>st</sup>/Lt' : '1st/Lt'
+      html ? '1<sup>st</sup>/Lt'.html_safe : '1st/Lt'
     end
   end
 
@@ -69,8 +62,15 @@ module User::RanksAndGrades
     %w[asst_educational asst_secretary]
   end
 
-  def committee?
-    cached_standing_committees.present? || cached_committees.present?
+  def committee_rank
+    return 'F/Lt' if 'Flag Lieutenant'.in?(cached_committees.map(&:name))
+    return 'Lt' if cached_standing_committees.present? || cached_committees.present?
+  end
+
+  def cleanup_1st(output_rank, html = true)
+    # html_safe: No user content
+    r = output_rank&.gsub(%r{1/}, '1st/')
+    html ? r&.gsub(/1st/, '1<sup>st</sup>')&.html_safe : r
   end
 
   def valid_rank

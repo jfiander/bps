@@ -3,7 +3,7 @@ h2 Member Ranks and Grades
 div#user-ranks
   - @users.each do |user|
     .member
-      .rank = user.html_rank
+      .rank = user.auto_rank
       .name = user.simple_name
       .grade = user.grade
       br.clear
@@ -12,7 +12,7 @@ div#user-ranks-mobile
   - @users.each do |user|
     .member-container.table
       .member.table-row
-        .rank.table-cell = user.html_rank
+        .rank.table-cell = user.auto_rank
         .name.table-cell = user.simple_name
         .grade.table-cell = user.grade
         br.clear
