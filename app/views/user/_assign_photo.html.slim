@@ -1,4 +1,4 @@
-h3 Assign Profile Photo
+h2 Assign Profile Photo
 = form_tag assign_photo_path, method: :post, multipart: true
   = file_field_tag :photo, required: true
   = hidden_field_tag :redirect_to, redirect_to

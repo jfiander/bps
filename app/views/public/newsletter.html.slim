@@ -1,9 +1,9 @@
-h2 Squadron Newsletter
-h3 The Bilge Chatter
+h1 Squadron Newsletter
+h2 The Bilge Chatter
 
 = editor('newsletter_editor') if current_user&.permitted?(:newsletter)
 
-h4 Click on a button below to view or download that issue.
+h3 Click on a button below to view or download that issue.
 
 - if user_signed_in?
   .information Issues in the gray area are not displayed to the public.

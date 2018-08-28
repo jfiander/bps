@@ -1,5 +1,5 @@
 hr
-h3 Upload photos
+h2 Upload photos
 = form_for(@photo, url: upload_photo_path, multipart: true) do |f|
   - if controller.action_name == 'show'
     = hidden_field_tag :redirect_to_album, true

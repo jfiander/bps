@@ -1,4 +1,4 @@
-h2 = @album.name.titleize
+h1 = @album.name.titleize
 
 = editor('album_editor') if current_user&.permitted?(:photos)
 
@@ -8,4 +8,4 @@ h2 = @album.name.titleize
   - else
     = render 'album'
 - else
-  h4 There are no photos in this album.
+  h3 There are no photos in this album.

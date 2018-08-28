@@ -1,5 +1,5 @@
 hr
-h3 Assign to Bridge Office
+h2 Assign to Bridge Office
 .assign-bridge
   = form_tag assign_bridge_path, id: "assign-bridge", name: "assign-bridge"
     = select_tag :bridge_office, options_for_select(@select[:bridge_offices]), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a bridge office"
@@ -8,7 +8,7 @@ h3 Assign to Bridge Office
     = spinner_button(button_text: "Assign to bridge office", disable_text: "Assigning bridge office", css_class: 'big')
 hr
 
-h3 Assign to Committee
+h2 Assign to Committee
 .assign-bridge
   = form_tag assign_committee_path, id: "assign-committee", name: "assign-committee"
     = select_tag :department, options_for_select(@select[:departments]), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a department"
@@ -26,7 +26,7 @@ h3 Assign to Committee
     = spinner_button(button_text: "Assign to committee", disable_text: "Assigning to committee", css_class: 'big')
 hr
 
-h3 Assign to Standing Committee
+h2 Assign to Standing Committee
 .assign-bridge
   = form_tag assign_standing_committee_path, id: "assign-standing-committee", name: "assign-standing-committee"
     = select_tag :committee_name, options_for_select(@select[:standing_committees]), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a committee"

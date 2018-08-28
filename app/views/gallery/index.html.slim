@@ -1,14 +1,14 @@
-h2 Squadron Photos
+h1 Squadron Photos
 
 - if current_user&.permitted?(:photos)
   = editor('gallery_editor')
 
 - if @albums.blank?
-  h3 We're sorry, but there are currently no photo albums available.
+  h2 We're sorry, but there are currently no photo albums available.
   p Please check back again later!
 - else
   - @albums.each do |album|
-    h3
+    h2
       = album.name.titleize
     = render 'cover', album: album
     hr

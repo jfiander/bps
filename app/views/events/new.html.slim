@@ -1,4 +1,4 @@
-h2 = "#{@edit_mode} #{@event_title}"
+h1 = "#{@edit_mode} #{@event_title}"
 
 em
   | Fields marked with
@@ -9,7 +9,7 @@ em
   = f.hidden_field :id if @submit_path.match /\/update/
 
   #new-event
-    h3 General Information
+    h2 General Information
 
     .left
       span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
@@ -59,7 +59,7 @@ em
 
     hr
 
-    h3 Schedule
+    h2 Schedule
 
     .left = f.label :all_day
     .right
@@ -97,7 +97,7 @@ em
 
     hr
 
-    h3 Registrations
+    h2 Registrations
 
     .left = f.label :cost, 'Cost'
     .right
@@ -146,7 +146,7 @@ em
 
     hr
 
-    h3 Details
+    h2 Details
 
     .left = f.label :description
     .right = f.text_area :description

@@ -1,4 +1,4 @@
-h2 = admin_header("Version Diff of #{@model} ##{@id} – #{@a}:#{@b}")
+h1 = admin_header("Version Diff of #{@model} ##{@id} – #{@a}:#{@b}")
 = form_tag do
   = label_tag :mode, 'Diff Mode: '
   = select_tag :mode, options_for_select(%w[word line char], @mode), required: true

@@ -62,7 +62,7 @@ module MarkdownHelper
 
   def generate_markdown_div
     @markdown_div = +'<div class="markdown">'
-    @markdown_div << redcarpet.render(@page_markdown.to_s.gsub(/(#+)/, '#\1'))
+    @markdown_div << redcarpet.render(@page_markdown.to_s)
     @markdown_div << '</div>'
 
     @markdown_div

@@ -1,4 +1,4 @@
-h2 = "Catalog of All #{event_type_param.titleize}s"
+h1 = "Catalog of All #{event_type_param.titleize}s"
 
 = render "application/navigation/education", active: {courses: (event_type_param == 'course'), seminars: (event_type_param == 'seminar')}, catalog: true if event_type_param.in? %w[course seminar]
 

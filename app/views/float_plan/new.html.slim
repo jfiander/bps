@@ -1,4 +1,4 @@
-h2 File a Float Plan
+h1 File a Float Plan
 
 p Please fill out the following form to generate a float plan for your trip.
 
@@ -9,7 +9,7 @@ p
 
 = form_for(@float_plan, url: submit_float_plan_path, multipart: true) do |f|
   #float-plan
-    h3 Primary Contact
+    h2 Primary Contact
     .table
       .table-row
         .table-cell.table-header
@@ -22,7 +22,7 @@ p
           = f.label :phone
         .table-cell.field = f.text_field :phone, required: true
 
-    h3 Boat Information
+    h2 Boat Information
     .table
       .table-row
         .table-cell.table-header
@@ -80,7 +80,7 @@ p
           = f.number_field :fuel_capacity
           |  gallons
 
-    h3 Safety Equipment
+    h2 Safety Equipment
     .table
       .table-row
         .table-cell.table-header Emergency Equipment
@@ -127,7 +127,7 @@ p
                 = f.check_box :anchor
                 = f.label :anchor
 
-    h3 Radio
+    h2 Radio
     .table
       .table-row
         .table-cell.table-header EPIRB channels
@@ -170,7 +170,7 @@ p
         .table-cell.table-header = f.label :call_sign
         .table-cell.field = f.text_field :call_sign
 
-    h3 Route Plan
+    h2 Route Plan
     .table
       .table-row
         .table-cell.table-header
@@ -193,7 +193,7 @@ p
           = f.label :return_at
         .table-cell.field = f.datetime_field :return_at, required: true
 
-    h3.red Alert
+    h2.red Alert
     p.red.italic If not returned or contacted by this time, report missing.
     .table
       .table-row
@@ -210,7 +210,7 @@ p
         .table-cell.table-header = f.label :alert_phone, 'Phone'
         .table-cell.field = f.text_field :alert_phone
 
-    h3 Transportation Ashore
+    h2 Transportation Ashore
     .table
       .table-row
         .table-cell.table-header = f.label :car_make, 'Make'
@@ -234,13 +234,13 @@ p
         .table-cell.table-header = f.label :car_parked_at, 'Parked at'
         .table-cell.field = f.text_field :car_parked_at
 
-    h3 Misc
+    h2 Misc
     .table
       .table-row
         .table-cell.table-header = f.label :comments
         .table-cell.field = f.text_area :comments
 
-    h3 Persons Onboard
+    h2 Persons Onboard
     p.italic You must report at least one person onboard.
     #persons-onboard
       = f.nested_fields_for :float_plan_onboards do |ff|

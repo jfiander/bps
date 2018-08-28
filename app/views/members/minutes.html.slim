@@ -1,8 +1,8 @@
-h2 Squadron Meeting Minutes
+h1 Squadron Meeting Minutes
 
 = editor('minutes_editor') if current_user&.permitted?(:minutes)
 
-h4 Click on a button below to view or download that issue.
+h3 Click on a button below to view or download that issue.
 
 .table#bilge
   - @years.sort { |a,b| b <=> a }.each do |year|

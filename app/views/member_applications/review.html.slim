@@ -1,4 +1,4 @@
-h2 Review Member Applications
+h1 Review Member Applications
 
 - if @applications.present?
   p Approving an application will automatically invite all new members to choose a password on the website.
@@ -20,4 +20,4 @@ h2 Review Member Applications
       = link_to 'Approve this application', approve_application_path(app.id), method: :patch, remote: true, class: 'big',
         data: { confirm: 'Are you sure you want to approve this application and invite all applicants to the website?', disable_with: (FA::Icon.p('spinner', fa: 'pulse') + 'Approving application...') }
 - else
-  h3.red There are currently no pending applications.
+  h2.red There are currently no pending applications.

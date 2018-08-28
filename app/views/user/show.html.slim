@@ -1,4 +1,4 @@
-h2 = @user.full_name
+h1 = @user.full_name
 
 #profile.table
   .table-row
@@ -37,7 +37,7 @@ h2 = @user.full_name
 
 - if current_user.id == @user.id
   hr
-  h3 Profile Actions
+  h2 Profile Actions
   ul#profile-actions.simple
     li = link_to(profile_edit_path) { FA::Icon.p('edit') + 'Update your information' }
     - if current_user.id == @user.id && current_user.dues_due? && ENV['ENABLE_BRAINTREE'] == 'enabled'
@@ -46,7 +46,7 @@ h2 = @user.full_name
 
 - if @registrations.present?
   hr
-  h3 Current Registrations
+  h2 Current Registrations
   #profile-registrations.table
     - @registrations.each do |r|
       .table-row

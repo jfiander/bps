@@ -1,19 +1,19 @@
-h2 = "Current #{event_type_param.titleize} Registrations"
+h1 = "Current #{event_type_param.titleize} Registrations"
 
 = render "application/navigation/education", active: {courses: (event_type_param == 'course'), seminars: (event_type_param == 'seminar')} if event_type_param.in? %w[course seminar]
 
-h3 Current
+h2 Current
 - if @current.count.positive?
   #registrations.table
     - @current.each do |event|
       = render "events/registrations", type: event_type_param, event: event
 - else
-  h4.red There are no current registrations.
+  h3.red There are no current registrations.
 
-h3.red Expired
+h2.red Expired
 - if @expired.count.positive?
   #registrations.table
     - @expired.each do |event|
       = render "events/registrations", type: event_type_param, event: event
 - else
-  h4 There are no expired registrations.
+  h3 There are no expired registrations.

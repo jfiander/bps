@@ -1,5 +1,5 @@
 hr
-h3 Upload a new file
+h2 Upload a new file
 = form_for(@file, url: upload_file_path, multipart: true) do |f|
   = FA::Icon.p('file-pdf', style: :regular, css: 'file-type')
   = FA::Icon.p('file-image', style: :regular, css: 'file-type')
