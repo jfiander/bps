@@ -104,6 +104,32 @@ h2 Formatting Help
     hr
 
     p
+      b Reference Links
+    p You can specify reusable links, or simply define the URL for a link somewhere else in the page by using the following syntax:
+    p
+      span.bold.red
+        | [
+      | Link Name
+      span.bold.red
+        | ]: 
+      span.bold.red
+        | [
+      | http://example.com/some/path
+      span.bold.red
+        | ]
+    p To use one of these links in the page, reference it like this:
+    p
+      span.bold.red
+        | [
+      | Link Text to Display
+      span.bold.red
+        | ] [
+      | Link Name
+      span.bold.red
+        | ]
+    hr
+
+    p
       b Image
     p
       span.bold.red ![
@@ -143,25 +169,44 @@ h2 Formatting Help
     p
       b Table
     p
+      | You can create a table using 
+      span.bold.red |
+      |  and 
+      span.bold.red -
+      |  as shown below.
+    p
+      | You can also add 
+      span.bold.red
+        | :
+      |  at the ends of the row of 
+      span.bold.red -
+      |  to specify the alignment of each column. (The default is left.) 
+    p
       pre
         span.bold.red | 
-        | Header 1
+        | Header 1  
         span.bold.red  | 
-        | Header 2
+        | Center Header 2
+        span.bold.red  |  
+        | Right Header 3
         span.bold.red  |
         br
-        span.bold.red |----------|----------|
+        span.bold.red |------------|:---------------:|----------------:|
         br
         span.bold.red | 
-        | Item 1.1
+        | Item 1.1  
         span.bold.red  | 
-        | Item 2.1
+        |    Item 2.1    
+        span.bold.red  | 
+        |        Item 3.1
         span.bold.red  |
         br
         span.bold.red | 
-        | Item 1.2
+        | Item 1.2  
         span.bold.red  | 
-        | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        |                
+        span.bold.red  | 
+        |                
         span.bold.red  |
     hr
 
