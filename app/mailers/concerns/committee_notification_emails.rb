@@ -45,6 +45,7 @@ module CommitteeNotificationEmails
       'meetings' => 'Meetings & Programs'
     }[name]
 
+    @committee_chairs ||= load_committee_chairs
     @committee_chairs.find_all { |c| c.name == name }&.map { |c| c&.user&.email }
   end
 end

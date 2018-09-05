@@ -6,7 +6,6 @@ class RegistrationMailer < ApplicationMailer
 
   def registered(registration)
     @registration = registration
-    @committee_chairs = load_committee_chairs
     @to_list = to_list
 
     mail(to: @to_list, subject: 'New registration')
@@ -15,7 +14,6 @@ class RegistrationMailer < ApplicationMailer
 
   def cancelled(registration)
     @registration = registration
-    @committee_chairs = load_committee_chairs
     @to_list = to_list
 
     mail(to: @to_list, subject: 'Cancelled registration')
@@ -43,7 +41,6 @@ class RegistrationMailer < ApplicationMailer
 
   def paid(registration)
     @registration = registration
-    @committee_chairs = load_committee_chairs
     @to_list = to_list
 
     mail(to: @to_list, subject: 'Registration paid')
