@@ -8,8 +8,8 @@ require 'fileutils'
 class GoogleCalendarAPI
   OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
 
-  def authorize!
-    service.authorization = authorize
+  def authorize!(refresh: false)
+    service.authorization = authorize(refresh: refresh)
   end
 
   def create(calendar, event_options = {})
@@ -30,10 +30,10 @@ class GoogleCalendarAPI
 
   private
 
-  def authorize
+  def authorize(refresh: false)
     @user_id = 'default'
     @credentials = authorizer.get_credentials(@user_id)
-    return @credentials unless @credentials.nil?
+    return @credentials unless @credentials.nil? || refresh
 
     @url = authorizer.get_authorization_url(base_url: OOB_URI)
     puts 'Open to authorize:', @url
