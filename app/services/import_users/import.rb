@@ -46,7 +46,7 @@ module ImportUsers
         updated: @updated&.reduce({}, :merge),
         completions: @completions&.map(&:id),
         families: @families,
-        locked: @lock ? :skipped : @removed&.map(&:id)
+        locked: @lock ? @removed&.map(&:id) : :skipped
       }
     end
   end
