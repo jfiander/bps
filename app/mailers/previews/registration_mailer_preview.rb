@@ -37,6 +37,10 @@ class RegistrationMailerPreview < ActionMailer::Preview
     RegistrationMailer.confirm(reg_public_paid)
   end
 
+  def request_schedule
+    RegistrationMailer.request_schedule(EventType.last, by: User.first)
+  end
+
   private
 
   def reg_member_free

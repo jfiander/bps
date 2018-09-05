@@ -206,6 +206,9 @@ Rails.application.routes.draw do
   put     '/register/:type/:id', to: 'user#register',            as: 'register'
   delete  '/register/:id',       to: 'user#cancel_registration', as: 'cancel_registration'
 
+  # Request
+  put     '/request/:id', to: 'user#request_schedule', as: 'request_schedule'
+
   # Import
   get     '/import', to: 'user#import', as: 'import_users'
   post    '/import', to: 'user#do_import'

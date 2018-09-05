@@ -124,6 +124,22 @@ RSpec.describe RegistrationMailer, type: :mailer do
         expect(mail.body.encoded).to include('Amount paid: $')
       end
     end
+
+    describe 'request_schedule' do
+      let(:mail) { RegistrationMailer.request_schedule(ed_user_reg.event.event_type) }
+
+      it 'renders the headers' do
+        expect(mail.subject).to eql('Educational request')
+        expect(mail.to).to eql(['seo@bpsd9.org', 'aseo@bpsd9.org'])
+        expect(mail.from).to eql(['support@bpsd9.org'])
+      end
+
+      it 'renders the body' do
+        expect(mail.body.encoded).to include('Educational Request')
+        expect(mail.body.encoded).to include('has requested a')
+        expect(mail.body.encoded).to include('Please consider including this')
+      end
+    end
   end
 
   context 'with email' do

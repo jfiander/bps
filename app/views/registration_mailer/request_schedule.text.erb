@@ -1,0 +1,17 @@
+<%= render 'application/mailers/auto' %>
+
+Educational Request
+
+
+**********
+
+<%= @by.present? ? @by.full_name : 'Someone' %>
+
+has requested a <%= @event_type.event_category %>:
+
+<%= @event_type.display_title %>
+
+**********
+
+
+Please consider including this <%= @event_type.event_category %> in your upcoming schedules.

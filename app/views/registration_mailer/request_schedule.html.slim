@@ -1,0 +1,16 @@
+= render 'application/mailers/auto'
+
+h1.birmingham Educational Request
+
+p
+  = @by.present? ? @by.full_name : 'Someone'
+  |  has requested a 
+  b = @event_type.event_category
+  | :
+
+b = @event_type.display_title
+
+p
+  | Please consider including this 
+  = @event_type.event_category
+  |  in your upcoming schedules.

@@ -4,6 +4,7 @@ class UserController < ApplicationController
   include User::Load
   include User::Lock
   include User::Register
+  include User::RequestSchedule
   include User::Import
   include User::Invite
   include User::Edit

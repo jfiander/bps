@@ -70,6 +70,10 @@
                     = link_to(send("edit_#{event_type_param}_path", event), class: "control blue-faded") do
                       = FA::Icon.p('edit', fa: 'fw')
                       | Edit
+                  - if user_signed_in?
+                    = link_to(request_schedule_path(event.id), class: "control blue-faded", method: :put, remote: true, id: "request_link_#{event.id}") do
+                      = FA::Icon.p('check-square', style: :regular, fa: 'fw')
+                      | Request
                 - else
                   - if @current_user_permitted_event_type
                     = render 'events/actions', event: event
