@@ -15,7 +15,9 @@ module ImportUsers
       @parsed_csv = ImportUsers::ParseCSV.new(@path).call
       process_import
       File.unlink(@path) if File.exist?(@path)
-      results_hash
+      results = results_hash
+      ImportLog.create(json: results.to_json)
+      results
     end
 
     private
