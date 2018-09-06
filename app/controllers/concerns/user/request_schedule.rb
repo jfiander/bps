@@ -4,7 +4,7 @@ module User::RequestSchedule
   def request_schedule
     @event = Event.find_by(id: clean_params[:id])
 
-    RegistrationMailer.request_schedule(@event.event_type)
+    RegistrationMailer.request_schedule(@event.event_type).deliver
     flash[:success] = "#{@event.category.titleize} requested!"
   end
 end
