@@ -3,12 +3,6 @@
 module Application::LayoutAndFormatting
   private
 
-  def main_layout
-    return 'application_new' if ENV['NEW_HEADER'] == 'enabled'
-    return 'application_new' if current_user&.new_layout
-    'application_old'
-  end
-
   def load_layout_images
     pick_header_image
     @header_logo = static_bucket.link('logos/ABC.tr.300.png')

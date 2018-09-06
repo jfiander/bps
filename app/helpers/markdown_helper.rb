@@ -11,10 +11,7 @@ module MarkdownHelper
       page_title(StaticPage.find_by(name: action_name).title)
     end
 
-    render(
-      layout: send(:main_layout),
-      inline: render_markdown_raw(name: action_name)
-    )
+    render layout: 'application', inline: render_markdown_raw(name: action_name)
   end
 
   def render_markdown_raw(name: nil, markdown: nil)
