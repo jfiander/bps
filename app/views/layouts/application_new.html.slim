@@ -40,9 +40,9 @@ html
           - if current_user&.show_admin_menu? && admin_menu.values.any?
             #nested-navigation = render 'application/navigation/admin/nested', admin_links: admin_menu
           #flashes
-            #success class=(success ? '' : 'hide') = FA::Icon.p('check-circle') + success
-            #notice class=(notice ? '' : 'hide') = FA::Icon.p('info-circle') + notice
-            #alert class=(alert ? '' : 'hide') = FA::Icon.p('exclamation-circle') + alert
+            #success class=(success ? '' : 'hide') = success
+            #notice class=(notice ? '' : 'hide') = notice
+            #alert class=(alert ? '' : 'hide') = alert
             #error class=(error ? '' : 'hide') = formatted_error_flash(error)
         #content-main = yield
       footer
