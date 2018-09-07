@@ -28,6 +28,10 @@ module MarkdownHelper
     @markdown_div
   end
 
+  def simple_markdown(markdown)
+    sanitize(redcarpet.render(markdown.to_s))
+  end
+
   private
 
   def preload_markdown(name)
@@ -62,7 +66,7 @@ module MarkdownHelper
     @markdown_div << redcarpet.render(@page_markdown.to_s)
     @markdown_div << '</div>'
 
-    @markdown_div
+    sanitize(@markdown_div)
   end
 
   def redcarpet

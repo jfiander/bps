@@ -59,4 +59,10 @@ RSpec.describe MarkdownHelper, type: :helper do
       )
     end
   end
+
+  it 'should correctly parse using simple_markdown' do
+    expect(MarkdownHelper.simple_markdown('This is **bold** text.')).to eql(
+      "<p>This is <strong>bold</strong> text.</p>\n"
+    )
+  end
 end

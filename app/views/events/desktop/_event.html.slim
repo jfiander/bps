@@ -102,7 +102,7 @@
         .table-cell.bottom-left
           .table
             .table.row
-              .table-cell = simple_format(event.description)
+              .table-cell = simple_markdown(event.description) if event.description.present?
             - if course_topics(event).present?
               .table.row
                 .table-cell
@@ -121,7 +121,7 @@
               .table.row
                 .table-cell
                   b Student requirements:
-                  = simple_format(event.requirements)
+                  = simple_markdown(event.requirements)
             - if event_instructors(event).present? && !defined?(@event_catalog)
               .table.row
                 .table-cell

@@ -78,7 +78,7 @@
           small = simple_format(@locations[event.location_id][:details])
     - else
       | Location TBD
-.event-mobile-contents.spaced = simple_format(event.description)
+.event-mobile-contents.spaced = simple_markdown(event.description) if event.description.present?
 - if course_topics(event).present?
   .event-mobile-contents.spaced
     b Topics include:
@@ -94,7 +94,7 @@
 - if event.requirements.present?
   .event-mobile-contents.spaced
     b Student requirements:
-    p = simple_format(event.requirements)
+    p = simple_markdown(event.requirements)
 - if event_instructors(event).present? && !defined?(@event_catalog)
   .event-mobile-contents.spaced
     b = "Instructor".pluralize(event_instructors(event).count) + ":"
