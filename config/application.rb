@@ -83,3 +83,5 @@ module Bps
     FileUtils.mkdir_p("#{Rails.root}/tmp/run")
   end
 end
+
+require 'redcarpet/render_strip'

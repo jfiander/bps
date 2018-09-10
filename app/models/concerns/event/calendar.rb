@@ -89,9 +89,9 @@ module Concerns::Event::Calendar
   end
 
   def calendar_description
-    description.to_s +
-      "\n\n#{link}" \
-      "\n\n*** Booked automatically by #{ENV['DOMAIN']} ***"
+    Redcarpet::Markdown.new(Redcarpet::Render::StripDown).render(
+      description.to_s
+    ) + "\n\n#{link}\n\n*** Booked automatically by #{ENV['DOMAIN']} ***"
   end
 
   def calendar_details_updated?
