@@ -1,0 +1,42 @@
+- name: Seamanship
+  code: S
+  exam_prefix: SE
+- name: Piloting
+  code: P
+  exam_prefix: PI
+- name: Advanced Piloting
+  code: AP
+  exam_prefix: AP
+- name: Junior Navigation
+  code: JN
+  exam_prefix: JN
+- name: Navigation
+  code: N
+  exam_prefix: NA
+- name: Cruising and Cruise Planning
+  code: CP
+  exam_prefix: CP
+- name: Engine Maintenance
+  code: EM
+  exam_prefix: EM
+- name: Marine Communication Systems
+  code: CS
+  exam_prefix: CS
+- name: Marine Electrionic Systems
+  code: ES
+  exam_prefix: ES
+- name: Electronic Navigation
+  code: NS
+  exam_prefix: NS
+- name: Marine Electrionics
+  code: ME
+  exam_prefix: ME
+- name: Instructor Development
+  code: ID
+  exam_prefix:
+- name: Sail
+  code: SA
+  exam_prefix: SA
+- name: Weather
+  code: WE
+  exam_prefix: WE
