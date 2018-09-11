@@ -23,9 +23,7 @@ module EducationCertificatePDF::Seminars
   end
 
   def seminar_list
-    @seminar_list ||= YAML.safe_load(
-      File.read("#{Rails.root}/app/lib/education_certificate_pdf/seminars.yml")
-    )['seminars']
+    @seminar_list ||= SeminarList.new.list
   end
 
   def seminar_box(seminar, column)
