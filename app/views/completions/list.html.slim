@@ -11,9 +11,11 @@ h1
   - @completions.each do |user, comp|
     - comp.each_with_index do |c, i|
       .table-row class=(cycle('gray', ''))
-        .table-cell = user.full_name
-        .table-cell = user.certificate
+        .table-cell = user.full_name unless user.full_name == @previous_name
+        .table-cell = user.certificate unless user.full_name == @previous_name
         .table-cell = c.course_key
         .table-cell = c.date.strftime(ApplicationController::SIMPLE_DATE_FORMAT)
+      - @previous_name = user.full_name
     .table-row
       .table-cell style="height: 1em;"
+      - reset_cycle
