@@ -29,4 +29,10 @@
       width: 12em;
     }
   }
+
+  div.table-row.gray {
+    div.table-cell {
+      background-color: $background-blue-extra-faded;
+    }
+  }
 }
