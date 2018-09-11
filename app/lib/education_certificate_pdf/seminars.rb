@@ -23,7 +23,7 @@ module EducationCertificatePDF::Seminars
   end
 
   def seminar_list
-    @seminar_list ||= SeminarList.new.list
+    @seminar_list ||= CodeList.new.seminars
   end
 
   def seminar_box(seminar, column)

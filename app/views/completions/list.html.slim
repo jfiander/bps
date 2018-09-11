@@ -6,13 +6,29 @@ h1
   .table-row
     .table-cell.table-header Member
     .table-cell.table-header Certificate
-    .table-cell.table-header Course
+    .table-cell.table-header Subject
+    .table-cell.table-header Code
     .table-cell.table-header Date
   - @completions.each do |user, comp|
     - comp.each_with_index do |c, i|
       .table-row class=(cycle('gray', ''))
         .table-cell = user.full_name unless user.full_name == @previous_name
         .table-cell = user.certificate unless user.full_name == @previous_name
+        .table-cell
+          - subject = @seminar_list[c.course_key] || @course_list[c.course_key]
+          - unless subject
+            - key = @exam_list.keys.compact.select { |key| c.course_key.match(/#{key}_\d+[OCS]/) }.first
+            - if key.present?
+              - exam_type = c.course_key.last
+              = @exam_list[key]
+              - case exam_type
+              - when 'O'
+                |  – Open Book
+              - when 'C'
+                |  – Closed Book
+              - when 'S'
+                |  – Sight Folder
+          = subject
         .table-cell = c.course_key
         .table-cell = c.date.strftime(ApplicationController::SIMPLE_DATE_FORMAT)
       - @previous_name = user.full_name
