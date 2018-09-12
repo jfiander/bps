@@ -11,6 +11,12 @@
       - LD102
       - LD103
   green: true
+- name: Leadership Development – AO
+  code: LDAO
+- name: Leadership Development – XO
+  code: LDXO
+- name: Leadership Development – Cdr
+  code: LDCDR
 - name: Certified Instructor Expiration
   code: ID_EXPR
   yellow: true
@@ -89,3 +95,11 @@
   code: TRLRNG
 - name: Using VHF/DSC Marine Radio
   code: VHFDSC
+- name: Using an EPIRB
+  code: EPIRB
+- name: Computer Weather Forecasting
+  code: CWFN
+- name: Ocean Currents & Computer Navigation
+  code: OCCNAV
+- name: Thunderstorms & Severe Weather Forecasting
+  code: TSWFOR

@@ -13,7 +13,7 @@
 - name: BOC Endorsement – Inland Waterways
   code: BOC_IW
 - name: BOC Endorsement – Canadian
-  code: BOC_CAM
+  code: BOC_CAN
 - name: BOC Endorsement – Mexican
   code: BOC_MEX
 - name: Fire Extinguisher

@@ -17,7 +17,7 @@ h1
         .table-cell
           - subject = @seminar_list[c.course_key] || @course_list[c.course_key] || @boc_skills_list[c.course_key]
           - unless subject
-            - key = @exam_list.keys.compact.select { |key| c.course_key.match(/#{key}_\d+[OCS]/) }.first
+            - key = @exam_list.keys.compact.select { |key| c.course_key.match(/#{key}_\w+[OCS]?/) }.first
             - if key.present?
               - exam_type = c.course_key.last
               = @exam_list[key]

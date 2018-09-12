@@ -37,6 +37,12 @@
 - name: Instructor Development
   code: ID
   exam_prefix:
+- name: Instructor Qualification
+  code: IQ
+- name: Instructor Aids
+  code: IA
+- name: Instructor Training
+  code: IT
 - name: Sail
   code: SA
   exam_prefix: SA
