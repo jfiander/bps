@@ -7,6 +7,6 @@ module TimeHelper
   EVENT_DATE_FORMAT = '%a %d %b %Y'
   SIMPLE_DATE_FORMAT = '%-m/%-d/%Y'
   PUBLIC_DATE_FORMAT = '%b %-d'
-  PUBLIC_TIME_FORMAT = '%k:%M %P %Z'
+  PUBLIC_TIME_FORMAT = '%l:%M %P %Z'
   DURATION_FORMAT = '%-kh %Mm'
 end

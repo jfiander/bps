@@ -1,7 +1,7 @@
 Registration information:
   <%= @registration.event.category.to_s.titleize %>: <%= @registration.event.display_title %>
   Date: <%= @registration.event.start_at.strftime('%-d %B %Y') %>
-  Time: <%= @registration.event.start_at.strftime('%-k:%M %P') %>
+  Time: <%= @registration.event.start_at.strftime('%-l:%M %P') %>
   <%- if @registration.event.location.present? && !controller.action_name.in?(%w[confirm remind]) %>
   Location: <%= @registration.event.location.address.split("\n").first %>
   <%- end %>

@@ -9,7 +9,7 @@ p
   = @registration.event.start_at.strftime('%-d %B %Y')
   br
   b Time:  
-  = @registration.event.start_at.strftime('%-k:%M %P')
+  = @registration.event.start_at.strftime('%-l:%M %P')
   - if @registration.event.location.present? && !controller.action_name.in?(%w[confirm remind])
     br
     b Location: 
