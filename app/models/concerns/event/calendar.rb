@@ -2,19 +2,21 @@
 
 module Concerns::Event::Calendar
   def book!
+    return if booked?
+
     response = calendar.create(calendar_id, calendar_hash)
     store_calendar_details(response)
   end
 
   def unbook!
-    return if google_calendar_event_id.blank?
+    return unless booked?
 
     calendar.delete(calendar_id, google_calendar_event_id)
     store_calendar_details(nil)
   end
 
   def refresh_calendar!
-    return if google_calendar_event_id.blank?
+    return unless booked?
 
     calendar.update(calendar_id, google_calendar_event_id, calendar_hash)
   end
