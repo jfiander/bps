@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_05_175018) do
+ActiveRecord::Schema.define(version: 2018_09_12_163115) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -407,6 +407,7 @@ ActiveRecord::Schema.define(version: 2018_09_05_175018) do
     t.datetime "last_mm"
     t.boolean "new_layout"
     t.string "rank_override"
+    t.string "calendar_rule_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
