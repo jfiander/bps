@@ -10,16 +10,19 @@ module ImportUsers
     end
 
     def call
-      course_completions_data.each do |(key, date)|
-        next unless (date = ImportUsers::CleanDate.new(date).call)
-
-        @completions << create_completion(key, date) unless exists?(key, date)
-      end
+      completions_data.each { |(key, date)| process_completions(key, date) }
 
       @completions
     end
 
     private
+
+    def process_completions(key, date)
+      return unless (date = ImportUsers::CleanDate.new(date).call)
+      return if exists?(key, date)
+
+      @completions << create_completion(key, date)
+    end
 
     def create_completion(key, date)
       CourseCompletion.create!(
@@ -27,12 +30,12 @@ module ImportUsers
       )
     end
 
-    def completion_ignored_columns
+    def ignored_columns
       ImportUsers::IMPORTED_FIELDS + ImportUsers::IGNORED_FIELDS
     end
 
-    def course_completions_data
-      @row.to_hash.except(*completion_ignored_columns)
+    def completions_data
+      @row.to_hash.except(*ignored_columns)
     end
 
     def exists?(key, date)
