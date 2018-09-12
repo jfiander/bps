@@ -11,8 +11,8 @@ module ImportUsers
 
     def call
       course_completions_data.each do |(key, date)|
+        next if date.nil?
         date = ImportUsers::CleanDate.new(date).call
-        # raise [:cleaned_date, date].inspect if @user.certificate == 'E012345'
         next if course_completion_exists?(key, date)
 
         @completions << CourseCompletion.create!(

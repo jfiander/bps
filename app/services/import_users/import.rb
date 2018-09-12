@@ -9,6 +9,7 @@ module ImportUsers
       @created = []
       @updated = []
       @certificates = []
+      @completions = []
     end
 
     def call
@@ -33,7 +34,7 @@ module ImportUsers
     def process_row(row)
       user, changes = ImportUsers::ParseRow.new(row).call
       record_results(user, changes)
-      @completions = ImportUsers::CourseCompletions.new(user, row).call
+      @completions << ImportUsers::CourseCompletions.new(user, row).call
     end
 
     def record_results(user, changes)
@@ -46,7 +47,7 @@ module ImportUsers
       {
         created: @created&.map(&:id),
         updated: @updated&.reduce({}, :merge),
-        completions: @completions&.map(&:id),
+        completions: @completions&.flatten&.map(&:id),
         families: @families,
         locked: @lock ? @removed&.map(&:id) : :skipped
       }
