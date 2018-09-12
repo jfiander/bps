@@ -1,3 +1,6 @@
+- name: Boating Course
+  code: BC
+  exam:
 - name: Seamanship
   code: S
   exam_prefix: SE
