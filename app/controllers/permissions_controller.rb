@@ -41,6 +41,7 @@ class PermissionsController < ApplicationController
 
     user_role = UserRole.create!(user: user, role: role)
     permission_notification(user_role, :added, current_user)
+    update_calendar_acl(user)
 
     flash[:success] = "Successfully added #{role.name} " \
                       "permission to #{user.simple_name}."
@@ -56,6 +57,7 @@ class PermissionsController < ApplicationController
     end
 
     user_role.destroy
+    update_calendar_acl(user_role.user)
     permission_notification(user_role, :removed, current_user)
 
     flash[:success] = "Successfully removed #{user_role.role.name} " \
@@ -104,5 +106,21 @@ class PermissionsController < ApplicationController
         { title: 'By', value: by.full_name, short: true }
       ]
     ).notify!
+  end
+
+  def calendar_id
+    if ENV['ASSET_ENVIRONMENT'] == 'production'
+      ENV['GOOGLE_CALENDAR_ID_GEN']
+    else
+      ENV['GOOGLE_CALENDAR_ID_TEST']
+    end
+  end
+
+  def update_calendar_acl(user)
+    method = user.permitted?(:calendar) ? :permit : :unpermit
+
+    cal = GoogleCalendarAPI.new
+    cal.authorize!
+    cal.send(method, calendar_id, user)
   end
 end
