@@ -1,0 +1,32 @@
+- name: Boat Operator Certification
+  code:
+    any:
+      - BOC_IN
+      - BOC_CN
+      - BOC_ACN
+      - BOC_ON
+  yellow: true
+- name: BOC Endorsement – Sail
+  code: BOC_SA
+- name: BOC Endorsement – Paddle
+  code: BOC_PAD
+- name: BOC Endorsement – Inland Waterways
+  code: BOC_IW
+- name: BOC Endorsement – Canadian
+  code: BOC_CAM
+- name: BOC Endorsement – Mexican
+  code: BOC_MEX
+- name: Fire Extinguisher
+  code: FIRE
+- name: CPR/AED
+  code: CPR
+- name: Pyrotechnic Distress Signals
+  code: PYROD
+- name: First Aid
+  code: FAID
+- name: On-the-Water Navigation
+  code: NAV
+- name: Advanced Navigation
+  code: ADN
+- name: Offshore Navigation
+  code: ONC

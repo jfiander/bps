@@ -9,6 +9,7 @@ class CompletionsController < ApplicationController
   before_action :seminar_list
   before_action :course_list
   before_action :exam_list
+  before_action :boc_skills_list
 
   def list
     #
@@ -54,6 +55,12 @@ class CompletionsController < ApplicationController
   def exam_list
     @exam_list = CodeList.new.courses.map do |h|
       { h['exam_prefix'] => "#{h['name']} Exam" }
+    end.compact.reduce({}, :merge)
+  end
+
+  def boc_skills_list
+    @boc_skills_list = CodeList.new.boc_skills.map do |h|
+      { h['code'] => h['name'] }
     end.compact.reduce({}, :merge)
   end
 end
