@@ -5,7 +5,6 @@ bridge_office:
     - admin
   educational:
     - education
-    - calendar
   administrative:
     - users
     - calendar
@@ -17,7 +16,6 @@ bridge_office:
     - store
   asst_educational:
     - education
-    - calendar
   asst_secretary:
     - newsletter
     - calendar
