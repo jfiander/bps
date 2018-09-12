@@ -5,6 +5,7 @@ class OTWMailer < ApplicationMailer
     @to_list = to_list
 
     mail(to: @to_list, subject: 'On-the-Water training requested')
+    slack_notification(@otw.name)
   end
 
   def jumpstart(options = {})
@@ -12,6 +13,7 @@ class OTWMailer < ApplicationMailer
     @to_list = to_list
 
     mail(to: @to_list, subject: 'Jump Start training requested')
+    slack_notification('Jump Start')
   end
 
   private
@@ -21,5 +23,17 @@ class OTWMailer < ApplicationMailer
 
     committees = Committee.get(:educational, 'On-the-Water Training')
     list << committees&.map { |c| c&.user&.email }
+  end
+
+  def slack_notification(name)
+    SlackNotification.new(
+      type: :info, title: 'OTW Training Requested',
+      fallback: 'Someone has requested OTW training.',
+      fields: {
+        'Training' => name,
+        'Requested by' => @user&.full_name || @options[:name],
+        'Email' => @user&.email || @options[:email]
+      }
+    ).notify!
   end
 end
