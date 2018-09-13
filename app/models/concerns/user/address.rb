@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module User::Address
-  def mailing_address
+  def mailing_address(name: true)
     [
-      full_name,
+      (name ? full_name(html: false) : nil),
       address_1,
       address_2,
       "#{city} #{state} #{zip}"

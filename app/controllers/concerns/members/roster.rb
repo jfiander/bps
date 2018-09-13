@@ -33,9 +33,32 @@ module Members::Roster
     redirect_to root_path
   end
 
+  def roster_gen
+    respond_to do |format|
+      format.pdf { generate_and_send_roster }
+      format.html { redirect_to roster_gen_path(format: :pdf) }
+    end
+  end
+
   private
 
   def roster_params
-    params.permit(:roster)
+    params.permit(:roster, :orientation, :include_blank)
+  end
+
+  def roster_orientation
+    if roster_params[:orientation].in?(%w[portrait landscape])
+      roster_params[:orientation]
+    else
+      'portrait'
+    end
+  end
+
+  def generate_and_send_roster
+    send_file(
+      RosterPDF.send(roster_orientation, include_blank: roster_params[:include_blank].present?),
+      disposition: :inline,
+      filename: "Birmingham Power Squadron - #{Date.today.strftime('%Y')} Roster.pdf"
+    )
   end
 end

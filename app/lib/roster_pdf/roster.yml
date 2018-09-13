@@ -1,0 +1,66 @@
+cover:
+  portrait:
+    logo:
+      y: 700
+      width: 550
+    burgee:
+      x: 25
+      y: 475
+      width: 500
+    title:
+      y: 580
+      width: 550
+      size: 26
+    timestamp:
+      y: 75
+      width: 550
+  landscape:
+    logo:
+      y: 525
+      width: 325
+    burgee:
+      x: 50
+      y: 325
+      width: 275
+    title:
+      y: 425
+      width: 325
+      size: 20
+    timestamp:
+      y: 50
+      width: 325
+roster:
+  portrait:
+    logo:
+      x: 25
+      y: 720
+      width: 500
+    per_page: 12
+    columns: 3
+    base:
+      x: 0
+      y: 620
+    member:
+      width: 180
+      height: 130
+      after_name: 15
+    footer:
+      y: 10
+      width: 550
+  landscape:
+    logo:
+      x: 0
+      y: 560
+      width: 325
+    per_page: 6
+    columns: 2
+    base:
+      x: 0
+      y: 475
+    member:
+      width: 160
+      height: 130
+      after_name: 25
+    footer:
+      y: 0
+      width: 325
