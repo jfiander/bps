@@ -83,6 +83,10 @@ em
       .left = f.label :sessions, 'Number of sessions'
       .right = f.number_field :sessions, class: 'number', min: 1, max: 100, placeholder: '1', disabled: @event.all_day
       br.clear
+
+      .left = f.label :repeat_pattern, 'Repeat'
+      .right = f.select :repeat_pattern, options_for_select([['Every week', 'WEEKLY'], ['Consecutive days', 'DAILY']], @event.repeat_pattern), disabled: @event.all_day
+      br.clear
     
     #all_day_start_time class=(@event.all_day ? '' : 'hide')
       .left

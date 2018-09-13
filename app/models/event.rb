@@ -19,6 +19,7 @@ class Event < ApplicationRecord
 
   before_validation { validate_costs }
   before_validation { validate_dates }
+  validates :repeat_pattern, inclusion: { in: %w[DAILY WEEKLY] << nil }
 
   after_create { book! }
   before_destroy { unbook! }

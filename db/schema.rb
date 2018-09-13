@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_12_163115) do
+ActiveRecord::Schema.define(version: 2018_09_13_150755) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 2018_09_12_163115) do
     t.string "google_calendar_link"
     t.boolean "all_day", default: false
     t.string "summary"
+    t.string "repeat_pattern"
   end
 
   create_table "float_plan_onboards", force: :cascade do |t|
