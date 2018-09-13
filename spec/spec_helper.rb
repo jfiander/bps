@@ -39,6 +39,8 @@ SimpleCov.start('rails') do
   add_filter 'app/lib/google_calendar_api.rb'
   add_filter 'app/models/concerns/payments/braintree_methods.rb'
   add_filter 'app/models/concerns/payments/model_configs.rb'
+  ## used for configuring regular meetings
+  add_filter 'app/lib/regular_meetings.rb'
   ## used for fetching git information
   add_filter 'app/lib/git_info.rb'
   ## user to improve markdown formatting

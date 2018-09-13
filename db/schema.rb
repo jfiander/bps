@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 2018_09_13_150755) do
     t.string "google_calendar_link"
     t.boolean "all_day", default: false
     t.string "summary"
-    t.string "repeat_pattern"
+    t.string "repeat_pattern", default: "WEEKLY"
   end
 
   create_table "float_plan_onboards", force: :cascade do |t|

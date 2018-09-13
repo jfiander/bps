@@ -8,6 +8,7 @@ FactoryBot.define do
     expires_at Time.now + 3.weeks
     show_in_catalog false
     length Time.now + 2.hours
+    repeat_pattern 'WEEKLY'
 
     trait :with_instructor do
       after(:create) do |event|

@@ -13,7 +13,7 @@ class GoogleCalendarAPI
   end
 
   def create(calendar, event_options = {})
-    service.insert_event(calendar, event(event_options))
+    service.insert_event(calendar, event(event_options), conference_data_version: 1)
   end
 
   def get(calendar, event_id)
@@ -70,11 +70,18 @@ class GoogleCalendarAPI
   end
 
   def event(event_options)
-    event_options.assert_valid_keys(%i[summary start end description location recurrence])
+    event_options.assert_valid_keys(valid_event_keys)
     event_options[:start] = date(event_options[:start])
     event_options[:end] = date(event_options[:end])
 
     Google::Apis::CalendarV3::Event.new(event_options.reject { |_, v| v.nil? })
+  end
+
+  def valid_event_keys
+    %i[
+      summary start end description location recurrence conference_data
+      conference_data_version
+    ]
   end
 
   def date(date)
