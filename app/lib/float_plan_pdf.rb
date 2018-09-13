@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FloatPlanPDF < Prawn::Document
+class FloatPlanPDF < ApplicationPDF
   MODULES ||= %w[
     Heading PrimaryContact BoatInformation SafetyEquipment
     CommunicationInformation RoutePlan AlertPlan GroundTransportation
@@ -19,11 +19,6 @@ class FloatPlanPDF < Prawn::Document
   end
 
   private
-
-  def configure_colors(color = '232D62')
-    stroke_color(color)
-    fill_color(color)
-  end
 
   def labeled_text(label, value, x1:, x2:, y:)
     draw_text "#{label}:", size: 14, at: [x1, y]

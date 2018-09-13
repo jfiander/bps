@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RosterPDF < Prawn::Document
+class RosterPDF < ApplicationPDF
   include RosterPDF::CoverPage
   include RosterPDF::RosterPages
 
@@ -36,29 +36,6 @@ class RosterPDF < Prawn::Document
   def load_burgee
     burgee = BpsS3.new(:static).download('flags/Birmingham/Birmingham.png')
     File.open('tmp/run/Burgee.png', 'w+') { |f| f.write(burgee) }
-  end
-
-  def specify_font
-    font_families.update(
-      'DejaVu Sans' => {
-        normal: "#{Rails.root}/app/assets/fonts/DejaVuSans.ttf",
-        bold:   "#{Rails.root}/app/assets/fonts/DejaVuSans-Bold.ttf",
-        italic: "#{Rails.root}/app/assets/fonts/DejaVuSans-Oblique.ttf"
-      }
-    )
-
-    font 'DejaVu Sans'
-  end
-
-  def configure_colors(color = '232D62')
-    stroke_color(color)
-    fill_color(color)
-  end
-
-  def insert_image(*args)
-    image(*args)
-  rescue StandardError
-    nil
   end
 
   def config

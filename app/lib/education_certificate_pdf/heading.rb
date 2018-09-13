@@ -2,12 +2,8 @@
 
 module EducationCertificatePDF::Heading
   def heading(_, **_)
-    begin
-      load_header_image
-      image 'tmp/run/Wheel.500.png', at: [0, 730], width: 125
-    rescue StandardError
-      nil
-    end
+    load_header_image
+    insert_image 'tmp/run/Wheel.500.png', at: [0, 730], width: 125
     title_text
   end
 

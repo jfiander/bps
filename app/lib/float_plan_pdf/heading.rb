@@ -2,12 +2,8 @@
 
 module FloatPlanPDF::Heading
   def heading(_)
-    begin
-      load_header_image
-      image 'tmp/run/ABC.png', at: [0, 740], width: 550
-    rescue StandardError
-      nil
-    end
+    load_header_image
+    insert_image 'tmp/run/ABC.png', at: [0, 740], width: 550
     draw_text 'Float Plan', size: 22, at: [220, 630]
   end
 

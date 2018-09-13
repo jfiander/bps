@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EducationCertificatePDF < Prawn::Document
+class EducationCertificatePDF < ApplicationPDF
   MODULES ||= %w[
     Heading NameAndGrade Details Completions Seminars
   ].freeze
@@ -21,23 +21,6 @@ class EducationCertificatePDF < Prawn::Document
   end
 
   private
-
-  def specify_font
-    font_families.update(
-      'DejaVu Sans' => {
-        normal: "#{Rails.root}/app/assets/fonts/DejaVuSans.ttf",
-        bold:   "#{Rails.root}/app/assets/fonts/DejaVuSans-Bold.ttf",
-        italic: "#{Rails.root}/app/assets/fonts/DejaVuSans-Oblique.ttf"
-      }
-    )
-
-    font 'DejaVu Sans'
-  end
-
-  def configure_colors(color = '232D62')
-    stroke_color(color)
-    fill_color(color)
-  end
 
   def completion_row(row)
     y = 370 - (ROW_HEIGHT * (row - 1))
