@@ -10,13 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_13_150755) do
+ActiveRecord::Schema.define(version: 2018_09_21_203544) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+  end
+
+  create_table "award_recipients", force: :cascade do |t|
+    t.string "award_name"
+    t.date "year"
+    t.integer "user_id"
+    t.integer "additional_user_id"
+    t.string "name"
+    t.string "photo_file_name"
+    t.string "photo_content_type"
+    t.integer "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "bridge_offices", force: :cascade do |t|
@@ -282,6 +297,17 @@ ActiveRecord::Schema.define(version: 2018_09_13_150755) do
     t.string "boc_level"
   end
 
+  create_table "past_commanders", force: :cascade do |t|
+    t.date "year"
+    t.integer "user_id"
+    t.string "name"
+    t.boolean "deceased", default: false
+    t.string "comment"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "payments", force: :cascade do |t|
     t.string "parent_type"
     t.integer "parent_id"
@@ -409,6 +435,16 @@ ActiveRecord::Schema.define(version: 2018_09_13_150755) do
     t.boolean "new_layout"
     t.string "rank_override"
     t.string "calendar_rule_id"
+    t.date "last_mm_year"
+    t.integer "mm_cache"
+    t.string "spouse_name"
+    t.string "fax"
+    t.string "home_port"
+    t.date "birthday"
+    t.string "boat_name"
+    t.string "boat_type"
+    t.string "mmsi"
+    t.string "call_sign"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"

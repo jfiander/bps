@@ -47,7 +47,7 @@ module Members::Roster
   end
 
   def roster_orientation
-    if roster_params[:orientation].in?(%w[portrait landscape])
+    if roster_params[:orientation].in?(%w[portrait landscape detailed])
       roster_params[:orientation]
     else
       'portrait'

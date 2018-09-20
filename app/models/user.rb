@@ -9,6 +9,7 @@ class User < ApplicationRecord
   include User::Address
   include User::BOC
   include User::Dues
+  include User::RosterFormat
 
   devise(
     :invitable, :database_authenticatable, :recoverable, :trackable, :lockable,
@@ -61,6 +62,7 @@ class User < ApplicationRecord
     self.first_name = ActionController::Base.helpers.sanitize(first_name)
     self.last_name = ActionController::Base.helpers.sanitize(last_name)
     self.simple_name = "#{first_name} #{last_name}"
+    update_last_mm
   end
 
   validate :valid_rank, :valid_grade
@@ -75,6 +77,7 @@ class User < ApplicationRecord
   scope :with_any_name,     -> { where.not(simple_name: [nil, '', ' ']) }
   scope :valid_instructors, -> { where('id_expr > ?', Time.now) }
   scope :include_positions, -> { includes(position_associations) }
+  scope :recent_mm,         -> { where('last_mm_year >= ?', Date.today.beginning_of_year - 1.year) }
 
   def self.invitable
     unlocked.where('sign_in_count = 0').reject(&:placeholder_email?)
@@ -88,7 +91,7 @@ class User < ApplicationRecord
     fn << simple_name
     fn << formatted_grade
     fn << boc_display if show_boc
-    fn
+    fn.gsub(/&#39;/, "'")
   end
 
   def bridge_hash
@@ -139,5 +142,11 @@ class User < ApplicationRecord
 
   def cached_bridge_office
     @cached_bridge_office ||= bridge_office
+  end
+
+  def update_last_mm
+    return unless mm.to_i > mm_cache.to_i
+    self.mm_cache = mm
+    self.last_mm_year = Date.today.beginning_of_year
   end
 end

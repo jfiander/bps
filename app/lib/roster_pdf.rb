@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class RosterPDF < ApplicationPDF
-  include RosterPDF::CoverPage
-  include RosterPDF::RosterPages
+  include RosterPDF::Shared
+  include RosterPDF::Simple::CoverPage
+  include RosterPDF::Simple::RosterPages
 
   def self.create_pdf(orientation = :portrait, include_blank: false)
     @orientation = orientation
@@ -26,17 +27,11 @@ class RosterPDF < ApplicationPDF
     create_pdf(:landscape, include_blank: include_blank)
   end
 
+  def self.detailed(*_ignored)
+    RosterPDF::Detailed.create_pdf
+  end
+
   private
-
-  def load_logo
-    logo = BpsS3.new(:static).download('logos/ABC.long.birmingham.1000.png')
-    File.open('tmp/run/ABC-B.png', 'w+') { |f| f.write(logo) }
-  end
-
-  def load_burgee
-    burgee = BpsS3.new(:static).download('flags/Birmingham/Birmingham.png')
-    File.open('tmp/run/Burgee.png', 'w+') { |f| f.write(burgee) }
-  end
 
   def config
     @config ||= YAML.safe_load(

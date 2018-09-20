@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RosterPDF::RosterPages
+module RosterPDF::Simple::RosterPages
   def roster_pages(users, orientation)
     @orientation = orientation
     load_logo

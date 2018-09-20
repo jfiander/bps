@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RosterPDF::CoverPage
+module RosterPDF::Simple::CoverPage
   def cover_page(orientation, include_blank: false)
     @orientation = orientation
     load_logo

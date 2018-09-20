@@ -23,7 +23,7 @@ class BpsS3
   end
 
   def has?(key)
-    s3.object(key).exists?
+    s3.object(key)&.exists?
   end
 
   def download(key)
