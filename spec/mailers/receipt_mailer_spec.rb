@@ -125,7 +125,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
       it 'renders the headers' do
         expect(mail.subject).to eql('Registration paid')
-        expect(mail.to).to eql(['seo@bpsd9.org', 'aseo@bpsd9.org'])
+        expect(mail.to).to eql(['seo@bpsd9.org', 'aseo@bpsd9.org', 'treasurer@bpsd9.org'])
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 

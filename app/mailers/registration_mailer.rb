@@ -41,7 +41,7 @@ class RegistrationMailer < ApplicationMailer
 
   def paid(registration)
     @registration = registration
-    @to_list = to_list
+    @to_list = to_list << 'treasurer@bpsd9.org'
 
     mail(to: @to_list, subject: 'Registration paid')
   end

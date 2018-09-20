@@ -40,6 +40,6 @@ class MemberApplicationPreview < ActionMailer::Preview
   end
 
   def user
-    User.first
+    User.where(parent_id: nil).last
   end
 end
