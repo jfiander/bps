@@ -107,8 +107,8 @@ class PublicController < ApplicationController
 
   def registration_saved
     flash[:success] = 'You have successfully registered!'
-    if registration_payable?(registration)
-      redirect_to ask_to_pay_path(model: 'registration', id: registration.token)
+    if registration_payable?(@registration)
+      redirect_to ask_to_pay_path(model: 'registration', id: @registration.token)
     else
       redirect_to send("show_#{register_event_type}_path", id: @event_id)
     end
