@@ -25,12 +25,18 @@ import:
   - Tot.Years
   - Prim.Cert
   - Cert. Date
+  - Birthday
+  - Spouse
+  - Fax Phone
+  - MMSI
+  - Call Sign
+  - Boat Name
+  - Boat Type
+  - Home Port
 ignore:
   - DA
   - H/A
-  - Birthday
   - Sex
-  - Spouse
   - Spo Cert.
   - Spo Sex
   - Wedding
@@ -48,15 +54,9 @@ ignore:
   - Type / Status Code
   - Transfer
   - Telephone
-  - Fax Phone
   - < Test
   - Ext
   - OK
-  - MMSI
-  - Call Sign
-  - Boat Name
-  - Boat Type
-  - Home Port
   - OAL
   - Beam
   - Draft
