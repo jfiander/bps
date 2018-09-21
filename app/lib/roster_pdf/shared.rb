@@ -17,4 +17,13 @@ module RosterPDF::Shared
     ensign = BpsS3.new(:static).download('flags/PNG/ENSIGN.500.png')
     File.open('tmp/run/Ensign.png', 'w+') { |f| f.write(ensign) }
   end
+
+  def format_name(name)
+    if name.to_s&.match?(%r{1st/Lt})
+      pre, name = name.split('1st/Lt')
+      [{ text: "#{pre}1" }, { text: 'st', styles: [:superscript] }, { text: "/Lt#{name}" }]
+    else
+      [{ text: name }]
+    end
+  end
 end

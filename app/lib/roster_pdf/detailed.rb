@@ -23,7 +23,11 @@ class RosterPDF::Detailed < ApplicationPDF
       specify_font
       configure_colors
 
-      MODULES.each { |m| send(m.underscore) }
+      MODULES.each do |m|
+        puts "*** Generating #{m}..."
+        send(m.underscore)
+      end
+      puts '*** Roster generation complete!'
     end
 
     File.open('tmp/run/Roster.pdf', 'r+')

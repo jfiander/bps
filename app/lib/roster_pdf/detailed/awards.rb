@@ -26,11 +26,7 @@ module RosterPDF::Detailed::Awards
   private
 
   def award_intro
-    bounding_box([0, 540], width: 325, height: 50) do
-      text 'Squadron Awards', size: RosterPDF::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
-      move_down(10)
-      text config_text[:awards][:top], size: RosterPDF::Detailed::BODY_REG_SIZE, align: :justify
-    end
+    intro_block('Squadron Awards', config_text[:awards][:top], 50)
   end
 
   def award_block(name, bottom: false)

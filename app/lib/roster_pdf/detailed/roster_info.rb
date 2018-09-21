@@ -32,33 +32,32 @@ module RosterPDF::Detailed::RosterInfo
   end
 
   def grades
-    bounding_box([20, 230], width: 125, height: 130) do
-      bounding_box([0, 130], width: 25, height: 130) do
-        config_text[:roster_info][:grades].keys.each do |abbr|
-          text abbr.to_s, size: RosterPDF::Detailed::BODY_REG_SIZE, style: :bold
-        end
-      end
+    roster_info_table(:grades, 20, 25, [25, 100])
+  end
 
-      bounding_box([25, 130], width: 100, height: 130) do
-        config_text[:roster_info][:grades].values.each do |grade|
-          body_text grade
-        end
+  def ranks
+    roster_info_table(:ranks, 140, 50, [40, 160])
+  end
+
+  def roster_info_table(key, x_pos, gap, widths)
+    bounding_box([x_pos, 230], width: widths.sum, height: 130) do
+      roster_info_abbr_table(key, widths[0])
+      roster_info_desc_table(key, gap, widths[1])
+    end
+  end
+
+  def roster_info_abbr_table(key, width)
+    bounding_box([0, 130], width: width, height: 130) do
+      config_text[:roster_info][key].keys.each do |abbr|
+        text abbr.to_s, size: RosterPDF::Detailed::BODY_REG_SIZE, style: :bold
       end
     end
   end
 
-  def ranks
-    bounding_box([140, 230], width: 200, height: 130) do
-      bounding_box([0, 130], width: 40, height: 130) do
-        config_text[:roster_info][:ranks].keys.each do |abbr|
-          text abbr.to_s, size: RosterPDF::Detailed::BODY_REG_SIZE, style: :bold
-        end
-      end
-
-      bounding_box([50, 130], width: 160, height: 130) do
-        config_text[:roster_info][:ranks].values.each do |rank|
-          body_text rank, align: :left
-        end
+  def roster_info_desc_table(key, gap, width)
+    bounding_box([gap, 130], width: width, height: 130) do
+      config_text[:roster_info][key].values.each do |desc|
+        body_text desc.to_s, align: :left
       end
     end
   end

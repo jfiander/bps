@@ -45,35 +45,39 @@ module RosterPDF::Detailed::Helpers
     header_footer
   end
 
-  def format_name(name)
-    if name.to_s&.match?(%r{1st/Lt})
-      pre, name = name.split('1st/Lt')
-      [{ text: "#{pre}1" }, { text: 'st', styles: [:superscript] }, { text: "/Lt#{name}" }]
-    else
-      [{ text: name }]
+  def intro_block(heading, message, height)
+    bounding_box([0, 540], width: 325, height: height) do
+      text heading, size: RosterPDF::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
+      move_down(10)
+      text message, size: RosterPDF::Detailed::BODY_REG_SIZE, align: :justify
     end
   end
 
   def roster_entry(user_data, y_offset: 0)
-    first = true
     bounding_box([0, 530 - y_offset], width: 325, height: 90) do
-      bounding_box([0, 90], width: 155, height: 90) do
-        user_data[:left].each do |field|
-          if first
-            roster_entry_name(field)
-            move_down(12)
-            first = false
-          else
-            body_text field
-          end
-        end
+      roster_entry_left(user_data[:left])
+      roster_entry_column(user_data[:middle], 155, 80)
+      roster_entry_column(user_data[:right], 235, 90)
+    end
+  end
+
+  def roster_entry_left(user_data)
+    bounding_box([0, 90], width: 155, height: 90) do
+      user_data.each_with_index do |field, index|
+        roster_entry_left_first(field) if index.zero?
+        body_text(field, align: :left) unless index.zero?
       end
-      bounding_box([155, 90], width: 80, height: 90) do
-        user_data[:middle].each { |field| body_text(field) }
-      end
-      bounding_box([235, 90], width: 90, height: 90) do
-        user_data[:right].each { |field| body_text(field) }
-      end
+    end
+  end
+
+  def roster_entry_left_first(field)
+    roster_entry_name(field)
+    move_down(12)
+  end
+
+  def roster_entry_column(user_data, x_pos, width)
+    bounding_box([x_pos, 90], width: width, height: 90) do
+      user_data.each { |field| body_text(field, align: :left) }
     end
   end
 

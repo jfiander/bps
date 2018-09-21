@@ -20,17 +20,13 @@ module RosterPDF::Detailed::Merit
   private
 
   def merit_intro
-    bounding_box([0, 540], width: 325, height: 55) do
-      text 'We Honor Our Members', size: RosterPDF::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
-      move_down(10)
-      text config_text[:merit][:top], size: RosterPDF::Detailed::BODY_REG_SIZE, align: :justify
-    end
+    intro_block('We Honor Our Members', config_text[:merit][:top], 55)
   end
 
   def emeritus
     emeriti = @users.where('mm >= ?', 50)
     @emeritus_height = (50 + emeriti.count * 6 + (emeriti.present? ? 10 : 0))
-    bounding_box([0, 480], width: 325, height: @emeritus_height) do
+    bounding_box([0, 470], width: 325, height: @emeritus_height) do
       member_collection('Emeritus Members', emeriti, :emeritus, honor: true)
     end
   end
@@ -38,7 +34,7 @@ module RosterPDF::Detailed::Merit
   def life
     life_members = @users.where('mm >= ?', 25).where('mm < ?', 50)
     @life_height = (50 + life_members.count * 6 + (life_members.present? ? 10 : 0))
-    bounding_box([0, 470 - @emeritus_height], width: 325, height: @life_height) do
+    bounding_box([0, 450 - @emeritus_height], width: 325, height: @life_height) do
       member_collection('Life Members', life_members, :life, honor: true)
     end
 

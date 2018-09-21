@@ -41,15 +41,14 @@ module RosterPDF::Detailed::PastAwards
     past_awards = past_awards.map { |pa| [pa.display_year, pa.display_name] }
     left, right = past_awards.each_slice((past_awards.size / 2.0).round).to_a
 
-    bounding_box([0, y_pos - 40], width: 150, height: 500) do
-      left&.map { |a| "<b>#{a[0]}</b> #{a[1]}" }&.each do |l|
-        text l, size: size, align: :left, inline_format: true
-      end
-    end
+    past_award_column(left, size, 20, y_pos)
+    past_award_column(right, size, 175, y_pos)
+  end
 
-    bounding_box([175, y_pos - 40], width: 150, height: 500) do
-      right&.map { |a| "<b>#{a[0]}</b> #{a[1]}" }&.each do |r|
-        text r, size: size, align: :left, inline_format: true
+  def past_award_column(collection, size, x_pos, y_pos)
+    bounding_box([x_pos, y_pos - 40], width: 150, height: 500) do
+      collection&.map { |a| "<b>#{a[0]}</b> #{a[1]}" }&.each do |pa|
+        text pa, size: size, align: :left, inline_format: true
       end
     end
   end

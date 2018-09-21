@@ -66,13 +66,7 @@ module RosterPDF::Simple::RosterPages
   end
 
   def name(user)
-    name = user.full_name(html: false).gsub(/&#39;/, "'")
-    if name&.match?(%r{1st/Lt})
-      pre, name = name.split('1st/Lt')
-      [{ text: "#{pre}1" }, { text: 'st', styles: [:superscript] }, { text: "/Lt#{name}" }]
-    else
-      [{ text: name }]
-    end
+    format_name(user.full_name(html: false).gsub(/&#39;/, "'"))
   end
 
   def footer
