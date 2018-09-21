@@ -48,7 +48,7 @@ gem 'redcarpet',           '~> 3.4.0'
 gem 'slim',                '~> 3.0.6'
 gem 'usps_flags',          '~> 0.3.20'
 gem 'usps_flags-burgees',  '~> 0.0.19'
-gem 'usps_flags-grades',   '~> 0.0.4'
+gem 'usps_flags-grades',   '~> 0.0.5'
 
 # Logging
 gem 'bugsnag',             '~> 6.1.0'
