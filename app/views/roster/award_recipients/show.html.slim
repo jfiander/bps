@@ -1,0 +1,21 @@
+h1 Award Recipients
+
+= link_to 'Add Award Recipient', new_roster_award_recipients_path
+
+- @collection.group_by { |ar| ar.award_name }.each do |award, recipients|
+  h2 = award
+  .table
+    .table-row
+      .table-cell.table-header Year
+      .table-cell.table-header Name
+      .table-cell.table-header Additional Name
+      .table-cell
+    - recipients.each do |recipient|
+      .table-row class=(cycle('gray', ''))
+          .table-cell = recipient.year.strftime('%Y')
+          .table-cell = recipient.user&.simple_name || recipient.name
+          .table-cell = recipient.additional_user&.simple_name
+          .table-cell
+            = link_to(edit_roster_award_recipients_path(id: recipient.id)) { FA::Icon.p('edit') }
+            = link_to(roster_award_recipients_path(id: recipient.id), class: 'red', method: :delete, data: { confirm: 'Are you sure you want to remove this award recipient?' }) { FA::Icon.p('minus-square') }
+

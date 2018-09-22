@@ -59,7 +59,7 @@ module ApplicationHelper
 
   def admin_menu
     menus = %i[
-      current files users_top review upload users_bottom education otw
+      current files users_top review upload roster users_bottom education otw
       completions admin
     ]
 
@@ -109,6 +109,12 @@ module ApplicationHelper
     return unless current_user&.permitted?(:users, :roster)
 
     render('application/navigation/admin/upload')
+  end
+
+  def admin_roster
+    return unless current_user&.permitted?(:users, :roster)
+
+    render('application/navigation/admin/roster')
   end
 
   def admin_users_bottom

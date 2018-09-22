@@ -1,4 +1,4 @@
-class AwardRecipient < ApplicationRecord
+class Roster::AwardRecipient < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :additional_user, optional: true, class_name: 'User'
 
@@ -12,6 +12,7 @@ class AwardRecipient < ApplicationRecord
 
   validates_attachment_content_type :photo, content_type: %r{\Aimage/}
   validate :user_or_name
+  validates :year, presence: true
 
   scope :for, ->(award_name) { where(award_name: award_name) }
 

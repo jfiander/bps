@@ -1,0 +1,24 @@
+= render 'roster/heading', title: 'Past Commander'
+
+= form_for(@record, url: roster_past_commanders_path, multipart: true) do |f|
+  = f.hidden_field :id
+  #new-event
+    .left
+      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+      = f.label :year
+    .right = f.number_field :year, value: (@record.year || Date.today).strftime('%Y'), class: 'number', required: true
+    br.clear
+
+    .left = f.label :user_id
+    .right = f.select :user_id, options_for_select(@users.map { |u| [u.full_name(html: false), u.id] }, @record.user_id), include_blank: true
+    br.clear
+
+    .left = f.label :name
+    .right = f.text_field :name
+    br.clear
+
+    .left = f.label :deceased
+    .right = f.check_box :deceased
+    br.clear
+
+    .center = f.submit 'Submit Past Commander', class: 'big'

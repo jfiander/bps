@@ -1,0 +1,38 @@
+= render 'roster/heading', title: 'Award Recipient'
+
+= form_for(@record, url: roster_award_recipients_path, multipart: true) do |f|
+  = f.hidden_field :id
+  #new-event
+    .left
+      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+      = f.label :award_name
+    .right = f.select :award_name, options_for_select(@awards, @record.award_name), prompt: 'Please select an award.', include_blank: true, required: true
+    br.clear
+
+    .left
+      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+      = f.label :year
+    .right = f.number_field :year, value: (@record.year || Date.today).strftime('%Y'), class: 'number', required: true
+    br.clear
+
+    .left = f.label :user_id
+    .right = f.select :user_id, options_for_select(@users.map { |u| [u.full_name(html: false), u.id] }, @record.user_id), include_blank: true
+    br.clear
+
+    .left = f.label :additional_user_id
+    .right = f.select :additional_user_id, options_for_select(@users.map { |u| [u.full_name(html: false), u.id] }, @record.additional_user_id), include_blank: true
+    br.clear
+
+    .left = f.label :name
+    .right = f.text_field :name
+    br.clear
+
+    .left = f.label :photo
+    .right
+      = f.file_field :photo
+      - if @record.photo.present?
+        br
+        = image_tag Roster::AwardRecipient.buckets[:files].link(@record.photo&.s3_object(:thumb)&.key)
+    br.clear
+
+    .center = f.submit 'Submit Award Recipient', class: 'big'

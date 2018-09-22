@@ -1,0 +1,18 @@
+h1 Past Commanders
+
+= link_to 'Add Past Commander', new_roster_past_commanders_path
+
+.table
+  .table-row
+    .table-cell.table-header Year
+    .table-cell.table-header Name
+    .table-cell.table-header Deceased?
+    .table-cell
+  - @collection.each do |commander|
+    .table-row class=(cycle('gray', ''))
+        .table-cell = commander.year.strftime('%Y')
+        .table-cell = commander.user&.simple_name || commander.name
+        .table-cell = FA::Icon.p('dot-circle', style: :regular, css: 'red') if commander.deceased
+        .table-cell
+          = link_to(edit_roster_past_commanders_path(id: commander.id)) { FA::Icon.p('edit') }
+          = link_to(roster_past_commanders_path(id: commander.id), class: 'red', method: :delete, data: { confirm: 'Are you sure you want to remove this Past Commander?' }) { FA::Icon.p('minus-square') }

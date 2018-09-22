@@ -24,7 +24,7 @@ module RosterPDF::Detailed::PastCommanders
   end
 
   def pc_table
-    pcs = PastCommander.all
+    pcs = Roster::PastCommander.all
     return if pcs.blank?
     size = pcs.count > 60 ? 7 : 8
     left, right = pcs.each_slice((pcs.size / 2.0).round).to_a

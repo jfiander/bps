@@ -1,7 +1,8 @@
-class PastCommander < ApplicationRecord
+class Roster::PastCommander < ApplicationRecord
   belongs_to :user, optional: true
 
   validate :user_or_name
+  validates :year, presence: true
 
   def display_name
     return name unless user.present?

@@ -30,8 +30,8 @@ module RosterPDF::Detailed::Awards
   end
 
   def award_block(name, bottom: false)
-    recipient = AwardRecipient.current(name)&.user&.simple_name || AwardRecipient.current(name)&.name
-    additional = AwardRecipient.current(name)&.additional_user&.simple_name
+    recipient = Roster::AwardRecipient.current(name)&.user&.simple_name || Roster::AwardRecipient.current(name)&.name
+    additional = Roster::AwardRecipient.current(name)&.additional_user&.simple_name
 
     y_pos = bottom ? 240 : 490
     bounding_box([0, y_pos], width: 325, height: 210) do
@@ -47,7 +47,7 @@ module RosterPDF::Detailed::Awards
     winner = additional.present? ? 'winners were' : 'winner was'
     text "This year's #{winner}:", size: RosterPDF::Detailed::BODY_REG_SIZE, style: :bold, align: :center
     bounding_box([0, 130], width: 175, height: 140) do
-      insert_image "tmp/run/#{name}.png", height: 140
+      insert_image "tmp/run/#{name}.png", height: 140, position: :center
     end
     bounding_box([175, 130], width: 150, height: 140) do
       award_recipient_names(recipient, additional)
@@ -61,7 +61,7 @@ module RosterPDF::Detailed::Awards
   end
 
   def load_award_images
-    AwardRecipient.current.each do |award|
+    Roster::AwardRecipient.current.each do |award|
       next unless BpsS3.new(:files)&.has?(award&.photo&.path)
 
       photo = BpsS3.new(:files)&.download(award&.photo&.path)

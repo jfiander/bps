@@ -29,13 +29,13 @@ RSpec.describe RosterPDF, type: :lib do
       FactoryBot.create(:user, grade: 'JN', ed_pro: '2016-01-01')
       u = FactoryBot.create(:user, city: 'Someplace', state: 'ST')
       FactoryBot.create(:bridge_office, office: :commander, user: u)
-      FactoryBot.create(:award_recipient, award_name: 'Bill Booth Moose Milk', user: u, year: Date.today.strftime('%Y-%m-%d'), photo: File.new(test_image(300, 500)))
-      FactoryBot.create(:award_recipient, award_name: 'Master Mariner', user: u, year: Date.today.strftime('%Y-%m-%d'))
-      FactoryBot.create(:award_recipient, award_name: 'Bill Booth Moose Milk', user: u, year: '2014-01-01')
-      FactoryBot.create(:award_recipient, award_name: 'Master Mariner', user: u, year: '2014-01-01')
-      FactoryBot.create(:award_recipient, award_name: 'Master Mariner', user: u, year: '2013-01-01')
-      FactoryBot.create(:past_commander, user: u, year: '2012-01-01')
-      FactoryBot.create(:past_commander, user: u, year: '2015-01-01')
+      FactoryBot.create(:roster_award_recipient, award_name: 'Bill Booth Moose Milk', user: u, year: Date.today.strftime('%Y-%m-%d'), photo: File.new(test_image(300, 500)))
+      FactoryBot.create(:roster_award_recipient, award_name: 'Master Mariner', user: u, year: Date.today.strftime('%Y-%m-%d'))
+      FactoryBot.create(:roster_award_recipient, award_name: 'Bill Booth Moose Milk', user: u, year: '2014-01-01')
+      FactoryBot.create(:roster_award_recipient, award_name: 'Master Mariner', user: u, year: '2014-01-01')
+      FactoryBot.create(:roster_award_recipient, award_name: 'Master Mariner', user: u, year: '2013-01-01')
+      FactoryBot.create(:roster_past_commander, user: u, year: '2012-01-01')
+      FactoryBot.create(:roster_past_commander, user: u, year: '2015-01-01')
 
       expect { RosterPDF.detailed }.not_to raise_error
     end

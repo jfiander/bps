@@ -56,8 +56,6 @@ Rails.application.routes.draw do
   get     '/photos',                    to: 'gallery#index'
   get     '/minutes',                   to: 'members#minutes'
   post    '/assign_photo',              to: 'user#assign_photo'
-  get     '/locations',                 to: 'locations#list'
-  get     '/event_types',               to: 'event_types#list'
   get     '/apply',                     to: 'member_applications#new'
   get     '/applications',              to: 'member_applications#review'
   get     '/dues',                      to: 'members#dues'
@@ -108,12 +106,28 @@ Rails.application.routes.draw do
 
   # Locations and Event Types
   %i[location event_type].each do |model|
+    get     "/#{model}s",               to: "#{model}s#list",    as: "#{model}s"
     get     "/#{model}s/new",           to: "#{model}s#new",     as: "new_#{model}"
     post    "/#{model}s/create",        to: "#{model}s#create",  as: "create_#{model}"
     get     "/#{model}s/:id/edit",      to: "#{model}s#edit",    as: "edit_#{model}"
     patch   "/#{model}s/:id/update",    to: "#{model}s#update",  as: "update_#{model}"
     delete  "/#{model}s/:id/remove",    to: "#{model}s#remove",  as: "remove_#{model}"
     get     "/#{model}s/refresh(/:id)", to: "#{model}s#refresh", as: "refresh_#{model}s"
+  end
+
+  # Roster Historical Records
+  namespace :roster do
+    resource :award_recipients
+    resource :past_commanders
+    # %i[award_recipient past_commander].each do |model|
+    #   # get     "/#{model}s",               to: "roster/#{model}s#list",    as: "#{model}s"
+    #   # get     "/#{model}s/new",           to: "roster/#{model}s#new",     as: "new_#{model}"
+    #   # post    "/#{model}s",        to: "roster/#{model}s#create"
+    #   # get     "/#{model}s/:id/edit",      to: "roster/#{model}s#edit",    as: "edit_#{model}"
+    #   # patch   "/#{model}s",               to: "roster/#{model}s#update"
+    #   # delete  "/#{model}s/:id/remove",    to: "roster/#{model}s#destroy", as: "remove_#{model}"
+    #   resource model
+    # end
   end
 
   # Photo Galleries

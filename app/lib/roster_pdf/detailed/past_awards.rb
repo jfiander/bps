@@ -35,7 +35,7 @@ module RosterPDF::Detailed::PastAwards
   end
 
   def past_award_table(name, y_pos: 540)
-    past_awards = AwardRecipient.past(name)
+    past_awards = Roster::AwardRecipient.past(name)
     return if past_awards.blank?
     size = past_awards.count > 60 ? 7 : 8
     past_awards = past_awards.map { |pa| [pa.display_year, pa.display_name] }
