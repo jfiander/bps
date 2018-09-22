@@ -64,6 +64,10 @@ class RosterController < ApplicationController
     flash[:success] = "Successfully #{verb}d #{model}!" if success
     flash[:alert] = "Unable to #{verb} #{model}." unless success
 
+    render_or_redirect(success, render_sym)
+  end
+
+  def render_or_redirect(success, render_sym)
     if !success && render_sym.present?
       render render_sym
       return

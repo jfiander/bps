@@ -39,7 +39,7 @@ module RosterPDF::Detailed::PastAwards
     return if past_awards.blank?
     size = past_awards.count > 60 ? 7 : 8
     past_awards = past_awards.map { |pa| [pa.display_year, pa.display_name] }
-    left, right = past_awards.each_slice((past_awards.size / 2.0).round).to_a
+    left, right = halve(past_awards)
 
     past_award_column(left, size, 20, y_pos)
     past_award_column(right, size, 175, y_pos)

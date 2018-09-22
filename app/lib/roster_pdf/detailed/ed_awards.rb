@@ -43,7 +43,10 @@ module RosterPDF::Detailed::EdAwards
     left, right, size = ed_award_collections(
       ed_ach: options[:ed_ach], ed_pro: options[:ed_pro]
     )
-    ed_award_body(options[:y_2], options[:award], left, right, size)
+    ed_award_body(
+      y_pos: options[:y_2], key: options[:award],
+      left: left, right: right, size: size
+    )
   end
 
   def ed_awards_intro
@@ -100,26 +103,28 @@ module RosterPDF::Detailed::EdAwards
 
   def ed_award_results(users)
     return unless users.size.positive?
-    left, right = users.each_slice((users.size / 2.0).round).to_a
+    left, right = halve(users)
     size = users.size > 70 ? RosterPDF::Detailed::BODY_SM_SIZE : RosterPDF::Detailed::BODY_REG_SIZE
 
     [left, right, size]
   end
 
-  def ed_award_body(y_pos, key, left, right, size)
-    bounding_box([0, y_pos], width: 325, height: y_pos) do
-      text config_text[:education]["#{key} proud".to_sym], size: RosterPDF::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
+  def ed_award_body(options = {})
+    bounding_box([0, options[:y_pos]], width: 325, height: options[:y_pos]) do
+      text(
+        config_text[:education]["#{options[:key]} proud".to_sym],
+        size: RosterPDF::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
+      )
 
-      bounding_box([20, y_pos - 30], width: 150, height: y_pos - 30) do
-        left&.map(&:simple_name)&.each do |l|
-          text l, size: size, align: :left, inline_format: true
-        end
-      end
+      ed_award_column(options[:left], 20, options[:y_pos], options[:size])
+      ed_award_column(options[:right], 175, options[:y_pos], options[:size])
+    end
+  end
 
-      bounding_box([175, y_pos - 30], width: 150, height: y_pos - 30) do
-        right&.map(&:simple_name)&.each do |r|
-          text r, size: size, align: :left, inline_format: true
-        end
+  def ed_award_column(collection, x_pos, y_pos, size)
+    bounding_box([x_pos, y_pos - 30], width: 150, height: y_pos - 30) do
+      collection&.map(&:simple_name)&.each do |l|
+        text l, size: size, align: :left, inline_format: true
       end
     end
   end

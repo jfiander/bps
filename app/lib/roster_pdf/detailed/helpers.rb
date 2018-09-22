@@ -64,10 +64,13 @@ module RosterPDF::Detailed::Helpers
   def roster_entry_left(user_data)
     bounding_box([0, 90], width: 155, height: 90) do
       user_data.each_with_index do |field, index|
-        roster_entry_left_first(field) if index.zero?
-        body_text(field, align: :left) unless index.zero?
+        roster_entry_left_contents(field, index)
       end
     end
+  end
+
+  def roster_entry_left_contents(field, index)
+    index.zero? ? roster_entry_left_first(field) : body_text(field, align: :left)
   end
 
   def roster_entry_left_first(field)
@@ -87,5 +90,9 @@ module RosterPDF::Detailed::Helpers
       overflow: :shrink_to_fit, style: :bold, width: 145, height: 15,
       size: RosterPDF::Detailed::HEADING_SIZE, document: self
     ).render
+  end
+
+  def halve(collection)
+    collection.each_slice((collection.size / 2.0).round).to_a
   end
 end
