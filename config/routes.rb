@@ -119,15 +119,6 @@ Rails.application.routes.draw do
   namespace :roster do
     resource :award_recipients
     resource :past_commanders
-    # %i[award_recipient past_commander].each do |model|
-    #   # get     "/#{model}s",               to: "roster/#{model}s#list",    as: "#{model}s"
-    #   # get     "/#{model}s/new",           to: "roster/#{model}s#new",     as: "new_#{model}"
-    #   # post    "/#{model}s",        to: "roster/#{model}s#create"
-    #   # get     "/#{model}s/:id/edit",      to: "roster/#{model}s#edit",    as: "edit_#{model}"
-    #   # patch   "/#{model}s",               to: "roster/#{model}s#update"
-    #   # delete  "/#{model}s/:id/remove",    to: "roster/#{model}s#destroy", as: "remove_#{model}"
-    #   resource model
-    # end
   end
 
   # Photo Galleries
@@ -156,7 +147,8 @@ Rails.application.routes.draw do
   patch   '/approve_application/:id', to: 'member_applications#approve', as: 'approve_application'
 
   # Roster
-  get  '/roster',                    to: 'members#roster'
+  get  '/roster',                    to: 'members#roster_gen',    as: 'roster', defaults: { orientation: 'detailed' }
+  get  '/roster/download',           to: 'members#roster'
   get  '/update_roster',             to: 'members#update_roster', as: 'update_roster'
   post '/update_roster',             to: 'members#upload_roster'
   get  '/roster/gen(/:orientation)', to: 'members#roster_gen',    as: 'roster_gen'

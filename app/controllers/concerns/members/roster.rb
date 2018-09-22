@@ -36,7 +36,10 @@ module Members::Roster
   def roster_gen
     respond_to do |format|
       format.pdf { generate_and_send_roster }
-      format.html { redirect_to roster_gen_path(format: :pdf) }
+      format.html do
+        redirect_to roster_path(format: :pdf) if roster_orientation == 'detailed'
+        redirect_to roster_gen_path(format: :pdf) unless roster_orientation == 'detailed'
+      end
     end
   end
 
