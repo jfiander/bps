@@ -47,7 +47,7 @@ module RosterPDF::Detailed::Awards
     winner = additional.present? ? 'winners were' : 'winner was'
     text "This year's #{winner}:", size: RosterPDF::Detailed::BODY_REG_SIZE, style: :bold, align: :center
     bounding_box([0, 130], width: 175, height: 140) do
-      insert_image "tmp/run/#{name}.png", fit: [180, 140], position: :center
+      insert_image "tmp/run/#{name}.png", fit: [180, 140], position: :center, vposition: :center
     end
     bounding_box([175, 130], width: 150, height: 140) do
       award_recipient_names(recipient, additional)
