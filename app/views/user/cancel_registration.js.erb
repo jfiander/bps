@@ -1,9 +1,11 @@
 <%= render 'application/update_flashes' %>
 
-<%- if @cancel_link %>
-  $("#event_<%= @reg.event.id %>").html("Cancelled").attr("href", "#");
-  $("#event_<%= @reg.event.id %>_mobile").html("Cancelled").attr("href", "#");
-<% end %>
+<%- if flash[:alert].blank? %>
+  <%- if @cancel_link %>
+    $("#event_<%= @reg.event.id %>").html("Cancelled").attr("href", "#");
+    $("#event_<%= @reg.event.id %>_mobile").html("Cancelled").attr("href", "#");
+  <% end %>
 
-$("#registration_<%= @reg.id %>").fadeOut();
-$("#registration_<%= @reg.id %>_mobile").fadeOut();
+  $("#registration_<%= @reg.id %>").fadeOut();
+  $("#registration_<%= @reg.id %>_mobile").fadeOut();
+<% end %>
