@@ -41,3 +41,33 @@ div#registrations {
     padding: 1em 0;
   }
 }
+
+input.medium.control, button.medium.control, a.medium.control {
+  max-width: 12em;
+  width: 12em;
+  text-align: left;
+}
+
+input.medium.red, button.medium.red, a.medium.red {
+  background-color: $old-glory-red;
+}
+
+input.medium.red:hover, button.medium.red:hover, a.medium.red:hover {
+  background-color: darken($old-glory-red, 10%);
+}
+
+input.medium.green, button.medium.green, a.medium.green {
+  background-color: green;
+}
+
+input.medium.green:hover, button.medium.green:hover, a.medium.green:hover {
+  background-color: darken(green, 10%);
+}
+
+input.medium.blue-faded, button.medium.blue-faded, a.medium.blue-faded {
+  background-color: lighten($old-glory-blue, 20%);
+}
+
+input.medium.blue-faded:hover, button.medium.blue-faded:hover, a.medium.blue-faded:hover {
+  background-color: lighten($old-glory-blue, 10%);
+}

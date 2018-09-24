@@ -95,7 +95,7 @@ module EventsHelper
 
   def event_action_link(event, path, **options)
     options = {
-      icon: '', text: '', class: "control #{options[:css]}",
+      icon: '', text: '', class: "control medium #{options[:css]}",
       confirm: '', data: {}, icon_options: { fa: :fw, style: :regular }
     }.merge(options)
     confirm = options.delete(:confirm)
@@ -104,11 +104,11 @@ module EventsHelper
     icon = FA::Icon.p(options[:icon], **options.delete(:icon_options)) + options[:text].titleize
 
     if path.present? && path.match?(/_path/)
-      link_to(send(path, event), **options) { icon }
+      button_to(send(path, event), **options) { icon }
     elsif path.present?
-      link_to(path, **options) { icon }
+      button_to(path, **options) { icon }
     else
-      icon
+      button_to('#', **options) { icon }
     end
   end
 end
