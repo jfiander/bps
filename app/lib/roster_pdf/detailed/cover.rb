@@ -21,9 +21,9 @@ module RosterPDF::Detailed::Cover
   end
 
   def timestamp
+    ts = Time.now.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
     bounding_box([0, 470], width: 325, height: 35) do
-      timestamp = Time.now.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
-      text "Generated: #{timestamp}", size: RosterPDF::Detailed::SECTION_TITLE_SIZE, align: :center
+      text "Generated: #{ts}", size: RosterPDF::Detailed::SECTION_TITLE_SIZE, align: :center
     end
   end
 

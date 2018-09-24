@@ -27,7 +27,7 @@ module User::RosterFormat
         u.address_2,
         allow_blank(city_state(u)),
         allow_blank(u.zip),
-        allow_blank(u.email)
+        allow_blank(email(u))
       ]
     end
 
@@ -59,8 +59,13 @@ module User::RosterFormat
     end
 
     def city_state(u)
-      return nil unless u.city.present? && u.state.present?
+      return unless u.city.present? && u.state.present?
       "#{u.city}, #{u.state}"
+    end
+
+    def email(u)
+      return if u.placeholder_email?
+      u.email
     end
 
     def member_level(u)
