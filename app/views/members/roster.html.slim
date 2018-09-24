@@ -1,1 +1,4 @@
 iframe#roster src=(files_bucket.link("roster/Birmingham_Power_Squadron_-_#{Date.today.strftime('%Y')}_Roster.pdf"))
+
+hr
+= link_to 'Download Roster PDF', roster_path(format: :pdf)
