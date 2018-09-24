@@ -21,12 +21,12 @@ module BraintreeHelper
     params.permit(:payment_method_nonce, :token, :email)
   end
 
-  def load_payment(js: false)
+  def load_payment
     @token = clean_params[:token]
     @payment = Payment.find_by(token: @token)
 
-    return payment_not_found(js) if @payment.nil?
-    return payment_no_cost(js) unless @payment.parent.payment_amount.positive?
+    return payment_not_found if @payment.nil?
+    return payment_no_cost unless @payment.parent.payment_amount.positive?
   end
 
   def payment_not_found
