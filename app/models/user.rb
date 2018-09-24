@@ -104,7 +104,7 @@ class User < ApplicationRecord
   end
 
   def register_for(event)
-    Registration.create(user: self, event: event)
+    Registration.find_or_create_by(user: self, event: event)
   end
 
   def excom?
