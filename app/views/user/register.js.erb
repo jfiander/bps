@@ -1,7 +1,7 @@
 <%= render 'application/update_flashes' %>
 
 <%- unless flash[:alert].present? %>
-  <% if @registration.payment_amount.positive? && !@registration.payment.paid %>
+  <% if @registration.payable? %>
     <% pay_link = ask_to_pay_path(token: @registration.payment.token) %>
     <% pay_icon = FA::Icon.p('credit-card', style: :regular, title: 'Pay for registration') %>
     $("#event_<%= @event.id %>")

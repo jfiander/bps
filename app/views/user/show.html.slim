@@ -40,7 +40,7 @@ h1 = @user.full_name
   h2 Profile Actions
   ul#profile-actions.simple
     li = link_to(profile_edit_path) { FA::Icon.p('edit') + 'Update your information' }
-    - if current_user.id == @user.id && current_user.dues_due? && ENV['ENABLE_BRAINTREE'] == 'enabled'
+    - if current_user.id == @user.id && current_user.dues_due? && current_user.payable?
       li = link_to(dues_path, class: :red) { FA::Icon.p('credit-card') + 'Pay your annual dues online' }
     li = link_to(user_certificate_path(@user.id), target: :_blank, class: 'green') { FA::Icon.p('file-certificate', style: :regular) + 'View Educational Certificate' }
 
@@ -52,9 +52,9 @@ h1 = @user.full_name
       .table-row
         .table-cell.name = r.event.display_title
         .table-cell
-          - if r.paid? && ENV['ENABLE_BRAINTREE'] == 'enabled'
+          - if r.paid?
             = FA::Layer.p([{ name: 'credit-card', options: { style: :regular, css: :gray } }, { name: 'check', options: { style: :regular, css: :green, grow: 12 } }], title: 'Paid – Thank you!')
-          - elsif r.payable? && r.event.cost&.positive? && ENV['ENABLE_BRAINTREE'] == 'enabled'
+          - elsif r.payable?
             = link_to(pay_path(token: r.payment_token)) do
               = FA::Icon.p('credit-card', style: :regular, title: 'Pay for registration', fa: 'fw')
         .table-cell = r.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)

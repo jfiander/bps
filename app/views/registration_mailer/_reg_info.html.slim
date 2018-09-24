@@ -7,7 +7,7 @@
     = link_to 'View this event on Google Calendar', @registration.event.google_calendar_link
   br
 
-- if @registration.payable? && @registration.event.cost?
+- if @registration.payable?
   p
     | If you would like to, you can 
     = link_to 'pay for this registration now', pay_url(token: @registration.payment.token)

@@ -18,7 +18,7 @@ module Payable
   end
 
   def paid?
-    return nil unless self.class.payable?
+    return nil unless self&.class&.payable?
     self&.payment&.paid
   end
 
@@ -31,7 +31,8 @@ module Payable
   end
 
   def payable?
-    payment&.present?
+    payment&.present? && payment_amount&.to_i&.positive? && !paid? &&
+      ENV['ENABLE_BRAINTREE'] == 'enabled'
   end
 
   private
