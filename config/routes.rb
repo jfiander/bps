@@ -147,11 +147,10 @@ Rails.application.routes.draw do
   patch   '/approve_application/:id', to: 'member_applications#approve', as: 'approve_application'
 
   # Roster
-  get  '/roster',                    to: 'members#roster_gen',    as: 'roster', defaults: { orientation: 'detailed' }
-  get  '/roster/download',           to: 'members#roster'
-  get  '/update_roster',             to: 'members#update_roster', as: 'update_roster'
-  post '/update_roster',             to: 'members#upload_roster'
-  get  '/roster/gen(/:orientation)', to: 'members#roster_gen',    as: 'roster_gen'
+  get  '/roster',                    to: 'members#roster',        as: 'roster'
+  # get  '/update_roster',             to: 'members#update_roster', as: 'update_roster'
+  # post '/update_roster',             to: 'members#upload_roster'
+  get  '/roster/gen(/:orientation)', to: 'members#roster_gen',    as: 'roster_gen', defaults: { orientation: 'detailed' }
 
   # OTW Trainings
   get     '/otw',            to: 'otw_trainings#user'

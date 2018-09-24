@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 module Members::Roster
-  FILENAME ||= 'roster/Birmingham_Power_Squadron_Roster.pdf'
-
   def roster
-    redirect_to root_path and return unless files_bucket.has?(FILENAME)
+    redirect_to root_path and return unless files_bucket.has?("roster/#{roster_filename}")
 
     respond_to do |format|
       format.html
       format.pdf do
-        roster_file = files_bucket.download(FILENAME)
-        send_data(roster_file, filename: FILENAME.dup.tr('_', ' '), disposition: :inline)
+        roster_file = files_bucket.download("roster/#{roster_filename}")
+        send_data(roster_file, filename: roster_filename.dup.tr('_', ' '), disposition: :inline)
       end
     end
   end
@@ -26,7 +24,7 @@ module Members::Roster
       return
     end
 
-    files_bucket.upload(file: roster_params[:roster], key: FILENAME)
+    files_bucket.upload(file: roster_params[:roster], key: roster_filename)
 
     flash[:success] = 'Roster file succesfully updated!'
     flash[:notice] = 'There may be a ~24 hour delay in the live file changing.'
@@ -36,14 +34,15 @@ module Members::Roster
   def roster_gen
     respond_to do |format|
       format.pdf { generate_and_send_roster }
-      format.html do
-        redirect_to roster_path(format: :pdf) if roster_orientation == 'detailed'
-        redirect_to roster_gen_path(format: :pdf) unless roster_orientation == 'detailed'
-      end
+      format.html { redirect_to roster_gen_path(format: :pdf) }
     end
   end
 
   private
+
+  def roster_filename
+    "Birmingham_Power_Squadron_-_#{Date.today.strftime('%Y')}_Roster.pdf"
+  end
 
   def roster_params
     params.permit(:roster, :orientation, :include_blank)
@@ -58,10 +57,19 @@ module Members::Roster
   end
 
   def generate_and_send_roster
-    send_file(
-      RosterPDF.send(roster_orientation, include_blank: roster_params[:include_blank].present?),
-      disposition: :inline,
-      filename: "Birmingham Power Squadron - #{Date.today.strftime('%Y')} Roster.pdf"
-    )
+    pdf = RosterPDF.send(roster_orientation, include_blank: roster_params[:include_blank].present?)
+    upload_roster_to_s3(pdf.read)
+
+    pdf_file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'r+')
+    send_file(pdf_file, disposition: :inline, filename: roster_filename)
+  end
+
+  def upload_roster_to_s3(pdf)
+    pdf_file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'w+')
+    pdf_file.write(pdf)
+    pdf_file.rewind
+
+    pdf_file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'r+')
+    files_bucket.upload(file: pdf_file, key: "roster/#{roster_filename}")
   end
 end

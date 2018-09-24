@@ -1,2 +1,3 @@
 = link 'Award Recipients', path: roster_award_recipients_path, fa: { name: 'trophy',        options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users, :roster)
-= link 'P/Cs',  path: roster_past_commanders_path,  fa: { name: 'hourglass-end', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users, :roster)
+= link 'P/Cs',             path: roster_past_commanders_path,  fa: { name: 'hourglass-end', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users, :roster)
+= link 'Generate',         path: roster_gen_path,              fa: { name: 'file-plus',     options: { style: :regular, fa: :fw } } if current_user&.permitted?(:users, :roster)
