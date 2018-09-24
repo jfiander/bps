@@ -43,11 +43,8 @@ RSpec.describe Registration, type: :model do
         expect(@reg.payment_amount).to eql(15)
       end
 
-      it 'should return the payable token' do
-        expect(@reg.payment_token).to eql(@reg.payment.token)
-      end
-
-      it 'should detect if a payment object is present' do
+      it 'should detect if an object is payable' do
+        allow(ENV).to receive(:[]).with('ENABLE_BRAINTREE').and_return('enabled')
         expect(@reg.payable?).to be(true)
       end
 

@@ -109,7 +109,7 @@ module Payments::BraintreeMethods
 
   def transaction_options(nonce, email: nil, user_id: nil, postal_code: nil)
     options = {
-      amount: parent.payment_amount,
+      amount: amount,
       payment_method_nonce: nonce,
       options: braintree_options,
       custom_fields: custom_fields(user_id)

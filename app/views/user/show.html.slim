@@ -55,7 +55,7 @@ h1 = @user.full_name
           - if r.paid?
             = FA::Layer.p([{ name: 'credit-card', options: { style: :regular, css: :gray } }, { name: 'check', options: { style: :regular, css: :green, grow: 12 } }], title: 'Paid – Thank you!')
           - elsif r.payable?
-            = link_to(pay_path(token: r.payment_token)) do
+            = link_to(pay_path(token: r.payment.token)) do
               = FA::Icon.p('credit-card', style: :regular, title: 'Pay for registration', fa: 'fw')
         .table-cell = r.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
         .table-cell

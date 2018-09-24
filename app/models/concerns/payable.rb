@@ -26,10 +26,6 @@ module Payable
     nil
   end
 
-  def payment_token
-    payment&.token
-  end
-
   def payable?
     payment&.present? && payment_amount&.to_i&.positive? && !paid? &&
       ENV['ENABLE_BRAINTREE'] == 'enabled'

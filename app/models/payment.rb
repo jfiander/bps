@@ -11,8 +11,11 @@ class Payment < ApplicationRecord
   scope :recent, -> { where('created_at > ?', 11.months.ago) }
   scope :for_user, ->(user) { where(parent_type: 'User', parent_id: user.id) }
 
+  def amount
+    parent.payment_amount
+  end
+
   def transaction_amount
-    amount = parent.payment_amount
     amount.is_a?(Integer) ? "#{amount}.00" : amount
   end
 
