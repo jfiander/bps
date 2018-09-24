@@ -1,6 +1,21 @@
 <%= render 'application/update_flashes' %>
 
 <%- unless flash[:alert].present? %>
-  $("#event_<%= @event.id %>").html("Registered").addClass("red").attr("href", "#");
-  $("#event_<%= @event.id %>_mobile").html("Registered").addClass("red").attr("href", "#");
+  <% if @registration.payment_amount.positive? && !@registration.payment.paid %>
+    <% pay_link = ask_to_pay_path(token: @registration.payment.token) %>
+    <% pay_icon = FA::Icon.p('credit-card', style: :regular, title: 'Pay for registration') %>
+    $("#event_<%= @event.id %>")
+      .attr("href", "<%= pay_link %>")
+      .removeAttr("data-method").removeAttr("data-remote")
+      .addClass('green').attr("title", "Pay for registration")
+      .html("Registered <%= pay_icon %> Pay now?");
+    $("#event_<%= @event.id %>_mobile")
+      .attr("href", "<%= pay_link %>")
+      .removeAttr("data-method").removeAttr("data-remote")
+      .addClass('green').attr("title", "Pay for registration")
+      .html("Registered <%= pay_icon %> Pay now?");
+  <% else %>
+    $("#event_<%= @event.id %>").html("Registered").addClass("red").attr("href", "#");
+    $("#event_<%= @event.id %>_mobile").html("Registered").addClass("red").attr("href", "#");
+  <% end %>
 <%- end %>
