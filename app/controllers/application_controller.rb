@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   include MarkdownHelper
   include BucketHelper
   include ApplicationHelper
+  include AdminMenuHelper
   include TimeHelper
   helper_method :static_bucket, :files_bucket, :bilge_bucket, :photos_bucket
 
