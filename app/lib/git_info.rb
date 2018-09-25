@@ -29,6 +29,13 @@ class GitInfo
     @last_tag ||= load_json(TAGS_URL).first['name']
   end
 
+  def master_time
+    @master_time ||= Time.strptime(
+      load_json(MASTER_URL)['commit']['commit']['author']['date'],
+      '%Y-%m-%dT%H:%M:%S%Z'
+    )
+  end
+
   private
 
   def load_json(url)
