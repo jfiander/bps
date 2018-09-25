@@ -10,7 +10,7 @@ RSpec.describe PublicController, type: :controller do
     get :home
     expect(response).to have_http_status(:ok)
 
-    expect(response.body).to match(/Come for the [Bb]oating [Ee]ducation/)
+    expect(response.body).to match(/For Boaters, By Boaters/)
   end
 
   describe 'META tags' do
