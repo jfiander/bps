@@ -156,14 +156,14 @@ RSpec.describe Registration, type: :model do
       expect(reg.type).to eql('course')
     end
 
-    it 'dhould return seminar for seminars' do
+    it 'should return seminar for seminars' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
       event = FactoryBot.create(:event, event_type: event_type)
       reg = FactoryBot.create(:registration, event: event, user: @user)
       expect(reg.type).to eql('seminar')
     end
 
-    it 'dhould return meeting for meetings' do
+    it 'should return meeting for meetings' do
       event_type = FactoryBot.create(:event_type, event_category: 'meeting')
       event = FactoryBot.create(:event, event_type: event_type)
       reg = FactoryBot.create(:registration, event: event, user: @user)
