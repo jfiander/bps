@@ -34,9 +34,9 @@ module User::RosterFormat
     def middle(u)
       [
         allow_blank(u.certificate),
-        allow_blank(postfix(u.total_years, 'years')),
+        allow_blank(postfix(u.total_years, 'year'.pluralize(u.total_years))),
         allow_blank(prefix(u.phone_c, 'c.')),
-        allow_blank(postfix(u.mm, 'Merit Marks')),
+        allow_blank(postfix(u.mm, 'Merit Mark'.pluralize(u.mm))),
         allow_blank(member_level(u)),
         allow_blank(prefix(u.fax, 'f.'))
       ]
