@@ -134,6 +134,10 @@ em
           .description.public_registrations
     br.clear
 
+    .left = f.label :registration_limit, 'Registrations limit'
+    .right = f.number_field :registration_limit, class: 'number', min: 0, placeholder: 'no limit'
+    br.clear
+
     .left
       = f.label :cutoff_at, 'Do not allow registrations after', class: 'red'
       ul.red

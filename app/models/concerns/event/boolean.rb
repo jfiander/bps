@@ -6,7 +6,12 @@ module Concerns::Event::Boolean
   end
 
   def cutoff?
-    cutoff_at.present? && cutoff_at < Time.now
+    (cutoff_at.present? && cutoff_at < Time.now) || full?
+  end
+
+  def full?
+    registration_limit.to_i.positive? &&
+      registrations.count >= registration_limit.to_i
   end
 
   def reminded?
