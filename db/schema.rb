@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_25_211859) do
+ActiveRecord::Schema.define(version: 2018_09_25_224113) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -340,6 +340,7 @@ ActiveRecord::Schema.define(version: 2018_09_25_211859) do
     t.datetime "deleted_at"
     t.string "name"
     t.string "phone"
+    t.integer "override_cost"
   end
 
   create_table "roles", force: :cascade do |t|

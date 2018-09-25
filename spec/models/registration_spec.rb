@@ -43,6 +43,11 @@ RSpec.describe Registration, type: :model do
         expect(@reg.payment_amount).to eql(15)
       end
 
+      it 'should return the overridden payable amount' do
+        @reg.update(override_cost: 10)
+        expect(@reg.payment_amount).to eql(10)
+      end
+
       it 'should detect if an object is payable' do
         allow(ENV).to receive(:[]).with('ENABLE_BRAINTREE').and_return('enabled')
         expect(@reg.payable?).to be(true)
