@@ -77,7 +77,7 @@ em
       br.clear
 
       .left = f.label :length, 'Session length'
-      .right = f.time_select :length, minute_step: 15, end_hour: 8, default: {hour: 2, minute: 0}, disabled: @event.all_day
+      .right = f.time_select :length, minute_step: 15, end_hour: 12, default: {hour: 2, minute: 0}, disabled: @event.all_day
       br.clear
 
       .left = f.label :sessions, 'Number of sessions'
