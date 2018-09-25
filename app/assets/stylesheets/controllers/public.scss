@@ -18,6 +18,10 @@
     @include blue-button(0.25em);
   }
 
+  a.members {
+    @include blue-button(0.25em, lighten($old-glory-blue, 20%));
+  }
+
   .table-cell.excom a {
     background-color: lighten($old-glory-blue, 10%);
   }

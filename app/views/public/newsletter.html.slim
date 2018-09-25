@@ -6,14 +6,14 @@ h2 The Bilge Chatter
 h3 Click on a button below to view or download that issue.
 
 - if user_signed_in?
-  .information Issues in the gray area are not displayed to the public.
+  .information Issues with darker buttons are not displayed to the public.
 
 .table#bilge
-  - @years.sort { |a,b| b <=> a }.each_with_index do |year, index|
-    .table-row class=(index > 1 ? 'gray-background' : '')
+  - @years.sort { |a, b| b <=> a }.each_with_index do |year, index|
+    .table-row class=(cycle('', 'gray'))
       .table-cell.table-header = year
       - @available_issues.each do |key, issue|
-        .table-cell = @issues.include?("#{year}/#{key}") ? link_to(issue, bilge_bucket.link("#{year}/#{key}.pdf"), target: :_blank) : "-"
+        .table-cell = @issues.include?("#{year}/#{key}") ? link_to(issue, bilge_bucket.link("#{year}/#{key}.pdf"), target: :_blank, class: (index > 1 ? 'members' : '')) : "-"
 
 hr
 = link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag static_bucket.link("acrobat_reader.png") }

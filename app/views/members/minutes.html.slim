@@ -5,12 +5,13 @@ h1 Squadron Meeting Minutes
 h3 Click on a button below to view or download that issue.
 
 .table#bilge
-  - @years.sort { |a,b| b <=> a }.each do |year|
-    .table-row
+  - @years.sort { |a, b| b <=> a }.each do |year|
+    - gray = cycle('', 'gray')
+    .table-row class=(gray)
       .table-cell.table-header = year
       - @available_issues.each do |issue, month|
         .table-cell = @issues.include?("#{year}/#{issue}") ? link_to(month, files_bucket.link("minutes/#{year}/#{issue}.pdf"), target: :_blank) : "-"
-    .table-row
+    .table-row class=(gray)
       .table-cell.table-header ExCom
       - @available_issues.each do |issue, month|
         .table-cell.excom = @issues_excom.include?("#{year}/#{issue}") ? link_to(month, files_bucket.link("excom_minutes/#{year}/#{issue}.pdf"), target: :_blank) : "-"
