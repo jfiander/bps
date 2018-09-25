@@ -13,7 +13,8 @@ class RegularMeetings
   end
 
   def calendar_id
-    Event.last.send(:calendar_id)
+    Event.includes(:event_type).where(event_types: { event_category: 'meeting' })
+         .last.send(:calendar_id)
   end
 
   def membership
