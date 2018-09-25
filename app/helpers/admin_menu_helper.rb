@@ -10,8 +10,6 @@ module AdminMenuHelper
     @admin_menu ||= menus.map do |menu|
       { menu => send("admin_#{menu}") }
     end.reduce({}, :merge)
-
-    raise @admin_menu.inspect
   end
 
   private
