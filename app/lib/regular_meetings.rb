@@ -23,7 +23,7 @@ class RegularMeetings
       end: Time.strptime('2018/01/09 21:00', '%Y/%m/%d %H:%M').to_datetime,
       summary: 'Membership Meeting',
       description: membership_description,
-      location: nil,
+      location: "Kerby's Koney Island, 5407 Crooks Rd, Troy, MI 48098, USA",
       recurrence: ['RRULE:FREQ=MONTHLY;BYMONTH=1,2,3,4,5,9,10,11,12;BYDAY=2TU'],
       conference_data_version: 1,
       conference_data: Google::Apis::CalendarV3::ConferenceData.new(**membership_meet)
@@ -46,7 +46,7 @@ class RegularMeetings
       end: Time.strptime('2018/01/02 21:30', '%Y/%m/%d %H:%M').to_datetime,
       summary: 'Executive Committee Meeting',
       description: excom_description,
-      location: nil,
+      location: "Kerby's Koney Island, 5407 Crooks Rd, Troy, MI 48098, USA",
       recurrence: ['RRULE:FREQ=MONTHLY;BYMONTH=1,2,3,4,5,6,9,10,11,12;BYDAY=1TU'],
       conference_data: Google::Apis::CalendarV3::ConferenceData.new(**excom_meet)
     }
