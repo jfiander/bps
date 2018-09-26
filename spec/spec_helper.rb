@@ -86,6 +86,14 @@ def assign_bridge_office(office, user)
   bridge_office.update(user: user)
 end
 
+def clear_test_calendar
+  cal = GoogleCalendarAPI.new
+  cal.authorize!
+  cal.clear_test_calendar
+rescue Google::Apis::ClientError
+  nil
+end
+
 RSpec.configure do |config|
   config.example_status_persistence_file_path = 'tmp/run/failures.txt'
 
@@ -97,6 +105,8 @@ RSpec.configure do |config|
   config.after(:suite) do
     DatabaseCleaner.clean_with(:truncation)
     Dir["#{Rails.root}/tmp/run/**/*"].each { |file| File.delete(file) }
+
+    clear_test_calendar
   end
 
   # rspec-expectations config goes here. You can use an alternate

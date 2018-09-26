@@ -28,6 +28,13 @@ class GoogleCalendarAPI
     service.delete_event(calendar, event_id)
   end
 
+  def clear_test_calendar
+    cal_id = ENV['GOOGLE_CALENDAR_ID_TEST']
+    service.list_events(cal_id, max_results: 2500).items.each do |event|
+      delete(cal_id, event.id)
+    end
+  end
+
   def permit(calendar, user)
     rule = Google::Apis::CalendarV3::AclRule.new(
       scope: { type: 'user', value: user.email },
