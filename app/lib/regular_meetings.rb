@@ -19,8 +19,8 @@ class RegularMeetings
 
   def membership
     {
-      start: Time.strptime('2018/01/09 18:00', '%Y/%m/%d %H:%M').to_datetime,
-      end: Time.strptime('2018/01/09 21:00', '%Y/%m/%d %H:%M').to_datetime,
+      start: Time.strptime('2018/01/09 18:00 EST', '%Y/%m/%d %H:%M %Z').to_datetime,
+      end: Time.strptime('2018/01/09 21:00 EST', '%Y/%m/%d %H:%M %Z').to_datetime,
       summary: 'Membership Meeting',
       description: membership_description,
       location: "Kerby's Koney Island, 5407 Crooks Rd, Troy, MI 48098, USA",
@@ -42,8 +42,8 @@ class RegularMeetings
 
   def excom
     {
-      start: Time.strptime('2018/01/02 18:00', '%Y/%m/%d %H:%M').to_datetime,
-      end: Time.strptime('2018/01/02 21:30', '%Y/%m/%d %H:%M').to_datetime,
+      start: Time.strptime('2018/01/02 18:00 EST', '%Y/%m/%d %H:%M %Z').to_datetime,
+      end: Time.strptime('2018/01/02 21:30 EST', '%Y/%m/%d %H:%M %Z').to_datetime,
       summary: 'Executive Committee Meeting',
       description: excom_description,
       location: "Kerby's Koney Island, 5407 Crooks Rd, Troy, MI 48098, USA",
