@@ -19,8 +19,8 @@ class RegularMeetings
 
   def membership
     {
-      start: Date.strptime('2018/01/09 18:00', '%Y/%m/%d %H:%M').to_datetime,
-      end: (Date.strptime('2018/01/09 18:00', '%Y/%m/%d %H:%M') + 3.hours).to_datetime,
+      start: Time.strptime('2018/01/09 18:00', '%Y/%m/%d %H:%M').to_datetime,
+      end: Time.strptime('2018/01/09 21:00', '%Y/%m/%d %H:%M').to_datetime,
       summary: 'Membership Meeting',
       description: membership_description,
       location: nil,
@@ -42,8 +42,8 @@ class RegularMeetings
 
   def excom
     {
-      start: Date.strptime('2018/01/02 18:00', '%Y/%m/%d %H:%M').to_datetime,
-      end: (Date.strptime('2018/01/02 18:00', '%Y/%m/%d %H:%M') + 3.hours).to_datetime,
+      start: Time.strptime('2018/01/02 18:00', '%Y/%m/%d %H:%M').to_datetime,
+      end: Time.strptime('2018/01/02 21:30', '%Y/%m/%d %H:%M').to_datetime,
       summary: 'Executive Committee Meeting',
       description: excom_description,
       location: nil,
