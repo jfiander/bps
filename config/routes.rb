@@ -80,6 +80,7 @@ Rails.application.routes.draw do
   get     '/minutes/:year/:month', to: 'members#get_minutes',       as: 'get_minutes'
   get     '/excom/:year/:month',   to: 'members#get_minutes_excom', as: 'get_minutes_excom'
   post    '/bilge',                to: 'members#upload_bilge',      as: 'upload_bilge'
+  get     '/bilge',                to: redirect('/newsletter')
 
   # Registration
   put     '/register', to: 'public#register', as: 'public_register'

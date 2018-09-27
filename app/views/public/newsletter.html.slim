@@ -9,11 +9,16 @@ h3 Click on a button below to view or download that issue.
   .information Issues with darker buttons are not displayed to the public.
 
 .table#bilge
-  - @years.sort { |a, b| b <=> a }.each_with_index do |year, index|
+  - @bilges.sort_by { |b| [-b.year, b.month] }.group_by(&:year).each do |year, bilges|
     .table-row class=(cycle('', 'gray'))
       .table-cell.table-header = year
-      - @available_issues.each do |key, issue|
-        .table-cell = @issues.include?("#{year}/#{key}") ? link_to(issue, bilge_bucket.link("#{year}/#{key}.pdf"), target: :_blank, class: (index > 1 ? 'members' : '')) : "-"
+      - @issues.keys.each do |month|
+        .table-cell
+          - if month.in?(bilges.map(&:month))
+            - bilge = bilges.select { |b| b.month == month }.first
+            = link_to(bilge.issue, bilge_bucket.link(bilge.key), target: :_blank, class: (bilge.id.in?(@public_ids) ? '' : 'members'))
+          - else
+            | -
 
 hr
 = link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag static_bucket.link("acrobat_reader.png") }

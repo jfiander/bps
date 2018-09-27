@@ -10,7 +10,7 @@ $ ->
 
 $(document).ready ->
   $('#minutes_remove').change ->
-    $('#minutes_upload_file').prop 'disabled', $(this).is(':checked')
+    $('#file').prop 'disabled', $(this).is(':checked')
     return
   return
 

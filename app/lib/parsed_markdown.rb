@@ -102,7 +102,7 @@ class ParsedMarkdown < String
   end
 
   def file_link(id, title: nil)
-    markdown_link(prefix: 'uploaded_files', id: id, title: title)
+    markdown_link(prefix: 'uploaded/markdown_files', id: id, title: title)
   end
 
   def markdown_link(prefix:, id:, title: nil)
@@ -115,7 +115,7 @@ class ParsedMarkdown < String
   end
 
   def image(id)
-    key = "uploaded_files/#{get_uploaded_file_name(id)}"
+    key = "uploaded/markdown_files/#{get_uploaded_file_name(id)}"
     @view_context.image_tag(@files_bucket.link(key))
   end
 

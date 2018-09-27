@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_25_224113) do
+ActiveRecord::Schema.define(version: 2018_09_27_173624) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -29,6 +29,18 @@ ActiveRecord::Schema.define(version: 2018_09_25_224113) do
     t.string "photo_content_type"
     t.integer "photo_file_size"
     t.datetime "photo_updated_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "bilge_files", force: :cascade do |t|
+    t.integer "year"
+    t.integer "month"
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -278,6 +290,19 @@ ActiveRecord::Schema.define(version: 2018_09_25_224113) do
     t.datetime "updated_at", null: false
     t.datetime "approved_at"
     t.integer "approver_id"
+  end
+
+  create_table "minutes_files", force: :cascade do |t|
+    t.integer "year"
+    t.integer "month"
+    t.boolean "excom"
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "otw_training_users", force: :cascade do |t|

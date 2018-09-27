@@ -4,6 +4,6 @@
 
 $(document).ready ->
   $('#bilge_remove').change ->
-    $('#bilge_upload_file').prop 'disabled', $(this).is(':checked')
+    $('#file').prop 'disabled', $(this).is(':checked')
     return
   return
