@@ -34,6 +34,10 @@ class BpsS3
     object(key).upload_file(file.path)
   end
 
+  def move(key, new_key)
+    object(key).move_to("#{full_bucket}/#{new_key}")
+  end
+
   def remove_object(key)
     object(key).delete
   end

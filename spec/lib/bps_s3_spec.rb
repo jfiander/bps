@@ -79,6 +79,10 @@ RSpec.describe BpsS3, type: :lib do
       ).to be(true)
     end
 
+    it 'should move a file in the bucket' do
+      expect { @bps_s3.move('something.abc', 'new.abc') }.not_to raise_error
+    end
+
     it 'should remove a file to the bucket' do
       expect { @bps_s3.remove_object('something.abc') }.not_to raise_error
     end
