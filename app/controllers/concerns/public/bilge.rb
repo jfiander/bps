@@ -1,64 +1,51 @@
 # frozen_string_literal: true
 
 module Public::Bilge
-  def get_bilge
-    key = "#{clean_params[:year]}/#{clean_params[:month]}"
-    issue_link = @bilge_links[key]
-    issue_title = key.tr('/', '-')
+  def newsletter
+    @public_ids = BilgeFile.last_18.map(&:id)
+    @issues = BilgeFile.issues
+  end
 
-    if issue_link.blank?
-      newsletter
-      flash.now[:alert] = 'There was a problem accessing the Bilge Chatter.'
-      flash.now[:error] = 'Issue not found.'
-      render :newsletter
-      return
-    end
+  def bilge
+    bilge = @bilges.find_by(
+      year: clean_params[:year].to_i, month: clean_params[:month].to_i
+    )
 
-    begin
-      send_data(
-        open(issue_link).read,
-        filename: "Bilge Chatter #{issue_title}.pdf",
-        type: 'application/pdf',
-        disposition: 'inline'
-      )
-    rescue SocketError
-      newsletter
-      flash.now[:alert] = 'There was a problem accessing the Bilge Chatter. Please try again later.'
-      render :newsletter
-    end
+    return bilge_not_found unless bilge.present?
+
+    send_bilge(bilge.file, "#{bilge.year} - #{bilge.month}")
   end
 
   private
 
   def list_bilges
-    @bilges = bilge_bucket.list
-
-    @bilge_links = @bilges.map(&:key).map do |b|
-      { b.delete('.pdf') => bilge_bucket.link(b) }
-    end.reduce({}, :merge)
+    @bilges = user_signed_in? ? BilgeFile.ordered : BilgeFile.last_18
   end
 
-  def bilge_years
-    @bilges
-      .map(&:key)
-      .map { |b| b.sub('.pdf', '').sub(%r{/(s|\d+)$}, '').delete('/') }
-      .uniq
-      .reject(&:blank?)
+  def bilge_not_found
+    newsletter
+    flash.now[:alert] = 'There was a problem accessing the Bilge Chatter.'
+    flash.now[:error] = 'Issue not found.'
+    render :newsletter
+  end
+
+  def send_bilge(file, issue)
+    send_data(
+      URI.parse(bilge_bucket.link(file.s3_object.key)).open.read,
+      filename: "Bilge Chatter #{issue}.pdf",
+      type: 'application/pdf',
+      disposition: 'inline'
+    )
+  rescue SocketError
+    newsletter
+    flash.now[:alert] = 'There was a problem accessing the Bilge Chatter. Please try again later.'
+    render :newsletter
   end
 
   def available_bilge_issues
     {
-      1   => 'Jan',
-      2   => 'Feb',
-      3   => 'Mar',
-      4   => 'Apr',
-      5   => 'May',
-      6   => 'Jun',
-      's' => 'Sum',
-      9   => 'Sep',
-      10  => 'Oct',
-      11  => 'Nov',
-      12  => 'Dec'
+      1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',
+      's' => 'Sum', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec'
     }
   end
 end

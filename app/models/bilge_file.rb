@@ -5,6 +5,9 @@ class BilgeFile < UploadedFile
     :file, paperclip_defaults(:bilge).merge(path: ':id/Bilge_Chatter.pdf')
   )
 
+  validates :year, presence: true
+  validates :month, presence: true
+
   scope :ordered, -> { order(year: :asc, month: :asc) }
   scope :last_18, -> { order(year: :desc, month: :desc).limit(18) }
 
@@ -15,15 +18,7 @@ class BilgeFile < UploadedFile
     }
   end
 
-  def self.last_18_ids
-    last_18.map(&:id)
-  end
-
   def issue
     BilgeFile.issues[month]
-  end
-
-  def key
-    file.s3_object.key
   end
 end

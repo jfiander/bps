@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class MembersController < ApplicationController
-  include Members::BilgeAndMinutes
+  include Members::Bilge
+  include Members::Minutes
   include Members::Roster
   include BraintreeHelper
 
@@ -17,8 +18,6 @@ class MembersController < ApplicationController
   before_action :redirect_to_root, only: :dues, unless: :braintree_enabled?
   before_action :prepare_dues, only: :dues, if: :current_user_dues_due?
 
-  before_action :bilge_issue, only: %i[upload_bilge remove_bilge]
-  before_action :get_minutes_issue, only: %i[upload_minutes remove_minutes]
   before_action :list_minutes, only: %i[minutes get_minutes get_minutes_excom]
 
   before_action :generate_client_token, only: :applied

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :minutes_file do
+    year 2018
+    month 1
     excom false
-    file ""
-    deleted_at "2018-09-27 13:36:24"
   end
 end

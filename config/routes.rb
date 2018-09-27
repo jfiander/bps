@@ -76,11 +76,11 @@ Rails.application.routes.draw do
   ### Functional page back-ends
 
   # Newsletter
-  get     '/bilge/:year/:month',   to: 'public#get_bilge',          as: 'bilge'
-  get     '/minutes/:year/:month', to: 'members#get_minutes',       as: 'get_minutes'
-  get     '/excom/:year/:month',   to: 'members#get_minutes_excom', as: 'get_minutes_excom'
-  post    '/bilge',                to: 'members#upload_bilge',      as: 'upload_bilge'
-  get     '/bilge',                to: redirect('/newsletter')
+  get     '/bilge/:year/:month',   to: 'public#get_bilge',     as: 'bilge'
+  get     '/minutes/:year/:month', to: 'members#find_minutes', as: 'get_minutes'
+  get     '/excom/:year/:month',   to: 'members#find_minutes', as: 'get_minutes_excom', defaults: { excom: 'true' }
+  post    '/bilge',                to: 'members#upload_bilge', as: 'upload_bilge'
+  get     '/bilge(/:year)',        to: redirect('/newsletter')
 
   # Registration
   put     '/register', to: 'public#register', as: 'public_register'

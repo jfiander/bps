@@ -6,7 +6,7 @@ h2 The Bilge Chatter
 h3 Click on a button below to view or download that issue.
 
 - if user_signed_in?
-  .information Issues with darker buttons are not displayed to the public.
+  .information Only the 18 most recent issues (with lighter buttons) are displayed to the public.
 
 .table#bilge
   - @bilges.sort_by { |b| [-b.year, b.month] }.group_by(&:year).each do |year, bilges|
@@ -16,7 +16,7 @@ h3 Click on a button below to view or download that issue.
         .table-cell
           - if month.in?(bilges.map(&:month))
             - bilge = bilges.select { |b| b.month == month }.first
-            = link_to(bilge.issue, bilge_bucket.link(bilge.key), target: :_blank, class: (bilge.id.in?(@public_ids) ? '' : 'members'))
+            = link_to(bilge.issue, bilge_bucket.link(bilge.file.s3_object.key), target: :_blank, class: (bilge.id.in?(@public_ids) ? '' : 'members'))
           - else
             | -
 

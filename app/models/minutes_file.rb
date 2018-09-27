@@ -3,6 +3,9 @@
 class MinutesFile < UploadedFile
   scope :ordered, -> { order(year: :asc, month: :asc) }
 
+  validates :year, presence: true
+  validates :month, presence: true
+
   def self.issues
     {
       1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',
@@ -12,9 +15,5 @@ class MinutesFile < UploadedFile
 
   def issue
     MinutesFile.issues[month]
-  end
-
-  def key
-    file.s3_object.key
   end
 end

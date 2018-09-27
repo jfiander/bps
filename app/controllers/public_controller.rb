@@ -28,14 +28,6 @@ class PublicController < ApplicationController
     end
   end
 
-  def newsletter
-    @years = bilge_years
-    @years = @years.last(2) unless user_signed_in?
-    @issues = @bilge_links.keys
-
-    @available_issues = available_bilge_issues
-  end
-
   private
 
   def clean_params
