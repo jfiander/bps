@@ -2,7 +2,7 @@
 
 module Members::Bilge
   def upload_bilge
-    verb = update_bilge
+    verb = update_file(:bilge)
 
     redirect_to(
       newsletter_path,
@@ -24,19 +24,6 @@ module Members::Bilge
       :id, :page_name, :save, :preview, :file, :bilge_remove,
       issue: ['date(1i)', 'date(2i)']
     )
-  end
-
-  def update_bilge
-    if bilge_params[:bilge_remove].present?
-      remove_bilge
-      'removed'
-    elsif (bilge = find_bilge).present?
-      bilge.update(file: bilge_params[:file])
-      'replaced'
-    else
-      create_bilge
-      'uplodaed'
-    end
   end
 
   def remove_bilge

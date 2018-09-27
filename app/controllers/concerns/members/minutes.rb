@@ -21,7 +21,7 @@ module Members::Minutes
   end
 
   def upload_minutes
-    verb = update_minutes
+    verb = update_file(:minutes)
 
     redirect_to(
       minutes_path,

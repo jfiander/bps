@@ -7,9 +7,7 @@ module Public::Bilge
   end
 
   def bilge
-    bilge = @bilges.find_by(
-      year: clean_params[:year].to_i, month: clean_params[:month].to_i
-    )
+    bilge = pick_bilge
 
     return bilge_not_found unless bilge.present?
 
@@ -20,6 +18,12 @@ module Public::Bilge
 
   def list_bilges
     @bilges = user_signed_in? ? BilgeFile.ordered : BilgeFile.last_18
+  end
+
+  def pick_bilge
+    @bilges.select do |b|
+      b.year == clean_params[:year].to_i && b.month == clean_params[:month].to_i
+    end.first
   end
 
   def bilge_not_found
