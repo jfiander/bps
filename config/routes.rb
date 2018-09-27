@@ -41,24 +41,38 @@ Rails.application.routes.draw do
   get     '/welcome',      to: 'members#welcome'
   get     '/user_help',    to: 'members#user_help'
 
+  # Markdown page editors
+  get     '/edit/:page_name', to: 'members#edit_markdown',   as: 'edit_page'
+  patch   '/edit/:page_name', to: 'members#update_markdown', as: 'update_page'
+
   ### Static pages
   get     '/refunds',       to: 'braintree#refunds'
   get     '/payment_terms', to: 'braintree#terms'
 
-  ### Dynamic pages
+  ### Pre-loaded pages
   get     '/ranks',            to: 'members#ranks'
   get     '/auto_permissions', to: 'permissions#auto'
 
   ### Functional pages
-  get     '/bridge',                    to: 'bridge#list'
-  get     '/newsletter',                to: 'public#newsletter'
-  get     '/store',                     to: 'public#store'
-  get     '/photos',                    to: 'gallery#index'
-  get     '/minutes',                   to: 'members#minutes'
-  post    '/assign_photo',              to: 'user#assign_photo'
-  get     '/apply',                     to: 'member_applications#new'
-  get     '/applications',              to: 'member_applications#review'
-  get     '/dues',                      to: 'members#dues'
+  get     '/bridge', to: 'bridge#list'
+  get     '/store',  to: 'public#store'
+
+  # Photo gallery
+  get     '/photos',       to: 'gallery#index'
+  post    '/assign_photo', to: 'user#assign_photo'
+
+  # Membership
+  get     '/apply',        to: 'member_applications#new'
+  get     '/applications', to: 'member_applications#review'
+  get     '/dues',         to: 'members#dues'
+
+  # Float plans
+  get     '/float_plan',  to: 'float_plan#new',     as: 'float_plan'
+  post    '/float_plan',  to: 'float_plan#submit',  as: 'submit_float_plan'
+  patch   '/float_plan',  to: 'float_plan#refresh', as: 'refresh_float_plan'
+  get     '/float_plans', to: 'float_plan#list'
+
+  # Admin utilities
   get     '/s3',                        to: 'links#s3'
   post    '/s3',                        to: 'links#s3'
   get     '/versions/:model/:id',       to: 'versions#show',      as: 'show_versions'
@@ -66,32 +80,23 @@ Rails.application.routes.draw do
   post    '/versions/:model/:id/:a/:b', to: 'versions#diff'
   patch   '/versions/:model/:id/:a',    to: 'versions#revert',    as: 'revert_version'
   get     '/versions(/:model)',         to: 'versions#index',     as: 'versions'
-  get     '/float_plan',                to: 'float_plan#new',     as: 'float_plan'
-  post    '/float_plan',                to: 'float_plan#submit',  as: 'submit_float_plan'
-  patch   '/float_plan',                to: 'float_plan#refresh', as: 'refresh_float_plan'
-  get     '/float_plans',               to: 'float_plan#list'
-  get     '/jumpstart',                 to: 'otw_trainings#public'
-  post    '/jumpstart',                 to: 'otw_trainings#public_request'
-
-  ### Functional page back-ends
 
   # Newsletter
-  get     '/bilge/:year/:month',   to: 'public#get_bilge',     as: 'bilge'
-  get     '/minutes/:year/:month', to: 'members#find_minutes', as: 'get_minutes'
-  get     '/excom/:year/:month',   to: 'members#find_minutes', as: 'get_minutes_excom', defaults: { excom: 'true' }
-  post    '/bilge',                to: 'members#upload_bilge', as: 'upload_bilge'
-  get     '/bilge(/:year)',        to: redirect('/newsletter')
-
-  # Registration
-  put     '/register', to: 'public#register', as: 'public_register'
-  post    '/register', to: 'public#register', as: 'long_register'
+  get     '/newsletter',         to: 'public#newsletter'
+  get     '/bilge/:year/:month', to: 'public#bilge',         as: 'bilge'
+  post    '/bilge',              to: 'members#upload_bilge', as: 'upload_bilge'
+  get     '/bilge(/:year)',      to: redirect('/newsletter')
 
   # Minutes
-  post    '/minutes',         to: 'members#upload_minutes',  as: 'upload_minutes'
+  get     '/minutes',              to: 'members#minutes'
+  post    '/minutes',              to: 'members#upload_minutes', as: 'upload_minutes'
+  get     '/minutes/:year/:month', to: 'members#find_minutes',   as: 'get_minutes'
+  get     '/excom/:year/:month',   to: 'members#find_minutes',   as: 'get_minutes_excom', defaults: { excom: 'true' }
 
-  # Markdown page editors
-  get     '/edit/:page_name', to: 'members#edit_markdown',   as: 'edit_page'
-  patch   '/edit/:page_name', to: 'members#update_markdown', as: 'update_page'
+  # Registration
+  put     '/register',        to: 'public#register', as: 'public_register'
+  post    '/register',        to: 'public#register', as: 'long_register'
+  get     '/minutes(/:year)', to: redirect('/minutes')
 
   # User invitation
   put     '/invite/:id', to: 'user#invite', as: 'invite'
@@ -163,6 +168,10 @@ Rails.application.routes.draw do
   get     '/otw/:id/edit',   to: 'otw_trainings#edit',         as: 'edit_otw'
   patch   '/otw/:id/edit',   to: 'otw_trainings#update',       as: 'update_otw'
   delete  '/otw/:id/remove', to: 'otw_trainings#destroy',      as: 'remove_otw'
+
+  # On-the-Water Training
+  get     '/jumpstart', to: 'otw_trainings#public'
+  post    '/jumpstart', to: 'otw_trainings#public_request'
 
   # Course Completions
   get     '/completions',     to: 'completions#list'

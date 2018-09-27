@@ -4,7 +4,7 @@ class PublicController < ApplicationController
   include Public::Bilge
   include CalendarHelper
 
-  before_action :list_bilges, only: %i[newsletter get_bilge]
+  before_action :list_bilges, only: %i[newsletter bilge]
   before_action :registration_attributes, only: [:register]
   before_action :find_event,              only: [:register]
   before_action :find_registration,       only: [:register]

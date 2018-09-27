@@ -18,7 +18,7 @@ class MembersController < ApplicationController
   before_action :redirect_to_root, only: :dues, unless: :braintree_enabled?
   before_action :prepare_dues, only: :dues, if: :current_user_dues_due?
 
-  before_action :list_minutes, only: %i[minutes get_minutes get_minutes_excom]
+  before_action :list_minutes, only: %i[minutes find_minutes find_minutes_excom]
 
   before_action :generate_client_token, only: :applied
   before_action :block_duplicate_payments, only: :applied, if: :already_paid?
