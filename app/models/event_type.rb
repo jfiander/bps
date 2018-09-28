@@ -113,8 +113,12 @@ class EventType < ApplicationRecord
 
   def new_title(title)
     return title unless title.in?(NEW_TITLES.keys)
-    return title unless ENV['USE_NEW_AG_TITLES'] == 'enabled'
+    return title unless new_title?
     NEW_TITLES[title]
+  end
+
+  def new_title?
+    ENV['USE_NEW_AG_TITLES'] == 'enabled' || title.in?(ENV['USE_NEW_AG_TITLES'].split(','))
   end
 
   def title_subs

@@ -79,7 +79,14 @@ class BpsS3
   end
 
   def cf_host
-    @cf_host ||= ENV["CLOUDFRONT_#{@endpoint.upcase}_ENDPOINT"]
+    @cf_host ||= "#{cf_subdomain}.bpsd9.org"
+  end
+
+  def cf_subdomain
+    first = @endpoint
+    second = ENV['ASSET_ENVIRONMENT'] unless @endpoint.in?(%i[seo static])
+
+    [first, second].compact.join('.')
   end
 
   def sign?(signed = false, bypass: false)
