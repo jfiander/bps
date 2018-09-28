@@ -7,12 +7,20 @@ RSpec.describe MinutesFile, type: :model do
     expect(MinutesFile.issues.count).to eql(10)
   end
 
-  it 'should return the correct issue' do
-    minutes = FactoryBot.create(
-      :minutes_file,
-      year: 2017, month: 9, file: File.open(test_image(200, 500), 'r')
-    )
+  describe 'issues' do
+    before(:each) do
+      @minutes = FactoryBot.create(
+        :minutes_file,
+        year: 2017, month: 9, file: File.open(test_image(200, 500), 'r')
+      )
+    end
 
-    expect(minutes.issue).to eql('Sep')
+    it 'should return the correct issue' do
+      expect(@minutes.issue).to eql('Sep')
+    end
+
+    it 'should return the correct full_issue' do
+      expect(@minutes.full_issue).to eql('2017 Sep')
+    end
   end
 end

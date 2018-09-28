@@ -16,4 +16,8 @@ class MinutesFile < UploadedFile
   def issue
     MinutesFile.issues[month]
   end
+
+  def full_issue
+    "#{year} #{issue}"
+  end
 end

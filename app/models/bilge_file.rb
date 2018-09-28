@@ -21,4 +21,8 @@ class BilgeFile < UploadedFile
   def issue
     BilgeFile.issues[month]
   end
+
+  def full_issue
+    "#{year} #{issue}"
+  end
 end

@@ -8,10 +8,8 @@ module Public::Bilge
 
   def bilge
     bilge = pick_bilge
-
     return bilge_not_found unless bilge.present?
-
-    send_bilge(bilge.file, "#{bilge.year} - #{bilge.month}")
+    send_bilge(bilge)
   end
 
   private
@@ -33,10 +31,10 @@ module Public::Bilge
     render :newsletter
   end
 
-  def send_bilge(file, issue)
+  def send_bilge(bilge)
     send_data(
-      URI.parse(bilge_bucket.link(file.s3_object.key)).open.read,
-      filename: "Bilge Chatter #{issue}.pdf",
+      URI.parse(bilge_bucket.link(bilge.file.s3_object.key)).open.read,
+      filename: "Bilge Chatter - #{bilge.full_issue}.pdf",
       type: 'application/pdf',
       disposition: 'inline'
     )

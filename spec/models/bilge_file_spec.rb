@@ -7,12 +7,20 @@ RSpec.describe BilgeFile, type: :model do
     expect(BilgeFile.issues.count).to eql(11)
   end
 
-  it 'should return the correct issue' do
-    bilge = FactoryBot.create(
-      :bilge_file,
-      year: 2017, month: 5, file: File.open(test_image(200, 500), 'r')
-    )
+  describe 'issues' do
+    before(:each) do
+      @bilge = FactoryBot.create(
+        :bilge_file,
+        year: 2017, month: 9, file: File.open(test_image(200, 500), 'r')
+      )
+    end
 
-    expect(bilge.issue).to eql('May')
+    it 'should return the correct issue' do
+      expect(@bilge.issue).to eql('Sep')
+    end
+
+    it 'should return the correct full_issue' do
+      expect(@bilge.full_issue).to eql('2017 Sep')
+    end
   end
 end
