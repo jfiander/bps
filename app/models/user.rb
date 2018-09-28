@@ -84,14 +84,16 @@ class User < ApplicationRecord
   end
 
   def full_name(html: true, show_boc: false)
-    # html_safe: No user content
-    fn = (+'').html_safe
-    fn << auto_rank(html: html)
-    fn << ' ' if auto_rank.present?
-    fn << simple_name
-    fn << formatted_grade
-    fn << boc_display if show_boc
-    fn.gsub(/&#39;/, "'")
+    # html_safe: Text is sanitized before storage
+    sanitize(
+      [
+        auto_rank(html: html),
+        (' ' if auto_rank.present?),
+        simple_name,
+        formatted_grade,
+        (boc_display if show_boc)
+      ].join
+    ).gsub(/&#39;/, '’').html_safe
   end
 
   def bridge_hash

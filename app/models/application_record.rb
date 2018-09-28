@@ -32,4 +32,10 @@ class ApplicationRecord < ActiveRecord::Base
       model: self.class.name, id: id
     )
   end
+
+  private
+
+  def sanitize(text)
+    ActionController::Base.helpers.sanitize text
+  end
 end
