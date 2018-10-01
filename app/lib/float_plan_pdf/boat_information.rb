@@ -6,7 +6,7 @@ module FloatPlanPDF::BoatInformation
     labeled_text('Type', float_plan.boat_type_display, x1: 300, x2: 375, y: 580)
 
     labeled_text('Name', float_plan.boat_name, x1: 300, x2: 375, y: 560)
-    labeled_text('Length', float_plan.length, x1: 300, x2: 375, y: 540)
+    labeled_text('Length', "#{float_plan.length} feet", x1: 300, x2: 375, y: 540)
     labeled_text(
       'Make',
       [float_plan.make, float_plan.model, float_plan.year].reject(&:blank?)
