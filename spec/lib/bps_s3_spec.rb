@@ -87,4 +87,59 @@ RSpec.describe BpsS3, type: :lib do
       expect { @bps_s3.remove_object('something.abc') }.not_to raise_error
     end
   end
+
+  describe 'CloudFront subdomains' do
+    before(:each) do
+      @files_bucket = BpsS3.new(:files)
+      @static_bucket = BpsS3.new(:static)
+    end
+
+    context 'development' do
+      before(:each) do
+        allow(ENV).to(
+          receive(:[]).with('ASSET_ENVIRONMENT').and_return('development')
+        )
+      end
+
+      it 'should generate the correct subdomain' do
+        expect(@files_bucket.send(:cf_subdomain)).to eql('files.development')
+      end
+
+      it 'should generate the correct static subdomain' do
+        expect(@static_bucket.send(:cf_subdomain)).to eql('static')
+      end
+    end
+
+    context 'staging' do
+      before(:each) do
+        allow(ENV).to(
+          receive(:[]).with('ASSET_ENVIRONMENT').and_return('staging')
+        )
+      end
+
+      it 'should generate the correct subdomain' do
+        expect(@files_bucket.send(:cf_subdomain)).to eql('files.staging')
+      end
+
+      it 'should generate the correct static subdomain' do
+        expect(@static_bucket.send(:cf_subdomain)).to eql('static')
+      end
+    end
+
+    context 'production' do
+      before(:each) do
+        allow(ENV).to(
+          receive(:[]).with('ASSET_ENVIRONMENT').and_return('production')
+        )
+      end
+
+      it 'should generate the correct subdomain' do
+        expect(@files_bucket.send(:cf_subdomain)).to eql('files')
+      end
+
+      it 'should generate the correct static subdomain' do
+        expect(@static_bucket.send(:cf_subdomain)).to eql('static')
+      end
+    end
+  end
 end
