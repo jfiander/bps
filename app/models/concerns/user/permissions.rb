@@ -70,7 +70,9 @@ module User::Permissions
   def office_roles
     SIMPLIFY.call(
       [
-        permitted_roles_from_bridge_office, permitted_roles_from_committee
+        permitted_roles_from_bridge_office,
+        permitted_roles_from_committee,
+        (:excom if excom?)
       ]
     )
   end

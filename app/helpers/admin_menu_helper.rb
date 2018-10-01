@@ -54,8 +54,8 @@ module AdminMenuHelper
   end
 
   def admin_review
-    roles = %i[users float roster]
-    return unless current_user&.permitted?(roles) || current_user&.excom?
+    roles = %i[users float roster excom]
+    return unless current_user&.permitted?(roles)
     render('application/navigation/admin/review')
   end
 
