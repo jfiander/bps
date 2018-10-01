@@ -4,6 +4,7 @@ class MembersController < ApplicationController
   include Members::Bilge
   include Members::Minutes
   include Members::Roster
+  include Members::Markdown
   include Members::Dues
   include Members::Store
   include BraintreeHelper
