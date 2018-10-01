@@ -27,21 +27,16 @@ Rails.application.routes.draw do
   end
 
   ### Markdown pages
-  get     '/home',         to: redirect('/')
-  get     '/about',        to: 'public#about'
-  get     '/join',         to: 'public#join'
-  get     '/requirements', to: 'public#requirements'
-  get     '/vsc',          to: 'public#vsc'
-  get     '/education',    to: 'public#education'
-  get     '/calendar',     to: 'public#calendar'
-  get     '/civic',        to: 'public#civic'
-  get     '/history',      to: 'public#history'
-  get     '/links',        to: 'public#links'
-  get     '/members',      to: 'members#members'
-  get     '/welcome',      to: 'members#welcome'
-  get     '/user_help',    to: 'members#user_help'
+  %i[
+    home about join requirements vsc education calendar civic history links
+    members welcome user_help
+  ].each do |md|
+    get   "/#{md}",      to: "public##{md}", as: md,    defaults: { page_name: md } unless md == :home
+    get   "/#{md}/edit", to: 'members#edit_markdown',   defaults: { page_name: md }
+    patch "/#{md}/edit", to: 'members#update_markdown', defaults: { page_name: md }
+  end
 
-  # Markdown page editors
+  get     '/home',            to: redirect('/')
   get     '/edit/:page_name', to: 'members#edit_markdown',   as: 'edit_page'
   patch   '/edit/:page_name', to: 'members#update_markdown', as: 'update_page'
 
