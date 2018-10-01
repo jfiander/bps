@@ -7,6 +7,14 @@ p
   span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
   | are required.
 
+- if @last.present?
+  .information.gray-background
+    p.red
+      | This form has been pre-populated with data from your most recent float plan, except for
+      br
+      | the leave, return, and alert times, and any persons onboard.
+    p Please update it as necessary.
+
 = form_for(@float_plan, url: submit_float_plan_path, multipart: true) do |f|
   #float-plan
     h2 Primary Contact
@@ -29,7 +37,7 @@ p
           span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
           = f.label :boat_type
         .table-cell
-          = f.select :boat_type, options_for_select(%w[Power Sail Paddle Other]), include_blank: true, required: true
+          = f.select :boat_type, options_for_select(%w[Power Sail Paddle Other], @float_plan.boat_type), include_blank: true, required: true
           = f.text_field :subtype, class: 'shorter'
       .table-row
         .table-cell.table-header

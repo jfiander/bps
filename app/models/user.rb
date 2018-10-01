@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_one  :bridge_office
   has_many :standing_committee_offices
   has_many :committees
+  has_many :float_plans
 
   belongs_to :parent, class_name: 'User', optional: true
   has_many(

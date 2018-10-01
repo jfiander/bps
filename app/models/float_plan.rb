@@ -1,6 +1,7 @@
 class FloatPlan < ApplicationRecord
   include Concerns::FloatPlan::Formatting
 
+  belongs_to :user, optional: true
   has_many :float_plan_onboards
   accepts_nested_attributes_for :float_plan_onboards
 

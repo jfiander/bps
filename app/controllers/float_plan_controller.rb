@@ -7,11 +7,13 @@ class FloatPlanController < ApplicationController
   title!('Float Plans')
 
   def new
-    @float_plan = FloatPlan.new
+    @last = FloatPlan.where(user_id: current_user&.id)&.last
+    non_persisted = %w[id leave_at return_at alert_at]
+    @float_plan = FloatPlan.new(@last&.attributes&.except(*non_persisted))
   end
 
   def submit
-    @float_plan = FloatPlan.new(float_plan_params)
+    @float_plan = FloatPlan.new(float_plan_params.merge(user_id: current_user&.id))
     onboards = float_plan_params[:float_plan_onboards_attributes]
     if onboards.blank?
       flash.now[:alert] = 'You must include who will be onboard.'
