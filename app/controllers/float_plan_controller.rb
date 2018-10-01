@@ -6,6 +6,8 @@ class FloatPlanController < ApplicationController
 
   title!('Float Plans')
 
+  after_action :slack_notification, only: :submit
+
   def new
     @last = FloatPlan.where(user_id: current_user&.id)&.last
     non_persisted = %w[id leave_at return_at alert_at]
@@ -22,8 +24,6 @@ class FloatPlanController < ApplicationController
     end
 
     @float_plan.save!
-
-    slack_notification
   end
 
   def refresh
@@ -61,6 +61,7 @@ class FloatPlanController < ApplicationController
   end
 
   def slack_notification
+    return unless @float_plan.persisted?
     NotificationsMailer.float_plan(@float_plan).deliver
     SlackNotification.new(
       channel: 'floatplans', type: :info, title: 'Float Plan Submitted',
@@ -68,23 +69,15 @@ class FloatPlanController < ApplicationController
       fields: [
         { title: 'Name', value: @float_plan.name, short: true },
         { title: 'Phone', value: @float_plan.phone, short: true },
-        {
-          title: 'Depart',
-          value: @float_plan.leave_at.strftime(ApplicationController::LONG_TIME_FORMAT),
-          short: true
-        },
-        {
-          title: 'Return',
-          value: @float_plan.return_at.strftime(ApplicationController::LONG_TIME_FORMAT),
-          short: true
-        },
-        {
-          title: 'Alert',
-          value: @float_plan.alert_at.strftime(ApplicationController::LONG_TIME_FORMAT),
-          short: true
-        },
+        { title: 'Depart', value: format_fp_time(:leave_at), short: true },
+        { title: 'Return', value: format_fp_time(:return_at), short: true },
+        { title: 'Alert', value: format_fp_time(:alert_at), short: true },
         { title: 'Float Plan PDF', value: @float_plan.link, short: false }
       ]
     ).notify!
+  end
+
+  def format_fp_time(method)
+    @float_plan.send(method).strftime(ApplicationController::LONG_TIME_FORMAT)
   end
 end
