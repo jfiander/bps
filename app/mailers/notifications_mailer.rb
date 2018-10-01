@@ -5,19 +5,20 @@ class NotificationsMailer < ApplicationMailer
     @bridge_office = bridge_office
     @by = by
     @previous = previous
+    @to_list = ['dev@bpsd9.org']
 
-    mail(to: 'dev@bpsd9.org', subject: 'Bridge Office Updated')
+    mail(to: @to_list, subject: 'Bridge Office Updated')
     bridge_slack_notification
   end
 
   def float_plan(float_plan)
     @float_plan = float_plan
-    to = if float_plan_monitor_emails.present?
-           float_plan_monitor_emails
-         else
-           ['"No Monitors" <dev@bpsd9.org>']
-         end
-    mail(to: to, subject: 'Float Plan Submitted')
+    @to_list = if float_plan_monitor_emails.present?
+                 float_plan_monitor_emails
+               else
+                 ['"No Monitors" <dev@bpsd9.org>']
+               end
+    mail(to: @to_list, subject: 'Float Plan Submitted')
   end
 
   private

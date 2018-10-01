@@ -1,11 +1,13 @@
-h2 Bridge Office Updated
+= render 'application/mailers/auto'
+
+h1.birmingham Bridge Office Updated
 
 p The following bridge office has been updated.
 
-h3 Office
+h2 Office
 p = @bridge_office.title
 
-h3 Previous holder
+h2 Previous holder
 p
   = @previous.full_name
   br
@@ -13,7 +15,7 @@ p
   | , #
   = @previous.id
 
-h3 New holder
+h2 New holder
 p
   = @bridge_office.user.full_name
   br
@@ -21,7 +23,7 @@ p
   | , #
   = @bridge_office.user.id
 
-h3 Updated by
+h2 Updated by
 p
   = @by.full_name
   br
