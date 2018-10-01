@@ -84,9 +84,13 @@ class BpsS3
 
   def cf_subdomain
     first = @endpoint
-    second = ENV['ASSET_ENVIRONMENT'] unless @endpoint.in?(%i[seo static])
+    second = ENV['ASSET_ENVIRONMENT'] unless single_subdomain?
 
     [first, second].compact.join('.')
+  end
+
+  def single_subdomain?
+    @endpoint.in?(%i[seo static]) || ENV['ASSET_ENVIRONMENT'] == 'production'
   end
 
   def sign?(signed = false, bypass: false)
