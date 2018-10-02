@@ -56,7 +56,7 @@ module RosterPDF::Detailed::Awards
 
   def award_recipient_names(recipient, additional)
     text = [{ text: recipient }]
-    text << { text: additional } if additional.present?
+    text << { text: "\n#{additional}" } if additional.present?
     formatted_text(text, size: RosterPDF::Detailed::BODY_REG_SIZE, align: :center, valign: :center)
   end
 
