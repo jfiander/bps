@@ -25,4 +25,8 @@ class BilgeFile < UploadedFile
   def full_issue
     "#{year} #{issue}"
   end
+
+  def link
+    self.class.buckets[:bilge].link(file.s3_object.key)
+  end
 end

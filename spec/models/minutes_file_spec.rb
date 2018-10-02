@@ -22,5 +22,12 @@ RSpec.describe MinutesFile, type: :model do
     it 'should return the correct full_issue' do
       expect(@minutes.full_issue).to eql('2017 Sep')
     end
+
+    it 'should return a valid link' do
+      # This link is not signed in tests
+      expect(@minutes.link).to match(
+        %r{https://files.development.bpsd9.org/uploaded/minutes_files/\d+/test_image.jpg}
+      )
+    end
   end
 end

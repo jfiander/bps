@@ -24,7 +24,7 @@ h3 Click on a button below to view or download that issue.
         .table-cell
           - if excom_minutes.present? && month.in?(excom_minutes.map(&:month))
             - minute = excom_minutes.select { |m| m.month == month }.first
-            = link_to(minute.issue, files_bucket.link(minute.file.s3_object.key), target: :_blank, class: 'members')
+            = link_to(minute.issue, minute.link, target: :_blank, class: 'members')
           - else
             | -
 

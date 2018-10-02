@@ -20,4 +20,8 @@ class MinutesFile < UploadedFile
   def full_issue
     "#{year} #{issue}"
   end
+
+  def link
+    self.class.buckets[:files].link(file.s3_object.key)
+  end
 end

@@ -22,5 +22,12 @@ RSpec.describe BilgeFile, type: :model do
     it 'should return the correct full_issue' do
       expect(@bilge.full_issue).to eql('2017 Sep')
     end
+
+    it 'should return a valid link' do
+      # This link is not signed in tests
+      expect(@bilge.link).to match(
+        %r{https://bilge.development.bpsd9.org/\d+/Bilge_Chatter.pdf}
+      )
+    end
   end
 end
