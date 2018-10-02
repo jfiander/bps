@@ -55,8 +55,8 @@ module RosterPDF::Detailed::Bridge
       text 'Other Contacts', size: RosterPDF::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
       move_down(10)
       contact_box('Webmaster', 'Webmaster', 'webmaster@bpsd9.org', 160)
-      contact_box('Bilge Chatter Editor', 'Newsletter', 'newsletter@bpsd9.org', 160 - 40 * 1)
-      contact_box('Vessel Safety Check', 'VSC', 'vsc@bpsd9.org', 160 - 40 * 2)
+      contact_box('Bilge Chatter Editor', 'Newsletter Editor', 'newsletter@bpsd9.org', 160 - 40 * 1)
+      contact_box('Vessel Safety Check', 'Vessel Safety Check', 'vsc@bpsd9.org', 160 - 40 * 2)
       contact_box('Membership', 'Membership', 'membership@bpsd9.org', 160 - 40 * 3)
     end
   end
