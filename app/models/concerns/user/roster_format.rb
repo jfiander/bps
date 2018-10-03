@@ -45,7 +45,7 @@ module User::RosterFormat
     def right(u)
       [
         allow_blank(u.home_port),
-        allow_blank("Birthday: #{u.birthday&.strftime('%d %b')}"),
+        allow_blank(birthday(u)),
         allow_blank(prefix(u.phone_w, 'w.')),
         allow_blank(u.boat_name),
         allow_blank(u.boat_type),
