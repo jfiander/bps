@@ -26,7 +26,7 @@ RSpec.describe RosterPDF, type: :lib do
       FactoryBot.create(:user, life: '2017-03-05', grade: 'SN', ed_ach: '2018-01-01', mm: 35)
       FactoryBot.create(:user, life: '2001-03-05', grade: 'SN', ed_ach: '2002-01-01', mm: 50)
       FactoryBot.create(:user, grade: 'N', ed_pro: '2017-01-01', senior: '2013-01-01', mm: 5)
-      FactoryBot.create(:user, grade: 'JN', ed_pro: '2016-01-01')
+      FactoryBot.create(:user, grade: 'JN', ed_pro: '2016-01-01', birthday: '2001-06-05')
       u = FactoryBot.create(:user, city: 'Someplace', state: 'ST')
       FactoryBot.create(:bridge_office, office: :commander, user: u)
       FactoryBot.create(:roster_award_recipient, award_name: 'Bill Booth Moose Milk', user: u, year: Date.today.strftime('%Y-%m-%d'), photo: File.new(test_image(300, 500)))
