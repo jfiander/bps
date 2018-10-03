@@ -45,7 +45,7 @@ module User::RosterFormat
     def right(u)
       [
         allow_blank(u.home_port),
-        allow_blank(u.birthday),
+        allow_blank("Birthday: #{u.birthday&.strftime('%d %b')}"),
         allow_blank(prefix(u.phone_w, 'w.')),
         allow_blank(u.boat_name),
         allow_blank(u.boat_type),
@@ -72,6 +72,11 @@ module User::RosterFormat
       return 'Emeritus Member' if u.mm.to_i >= 50
       return 'Life Member' if u.life
       return 'Senior Member' if u.senior
+    end
+
+    def birthday(u)
+      return unless u.birthday.present?
+      "Birthday: #{u.birthday&.strftime('%d %b')}"
     end
 
     def prefix(string, pre)
