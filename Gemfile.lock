@@ -363,7 +363,7 @@ DEPENDENCIES
   jquery-ui-rails (~> 6.0)
   listen (~> 3.1.5)
   mini_magick (~> 4.8)
-  mysql2
+  mysql2 (~> 0.5.2)
   nested_form_fields (~> 0.8.2)
   newrelic_rpm (~> 5.0.0.342)
   paper_trail (~> 9.2.0)
