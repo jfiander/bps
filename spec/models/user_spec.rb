@@ -387,6 +387,10 @@ RSpec.describe User, type: :model do
       expect(@parent.dues).to eql(89)
     end
 
+    it 'should return the correct discounted amount' do
+      expect(@parent.discounted_amount).to eql(86.75)
+    end
+
     context 'family' do
       before(:each) do
         @child = FactoryBot.create(:user, parent: @parent)

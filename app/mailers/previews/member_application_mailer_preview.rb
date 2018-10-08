@@ -36,10 +36,10 @@ class MemberApplicationPreview < ActionMailer::Preview
   end
 
   def large_application
-    MemberApplication.all.select { |m| m.member_applicants.count > 2 }.last
+    MemberApplication.all.select { |m| m.member_applicants.count > 2 }.first
   end
 
   def user
-    User.where(parent_id: nil).last
+    User.where(parent_id: nil).first
   end
 end

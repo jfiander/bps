@@ -4,6 +4,12 @@ RSpec.describe Payment, type: :model do
   let(:token) { Payment.client_token }
   let(:user_token) { Payment.client_token(user_id: @user.id) }
 
+  it 'should use the correct discount rate' do
+    expect(Payment.discount(1)).to eql(0.32)
+    expect(Payment.discount(100)).to eql(2.50)
+    expect(Payment.discount(200)).to eql(4.70)
+  end
+
   describe 'general methods' do
     it 'should return a Braintree gateway' do
       expect(Payment.gateway).to be_a(Braintree::Gateway)

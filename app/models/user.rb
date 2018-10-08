@@ -125,6 +125,10 @@ class User < ApplicationRecord
     dues
   end
 
+  def discounted_amount
+    payment_amount.to_d - Payment.discount(payment_amount)
+  end
+
   def valid_instructor?
     id_expr.present? && id_expr > Time.now
   end

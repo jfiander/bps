@@ -5,6 +5,9 @@ h1.birmingham Paid Registration
 h2.red
   | Amount paid: $
   = @registration.payment_amount
+h3
+  | Received amount (est.): $
+  = @registration.payment.discounted_amount
 
 = render 'registration'
 = render 'registrant'
