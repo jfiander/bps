@@ -30,4 +30,6 @@
   ul.policies
     li = link_to(payment_terms_path, target: :_blank) { FA::Icon.p('file-alt', style: :regular) + 'Terms & Conditions' }
     li = link_to(refunds_path, target: :_blank) { FA::Icon.p('file-invoice-dollar', style: :regular) + 'Refund Policy' }
+  ul.policies
+    li = mail_to('payments@bpsd9.org', target: :_blank) { FA::Icon.p('envelope', style: :regular) + 'Contact us at payments@bpsd9.org' }
   = render 'braintree/dropin_script'
