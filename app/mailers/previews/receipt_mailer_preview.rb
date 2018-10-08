@@ -2,11 +2,18 @@
 
 class ReceiptMailerPreview < ActionMailer::Preview
   def receipt
-    transaction = gateway.transaction.sale(transaction_details).transaction
-    ReceiptMailer.receipt(transaction, 'registration', Registration.last.id)
+    ReceiptMailer.receipt(transaction, payment)
   end
 
   private
+
+  def payment
+    Registration.last.payment
+  end
+  
+  def transaction
+    gateway.transaction.sale(transaction_details).transaction
+  end
 
   # Dedicated, separate gateway instance that is always sandboxed for preview.
   def gateway

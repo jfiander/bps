@@ -10,7 +10,7 @@ class RegistrationMailerPreview < ActionMailer::Preview
   end
 
   def paid
-    RegistrationMailer.paid(reg_member_free)
+    RegistrationMailer.paid(reg_member_paid)
   end
 
   def confirm_event
@@ -18,7 +18,7 @@ class RegistrationMailerPreview < ActionMailer::Preview
   end
 
   def remind
-    RegistrationMailer.remind(registration)
+    RegistrationMailer.remind(reg_public_free)
   end
 
   def confirm_member_free
@@ -44,23 +44,27 @@ class RegistrationMailerPreview < ActionMailer::Preview
   private
 
   def reg_member_free
-    Registration.where.not(user: nil)
-                .select { |r| r.payment_amount.zero? }.last
+    Registration.where.not(user: nil).select do |r|
+      r.payment_amount.zero?
+    end.last
   end
 
   def reg_member_paid
-    Registration.where.not(user: nil)
-                .select { |r| r.payment_amount.positive? }.last
+    Registration.where.not(user: nil).select do |r|
+      r.payment_amount.positive?
+    end.last
   end
 
   def reg_public_free
-    Registration.where(user: nil)
-                .select { |r| r.payment_amount.zero? }.last
+    Registration.where(user: nil).select do |r|
+      r.payment_amount.zero?
+    end.last
   end
 
   def reg_public_paid
-    Registration.where(user: nil)
-                .select { |r| r.payment_amount.positive? }.last
+    Registration.where(user: nil).select do |r|
+      r.payment_amount.positive?
+    end.last
   end
 
   def registration_ao

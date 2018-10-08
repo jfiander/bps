@@ -1,9 +1,9 @@
-h2 Transaction Receipt
+h1.birmingham Transaction Receipt
 
 - if @payment.parent.present?
   - if @payment.parent_type == 'Registration'
     p
-      h3
+      h2
         = @purchase_model.titleize
         |  information:
       = @purchase_info[:type].titleize
@@ -17,12 +17,12 @@ h2 Transaction Receipt
       b = @purchase_info[:time]
   - elsif @payment.parent_type == 'MemberApplication'
     p
-      h3 Membership application
+      h2 Membership application
       b Individuals:
       = @purchase_info[:people]
 
 p
-  h3 Transaction information:
+  h2 Transaction information:
   | Transaction # 
   b = @transaction.id
   br
