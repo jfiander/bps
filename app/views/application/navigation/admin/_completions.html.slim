@@ -1,2 +1,2 @@
-= link 'All', path: completions_path,     fa: { name: 'check-double', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:education)
-= link 'YTD', path: completions_ytd_path, fa: { name: 'calendar-alt', options: { style: :regular, fa: :fw } } if current_user&.permitted?(:education)
+= link 'All', path: completions_path,     fa: { name: 'check-double', options: { style: :regular, fa: :fw } } if show_link?(:education)
+= link 'YTD', path: completions_ytd_path, fa: { name: 'calendar-alt', options: { style: :regular, fa: :fw } } if show_link?(:education)

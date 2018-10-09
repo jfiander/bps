@@ -4,23 +4,23 @@ ul.desktop
       a.menu-header Current Page
       ul = admin_links[:current]
 
-  - if current_user&.permitted?(:page)
+  - if show_link?(:page)
     li.menu onclick=""
       a.menu-header Files
       ul = admin_links[:files]
 
-  - if current_user&.permitted?(:users, :float, :roster, :education, :excom)
+  - if show_link?(:users, :float, :roster, :education, :excom)
     li.menu onclick=""
       a.menu-header Users
       ul
         = admin_links[:users_top]
-        - if current_user&.permitted?(:float, :education, :excom)
+        - if show_link?(:float, :education, :excom)
           li.menu onclick=""
             a.menu-header
               = FA::Icon.p('list', style: :regular, fa: :fw) + 'Review'
               .arrow = FA::Icon.p('chevron-right', style: :regular, fa: :fw)
             ul = admin_links[:review]
-        - if current_user&.permitted?(:users, :roster)
+        - if show_link?(:users, :roster)
           li.menu onclick=""
             a.menu-header
               = FA::Icon.p('upload', style: :regular, fa: :fw) + 'Upload'
@@ -34,7 +34,7 @@ ul.desktop
         = admin_links[:users_bottom]
 
 
-  - if current_user&.permitted?(:otw)
+  - if show_link?(:otw)
     li.menu onclick=""
       a.menu-header Education
       ul
@@ -50,7 +50,7 @@ ul.desktop
             .arrow = FA::Icon.p('chevron-right', style: :regular, fa: :fw)
           ul = admin_links[:completions]
 
-  - if current_user&.permitted?(:admin, strict: true)
+  - if show_link?(:admin, strict: true)
     li.menu.admin onclick=""
       a.menu-header.admin Admin
       ul = admin_links[:admin]
