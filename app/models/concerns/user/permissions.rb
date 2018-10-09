@@ -60,11 +60,17 @@ module User::Permissions
   private
 
   def searchable_roles(strict = false, session: nil)
-    if session.present?
-      strict ? session[:granted] : session[:permitted]
-    else
-      strict ? granted_roles : permitted_roles
-    end
+    return session_roles(strict, session) if session.present?
+
+    lookup_roles(strict)
+  end
+
+  def session_roles(strict, session)
+    strict ? session[:granted] : session[:permitted]
+  end
+
+  def lookup_roles(strict)
+    strict ? granted_roles : permitted_roles
   end
 
   def office_roles

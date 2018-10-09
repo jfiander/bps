@@ -44,13 +44,24 @@ module AdminMenuHelper
   end
 
   def invalid?(rc, ra, nc, na)
-    return true if missing_controller?(rc) && ra.blank?
-    return true if wrong_controller?(nc) && na.blank?
-    return true if missing_action?(ra) && rc.blank?
-    return true if wrong_action?(na) && nc.blank?
-    return true if missing_controller?(rc) && missing_action?(ra)
-    return true if wrong_controller?(nc) && wrong_action?(na)
-    false
+    invalid_controller?(rc, ra, nc, na) ||
+      invalid_action?(rc, ra, nc, na) ||
+      invalid_combination?(rc, ra, nc, na)
+  end
+
+  def invalid_controller?(rc, ra, nc, na)
+    (missing_controller?(rc) && ra.blank?) ||
+      (wrong_controller?(nc) && na.blank?)
+  end
+
+  def invalid_action?(rc, ra, nc, na)
+    (missing_action?(ra) && rc.blank?) ||
+      (wrong_action?(na) && nc.blank?)
+  end
+
+  def invalid_combination?(rc, ra, nc, na)
+    (missing_controller?(rc) && missing_action?(ra)) ||
+      (wrong_controller?(nc) && wrong_action?(na))
   end
 
   def missing_controller?(req_controller = nil)
