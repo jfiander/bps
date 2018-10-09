@@ -26,7 +26,7 @@ class EventTypesController < ApplicationController
     @edit_action = 'Add'
     @submit_path = create_event_type_path
 
-    return if current_user&.permitted?(:admin, strict: true)
+    return if current_user&.permitted?(:admin, strict: true, session: session)
     @event_types = @event_types.where.not(event_category: 'meeting')
   end
 
@@ -74,7 +74,7 @@ class EventTypesController < ApplicationController
   end
 
   def restricted?
-    !current_user&.permitted?(:admin, strict: true) &&
+    !current_user&.permitted?(:admin, strict: true, session: session) &&
       event_type_params[:event_category] == 'meeting'
   end
 
@@ -83,13 +83,13 @@ class EventTypesController < ApplicationController
   end
 
   def remove_events_unless_permitted
-    return if current_user&.permitted?(:event)
+    return if current_user&.permitted?(:event, session: session)
 
     @event_types.reject! { |et| et[:category] == 'meeting' }
   end
 
   def remove_education_unless_permitted
-    return if current_user&.permitted?(:education)
+    return if current_user&.permitted?(:education, session: session)
 
     @event_types.select! { |et| et[:category] == 'meeting' }
   end

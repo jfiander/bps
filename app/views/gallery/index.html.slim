@@ -1,6 +1,6 @@
 h1 Squadron Photos
 
-- if current_user&.permitted?(:photos)
+- if current_user&.permitted?(:photos, session: session)
   = editor('gallery_editor')
 
 - if @albums.blank?

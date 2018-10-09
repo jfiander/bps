@@ -8,7 +8,7 @@ module User::Load
     @user = User.find_by(id: id)
     return @user if @user.present?
 
-    if current_user&.permitted?(:admin)
+    if current_user&.permitted?(:admin, session: session)
       flash[:notice] = "Couldn't find that user."
     end
     redirect_to root_path

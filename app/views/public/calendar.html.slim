@@ -1,5 +1,5 @@
 h1 Squadron Calendar
 
-= editor('calendar_editor') if current_user&.permitted?(:calendar)
+= editor('calendar_editor') if current_user&.permitted?(:calendar, session: session)
 
 iframe#calendar src=(render_calendar) frameborder="0" scrolling="no"

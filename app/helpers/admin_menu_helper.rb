@@ -20,7 +20,7 @@ module AdminMenuHelper
     not_cont = *options[:not_controller] || []
     not_action = *options[:not_action] || []
 
-    return false unless current_user&.permitted?(roles, strict: strict)
+    return false unless current_user&.permitted?(roles, strict: strict, session: session)
     return false if invalid?(req_cont, req_action, not_cont, not_action)
     true
   end
@@ -28,10 +28,19 @@ module AdminMenuHelper
   private
 
   def admin_menus
-    %i[
-      current files users_top review upload roster users_bottom education otw
-      completions admin
-    ]
+    {
+      current: admin_current?,
+      files: [:page],
+      users_top: [:users],
+      review: %i[users float roster excom],
+      upload: %i[users roster],
+      roster: %i[users roster],
+      users_bottom: [:users],
+      education: [:education],
+      otw: [:education],
+      completions: [:education],
+      admin: [:admin, { strict: true }],
+    }
   end
 
   def invalid?(rc, ra, nc, na)

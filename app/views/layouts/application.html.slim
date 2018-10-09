@@ -46,7 +46,7 @@ html
             #error class=(error ? '' : 'hide') = formatted_error_flash(error)
         #content-main = yield
       footer
-        - if current_user&.permitted?(:admin, strict: true) && ::GIT_INFORMATION.local_ref.present?
+        - if current_user&.permitted?(:admin, strict: true, session: session) && ::GIT_INFORMATION.local_ref.present?
           .gray = ::GIT_INFORMATION.local_ref
         #main-footer
           .table

@@ -4,9 +4,9 @@
   = event_action_link(nil, nil, icon: 'bell-slash', text: 'Reminded')
 - else
   = event_action_link(event, "remind_#{event_type_param}_path", icon: 'bell', text: 'Remind', css: 'birmingham-blue', method: :put)
-- if current_user&.permitted?(event_type_param) && event.booked?
+- if current_user&.permitted?(event_type_param, session: session) && event.booked?
   = event_action_link(event, "unbook_#{event_type_param}_path", icon: 'calendar-times', text: 'Remove from Calendar', css: 'red', method: :delete)
-- elsif current_user&.permitted?(event_type_param) && !event.expired?
+- elsif current_user&.permitted?(event_type_param, session: session) && !event.expired?
   = event_action_link(event, "book_#{event_type_param}_path", icon: 'calendar-check', text: 'Post to Calendar', css: 'birmingham-blue', method: :put)
 = event_action_link(event, "copy_#{event_type_param}_path", icon: 'clone', text: 'Clone', css: 'blue-faded')
 = event_action_link(event, "edit_#{event_type_param}_path", icon: 'edit', text: 'Edit', css: 'blue-faded')

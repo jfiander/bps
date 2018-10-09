@@ -268,6 +268,11 @@ RSpec.describe User, type: :model do
       expect(@user.permitted?(:not_a_permission)).to be(false)
     end
 
+    it 'should return true when user has the required cached permission' do
+      session = { permitted: [:child], granted: [:child] }
+      expect(@user.permitted?(:child, session: session)).to be(true)
+    end
+
     it 'should return false for invalid/empty permissions' do
       expect(@user.permitted?(nil)).to be(false)
       expect(@user.permitted?([])).to be(false)

@@ -15,12 +15,12 @@ module User::Permissions
     end
   end
 
-  def permitted?(*required_roles, strict: false)
+  def permitted?(*required_roles, strict: false, session: nil)
     return false if locked?
     required = SIMPLIFY.call(required_roles)
     return false if required.blank? || required.all?(&:blank?)
 
-    permitted = searchable_roles(strict).any? do |p|
+    permitted = searchable_roles(strict, session: session).any? do |p|
       p.in?(required.map(&:to_sym))
     end
 
@@ -50,7 +50,7 @@ module User::Permissions
   end
 
   def granted_roles
-    cached_roles.map(&:name).map(&:to_sym).uniq
+    roles.map(&:name).map(&:to_sym).uniq
   end
 
   def permitted_roles
@@ -59,12 +59,12 @@ module User::Permissions
 
   private
 
-  def searchable_roles(strict = false)
-    strict ? granted_roles : permitted_roles
-  end
-
-  def cached_roles
-    @cached_roles ||= roles
+  def searchable_roles(strict = false, session: nil)
+    if session.present?
+      strict ? session[:granted] : session[:permitted]
+    else
+      strict ? granted_roles : permitted_roles
+    end
   end
 
   def office_roles

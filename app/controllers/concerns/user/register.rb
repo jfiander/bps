@@ -70,7 +70,7 @@ module User::Register
   end
 
   def cannot_cancel_registration?
-    return false if (@reg&.user == current_user) || current_user&.permitted?(:course, :seminar, :event)
+    return false if (@reg&.user == current_user) || current_user&.permitted?(:course, :seminar, :event, session: session)
 
     flash[:alert] = 'You are not allowed to cancel that registration.'
     redirect_to root_path, status: :unprocessable_entity

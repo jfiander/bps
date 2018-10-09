@@ -6,10 +6,10 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
   = link_to "Send invitations to all new users", invite_all_path, method: :put
   hr
 
-= editor('photo_editor') if current_user&.permitted?(:admin)
+= editor('photo_editor') if current_user&.permitted?(:admin, session: session)
 
-- admin = current_user&.permitted?(:admin)
-- can_lock = current_user&.permitted?(:users)
+- admin = current_user&.permitted?(:admin, session: session)
+- can_lock = current_user&.permitted?(:users, session: session)
 
 table#users
   tr

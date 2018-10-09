@@ -144,7 +144,7 @@ class User < ApplicationRecord
   end
 
   def cached_standing_committees
-    @cached_standing_committees ||= standing_committee_offices
+    @cached_standing_committees ||= standing_committee_offices 
   end
 
   def cached_bridge_office

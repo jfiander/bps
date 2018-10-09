@@ -32,7 +32,7 @@ module Application::Security
   end
 
   def require_permission(*roles, strict: false)
-    return if current_user&.permitted?(*roles, strict: strict)
+    return if current_user&.permitted?(*roles, strict: strict, session: session)
     redirect_to root_path
   end
 
@@ -44,7 +44,7 @@ module Application::Security
   end
 
   def authenticate_inviter!
-    unless current_user&.permitted?(:users)
+    unless current_user&.permitted?(:users, session: session)
       redirect_to root_path
       return
     end
@@ -57,5 +57,11 @@ module Application::Security
       :account_update,
       keys: %i[profile_photo rank first_name last_name]
     )
+  end
+
+  def cache_user_permissions
+    return unless current_user.present?
+    session[:granted] = current_user.granted_roles
+    session[:permitted] = current_user.permitted_roles
   end
 end

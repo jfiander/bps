@@ -97,6 +97,6 @@ module NavigationHelper
   end
 
   def user_not_permitted?(permit)
-    permit.present? && !current_user&.permitted?(permit)
+    permit.present? && !current_user&.permitted?(permit, session: session)
   end
 end

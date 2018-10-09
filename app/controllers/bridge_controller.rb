@@ -13,7 +13,7 @@ class BridgeController < ApplicationController
   before_action :users_for_select, only: %i[assign_bridge assign_committee]
 
   def list
-    @current_user_permitted_users = current_user&.permitted?(:users)
+    @current_user_permitted_users = current_user&.permitted?(:users, session: session)
 
     preload_user_data
     bridge_selectors

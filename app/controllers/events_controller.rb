@@ -25,7 +25,7 @@ class EventsController < ApplicationController
   def schedule
     @events = get_events(event_type_param, :current)
 
-    @current_user_permitted_event_type = current_user&.permitted?(event_type_param)
+    @current_user_permitted_event_type = current_user&.permitted?(event_type_param, session: session)
 
     return unless @current_user_permitted_event_type
     @registered_users = Registration.includes(:user).all.group_by(&:event_id)
@@ -41,7 +41,7 @@ class EventsController < ApplicationController
                        catalog_list[event_type_param]
                      end
 
-    @current_user_permitted_event_type = current_user&.permitted?(event_type_param)
+    @current_user_permitted_event_type = current_user&.permitted?(event_type_param, session: session)
   end
 
   def registrations

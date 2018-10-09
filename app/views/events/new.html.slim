@@ -19,7 +19,7 @@ em
         = f.select :event_type_id, grouped_options_for_select(@event_types, @event.event_type_id), prompt: "Please select #{event_type_param == 'event' ? 'an' : 'a'} #{event_type_param} type", required: true
       - else
         = f.select :event_type_id, options_for_select(@event_types, @event.event_type_id), include_blank: true, prompt: "Please select #{event_type_param == 'event' ? 'an' : 'a'} #{event_type_param} type", required: true
-      - if current_user&.permitted?(:admin, :education, strict: true)
+      - if current_user&.permitted?(:admin, :education, strict: true, session: session)
         ul
           li = link_to(event_types_path, target: :_blank) { FA::Icon.p('edit') + 'Manage Event Types' }
           li &nbsp;

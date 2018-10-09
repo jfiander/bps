@@ -34,7 +34,7 @@ h2.red This page is currently under construction.
 /             = link_to(request_store_item_path(item.id), method: :put, remote: true, id: "request_item_#{item.id}") do
 /               = FA::Icon.p("cart-plus")
 /               | Request
-/         - if current_user&.permitted?(:store)
+/         - if current_user&.permitted?(:store, session: session)
 /           br.mobile
 /           = link_to(edit_store_item_path(item.id), class: "blue-faded") do
 /             = FA::Icon.p("edit")
@@ -47,7 +47,7 @@ h2.red This page is currently under construction.
 /       td colspan=3
 /         hr
 
-/ - if current_user&.permitted?(:store) && @store_item_requests.present?
+/ - if current_user&.permitted?(:store, session: session) && @store_item_requests.present?
 /   h2 Requested Items
 /   table#requested-items
 /     - @store_item_requests.each do |request|
