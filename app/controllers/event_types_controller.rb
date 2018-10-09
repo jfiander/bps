@@ -4,7 +4,7 @@ class EventTypesController < ApplicationController
   include EventTypes::Refresh
   include Concerns::Application::RedirectWithStatus
 
-  secure!(:admin, :education, strict: true)
+  secure!(:admin, strict: true)
 
   before_action :load_event_types, only: %i[new edit]
 
