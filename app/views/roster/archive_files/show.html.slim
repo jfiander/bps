@@ -1,0 +1,21 @@
+h1 Archived Rosters
+
+= form_tag(roster_archive_files_path) do |f|
+  = spinner_button(f, button_text: 'Archive Current Roster', disable_text: 'Archiving Current Roster', name: 'button', css_class: 'big')
+
+- if @collection.empty?
+  h2.red There are no archived rosters available.
+- else
+  .table
+    .table-row
+      .table-cell.table-header Generated at
+      .table-cell.table-header Archived at
+      .table-cell.table-header Link
+      .table-cell
+    - @collection.each do |archive|
+      .table-row class=(cycle('gray', ''))
+        .table-cell = archive.generated_at&.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+        .table-cell = archive.created_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+        .table-cell = link_to 'View', archive.link, target: :_blank
+        .table-cell
+          = link_to(roster_archive_files_path(id: archive.id), class: 'red', method: :delete, data: { confirm: 'Are you sure you want to remove this archived roster?' }) { FA::Icon.p('minus-square') }

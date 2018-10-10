@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_01_213046) do
+ActiveRecord::Schema.define(version: 2018_10_10_180704) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -375,6 +375,17 @@ ActiveRecord::Schema.define(version: 2018_10_01_213046) do
     t.datetime "updated_at", null: false
     t.integer "parent_id"
     t.datetime "deleted_at"
+  end
+
+  create_table "roster_archive_files", force: :cascade do |t|
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "generated_at"
   end
 
   create_table "standing_committee_offices", force: :cascade do |t|

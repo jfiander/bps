@@ -122,6 +122,7 @@ Rails.application.routes.draw do
   namespace :roster do
     resource :award_recipients
     resource :past_commanders
+    resource :archive_files
   end
 
   # Photo Galleries

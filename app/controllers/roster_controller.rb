@@ -36,7 +36,7 @@ class RosterController < ApplicationController
   private
 
   def safe_params
-    params.permit(:id)
+    params.permit(:id, :year)
   end
 
   def record_id
