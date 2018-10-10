@@ -12,9 +12,7 @@ class Roster::ArchiveFile < UploadedFile
     year = Date.today.strftime('%Y')
     file_name = "Birmingham_Power_Squadron_-_#{year}_Roster.pdf"
     file = buckets[:files].download("roster/#{file_name}")
-    f = File.open("#{Rails.root}/tmp/run/roster.pdf", 'wb')
-    f.write(file)
-    f.close
+    File.open("#{Rails.root}/tmp/run/roster.pdf", 'wb') { |f| f.write(file) }
 
     buckets[:files].object("roster/#{file_name}").last_modified
   end
