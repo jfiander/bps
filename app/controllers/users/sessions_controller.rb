@@ -26,16 +26,37 @@ class Users::SessionsController < Devise::SessionsController
     #
     # This whitelist is permissions-agnostic, since Devise will handle that
     # after login is complete.
-    simple_paths = %w[
-      members minutes profile permit invitation/new header file import
-      user_help profile profile/edit ranks auto_permissions locations
-      roster update_roster float_plan float_plans otw(/list)?
-    ]
-    users_paths = 'users(/\d+(/certificate(.pdf)?)?)?'
-    minutes_paths = '(minutes|excom)/\d{4}/\d{1,2}'
-    event_paths = '(courses|seminars|events)(/(new|(\d+(/(copy|edit))?))?)'
-    edit_paths = "edit/(#{MarkdownHelper::VIEWS.map { |_, v| v }.join('|')})"
+    [
+      simple_paths, users_paths, roster_paths, minutes_paths, event_paths,
+      edit_paths
+    ].flatten
+  end
 
-    [simple_paths, users_paths, minutes_paths, event_paths, edit_paths].flatten
+  def simple_paths
+    %w[
+      members minutes profile permit invitation/new header file import
+      user_help profile(/edit)? ranks auto_permissions event_types locations
+      float_plans? otw(/list)?
+    ]
+  end
+
+  def users_paths
+    'users(/\d+(/certificate(.pdf)?)?)?'
+  end
+
+  def roster_paths
+    'roster(/(gen(/.*?)|archive_files))?'
+  end
+
+  def minutes_paths
+    '(minutes|excom)/\d{4}/\d{1,2}'
+  end
+
+  def event_paths
+    '(courses|seminars|events)(/(new|(\d+(/(copy|edit))?))?)'
+  end
+
+  def edit_paths
+    "edit/(#{MarkdownHelper::VIEWS.map { |_, v| v }.join('|')})"
   end
 end
