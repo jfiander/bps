@@ -221,6 +221,8 @@ Rails.application.routes.draw do
   # Registration
   put     '/register/:type/:id', to: 'user#register',            as: 'register'
   delete  '/register/:id',       to: 'user#cancel_registration', as: 'cancel_registration'
+  get     '/override_cost/:id',  to: 'user#override_cost',       as: 'override_cost'
+  patch   '/override_cost/:id',  to: 'user#set_override_cost',   as: 'set_override_cost'
 
   # Request
   put     '/request/:id', to: 'user#request_schedule', as: 'request_schedule'

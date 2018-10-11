@@ -12,7 +12,7 @@ class UserController < ApplicationController
   include User::Instructors
 
   secure!
-  secure!(:admin, only: :assign_photo)
+  secure!(:admin, only: %i[assign_photo override_cost])
   secure!(:users, except: %i[current show register cancel_registration instructors])
   secure!(:education, only: :instructors)
 
@@ -20,6 +20,7 @@ class UserController < ApplicationController
   before_action :can_view_profile?, only: [:certificate]
   before_action :find_user, only: [:show]
   before_action :load_users, only: [:list]
+  before_action :find_registration, only: %i[override_cost set_override_cost]
   before_action(
     :users_for_select,
     only: %i[permissions_index assign_bridge assign_committee]

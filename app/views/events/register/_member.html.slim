@@ -4,6 +4,8 @@
       = r.user.full_name
   - else
     = mail_to(r.email || r.user&.email)
-  |  
+  '
+  - if defined?(override_link) && current_user&.permitted?(:admin)
+    = link_to(override_cost_path(r.id)) { FA::Icon.p('file-invoice-dollar', style: (r.override_cost.present? ? :solid : :regular), css: 'green', title: 'Set override cost') }
   = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true,
     data: {confirm: 'Are you sure you want to cancel this registration?'}) { FA::Icon.p('minus-square') }

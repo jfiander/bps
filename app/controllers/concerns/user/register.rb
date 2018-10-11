@@ -33,7 +33,37 @@ module User::Register
     end
   end
 
+  def override_cost
+    #
+  end
+
+  def set_override_cost
+    if @registration.update(override_cost: reg_params[:override_cost])
+      reg_params[:override_cost].to_i.zero? ? removed_flash : set_flash
+    else
+      flash[:alert] = 'Unable to override registration cost.'
+    end
+
+    redirect_to send("#{@registration.event.category}_registrations_path")
+  end
+
   private
+
+  def find_registration
+    @registration = Registration.find_by(id: clean_params[:id])
+  end
+
+  def reg_params
+    params.require(:registration).permit(:override_cost)
+  end
+
+  def set_flash
+    flash[:success] = 'Successfully overrode registration cost.'
+  end
+
+  def removed_flash
+    flash[:success] = 'Successfully removed override registration cost.'
+  end
 
   def no_member_registrations?
     return false if @event.allow_member_registrations
