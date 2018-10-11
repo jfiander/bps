@@ -66,7 +66,9 @@ class EventsController < ApplicationController
   end
 
   def copy
-    @event = Event.new(@event.attributes.merge(show_in_catalog: false))
+    @event = Event.new(
+      @event.attributes.merge(show_in_catalog: false, start_at: nil, cutoff_at: nil, expires_at: nil)
+    )
     render :new
   end
 
