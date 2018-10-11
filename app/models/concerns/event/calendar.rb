@@ -6,6 +6,8 @@ module Concerns::Event::Calendar
 
     response = calendar.create(calendar_id, calendar_hash)
     store_calendar_details(response)
+  rescue StandardError => e
+    Bugsnag.notify(e)
   end
 
   def unbook!
@@ -13,12 +15,16 @@ module Concerns::Event::Calendar
 
     calendar.delete(calendar_id, google_calendar_event_id)
     store_calendar_details(nil)
+  rescue StandardError => e
+    Bugsnag.notify(e)
   end
 
   def refresh_calendar!
     return unless booked?
 
     calendar.update(calendar_id, google_calendar_event_id, calendar_hash)
+  rescue StandardError => e
+    Bugsnag.notify(e)
   end
 
   def booked?
