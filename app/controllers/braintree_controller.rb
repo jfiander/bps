@@ -39,7 +39,7 @@ class BraintreeController < ApplicationController
       transaction = @result.transaction
       @payment.paid!(transaction.id)
       ReceiptMailer.receipt(transaction, @payment).deliver
-      ReceiptMailer.paid(@payment, transaction.credit_card_details.card_type).deliver
+      ReceiptMailer.paid(@payment).deliver
       slack_notification(@payment)
       render js: "window.location='#{transaction_complete_path(token: @token)}'"
     else
