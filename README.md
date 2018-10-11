@@ -15,9 +15,9 @@
 
 All assets are served by CloudFront.
 
-Static files are stored in one bucket.
+Static assets and SEO files are stored in one bucket each.
 
-All other files are stored in environment-specific buckets by purpose.
+Photos, Bilge issues, and general files are stored in environmented buckets.
 
 ## Setup
 
