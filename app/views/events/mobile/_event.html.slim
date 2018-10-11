@@ -78,7 +78,13 @@
           small = simple_format(@locations[event.location_id][:details])
     - else
       | Location TBD
-.event-mobile-contents.spaced = simple_markdown(event.description) if event.description.present?
+.event-mobile-contents.spaced
+  = simple_markdown(event.description) if event.description.present?
+  - if event.usps_cost.present?
+    p.red.italic
+      b USPS members from other squadrons: 
+      br
+      | Please contact us for your discounted rate.
 - if course_topics(event).present?
   .event-mobile-contents.spaced
     b Topics include:

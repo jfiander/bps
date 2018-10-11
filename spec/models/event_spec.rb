@@ -232,24 +232,56 @@ RSpec.describe Event, type: :model do
         it 'should store only the cost' do
           @event.update(cost: 15)
           expect(@event.cost).to eql(15)
+          expect(@event.usps_cost).to be_nil
           expect(@event.member_cost).to be_nil
         end
 
-        it 'should store member_cost as cost when no cost is specified' do
+        it 'should reject member_cost when no cost is specified' do
           @event.update(member_cost: 16)
-          expect(@event.cost).to eql(16)
+          expect(@event.cost).to be_nil
+          expect(@event.usps_cost).to be_nil
           expect(@event.member_cost).to be_nil
         end
 
-        it 'should store only the member_cost as cost when higher than cost' do
+        it 'should reject usps_cost when no cost is specified' do
+          @event.update(usps_cost: 11)
+          expect(@event.cost).to be_nil
+          expect(@event.usps_cost).to be_nil
+          expect(@event.member_cost).to be_nil
+        end
+
+        it 'should store the member_cost and cost correctly when backwards' do
           @event.update(cost: 17, member_cost: 20)
           expect(@event.cost).to eql(20)
-          expect(@event.member_cost).to be_nil
+          expect(@event.usps_cost).to be_nil
+          expect(@event.member_cost).to eql(17)
         end
 
         it 'should store both costs when valid' do
           @event.update(cost: 18, member_cost: 12)
           expect(@event.cost).to eql(18)
+          expect(@event.usps_cost).to be_nil
+          expect(@event.member_cost).to eql(12)
+        end
+
+        it 'should reject usps_cost when below range' do
+          @event.update(cost: 20, usps_cost: 12, member_cost: 15)
+          expect(@event.member_cost).to eql(15)
+          expect(@event.usps_cost).to be_nil
+          expect(@event.cost).to eql(20)
+        end
+
+        it 'should reject usps_cost when above range' do
+          @event.update(cost: 21, usps_cost: 24, member_cost: 13)
+          expect(@event.member_cost).to eql(13)
+          expect(@event.usps_cost).to be_nil
+          expect(@event.cost).to eql(21)
+        end
+
+        it 'should store all costs when valid' do
+          @event.update(cost: 18, usps_cost: 16, member_cost: 12)
+          expect(@event.cost).to eql(18)
+          expect(@event.usps_cost).to eql(16)
           expect(@event.member_cost).to eql(12)
         end
       end
@@ -264,14 +296,14 @@ RSpec.describe Event, type: :model do
         it 'should correctly format a single cost' do
           @event.update(cost: 10)
           expect(@event.formatted_cost).to eql(
-            '<b>Cost:</b> $10'
+            '<b>Cost:</b>&nbsp;$10'
           )
         end
 
         it 'should correctly format both costs' do
           @event.update(cost: 10, member_cost: 5)
           expect(@event.formatted_cost).to eql(
-            '<b>Members:</b> $5, <b>Non-members:</b> $10'
+            '<b>Members:</b>&nbsp;$5, <b>Non-members:</b>&nbsp;$10'
           )
         end
 

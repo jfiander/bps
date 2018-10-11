@@ -5,6 +5,7 @@ class Event < ApplicationRecord
   include Concerns::Event::Category
   include Concerns::Event::Flyer
   include Concerns::Event::Boolean
+  include Concerns::Event::Cost
 
   belongs_to :event_type
   has_many   :course_topics,   foreign_key: :course_id
@@ -67,13 +68,6 @@ class Event < ApplicationRecord
     includes(:registrations).select { |e| e.registrations.present? }
   end
 
-  def formatted_cost
-    # html_safe: User content is restricted to integers
-    return nil if cost.blank?
-    return "<b>Cost:</b> $#{cost}".html_safe if member_cost.blank?
-    "<b>Members:</b> $#{member_cost}, <b>Non-members:</b> $#{cost}".html_safe
-  end
-
   def formatted_length
     return nil if length.blank?
 
@@ -105,12 +99,6 @@ class Event < ApplicationRecord
     )
   end
 
-  def get_cost(member = false)
-    return member_cost if member && member_cost.present?
-    return cost if cost.present?
-    0
-  end
-
   def display_title(event_type_cache = nil)
     return summary if summary.present?
 
@@ -119,14 +107,6 @@ class Event < ApplicationRecord
   end
 
   private
-
-  def validate_costs
-    return unless member_cost.present?
-    return if cost.present? && cost > member_cost
-
-    self.cost = member_cost
-    self.member_cost = nil
-  end
 
   def validate_dates
     self.cutoff_at = start_at if cutoff_at.blank?

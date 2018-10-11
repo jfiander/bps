@@ -38,7 +38,7 @@ em
         li
           | You can also save this 
           = event_type_param
-          | , go create the location, then add it here later.
+          | , create the location, then add it here later.
     .right
       - if @locations.present?
         = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: 'Please select a location', required: true
@@ -103,19 +103,33 @@ em
 
     h2 Registrations
 
-    .left = f.label :cost, 'Cost'
+    .left = f.label :cost, 'Regular cost'
     .right
       = FA::Icon.p('dollar-sign')
       = f.number_field :cost, class: 'number', min: 0, placeholder: '0.00'
     br.clear
 
     .left
-      = f.label :member_cost, 'Member discounted cost'
+      = f.label :member_cost, 'BPS member cost'
       ul.red
-        li Only enter if applicable
+        li Only enter if applicable.
     .right
       = FA::Icon.p('dollar-sign')
       = f.number_field :member_cost, class: 'number', min: 0, placeholder: '0.00'
+    br.clear
+
+    .left
+      = f.label :usps_cost, 'USPS member cost'
+      ul
+        li This will automatically add a note to the end of the description.
+        li.red
+          | Must be 
+          u between
+          |  the two above costs.
+        li.red Only enter if applicable.
+    .right
+      = FA::Icon.p('dollar-sign')
+      = f.number_field :usps_cost, class: 'number', min: 0, placeholder: '0.00'
     br.clear
 
     .left = f.label :allow_member_registrations, 'Member registrations'
@@ -141,14 +155,14 @@ em
     .left
       = f.label :cutoff_at, 'Do not allow registrations after', class: 'red'
       ul.red
-        li Defaults to start time
+        li Defaults to start time.
     .right = f.datetime_field :cutoff_at
     br.clear
 
     .left
       = f.label :expires_at, "Do not display this #{event_type_param} after", class: 'red'
       ul.red
-        li Defaults to one week after start time
+        li Defaults to one week after start time.
     .right = f.datetime_field :expires_at
     br.clear
 

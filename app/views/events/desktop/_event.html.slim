@@ -102,7 +102,13 @@
         .table-cell.bottom-left
           .table
             .table.row
-              .table-cell = simple_markdown(event.description) if event.description.present?
+              .table-cell
+                = simple_markdown(event.description) if event.description.present?
+                - if event.usps_cost.present?
+                  p.red.italic
+                    b USPS members from other squadrons:
+                    br
+                    | Please contact us for your discounted rate.
             - if course_topics(event).present?
               .table.row
                 .table-cell
