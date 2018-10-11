@@ -22,6 +22,6 @@ hr
     .table-cell.table-header Date
     .table-cell.table-header Diff
     .table-cell.table-header Revert
-  = render 'versions/current_version', version: @current_version, no_versions: @versions&.count == 0 || @versions.blank?
+  = render 'admin/versions/current_version', version: @current_version, no_versions: @versions&.count == 0 || @versions.blank?
   - @versions&.each_with_index do |version, index|
-    = render 'versions/version', version: version, index: index
+    = render 'admin/versions/version', version: version, index: index

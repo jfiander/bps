@@ -1,4 +1,4 @@
-class VersionsController < ApplicationController
+class Admin::VersionsController < ApplicationController
   secure!(:admin, strict: true)
 
   before_action :load_versions, only: %i[show diff revert]
@@ -35,7 +35,7 @@ class VersionsController < ApplicationController
       @version.item.destroy
     end
 
-    redirect_to show_versions_path
+    redirect_to admin_show_versions_path
   end
 
   private

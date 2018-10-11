@@ -1,4 +1,4 @@
-class LinksController < ApplicationController
+class Admin::LinksController < ApplicationController
   secure!(:admin, strict: true)
 
   def s3

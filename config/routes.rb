@@ -70,13 +70,15 @@ Rails.application.routes.draw do
   get     '/float_plans', to: 'float_plan#list'
 
   # Admin utilities
-  get     '/s3',                        to: 'links#s3'
-  post    '/s3',                        to: 'links#s3'
-  get     '/versions/:model/:id',       to: 'versions#show',      as: 'show_versions'
-  get     '/versions/:model/:id/:a/:b', to: 'versions#diff',      as: 'diff_versions'
-  post    '/versions/:model/:id/:a/:b', to: 'versions#diff'
-  patch   '/versions/:model/:id/:a',    to: 'versions#revert',    as: 'revert_version'
-  get     '/versions(/:model)',         to: 'versions#index',     as: 'versions'
+  namespace :admin do
+    get   '/s3',                        to: 'links#s3'
+    post  '/s3',                        to: 'links#s3'
+    get   '/versions/:model/:id',       to: 'versions#show',   as: 'show_versions'
+    get   '/versions/:model/:id/:a/:b', to: 'versions#diff',   as: 'diff_versions'
+    post  '/versions/:model/:id/:a/:b', to: 'versions#diff'
+    patch '/versions/:model/:id/:a',    to: 'versions#revert', as: 'revert_version'
+    get   '/versions(/:model)',         to: 'versions#index',  as: 'versions'
+  end
 
   # Newsletter
   get     '/newsletter',         to: 'public#newsletter'

@@ -2,7 +2,7 @@
   h1 = admin_header('Versioned Models')
   ul.simple
     - @models.each do |model|
-      li = link_to model, versions_path(model: model)
+      li = link_to model, admin_versions_path(model: model)
 - elsif @objects.present?
   h1 = admin_header('Versioned Objects')
   - headers = @objects.first.attributes.keys.reject { |e| e.in?(%w[created_at updated_at encrypted_password reset_password_token invitation_token]) }
@@ -15,7 +15,7 @@
         - headers.each do |header|
           .table-cell
             - if header == 'id'
-              = link_to object.send(header), show_versions_path(id: object.id)
+              = link_to object.send(header), admin_show_versions_path(id: object.id)
             - else
               = object.send(header)&.to_s&.truncate(100, separator: /\s/)
 - else
