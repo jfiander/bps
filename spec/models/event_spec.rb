@@ -121,6 +121,26 @@ RSpec.describe Event, type: :model do
         end
       end
 
+      describe 'calendar API silent failures' do
+        it 'should not allow errors to surface from book!' do
+          allow(@event).to(receive(:calendar).and_raise('An error'))
+
+          expect { @event.book! }.not_to raise_error
+        end
+
+        it 'should not allow errors to surface from unbook!' do
+          allow(@event).to(receive(:calendar).and_raise('An error'))
+
+          expect { @event.unbook! }.not_to raise_error
+        end
+
+        it 'should not allow errors to surface from refresh_calendar!' do
+          allow(@event).to(receive(:calendar).and_raise('An error'))
+
+          expect { @event.book! }.not_to raise_error
+        end
+      end
+
       describe 'within a week' do
         it 'should return false if the start date is more than 1 week away' do
           @event.start_at = Time.now + 2.weeks
