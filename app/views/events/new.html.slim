@@ -178,6 +178,8 @@ em
       .left
         = f.label :requirements, 'Student requirements'
         ul
+          li Put each requirement on a separate line.
+          li &nbsp;
           li.italic e.g. A computer to run navigation software; a calculator; etc.
       .right = f.text_area :requirements
       br.clear
@@ -192,7 +194,7 @@ em
       .left
         = label_tag :includes, 'Course materials'
         ul
-          li Put each topic on a separate line.
+          li Put each item on a separate line.
       .right = text_area_tag :includes, @course_includes, class: 'bulletted'
       br.clear
 
@@ -204,6 +206,8 @@ em
     .left
       = f.label :flyer
       ul
+        li Courses and seminars default to showing their book cover.
+        li &nbsp;
         li An image will display a thumbnail next to the description.
         li A PDF will display in a box under all other information.
     .right
@@ -225,7 +229,7 @@ em
       .left
         = label_tag :instructors, 'Instructor(s)'
         ul
-          li Put each topic on a separate line.
+          li Put each instructor on a separate line.
           li &nbsp;
           li Enter the full name of each instructor without rank or grade.
           li You can also put a slash followed by their certificate number.
