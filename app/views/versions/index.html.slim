@@ -11,7 +11,7 @@
       - headers.each do |header|
         .table-cell.table-header = header.titleize
     - @objects.each do |object|
-      .table-row
+      .table-row class=(cycle('gray', ''))
         - headers.each do |header|
           .table-cell
             - if header == 'id'
