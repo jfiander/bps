@@ -17,28 +17,30 @@ class Event < ApplicationRecord
 
   has_many :registrations
 
-  before_validation { validate_costs }
-  before_validation { validate_dates }
-  validates :repeat_pattern, inclusion: { in: %w[DAILY WEEKLY] << nil }
-
-  after_create { book! }
-  before_destroy { unbook! }
-  before_save :refresh_calendar!, if: :calendar_details_updated?
-
   has_attached_file(
     :flyer,
     paperclip_defaults(:files).merge(path: 'event_flyers/:id/:filename')
   )
 
   attr_accessor :delete_attachment
-  before_validation { flyer.clear if delete_attachment == '1' }
+
+  before_validation do
+    validate_costs
+    validate_dates
+    flyer.clear if delete_attachment == '1'
+  end
+
+  validates :repeat_pattern, inclusion: { in: %w[DAILY WEEKLY] << nil }
+  validates :event_type, :start_at, :expires_at, :cutoff_at, presence: true
 
   validates_attachment_content_type(
     :flyer,
     content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
   )
 
-  validates :event_type, :start_at, :expires_at, :cutoff_at, presence: true
+  before_save :refresh_calendar!, if: :calendar_details_updated?
+  after_create { book! }
+  before_destroy { unbook! }
 
   def self.include_details
     includes(:event_type, :course_topics, :course_includes, :prereq)
