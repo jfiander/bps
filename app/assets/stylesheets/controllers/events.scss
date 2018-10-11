@@ -5,6 +5,10 @@
 div#new-event {
   width: 95%;
 
+  &> div {
+    border-bottom: thin solid gray;
+  }
+
   ul {
     font-size: 80%;
     list-style: none;
