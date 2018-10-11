@@ -1,6 +1,8 @@
 class VersionsController < ApplicationController
   secure!(:admin, strict: true)
 
+  layout 'wide'
+
   before_action :load_versions, only: %i[show diff revert]
 
   def index

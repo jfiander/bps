@@ -1,0 +1,42 @@
+doctype html
+html
+  head
+    title = @title
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application'
+    meta name='description' content=(@site_description)
+    meta name='keywords' content=(@site_keywords)
+    meta name='viewport' content='width=device-width, initial-scale=1.0'
+    = favicon_link_tag static_bucket.link('favicon.ico')
+    = FA::Link.p(version: ENV['FONTAWESOME_VERSION'], integrity: ENV['FONTAWESOME_INTEGRITY'])
+    - if ENV['ASSET_ENVIRONMENT'].in? ['production', 'staging']
+      = render 'application/trackers/analytics', key: ENV['GA_TRACKING_ID']
+    - if ENV['ASSET_ENVIRONMENT'].in? ['production']
+      = render 'application/trackers/facebook_pixel', key: ENV['FACEBOOK_PIXEL_ID']
+    = yield :head
+  body.wide-layout
+    #main.flex.wide-layout
+      header
+        #desktop-header
+          .header = image_tag @header_image, class: 'header' if @header_image.present?
+          .logo = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
+          .slogan For Boaters, By Boaters™
+        #print-header = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
+      #content
+        #content-top
+          - if current_user&.show_admin_menu? && admin_menu.values.any?
+            #nested-navigation = render 'application/navigation/admin/nested', admin_links: admin_menu
+          #flashes
+            #success class=(success ? '' : 'hide') = success
+            #notice class=(notice ? '' : 'hide') = notice
+            #alert class=(alert ? '' : 'hide') = alert
+            #error class=(error ? '' : 'hide') = formatted_error_flash(error)
+        #content-main = yield
+      footer
+        - if current_user&.permitted?(:admin, strict: true, session: session) && ::GIT_INFORMATION.local_ref.present?
+          .gray = ::GIT_INFORMATION.local_ref
+        #main-footer
+          .copyright Copyright &copy; 2017 Birmingham Power Squadron
+        #print-footer
+          .copyright Copyright &copy; 2017 Birmingham Power Squadron

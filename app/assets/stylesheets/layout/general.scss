@@ -182,3 +182,12 @@ div.table-row.gray {
     background-color: $background-blue;
   }
 }
+
+body.wide-layout {
+  margin: 0;
+  width: auto !important;
+}
+
+div#main.wide-layout {
+  width: auto !important;
+}
