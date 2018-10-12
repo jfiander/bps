@@ -24,6 +24,9 @@ h2 Assign to Committee
       |  will be replaced with a newline-and-indent.
     br
     = spinner_button(button_text: "Assign to committee", disable_text: "Assigning to committee", css_class: 'big')
+    - if @missing_committees.present?
+      h3.red Recommended missing committees:
+      ul.simple.red = safe_join(@missing_committees.map { |c| content_tag(:li, c) })
 hr
 
 h2 Assign to Standing Committee

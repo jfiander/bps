@@ -14,6 +14,7 @@ class BridgeController < ApplicationController
 
   def list
     @current_user_permitted_users = current_user&.permitted?(:users, session: session)
+    missing_committees if @current_user_permitted_users
 
     preload_user_data
     bridge_selectors
@@ -97,5 +98,12 @@ class BridgeController < ApplicationController
       @standing = ' standing'
       @klass = StandingCommitteeOffice
     end
+  end
+
+  def missing_committees
+    auto_roles = YAML.safe_load(
+      File.read("#{Rails.root}/config/implicit_permissions.yml")
+    )['committee'].keys
+    @missing_committees = auto_roles - Committee.all.map(&:name)
   end
 end
