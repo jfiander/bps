@@ -53,11 +53,20 @@ module User::Register
     @registration = Registration.find_by(id: clean_params[:id])
   end
 
-  def block_override_paid
+  def block_override
+    return unless not_overrideable?
+
     if @registration.paid?
       flash[:notice] = 'That registration has already been paid.'
-      redirect_to send("#{@registration.event.category}_registrations_path")
+    elsif @registration.payment_amount&.zero?
+      flash[:notice] = 'That registration has no cost.'
     end
+
+    redirect_to send("#{@registration.event.category}_registrations_path")
+  end
+
+  def not_overrideable?
+    @registration.paid? || @registration.payment_amount&.zero?
   end
 
   def reg_params

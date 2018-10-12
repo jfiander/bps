@@ -21,7 +21,7 @@ class UserController < ApplicationController
   before_action :find_user, only: [:show]
   before_action :load_users, only: [:list]
   before_action :find_registration, only: %i[override_cost set_override_cost]
-  before_action :block_override_paid, only: %i[override_cost set_override_cost]
+  before_action :block_override, only: %i[override_cost set_override_cost]
   before_action(
     :users_for_select,
     only: %i[permissions_index assign_bridge assign_committee]
