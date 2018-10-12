@@ -5,7 +5,7 @@
   - else
     = mail_to(r.email || r.user&.email)
   '
-  - if defined?(override_link) && current_user&.permitted?(:admin)
+  - if current_user&.permitted?(:admin) && r.event&.cost&.positive?
     - style = r.override_cost.present? ? :solid : :regular
     - if r.paid?
       - title = 'Registration has already been paid'
