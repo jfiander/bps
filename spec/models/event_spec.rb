@@ -122,22 +122,23 @@ RSpec.describe Event, type: :model do
       end
 
       describe 'calendar API silent failures' do
-        it 'should not allow errors to surface from book!' do
+        before(:each) do
           allow(@event).to(receive(:calendar).and_raise('An error'))
+        end
 
+        it 'should not allow errors to surface from book!' do
+          @event.update(google_calendar_event_id: nil)
           expect { @event.book! }.not_to raise_error
         end
 
         it 'should not allow errors to surface from unbook!' do
-          allow(@event).to(receive(:calendar).and_raise('An error'))
-
+          @event.book!
           expect { @event.unbook! }.not_to raise_error
         end
 
         it 'should not allow errors to surface from refresh_calendar!' do
-          allow(@event).to(receive(:calendar).and_raise('An error'))
-
-          expect { @event.book! }.not_to raise_error
+          @event.book!
+          expect { @event.refresh_calendar! }.not_to raise_error
         end
       end
 
