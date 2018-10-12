@@ -11,7 +11,7 @@ html
     = favicon_link_tag static_bucket.link('favicon.ico')
     = FA::Link.p(version: ENV['FONTAWESOME_VERSION'], integrity: ENV['FONTAWESOME_INTEGRITY'])
     - if ENV['ASSET_ENVIRONMENT'].in? ['production', 'staging']
-      = render 'application/trackers/analytics', key: ENV['GA_TRACKING_ID']
+      = render 'application/trackers/analytics', keys: ENV.select { |k, _| k.match?(/\AGA_TRACKING_ID/) }.values
     - if ENV['ASSET_ENVIRONMENT'].in? ['production']
       = render 'application/trackers/facebook_pixel', key: ENV['FACEBOOK_PIXEL_ID']
     = yield :head

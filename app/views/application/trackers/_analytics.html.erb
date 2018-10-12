@@ -1,7 +1,9 @@
-<script async src="https://www.googletagmanager.com/gtag/js?id=<%= key %>"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<%= keys.first %>"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', '<%= key %>');
+  <%- keys.each do |key| -%>
+    gtag('config', '<%= key %>');
+  <%- end -%>
 </script>
