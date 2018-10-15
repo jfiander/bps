@@ -14,19 +14,19 @@ a {
   color: $birmingham-blue;
 }
 
-a:hover {
+a:hover, a:hover > i  {
   color: darken($birmingham-blue, 20%);
 }
 
-a.red:hover {
+a.red:hover, a.red:hover > i, a:hover > i.red {
   color: lighten($old-glory-red, 10%);
 }
 
-a.blue-faded:hover {
+a.blue-faded:hover, a.blue-faded:hover > i, a:hover > i.blue-faded {
   color: lighten($old-glory-blue, 40%);
 }
 
-a.green:hover {
+a.green:hover, a.green:hover > i, a:hover > i.green {
   color: lighten(green, 10%);
 }
 
