@@ -129,7 +129,8 @@ module Payments::BraintreeMethods
   def braintree_options
     {
       submit_for_settlement: true,
-      store_in_vault_on_success: true
+      store_in_vault_on_success: true,
+      paypal: { description: purchase_subject }
     }
   end
 end
