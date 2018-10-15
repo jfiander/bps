@@ -1,19 +1,15 @@
 .registration id=("registration_#{r.id}_mobile")
-  - if r.user&.full_name&.present?
-    = link_to("mailto:#{r.user.email}") do
-      = r.user.full_name
-  - else
-    = mail_to(r.email || r.user&.email)
-  '
+  = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true, data: {confirm: 'Are you sure you want to cancel this registration?'}) { FA::Icon.p('minus-square') }
   - if current_user&.permitted?(:admin) && r.event&.cost&.positive?
     - style = r.override_cost.present? ? :solid : :regular
     - if r.paid?
-      - title = 'Registration has already been paid'
-      - css = 'gray'
+      - options = { title: 'Registration has already been paid', css: 'gray' }
     - else
-      - title = 'Set override cost'
-      - css = 'green'
-    - icon = FA::Icon.p('file-invoice-dollar', style: style, css: css, title: title)
+      - options = { title: 'Set override cost', css: 'green' }
+    - icon = FA::Icon.p('file-invoice-dollar', style: style, css: options[:css], title: options[:title])
     = r.paid? ? icon : link_to(override_cost_path(r.id)) { icon }
-  = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true,
-    data: {confirm: 'Are you sure you want to cancel this registration?'}) { FA::Icon.p('minus-square') }
+  '
+  - if r.user&.full_name&.present?
+    = link_to("mailto:#{r.user.email}") { r.user.full_name }
+  - else
+    = mail_to(r.email || r.user&.email)
