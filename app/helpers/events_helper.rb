@@ -111,4 +111,18 @@ module EventsHelper
       icon
     end
   end
+
+  def reg_override_icon(reg)
+    style = reg.override_cost.present? ? :solid : :regular
+
+    options = if reg.paid?
+                { title: 'Registration has already been paid', css: 'gray' }
+              else
+                verb = reg.override_cost.present? ? 'Update' : 'Set'
+                { title: "#{verb} override cost", css: 'green' }
+              end
+
+    icon = FA::Icon.p('file-invoice-dollar', style: style, css: options[:css], title: options[:title])
+    reg.paid? ? icon : link_to(override_cost_path(reg.id)) { icon }
+  end
 end

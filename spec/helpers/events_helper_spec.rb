@@ -135,4 +135,50 @@ RSpec.describe EventsHelper, type: :helper do
       end
     end
   end
+
+  describe 'override_icon' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+      @event = FactoryBot.create(:event)
+      generic_seo_and_ao
+      @reg = FactoryBot.create(:registration, user: @user, event: @event)
+    end
+
+    it 'should generate the correct normal icon' do
+      expect(reg_override_icon(@reg)).to eql(
+        "<a href=\"/override_cost/1\"><i class='far green " \
+        "fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
+        "title='Set override cost'></i></a>"
+      )
+    end
+
+    it 'should generate the correct set icon' do
+      @reg.update(override_cost: 1)
+
+      expect(reg_override_icon(@reg)).to eql(
+        "<a href=\"/override_cost/1\"><i class='fas green " \
+        "fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
+        "title='Update override cost'></i></a>"
+      )
+    end
+
+    it 'should generate the correct normal paid icon' do
+      @reg.payment.paid!('1234567890')
+
+      expect(reg_override_icon(@reg)).to eql(
+        "<i class='far gray fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
+        "title='Registration has already been paid'></i>"
+      )
+    end
+
+    it 'should generate the correct set paid icon' do
+      @reg.update(override_cost: 1)
+      @reg.payment.paid!('1234567890')
+
+      expect(reg_override_icon(@reg)).to eql(
+        "<i class='fas gray fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
+        "title='Registration has already been paid'></i>"
+      )
+    end
+  end
 end
