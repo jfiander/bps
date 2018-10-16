@@ -87,6 +87,7 @@ def assign_bridge_office(office, user)
 end
 
 def clear_test_calendar
+  puts "\n*** Specs complete! Clearing test calendar..."
   cal = GoogleCalendarAPI.new
   cal.authorize!
   cal.clear_test_calendar
