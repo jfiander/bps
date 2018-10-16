@@ -4,7 +4,9 @@ module Concerns::Event::Calendar
   def book!
     return if booked?
 
-    response = calendar.create(calendar_id, calendar_hash)
+    response = calendar_retry.call do
+      calendar.create(calendar_id, calendar_hash)
+    end
     store_calendar_details(response)
   rescue StandardError => e
     Bugsnag.notify(e)
@@ -13,7 +15,9 @@ module Concerns::Event::Calendar
   def unbook!
     return unless booked?
 
-    calendar.delete(calendar_id, google_calendar_event_id)
+    calendar_retry.call do
+      calendar.delete(calendar_id, google_calendar_event_id)
+    end
     store_calendar_details(nil)
   rescue StandardError => e
     Bugsnag.notify(e)
@@ -22,7 +26,9 @@ module Concerns::Event::Calendar
   def refresh_calendar!
     return unless booked?
 
-    calendar.update(calendar_id, google_calendar_event_id, calendar_hash)
+    calendar_retry.call do
+      calendar.update(calendar_id, google_calendar_event_id, calendar_hash)
+    end
   rescue StandardError => e
     Bugsnag.notify(e)
   end
@@ -124,5 +130,9 @@ module Concerns::Event::Calendar
       google_calendar_event_id: response&.id,
       google_calendar_link: response&.html_link
     )
+  end
+
+  def calendar_retry
+    ExpRetry.new(exception: Google::Apis::RateLimitError, retries: 6)
   end
 end
