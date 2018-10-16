@@ -7,6 +7,7 @@ require 'fileutils'
 
 class GoogleCalendarAPI
   OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
+  LAST_TOKEN_PATH = "#{Rails.root}/tmp/run/last_page_token"
 
   def authorize!(refresh: false)
     service.authorization = authorize(refresh: refresh)
@@ -28,11 +29,18 @@ class GoogleCalendarAPI
     service.delete_event(calendar, event_id)
   end
 
-  def clear_test_calendar
+  def clear_test_calendar(page_token: nil, page_limit: 50)
+    Google::Apis.logger.level = Logger::WARN
+
     cal_id = ENV['GOOGLE_CALENDAR_ID_TEST']
-    service.list_events(cal_id, max_results: 2500).items.each do |event|
-      delete(cal_id, event.id)
-    end
+    @page_token ||= File.read(LAST_TOKEN_PATH) if File.exist?(LAST_TOKEN_PATH)
+    @page_token = page_token if page_token.present?
+
+    loop_over_pages(cal_id, page_limit: page_limit)
+  rescue Google::Apis::RateLimitError
+    puts "\n\n*** Google::Apis::RateLimitError (Rate Limit Exceeded)"
+  ensure
+    log_last_page_token
   end
 
   def permit(calendar, user)
@@ -94,5 +102,33 @@ class GoogleCalendarAPI
   def date(date)
     key = date&.is_a?(String) ? :date : :date_time
     Google::Apis::CalendarV3::EventDateTime.new(key => date, time_zone: 'America/Detroit')
+  end
+
+  def loop_over_pages(cal_id, page_limit: 50)
+    puts "*** Starting with page token: #{@page_token}" if @page_token.present?
+
+    while (@page_token = clear_page(cal_id)) && page_limit.positive?
+      puts "*** Page token: #{@page_token}"
+      page_limit -= 1
+    end
+  end
+
+  def clear_page(cal_id)
+    response = list(cal_id)
+    response.items&.each do |event|
+      delete(cal_id, event.id)
+      print '.'
+    end
+    response.next_page_token
+  end
+
+  def list(cal_id)
+    service.list_events(cal_id, max_results: 2500, page_token: @page_token)
+  end
+
+  def log_last_page_token
+    puts "\n\n*** Last page token cleared: #{@page_token}"
+    File.open(LAST_TOKEN_PATH, 'w+') { |f| f.write(@page_token) }
+    puts "\n*** Token stored in #{LAST_TOKEN_PATH}"
   end
 end
