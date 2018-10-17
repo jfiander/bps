@@ -37,7 +37,7 @@ module GoogleCalendarAPI::ClearTestCalendar
     response = list(cal_id, page_token: @page_token)
     pb = progress_bar(response.items.count)
     response.items&.each_with_index do |event, index|
-      ExpRetry.new(exception: RETRIABLE_EXCEPTIONS).call do
+      ExpRetry.for(exception: RETRIABLE_EXCEPTIONS) do
         delete(cal_id, event.id)
         pb.increment
       end
