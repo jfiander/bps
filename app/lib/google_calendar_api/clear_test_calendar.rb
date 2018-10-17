@@ -35,9 +35,11 @@ module GoogleCalendarAPI::ClearTestCalendar
 
   def clear_page(cal_id)
     response = list(cal_id, page_token: @page_token)
+    pb = progress_bar(response.items.count)
+    response.items&.each_with_index do |event, index|
       ExpRetry.new(exception: RETRIABLE_EXCEPTIONS).call do
         delete(cal_id, event.id)
-        print '.'
+        pb.increment
       end
     end
     response.next_page_token
@@ -49,5 +51,9 @@ module GoogleCalendarAPI::ClearTestCalendar
       f.write(@page_token)
     end
     puts "\n*** Token stored in #{GoogleCalendarAPI::LAST_TOKEN_PATH}"
+  end
+
+  def progress_bar(total)
+    ProgressBar.create(title: 'Page cleared', starting_at: 0, total: total, format: "%a [%R/sec] %E | %b\u{15E7}%i %c/%C (%P%%) %t", progress_mark: ' ', remainder_mark: "\u{FF65}")
   end
 end
