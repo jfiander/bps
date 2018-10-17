@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module GoogleCalendarAPI::ClearTestCalendar
+  RETRIABLE_EXCEPTIONS = [
+    Google::Apis::RateLimitError,
+    Google::Apis::TransmissionError
+  ].freeze
+
   def clear_test_calendar(page_token: nil, page_limit: 50)
     Google::Apis.logger.level = Logger::WARN
     set_page_token(page_token)
@@ -30,8 +35,7 @@ module GoogleCalendarAPI::ClearTestCalendar
 
   def clear_page(cal_id)
     response = list(cal_id, page_token: @page_token)
-    response.items&.each do |event|
-      ExpRetry.new(exception: Google::Apis::RateLimitError).call do
+      ExpRetry.new(exception: RETRIABLE_EXCEPTIONS).call do
         delete(cal_id, event.id)
         print '.'
       end
