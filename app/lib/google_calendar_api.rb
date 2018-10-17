@@ -11,6 +11,10 @@ class GoogleCalendarAPI
   OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
   LAST_TOKEN_PATH = "#{Rails.root}/tmp/run/last_page_token"
 
+  def initialize(auth: false)
+    self.authorize! if auth
+  end
+
   def authorize!(refresh: false)
     service.authorization = authorize(refresh: refresh)
   end

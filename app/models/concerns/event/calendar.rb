@@ -40,11 +40,7 @@ module Concerns::Event::Calendar
   private
 
   def calendar
-    return @calendar unless @calendar.nil?
-
-    @calendar = GoogleCalendarAPI.new
-    @calendar.authorize!
-    @calendar
+    @calendar ||= GoogleCalendarAPI.new(auth: true)
   end
 
   def calendar_id(production: false)

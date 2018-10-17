@@ -119,8 +119,6 @@ class PermissionsController < ApplicationController
   def update_calendar_acl(user)
     method = user.permitted?(:calendar) ? :permit : :unpermit
 
-    cal = GoogleCalendarAPI.new
-    cal.authorize!
-    cal.send(method, calendar_id, user)
+    GoogleCalendarAPI.new(auth: true).send(method, calendar_id, user)
   end
 end
