@@ -30,7 +30,7 @@ module Members::Bilge
     BilgeFile.find_by(
       year: bilge_params[:issue]['date(1i)'],
       month: bilge_params[:issue]['date(2i)']
-    ).destroy
+    )&.destroy
   end
 
   def create_bilge

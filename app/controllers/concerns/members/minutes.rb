@@ -86,7 +86,7 @@ module Members::Minutes
       year: minutes_params[:issue]['date(1i)'],
       month: minutes_params[:issue]['date(2i)'],
       excom: minutes_params[:minutes_excom].present?
-    ).destroy
+    )&.destroy
   end
 
   def create_minutes
