@@ -2,7 +2,7 @@
 
 module User::Receipts
   def receipts
-    @payments = Payment.all.select(&:cost?)
+    @payments = Payment.includes(:parent).all.select(&:cost?)
   end
 
   def receipt
