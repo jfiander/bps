@@ -15,6 +15,10 @@ module Concerns::Event::Cost
     0
   end
 
+  def costs
+    { general: cost, usps: usps_cost, member: member_cost }
+  end
+
   private
 
   def validate_costs

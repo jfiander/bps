@@ -106,4 +106,34 @@ RSpec.describe Payment, type: :model do
       expect(@user.dues_last_paid_at).to be < 5.seconds.since
     end
   end
+
+  describe 'cost' do
+    before(:each) do
+      generic_seo_and_ao
+    end
+
+    it 'should return false if cost is a Hash' do
+      parent = FactoryBot.create(:user)
+      child = FactoryBot.create(:user, parent: parent)
+      payment = FactoryBot.create(:payment, parent: child)
+
+      expect(payment.cost?).to be(false)
+    end
+
+    it 'should return false if cost is nil' do
+      event = FactoryBot.create(:event, cost: nil)
+      reg = FactoryBot.create(:registration, event: event, email: 'example@example.com')
+      payment = FactoryBot.create(:payment, parent: reg)
+
+      expect(payment.cost?).to be(false)
+    end
+
+    it 'should return true if cost is an Integer' do
+      event = FactoryBot.create(:event, cost: 7)
+      reg = FactoryBot.create(:registration, event: event, email: 'example@example.com')
+      payment = FactoryBot.create(:payment, parent: reg)
+
+      expect(payment.cost?).to be(true)
+    end
+  end
 end

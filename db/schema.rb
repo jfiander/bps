@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_11_192942) do
+ActiveRecord::Schema.define(version: 2018_10_18_193834) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -345,6 +345,11 @@ ActiveRecord::Schema.define(version: 2018_10_11_192942) do
     t.datetime "updated_at", null: false
     t.boolean "paid", default: false
     t.datetime "deleted_at"
+    t.string "receipt_file_name"
+    t.string "receipt_content_type"
+    t.integer "receipt_file_size"
+    t.datetime "receipt_updated_at"
+    t.string "cost_type"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -368,6 +373,7 @@ ActiveRecord::Schema.define(version: 2018_10_11_192942) do
     t.string "name"
     t.string "phone"
     t.integer "override_cost"
+    t.string "override_comment"
   end
 
   create_table "roles", force: :cascade do |t|

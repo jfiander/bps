@@ -1,0 +1,18 @@
+h1 = admin_header('Payments & Receipts')
+
+.table
+  .table-row
+    .table-cell.table-header ID
+    .table-cell.table-header Parent
+    .table-cell.table-header Amount
+    .table-cell.table-header Link
+  - @payments.each do |payment|
+    .table-row
+      .table-cell = payment.id
+      .table-cell = "#{payment.parent&.class&.name}##{payment.parent&.id}" if payment.parent.present?
+      .table-cell = payment.transaction_amount
+      .table-cell
+        - if payment.paid
+          = link_to(receipt_path(payment.token), class: 'green') { FA::Icon.p('file-pdf', style: :regular) + 'Receipt'}
+        - else
+          = link_to(pay_path(payment.token)) { FA::Icon.p('credit-card', style: :regular) + 'Pay' }

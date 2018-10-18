@@ -236,6 +236,8 @@ Rails.application.routes.draw do
   get     '/please_pay(/:token)', to: 'braintree#ask_to_pay', as: 'ask_to_pay'
   post    '/checkout',            to: 'braintree#checkout'
   get     '/paid(/:token)',       to: 'braintree#done',       as: 'transaction_complete'
+  get     '/receipts',            to: 'user#receipts'
+  get     '/receipts/:token',     to: 'user#receipt',         as: 'receipt'
 
   ### Miscellaneous
   get     '/sitemap.xml',    to: 'sitemap#index',  as: 'sitemap', format: 'xml'

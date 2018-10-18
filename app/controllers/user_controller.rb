@@ -10,8 +10,10 @@ class UserController < ApplicationController
   include User::Edit
   include User::Insignia
   include User::Instructors
+  include User::Receipts
 
   secure!
+  secure!(:admin, strict: true, only: %i[receipts receipt])
   secure!(:admin, only: %i[assign_photo override_cost])
   secure!(:users, except: %i[current show register cancel_registration instructors])
   secure!(:education, only: :instructors)
