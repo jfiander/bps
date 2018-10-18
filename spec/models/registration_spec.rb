@@ -49,7 +49,6 @@ RSpec.describe Registration, type: :model do
       end
 
       it 'should detect if an object is payable' do
-        allow(ENV).to receive(:[]).with('ENABLE_BRAINTREE').and_return('enabled')
         expect(@reg.payable?).to be(true)
       end
 

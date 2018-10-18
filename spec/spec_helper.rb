@@ -103,7 +103,7 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    Event.where.not(google_calendar_event_id: nil).map(&:unbook!)
+    Event.where.not(google_calendar_event_id: nil)&.map(&:unbook!)
   end
 
   config.after(:suite) do
