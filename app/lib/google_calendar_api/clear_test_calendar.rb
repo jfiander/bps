@@ -10,10 +10,11 @@ module GoogleCalendarAPI::ClearTestCalendar
     Google::Apis.logger.level = Logger::WARN
     set_page_token(page_token)
     loop_over_pages(ENV['GOOGLE_CALENDAR_ID_TEST'], page_limit: page_limit)
+    puts '*** Cleared all events!'
   rescue Google::Apis::RateLimitError
     puts "\n\n*** Google::Apis::RateLimitError (Rate Limit Exceeded)"
   ensure
-    log_last_page_token
+    log_last_page_token unless @page_token.blank?
   end
 
   private
