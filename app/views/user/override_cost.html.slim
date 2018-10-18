@@ -1,32 +1,27 @@
 h1 = admin_header('Override Registration Cost')
 
-.table
-  .table-row
-    .table-cell.table-header Event
-    .table-cell.bold.red = @registration.event.display_title
-  .table-row
-    .table-cell.table-header Start at
-    .table-cell = @registration.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
-  .table-row
-    .table-cell.table-header Costs
-    .table-cell = @registration.event.formatted_cost
-  .table-row
-    .table-cell.table-header Registrant
-    .table-cell = @registration.user&.full_name || @registration.email
-  .table-row
-    .table-cell.table-header Current cost
-    .table-cell.bold.birmingham-blue
-      | $
-      = @registration.payment_amount
-
-hr
-
-#new-event
-  = form_for(@registration, url: set_override_cost_path, method: :patch) do |f|
-    .left.bold = f.label :override_cost
-    .right
-      = FA::Icon.p('dollar-sign')
-      = f.number_field :override_cost, class: 'number', min: 0, placeholder: '0.00'
-    br.clear
-
-    .center = f.submit 'Set Override Cost', class: 'big'
+= form_for(@registration, url: set_override_cost_path, method: :patch) do |f|
+  .table#override-cost
+    .table-row
+      .table-cell.table-header Event
+      .table-cell.bold.red = @registration.event.display_title
+    .table-row
+      .table-cell.table-header Start at
+      .table-cell = @registration.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+    .table-row
+      .table-cell.table-header Posted costs
+      .table-cell = @registration.event.formatted_cost
+    .table-row
+      .table-cell.table-header Registrant
+      .table-cell
+        - if @registration.user.present?
+          = mail_to(@registration.user&.email, @registration.user&.full_name)
+        - else
+          = mail_to(@registration.email)
+    .table-row
+      .table-cell.table-header = f.label :override_cost, 'Current cost'
+      .table-cell.bold
+        = FA::Icon.p('dollar-sign')
+        = f.number_field :override_cost, class: 'number', min: 0, placeholder: '0.00'
+        = link_to(pay_path(@registration.payment.token), target: :_blank) { FA::Icon.p('share-square', css: 'green') }
+  .center = f.submit 'Set Override Cost', class: 'big'
