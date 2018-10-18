@@ -29,21 +29,25 @@ module GoogleCalendarAPI::ClearTestCalendar
     puts "*** Starting with page token: #{@page_token}" if @page_token.present?
 
     while (@page_token = clear_page(cal_id)) && page_limit.positive?
-      puts "*** Page token: #{@page_token}"
       page_limit -= 1
     end
   end
 
   def clear_page(cal_id)
     response = list(cal_id, page_token: @page_token)
-    pb = progress_bar(response.items.count)
-    response.items&.each_with_index do |event, index|
+    clear_events_from_page(cal_id, response.items) unless response.items.blank?
+    response.next_page_token
+  end
+
+  def clear_events_from_page(cal_id, items)
+    puts "*** Page token: #{@page_token}"
+    pb = progress_bar(items.count)
+    items&.each_with_index do |event, index|
       ExpRetry.for(exception: RETRIABLE_EXCEPTIONS) do
         delete(cal_id, event.id)
         pb.increment
       end
     end
-    response.next_page_token
   end
 
   def log_last_page_token
