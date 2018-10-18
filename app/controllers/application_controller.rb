@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
   before_action :meta_tags
   before_action :set_paper_trail_whodunnit
   before_action :cache_user_permissions
+  before_bugsnag_notify :bugsnag_format_user
 
   skip_before_action :verify_authenticity_token, only: %i[auto_show auto_hide]
 
@@ -42,4 +43,16 @@ class ApplicationController < ActionController::Base
     nil
   end
   helper_method :event_type_param
+
+  private
+
+  def bugsnag_format_user(report)
+    report.user = {
+      id: current_user.id,
+      name: current_user.simple_name,
+      certificate: current_user.certificate,
+      email: current_user.email,
+      created_at: current_user.created_at
+    }
+  end
 end
