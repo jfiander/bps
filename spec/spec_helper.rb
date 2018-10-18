@@ -102,6 +102,10 @@ RSpec.configure do |config|
     FileUtils.mkdir_p("#{Rails.root}/tmp/run")
   end
 
+  config.after(:each) do
+    Event.where.not(google_calendar_event_id: nil).map(&:unbook!)
+  end
+
   config.after(:suite) do
     DatabaseCleaner.clean_with(:truncation)
     Dir["#{Rails.root}/tmp/run/**/*"].each { |file| File.delete(file) }

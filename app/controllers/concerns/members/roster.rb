@@ -57,7 +57,7 @@ module Members::Roster
   end
 
   def generate_and_send_roster
-    pdf = RosterPDF.send(roster_orientation, include_blank: roster_params[:include_blank].present?)
+    pdf = BpsPdf::Roster.send(roster_orientation, include_blank: roster_params[:include_blank].present?)
     upload_roster_to_s3(pdf.read)
 
     pdf_file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'r+')

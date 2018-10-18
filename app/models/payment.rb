@@ -63,7 +63,7 @@ class Payment < ApplicationRecord
   end
 
   def receipt!
-    update!(receipt: ReceiptPDF.create_pdf(self))
+    update!(receipt: BpsPdf::Receipt.create_pdf(self))
     receipt_link
   end
 

@@ -19,7 +19,7 @@ class FloatPlan < ApplicationRecord
   alias onboard :float_plan_onboards
 
   def generate_pdf
-    update!(pdf: FloatPlanPDF.for(self))
+    update!(pdf: BpsPdf::FloatPlan.for(self))
   end
 
   def link

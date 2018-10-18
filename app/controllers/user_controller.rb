@@ -64,7 +64,7 @@ class UserController < ApplicationController
     respond_to do |format|
       format.pdf do
         send_file(
-          EducationCertificatePDF.for(
+          BpsPdf::EducationCertificate.for(
             @user, membership_date: @membership_date, last_mm: @last_mm
           ), disposition: :inline
         )
