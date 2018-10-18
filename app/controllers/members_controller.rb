@@ -52,7 +52,7 @@ class MembersController < ApplicationController
     if send("#{model}_params")["#{model}_remove".to_sym].present?
       send("remove_#{model}")
       'removed'
-    elsif (file = send("find_#{model}")).present?
+    elsif (file = send("find_#{model}_issue")).present?
       file.update(file: send("#{model}_params")[:file])
       'replaced'
     else

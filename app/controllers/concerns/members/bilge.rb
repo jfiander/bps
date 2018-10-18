@@ -12,7 +12,7 @@ module Members::Bilge
 
   private
 
-  def find_bilge
+  def find_bilge_issue
     BilgeFile.find_by(
       year: bilge_params[:issue]['date(1i)'],
       month: bilge_params[:issue]['date(2i)']
