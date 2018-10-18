@@ -19,9 +19,20 @@ h1 = admin_header('Override Registration Cost')
         - else
           = mail_to(@registration.email)
     .table-row
-      .table-cell.table-header = f.label :override_cost, 'Current cost'
+      .table-cell.table-header Current cost
+      .table-cell.bold.birmingham-blue
+        = FA::Icon.p('dollar-sign')
+        = @registration.payment_amount
+    .table-row
+      .table-cell.table-header = f.label :override_cost
       .table-cell.bold
         = FA::Icon.p('dollar-sign')
         = f.number_field :override_cost, class: 'number', min: 0, placeholder: '0.00'
         = link_to(pay_path(@registration.payment.token), target: :_blank) { FA::Icon.p('share-square', css: 'green') }
+    .table-row
+      .table-cell.table-header = f.label :override_comment, 'Reason for override (optional)'
+      .table-cell
+        = f.text_field :override_comment
+        br
+        small.italic.red This comment will be displayed on the customer's receipt.
   .center = f.submit 'Set Override Cost', class: 'big'

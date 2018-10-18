@@ -38,7 +38,7 @@ module User::Register
   end
 
   def set_override_cost
-    if @registration.update(override_cost: reg_params[:override_cost])
+    if @registration.update(reg_params)
       reg_params[:override_cost].to_i.zero? ? removed_flash : set_flash
     else
       flash[:alert] = 'Unable to override registration cost.'
@@ -70,7 +70,7 @@ module User::Register
   end
 
   def reg_params
-    params.require(:registration).permit(:override_cost)
+    params.require(:registration).permit(:override_cost, :override_comment)
   end
 
   def set_flash
