@@ -10,8 +10,8 @@ class BpsS3
     prepare_bucket
   end
 
-  def link(key, signed: false, time: nil, bypass: false)
-    sign?(signed, bypass: bypass) ? signed_link(key, time) : cf_link(key)
+  def link(key, signed: false, time: nil)
+    sign?(signed) ? signed_link(key, time) : cf_link(key)
   end
 
   def list(prefix = '')
@@ -93,8 +93,7 @@ class BpsS3
     @endpoint.in?(%i[seo static]) || ENV['ASSET_ENVIRONMENT'] == 'production'
   end
 
-  def sign?(signed = false, bypass: false)
-    return false if Rails.env.test? && !bypass
+  def sign?(signed = false)
     return true if @bucket.in?(%i[seo files bilge]) && @environment != :static
     signed
   end

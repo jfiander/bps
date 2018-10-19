@@ -376,8 +376,8 @@ RSpec.describe Event, type: :model do
         event_type = FactoryBot.create(:event_type, event_category: 'meeting')
         flyer = File.open(test_image(250, 500), 'r')
         event = FactoryBot.create(:event, event_type: event_type, flyer: flyer)
-        expect(event.get_flyer).to eql(
-          "https://files.development.bpsd9.org/event_flyers/#{event.id}/test_image.jpg"
+        expect(event.get_flyer).to match(
+          %r{https://files.development.bpsd9.org/event_flyers/#{event.id}/test_image.jpg\?[^ ]*?}
         )
       end
     end

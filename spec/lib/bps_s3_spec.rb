@@ -37,7 +37,7 @@ RSpec.describe BpsS3, type: :lib do
 
   describe 'behaviors' do
     before(:each) do
-      @bps_s3 = BpsS3.new(:photos)
+      @bps_s3 = BpsS3.new(:files)
     end
 
     it 'should detect files' do
@@ -45,14 +45,8 @@ RSpec.describe BpsS3, type: :lib do
     end
 
     it 'should generate a correct link' do
-      expect(@bps_s3.link('test-key.abc')).to eql(
-        'https://photos.development.bpsd9.org/test-key.abc'
-      )
-    end
-
-    it 'should raise an error when signing a link without keys' do
-      expect { @bps_s3.link('test-key.abc', signed: true, bypass: true) }.to raise_error(
-        OpenSSL::PKey::RSAError
+      expect(@bps_s3.link('test-key.abc')).to match(
+        %r{\Ahttps://files.development.bpsd9.org/test-key.abc\?[^ ]*?}
       )
     end
 
