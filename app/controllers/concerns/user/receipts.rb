@@ -2,6 +2,7 @@
 
 module User::Receipts
   def receipts
+    page_title('Receipts')
     @payments = Payment.includes(:parent).all.select(&:cost?)
   end
 
@@ -22,7 +23,7 @@ module User::Receipts
   end
   
   def show_receipt
-    @payment.receipt! unless @payment.receipt.present?
+    @payment.receipt! unless @payment.receipt.exists?
     redirect_to @payment.receipt_link
   end
 
