@@ -6,14 +6,24 @@ module User::Receipts
   end
 
   def receipt
-    @payment = Payment.find_by(token: receipt_params[:token])
+    find_payment
 
     if @payment.present? && @payment.cost?
-      @payment.receipt! unless @payment.receipt.present?
-      redirect_to @payment.receipt_link
+      show_receipt
     else
       redirect_to root_path, notice: 'Receipt not available.'
     end
+  end
+  
+  private
+
+  def find_payment
+    @payment = Payment.find_by(token: receipt_params[:token])
+  end
+  
+  def show_receipt
+    @payment.receipt! unless @payment.receipt.present?
+    redirect_to @payment.receipt_link
   end
 
   def receipt_params
