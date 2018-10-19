@@ -17,8 +17,9 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore any key files
+# Ignore any live key files
 /config/keys/*
+!/config/keys/cf.pem.enc
 
 # Ignore generated converage
 coverage/*
