@@ -112,7 +112,7 @@ class EventsController < ApplicationController
 
     @event.remind!
     flash[:success] = 'Successfully sent reminder emails.'
-    redirect_to send("list_#{model}s_path")
+    redirect_to send("list_#{event_type_param}s_path")
   end
 
   def book
