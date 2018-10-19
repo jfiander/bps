@@ -16,6 +16,18 @@ module BpsPdf
       font 'DejaVu Sans'
     end
 
+    def specify_font_awesome
+      font_families.update(
+        { solid: 900, regular: 400, light: 300, brands: 400 }.map do |s, w|
+          {
+            "FontAwesome Pro #{s.to_s.titleize}" => {
+              normal: "#{Rails.root}/public/webfonts/fa-#{s}-#{w}.ttf"
+            }
+          }
+        end.reduce({}, :merge)
+      )
+    end
+
     def configure_colors(color = '232D62')
       stroke_color(color)
       fill_color(color)

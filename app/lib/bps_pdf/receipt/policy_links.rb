@@ -25,22 +25,42 @@ module BpsPdf::Receipt::PolicyLinks
   end
 
   def terms_link
-    text 'Terms & Conditions', size: 12, align: :center, inline_format: true
+    formatted_text(
+      [
+        { text: "\uf15c", inline_format: true, font: 'FontAwesome Pro Regular' },
+        { text: ' Terms & Conditions', inline_format: true }
+      ], size: 12, align: :center
+    )
     text "https://#{ENV['DOMAIN']}/payment_terms", size: 10, align: :center
   end
 
   def refund_link
-    text 'Refund Policy', size: 12, align: :center, inline_format: true
+    formatted_text(
+      [
+        { text: "\uf571", inline_format: true, font: 'FontAwesome Pro Regular' },
+        { text: ' Refund Policy' }
+      ], size: 12, align: :center
+    )
     text "https://#{ENV['DOMAIN']}/refunds", size: 10, align: :center
   end
 
   def security_link
-    text 'Data Security', size: 12, align: :center, inline_format: true
+    formatted_text(
+      [
+        { text: "\uf023", inline_format: true, font: 'FontAwesome Pro Regular' },
+        { text: ' Data Security' }
+      ], size: 12, align: :center
+    )
     text "https://www.braintreepayments.com/features/data-security", size: 10, align: :center
   end
 
   def mail_link
-    text 'Contact us', size: 12, align: :center, inline_format: true
+    formatted_text(
+      [
+        { text: "\uf0e0", inline_format: true, font: 'FontAwesome Pro Regular' },
+        { text: ' Contact Us' }
+      ], size: 12, align: :center
+    )
     text "payments@bpsd9.org", size: 10, align: :center
   end
 end

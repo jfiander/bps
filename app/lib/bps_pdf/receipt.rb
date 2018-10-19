@@ -9,6 +9,7 @@ class BpsPdf::Receipt < BpsPdf::Base
 
   def self.create_pdf(payment)
      BpsPdf::Receipt.generate('tmp/run/Receipt.pdf') do
+      specify_font_awesome
       specify_font
       configure_colors
       load_logo
