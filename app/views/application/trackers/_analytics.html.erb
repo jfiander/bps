@@ -3,6 +3,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+  gtag('set', {'user_id': '<%= current_user&.id %>'}); 
   <%- keys.each do |key| -%>
     gtag('config', '<%= key %>');
   <%- end -%>
