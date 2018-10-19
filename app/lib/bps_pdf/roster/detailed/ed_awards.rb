@@ -17,8 +17,8 @@ module BpsPdf::Roster::Detailed::EdAwards
   def education_intro
     span(325) do
       config_text[:education][:introduction].each do |t|
-        text t, size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
-        text '<br>', size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, inline_format: true
+        text t, size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
+        text '<br>', size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, inline_format: true
       end
     end
   end
@@ -53,7 +53,7 @@ module BpsPdf::Roster::Detailed::EdAwards
     bounding_box([0, 540], width: 325, height: 20) do
       text(
         'We are proud of the educational accomplishments of our members!',
-        size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold, align: :center
+        size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold, align: :center
       )
     end
   end
@@ -62,14 +62,14 @@ module BpsPdf::Roster::Detailed::EdAwards
     bounding_box([0, y_pos], width: 325, height: 70) do
       text(
         "Educational #{award} Award",
-        size:  BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
+        size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
       )
 
       move_down(10)
 
       text(
         config_text[:education][key],
-        size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
+        size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
       )
     end
   end
@@ -113,7 +113,7 @@ module BpsPdf::Roster::Detailed::EdAwards
     bounding_box([0, options[:y_pos]], width: 325, height: options[:y_pos]) do
       text(
         config_text[:education]["#{options[:key]} proud".to_sym],
-        size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
+        size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
       )
 
       ed_award_column(options[:left], 20, options[:y_pos], options[:size])

@@ -49,7 +49,7 @@ module BpsPdf::Roster::Detailed::RosterInfo
   def roster_info_abbr_table(key, width)
     bounding_box([0, 130], width: width, height: 130) do
       config_text[:roster_info][key].keys.each do |abbr|
-        text abbr.to_s, size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold
+        text abbr.to_s, size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold
       end
     end
   end
@@ -63,7 +63,7 @@ module BpsPdf::Roster::Detailed::RosterInfo
   end
 
   def entry_format
-    text 'Roster Entry Format', size:  BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
+    text 'Roster Entry Format', size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
 
     roster_entry(config_text[:roster_info][:format], y_offset: 450)
   end

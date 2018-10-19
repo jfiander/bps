@@ -46,7 +46,7 @@ module BpsPdf::Roster::Detailed::Benefits
     supply_officer = Committee.find_by(department: :treasurer, name: 'Supply')
     supply = supply_officer.present? ? ", #{supply_officer.user.simple_name}, " : ''
     bounding_box([0, 100], width: 325, height: 80) do
-      text "Ship's Store", size:  BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
+      text "Ship's Store", size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
       move_down(10)
       body_text config_text[:benefits][:store].gsub('%supply', supply)
     end
@@ -56,7 +56,7 @@ module BpsPdf::Roster::Detailed::Benefits
     bounding_box([0, 15], width: 325, height: 15) do
       text(
         config_text[:benefits][:disclaimer],
-        size:  BpsPdf::Roster::Detailed::BODY_SM_SIZE, align: :justify
+        size: BpsPdf::Roster::Detailed::BODY_SM_SIZE, align: :justify
       )
     end
   end

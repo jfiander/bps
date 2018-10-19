@@ -24,7 +24,7 @@ module BpsPdf::Roster::Detailed::Flags
   def flag_text(text, y_pos, height = 100)
     bounding_box([175, y_pos], width: 150, height: height) do
       formatted_text(
-        [{ text: text }], size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
+        [{ text: text }], size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
       )
     end
   end

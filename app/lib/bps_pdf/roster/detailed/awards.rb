@@ -35,9 +35,9 @@ module BpsPdf::Roster::Detailed::Awards
 
     y_pos = bottom ? 240 : 490
     bounding_box([0, y_pos], width: 325, height: 210) do
-      text "#{name} Award", size:  BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
+      text "#{name} Award", size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
       move_down(10)
-      text config_text[:awards][name.to_sym], size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
+      text config_text[:awards][name.to_sym], size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
       award_recipients(name, recipient, additional) if recipient.present?
     end
   end
@@ -45,7 +45,7 @@ module BpsPdf::Roster::Detailed::Awards
   def award_recipients(name, recipient, additional)
     move_down(10)
     winner = additional.present? ? 'winners were' : 'winner was'
-    text "This year's #{winner}:", size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold, align: :center
+    text "This year's #{winner}:", size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold, align: :center
     bounding_box([0, 130], width: 175, height: 140) do
       insert_image "tmp/run/#{name}.png", fit: [180, 140], position: :center, vposition: :center
     end
@@ -57,7 +57,7 @@ module BpsPdf::Roster::Detailed::Awards
   def award_recipient_names(recipient, additional)
     text = [{ text: recipient }]
     text << { text: "\n#{additional}" } if additional.present?
-    formatted_text(text, size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :center, valign: :center)
+    formatted_text(text, size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :center, valign: :center)
   end
 
   def load_award_images

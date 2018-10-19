@@ -18,7 +18,7 @@ module BpsPdf::Roster::Detailed::PastCommanders
     move_down(20)
     text(
       'Past Commanders',
-      size:  BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
+      size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
     )
     insert_image 'tmp/run/PC.png', at: [245, 540], width: 80
   end
@@ -48,7 +48,7 @@ module BpsPdf::Roster::Detailed::PastCommanders
           { text: "‡ Deceased\n" },
           { text: '* Election date changed from February to December' }
         ],
-        size:  BpsPdf::Roster::Detailed::BODY_SM_SIZE, align: :left, inline_format: true
+        size: BpsPdf::Roster::Detailed::BODY_SM_SIZE, align: :left, inline_format: true
       )
     end
   end

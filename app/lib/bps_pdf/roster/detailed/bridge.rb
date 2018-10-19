@@ -13,7 +13,7 @@ module BpsPdf::Roster::Detailed::Bridge
 
   def bridge_title
     bounding_box([0, 540], width: 325, height: 25) do
-      text "Elected Officers for #{Date.today.strftime('%Y')}", size:  BpsPdf::Roster::Detailed::SUBTITLE_SIZE, style: :bold, align: :center
+      text "Elected Officers for #{Date.today.strftime('%Y')}", size: BpsPdf::Roster::Detailed::SUBTITLE_SIZE, style: :bold, align: :center
     end
   end
 
@@ -38,21 +38,21 @@ module BpsPdf::Roster::Detailed::Bridge
       formatted_text(
         [{ text: "#{bridge_office&.title}\n", styles: [:bold] }] +
         format_name((bridge_office&.user&.full_name(html: false) || 'TBD')),
-        size:  BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, align: :left, valign: :center
+        size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, align: :left, valign: :center
       )
     end
     return unless bridge_office.present?
     bounding_box([175, y_pos], width: 150, height: 40) do
       formatted_text(
         [{ text: bridge_office.email }],
-        size:  BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, align: :center, valign: :center
+        size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, align: :center, valign: :center
       )
     end
   end
 
   def contacts
     bounding_box([0, 170], width: 325, height: 170) do
-      text 'Other Contacts', size:  BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
+      text 'Other Contacts', size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
       move_down(10)
       contact_box('Webmaster', 'Webmaster', 'webmaster@bpsd9.org', 160)
       contact_box('Bilge Chatter Editor', 'Newsletter Editor', 'newsletter@bpsd9.org', 160 - 40 * 1)
@@ -67,13 +67,13 @@ module BpsPdf::Roster::Detailed::Bridge
     bounding_box([0, y_pos], width: 175, height: 40) do
       formatted_text(
         [{ text: "#{name}\n", styles: [:bold] }, { text: chair_name }],
-        size:  BpsPdf::Roster::Detailed::HEADING_SIZE, align: :left, valign: :center
+        size: BpsPdf::Roster::Detailed::HEADING_SIZE, align: :left, valign: :center
       )
     end
     bounding_box([175, y_pos], width: 150, height: 40) do
       formatted_text(
         [{ text: email }],
-        size:  BpsPdf::Roster::Detailed::HEADING_SIZE, align: :center, valign: :center
+        size: BpsPdf::Roster::Detailed::HEADING_SIZE, align: :center, valign: :center
       )
     end
   end

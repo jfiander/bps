@@ -59,9 +59,9 @@ module BpsPdf::Roster::Detailed::Merit
   end
 
   def member_collection(title, collection, description_key, honor: false, mm: false)
-    text title, size:  BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
+    text title, size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
     move_down(10)
-    text config_text[:merit][description_key], size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
+    text config_text[:merit][description_key], size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
     return unless collection.count.positive?
 
     move_down(10)
@@ -73,13 +73,13 @@ module BpsPdf::Roster::Detailed::Merit
 
   def statement(title, collection, honor)
     adj = honor ? 'honored' : 'proud'
-    text "We are #{adj} to have #{collection.count} #{title}:", size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
+    text "We are #{adj} to have #{collection.count} #{title}:", size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
     move_down(10)
   end
 
   def collection_row(left, right)
-    draw_text left&.simple_name, size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, at: [20, cursor]
-    draw_text right&.simple_name, size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, at: [195, cursor]
+    draw_text left&.simple_name, size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, at: [20, cursor]
+    draw_text right&.simple_name, size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, at: [195, cursor]
     move_down(10)
   end
 

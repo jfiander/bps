@@ -8,14 +8,14 @@ module BpsPdf::Roster::Detailed::Helpers
   end
 
   def body_text(string, align: :justify)
-    text string.to_s, size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: align, inline_format: true
+    text string.to_s, size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: align, inline_format: true
   end
 
   def regular_header
     bounding_box([0, 560], width: 325, height: 15) do
       text(
         "America's Boating Club – Birmingham Squadron",
-        size:  BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center, color: 'BF0D3E'
+        size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center, color: 'BF0D3E'
       )
 
       stroke_line([0, 0], [325, 0])
@@ -24,13 +24,13 @@ module BpsPdf::Roster::Detailed::Helpers
 
   def footer
     bounding_box([0, -10], width: 325, height: 25) do
-      text 'Copyright © 2018 – Birmingham Power Squadron', size:  BpsPdf::Roster::Detailed::BODY_SM_SIZE, align: :center
-      text 'Member Use Only – Commercial Use Prohibited', size:  BpsPdf::Roster::Detailed::BODY_SM_SIZE, align: :center, style: :italic
+      text 'Copyright © 2018 – Birmingham Power Squadron', size: BpsPdf::Roster::Detailed::BODY_SM_SIZE, align: :center
+      text 'Member Use Only – Commercial Use Prohibited', size: BpsPdf::Roster::Detailed::BODY_SM_SIZE, align: :center, style: :italic
       stroke_line([0, 30], [325, 30])
     end
 
     bounding_box([285, -10], width: 40, height: 25) do
-      text "Page #{page_number}", size:  BpsPdf::Roster::Detailed::BODY_SM_SIZE, align: :right
+      text "Page #{page_number}", size: BpsPdf::Roster::Detailed::BODY_SM_SIZE, align: :right
     end
   end
 
@@ -47,9 +47,9 @@ module BpsPdf::Roster::Detailed::Helpers
 
   def intro_block(heading, message, height)
     bounding_box([0, 540], width: 325, height: height) do
-      text heading, size:  BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
+      text heading, size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
       move_down(10)
-      text message, size:  BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
+      text message, size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
     end
   end
 
@@ -88,7 +88,7 @@ module BpsPdf::Roster::Detailed::Helpers
     Prawn::Text::Formatted::Box.new(
       format_name(name),
       overflow: :shrink_to_fit, style: :bold, width: 145, height: 15,
-      size:  BpsPdf::Roster::Detailed::HEADING_SIZE, document: self
+      size: BpsPdf::Roster::Detailed::HEADING_SIZE, document: self
     ).render
   end
 
