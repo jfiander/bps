@@ -25,42 +25,31 @@ module BpsPdf::Receipt::PolicyLinks
   end
 
   def terms_link
-    formatted_text(
-      [
-        { text: "\uf15c", inline_format: true, font: 'FontAwesome Pro Regular' },
-        { text: ' Terms & Conditions', inline_format: true }
-      ], size: 12, align: :center
-    )
+    text_with_fa('Terms & Conditions', "\uf15c")
     text "https://#{ENV['DOMAIN']}/payment_terms", size: 10, align: :center
   end
 
   def refund_link
-    formatted_text(
-      [
-        { text: "\uf571", inline_format: true, font: 'FontAwesome Pro Regular' },
-        { text: ' Refund Policy' }
-      ], size: 12, align: :center
-    )
+    text_with_fa('Refund Policy', "\uf571")
     text "https://#{ENV['DOMAIN']}/refunds", size: 10, align: :center
   end
 
   def security_link
-    formatted_text(
-      [
-        { text: "\uf023", inline_format: true, font: 'FontAwesome Pro Regular' },
-        { text: ' Data Security' }
-      ], size: 12, align: :center
-    )
+    text_with_fa('Data Security', "\uf023")
     text "https://www.braintreepayments.com/features/data-security", size: 10, align: :center
   end
 
   def mail_link
+    text_with_fa('Contact Us', "\uf0e0")
+    text "payments@bpsd9.org", size: 10, align: :center
+  end
+
+  def text_with_fa(text, icon_unicode)
     formatted_text(
       [
-        { text: "\uf0e0", inline_format: true, font: 'FontAwesome Pro Regular' },
-        { text: ' Contact Us' }
+        { text: icon_unicode, inline_format: true, font: 'FontAwesome Pro Regular' },
+        { text: " #{text}" }
       ], size: 12, align: :center
     )
-    text "payments@bpsd9.org", size: 10, align: :center
   end
 end
