@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Braintree API implementation
-module Payments::BraintreeMethods
+module Concerns::Payment::BraintreeMethods
   extend ActiveSupport::Concern
 
   module ClassMethods
@@ -118,6 +118,11 @@ module Payments::BraintreeMethods
     options[:billing] = { postal_code: postal_code } if postal_code.present?
 
     options
+  end
+
+  def lookup_transaction
+    return false unless paid?
+    self.class.gateway.transaction.find(transaction_id)
   end
 
   private

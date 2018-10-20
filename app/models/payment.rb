@@ -2,8 +2,8 @@
 
 # Internal API for accessing Braintree payments.
 class Payment < ApplicationRecord
-  include Payments::ModelConfigs
-  include Payments::BraintreeMethods
+  include Concerns::Payment::ModelConfigs
+  include Concerns::Payment::BraintreeMethods
 
   belongs_to :parent, polymorphic: true
   has_secure_token
@@ -16,6 +16,8 @@ class Payment < ApplicationRecord
 
   scope :recent, -> { where('created_at > ?', 11.months.ago) }
   scope :for_user, ->(user) { where(parent_type: 'User', parent_id: user.id) }
+  scope :paid, -> { where(paid: true) }
+  scope :unpaid, -> { not(paid) }
 
   def self.discount(amount)
     # Fee is rounded down to the nearest cent

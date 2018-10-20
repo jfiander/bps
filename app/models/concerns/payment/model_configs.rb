@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Configuration for payable models
-module Payments::ModelConfigs
+module Concerns::Payment::ModelConfigs
   extend ActiveSupport::Concern
 
   def purchase_info
