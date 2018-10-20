@@ -47,6 +47,24 @@ RSpec.describe Payment, type: :model do
         %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/customers 201}
       ).to_stdout_from_any_process
     end
+    
+    describe 'paid?' do
+      before(:each) do
+        generic_seo_and_ao
+        event = FactoryBot.create(:event)
+        reg = FactoryBot.create(:registration, event: event, email: 'example@example.com')
+        @payment = FactoryBot.create(:payment, parent: reg)
+      end
+
+      it 'should be false if not paid' do
+        expect(@payment.paid?).to be(false)
+      end
+
+      it 'should be true if paid' do
+        @payment.paid!('testing')
+        expect(@payment.paid?).to be(true)
+      end
+    end
   end
 
   context 'registration' do
@@ -65,6 +83,12 @@ RSpec.describe Payment, type: :model do
       @registration.payment.paid!('09876')
       expect(@registration.payment.paid).to be(true)
       expect(@registration.payment.transaction_id).to eql('09876')
+    end
+    
+    it 'should correctly set as paid in-person' do
+      @registration.payment.in_person!
+      expect(@registration.payment.paid).to be(true)
+      expect(@registration.payment.transaction_id).to eql('in-person')
     end
   end
 

@@ -7,8 +7,6 @@ module User::Receipts
   end
 
   def receipt
-    find_payment
-
     if @payment.present? && @payment.cost?
       show_receipt
     else
@@ -16,6 +14,12 @@ module User::Receipts
     end
   end
   
+  def paid_in_person
+    @payment.paid_in_person!
+    flash[:success] = 'Successfully marked as paid in-person.'
+    redirect_to receipts_path
+  end
+
   private
 
   def find_payment

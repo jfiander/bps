@@ -26,3 +26,4 @@ h1 = admin_header('Payments & Receipts')
           = FA::Icon.p('ellipsis-h', style: :regular, css: 'gray', title: 'Pending generation') unless payment.receipt.exists?
         - else
           = link_to(pay_path(payment.token)) { FA::Icon.p('credit-card', style: :regular) + 'Pay' }
+          = link_to(paid_in_person_path(payment.token), class: 'admin') { FA::Icon.p('money-check-alt', style: :regular) + 'Paid In-Person' }

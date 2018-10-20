@@ -39,6 +39,10 @@ class Payment < ApplicationRecord
     transaction_amount.to_d - Payment.discount(transaction_amount)
   end
 
+  def paid?
+    paid.present?
+  end
+
   def paid!(transaction_id)
     update(paid: true, transaction_id: transaction_id, cost_type: set_cost_type)
     receipt!
@@ -46,7 +50,11 @@ class Payment < ApplicationRecord
     # Post-payment hooks
     parent.dues_paid! if parent_type == 'User'
   end
-  
+
+  def in_person!
+    paid!('in-person')
+  end
+
   def customer
     case parent.class.name
     when 'MemberApplication'

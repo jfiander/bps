@@ -232,12 +232,13 @@ Rails.application.routes.draw do
   post    '/import', to: 'user#do_import'
 
   # Payments
-  get     '/pay/:token',          to: 'braintree#index',      as: 'pay'
-  get     '/please_pay(/:token)', to: 'braintree#ask_to_pay', as: 'ask_to_pay'
-  post    '/checkout',            to: 'braintree#checkout'
-  get     '/paid(/:token)',       to: 'braintree#done',       as: 'transaction_complete'
-  get     '/receipts',            to: 'user#receipts'
-  get     '/receipts/:token',     to: 'user#receipt',         as: 'receipt'
+  get     '/pay/:token',            to: 'braintree#index',      as: 'pay'
+  get     '/please_pay(/:token)',   to: 'braintree#ask_to_pay', as: 'ask_to_pay'
+  post    '/checkout',              to: 'braintree#checkout'
+  get     '/paid(/:token)',         to: 'braintree#done',       as: 'transaction_complete'
+  get     '/paid_in_person/:token', to: 'user#paid_in_person',  as: 'paid_in_person'
+  get     '/receipts',              to: 'user#receipts'
+  get     '/receipts/:token',       to: 'user#receipt',         as: 'receipt'
 
   ### Miscellaneous
   get     '/sitemap.xml',    to: 'sitemap#index',  as: 'sitemap', format: 'xml'
