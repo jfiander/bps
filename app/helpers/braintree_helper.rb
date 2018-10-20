@@ -89,7 +89,8 @@ module BraintreeHelper
       'unrecognized' => { alert: 'There was an unrecognized error.', error: 'Please try again.' },
       'authorization_expired' => { alert: 'Your payment authorization has expired.', error: 'Please try again.' },
       'settlement_declined' => { alert: 'Your payment was declined at settlement.', error: 'Please choose another payment method.' },
-      'voided' => { alert: 'This transaction has been voided.', error: 'Please try again.' }
-    }[status]
+      'voided' => { alert: 'This transaction has been voided.', error: 'Please try again.' },
+      'Cannot use a payment_method_nonce more than once.' => { alert: 'This page has expired.', error: 'Please refresh the page and try again.' }
+    }[status.to_s]
   end
 end

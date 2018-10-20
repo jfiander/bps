@@ -32,8 +32,12 @@ class BraintreeController < ApplicationController
 
     @result = @payment.sale!(nonce, email: @receipt, user_id: current_user&.id)
 
-    @result_response = Payment.create_result_hash(@result.transaction)
+    @result_response = Payment.create_result_hash(@result)
     @result_flash = result_flash_for(@result_response[:message])
+    @result_flash ||= {
+      alert: 'There was a problem processing the transaction.',
+      error: 'You have not been billed.'
+    }
 
     if @result.success?
       process_success
@@ -44,6 +48,13 @@ class BraintreeController < ApplicationController
         $('#error').html('#{@result_flash[:error]}').removeClass('hide');
       JS
     end
+  rescue StandardError => e
+    render js: <<~JS
+      $('#alert').html('There was a problem processing the transaction.').removeClass('hide');
+      $('#error').html('You have not been charged.').removeClass('hide');
+    JS
+
+    raise e
   end
 
   def done

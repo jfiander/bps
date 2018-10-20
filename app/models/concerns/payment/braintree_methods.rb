@@ -31,14 +31,9 @@ module Concerns::Payment::BraintreeMethods
       gateway.client_token.generate(opts)
     end
 
-    def create_result_hash(transaction)
-      status = transaction.status
-
-      if TRANSACTION_SUCCESS_STATUSES.include? status
-        success_hash
-      else
-        failed_hash(status, @result)
-      end
+    def create_result_hash(result)
+      return success_hash if result.success?
+      failed_hash(result)
     end
 
     private
@@ -88,13 +83,11 @@ module Concerns::Payment::BraintreeMethods
       { status: :success, message: nil }
     end
 
-    def failed_hash(status, result)
+    def failed_hash(result)
       {
         status: :failed,
-        message: status,
-        errors: result.errors.map do |error|
-          "Error: #{error.code}: #{error.message}"
-        end
+        message: result&.message,
+        errors: result&.errors&.map { |e| "Error: #{e.code}: #{e.message}" }
       }
     end
   end
