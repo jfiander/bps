@@ -78,8 +78,8 @@ class BraintreeController < ApplicationController
   def process_success
     transaction = @result.transaction
     @payment.paid!(transaction.id)
-    send_receipt_email(transaction)
     ReceiptMailer.paid(@payment).deliver
+    send_receipt_email(transaction)
     slack_notification(@payment)
   end
 
