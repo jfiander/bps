@@ -15,7 +15,7 @@ module User::Receipts
   end
   
   def paid_in_person
-    @payment.paid_in_person!
+    @payment.in_person!
     flash[:success] = 'Successfully marked as paid in-person.'
     redirect_to receipts_path
   end
