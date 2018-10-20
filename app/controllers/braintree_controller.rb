@@ -36,11 +36,7 @@ class BraintreeController < ApplicationController
     @result_flash = result_flash_for(@result_response[:message])
 
     if @result.success?
-      transaction = @result.transaction
-      @payment.paid!(transaction.id)
-      ReceiptMailer.receipt(transaction, @payment).deliver
-      ReceiptMailer.paid(@payment).deliver
-      slack_notification(@payment)
+      process_success
       render js: "window.location='#{transaction_complete_path(token: @token)}'"
     else
       render js: <<~JS
@@ -77,5 +73,18 @@ class BraintreeController < ApplicationController
         'Payment Token' => payment.token
       }
     ).notify!
+  end
+  
+  def process_success
+    transaction = @result.transaction
+    @payment.paid!(transaction.id)
+    send_receipt_mail(transaction)
+    ReceiptMailer.paid(@payment).deliver
+    slack_notification(@payment)
+  end
+
+  def send_receipt_email(transaction)
+    return unless transaction.customer_details.email.present?
+    ReceiptMailer.receipt(transaction, @payment).deliver
   end
 end
