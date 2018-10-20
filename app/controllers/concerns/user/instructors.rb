@@ -11,7 +11,7 @@ module User::Instructors
     @instructors = filter_instructors
   end
 
-  private
+private
 
   def filter_instructors
     return sn_instructors if @highlight == 'SN'

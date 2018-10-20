@@ -63,7 +63,7 @@ class EventTypesController < ApplicationController
     end
   end
 
-  private
+private
 
   def event_type_params
     params.require(:event_type).permit(:event_category, :title)

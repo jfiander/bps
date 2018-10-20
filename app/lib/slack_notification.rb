@@ -26,7 +26,7 @@ class SlackNotification
     @dryrun ? data : notifier.post(attachments: [data])
   end
 
-  private
+private
 
   def notifier
     raise "Missing notifier url for #{@channel}." if slack_urls[@channel].blank?

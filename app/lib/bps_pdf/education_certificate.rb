@@ -11,7 +11,7 @@ class BpsPdf::EducationCertificate < BpsPdf::Base
   MODULES.each { |c| include "BpsPdf::EducationCertificate::#{c}".constantize }
 
   def self.for(*args)
-     BpsPdf::EducationCertificate.generate('tmp/run/Education_Certificate.pdf') do
+    BpsPdf::EducationCertificate.generate('tmp/run/Education_Certificate.pdf') do
       specify_font
       configure_colors
       MODULES.each { |m| send(m.underscore, *args) }
@@ -20,7 +20,7 @@ class BpsPdf::EducationCertificate < BpsPdf::Base
     File.open('tmp/run/Education_Certificate.pdf', 'r+')
   end
 
-  private
+private
 
   def completion_row(row)
     y = 370 - (ROW_HEIGHT * (row - 1))
@@ -38,7 +38,10 @@ class BpsPdf::EducationCertificate < BpsPdf::Base
   end
 
   def completion_contents(label, date)
-    text_box label, at: [2, (ROW_HEIGHT - 5)], width: (COLUMN_WIDTH - 6), size: 7, align: :center, style: :bold, inline_format: true
+    text_box(
+      label, at: [2, (ROW_HEIGHT - 5)], width: (COLUMN_WIDTH - 6), size: 7, align: :center,
+      style: :bold, inline_format: true
+    )
     text_box date.to_s, at: [2, 10], width: (COLUMN_WIDTH - 6), size: 7, align: :center
   end
 

@@ -40,7 +40,7 @@ class ApplicationRecord < ActiveRecord::Base
     )
   end
 
-  private
+private
 
   def sanitize(text)
     ActionController::Base.helpers.sanitize text

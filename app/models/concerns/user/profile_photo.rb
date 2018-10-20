@@ -14,7 +14,7 @@ module User::ProfilePhoto
     save!
   end
 
-  private
+private
 
   def photo?
     profile_photo.present? &&

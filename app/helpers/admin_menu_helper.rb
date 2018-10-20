@@ -25,21 +25,15 @@ module AdminMenuHelper
     true
   end
 
-  private
+private
 
   def admin_menus
     {
-      current: admin_current?,
-      files: [:page],
-      users_top: [:users],
-      review: %i[users float roster excom],
-      upload: %i[users roster],
-      roster: %i[users roster],
-      users_bottom: [:users],
-      education: [:education],
-      otw: [:education],
-      completions: [:education],
-      admin: [:admin, { strict: true }],
+      current: admin_current?, files: [:page], users_top: [:users],
+      review: %i[users float roster excom], upload: %i[users roster],
+      roster: %i[users roster], users_bottom: [:users], education: [:education],
+      otw: [:education], completions: [:education],
+      admin: [:admin, { strict: true }]
     }
   end
 

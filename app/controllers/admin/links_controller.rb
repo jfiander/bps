@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::LinksController < ApplicationController
   secure!(:admin, strict: true)
 
@@ -7,7 +9,7 @@ class Admin::LinksController < ApplicationController
     @link = links[@r] if @r.in?(links.keys)
   end
 
-  private
+private
 
   def clean_params
     params.permit(:r, :t)

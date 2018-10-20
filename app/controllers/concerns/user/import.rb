@@ -19,7 +19,7 @@ module User::Import
     end
   end
 
-  private
+private
 
   def only_csv
     flash.now[:alert] = 'You can only upload CSV files.'

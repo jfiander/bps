@@ -10,7 +10,7 @@ module Members::Bilge
     )
   end
 
-  private
+private
 
   def find_bilge_issue
     BilgeFile.find_by(

@@ -5,7 +5,7 @@ module Members::Dues
     dues_not_payable unless @payment.present?
   end
 
-  private
+private
 
   def current_user_dues_due?
     current_user&.dues_due?

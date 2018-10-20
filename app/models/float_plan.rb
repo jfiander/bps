@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FloatPlan < ApplicationRecord
   include Concerns::FloatPlan::Formatting
 

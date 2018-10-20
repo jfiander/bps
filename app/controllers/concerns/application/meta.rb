@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Application::Meta
-  private
+private
 
   def page_title(title = nil)
     title = "#{title} | " if title.present?

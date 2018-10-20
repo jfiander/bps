@@ -13,19 +13,19 @@ module User::Receipts
       redirect_to root_path, notice: 'Receipt not available.'
     end
   end
-  
+
   def paid_in_person
     @payment.in_person!
     flash[:success] = 'Successfully marked as paid in-person.'
     redirect_to receipts_path
   end
 
-  private
+private
 
   def find_payment
     @payment = Payment.find_by(token: receipt_params[:token])
   end
-  
+
   def show_receipt
     @payment.receipt! unless @payment.receipt.exists?
     redirect_to @payment.receipt_link

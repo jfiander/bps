@@ -29,7 +29,7 @@ module Concerns::Payment::ModelConfigs
     end
   end
 
-  private
+private
 
   def displayable_registration_types
     %w[course seminar]

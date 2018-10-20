@@ -13,32 +13,20 @@ module NavigationHelper
     generate_link
   end
 
-  private
+private
 
   def default_options
     {
-      permit: nil,
-      path: nil,
-      show_when: :always,
-      suffix: '',
-      active: false,
-      fa: nil,
-      css_class: '',
-      admin: false
+      permit: nil, path: nil, show_when: :always, suffix: '', active: false,
+      fa: nil, css_class: '', admin: false
     }
   end
 
   def parse_nav_presets
     if @options[:title] == :login_or_logout && user_signed_in?
-      @options[:title] = 'Logout'
-      @options[:path] = destroy_user_session_path
-      @link_options = { method: :delete, class: 'red' }
-      @fa = { name: 'sign-out', options: { style: :regular } }
+      logout_link
     elsif @options[:title] == :login_or_logout
-      @options[:title] = 'Member Login'
-      @options[:path] = new_user_session_path
-      @link_options = { class: 'members' }
-      @fa = { name: 'sign-in', options: { style: :regular } }
+      login_link
     elsif @options[:show_when] == :logged_in
       @link_options = { class: 'members' }
     elsif @options[:admin]
@@ -98,5 +86,21 @@ module NavigationHelper
 
   def user_not_permitted?(permit)
     permit.present? && !current_user&.permitted?(permit, session: session)
+  end
+
+private
+
+  def logout_link
+    @options[:title] = 'Logout'
+    @options[:path] = destroy_user_session_path
+    @link_options = { method: :delete, class: 'red' }
+    @fa = { name: 'sign-out', options: { style: :regular } }
+  end
+
+  def login_link
+    @options[:title] = 'Member Login'
+    @options[:path] = new_user_session_path
+    @link_options = { class: 'members' }
+    @fa = { name: 'sign-in', options: { style: :regular } }
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Events::Preload
-  private
+private
 
   def load_registrations
     @registered = Registration.includes(:user).where(user_id: current_user.id)

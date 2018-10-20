@@ -18,7 +18,7 @@ class SitemapController < ApplicationController
     render request.host.match?(/bpsd9\.org/) ? 'robots_allow' : 'robots_disallow'
   end
 
-  private
+private
 
   def pages
     [''] + %w[

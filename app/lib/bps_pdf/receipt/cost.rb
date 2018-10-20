@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BpsPdf::Receipt::Cost
-  private
+private
 
   def cost(payment)
     bounding_box([0, 445 - people_height(payment)], width: 550, height: 100) do

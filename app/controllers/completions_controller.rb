@@ -19,7 +19,7 @@ class CompletionsController < ApplicationController
     render :list
   end
 
-  private
+private
 
   def completions
     @completions = CourseCompletion.with_users.send(@ytd ? :ytd : :all).by_user

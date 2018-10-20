@@ -46,7 +46,7 @@ class BpsS3
     @full_bucket ||= ['bps', @environment, @bucket].compact.join('-')
   end
 
-  private
+private
 
   def valid_buckets
     %i[files photos bilge static seo floatplans]
@@ -106,7 +106,7 @@ class BpsS3
   def cf_signer
     @cf_signer ||= Aws::CloudFront::UrlSigner.new(
       key_pair_id: Rails.application.secrets[:cf_keypair_id],
-      private_key_path: Rails.application.secrets[:cf_private_key_path]
+    private_key_path: Rails.application.secrets[:cf_private_key_path]
     )
   end
 end

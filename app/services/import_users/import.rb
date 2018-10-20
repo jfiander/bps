@@ -21,7 +21,7 @@ module ImportUsers
       results
     end
 
-    private
+  private
 
     def process_import
       User.transaction do

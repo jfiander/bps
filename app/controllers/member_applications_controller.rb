@@ -53,7 +53,7 @@ class MemberApplicationsController < ApplicationController
     flash.now[:success] = 'Successfully approved application and invited new members!'
   end
 
-  private
+private
 
   def primary_member_params
     params.permit(
@@ -85,33 +85,33 @@ class MemberApplicationsController < ApplicationController
   def process_application
     MemberApplication.transaction do
       begin
-        @member_application = MemberApplication.new
-        @member_application_persons = []
-        save_application
+        create_application
         return true
       rescue ActiveRecord::RecordInvalid => e
-        flash.now[:error] = e.message.gsub('Member applicants base ', '')
-                             .gsub('Validation failed: ', '')
-        raise ActiveRecord::Rollback
+        failed_application(e)
       end
     end
     false
   end
 
-  def save_application
+  def create_application
+    @member_application = MemberApplication.new
+    @member_application_persons = []
     @member_application = MemberApplication.create!(applicants)
   end
 
+  def failed_application(e)
+    flash.now[:error] = e.message
+                         .gsub('Member applicants base ', '')
+                         .gsub('Validation failed: ', '')
+    raise ActiveRecord::Rollback
+  end
+
   def applicants
-    primary = primary_member_params.to_h.merge(
-      primary: true, member_application: @member_application
-    )
     apps = additional_member_params.values.map(&:to_h).map(&:values).flatten
 
     apps = apps.map(&:values).flatten.reject do |a|
-      a == true ||
-        a.is_a?(MemberApplication) ||
-        a.key?('_destroy')
+      a == true || a.is_a?(MemberApplication) || a.key?('_destroy')
     end
 
     apps.each do |a|
@@ -119,9 +119,14 @@ class MemberApplicationsController < ApplicationController
       a[:primary] = false
     end
 
-    all_apps = [primary, apps].flatten
-    return if all_apps.blank?
+    all_apps = [primary_applicant, apps].flatten
 
-    { 'member_applicants_attributes' => all_apps }
+    { 'member_applicants_attributes' => all_apps } unless all_apps.blank?
+  end
+
+  def primary_applicant
+    primary_member_params.to_h.merge(
+      primary: true, member_application: @member_application
+    )
   end
 end

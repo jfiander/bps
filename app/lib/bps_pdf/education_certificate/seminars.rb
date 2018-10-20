@@ -7,7 +7,7 @@ module BpsPdf::EducationCertificate::Seminars
     seminar_rows
   end
 
-  private
+private
 
   def seminar_rows
     row_num = 3

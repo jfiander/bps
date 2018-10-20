@@ -1,6 +1,6 @@
 = form_for @page, url: edit_page_path, method: :patch do |f|
-  = spinner_button(f, button_text: 'Preview', disable_text: 'Submitting', name: 'preview', css_class: 'medium light')
-  = spinner_button(f, button_text: 'Save', disable_text: 'Submitting', name: 'save', css_class: 'medium')
+  = spinner_button(f, button_text: 'Preview', disable_text: 'Submitting', name: 'preview', css: 'medium light')
+  = spinner_button(f, button_text: 'Save', disable_text: 'Submitting', name: 'save', css: 'medium')
   br
   = f.hidden_field :name
   - if controller.action_name == 'edit_markdown'
@@ -8,6 +8,6 @@
   - elsif controller.action_name == 'update_markdown'
     = text_area_tag 'static_page[markdown]', @new_markdown
   br
-  = spinner_button(f, button_text: 'Preview', disable_text: 'Submitting', name: 'preview', css_class: 'medium light')
-  = spinner_button(f, button_text: 'Save', disable_text: 'Submitting', name: 'save', css_class: 'medium')
+  = spinner_button(f, button_text: 'Preview', disable_text: 'Submitting', name: 'preview', css: 'medium light')
+  = spinner_button(f, button_text: 'Save', disable_text: 'Submitting', name: 'save', css: 'medium')
   br

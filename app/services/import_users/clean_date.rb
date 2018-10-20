@@ -13,7 +13,7 @@ module ImportUsers
       handle_invalid_date(e)
     end
 
-    private
+  private
 
     def clean_date
       return if @string.blank?

@@ -5,12 +5,12 @@ class ReceiptMailerPreview < ActionMailer::Preview
     ReceiptMailer.receipt(transaction, payment)
   end
 
-  private
+private
 
   def payment
     Registration.last.payment
   end
-  
+
   def transaction
     gateway.transaction.sale(transaction_details).transaction
   end
@@ -21,7 +21,7 @@ class ReceiptMailerPreview < ActionMailer::Preview
       environment: :sandbox,
       merchant_id: ENV['BRAINTREE_MERCHANT_ID'],
       public_key: ENV['BRAINTREE_PUBLIC_KEY'],
-      private_key: ENV['BRAINTREE_PRIVATE_KEY']
+    private_key: ENV['BRAINTREE_PRIVATE_KEY']
     )
   end
 

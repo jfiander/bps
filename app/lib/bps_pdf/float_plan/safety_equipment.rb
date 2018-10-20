@@ -11,7 +11,7 @@ module BpsPdf::FloatPlan::SafetyEquipment
     safety_row(float_plan, y: 280, left: 'Food', right: 'Water')
   end
 
-  private
+private
 
   def safety_row(float_plan, y:, left:, right:)
     left_answer = (float_plan.send(left.split(' / ').first.downcase) ? 'Yes' : 'No')

@@ -3,17 +3,12 @@
 module User::Insignia
   def insignia
     grade, grade_title = grade_and_title
-
     membership, membership_title = membership_and_title
 
-    @insignia = {
-      grade: grade,
-      membership: membership
-    }
+    @insignia = { grade: grade, membership: membership }
 
     @insignia_title = {
-      grade: grade_title,
-      membership: membership_title,
+      grade: grade_title, membership: membership_title,
       mm: @user.mm&.positive? ? "#{@user.mm} Merit Marks" : nil
     }
 
@@ -21,7 +16,7 @@ module User::Insignia
     @rank_flag = 'PRC' if @rank_flag == 'PNFLT'
   end
 
-  private
+private
 
   def grade_and_title
     return unless @user.grade.present?

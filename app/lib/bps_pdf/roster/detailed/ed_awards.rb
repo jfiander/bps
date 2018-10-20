@@ -12,7 +12,7 @@ module BpsPdf::Roster::Detailed::EdAwards
     formatted_page { ed_pro }
   end
 
-  private
+private
 
   def education_intro
     span(325) do
@@ -53,35 +53,46 @@ module BpsPdf::Roster::Detailed::EdAwards
     bounding_box([0, 540], width: 325, height: 20) do
       text(
         'We are proud of the educational accomplishments of our members!',
-        size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold, align: :center
+        size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold,
+        align: :center
       )
     end
   end
 
   def ed_award_heading(award, y_pos, key)
     bounding_box([0, y_pos], width: 325, height: 70) do
-      text(
-        "Educational #{award} Award",
-        size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
-      )
-
+      ed_award_title(award)
       move_down(10)
-
-      text(
-        config_text[:education][key],
-        size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
-      )
+      ed_award_description(award, key)
     end
   end
 
-  def ed_award_image(award, x_pos)
-    grade = if award == :EdAch
-              :sn
-            elsif award == :EdPro
-              :ap
-            end
+  def ed_award_title(award)
+    text(
+      "Educational #{award} Award",
+      size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold,
+      align: :center
+    )
+  end
 
-    svg ed_award_svg(grade, (award == :EdPro)), width: 1325, at: [x_pos, cursor]
+  def ed_award_description(award, key)
+    text(
+      config_text[:education][key],
+      size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify,
+      inline_format: true
+    )
+  end
+
+  def ed_award_image(award, x_pos)
+    svg(
+      ed_award_svg(ed_award_grade(award), (award == :EdPro)), width: 1325,
+      at: [x_pos, cursor]
+    )
+  end
+
+  def ed_award_grade(award)
+    return :sn if award == :EdAch
+    :ap
   end
 
   def ed_award_svg(grade, ed_pro)
@@ -104,9 +115,14 @@ module BpsPdf::Roster::Detailed::EdAwards
   def ed_award_results(users)
     return unless users.size.positive?
     left, right = halve(users)
-    size = users.size > 70 ?  BpsPdf::Roster::Detailed::BODY_SM_SIZE :  BpsPdf::Roster::Detailed::BODY_REG_SIZE
+    size = ed_award_result_size(users)
 
     [left, right, size]
+  end
+
+  def ed_award_result_size(users)
+    size = users.size > 70 ? 'SM' : 'REG'
+    "BpsPdf::Roster::Detailed::BODY_#{size}_SIZE".constantize
   end
 
   def ed_award_body(options = {})

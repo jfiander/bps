@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Roster::ArchiveFile < UploadedFile
   def self.table_name_prefix
     'roster_'

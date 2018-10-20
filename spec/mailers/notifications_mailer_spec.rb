@@ -65,7 +65,7 @@ RSpec.describe NotificationsMailer, type: :mailer do
     context 'with monitors' do
       it 'sends mail to the monitors' do
         monitor = FactoryBot.create(:user)
-        FactoryBot.create(:committee, user: monitor, name: 'float_plan_monitor')
+        FactoryBot.create(:committee, user: monitor, name: 'Float Plan Monitor')
         expect(@mail.to).to eql([monitor.email])
       end
     end

@@ -8,7 +8,7 @@ module BpsPdf::EducationCertificate::Completions
     elec_row(course_completions)
   end
 
-  private
+private
 
   def top_row(user, membership_date = nil, last_mm = nil)
     color = 'FFFFCC'
@@ -41,10 +41,14 @@ module BpsPdf::EducationCertificate::Completions
       completion_box(2, 'Engine Maintenance', course_completions['EM'], color: color)
       completion_box(3, 'Instructor Development', course_completions['ID'], color: color)
       me_name, me_date = me_completion(course_completions) || ['MCS, MES, EN', nil]
-      completion_box(4, "Marine Electronics <font size='6'>#{me_name}</font>", me_date, color: color)
+      completion_box(4, "Marine Electronics #{me_name_sized(me_name)}", me_date, color: color)
       completion_box(5, 'Sail', course_completions['SA'], color: color)
       completion_box(6, 'Weather', course_completions['WE'], color: color)
     end
+  end
+
+  def me_name_sized(me_name)
+    "<font size='6'>#{me_name}</font>"
   end
 
   def member_level(user)

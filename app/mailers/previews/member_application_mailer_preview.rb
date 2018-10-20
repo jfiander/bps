@@ -29,7 +29,7 @@ class MemberApplicationPreview < ActionMailer::Preview
     MemberApplicationMailer.paid_dues(user)
   end
 
-  private
+private
 
   def application
     MemberApplication.last

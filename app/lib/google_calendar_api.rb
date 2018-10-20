@@ -59,7 +59,7 @@ class GoogleCalendarAPI
     service.delete_acl(calendar, user.calendar_rule_id)
   end
 
-  private
+private
 
   def authorize(refresh: false)
     @user_id = 'default'

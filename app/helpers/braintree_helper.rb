@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module BraintreeHelper
-  private
+private
 
   def braintree_enabled?
     ENV['ENABLE_BRAINTREE'] == 'enabled' ||
@@ -83,14 +85,51 @@ module BraintreeHelper
 
   def result_flash_for(status)
     {
-      'failed' => { alert: 'Your payment has failed.', error: 'Please try again.' },
-      'gateway_rejected' => { alert: 'There was a problem processing your payment.', error: 'Please check the details and try again.' },
-      'processor_declined' => { alert: 'Your payment was declined.', error: 'Please choose another payment method, or contact your card issuer.' },
-      'unrecognized' => { alert: 'There was an unrecognized error.', error: 'Please try again.' },
-      'authorization_expired' => { alert: 'Your payment authorization has expired.', error: 'Please try again.' },
-      'settlement_declined' => { alert: 'Your payment was declined at settlement.', error: 'Please choose another payment method.' },
-      'voided' => { alert: 'This transaction has been voided.', error: 'Please try again.' },
-      'Cannot use a payment_method_nonce more than once.' => { alert: 'This page has expired.', error: 'Please refresh the page and try again.' }
+      'failed' => failed_hash, 'gateway_rejected' => rejected_hash, 'voided' => voided_hash,
+      'processor_declined' => declined_hash, 'unrecognized' => unrecognized_hash,
+      'authorization_expired' => expired_hash, 'settlement_declined' => unsettled_hash,
+      'Cannot use a payment_method_nonce more than once.' => nonce_hash
     }[status.to_s]
+  end
+
+  def failed_hash
+    { alert: 'Your payment has failed.', error: 'Please try again.' }
+  end
+
+  def rejected_hash
+    {
+      alert: 'There was a problem processing your payment.',
+      error: 'Please check the details and try again.'
+    }
+  end
+
+  def declined_hash
+    {
+      alert: 'Your payment was declined.',
+      error: 'Please choose another payment method, or contact your card issuer.'
+    }
+  end
+
+  def unrecognized_hash
+    { alert: 'There was an unrecognized error.', error: 'Please try again.' }
+  end
+
+  def expired_hash
+    { alert: 'Your payment authorization has expired.', error: 'Please try again.' }
+  end
+
+  def unsettled_hash
+    {
+      alert: 'Your payment was declined at settlement.',
+      error: 'Please choose another payment method.'
+    }
+  end
+
+  def voided_hash
+    { alert: 'This transaction has been voided.', error: 'Please try again.' }
+  end
+
+  def nonce_hash
+    { alert: 'This page has expired.', error: 'Please refresh the page and try again.' }
   end
 end

@@ -11,7 +11,7 @@ module BpsPdf::Roster::Detailed::PastCommanders
     end
   end
 
-  private
+private
 
   def pc_title
     insert_image 'tmp/run/PC.png', at: [0, 540], width: 80

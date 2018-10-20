@@ -27,7 +27,7 @@ module Concerns::Event::Category
     category?('meeting', event_types)
   end
 
-  private
+private
 
   def courses_from_cache(event_types)
     return EventType.courses if event_types.nil?

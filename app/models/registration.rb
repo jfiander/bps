@@ -32,7 +32,7 @@ class Registration < ApplicationRecord
     event.course? ? 'course' : event.event_type.event_category
   end
 
-  private
+private
 
   def email_or_user_present
     return if user.present? || email.present?

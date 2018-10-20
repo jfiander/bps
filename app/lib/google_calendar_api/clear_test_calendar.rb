@@ -17,7 +17,7 @@ module GoogleCalendarAPI::ClearTestCalendar
     log_last_page_token unless @page_token.blank?
   end
 
-  private
+private
 
   def set_page_token(page_token)
     last_token = GoogleCalendarAPI::LAST_TOKEN_PATH
@@ -59,6 +59,9 @@ module GoogleCalendarAPI::ClearTestCalendar
   end
 
   def progress_bar(total)
-    ProgressBar.create(title: 'Page cleared', starting_at: 0, total: total, format: "%a [%R/sec] %E | %b\u{15E7}%i %c/%C (%P%%) %t", progress_mark: ' ', remainder_mark: "\u{FF65}")
+    ProgressBar.create(
+      title: 'Page cleared', starting_at: 0, total: total, progress_mark: ' ',
+      remainder_mark: "\u{FF65}", format: "%a [%R/sec] %E | %b\u{15E7}%i %c/%C (%P%%) %t"
+    )
   end
 end

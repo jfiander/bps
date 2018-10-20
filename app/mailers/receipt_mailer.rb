@@ -23,7 +23,7 @@ class ReceiptMailer < ApplicationMailer
     end
   end
 
-  private
+private
 
   def purchase_info(payment)
     @payment = payment

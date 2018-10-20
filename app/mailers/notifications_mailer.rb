@@ -13,15 +13,11 @@ class NotificationsMailer < ApplicationMailer
 
   def float_plan(float_plan)
     @float_plan = float_plan
-    @to_list = if float_plan_monitor_emails.present?
-                 float_plan_monitor_emails
-               else
-                 ['"No Monitors" <dev@bpsd9.org>']
-               end
+    @to_list = float_plan_to_list
     mail(to: @to_list, subject: 'Float Plan Submitted')
   end
 
-  private
+private
 
   def user_descriptor(user)
     "#{user.full_name}\n#{user.certificate}, ##{user.id}"
@@ -41,6 +37,16 @@ class NotificationsMailer < ApplicationMailer
   end
 
   def float_plan_monitor_emails
-    Committee.get(:administrative, 'float_plan_monitor').map { |c| c.user.email }
+    Committee.get(
+      :administrative, 'Float Plan Monitor'
+    ).map { |c| c.user.email }
+  end
+
+  def float_plan_to_list
+    if float_plan_monitor_emails.present?
+      float_plan_monitor_emails
+    else
+      ['"No Monitors" <dev@bpsd9.org>']
+    end
   end
 end

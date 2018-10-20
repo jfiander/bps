@@ -46,7 +46,7 @@ class Location < ApplicationRecord
     end.reduce({}, :merge)
   end
 
-  private
+private
 
   def prefix_map_link
     return if map_link.blank? || map_link.match(%r{https?://})

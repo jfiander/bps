@@ -41,7 +41,7 @@ module Concerns::FloatPlan::Formatting
     ].compact.join(' / ')
   end
 
-  private
+private
 
   def engines?
     number_of_engines.present? ||

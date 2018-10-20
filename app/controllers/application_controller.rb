@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   end
   helper_method :event_type_param
 
-  private
+private
 
   def bugsnag_format_user(report)
     report.user = {

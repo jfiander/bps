@@ -15,7 +15,7 @@ module ImportUsers
       @completions
     end
 
-    private
+  private
 
     def process_completions(key, date)
       return unless (date = ImportUsers::CleanDate.new(date).call)

@@ -34,7 +34,7 @@ module User::RanksAndGrades
     }[grade]
   end
 
-  private
+private
 
   def override_rank(html = true)
     return '' if rank_override == 'none'

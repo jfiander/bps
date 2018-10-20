@@ -62,15 +62,10 @@ class EventType < ApplicationRecord
     {
       'public' => 1,
       'advanced_grade' => {
-        'seamanship' => 2,
-        'piloting' => 3,
-        'advanced_piloting' => 4,
-        'junior_navigation' => 5,
-        'navigation' => 6
+        'seamanship' => 2, 'piloting' => 3, 'advanced_piloting' => 4,
+        'junior_navigation' => 5, 'navigation' => 6
       },
-      'elective' => 7,
-      'seminar' => 8,
-      'meeting' => 9
+      'elective' => 7, 'seminar' => 8, 'meeting' => 9
     }
   end
 
@@ -81,7 +76,7 @@ class EventType < ApplicationRecord
 
   singleton_class.send(:alias_method, :event, :meeting)
 
-  private
+private
 
   def cleanup_title(title)
     title = title.split('-').map(&:titleize).join('-')
@@ -110,14 +105,9 @@ class EventType < ApplicationRecord
     }
 
     small_words = {
-      ' A ' => ' a ',
-      ' To ' => ' to ',
+      ' A ' => ' a ', ' To ' => ' to ', ' Of ' => ' of ', ' And ' => ' and ',
+      ' On ' => ' on ', ' In ' => ' in ', ' For ' => ' for ',
       '([- ])The([- ])' => '\1the\2',
-      ' Of ' => ' of ',
-      ' And ' => ' and ',
-      ' On ' => ' on ',
-      ' In ' => ' in ',
-      ' For ' => ' for '
     }
 
     [slashes, small_words].inject(&:merge)

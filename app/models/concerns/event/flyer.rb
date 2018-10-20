@@ -11,7 +11,7 @@ module Concerns::Event::Flyer
     end
   end
 
-  private
+private
 
   def get_book_cover(type, event_types = nil)
     filename = cover_file_name(event_types)

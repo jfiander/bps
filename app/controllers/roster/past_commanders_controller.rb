@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Roster::PastCommandersController < RosterController
-  private
+private
 
   def model
     Roster::PastCommander

@@ -32,7 +32,7 @@ module MarkdownHelper
     sanitize(redcarpet.render(markdown.to_s))
   end
 
-  private
+private
 
   def preload_markdown(name)
     @page_markdown ||= StaticPage.find_by(name: name)&.markdown

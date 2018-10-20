@@ -33,7 +33,7 @@ class RosterController < ApplicationController
     check_and_redirect(:remove) { @record.destroy }
   end
 
-  private
+private
 
   def safe_params
     params.permit(:id, :year)

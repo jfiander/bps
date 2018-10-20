@@ -14,7 +14,9 @@ RSpec.describe ImportUsers, type: :service do
 
   describe 'user handling' do
     before(:each) do
-      @update = FactoryBot.create(:user, certificate: 'E012345', email: 'updated.person@example.com')
+      @update = FactoryBot.create(
+        :user, certificate: 'E012345', email: 'updated.person@example.com'
+      )
       @remove = FactoryBot.create(:user, certificate: 'E001234')
     end
 

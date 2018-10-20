@@ -15,12 +15,14 @@ class UserController < ApplicationController
   secure!
   secure!(:admin, strict: true, only: %i[receipts receipt])
   secure!(:admin, only: %i[assign_photo override_cost])
-  secure!(:users, except: %i[current show register cancel_registration instructors])
   secure!(:education, only: :instructors)
+  secure!(
+    :users, except: %i[current show register cancel_registration instructors]
+  )
 
   before_action :can_view_profile?, only: [:show]
   before_action :can_view_profile?, only: [:certificate]
-  before_action :find_user, only: [:show]
+  before_action :find_user, only: [:show, :certificate]
   before_action :load_users, only: [:list]
   before_action :find_registration, only: %i[override_cost set_override_cost]
   before_action :block_override, only: %i[override_cost set_override_cost]
@@ -57,19 +59,10 @@ class UserController < ApplicationController
   end
 
   def certificate
-    @user = User.find_by(id: clean_params[:id])
-
-    @membership_date = @user.membership_date&.strftime('%Y-%m-%d') || clean_params[:member_date]
     @last_mm = @user.last_mm&.strftime('%Y') || clean_params[:last_mm]
 
     respond_to do |format|
-      format.pdf do
-        send_file(
-          BpsPdf::EducationCertificate.for(
-            @user, membership_date: @membership_date, last_mm: @last_mm
-          ), disposition: :inline
-        )
-      end
+      format.pdf { send_certificate }
 
       format.html do
         redirect_to user_certificate_path(id: @user.id, format: :pdf)
@@ -77,7 +70,7 @@ class UserController < ApplicationController
     end
   end
 
-  private
+private
 
   def can_view_profile?
     unless clean_params[:id].to_i == current_user.id ||
@@ -91,6 +84,18 @@ class UserController < ApplicationController
            current_user&.permitted?(:admin, session: session)
       redirect_to user_certificate_path(current_user.id)
     end
+  end
+
+  def membership_date
+    @user.membership_date&.strftime('%Y-%m-%d') || clean_params[:member_date]
+  end
+
+  def send_certificate
+    send_file(
+      BpsPdf::EducationCertificate.for(
+        @user, membership_date: membership_date, last_mm: @last_mm
+      ), disposition: :inline
+    )
   end
 
   def clean_params

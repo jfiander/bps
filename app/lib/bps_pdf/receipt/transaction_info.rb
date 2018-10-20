@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BpsPdf::Receipt::TransactionInfo
-  private
+private
 
   def transaction_info(payment)
     transaction_details(payment)

@@ -37,7 +37,7 @@ class StandingCommitteeOffice < ApplicationRecord
     "[#{term_year}/#{term_length}]"
   end
 
-  private
+private
 
   def valid_committee_name
     committee_name.downcase.in? %w[executive auditing nominations rules]

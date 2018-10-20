@@ -10,7 +10,7 @@ class BpsPdf::FloatPlan < BpsPdf::Base
   MODULES.each { |c| include "BpsPdf::FloatPlan::#{c}".constantize }
 
   def self.for(float_plan)
-     BpsPdf::FloatPlan.generate('tmp/run/Float_Plan.pdf') do
+    BpsPdf::FloatPlan.generate('tmp/run/Float_Plan.pdf') do
       configure_colors
       MODULES.each { |m| send(m.underscore, float_plan) }
     end
@@ -18,7 +18,7 @@ class BpsPdf::FloatPlan < BpsPdf::Base
     File.open('tmp/run/Float_Plan.pdf', 'r+')
   end
 
-  private
+private
 
   def labeled_text(label, value, x1:, x2:, y:)
     draw_text "#{label}:", size: 14, at: [x1, y]

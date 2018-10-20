@@ -63,7 +63,7 @@ class OTWTrainingsController < ApplicationController
     redirect_to otw_list_path
   end
 
-  private
+private
 
   def load_all_trainings
     @otw_trainings = OTWTraining.all.ordered

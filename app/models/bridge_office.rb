@@ -23,7 +23,7 @@ class BridgeOffice < ApplicationRecord
   scope :assistants, -> { where('office LIKE ?', 'asst_%') }
 
   def self.preload
-    all.map { |b| {b.user_id => b.office} }.reduce({}, :merge)
+    all.map { |b| { b.user_id => b.office } }.reduce({}, :merge)
   end
 
   def department
@@ -56,7 +56,7 @@ class BridgeOffice < ApplicationRecord
     end
   end
 
-  private
+private
 
   def valid_office
     return true if office.in? BridgeOffice.departments(assistants: true)

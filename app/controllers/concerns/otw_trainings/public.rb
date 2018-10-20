@@ -9,7 +9,7 @@ module OTWTrainings::Public
     OTWMailer.jumpstart(otw_public_params)
   end
 
-  private
+private
 
   def otw_public_params
     params.permit(:name, :email, :phone, :details, :availability)

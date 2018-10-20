@@ -16,7 +16,7 @@ module User::RosterFormat
       end
     end
 
-    private
+  private
 
     def left(u)
       [

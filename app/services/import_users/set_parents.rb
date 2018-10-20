@@ -19,7 +19,7 @@ module ImportUsers
       @families
     end
 
-    private
+  private
 
     def update_parent_for(user, parent)
       user&.update(parent_id: parent.id)

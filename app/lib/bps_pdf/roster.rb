@@ -7,8 +7,9 @@ class BpsPdf::Roster < BpsPdf::Base
 
   def self.create_pdf(orientation = :portrait, include_blank: false)
     @orientation = orientation
-    page_width = 792 / (@orientation == :landscape ? 2 : 1)
-     BpsPdf::Roster.generate('tmp/run/Roster.pdf', page_layout: @orientation, page_size: [612, page_width]) do
+    BpsPdf::Roster.generate(
+      'tmp/run/Roster.pdf', page_layout: @orientation, page_size: [612, page_width]
+    ) do
       specify_font
       configure_colors
 
@@ -28,10 +29,14 @@ class BpsPdf::Roster < BpsPdf::Base
   end
 
   def self.detailed(*_ignored)
-     BpsPdf::Roster::Detailed.create_pdf
+    BpsPdf::Roster::Detailed.create_pdf
   end
 
-  private
+  def self.page_width
+    792 / (@orientation == :landscape ? 2 : 1)
+  end
+
+private
 
   def config
     @config ||= YAML.safe_load(

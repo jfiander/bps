@@ -34,7 +34,7 @@ class FileController < ApplicationController
     remove_file(:header)
   end
 
-  private
+private
 
   def file_params
     params.require(:markdown_file).permit(:file)
@@ -50,28 +50,36 @@ class FileController < ApplicationController
 
   def upload_file(type = :file)
     options = {}
-    @uploaded_file = if type == :file
-                       MarkdownFile.create(file_params)
-                     elsif type == :header
-                       HeaderImage.create(header_params)
-                     end
+    @uploaded_file = create_file(type)
 
     options[:header] = @uploaded_file.id if type == :header
 
-    redirect_with_status(send("#{type}_path", options), object: type, verb: 'upload', past: 'uploaded', ivar: @uploaded_file) do
+    redirect_with_status(
+      send("#{type}_path", options), object: type, verb: 'upload', past: 'uploaded',
+      ivar: @uploaded_file
+    ) do
       @uploaded_file.valid?
     end
   end
 
+  def create_file(type)
+    if type == :file
+      MarkdownFile.create(file_params)
+    elsif type == :header
+      HeaderImage.create(header_params)
+    end
+  end
+
   def remove_file(type = :file)
-    @file = if type == :file
-              MarkdownFile.find_by(id: destroy_params[:id])
-            elsif type == :header
-              HeaderImage.find_by(id: destroy_params[:id])
-            end
+    @file = find_destroy_file(type)
 
     redirect_with_status(send("#{type}_path"), object: type, verb: 'remove', ivar: @file) do
       @file.destroy
     end
+  end
+
+  def find_destroy_file(type)
+    klass = type == :header ? HeaderImage : MarkdownFile
+    klass.find_by(id: destroy_params[:id])
   end
 end

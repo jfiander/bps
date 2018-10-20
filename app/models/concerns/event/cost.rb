@@ -19,7 +19,7 @@ module Concerns::Event::Cost
     { general: cost, usps: usps_cost, member: member_cost }
   end
 
-  private
+private
 
   def validate_costs
     return clear_costs if cost.blank?

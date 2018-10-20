@@ -12,7 +12,7 @@ module User::BOC
     "-#{boc(endorsements: false)}"
   end
 
-  private
+private
 
   def boc_keys
     @boc_keys ||= course_completions.where(

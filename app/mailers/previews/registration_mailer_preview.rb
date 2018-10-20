@@ -41,7 +41,7 @@ class RegistrationMailerPreview < ActionMailer::Preview
     RegistrationMailer.request_schedule(EventType.last, by: User.first)
   end
 
-  private
+private
 
   def reg_member_free
     Registration.where.not(user: nil).select do |r|

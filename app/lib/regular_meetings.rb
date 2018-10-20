@@ -6,7 +6,7 @@ class RegularMeetings
     calendar.create(calendar_id, excom)
   end
 
-  private
+private
 
   def calendar
     Event.last.send(:calendar)

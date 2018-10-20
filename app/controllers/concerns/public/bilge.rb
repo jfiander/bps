@@ -12,7 +12,7 @@ module Public::Bilge
     send_bilge(bilge)
   end
 
-  private
+private
 
   def list_bilges
     @bilges = user_signed_in? ? BilgeFile.ordered : BilgeFile.last_18

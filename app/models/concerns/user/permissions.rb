@@ -57,7 +57,7 @@ module User::Permissions
     SIMPLIFY.call([explicit_roles, implicit_roles])
   end
 
-  private
+private
 
   def searchable_roles(strict = false, session: nil)
     return session_roles(strict, session) if session.present?

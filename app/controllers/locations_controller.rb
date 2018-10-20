@@ -34,7 +34,9 @@ class LocationsController < ApplicationController
   def update
     @location = Location.find_by(id: update_params[:id])
 
-    redirect_or_render_error(locations_path, render_method: :new, object: 'location', verb: 'update') do
+    redirect_or_render_error(
+      locations_path, render_method: :new, object: 'location', verb: 'update'
+    ) do
       @location.update(location_params)
     end
   end
@@ -45,7 +47,7 @@ class LocationsController < ApplicationController
     end
   end
 
-  private
+private
 
   def location_params
     params.require(:location).permit(

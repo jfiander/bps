@@ -9,7 +9,7 @@ class NotificationsMailerPreview < ActionMailer::Preview
     NotificationsMailer.float_plan(last_float_plan)
   end
 
-  private
+private
 
   def bridge_office
     BridgeOffice.last

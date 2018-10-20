@@ -20,7 +20,7 @@ module Concerns::Payment::BraintreeMethods
         environment: environment,
         merchant_id: ENV['BRAINTREE_MERCHANT_ID'],
         public_key: ENV['BRAINTREE_PUBLIC_KEY'],
-        private_key: ENV['BRAINTREE_PRIVATE_KEY']
+      private_key: ENV['BRAINTREE_PRIVATE_KEY']
       )
     end
 
@@ -36,7 +36,7 @@ module Concerns::Payment::BraintreeMethods
       failed_hash(result)
     end
 
-    private
+  private
 
     def environment
       allow_live_transactions? ? :production : :sandbox
@@ -66,8 +66,7 @@ module Concerns::Payment::BraintreeMethods
 
     def create_customer(user)
       result = gateway.customer.create(
-        first_name: user.first_name,
-        last_name: user.last_name,
+        first_name: user.first_name, last_name: user.last_name,
         email: user.email
       )
 
@@ -118,7 +117,7 @@ module Concerns::Payment::BraintreeMethods
     self.class.gateway.transaction.find(transaction_id)
   end
 
-  private
+private
 
   def custom_fields(user_id = nil)
     { rails_payment_token: token, rails_user_id: user_id }

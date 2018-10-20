@@ -13,7 +13,7 @@ class Roster::ArchiveFilesController < RosterController
     redirect_to roster_archive_files_path
   end
 
-  private
+private
 
   def model
     Roster::ArchiveFile

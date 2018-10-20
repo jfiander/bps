@@ -37,7 +37,7 @@ module Concerns::Event::Calendar
     google_calendar_event_id.present?
   end
 
-  private
+private
 
   def calendar
     @calendar ||= GoogleCalendarAPI.new(auth: true)

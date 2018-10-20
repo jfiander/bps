@@ -9,7 +9,7 @@ module BpsPdf::Roster::Detailed::Flags
     burgee
   end
 
-  private
+private
 
   def ensign
     insert_image 'tmp/run/Ensign.png', at: [0, 350], width: 150

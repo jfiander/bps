@@ -29,7 +29,7 @@ module Members::Minutes
     )
   end
 
-  private
+private
 
   def list_minutes
     @minutes = MinutesFile.ordered.where(excom: false).group_by(&:year)

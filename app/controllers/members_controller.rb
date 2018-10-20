@@ -23,6 +23,7 @@ class MembersController < ApplicationController
 
   before_action :generate_client_token, only: :applied
   before_action :block_duplicate_payments, only: :applied, if: :already_paid?
+  before_action :redirect_if_no_roster, only: :roster
 
   title!('Minutes', only: :minutes)
   title!('ExCom Minutes', only: :excom_minutes)
@@ -36,7 +37,7 @@ class MembersController < ApplicationController
     @users = User.unlocked.include_positions.alphabetized.with_any_name
   end
 
-  private
+private
 
   def static_page_params
     params.require(:static_page).permit(:name, :markdown)

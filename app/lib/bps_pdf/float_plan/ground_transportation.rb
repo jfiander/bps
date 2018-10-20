@@ -6,13 +6,15 @@ module BpsPdf::FloatPlan::GroundTransportation
     if car_fields(float_plan).any?(&:present?)
       car_details(float_plan)
       trailer_plate(float_plan)
-      labeled_text('Parked At', float_plan.car_parked_at, x1: 25, x2: 120, y: (120 + @left_vertical_offset))
+      labeled_text(
+        'Parked At', float_plan.car_parked_at, x1: 25, x2: 120, y: (120 + @left_vertical_offset)
+      )
     else
       draw_text 'n/a', size: 14, at: [25, (180 + @left_vertical_offset)]
     end
   end
 
-  private
+private
 
   def car_fields(float_plan)
     [
@@ -22,6 +24,15 @@ module BpsPdf::FloatPlan::GroundTransportation
   end
 
   def car_details(float_plan)
+    car_make_and_model(float_plan)
+
+    labeled_text(
+      'License', float_plan.car_license_plate,
+      x1: 25, x2: 120, y: (160 + @left_vertical_offset)
+    )
+  end
+
+  def car_make_and_model(float_plan)
     labeled_text(
       'Car',
       [
@@ -30,13 +41,14 @@ module BpsPdf::FloatPlan::GroundTransportation
       ].reject(&:blank?).join(' / '),
       x1: 25, x2: 120, y: (180 + @left_vertical_offset)
     )
-
-    labeled_text('License', float_plan.car_license_plate, x1: 25, x2: 120, y: (160 + @left_vertical_offset))
   end
 
   def trailer_plate(float_plan)
     if float_plan.trailer_license_plate.present?
-      labeled_text('Trailer License', float_plan.trailer_license_plate, x1: 25, x2: 120, y: (140 + @left_vertical_offset))
+      labeled_text(
+        'Trailer License', float_plan.trailer_license_plate,
+        x1: 25, x2: 120, y: (140 + @left_vertical_offset)
+      )
     else
       @left_vertical_offset += 20
     end

@@ -13,9 +13,11 @@ RSpec.describe EventType, type: :model do
   describe 'form selectors' do
     before(:each) do
       @abc = FactoryBot.create(:event_type, title: "America's Boating Course")
-      @eob = FactoryBot.create(:event_type, title: 'Emergencies on Board', event_category: 'seminar')
+      @eob = FactoryBot.create(:event_type, title: 'Emergencies Onboard', event_category: 'seminar')
       @n = FactoryBot.create(:event_type, title: 'Navigation', event_category: 'advanced_grade')
-      @jn = FactoryBot.create(:event_type, title: 'Junior Navigation', event_category: 'advanced_grade')
+      @jn = FactoryBot.create(
+        :event_type, title: 'Junior Navigation', event_category: 'advanced_grade'
+      )
       @sail = FactoryBot.create(:event_type, title: 'Sail', event_category: 'elective')
     end
 
@@ -38,7 +40,7 @@ RSpec.describe EventType, type: :model do
       select_data = EventType.selector('seminar')
 
       expect(select_data).to eql(
-        [['Emergencies on Board', @eob.id]]
+        [['Emergencies Onboard', @eob.id]]
       )
     end
   end

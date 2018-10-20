@@ -28,7 +28,7 @@ class PublicController < ApplicationController
     end
   end
 
-  private
+private
 
   def clean_params
     params.permit(:year, :month, :email, :event_id)

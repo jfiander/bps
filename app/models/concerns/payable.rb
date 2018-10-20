@@ -31,7 +31,7 @@ module Payable
       ENV['ENABLE_BRAINTREE'] == 'enabled'
   end
 
-  private
+private
 
   def block_destroy
     raise "This #{self.class.name} has been paid, and cannot be destroyed."

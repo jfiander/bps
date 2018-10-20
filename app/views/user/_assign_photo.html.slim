@@ -9,4 +9,4 @@ h2 Assign Profile Photo
     = label_tag :id, 'User: '
     = select_tag :id, options_for_select(@users.map { |u| [(u[:name].present? ? u[:name] : u[:email]), u[:id]] }), required: true
   br
-  = spinner_button(button_text: "Assign photo", disable_text: "Assigning photo", css_class: 'big')
+  = spinner_button(button_text: "Assign photo", disable_text: "Assigning photo", css: 'big')

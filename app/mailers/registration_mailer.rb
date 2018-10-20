@@ -55,7 +55,7 @@ class RegistrationMailer < ApplicationMailer
     mail(to: @to_list, subject: 'Educational request')
   end
 
-  private
+private
 
   def signature_for_confirm
     if @registration.event.category == 'meeting'
@@ -99,10 +99,14 @@ class RegistrationMailer < ApplicationMailer
       fallback: fallback,
       fields: {
         'Event name' => @registration.event.display_title,
-        'Event date' => @registration.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT),
+        'Event date' => slack_start_time,
         'Registrant name' => @registration&.user&.full_name,
         'Registrant email' => @registration&.user&.email || @registration&.email
       }
     ).notify!
+  end
+
+  def slack_start_time
+    @registration.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)
   end
 end

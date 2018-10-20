@@ -11,7 +11,7 @@ module BpsPdf::Roster::Detailed::Directory
     end
   end
 
-  private
+private
 
   def directory_page(users)
     users.each_with_index do |user, index|

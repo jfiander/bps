@@ -5,63 +5,36 @@ class PermissionsController < ApplicationController
 
   secure!(:users)
 
+  before_action :find_roles, only: %i[index]
+  before_action :restrict_roles, only: %i[index]
   before_action :users_for_select, only: %i[index]
+  before_action :find_user_role, only: %i[remove]
+  before_action :block_remove_admin, only: %i[remove]
+  before_action :process_permissions_errors, only: %i[add]
+  before_action :find_user_and_role, only: %i[add]
+  before_action :block_duplicate_permissions, only: %i[add]
 
   def index
-    @roles = Role.all.map(&:name)
-    @roles.delete('admin')
-    @roles.delete('users') unless current_user&.permitted?(:admin, strict: true, session: session)
-    unless current_user&.permitted?(:education, session: session)
-      @roles.delete('education')
-      @roles.delete('course')
-      @roles.delete('seminar')
-    end
-
-    respond_to do |format|
-      format.html
-    end
+    respond_to { |format| format.html }
   end
 
   def add
-    process_permissions_errors
-
-    if flash[:alert].present?
-      redirect_to permit_path
-      return
-    end
-
-    user = User.find_by(id: clean_params[:user_id])
-    role = Role.find_by(name: clean_params[:role])
-
-    if UserRole.find_by(user: user, role: role)
-      flash[:notice] = "#{user.simple_name} already has #{role.name} permissions."
-      redirect_to permit_path
-      return
-    end
-
-    user_role = UserRole.create!(user: user, role: role)
+    user_role = UserRole.create!(user: @user, role: @role)
     permission_notification(user_role, :added, current_user)
-    update_calendar_acl(user)
+    update_calendar_acl(@user)
 
-    flash[:success] = "Successfully added #{role.name} " \
-                      "permission to #{user.simple_name}."
+    flash[:success] = "Successfully added #{@role.name} " \
+                      "permission to #{@user.simple_name}."
     redirect_to permit_path
   end
 
   def remove
-    user_role = UserRole.find_by(id: clean_params[:permit_id])
+    @user_role.destroy
+    update_calendar_acl(@user_role.user)
+    permission_notification(@user_role, :removed, current_user)
 
-    if user_role.role.name == 'admin'
-      redirect_to permit_path, alert: 'Cannot remove admin permissions.'
-      return
-    end
-
-    user_role.destroy
-    update_calendar_acl(user_role.user)
-    permission_notification(user_role, :removed, current_user)
-
-    flash[:success] = "Successfully removed #{user_role.role.name} " \
-                      "permission from #{user_role.user.simple_name}."
+    flash[:success] = "Successfully removed #{@user_role.role.name} " \
+                      "permission from #{@user_role.user.simple_name}."
     redirect_to permit_path
   end
 
@@ -71,7 +44,47 @@ class PermissionsController < ApplicationController
     )
   end
 
-  private
+private
+
+  def find_roles
+    @roles = Role.all.map(&:name)
+  end
+
+  def restrict_roles
+    @roles.delete('admin')
+
+    unless current_user&.permitted?(:admin, strict: true, session: session)
+      @roles.delete('users')
+    end
+
+    unless current_user&.permitted?(:education, session: session)
+      @roles.delete('education')
+      @roles.delete('course')
+      @roles.delete('seminar')
+    end
+  end
+
+  def find_user_and_role
+    @user = User.find_by(id: clean_params[:user_id])
+    @role = Role.find_by(name: clean_params[:role])
+  end
+
+  def block_duplicate_permissions
+    return unless UserRole.find_by(user: @user, role: @role)
+
+    flash[:notice] = "#{@user.simple_name} already has #{@role.name} permissions."
+    redirect_to permit_path
+  end
+
+  def find_user_role
+    @user_role = UserRole.find_by(id: clean_params[:permit_id])
+  end
+
+  def block_remove_admin
+    return unless @user_role.role.name == 'admin'
+
+    redirect_to permit_path, alert: 'Cannot remove admin permissions.'
+  end
 
   def clean_params
     params.permit(:user_id, :role, :permit_id)
@@ -85,6 +98,8 @@ class PermissionsController < ApplicationController
     elsif restricted_permission?(clean_params[:role])
       flash[:alert] = 'Unable to add that permission.'
     end
+
+    redirect_to permit_path if flash[:alert].present?
   end
 
   def restricted_permission?(role)

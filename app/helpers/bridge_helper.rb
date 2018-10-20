@@ -4,17 +4,9 @@ module BridgeHelper
   def bridge_selectors
     @select = {}
     @select[:departments] = BridgeOffice.departments.map { |b| [b.titleize, b] }
-    @select[:bridge_offices] = BridgeOffice.departments(assistants: true)
-                                           .map do |b|
-                                             [BridgeOffice.title(b), b]
-                                           end
+    @select[:bridge_offices] = bridge_select_offices
     @select[:standing_committees] = StandingCommitteeOffice.committee_titles
-    @select[:users] = [['TBD', nil]] + @users.to_a.map! do |user|
-      [
-        user&.full_name.blank? ? user.email : user.full_name(html: false),
-        user.id
-      ]
-    end
+    @select[:users] = bridge_select_users
     @select
   end
 
@@ -29,7 +21,6 @@ module BridgeHelper
   end
 
   def build_bridge_list
-    @department_data = {}
     @standing_committee_data = {}
 
     @bridge_list = {
@@ -39,18 +30,16 @@ module BridgeHelper
   end
 
   def assemble_departments
+    dept_data = {}
+
     BridgeOffice.departments.each do |dept|
-      head = @all_bridge_officers.find_all { |b| b.office == dept }.first
-      asst = @all_bridge_officers.find_all do |b|
-        b.office == "asst_#{dept}"
-      end.first
-      @department_data[dept.to_sym] = {}
-      @department_data[dept.to_sym][:head] = generate_officer_hash(head)
-      @department_data[dept.to_sym][:assistant] = generate_officer_hash(asst)
-      @department_data[dept.to_sym][:committees] = generate_committees(dept)
+      dept_data[dept.to_sym] = {}
+      dept_data[dept.to_sym][:head] = generate_officer_hash(head(dept))
+      dept_data[dept.to_sym][:assistant] = generate_officer_hash(asst(dept))
+      dept_data[dept.to_sym][:committees] = generate_committees(dept)
     end
 
-    @department_data
+    dept_data
   end
 
   def assemble_standing_committees
@@ -92,6 +81,31 @@ module BridgeHelper
         user: get_user(c.user_id),
         id: c.id
       }
+    end
+  end
+
+private
+
+  def head(dept)
+    @all_bridge_officers.find_all { |b| b.office == dept }.first
+  end
+
+  def asst(dept)
+    @all_bridge_officers.find_all { |b| b.office == "asst_#{dept}" }.first
+  end
+
+  def bridge_select_offices
+    BridgeOffice.departments(assistants: true).map do |b|
+      [BridgeOffice.title(b), b]
+    end
+  end
+
+  def bridge_select_users
+    [['TBD', nil]] + @users.to_a.map! do |user|
+      [
+        user&.full_name.blank? ? user.email : user.full_name(html: false),
+        user.id
+      ]
     end
   end
 end

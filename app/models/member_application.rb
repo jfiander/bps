@@ -40,7 +40,7 @@ class MemberApplication < ApplicationRecord
     send_approval_notices(users)
   end
 
-  private
+private
 
   def user_hash(applicant)
     {

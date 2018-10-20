@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BpsPdf::Roster::Shared
-  private
+private
 
   def load_burgee
     burgee = BpsS3.new(:static).download('flags/Birmingham/Birmingham.png')

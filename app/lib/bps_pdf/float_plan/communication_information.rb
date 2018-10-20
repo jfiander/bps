@@ -10,7 +10,7 @@ module BpsPdf::FloatPlan::CommunicationInformation
     radio_comments(float_plan)
   end
 
-  private
+private
 
   def radio_comments(float_plan)
     if float_plan.radio.present?

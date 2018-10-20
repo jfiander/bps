@@ -11,9 +11,10 @@ class BridgeController < ApplicationController
   title!('Officers')
 
   before_action :users_for_select, only: %i[assign_bridge assign_committee]
+  before_action :permitted_users, only: %i[list]
+  before_action :find_bridge_office, only: %i[assign_bridge]
 
   def list
-    @current_user_permitted_users = current_user&.permitted?(:users, session: session)
     missing_committees if @current_user_permitted_users
 
     preload_user_data
@@ -22,25 +23,27 @@ class BridgeController < ApplicationController
   end
 
   def assign_bridge
-    bridge_office = BridgeOffice.find_or_create_by(
-      office: clean_params[:bridge_office]
-    )
-    previous = bridge_office.user
+    previous = @bridge_office.user
 
-    redirect_with_status(bridge_path, object: 'bridge office', verb: 'assign', past: 'assigned') do
-      bridge_office.update(user_id: clean_params[:user_id])
-      NotificationsMailer.bridge(bridge_office, by: current_user, previous: previous).deliver
+    redirect_with_status(
+      bridge_path, object: 'bridge office', verb: 'assign', past: 'assigned'
+    ) do
+      @bridge_office.update(user_id: clean_params[:user_id])
+      NotificationsMailer.bridge(
+        @bridge_office, by: current_user, previous: previous
+      ).deliver
     end
   end
 
   def assign_committee
     committee = Committee.new(
-      name: clean_params[:committee],
-      department: clean_params[:department],
+      name: clean_params[:committee], department: clean_params[:department],
       user_id: clean_params[:user_id]
     )
 
-    redirect_with_status(bridge_path, object: 'committee', verb: 'assign', past: 'assigned') do
+    redirect_with_status(
+      bridge_path, object: 'committee', verb: 'assign', past: 'assigned'
+    ) do
       committee.save
     end
   end
@@ -58,19 +61,12 @@ class BridgeController < ApplicationController
   end
 
   def assign_standing_committee
-    y = clean_params[:term_start_at]['(1i)']
-    m = clean_params[:term_start_at]['(2i)']
-    d = clean_params[:term_start_at]['(3i)']
-    term_start = "#{y}-#{m}-#{d}"
-    standing_committee = StandingCommitteeOffice.new(
-      committee_name: clean_params[:committee_name],
-      chair: clean_params[:chair],
-      user_id: clean_params[:user_id],
-      term_start_at: term_start,
-      term_length: clean_params[:term_length]
-    )
+    standing_committee = create_standing_committee
 
-    redirect_with_status(bridge_path, object: 'standing committee', verb: 'assign', past: 'assigned') do
+    redirect_with_status(
+      bridge_path, object: 'standing committee', verb: 'assign',
+      past: 'assigned'
+    ) do
       standing_committee.save
     end
   end
@@ -79,12 +75,24 @@ class BridgeController < ApplicationController
     remove_committee(:standing)
   end
 
-  private
+private
 
   def clean_params
     params.permit(
       :id, :user_id, :bridge_office, :committee, :department, :committee_name,
       :chair, :term_length, term_start_at: ['(1i)', '(2i)', '(3i)']
+    )
+  end
+
+  def permitted_users
+    @current_user_permitted_users = current_user&.permitted?(
+      :users, session: session
+    )
+  end
+
+  def find_bridge_office
+    @bridge_office = BridgeOffice.find_or_create_by(
+      office: clean_params[:bridge_office]
     )
   end
 
@@ -105,5 +113,19 @@ class BridgeController < ApplicationController
       File.read("#{Rails.root}/config/implicit_permissions.yml")
     )['committee'].keys
     @missing_committees = auto_roles - Committee.all.map(&:name)
+  end
+
+  def create_standing_committee
+    y = clean_params[:term_start_at]['(1i)']
+    m = clean_params[:term_start_at]['(2i)']
+    d = clean_params[:term_start_at]['(3i)']
+
+    StandingCommitteeOffice.new(
+      committee_name: clean_params[:committee_name],
+      chair: clean_params[:chair],
+      user_id: clean_params[:user_id],
+      term_start_at: "#{y}-#{m}-#{d}",
+      term_length: clean_params[:term_length]
+    )
   end
 end

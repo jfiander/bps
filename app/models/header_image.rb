@@ -20,7 +20,7 @@ class HeaderImage < ApplicationRecord
   validates :file, presence: true, if: :no_errors_yet?
   validate :correct_image_dimensions, if: :no_errors_yet?
 
-  private
+private
 
   def correct_image_dimensions
     image = file.queued_for_write[:original]

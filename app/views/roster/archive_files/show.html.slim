@@ -1,7 +1,7 @@
 h1 Archived Rosters
 
 = form_tag(roster_archive_files_path) do |f|
-  = spinner_button(f, button_text: 'Archive Current Roster', disable_text: 'Archiving Current Roster', name: 'button', css_class: 'big')
+  = spinner_button(f, button_text: 'Archive Current Roster', disable_text: 'Archiving Current Roster', name: 'button', css: 'big')
 
 - if @collection.empty?
   h2.red There are no archived rosters available.

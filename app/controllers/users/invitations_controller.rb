@@ -8,7 +8,7 @@ class Users::InvitationsController < Devise::InvitationsController
     new_user_invitation_path
   end
 
-  private
+private
 
   def redirect_if_no_invitations
     return if current_user&.permitted?(:users, session: session)

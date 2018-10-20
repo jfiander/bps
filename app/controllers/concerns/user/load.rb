@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module User::Load
-  private
+private
 
   def find_user
     id = clean_params[:id] || current_user&.id
@@ -24,25 +24,16 @@ module User::Load
     @users = @unlocked + @locked
   end
 
-  def user_hash(user)
+  def user_hash(u)
     {
-      id:                 user.id,
-      name:               user.full_name,
-      certificate:        user.certificate,
-      email:              user.email,
-      granted_roles:      granted_roles_for(user),
-      permitted_roles:    permitted_roles_for(user),
-      bridge_office:      bridge_office_for(user),
-      current_login_at:   user.current_sign_in_at,
-      current_login_from: user.current_sign_in_ip,
-      invited_at:         user.invitation_sent_at,
-      invitable:          user.invitable?,
-      placeholder_email:  user.placeholder_email?,
-      invited:            user.invited?,
-      locked:             user.locked?,
-      senior:             user.senior.present?,
-      life:               user.life.present?,
-      new_layout:         user.new_layout?
+      id: u.id, name: u.full_name, certificate: u.certificate,
+      email: u.email, senior: u.senior.present?, life: u.life.present?,
+      bridge_office: bridge_office_for(u), granted_roles: granted_roles_for(u),
+      permitted_roles: permitted_roles_for(u),
+      invited_at: u.invitation_sent_at, current_login_at: u.current_sign_in_at,
+      current_login_from: u.current_sign_in_ip,
+      invitable: u.invitable?, invited: u.invited?, locked: u.locked?,
+      new_layout: u.new_layout?, placeholder_email: u.placeholder_email?
     }
   end
 
@@ -67,14 +58,19 @@ module User::Load
   end
 
   def users_with_implied
-    @users_with_implied ||= BridgeOffice.all.map(&:user_id) +
-                            StandingCommitteeOffice.current.map(&:user_id) +
-                            Committee.all.map(&:user_id)
+    @users_with_implied ||= [
+      BridgeOffice.all.map(&:user_id),
+      StandingCommitteeOffice.current.map(&:user_id),
+      Committee.all.map(&:user_id)
+    ].flatten.uniq
   end
 
   def users_for_select
     @users = User.unlocked.alphabetized.include_positions.map do |user|
-      [(user.full_name.present? ? user.full_name(html: false) : user.email), user.id]
+      [
+        (user.full_name.present? ? user.full_name(html: false) : user.email),
+        user.id
+      ]
     end
   end
 end

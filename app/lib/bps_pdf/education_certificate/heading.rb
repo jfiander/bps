@@ -7,7 +7,7 @@ module BpsPdf::EducationCertificate::Heading
     title_text
   end
 
-  private
+private
 
   def load_header_image
     header = BpsS3.new(:static).download('flags/PNG/WHEEL.500.png')

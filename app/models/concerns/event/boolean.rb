@@ -37,7 +37,7 @@ module Concerns::Event::Boolean
     true
   end
 
-  private
+private
 
   def allow_any_registrations?
     allow_member_registrations? || allow_public_registrations?

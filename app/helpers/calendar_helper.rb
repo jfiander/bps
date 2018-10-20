@@ -9,7 +9,7 @@ module CalendarHelper
       calendars
   end
 
-  private
+private
 
   def calendar_options
     {

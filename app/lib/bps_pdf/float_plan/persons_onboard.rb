@@ -9,7 +9,7 @@ module BpsPdf::FloatPlan::PersonsOnboard
     configure_colors
   end
 
-  private
+private
 
   def person_onboard(person)
     draw_text "#{person.name} (#{person.age})", size: 12, at: [300, @onboard_y]

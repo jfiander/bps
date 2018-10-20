@@ -16,7 +16,7 @@ module EventTypes::Refresh
     end
   end
 
-  private
+private
 
   def refresh_params
     params.permit(:category)

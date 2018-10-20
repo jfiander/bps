@@ -2,7 +2,7 @@
 
 module BpsPdf
   class Base < Prawn::Document
-    private
+  private
 
     def specify_font
       font_families.update(

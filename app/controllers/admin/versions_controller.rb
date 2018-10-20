@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::VersionsController < ApplicationController
   secure!(:admin, strict: true)
 
@@ -38,7 +40,7 @@ class Admin::VersionsController < ApplicationController
     redirect_to admin_show_versions_path
   end
 
-  private
+private
 
   def versioned_models
     Rails.application.eager_load!
@@ -67,15 +69,18 @@ class Admin::VersionsController < ApplicationController
   end
 
   def version_jsons
-    a = if @a.zero?
-          model_class.find_by(id: clean_params[:id]).to_json
-        else
-          @versions.first(@a)&.last&.reify&.to_json
-        end
-
+    a = version_a
     b = @versions.first(@b)&.last&.reify&.to_json
 
     [a, b].map { |v| v&.gsub(',"', ', "')&.gsub('":', '": ') }
+  end
+
+  def version_a
+    if @a.zero?
+      model_class.find_by(id: clean_params[:id]).to_json
+    else
+      @versions.first(@a)&.last&.reify&.to_json
+    end
   end
 
   def diff_method

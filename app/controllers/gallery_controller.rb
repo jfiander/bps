@@ -14,7 +14,7 @@ class GalleryController < ApplicationController
   end
 
   def add_album
-    remove_album and return if clean_params[:remove].present?
+    return remove_album if clean_params[:remove].present?
 
     @album = Album.new(album_params)
     if @album.save
@@ -59,20 +59,14 @@ class GalleryController < ApplicationController
   end
 
   def remove_album
-    album_attributes = if params[:album].present?
-                         album_params
-                       else
-                         { id: clean_params[:id] }
-                       end
-
-    if Album.find_by(album_attributes)&.destroy
+    if album&.destroy
       redirect_to photos_path, success: 'Successfully removed album!'
     else
       redirect_to photos_path, alert: 'There was a problem removing the album.'
     end
   end
 
-  private
+private
 
   def album_params
     params.require(:album).permit(:name)
@@ -84,6 +78,12 @@ class GalleryController < ApplicationController
 
   def clean_params
     params.permit(:id, :remove, :redirect_to_album)
+  end
+
+  def album
+    @album = Album.find_by(
+      params[:album].present? ? album_params : { id: clean_params[:id] }
+    )
   end
 
   def process_photo_upload(photo_file)

@@ -36,7 +36,7 @@ class GitInfo
     )
   end
 
-  private
+private
 
   def load_json(url)
     JSON.parse(URI.parse(url).open.read)

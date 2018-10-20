@@ -18,7 +18,7 @@ module Application::Security
     klass.extend(ClassMethods)
   end
 
-  private
+private
 
   def ssl_configured?
     Rails.env.production?

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BpsPdf::Receipt::CustomerInfo
-  private
+private
 
   def customer_info(payment)
     bounding_box([0, 575], width: 300, height: 90) do

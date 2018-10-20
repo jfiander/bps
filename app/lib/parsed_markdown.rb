@@ -23,7 +23,7 @@ class ParsedMarkdown < String
     parse_fa
   end
 
-  private
+private
 
   def parse_center
     gsub!('<p>@', '<p class="center">') || self

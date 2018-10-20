@@ -13,7 +13,9 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
 
       it 'renders the headers' do
         expect(mail.subject).to eql('New member application')
-        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
+        expect(mail.to).to eql(
+          [generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email]
+        )
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 
@@ -69,7 +71,9 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
 
       it 'renders the headers' do
         expect(mail.subject).to eql('Member application approved')
-        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
+        expect(mail.to).to eql(
+          [generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email]
+        )
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 
@@ -85,7 +89,9 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
 
       it 'renders the headers' do
         expect(mail.subject).to eql('Membership application paid')
-        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
+        expect(mail.to).to eql(
+          [generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email]
+        )
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 
@@ -118,7 +124,9 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
 
       it 'renders the headers' do
         expect(mail.subject).to eql('New member application')
-        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
+        expect(mail.to).to eql(
+          [generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email]
+        )
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 
@@ -174,7 +182,9 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
 
       it 'renders the headers' do
         expect(mail.subject).to eql('Member application approved')
-        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
+        expect(mail.to).to eql(
+          [generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email]
+        )
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 

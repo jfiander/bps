@@ -12,7 +12,7 @@ module DeviseHelper
     resource.errors.present?
   end
 
-  private
+private
 
   def alert_sentence
     I18n.t(

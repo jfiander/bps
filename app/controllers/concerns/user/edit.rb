@@ -10,17 +10,7 @@ module User::Edit
       flash[:alert] = 'Unable to assign profile photo.'
     end
 
-    dest_path = case clean_params[:redirect_to]
-                when 'show'
-                  user_path(clean_params[:id])
-                when 'list'
-                  users_path
-                when 'bridge'
-                  bridge_path
-                else
-                  users_path
-                end
-    redirect_to dest_path
+    redirect_to assign_photo_dest_path
   end
 
   def auto_show
@@ -33,9 +23,22 @@ module User::Edit
     head :ok
   end
 
-  private
+private
 
   def auto_shows
     session[:auto_shows] ||= Set.new
+  end
+
+  def assign_photo_dest_path
+    case clean_params[:redirect_to]
+    when 'show'
+      user_path(clean_params[:id])
+    when 'list'
+      users_path
+    when 'bridge'
+      bridge_path
+    else
+      users_path
+    end
   end
 end

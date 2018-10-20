@@ -23,7 +23,7 @@ class Role < ApplicationRecord
     parents_array
   end
 
-  private
+private
 
   def descends_from_admin?
     return true if name == 'admin'

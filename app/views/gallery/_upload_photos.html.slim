@@ -10,6 +10,6 @@ h2 Upload photos
   = FA::Icon.p('file-image', style: :regular, css: 'file-type')
   = f.file_field :photo_file, required: true, multiple: true
   br
-  = spinner_button(button_text: "Submit", css_class: 'big')
+  = spinner_button(button_text: "Submit", css: 'big')
   br
   small The first photo in an album will be displayed on the gallery page.

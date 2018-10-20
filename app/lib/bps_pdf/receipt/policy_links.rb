@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BpsPdf::Receipt::PolicyLinks
-  private
+private
 
   def policy_links(payment)
     policy_links_left(payment)
@@ -36,12 +36,12 @@ module BpsPdf::Receipt::PolicyLinks
 
   def security_link
     text_with_fa('Data Security', "\uf023")
-    text "https://www.braintreepayments.com/features/data-security", size: 10, align: :center
+    text 'https://www.braintreepayments.com/features/data-security', size: 10, align: :center
   end
 
   def mail_link
     text_with_fa('Contact Us', "\uf0e0")
-    text "payments@bpsd9.org", size: 10, align: :center
+    text 'payments@bpsd9.org', size: 10, align: :center
   end
 
   def text_with_fa(text, icon_unicode)

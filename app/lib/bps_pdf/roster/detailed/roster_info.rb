@@ -11,7 +11,7 @@ module BpsPdf::Roster::Detailed::RosterInfo
     end
   end
 
-  private
+private
 
   def details
     bounding_box([0, 540], width: 325, height: 220) do
@@ -63,7 +63,10 @@ module BpsPdf::Roster::Detailed::RosterInfo
   end
 
   def entry_format
-    text 'Roster Entry Format', size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
+    text(
+      'Roster Entry Format', size: BpsPdf::Roster::Detailed::HEADING_SIZE,
+      style: :bold, align: :center
+    )
 
     roster_entry(config_text[:roster_info][:format], y_offset: 450)
   end

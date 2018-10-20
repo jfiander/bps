@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Events::Update
-  private
+private
 
   def update_attachments
     return nil unless event_type_param.in? %w[course seminar]
@@ -31,12 +31,16 @@ module Events::Update
 
   def update_instructors
     clean_params[:instructors].split("\n").map(&:squish).each do |u|
-      user = if u.match?(%r{/})
-               User.find_by(certificate: u.split('/').last.squish.upcase)
-             else
-               User.with_name(u).first
-             end
+      user = find_user_for_instructor(user)
       EventInstructor.create(event: @event, user: user) if user.present?
+    end
+  end
+
+  def find_user_for_instructor(user)
+    if user.match?(%r{/})
+      User.find_by(certificate: user.split('/').last.squish.upcase)
+    else
+      User.with_name(user).first
     end
   end
 

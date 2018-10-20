@@ -134,11 +134,9 @@ RSpec.describe User, type: :model do
 
       it 'should return the correct bridge_hash' do
         expect(@user.bridge_hash).to eql(
-          {
-            full_name: 'Lt/C&nbsp;John&nbsp;Doe,&nbsp;AP',
-            simple_name: 'John&nbsp;Doe',
-            photo: blank_photo
-          }
+          full_name: 'Lt/C&nbsp;John&nbsp;Doe,&nbsp;AP',
+          simple_name: 'John&nbsp;Doe',
+          photo: blank_photo
         )
       end
     end

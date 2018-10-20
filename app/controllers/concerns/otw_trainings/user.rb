@@ -2,7 +2,9 @@
 
 module OTWTrainings::User
   def user
-    @otw_requests = current_user&.otw_trainings&.where('otw_training_users.created_at > ?', Date.today - 6.months)
+    @otw_requests = current_user&.otw_trainings&.where(
+      'otw_training_users.created_at > ?', Date.today - 6.months
+    )
     @otw_credits = @otw_trainings.select { |o| o.course_key.in?(current_user.completions.keys) }
   end
 
@@ -16,7 +18,7 @@ module OTWTrainings::User
     end
   end
 
-  private
+private
 
   def otw_user_params
     params.permit(:id)

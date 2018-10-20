@@ -77,7 +77,7 @@ class Payment < ApplicationRecord
     receipt_link
   end
 
-  private
+private
 
   def set_cost_type
     return unless parent.class.name == 'Registration'

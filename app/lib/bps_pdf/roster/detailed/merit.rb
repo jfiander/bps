@@ -4,20 +4,26 @@ module BpsPdf::Roster::Detailed::Merit
   def merit
     @users = User.alphabetized.unlocked
     load_life_member
+    merit_first_page
+    merit_second_page
+  end
 
+private
+
+  def merit_first_page
     formatted_page do
       merit_intro
       emeritus
       life
     end
+  end
 
+  def merit_second_page
     formatted_page do
       senior
       merit_marks
     end
   end
-
-  private
 
   def merit_intro
     intro_block('We Honor Our Members', config_text[:merit][:top], 55)
@@ -61,9 +67,14 @@ module BpsPdf::Roster::Detailed::Merit
   def member_collection(title, collection, description_key, honor: false, mm: false)
     text title, size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
     move_down(10)
-    text config_text[:merit][description_key], size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
-    return unless collection.count.positive?
+    text(
+      config_text[:merit][description_key], size: BpsPdf::Roster::Detailed::BODY_REG_SIZE,
+      align: :justify
+    )
+    collection_body(title, collection, honor, mm) if collection.count.positive?
+  end
 
+  def collection_body(title, collection, honor, mm)
     move_down(10)
     statement(title, collection, honor) unless mm
     collection.each_slice(2) do |left, right|
@@ -73,7 +84,10 @@ module BpsPdf::Roster::Detailed::Merit
 
   def statement(title, collection, honor)
     adj = honor ? 'honored' : 'proud'
-    text "We are #{adj} to have #{collection.count} #{title}:", size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
+    text(
+      "We are #{adj} to have #{collection.count} #{title}:",
+      size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
+    )
     move_down(10)
   end
 

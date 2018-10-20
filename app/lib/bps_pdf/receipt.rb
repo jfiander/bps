@@ -8,7 +8,7 @@ class BpsPdf::Receipt < BpsPdf::Base
   MODULES.each { |c| include "BpsPdf::Receipt::#{c}".constantize }
 
   def self.create_pdf(payment)
-     BpsPdf::Receipt.generate('tmp/run/Receipt.pdf') do
+    BpsPdf::Receipt.generate('tmp/run/Receipt.pdf') do
       specify_font_awesome
       specify_font
       configure_colors
@@ -23,7 +23,7 @@ class BpsPdf::Receipt < BpsPdf::Base
     File.open('tmp/run/Receipt.pdf', 'r+')
   end
 
-  private
+private
 
   def title
     bounding_box([0, 625], width: 550, height: 35) do

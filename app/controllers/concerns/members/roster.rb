@@ -2,8 +2,6 @@
 
 module Members::Roster
   def roster
-    redirect_to root_path and return unless files_bucket.has?("roster/#{roster_filename}")
-
     respond_to do |format|
       format.html
       format.pdf do
@@ -38,7 +36,11 @@ module Members::Roster
     end
   end
 
-  private
+private
+
+  def redirect_if_no_roster
+    redirect_to root_path unless files_bucket.has?("roster/#{roster_filename}")
+  end
 
   def roster_filename
     "Birmingham_Power_Squadron_-_#{Date.today.strftime('%Y')}_Roster.pdf"
@@ -57,7 +59,9 @@ module Members::Roster
   end
 
   def generate_and_send_roster
-    pdf = BpsPdf::Roster.send(roster_orientation, include_blank: roster_params[:include_blank].present?)
+    pdf = BpsPdf::Roster.send(
+      roster_orientation, include_blank: roster_params[:include_blank].present?
+    )
     upload_roster_to_s3(pdf.read)
 
     pdf_file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'r+')

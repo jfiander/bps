@@ -20,7 +20,7 @@ module User::Register
   def cancel_registration
     @reg = Registration.find_by(id: clean_params[:id])
 
-    return if cannot_cancel_registration?
+    return unless can_cancel_registration?
 
     @cancel_link = (@reg&.user == current_user)
 
@@ -47,7 +47,7 @@ module User::Register
     redirect_to send("#{@registration.event.category}_registrations_path")
   end
 
-  private
+private
 
   def find_registration
     @registration = Registration.find_by(id: clean_params[:id])
@@ -115,12 +115,17 @@ module User::Register
     render status: :unprocessable_entity
   end
 
-  def cannot_cancel_registration?
-    return false if (@reg&.user == current_user) || current_user&.permitted?(:course, :seminar, :event, session: session)
+  def can_cancel_registration?
+    return true if allowed_to_cancel?
 
     flash[:alert] = 'You are not allowed to cancel that registration.'
     redirect_to root_path, status: :unprocessable_entity
-    true
+    false
+  end
+
+  def allowed_to_cancel?
+    (@reg&.user == current_user) ||
+      current_user&.permitted?(:course, :seminar, :event, session: session)
   end
 
   def successfully_cancelled

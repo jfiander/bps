@@ -13,7 +13,7 @@ module ImportUsers
       @user.present? ? update_user : new_user
     end
 
-    private
+  private
 
     def new_user
       [User.create!(ImportUsers::Hash.new(@row).new_user), :created]

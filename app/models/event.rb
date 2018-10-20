@@ -106,7 +106,7 @@ class Event < ApplicationRecord
     event_type_cache.display_title
   end
 
-  private
+private
 
   def validate_dates
     self.cutoff_at = start_at if cutoff_at.blank?

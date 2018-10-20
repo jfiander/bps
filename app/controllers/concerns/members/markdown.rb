@@ -15,7 +15,7 @@ module Members::Markdown
     end
   end
 
-  private
+private
 
   def save_markdown
     page = StaticPage.find_by(name: static_page_params[:name])

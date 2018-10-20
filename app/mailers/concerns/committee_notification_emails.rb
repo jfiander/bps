@@ -1,25 +1,27 @@
 # frozen_string_literal: true
 
 module CommitteeNotificationEmails
-  private
+private
 
   def to_list
-    list = if @registration.event.event_type.event_category == 'meeting'
-             event_emails
-           else
-             education_emails
-           end
-
-    list.flatten.uniq.reject(&:blank?)
+    if @registration.event.event_type.event_category == 'meeting'
+      event_emails
+    else
+      education_emails
+    end.flatten.uniq.reject(&:blank?)
   end
 
   def event_emails
     list = ['ao@bpsd9.org']
-    list << if @registration.event.event_type.title == 'rendezvous'
-              get_chair_email('rendezvous')
-            else
-              get_chair_email('meetings')
-            end
+    list << meeting_or_rendezvous_email
+  end
+
+  def meeting_or_rendezvous_email
+    if @registration.event.event_type.title == 'rendezvous'
+      get_chair_email('rendezvous')
+    else
+      get_chair_email('meetings')
+    end
   end
 
   def education_emails

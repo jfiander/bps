@@ -10,7 +10,7 @@ module BpsPdf::Roster::Simple::RosterPages
     end
   end
 
-  private
+private
 
   def roster_page(page)
     start_new_page
@@ -37,27 +37,19 @@ module BpsPdf::Roster::Simple::RosterPages
     base_x = roster_config[:base][:x] + col_index * (roster_config[:member][:width] + 10)
     base_y = roster_config[:base][:y] - row_index * (roster_config[:member][:height] + 20)
 
-    bounding_box([base_x, base_y], width: roster_config[:member][:width], height: roster_config[:member][:height]) do
+    bounding_box(
+      [base_x, base_y], width: roster_config[:member][:width],
+      height: roster_config[:member][:height]
+    ) do
       roster_for_member(user)
     end
   end
 
   def roster_for_member(user)
-    Prawn::Text::Formatted::Box.new(
-      name(user),
-      overflow: :shrink_to_fit, style: :bold, width: roster_config[:member][:width], height: 20,
-      document: self
-    ).render
-    move_down(roster_config[:member][:after_name])
-
+    name(user)
     text user.certificate, size: 9
     move_down(5)
-    if user.placeholder_email?
-      move_down(10)
-    else
-      text(user.email, size: 9)
-      move_down(5)
-    end
+    email(user)
     user.mailing_address(name: false).each { |a| text a, size: 9 }
     move_down(5)
     text 'h ' + user.phone_h, size: 9 if user.phone_h.present?
@@ -66,11 +58,27 @@ module BpsPdf::Roster::Simple::RosterPages
   end
 
   def name(user)
-    format_name(user.full_name(html: false).gsub(/&#39;/, "'"))
+    Prawn::Text::Formatted::Box.new(
+      format_name(user.full_name(html: false).gsub(/&#39;/, "'")),
+      document: self, overflow: :shrink_to_fit, style: :bold,
+      width: roster_config[:member][:width], height: 20
+    ).render
+    move_down(roster_config[:member][:after_name])
+  end
+
+  def email(user)
+    if user.placeholder_email?
+      move_down(10)
+    else
+      text(user.email, size: 9)
+      move_down(5)
+    end
   end
 
   def footer
-    bounding_box([0, roster_config[:footer][:y]], width: roster_config[:footer][:width], height: 25) do
+    bounding_box(
+      [0, roster_config[:footer][:y]], width: roster_config[:footer][:width], height: 25
+    ) do
       text 'Copyright © 2018 Birmingham Power Squadron', size: 10, align: :center
       text 'Non-Member and Commercial Use Prohibited.', size: 10, align: :center
     end

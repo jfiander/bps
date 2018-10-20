@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Payment, type: :model do
@@ -47,7 +49,7 @@ RSpec.describe Payment, type: :model do
         %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/customers 201}
       ).to_stdout_from_any_process
     end
-    
+
     describe 'paid?' do
       before(:each) do
         generic_seo_and_ao
@@ -84,7 +86,7 @@ RSpec.describe Payment, type: :model do
       expect(@registration.payment.paid).to be(true)
       expect(@registration.payment.transaction_id).to eql('09876')
     end
-    
+
     it 'should correctly set as paid in-person' do
       @registration.payment.in_person!
       expect(@registration.payment.paid).to be(true)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Concerns::Application::RedirectWithStatus
-  private
+private
 
   def redirect_with_status(path, options = {})
     redirect_if(yield, path, options) do

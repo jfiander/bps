@@ -7,7 +7,7 @@ module BpsPdf::EducationCertificate::NameAndGrade
     grade(user)
   end
 
-  private
+private
 
   def name(user)
     bounding_box([0, 580], width: 540, height: 30) do

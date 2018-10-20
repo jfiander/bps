@@ -7,7 +7,7 @@ module BpsPdf::EducationCertificate::Details
     signature
   end
 
-  private
+private
 
   def certificate(user)
     bounding_box([0, 500], width: 100, height: 30) do
@@ -42,19 +42,28 @@ module BpsPdf::EducationCertificate::Details
   end
 
   def decrypt_signature
-    signature_enc = File.join(Rails.root, 'app', 'assets', 'images', 'signatures', 'education.png.enc')
-
-    cipher = OpenSSL::Cipher.new('aes-256-cbc')
-    cipher.decrypt
-    cipher.key = Base64.decode64(ENV['SIGNATURE_KEY'])
-    cipher.iv = Base64.decode64(ENV['SIGNATURE_IV'])
-
     buffer = +''
     File.open('tmp/run/signature.png', 'wb') do |outfile|
       File.open(signature_enc, 'rb') do |inf|
-        outfile << cipher.update(buffer) while inf.read(4096, buffer)
-        outfile << cipher.final
+        outfile << dec_cipher.update(buffer) while inf.read(4096, buffer)
+        outfile << dec_cipher.final
       end
     end
+  end
+
+  def signature_enc
+    File.join(
+      Rails.root, 'app', 'assets', 'images', 'signatures', 'education.png.enc'
+    )
+  end
+
+  def dec_cipher
+    return @cipher if @cipher.present?
+
+    @cipher = OpenSSL::Cipher.new('aes-256-cbc')
+    @cipher.decrypt
+    @cipher.key = Base64.decode64(ENV['SIGNATURE_KEY'])
+    @cipher.iv = Base64.decode64(ENV['SIGNATURE_IV'])
+    @cipher
   end
 end

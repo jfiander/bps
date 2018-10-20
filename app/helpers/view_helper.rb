@@ -12,12 +12,12 @@ module ViewHelper
     end
   end
 
-  def spinner_button(form = nil, button_text: 'Submit', disable_text: nil, name: 'button', css_class: '')
+  def spinner_button(form = nil, button_text: 'Submit', disable_text: nil, name: 'button', css: '')
     disable_text ||= button_text == 'Submit' ? 'Submitting' : button_text.sub(/e$/, '') + 'ing'
     data_hash = { disable_with: (FA::Icon.p('spinner', fa: 'pulse') + "#{disable_text}...") }
 
-    return form.button(button_text, data: data_hash, name: name, class: css_class) if form.present?
-    button_tag(button_text, data: data_hash, name: name, class: css_class)
+    return form.button(button_text, data: data_hash, name: name, class: css) if form.present?
+    button_tag(button_text, data: data_hash, name: name, class: css)
   end
 
   def summer_months(select_tag, mode: :summer)
@@ -34,7 +34,7 @@ module ViewHelper
     end.join.html_safe
   end
 
-  private
+private
 
   def office_rank(office)
     case office

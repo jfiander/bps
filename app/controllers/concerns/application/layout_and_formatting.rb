@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Application::LayoutAndFormatting
-  private
+private
 
   def load_layout_images
     pick_header_image
@@ -12,13 +12,15 @@ module Application::LayoutAndFormatting
   end
 
   def pick_header_image
-    header = if new_header_params[:header].present?
-               HeaderImage.find_by(id: new_header_params[:header])
-             else
-               HeaderImage.all.sample
-             end
+    @header_image = files_bucket.link(find_header&.file&.path(:desktop))
+  end
 
-    @header_image = files_bucket.link(header&.file&.path(:desktop))
+  def find_header
+    if new_header_params[:header].present?
+      HeaderImage.find_by(id: new_header_params[:header])
+    else
+      HeaderImage.all.sample
+    end
   end
 
   def new_header_params

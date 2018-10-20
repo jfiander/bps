@@ -7,7 +7,7 @@ module BpsPdf::FloatPlan::Heading
     draw_text 'Float Plan', size: 22, at: [220, 630]
   end
 
-  private
+private
 
   def load_header_image
     header = BpsS3.new(:static).download('logos/ABC.long.birmingham.1000.png')

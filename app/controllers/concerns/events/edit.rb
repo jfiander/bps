@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Events::Edit
-  private
+private
 
   def event_params
     params.require(:event).permit(

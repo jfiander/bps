@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OTWMailer < ApplicationMailer
   def requested(otw_training_user)
     @otw = otw_training_user.otw_training
@@ -16,7 +18,7 @@ class OTWMailer < ApplicationMailer
     slack_notification('Jump Start')
   end
 
-  private
+private
 
   def to_list
     list = ['seo@bpsd9.org', 'aseo@bpsd9.org']

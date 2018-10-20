@@ -15,7 +15,7 @@ module Locations::Refresh
     end
   end
 
-  private
+private
 
   def add_option(l, id, event: nil)
     @new_locations << '<option value=\"'.html_safe

@@ -7,7 +7,7 @@ class Users::SessionsController < Devise::SessionsController
     members_path
   end
 
-  private
+private
 
   def valid_referrer?
     valid_pattern = %r{\A/?(?!login)(#{referrer_paths.join('|')})\z}

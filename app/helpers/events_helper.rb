@@ -66,10 +66,10 @@ module EventsHelper
   end
 
   def scoped_events
-    expired_date = Date.today.last_year.beginning_of_year
+    expired = Date.today.last_year.beginning_of_year
     @scoped_events ||= {
       current: @all_events.find_all { |e| !e.expired? },
-      expired: @all_events.find_all { |e| e.expired? && e.start_at >= expired_date }
+      expired: @all_events.find_all { |e| e.expired? && e.start_at >= expired }
     }
   end
 
@@ -94,22 +94,12 @@ module EventsHelper
   end
 
   def event_action_link(event, path, **options)
-    options = {
-      icon: '', text: '', class: "control #{options[:css]}",
-      confirm: '', data: {}, icon_options: { fa: :fw, style: :regular }
-    }.merge(options)
+    options = event_action_link_defaults(options[:css]).merge(options)
     confirm = options.delete(:confirm)
     options[:data][:confirm] = confirm if confirm.present?
+    icon = event_action_link_icon(options)
 
-    icon = FA::Icon.p(options[:icon], **options.delete(:icon_options)) + options[:text].titleize
-
-    if path.present? && path.match?(/_path/)
-      link_to(send(path, event), **options) { icon }
-    elsif path.present?
-      link_to(path, **options) { icon }
-    else
-      icon
-    end
+    generate_event_action_link(event, path, icon, options)
   end
 
   def reg_override_icon(reg)
@@ -134,6 +124,31 @@ module EventsHelper
       { title: 'Registration has already been paid', css: 'gray' }
     else
       { title: "#{reg_override_verb(reg)} override cost", css: 'green' }
+    end
+  end
+
+private
+
+  def event_action_link_defaults(css)
+    {
+      icon: '', text: '', class: "control #{css}",
+      confirm: '', data: {}, icon_options: { fa: :fw, style: :regular }
+    }
+  end
+
+  def event_action_link_icon(options)
+    FA::Icon.p(
+      options[:icon], **options.delete(:icon_options)
+    ) + options[:text].titleize
+  end
+
+  def generate_event_action_link(event, path, icon, options)
+    if path.present? && path.match?(/_path/)
+      link_to(send(path, event), **options) { icon }
+    elsif path.present?
+      link_to(path, **options) { icon }
+    else
+      icon
     end
   end
 end

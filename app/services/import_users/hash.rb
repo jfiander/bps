@@ -23,7 +23,7 @@ module ImportUsers
       }.merge(update_user)
     end
 
-    private
+  private
 
     def import_email
       if @row['E-Mail'].present?
@@ -46,15 +46,12 @@ module ImportUsers
 
     def user_personal
       {
-        rank: import_rank,
-        grade: @row['Grade'],
-        mm: @row['MM'],
+        rank: import_rank, grade: @row['Grade'], mm: @row['MM'],
         senior: ImportUsers::CleanDate.new(@row['Senior']).call,
         life: ImportUsers::CleanDate.new(@row['Life']).call,
         total_years: @row['Tot.Years'],
         membership_date: ImportUsers::CleanDate.new(@row['Cert. Date']).call,
-        spouse_name: @row['Spouse'],
-        birthday: @row['Birthday']
+        spouse_name: @row['Spouse'], birthday: @row['Birthday']
       }
     end
 

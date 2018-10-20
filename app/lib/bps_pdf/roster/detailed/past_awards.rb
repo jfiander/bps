@@ -16,7 +16,7 @@ module BpsPdf::Roster::Detailed::PastAwards
     end
   end
 
-  private
+private
 
   def past_award_formatted_page(name)
     formatted_page do
@@ -28,9 +28,14 @@ module BpsPdf::Roster::Detailed::PastAwards
 
   def past_award_title(name, y_pos: 540)
     bounding_box([0, y_pos], width: 325, height: 40) do
-      text 'Past Year Award Recipients', size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
+      text(
+        'Past Year Award Recipients', size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE,
+        style: :bold, align: :center
+      )
       move_down(10)
-      text "#{name} Award", size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
+      text(
+        "#{name} Award", size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
+      )
     end
   end
 

@@ -14,7 +14,11 @@ class EventsController < ApplicationController
   include Events::Update
   include Concerns::Application::RedirectWithStatus
 
-  before_action :find_event, only: %i[show copy edit update expire remind book unbook]
+  before_action(
+    :find_event, only: %i[
+      show copy edit update expire remind book unbook
+    ]
+  )
   before_action :prepare_form, only: %i[new copy edit]
   before_action :check_for_blank, only: %i[create update]
   before_action :preload_events, only: %i[schedule catalog registrations show]
@@ -25,7 +29,9 @@ class EventsController < ApplicationController
   def schedule
     @events = get_events(event_type_param, :current)
 
-    @current_user_permitted_event_type = current_user&.permitted?(event_type_param, session: session)
+    @current_user_permitted_event_type = current_user&.permitted?(
+      event_type_param, session: session
+    )
 
     return unless @current_user_permitted_event_type
     @registered_users = Registration.includes(:user).all.group_by(&:event_id)
@@ -33,20 +39,17 @@ class EventsController < ApplicationController
   end
 
   def catalog
-    @event_catalog = if event_type_param == 'course'
-                       catalog_list.slice(
-                         'public', 'advanced_grade', 'elective'
-                       ).symbolize_keys
-                     else
-                       catalog_list[event_type_param]
-                     end
-
-    @current_user_permitted_event_type = current_user&.permitted?(event_type_param, session: session)
+    @event_catalog = load_catalog
+    @current_user_permitted_event_type = current_user&.permitted?(
+      event_type_param, session: session
+    )
   end
 
   def registrations
-    @current = Event.order(:start_at).current(event_type_param).with_registrations
-    @expired = Event.order(:start_at).expired(event_type_param).with_registrations
+    @current = Event.order(:start_at).current(event_type_param)
+                    .with_registrations
+    @expired = Event.order(:start_at).expired(event_type_param)
+                    .with_registrations
   end
 
   def show
@@ -67,7 +70,9 @@ class EventsController < ApplicationController
 
   def copy
     @event = Event.new(
-      @event.attributes.merge(show_in_catalog: false, start_at: nil, cutoff_at: nil, expires_at: nil)
+      @event.attributes.merge(
+        show_in_catalog: false, start_at: nil, cutoff_at: nil, expires_at: nil
+      )
     )
     render :new
   end
@@ -98,14 +103,17 @@ class EventsController < ApplicationController
   end
 
   def expire
-    redirect_with_status(send("#{event_type_param}s_path"), object: event_type_param, verb: 'expire') do
+    redirect_with_status(
+      send("#{event_type_param}s_path"), object: event_type_param,
+      verb: 'expire'
+    ) do
       @event.update(expires_at: Time.now)
     end
   end
 
   def remind
     if @event.reminded?
-      flash[:alert] = "Reminders have already been sent for that #{event_type_param}."
+      flash[:alert] = "Reminders already sent for that #{event_type_param}."
       redirect_to send("#{event_type_param}s_path")
       return
     end
@@ -127,7 +135,17 @@ class EventsController < ApplicationController
     redirect_to send("#{event_type_param}s_path")
   end
 
-  private
+private
+
+  def load_catalog
+    if event_type_param == 'course'
+      catalog_list.slice(
+        'public', 'advanced_grade', 'elective'
+      ).symbolize_keys
+    else
+      catalog_list[event_type_param]
+    end
+  end
 
   def event_not_found?
     category = event_type_param == 'event' ? 'meeting' : event_type_param

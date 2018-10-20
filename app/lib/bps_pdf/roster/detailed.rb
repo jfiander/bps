@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BpsPdf::Roster::Detailed <  BpsPdf::Base
+class BpsPdf::Roster::Detailed < BpsPdf::Base
   include  BpsPdf::Roster::Shared
   include  BpsPdf::Roster::Detailed::Helpers
 
@@ -19,7 +19,7 @@ class BpsPdf::Roster::Detailed <  BpsPdf::Base
   MODULES.each { |c| include "BpsPdf::Roster::Detailed::#{c}".constantize }
 
   def self.create_pdf
-     BpsPdf::Roster::Detailed.generate('tmp/run/Roster.pdf', page_size: [396, 612]) do
+    BpsPdf::Roster::Detailed.generate('tmp/run/Roster.pdf', page_size: [396, 612]) do
       specify_font
       configure_colors
 

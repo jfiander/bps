@@ -48,7 +48,7 @@ class MemberApplicationMailer < ApplicationMailer
     mail(to: @to_list, subject: 'Annual dues paid')
   end
 
-  private
+private
 
   def new_app_to
     [
