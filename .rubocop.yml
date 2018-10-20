@@ -1,0 +1,31 @@
+inherit_gem:
+  rubocop-rails_config:
+    - config/rails.yml
+require: rubocop-rspec
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - app/assets/**/*
+    - bin/**/*
+    - config/**/*
+    - db/**/*
+    - vendor/**/*
+Layout/IndentHash:
+  EnforcedStyle: consistent
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+Metrics/LineLength:
+  Max: 100
+Metrics/MethodLength:
+  Enabled: true
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: true
+Style/NumericLiterals:
+  Enabled: true
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
