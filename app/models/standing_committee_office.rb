@@ -14,19 +14,6 @@ class StandingCommitteeOffice < ApplicationRecord
   scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.now) }
   scope :chair_first, -> { order(chair: :asc) }
 
-  def self.ordered
-    order Arel.sql(
-      <<~SQL
-        CASE
-          WHEN committee_name = 'executive'  THEN '1'
-          WHEN committee_name = 'auditing'   THEN '2'
-          WHEN committee_name = 'nominating' THEN '3'
-          WHEN committee_name = 'rules'      THEN '4'
-        END
-      SQL
-    )
-  end
-
   def self.committees
     %w[executive auditing nominating rules]
   end

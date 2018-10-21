@@ -27,6 +27,13 @@ class ApplicationRecord < ActiveRecord::Base
     }
   end
 
+  def self.ordered
+    path = "#{Rails.root}/app/models/concerns/#{self.name.underscore}/order.sql"
+    return unless File.exist?(path)
+
+    order(Arel.sql(File.read(path)))
+  end
+
   def versions_path
     Rails.application.routes.url_helpers.admin_show_versions_path(
       model: self.class.name, id: id
