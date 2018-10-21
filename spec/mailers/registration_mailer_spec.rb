@@ -21,15 +21,11 @@ RSpec.describe RegistrationMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include(
-          'This is an automated message that was sent to'
-        )
+        expect(mail.body.encoded).to include('This is an automated message that was sent to')
         expect(mail.body.encoded).to include('New Registration')
         expect(mail.body.encoded).to include('Registration information')
         expect(mail.body.encoded).to include('Registrant information')
-        expect(mail.body.encoded).to include(
-          'please reach out to this registrant'
-        )
+        expect(mail.body.encoded).to include('please reach out to this registrant')
       end
     end
 
@@ -43,15 +39,11 @@ RSpec.describe RegistrationMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include(
-          'This is an automated message that was sent to'
-        )
+        expect(mail.body.encoded).to include('This is an automated message that was sent to')
         expect(mail.body.encoded).to include('New Registration')
         expect(mail.body.encoded).to include('Registration information')
         expect(mail.body.encoded).to include('Registrant information')
-        expect(mail.body.encoded).to include(
-          'please reach out to this registrant'
-        )
+        expect(mail.body.encoded).to include('please reach out to this registrant')
       end
     end
 
@@ -65,9 +57,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include(
-          'This is an automated message that was sent to'
-        )
+        expect(mail.body.encoded).to include('This is an automated message that was sent to')
         expect(mail.body.encoded).to include('Cancelled Registration')
         expect(mail.body.encoded).to include('Registration information')
         expect(mail.body.encoded).to include('Registrant information')
@@ -153,15 +143,11 @@ RSpec.describe RegistrationMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include(
-          'This is an automated message that was sent to'
-        )
+        expect(mail.body.encoded).to include('This is an automated message that was sent to')
         expect(mail.body.encoded).to include('New Registration')
         expect(mail.body.encoded).to include('Registration information')
         expect(mail.body.encoded).to include('Registrant information')
-        expect(mail.body.encoded).to include(
-          'please reach out to this registrant'
-        )
+        expect(mail.body.encoded).to include('please reach out to this registrant')
       end
     end
 

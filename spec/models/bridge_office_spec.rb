@@ -28,11 +28,7 @@ RSpec.describe BridgeOffice, type: :model do
     asec = FactoryBot.create(:user)
     FactoryBot.create(:bridge_office, user: asec, office: 'asst_secretary')
 
-    expect(BridgeOffice.preload).to eql(
-      cdr.id => 'commander',
-      seo.id => 'educational',
-      asec.id => 'asst_secretary'
-    )
+    expect(BridgeOffice.preload).to eql(cdr.id => 'commander', seo.id => 'educational', asec.id => 'asst_secretary')
   end
 
   it 'should return the correct department' do
@@ -48,8 +44,6 @@ RSpec.describe BridgeOffice, type: :model do
   it 'should reject invalid offices' do
     @bridge = FactoryBot.build(:bridge_office, office: 'invalid')
     expect(@bridge.valid?).to be(false)
-    expect(@bridge.errors.messages).to eql(
-      office: ['must be in BridgeOffice.departments(assistants: true)']
-    )
+    expect(@bridge.errors.messages).to eql(office: ['must be in BridgeOffice.departments(assistants: true)'])
   end
 end

@@ -9,33 +9,25 @@ RSpec.describe NavigationHelper, type: :helper do
 
     it 'should generate the correct login link' do
       expect(link(:login_or_logout)).to eql(
-        '<a class="red" title="Logout" rel="nofollow" data-method="delete" '\
-        'href="/logout"><li class="">' \
-        "<i class='far fa-sign-out fa-1x' data-fa-transform='' title=''></i>" \
-        'Logout</li></a>'
+        '<a class="red" title="Logout" rel="nofollow" data-method="delete" href="/logout"><li class="">' \
+        "<i class='far fa-sign-out fa-1x' data-fa-transform='' title=''></i>Logout</li></a>"
       )
     end
 
     it 'should generate the correct profile link' do
       expect(link(:profile, path: '/profile', show_when: :logged_in)).to eql(
-        '<a class="members" title="Profile" href="/profile"><li class="">' \
-        'Profile</li></a>'
+        '<a class="members" title="Profile" href="/profile"><li class="">Profile</li></a>'
       )
     end
 
     it 'should generate the correct admin link' do
       expect(link(:something, path: '/something', admin: true)).to eql(
-        '<a class="admin" title="Something" href="/something">' \
-        '<li class="admin">Something</li></a>'
+        '<a class="admin" title="Something" href="/something"><li class="admin">Something</li></a>'
       )
     end
 
     it 'should not show an unpermitted link' do
-      expect(
-        link(
-          :something, path: '/something', permit: :admin, show_when: :logged_in
-        )
-      ).to be_nil
+      expect(link(:something, path: '/something', permit: :admin, show_when: :logged_in)).to be_nil
     end
   end
 

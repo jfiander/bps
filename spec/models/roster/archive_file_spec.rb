@@ -4,9 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Roster::ArchiveFile, type: :model do
   before(:each) do
-    @archive = FactoryBot.create(
-      :roster_archive_file, file: File.open(test_image(200, 500), 'r')
-    )
+    @archive = FactoryBot.create(:roster_archive_file, file: File.open(test_image(200, 500), 'r'))
   end
 
   it 'should have the correct table_name' do
@@ -18,9 +16,8 @@ RSpec.describe Roster::ArchiveFile, type: :model do
   end
 
   it 'should return a valid link' do
-    # This link is not signed in tests
     expect(@archive.link).to match(
-      %r{https://files.development.bpsd9.org/uploaded/roster/archive_files/\d+/test_image.jpg}
+      %r{\Ahttps://files.development.bpsd9.org/uploaded/roster/archive_files/\d+/test_image.jpg\?}
     )
   end
 end

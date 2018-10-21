@@ -16,7 +16,13 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
 Metrics/LineLength:
+  Exclude:
+    - 'spec/**/*.rb'
   Max: 100
+Metrics/LineLength:
+  Include:
+    - 'spec/**/*.rb'
+  Max: 120
 Metrics/MethodLength:
   Enabled: true
 RSpec/MessageSpies:

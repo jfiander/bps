@@ -106,7 +106,7 @@ private
   def cf_signer
     @cf_signer ||= Aws::CloudFront::UrlSigner.new(
       key_pair_id: Rails.application.secrets[:cf_keypair_id],
-    private_key_path: Rails.application.secrets[:cf_private_key_path]
+      private_key_path: Rails.application.secrets[:cf_private_key_path]
     )
   end
 end

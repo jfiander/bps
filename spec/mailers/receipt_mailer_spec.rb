@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 def transaction_for(payment, user)
-  payment.sale!(
-    'fake-valid-nonce', email: user.email, user_id: user.id
-  ).transaction
+  payment.sale!('fake-valid-nonce', email: user.email, user_id: user.id).transaction
 end
 
 RSpec.describe ReceiptMailer, type: :mailer do
@@ -22,6 +20,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
   let(:transaction_app) { transaction_for(payment_app, user) }
   let(:transaction_user) { transaction_for(payment_user, user) }
 
+  let(:braintree_api_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions (201|422)} }
+
   before(:each) { generic_seo_and_ao }
 
   describe 'receipt' do
@@ -32,12 +32,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
       let(:mail) { ReceiptMailer.receipt(transaction_reg, payment_reg) }
 
       it 'renders the headers' do
-        expect { transaction_reg }.to output(
-          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions (201|422)}
-        ).to_stdout_from_any_process
-        expect(transaction_reg.status).to be_in(
-          %w[submitted_for_settlement gateway_rejected]
-        )
+        expect { transaction_reg }.to output(braintree_api_regex).to_stdout_from_any_process
+        expect(transaction_reg.status).to be_in(%w[submitted_for_settlement gateway_rejected])
 
         expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
         expect(mail.to).to eql([user.email])
@@ -45,12 +41,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect { transaction_reg }.to output(
-          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions (201|422)}
-        ).to_stdout_from_any_process
-        expect(transaction_user.status).to be_in(
-          %w[submitted_for_settlement gateway_rejected]
-        )
+        expect { transaction_reg }.to output(braintree_api_regex).to_stdout_from_any_process
+        expect(transaction_user.status).to be_in(%w[submitted_for_settlement gateway_rejected])
 
         expect(mail.body.encoded).to include('Transaction Receipt')
         expect(mail.body.encoded).to include('Transaction information')
@@ -62,12 +54,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
       let(:mail) { ReceiptMailer.receipt(transaction_app, payment_app) }
 
       it 'renders the headers' do
-        expect { transaction_app }.to output(
-          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions (201|422)}
-        ).to_stdout_from_any_process
-        expect(transaction_app.status).to be_in(
-          %w[submitted_for_settlement gateway_rejected]
-        )
+        expect { transaction_app }.to output(braintree_api_regex).to_stdout_from_any_process
+        expect(transaction_app.status).to be_in(%w[submitted_for_settlement gateway_rejected])
 
         expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
         expect(mail.to).to eql([user.email])
@@ -75,12 +63,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect { transaction_app }.to output(
-          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions (201|422)}
-        ).to_stdout_from_any_process
-        expect(transaction_user.status).to be_in(
-          %w[submitted_for_settlement gateway_rejected]
-        )
+        expect { transaction_app }.to output(braintree_api_regex).to_stdout_from_any_process
+        expect(transaction_user.status).to be_in(%w[submitted_for_settlement gateway_rejected])
 
         expect(mail.body.encoded).to include('Transaction Receipt')
         expect(mail.body.encoded).to include('Transaction information')
@@ -92,12 +76,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
       let(:mail) { ReceiptMailer.receipt(transaction_user, payment_user) }
 
       it 'renders the headers' do
-        expect { transaction_user }.to output(
-          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions (201|422)}
-        ).to_stdout_from_any_process
-        expect(transaction_user.status).to be_in(
-          %w[submitted_for_settlement gateway_rejected]
-        )
+        expect { transaction_user }.to output(braintree_api_regex).to_stdout_from_any_process
+        expect(transaction_user.status).to be_in(%w[submitted_for_settlement gateway_rejected])
 
         expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
         expect(mail.to).to eql([user.email])
@@ -105,12 +85,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect { transaction_user }.to output(
-          %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions (201|422)}
-        ).to_stdout_from_any_process
-        expect(transaction_user.status).to be_in(
-          %w[submitted_for_settlement gateway_rejected]
-        )
+        expect { transaction_user }.to output(braintree_api_regex).to_stdout_from_any_process
+        expect(transaction_user.status).to be_in(%w[submitted_for_settlement gateway_rejected])
 
         expect(mail.body.encoded).to include('Transaction Receipt')
         expect(mail.body.encoded).to include('Transaction information')
@@ -130,9 +106,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include(
-          'This is an automated message that was sent to'
-        )
+        expect(mail.body.encoded).to include('This is an automated message that was sent to')
         expect(mail.body.encoded).to include('Paid Registration')
         expect(mail.body.encoded).to include('Amount paid: $')
       end
@@ -143,19 +117,12 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
       it 'renders the headers' do
         expect(mail.subject).to eql('Membership application paid')
-        expect(mail.to.sort).to eql(
-          [
-            generic_seo_and_ao[:ao].user.email,
-            generic_seo_and_ao[:seo].user.email
-          ].sort
-        )
+        expect(mail.to.sort).to eql([generic_seo_and_ao[:ao].user.email, generic_seo_and_ao[:seo].user.email].sort)
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include(
-          'This is an automated message that was sent to'
-        )
+        expect(mail.body.encoded).to include('This is an automated message that was sent to')
         expect(mail.body.encoded).to include('Membership Application Paid')
         expect(mail.body.encoded).to include('Amount paid: $')
       end
@@ -171,9 +138,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include(
-          'This is an automated message that was sent to'
-        )
+        expect(mail.body.encoded).to include('This is an automated message that was sent to')
         expect(mail.body.encoded).to include('Annual Dues Paid')
         expect(mail.body.encoded).to include('Amount paid: $')
       end

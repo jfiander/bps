@@ -18,12 +18,8 @@ RSpec.describe NotificationsMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(@mail.body.encoded).to include(
-        'The following bridge office has been updated.'
-      )
-      expect(@mail.body.encoded).to include(
-        'Office: Administrative Officer'
-      )
+      expect(@mail.body.encoded).to include('The following bridge office has been updated.')
+      expect(@mail.body.encoded).to include('Office: Administrative Officer')
       expect(@mail.body.encoded).to include(
         <<~TEXT
           Previous holder:
@@ -53,9 +49,7 @@ RSpec.describe NotificationsMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect(@mail.body.encoded).to include(
-          'The following float plan has been submitted.'
-        )
+        expect(@mail.body.encoded).to include('The following float plan has been submitted.')
         expect(@mail.body.encoded).to include('follow up on this plan')
         expect(@mail.body.encoded).to include('Contact')
         expect(@mail.body.encoded).to include('Travel Times')

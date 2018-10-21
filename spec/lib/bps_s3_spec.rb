@@ -5,33 +5,23 @@ require 'rails_helper'
 RSpec.describe BpsS3, type: :lib do
   describe 'bucket namess' do
     it 'should generate the correct static bucket name' do
-      expect(BpsS3.new(:static).full_bucket).to eql(
-        'bps-static-files'
-      )
+      expect(BpsS3.new(:static).full_bucket).to eql('bps-static-files')
     end
 
     it 'should generate the correct files bucket name' do
-      expect(BpsS3.new(:files).full_bucket).to eql(
-        'bps-development-files'
-      )
+      expect(BpsS3.new(:files).full_bucket).to eql('bps-development-files')
     end
 
     it 'should generate the correct bilge bucket name' do
-      expect(BpsS3.new(:bilge).full_bucket).to eql(
-        'bps-development-bilge'
-      )
+      expect(BpsS3.new(:bilge).full_bucket).to eql('bps-development-bilge')
     end
 
     it 'should generate the correct photos bucket name' do
-      expect(BpsS3.new(:photos).full_bucket).to eql(
-        'bps-development-photos'
-      )
+      expect(BpsS3.new(:photos).full_bucket).to eql('bps-development-photos')
     end
 
     it 'should generate the correct float plans bucket name' do
-      expect(BpsS3.new(:floatplans).full_bucket).to eql(
-        'bps-development-floatplans'
-      )
+      expect(BpsS3.new(:floatplans).full_bucket).to eql('bps-development-floatplans')
     end
   end
 
@@ -45,9 +35,7 @@ RSpec.describe BpsS3, type: :lib do
     end
 
     it 'should generate a correct link' do
-      expect(@bps_s3.link('test-key.abc')).to match(
-        %r{\Ahttps://files.development.bpsd9.org/test-key.abc\?[^ ]*?}
-      )
+      expect(@bps_s3.link('test-key.abc')).to match(%r{\Ahttps://files.development.bpsd9.org/test-key.abc\?[^ ]*?})
     end
 
     it 'should list the contents of the bucket' do
@@ -59,18 +47,11 @@ RSpec.describe BpsS3, type: :lib do
     end
 
     it 'should download a file from the bucket' do
-      expect(@bps_s3.download('something.abc')).to eql(
-        'something goes here'
-      )
+      expect(@bps_s3.download('something.abc')).to eql('something goes here')
     end
 
     it 'should upload a file to the bucket' do
-      expect(
-        @bps_s3.upload(
-          file: File.new('tmp/run/something.abc', 'w+'),
-          key: 'something.abc'
-        )
-      ).to be(true)
+      expect(@bps_s3.upload(file: File.new('tmp/run/something.abc', 'w+'), key: 'something.abc')).to be(true)
     end
 
     it 'should move a file in the bucket' do
@@ -90,9 +71,7 @@ RSpec.describe BpsS3, type: :lib do
 
     context 'development' do
       before(:each) do
-        allow(ENV).to(
-          receive(:[]).with('ASSET_ENVIRONMENT').and_return('development')
-        )
+        allow(ENV).to(receive(:[]).with('ASSET_ENVIRONMENT').and_return('development'))
       end
 
       it 'should generate the correct subdomain' do
@@ -106,9 +85,7 @@ RSpec.describe BpsS3, type: :lib do
 
     context 'staging' do
       before(:each) do
-        allow(ENV).to(
-          receive(:[]).with('ASSET_ENVIRONMENT').and_return('staging')
-        )
+        allow(ENV).to(receive(:[]).with('ASSET_ENVIRONMENT').and_return('staging'))
       end
 
       it 'should generate the correct subdomain' do
@@ -122,9 +99,7 @@ RSpec.describe BpsS3, type: :lib do
 
     context 'production' do
       before(:each) do
-        allow(ENV).to(
-          receive(:[]).with('ASSET_ENVIRONMENT').and_return('production')
-        )
+        allow(ENV).to(receive(:[]).with('ASSET_ENVIRONMENT').and_return('production'))
       end
 
       it 'should generate the correct subdomain' do

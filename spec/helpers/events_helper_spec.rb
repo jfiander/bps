@@ -32,23 +32,17 @@ RSpec.describe EventsHelper, type: :helper do
 
       it 'should return the instructors' do
         @course = FactoryBot.create(:event, :with_instructor)
-        expect(EventsHelper.event_instructors(@course)).to eql(
-          @course.instructors.to_a
-        )
+        expect(EventsHelper.event_instructors(@course)).to eql(@course.instructors.to_a)
       end
 
       it 'should return the topics' do
         @course = FactoryBot.create(:event, :with_topics)
-        expect(EventsHelper.course_topics(@course)).to eql(
-          @course.course_topics.to_a
-        )
+        expect(EventsHelper.course_topics(@course)).to eql(@course.course_topics.to_a)
       end
 
       it 'should return the includes' do
         @course = FactoryBot.create(:event, :with_includes)
-        expect(EventsHelper.course_includes(@course)).to eql(
-          @course.course_includes.to_a
-        )
+        expect(EventsHelper.course_includes(@course)).to eql(@course.course_includes.to_a)
       end
     end
 
@@ -76,9 +70,7 @@ RSpec.describe EventsHelper, type: :helper do
 
     describe 'catalog' do
       it 'should return only the catalog events' do
-        expect(EventsHelper.catalog_list).to eql(
-          'public' => [@catalog_course]
-        )
+        expect(EventsHelper.catalog_list).to eql('public' => [@catalog_course])
       end
     end
 
@@ -129,8 +121,7 @@ RSpec.describe EventsHelper, type: :helper do
         )
 
         expect(link).to eql(
-          '<i class=\'far fa-fw fa-calendar-check fa-1x\' ' \
-          'data-fa-transform=\'\' title=\'\'></i>Post To Calendar'
+          '<i class=\'far fa-fw fa-calendar-check fa-1x\' data-fa-transform=\'\' title=\'\'></i>Post To Calendar'
         )
       end
     end
@@ -146,8 +137,7 @@ RSpec.describe EventsHelper, type: :helper do
 
     it 'should generate the correct normal icon' do
       expect(reg_override_icon(@reg)).to eql(
-        "<a href=\"/override_cost/1\"><i class='far green " \
-        "fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
+        "<a href=\"/override_cost/1\"><i class='far green fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
         "title='Set override cost'></i></a>"
       )
     end
@@ -156,8 +146,7 @@ RSpec.describe EventsHelper, type: :helper do
       @reg.update(override_cost: 1)
 
       expect(reg_override_icon(@reg)).to eql(
-        "<a href=\"/override_cost/1\"><i class='fas green " \
-        "fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
+        "<a href=\"/override_cost/1\"><i class='fas green fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
         "title='Update override cost'></i></a>"
       )
     end

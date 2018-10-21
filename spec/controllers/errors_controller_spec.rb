@@ -10,9 +10,7 @@ RSpec.describe ErrorsController, type: :controller do
       get :not_found
       expect(response).to have_http_status(:not_found)
 
-      expect(response.body).to include(
-        "the page you requested couldn't be found"
-      )
+      expect(response.body).to include("the page you requested couldn't be found")
     end
   end
 
@@ -20,9 +18,7 @@ RSpec.describe ErrorsController, type: :controller do
     it 'should render the internal_server_error template' do
       get :internal_server_error
       expect(response).to have_http_status(:internal_server_error)
-      expect(response.body).to include(
-        'it looks like the website encountered an internal error'
-      )
+      expect(response.body).to include('it looks like the website encountered an internal error')
     end
   end
 end

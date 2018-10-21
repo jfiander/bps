@@ -6,17 +6,12 @@ RSpec.describe ImportUsers, type: :service do
   let(:import) { File.open(File.join(Rails.root, 'spec', 'import.csv'), 'r+') }
 
   before(:each) do
-    FileUtils.cp(
-      File.join(Rails.root, 'spec', 'demo_import.csv'),
-      File.join(Rails.root, 'spec', 'import.csv')
-    )
+    FileUtils.cp(File.join(Rails.root, 'spec', 'demo_import.csv'), File.join(Rails.root, 'spec', 'import.csv'))
   end
 
   describe 'user handling' do
     before(:each) do
-      @update = FactoryBot.create(
-        :user, certificate: 'E012345', email: 'updated.person@example.com'
-      )
+      @update = FactoryBot.create(:user, certificate: 'E012345', email: 'updated.person@example.com')
       @remove = FactoryBot.create(:user, certificate: 'E001234')
     end
 
@@ -32,16 +27,12 @@ RSpec.describe ImportUsers, type: :service do
 
       it 'should detect duplicate email addresses' do
         ImportUsers::Import.new(import).call
-        expect(User.find_by(certificate: 'E567890').email).to match(
-          /duplicate-.*?@bpsd9.org/
-        )
+        expect(User.find_by(certificate: 'E567890').email).to match(/duplicate-.*?@bpsd9.org/)
       end
 
       it 'should handle missing email addresses' do
         ImportUsers::Import.new(import).call
-        expect(User.find_by(certificate: 'E135792').email).to match(
-          /nobody-.*?@bpsd9.org/
-        )
+        expect(User.find_by(certificate: 'E135792').email).to match(/nobody-.*?@bpsd9.org/)
       end
     end
 

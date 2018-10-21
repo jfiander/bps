@@ -17,9 +17,7 @@ RSpec.describe PublicController, type: :controller do
     it 'should render the title tag' do
       get :home
 
-      expect(response.body).to match(
-        %r{<title>America&#39;s Boating Club – Birmingham Squadron</title>}
-      )
+      expect(response.body).to match(%r{<title>America&#39;s Boating Club – Birmingham Squadron</title>})
     end
 
     it 'should render the description tag' do
@@ -37,10 +35,7 @@ RSpec.describe PublicController, type: :controller do
 
   describe 'registering' do
     def params(event)
-      {
-        registration: { event_id: event.id, email: 'someone@example.com' },
-        format: :js
-      }
+      { registration: { event_id: event.id, email: 'someone@example.com' }, format: :js }
     end
 
     context 'accepting registrations' do
@@ -55,16 +50,12 @@ RSpec.describe PublicController, type: :controller do
       end
 
       it 'allows registering to a registerable event' do
-        FactoryBot.create(
-          :registration, event: @event, email: 'someone@example.com'
-        )
+        FactoryBot.create(:registration, event: @event, email: 'someone@example.com')
 
         post :register, params: params(@event)
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(flash[:alert]).to eql(
-          'You are already registered for this course.'
-        )
+        expect(flash[:alert]).to eql('You are already registered for this course.')
       end
     end
 

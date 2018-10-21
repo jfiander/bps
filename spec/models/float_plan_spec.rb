@@ -23,9 +23,7 @@ RSpec.describe FloatPlan, type: :model do
     end
 
     it 'should generate a correct link' do
-      expect(@float_plan.link).to match(
-        %r{https://floatplans.development.bpsd9.org/\d+.pdf}
-      )
+      expect(@float_plan.link).to match(%r{https://floatplans.development.bpsd9.org/\d+.pdf})
     end
   end
 

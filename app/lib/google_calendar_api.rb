@@ -20,15 +20,11 @@ class GoogleCalendarAPI
   end
 
   def create(calendar_id, event_options = {})
-    service.insert_event(
-      calendar_id, event(event_options), conference_data_version: 1
-    )
+    service.insert_event(calendar_id, event(event_options), conference_data_version: 1)
   end
 
   def list(calendar_id, max_results: 2500, page_token: nil)
-    service.list_events(
-      calendar_id, max_results: max_results, page_token: page_token
-    )
+    service.list_events(calendar_id, max_results: max_results, page_token: page_token)
   end
 
   def get(calendar_id, event_id)
@@ -36,9 +32,7 @@ class GoogleCalendarAPI
   end
 
   def update(calendar_id, event_id, event_options = {})
-    service.update_event(
-      calendar_id, event_id, event(event_options)
-    )
+    service.update_event(calendar_id, event_id, event(event_options))
   end
 
   def delete(calendar_id, event_id)
@@ -80,9 +74,7 @@ private
         JSON.parse(File.read('config/keys/google_calendar_api_client.json'))
       ),
       Google::Apis::CalendarV3::AUTH_CALENDAR,
-      Google::Auth::Stores::FileTokenStore.new(
-        file: 'config/keys/google_calendar_token.yaml'
-      )
+      Google::Auth::Stores::FileTokenStore.new(file: 'config/keys/google_calendar_token.yaml')
     )
   end
 
@@ -99,16 +91,11 @@ private
   end
 
   def valid_event_keys
-    %i[
-      summary start end description location recurrence conference_data
-      conference_data_version
-    ]
+    %i[summary start end description location recurrence conference_data conference_data_version]
   end
 
   def date(date)
     key = date&.is_a?(String) ? :date : :date_time
-    Google::Apis::CalendarV3::EventDateTime.new(
-      key => date, time_zone: 'America/Detroit'
-    )
+    Google::Apis::CalendarV3::EventDateTime.new(key => date, time_zone: 'America/Detroit')
   end
 end

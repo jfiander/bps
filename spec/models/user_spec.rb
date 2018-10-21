@@ -45,13 +45,7 @@ RSpec.describe User, type: :model do
 
   context 'with specified user' do
     before(:each) do
-      @user = FactoryBot.create(
-        :user,
-        first_name: 'John',
-        last_name: 'Doe',
-        rank: 'Lt/C',
-        grade: 'AP'
-      )
+      @user = FactoryBot.create(:user, first_name: 'John', last_name: 'Doe', rank: 'Lt/C', grade: 'AP')
     end
 
     describe 'auto_rank' do
@@ -84,13 +78,7 @@ RSpec.describe User, type: :model do
 
     describe 'formatting' do
       before(:each) do
-        @user = FactoryBot.create(
-          :user,
-          first_name: 'John',
-          last_name: 'Doe',
-          rank: 'Lt/C',
-          grade: 'AP'
-        )
+        @user = FactoryBot.create(:user, first_name: 'John', last_name: 'Doe', rank: 'Lt/C', grade: 'AP')
       end
 
       it 'should have the correct simple_name' do
@@ -211,11 +199,7 @@ RSpec.describe User, type: :model do
   describe 'permissions' do
     before(:all) do
       @admin = FactoryBot.build(:role, name: 'admin').save(validate: false)
-      @child = FactoryBot.create(
-        :role,
-        name: 'child',
-        parent: Role.find_by(name: 'admin')
-      )
+      @child = FactoryBot.create(:role, name: 'child', parent: Role.find_by(name: 'admin'))
     end
 
     before(:each) do
@@ -335,22 +319,10 @@ RSpec.describe User, type: :model do
   end
 
   describe 'address' do
-    user = FactoryBot.create(
-      :user,
-      address_1: '123 ABC St',
-      city: 'City',
-      state: 'ST',
-      zip: '12345'
-    )
+    user = FactoryBot.create(:user, address_1: '123 ABC St', city: 'City', state: 'ST', zip: '12345')
 
     it 'should return a correct address array' do
-      expect(user.mailing_address).to eql(
-        [
-          user.full_name,
-          user.address_1,
-          "#{user.city} #{user.state} #{user.zip}"
-        ]
-      )
+      expect(user.mailing_address).to eql([user.full_name, user.address_1, "#{user.city} #{user.state} #{user.zip}"])
     end
   end
 
@@ -366,18 +338,14 @@ RSpec.describe User, type: :model do
     end
 
     it 'should require a file path' do
-      expect { @user.assign_photo }.to raise_error(
-        ArgumentError, 'missing keyword: local_path'
-      )
+      expect { @user.assign_photo }.to raise_error(ArgumentError, 'missing keyword: local_path')
 
       expect { @user.assign_photo(local_path: @photo.path) }.not_to raise_error
     end
 
     it 'should have a photo after attaching' do
       @user.assign_photo(local_path: @photo.path)
-      expect(@user.photo).to eql(
-        User.buckets[:files].link(@user.profile_photo.s3_object(:medium).key)
-      )
+      expect(@user.photo).to eql(User.buckets[:files].link(@user.profile_photo.s3_object(:medium).key))
     end
   end
 
@@ -466,8 +434,6 @@ RSpec.describe User, type: :model do
   end
 
   it 'should return the correct associations to include' do
-    expect(User.position_associations).to eql(
-      %i[bridge_office standing_committee_offices committees user_roles roles]
-    )
+    expect(User.position_associations).to eql(%i[bridge_office standing_committee_offices committees user_roles roles])
   end
 end

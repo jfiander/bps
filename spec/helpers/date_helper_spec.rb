@@ -12,20 +12,14 @@ RSpec.describe DateHelper, type: :helper do
   end
 
   it 'should select the correct next date for the current month' do
-    expect(next_excom(Date.strptime('2018-06-01')).to_date).to eql(
-      Date.strptime('2018-06-05')
-    )
+    expect(next_excom(Date.strptime('2018-06-01')).to_date).to eql(Date.strptime('2018-06-05'))
   end
 
   it 'should select the correct date for the next month' do
-    expect(next_excom(Date.strptime('2018-05-02')).to_date).to eql(
-      Date.strptime('2018-06-05')
-    )
+    expect(next_excom(Date.strptime('2018-05-02')).to_date).to eql(Date.strptime('2018-06-05'))
   end
 
   it 'should select the correct end-of-summer date' do
-    expect(next_excom(Date.strptime('2018-06-06')).to_date).to eql(
-      Date.strptime('2018-09-04')
-    )
+    expect(next_excom(Date.strptime('2018-06-06')).to_date).to eql(Date.strptime('2018-09-04'))
   end
 end

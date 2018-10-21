@@ -353,17 +353,13 @@ RSpec.describe Event, type: :model do
       it 'should get the correct course book cover' do
         event_type = FactoryBot.create(:event_type, event_category: 'public')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.get_flyer).to eql(
-          'https://static.bpsd9.org/book_covers/courses/americas_boating_course.jpg'
-        )
+        expect(event.get_flyer).to eql('https://static.bpsd9.org/book_covers/courses/americas_boating_course.jpg')
       end
 
       it 'should get the correct seminar book cover' do
         event_type = FactoryBot.create(:event_type, event_category: 'seminar', title: 'vhf_dsc')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.get_flyer).to eql(
-          'https://static.bpsd9.org/book_covers/seminars/vhf_dsc.jpg'
-        )
+        expect(event.get_flyer).to eql('https://static.bpsd9.org/book_covers/seminars/vhf_dsc.jpg')
       end
 
       it 'should check if the event has a flyer' do
@@ -387,34 +383,26 @@ RSpec.describe Event, type: :model do
     it 'should use the test calendar when not in production' do
       event_type = FactoryBot.create(:event_type, event_category: 'public')
       event = FactoryBot.create(:event, event_type: event_type)
-      expect(event.send(:calendar_id)).to eql(
-        ENV['GOOGLE_CALENDAR_ID_TEST']
-      )
+      expect(event.send(:calendar_id)).to eql(ENV['GOOGLE_CALENDAR_ID_TEST'])
     end
 
     context 'production' do
       it 'should use the education calendar for courses' do
         event_type = FactoryBot.create(:event_type, event_category: 'public')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.send(:calendar_id, production: true)).to eql(
-          ENV['GOOGLE_CALENDAR_ID_EDUC']
-        )
+        expect(event.send(:calendar_id, production: true)).to eql(ENV['GOOGLE_CALENDAR_ID_EDUC'])
       end
 
       it 'should use the education calendar for seminars' do
         event_type = FactoryBot.create(:event_type, event_category: 'seminar')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.send(:calendar_id, production: true)).to eql(
-          ENV['GOOGLE_CALENDAR_ID_EDUC']
-        )
+        expect(event.send(:calendar_id, production: true)).to eql(ENV['GOOGLE_CALENDAR_ID_EDUC'])
       end
 
       it 'should use the education calendar for meetings' do
         event_type = FactoryBot.create(:event_type, event_category: 'meeting')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.send(:calendar_id, production: true)).to eql(
-          ENV['GOOGLE_CALENDAR_ID_GEN']
-        )
+        expect(event.send(:calendar_id, production: true)).to eql(ENV['GOOGLE_CALENDAR_ID_GEN'])
       end
     end
   end

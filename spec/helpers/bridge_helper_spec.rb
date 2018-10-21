@@ -29,12 +29,8 @@ RSpec.describe BridgeHelper, type: :helper do
         assistant: nil,
         committees: nil
       },
-      executive: {
-        head: nil, assistant: nil, committees: nil
-      },
-      educational: {
-        head: nil, assistant: nil, committees: nil
-      },
+      executive: { head: nil, assistant: nil, committees: nil },
+      educational: { head: nil, assistant: nil, committees: nil },
       administrative: {
         head: nil, assistant: nil, committees: [
           {
@@ -48,12 +44,8 @@ RSpec.describe BridgeHelper, type: :helper do
           }
         ]
       },
-      secretary: {
-        head: nil, assistant: nil, committees: nil
-      },
-      treasurer: {
-        head: nil, assistant: nil, committees: nil
-      }
+      secretary: { head: nil, assistant: nil, committees: nil },
+      treasurer: { head: nil, assistant: nil, committees: nil }
     }
   end
 
@@ -102,8 +94,6 @@ RSpec.describe BridgeHelper, type: :helper do
   end
 
   it 'should build the correct bridge list' do
-    expect(BridgeHelper.build_bridge_list).to eql(
-      departments: departments, standing_committees: standing_committees
-    )
+    expect(BridgeHelper.build_bridge_list).to eql(departments: departments, standing_committees: standing_committees)
   end
 end

@@ -45,7 +45,7 @@ SimpleCov.start('rails') do
   add_filter 'app/lib/regular_meetings.rb'
   ## used for fetching git information
   add_filter 'app/lib/git_info.rb'
-  ## user to improve markdown formatting
+  ## used to improve markdown formatting
   add_filter 'app/lib/target_blank_renderer.rb'
   add_filter '/app/lib/parsed_markdown.rb'
 

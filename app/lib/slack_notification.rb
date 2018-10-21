@@ -49,23 +49,14 @@ private
 
   def fields_from_hash(hash)
     hash.map do |title, value|
-      {
-        'title' => title,
-        'value' => value,
-        'short' => true
-      }
+      { 'title' => title, 'value' => value, 'short' => true }
     end
   end
 
   def slack_color
     return '#041E42' if @type.blank?
 
-    {
-      success: '#1086FF',
-      info: '#99CEFF',
-      warning: '#FF6600',
-      failure: '#BF0D3E'
-    }[@type]
+    { success: '#1086FF', info: '#99CEFF', warning: '#FF6600', failure: '#BF0D3E' }[@type]
   end
 
   def validated_channel(channel = nil)

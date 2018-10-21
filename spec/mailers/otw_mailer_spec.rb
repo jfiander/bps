@@ -14,9 +14,7 @@ RSpec.describe OTWMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to include(
-        'This is an automated message that was sent to'
-      )
+      expect(mail.body.encoded).to include('This is an automated message that was sent to')
       expect(mail.body.encoded).to include('New Training Request')
       expect(mail.body.encoded).to include('Training requested')
     end
@@ -44,9 +42,7 @@ RSpec.describe OTWMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include(
-          'This is an automated message that was sent to'
-        )
+        expect(mail.body.encoded).to include('This is an automated message that was sent to')
         expect(mail.body.encoded).to include('Jump Start Training Request')
         expect(mail.body.encoded).to include('Phone')
         expect(mail.body.encoded).to include('Boat, location, or knowledge')
@@ -64,9 +60,7 @@ RSpec.describe OTWMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include(
-          'This is an automated message that was sent to'
-        )
+        expect(mail.body.encoded).to include('This is an automated message that was sent to')
         expect(mail.body.encoded).to include('Jump Start Training Request')
         expect(mail.body.encoded).not_to include('Phone')
         expect(mail.body.encoded).not_to include('Boat, location, or knowledge')

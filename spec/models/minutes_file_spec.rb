@@ -9,10 +9,7 @@ RSpec.describe MinutesFile, type: :model do
 
   describe 'issues' do
     before(:each) do
-      @minutes = FactoryBot.create(
-        :minutes_file,
-        year: 2017, month: 9, file: File.open(test_image(200, 500), 'r')
-      )
+      @minutes = FactoryBot.create(:minutes_file, year: 2017, month: 9, file: File.open(test_image(200, 500), 'r'))
     end
 
     it 'should return the correct issue' do
@@ -24,9 +21,8 @@ RSpec.describe MinutesFile, type: :model do
     end
 
     it 'should return a valid link' do
-      # This link is not signed in tests
       expect(@minutes.link).to match(
-        %r{https://files.development.bpsd9.org/uploaded/minutes_files/\d+/test_image.jpg}
+        %r{\Ahttps://files.development.bpsd9.org/uploaded/minutes_files/\d+/test_image.jpg\?}
       )
     end
   end

@@ -35,15 +35,9 @@ RSpec.describe Roster::AwardRecipient, type: :model do
 
   describe 'scopes' do
     before(:each) do
-      @ar1 = FactoryBot.create(
-        :roster_award_recipient, name: 'John Doe', user_id: nil, year: '2015-01-01'
-      )
-      @ar2 = FactoryBot.create(
-        :roster_award_recipient, name: 'John Doe', user_id: nil, year: '2014-01-01'
-      )
-      @ar3 = FactoryBot.create(
-        :roster_award_recipient, name: 'John Doe', user_id: nil, year: '2013-01-01'
-      )
+      @ar1 = FactoryBot.create(:roster_award_recipient, name: 'John Doe', user_id: nil, year: '2015-01-01')
+      @ar2 = FactoryBot.create(:roster_award_recipient, name: 'John Doe', user_id: nil, year: '2014-01-01')
+      @ar3 = FactoryBot.create(:roster_award_recipient, name: 'John Doe', user_id: nil, year: '2013-01-01')
     end
 
     describe 'current' do
@@ -77,9 +71,7 @@ RSpec.describe Roster::AwardRecipient, type: :model do
 
       it 'should return the combined name if an additional_user is present' do
         additional = FactoryBot.create(:user, first_name: 'Jane', last_name: 'Doe')
-        ar = FactoryBot.create(
-          :roster_award_recipient, name: nil, user: @user, additional_user: additional
-        )
+        ar = FactoryBot.create(:roster_award_recipient, name: nil, user: @user, additional_user: additional)
         expect(ar.display_name).to eql('Jack Frost and Jane Doe')
       end
     end
@@ -91,9 +83,7 @@ RSpec.describe Roster::AwardRecipient, type: :model do
   end
 
   it 'should format the display year correctly' do
-    ar = FactoryBot.create(
-      :roster_award_recipient, name: 'John Doe', user_id: nil, year: '2015-01-01'
-    )
+    ar = FactoryBot.create(:roster_award_recipient, name: 'John Doe', user_id: nil, year: '2015-01-01')
     expect(ar.display_year).to eql('2015')
   end
 end

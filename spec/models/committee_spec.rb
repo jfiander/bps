@@ -37,13 +37,8 @@ RSpec.describe Committee, type: :model do
     end
 
     it 'should not modify a simple name' do
-      @committee = FactoryBot.create(
-        :committee,
-        name: 'Something//With a subtitle'
-      )
-      expect(@committee.display_name).to eql(
-        'Something<small><br>&nbsp;&nbsp;With a subtitle</small>'
-      )
+      @committee = FactoryBot.create(:committee, name: 'Something//With a subtitle')
+      expect(@committee.display_name).to eql('Something<small><br>&nbsp;&nbsp;With a subtitle</small>')
     end
   end
 end

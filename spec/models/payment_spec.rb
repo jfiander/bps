@@ -6,6 +6,9 @@ RSpec.describe Payment, type: :model do
   let(:token) { Payment.client_token }
   let(:user_token) { Payment.client_token(user_id: @user.id) }
 
+  let(:braintree_api_token_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/client_token 201} }
+  let(:braintree_api_customer_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/customers 201} }
+
   it 'should use the correct discount rate' do
     expect(Payment.discount(1)).to eql(0.32)
     expect(Payment.discount(100)).to eql(2.50)
@@ -18,9 +21,7 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'should return a valid client_token' do
-      expect { token }.to output(
-        %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/client_token 201}
-      ).to_stdout_from_any_process
+      expect { token }.to output(braintree_api_token_regex).to_stdout_from_any_process
 
       expect(token).to be_a(String)
       expect(token.length).to eql(1940)
@@ -28,9 +29,7 @@ RSpec.describe Payment, type: :model do
 
     it 'should return a valid client_token when given a user_id' do
       @user = FactoryBot.create(:user)
-      expect { user_token }.to output(
-        %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/client_token 201}
-      ).to_stdout_from_any_process
+      expect { user_token }.to output(braintree_api_token_regex).to_stdout_from_any_process
 
       expect(user_token).to be_a(String)
       expect(user_token.length).to eql(2020)
@@ -38,16 +37,12 @@ RSpec.describe Payment, type: :model do
 
     it 'should post the client_token request' do
       @user = FactoryBot.create(:user)
-      expect { user_token }.to output(
-        %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/client_token 201}
-      ).to_stdout_from_any_process
+      expect { user_token }.to output(braintree_api_token_regex).to_stdout_from_any_process
     end
 
     it 'should post customer data' do
       @user = FactoryBot.create(:user)
-      expect { user_token }.to output(
-        %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/customers 201}
-      ).to_stdout_from_any_process
+      expect { user_token }.to output(braintree_api_customer_regex).to_stdout_from_any_process
     end
 
     describe 'paid?' do
@@ -76,9 +71,7 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'should have the correct transaction amount' do
-      expect(@registration.payment.transaction_amount).to eql(
-        "#{@registration.payment_amount}.00"
-      )
+      expect(@registration.payment.transaction_amount).to eql("#{@registration.payment_amount}.00")
     end
 
     it 'should correctly update a paid payment' do
@@ -100,9 +93,7 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'should have the correct transaction amount' do
-      expect(@application.payment.transaction_amount).to eql(
-        "#{@application.payment_amount}.00"
-      )
+      expect(@application.payment.transaction_amount).to eql("#{@application.payment_amount}.00")
     end
 
     it 'should correctly update a paid payment' do
@@ -119,9 +110,7 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'should have the correct transaction amount' do
-      expect(@payment.transaction_amount).to eql(
-        "#{@user.payment_amount}.00"
-      )
+      expect(@payment.transaction_amount).to eql("#{@user.payment_amount}.00")
     end
 
     it 'should correctly update a paid payment' do

@@ -18,9 +18,7 @@ FactoryBot.define do
 
     trait :apprentice do
       before(:create) do |app|
-        primary = FactoryBot.build(
-          :primary_applicant, member_application: app, member_type: 'Apprentice'
-        )
+        primary = FactoryBot.build(:primary_applicant, member_application: app, member_type: 'Apprentice')
         app.member_applicants << primary
       end
     end

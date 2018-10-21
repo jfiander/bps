@@ -55,15 +55,11 @@ private
   end
 
   def parse_image
-    match_replace(%r{%image/(\d+)/}) do |match|
-      image(match[1])
-    end
+    match_replace(%r{%image/(\d+)/}) { |match| image(match[1]) }
   end
 
   def parse_link
-    match_replace(%r{%file/(\d+)/([^/]*?)/}) do |match|
-      file_link(match[1], title: match[2])
-    end
+    match_replace(%r{%file/(\d+)/([^/]*?)/}) { |match| file_link(match[1], title: match[2]) }
   end
 
   def parse_fal
@@ -84,13 +80,8 @@ private
   end
 
   def parse_fa
-    match_replace(%r{%fa/([^/:]+):([^/]*)/}) do |match|
-      FA::Icon.p(match[1], css: match[2])
-    end
-
-    match_replace(%r{%fa/([^/]+)/}) do |match|
-      FA::Icon.p(match[1])
-    end
+    match_replace(%r{%fa/([^/:]+):([^/]*)/}) { |match| FA::Icon.p(match[1], css: match[2]) }
+    match_replace(%r{%fa/([^/]+)/}) { |match| FA::Icon.p(match[1]) }
   end
 
   def center_html(classes = '')
@@ -109,9 +100,7 @@ private
     key = get_uploaded_file_name(id)
     link_title = title || key
     link_path = @files_bucket.link("#{prefix}/#{key}")
-    @view_context.link_to(link_path, target: :_blank) do
-      FA::Icon.p('download') + link_title
-    end
+    @view_context.link_to(link_path, target: :_blank) { FA::Icon.p('download') + link_title }
   end
 
   def image(id)

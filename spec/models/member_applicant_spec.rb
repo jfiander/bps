@@ -32,20 +32,12 @@ RSpec.describe MemberApplicant, type: :model do
   context 'additional' do
     before(:each) do
       @application = FactoryBot.build(:member_application)
-      @applicant = FactoryBot.build(
-        :member_applicant,
-        member_application: @application,
-        first_name: '',
-        last_name: ''
-      )
+      @applicant = FactoryBot.build(:member_applicant, member_application: @application, first_name: '', last_name: '')
     end
 
     it 'should require names' do
       @applicant.validate
-      expect(@applicant.errors.messages).to eql(
-        first_name: ["can't be blank"],
-        last_name: ["can't be blank"]
-      )
+      expect(@applicant.errors.messages).to eql(first_name: ["can't be blank"], last_name: ["can't be blank"])
     end
 
     it "should refuse an application with a member's email address" do

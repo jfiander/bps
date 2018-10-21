@@ -40,11 +40,7 @@ RSpec.describe SlackNotification, type: :lib do
     }
 
     @hash_notification = SlackNotification.new(
-      base_notification_details.merge(
-        fields: {
-          'One' => 'one', 'Two' => 'two', 'Three' => 'three'
-        }
-      )
+      base_notification_details.merge(fields: { 'One' => 'one', 'Two' => 'two', 'Three' => 'three' })
     )
 
     @array_notification = SlackNotification.new(
@@ -58,36 +54,25 @@ RSpec.describe SlackNotification, type: :lib do
     )
 
     @string_notification = SlackNotification.new(
-      base_notification_details.merge(
-        fields: 'Just one field'
-      )
+      base_notification_details.merge(fields: 'Just one field')
     )
 
     @live_notification = SlackNotification.new(
-      base_notification_details.merge(
-        fields: 'Just one field',
-        channel: :test
-      )
+      base_notification_details.merge(fields: 'Just one field', channel: :test)
     )
     @live_notification.dryrun = false
   end
 
   it 'should generate a valid notification with fields hash' do
-    expect(@hash_notification.notify!).to eql(
-      notification_with_short_three
-    )
+    expect(@hash_notification.notify!).to eql(notification_with_short_three)
   end
 
   it 'should generate a valid notification with fields array' do
-    expect(@array_notification.notify!).to eql(
-      notification_with_long_three
-    )
+    expect(@array_notification.notify!).to eql(notification_with_long_three)
   end
 
   it 'should generate a valid notification with fields array' do
-    expect(@string_notification.notify!).to eql(
-      notification_with_string
-    )
+    expect(@string_notification.notify!).to eql(notification_with_string)
   end
 
   it 'should reject invalid types of fields' do

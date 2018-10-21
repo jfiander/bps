@@ -15,9 +15,7 @@ RSpec.describe EventType, type: :model do
       @abc = FactoryBot.create(:event_type, title: "America's Boating Course")
       @eob = FactoryBot.create(:event_type, title: 'Emergencies Onboard', event_category: 'seminar')
       @n = FactoryBot.create(:event_type, title: 'Navigation', event_category: 'advanced_grade')
-      @jn = FactoryBot.create(
-        :event_type, title: 'Junior Navigation', event_category: 'advanced_grade'
-      )
+      @jn = FactoryBot.create(:event_type, title: 'Junior Navigation', event_category: 'advanced_grade')
       @sail = FactoryBot.create(:event_type, title: 'Sail', event_category: 'elective')
     end
 
@@ -27,10 +25,7 @@ RSpec.describe EventType, type: :model do
 
       expect(select_data).to eql(
         'Public' => [["America's Boating Course", @abc.id]],
-        'Advanced Grade' => [
-          ['Junior Navigation', @jn.id],
-          ['Navigation', @n.id]
-        ],
+        'Advanced Grade' => [['Junior Navigation', @jn.id], ['Navigation', @n.id]],
         'Elective' => [['Sail', @sail.id]]
       )
     end
@@ -39,9 +34,7 @@ RSpec.describe EventType, type: :model do
       allow(ENV).to receive(:[]).with('USE_NEW_AG_TITLES').and_return('disabled')
       select_data = EventType.selector('seminar')
 
-      expect(select_data).to eql(
-        [['Emergencies Onboard', @eob.id]]
-      )
+      expect(select_data).to eql([['Emergencies Onboard', @eob.id]])
     end
   end
 
@@ -51,30 +44,18 @@ RSpec.describe EventType, type: :model do
       FactoryBot.create(:event_type, event_category: :elective, title: 'sail')
       FactoryBot.create(:event_type, event_category: :meeting, title: 'member')
       FactoryBot.create(:event_type, event_category: :public)
-      FactoryBot.create(
-        :event_type,
-        event_category: :advanced_grade,
-        title: 'advanced_piloting'
-      )
+      FactoryBot.create(:event_type, event_category: :advanced_grade, title: 'advanced_piloting')
       @event_types = EventType.all
     end
 
     it 'should correctly order event_types by name' do
-      expect(
-        @event_types.map(&:order_position)
-      ).to eql(
-        [8, 7, 9, 1, 4]
-      )
+      expect(@event_types.map(&:order_position)).to eql([8, 7, 9, 1, 4])
     end
   end
 
   describe 'new titles' do
     before(:each) do
-      @event_type = FactoryBot.create(
-        :event_type,
-        event_category: 'advanced_grade',
-        title: 'Junior Navigation'
-      )
+      @event_type = FactoryBot.create(:event_type, event_category: 'advanced_grade', title: 'Junior Navigation')
     end
 
     it 'should use the correct old title' do

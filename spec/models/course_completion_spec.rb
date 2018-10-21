@@ -4,9 +4,7 @@ require 'rails_helper'
 
 RSpec.describe CourseCompletion, type: :model do
   it 'should return the correct value from to_h' do
-    expect(FactoryBot.create(:course_completion).to_h).to eql(
-      'SE' => Date.today.beginning_of_year.strftime('%Y-%m-%d')
-    )
+    expect(FactoryBot.create(:course_completion).to_h).to eql('SE' => Date.today.beginning_of_year.strftime('%Y-%m-%d'))
   end
 
   it 'should return a valid course completions hash for a user' do
@@ -16,10 +14,6 @@ RSpec.describe CourseCompletion, type: :model do
     FactoryBot.create(:course_completion, user: user, date: date + 1.month, course_key: 'PI')
     FactoryBot.create(:course_completion, user: user, date: date + 2.months, course_key: 'AP')
 
-    expect(user.completions).to eql(
-      'SE' => '2018-07-01',
-      'PI' => '2018-08-01',
-      'AP' => '2018-09-01'
-    )
+    expect(user.completions).to eql('SE' => '2018-07-01', 'PI' => '2018-08-01', 'AP' => '2018-09-01')
   end
 end

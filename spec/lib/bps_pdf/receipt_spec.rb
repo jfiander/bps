@@ -17,8 +17,7 @@ RSpec.describe BpsPdf::Receipt, type: :lib do
 
   it 'should successfully generate a receipt for an email registration' do
     email_reg = FactoryBot.create(
-      :registration, email: 'example@example.com', override_cost: 1,
-      override_comment: 'Overridden'
+      :registration, email: 'example@example.com', override_cost: 1, override_comment: 'Overridden'
     )
     expect { email_reg.payment.receipt! }.not_to raise_error
   end

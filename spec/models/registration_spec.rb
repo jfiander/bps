@@ -91,18 +91,14 @@ RSpec.describe Registration, type: :model do
   end
 
   it 'should send a confirmation email for public registrations' do
-    expect do
-      FactoryBot.create(:registration, email: 'nobody@example.com', event: @event)
-    end.not_to raise_error
+    expect { FactoryBot.create(:registration, email: 'nobody@example.com', event: @event) }.not_to raise_error
   end
 
   it 'should notify the chair of registrations' do
     FactoryBot.create(:committee, user: generic_seo_and_ao[:ao].user, name: 'rendezvous')
     event_type = FactoryBot.create(:event_type, event_category: 'meeting', title: 'rendezvous')
     event = FactoryBot.create(:event, event_type: event_type)
-    expect do
-      FactoryBot.create(:registration, user: @user, event: event)
-    end.not_to raise_error
+    expect { FactoryBot.create(:registration, user: @user, event: event) }.not_to raise_error
   end
 
   it 'should include an attached PDF if present' do

@@ -9,10 +9,7 @@ RSpec.describe BilgeFile, type: :model do
 
   describe 'issues' do
     before(:each) do
-      @bilge = FactoryBot.create(
-        :bilge_file,
-        year: 2017, month: 9, file: File.open(test_image(200, 500), 'r')
-      )
+      @bilge = FactoryBot.create(:bilge_file, year: 2017, month: 9, file: File.open(test_image(200, 500), 'r'))
     end
 
     it 'should return the correct issue' do
@@ -24,10 +21,7 @@ RSpec.describe BilgeFile, type: :model do
     end
 
     it 'should return a valid link' do
-      # This link is not signed in tests
-      expect(@bilge.link).to match(
-        %r{https://bilge.development.bpsd9.org/\d+/Bilge_Chatter.pdf}
-      )
+      expect(@bilge.link).to match(%r{\Ahttps://bilge.development.bpsd9.org/\d+/Bilge_Chatter.pdf\?})
     end
   end
 end

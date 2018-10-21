@@ -34,18 +34,10 @@ RSpec.describe BpsPdf::Roster, type: :lib do
           :roster_award_recipient, user: u, year: today, award_name: 'Bill Booth Moose Milk',
           photo: File.new(test_image(300, 500))
         )
-        FactoryBot.create(
-          :roster_award_recipient, user: u, year: today, award_name: 'Master Mariner'
-        )
-        FactoryBot.create(
-          :roster_award_recipient, user: u, year: '2014-01-01', award_name: 'Bill Booth Moose Milk'
-        )
-        FactoryBot.create(
-          :roster_award_recipient, user: u, year: '2014-01-01', award_name: 'Master Mariner'
-        )
-        FactoryBot.create(
-          :roster_award_recipient, user: u, year: '2013-01-01', award_name: 'Master Mariner'
-        )
+        FactoryBot.create(:roster_award_recipient, user: u, year: today, award_name: 'Master Mariner')
+        FactoryBot.create(:roster_award_recipient, user: u, year: '2014-01-01', award_name: 'Bill Booth Moose Milk')
+        FactoryBot.create(:roster_award_recipient, user: u, year: '2014-01-01', award_name: 'Master Mariner')
+        FactoryBot.create(:roster_award_recipient, user: u, year: '2013-01-01', award_name: 'Master Mariner')
         FactoryBot.create(:roster_past_commander,  user: u, year: '2012-01-01')
         FactoryBot.create(:roster_past_commander,  user: u, year: '2015-01-01')
       end
