@@ -72,7 +72,7 @@ BRAINTREE_MERCHANT_ID
 BRAINTREE_PRIVATE_KEY
 BRAINTREE_PUBLIC_KEY
 BUGSNAG_KEY
-CALENDARS # gen_cal_id_1:99FF99/educ_cal_id_2:3399FF - this is only used to read
+CALENDARS # this is only used to read from calendar(s)
 CF_ENC_IV
 CF_ENC_KEY
 CLOUDFRONT_KEYPAIR_ID
@@ -80,7 +80,7 @@ EXCOM_MEET_ID
 EXCOM_MEET_SIGNATURE
 FACEBOOK_PIXEL_ID # only used in production
 FONTAWESOME_INTEGRITY
-FONTAWESOME_VERSION # v5.3.1
+FONTAWESOME_VERSION
 GA_TRACKING_ID
 GOOGLE_ACCESS_TOKEN
 GOOGLE_CALENDAR_API_CLIENT
@@ -112,6 +112,8 @@ SLACK_URL_WEBSITE
 
 ## Testing
 
+### Rspec
+
 Rspec testing is available:
 
 `bundle exec rspec`
@@ -123,6 +125,18 @@ Not included in coverage stats:
 - Link signing
 - Events partial desktop/mobile renderer
 - Code used to configure gems or API access
+
+### Rubocop
+
+Rubocop formatting validation is available:
+
+`bundle exec rubocop`
+
+### Automatic Builds
+
+Builds are generated automatically by [Travis CI](https://travis-ci.org/jfiander/bps).
+
+Build success requires both `rspec` and `rubocop` to pass.
 
 ## Licensing
 
