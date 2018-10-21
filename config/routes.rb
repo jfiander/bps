@@ -134,15 +134,6 @@ Rails.application.routes.draw do
   post    '/album/photo',     to: 'gallery#upload_photo', as: 'upload_photo'
   delete  '/album/photo/:id', to: 'gallery#remove_photo', as: 'remove_photo'
 
-  # Store
-  get     '/store/new',         to: 'store#new',            as: 'new_store_item'
-  post    '/store/create',      to: 'store#create',         as: 'create_store_item'
-  patch   '/store/update',      to: 'store#update',         as: 'update_store_item'
-  get     '/store/:id/edit',    to: 'store#edit',           as: 'edit_store_item'
-  put     '/store/:id/request', to: 'members#request_item', as: 'request_store_item'
-  patch   '/store/:id/fulfill', to: 'members#fulfill_item', as: 'fulfill_store_item'
-  delete  '/store/:id/destroy', to: 'store#destroy',        as: 'destroy_store_item'
-
   # Editor auto-show state setters
   post    '/auto_show', to: 'user#auto_show', as: 'auto_show'
   post    '/auto_hide', to: 'user#auto_hide', as: 'auto_hide'

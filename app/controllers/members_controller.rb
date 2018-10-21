@@ -6,14 +6,12 @@ class MembersController < ApplicationController
   include Members::Roster
   include Members::Markdown
   include Members::Dues
-  include Members::Store
   include BraintreeHelper
 
   secure!
   secure!(:admin, only: :admin)
   secure!(:newsletter, only: :upload_bilge)
   secure!(:minutes, only: :upload_minutes)
-  secure!(:store, only: :fulfill_item)
   secure!(:roster, only: %i[update_roster upload_roster])
   secure!(:page, only: %i[edit_markdown update_markdown])
   secure!(%i[users newsletter page minutes event education], only: %i[ranks])

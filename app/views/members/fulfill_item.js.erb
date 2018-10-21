@@ -1,6 +1,0 @@
-$("#success").html("<%= flash[:success] %>");
-$("#alert").html("<%= flash[:alert] %>");
-
-<%- unless flash[:alert].present? %>
-  $("#fulfill_item_<%= @request_id %>").html("Fulfilled!").addClass("red");
-<%- end %>
