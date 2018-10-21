@@ -16,6 +16,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     payment(parent).sale!('fake-valid-nonce', email: user.email, user_id: user.id).transaction
   end
 
+  # Collisions can occur between multiple simultaneous test suites. Restart any failed suites.
   let(:braintree_api_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 201} }
 
   before(:each) { generic_seo_and_ao }
