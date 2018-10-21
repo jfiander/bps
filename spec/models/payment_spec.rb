@@ -21,18 +21,18 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'should return a valid client_token' do
-      expect { token }.to output(braintree_api_token_regex).to_stdout_from_any_process
+      expect { @token = token }.to output(braintree_api_token_regex).to_stdout_from_any_process
 
-      expect(token).to be_a(String)
-      expect(token.length).to eql(1940)
+      expect(@token).to be_a(String)
+      expect(@token.length).to eql(1940)
     end
 
     it 'should return a valid client_token when given a user_id' do
       @user = FactoryBot.create(:user)
-      expect { user_token }.to output(braintree_api_token_regex).to_stdout_from_any_process
+      expect { @token = user_token }.to output(braintree_api_token_regex).to_stdout_from_any_process
 
-      expect(user_token).to be_a(String)
-      expect(user_token.length).to eql(2020)
+      expect(@token).to be_a(String)
+      expect(@token.length).to eql(2020)
     end
 
     it 'should post the client_token request' do
