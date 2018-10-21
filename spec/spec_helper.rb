@@ -52,6 +52,7 @@ SimpleCov.start('rails') do
   # Config code located in app directory
   add_filter 'app/helpers/devise_helper.rb'
 end
+SimpleCov.minimum_coverage(100)
 
 def test_image(width, height)
   MiniMagick::Tool::Convert.new do |i|
