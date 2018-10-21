@@ -120,11 +120,12 @@ Rspec testing is available:
 
 Not included in coverage stats:
 
-- Controller specs
+- Controllers
 - View-oriented helper code
-- Link signing
 - Events partial desktop/mobile renderer
 - Code used to configure gems or API access
+
+The spec suite will fail if under 100% coverage.
 
 ### Rubocop
 
