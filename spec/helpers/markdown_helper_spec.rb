@@ -32,6 +32,26 @@ RSpec.describe MarkdownHelper, type: :helper do
       )
     end
 
+    it 'should correctly render a bigger section' do
+      expect(MarkdownHelper.render_markdown_raw(markdown: '+Bigger')).to eql(
+        "<div class=\"markdown\"><p class=\"bigger bold\">Bigger</p>\n</div>"
+      )
+    end
+
+    describe 'should correctly render a centered bigger section' do
+      it 'with centered first' do
+        expect(MarkdownHelper.render_markdown_raw(markdown: '@+Big Centered')).to eql(
+          "<div class=\"markdown\"><p class=\"center bigger bold\">Big Centered</p>\n</div>"
+        )
+      end
+
+      it 'with bigger first' do
+        expect(MarkdownHelper.render_markdown_raw(markdown: '+@Big Centered')).to eql(
+          "<div class=\"markdown\"><p class=\"center bigger bold\">Big Centered</p>\n</div>"
+        )
+      end
+    end
+
     it 'should correctly superscript the registered trademark symbol' do
       expect(MarkdownHelper.render_markdown_raw(markdown: '&reg;')).to eql(
         "<div class=\"markdown\"><p><sup>&reg;</sup></p>\n</div>"

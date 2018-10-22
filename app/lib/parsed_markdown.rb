@@ -11,7 +11,7 @@ class ParsedMarkdown < String
   end
 
   def parse
-    %i[center reg list email burgee education image link fal fa].each do |parser|
+    %i[center big reg list email burgee education image link fal fa].each do |parser|
       send("parse_#{parser}")
     end
     self
@@ -20,7 +20,12 @@ class ParsedMarkdown < String
 private
 
   def parse_center
-    gsub!('<p>@', '<p class="center">') || self
+    gsub!(/<p>(\+?)@/, '<p class="center">\1') || self
+  end
+
+  def parse_big
+    gsub!(/<p class="center">\+/, '<p class="center bigger bold">') || self
+    gsub!('<p>+', '<p class="bigger bold">') || self
   end
 
   def parse_reg
