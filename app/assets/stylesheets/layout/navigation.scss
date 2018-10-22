@@ -45,6 +45,19 @@
 }
 
 ul#education {
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+
+  li {
+    @include blue-button;
+    width: 10em;
+    display: inline-block;
+    margin: 1em;
+  }
+
   li.catalog-button {
     @include blue-button(0.5em, lighten($old-glory-blue, 20%));
     width: 15em;
@@ -261,10 +274,6 @@ div#navigation-mobile {
     margin: 0;
     width: 100%;
     display: table;
-
-    // li {
-    //   float: none;
-    // }
 
     a {
       width: 33%;

@@ -1,15 +1,13 @@
-// Place all the styles related to the public controller here.
-
-.table#bilge {
+div#bilge {
   width: 90%;
   margin: 0 auto;
   text-align: center;
 
-  .table-row {
+  div.table-row {
     height: 3em;
   }
 
-  .table-cell {
+  div.table-cell {
     max-width: 3em;
     vertical-align: middle;
   }
@@ -22,16 +20,16 @@
     @include blue-button(0.25em, lighten($old-glory-blue, 20%));
   }
 
-  .table-cell.excom a {
+  div.table-cell.excom a {
     background-color: lighten($old-glory-blue, 10%);
   }
 }
 
-#bridge {
+div#bridge {
   width: 100%;
   text-align: left;
 
-  .table-cell {
+  div.table-cell {
     vertical-align: top;
     padding: 0.25em;
   }
@@ -40,12 +38,12 @@
     margin-top: 2em;
   }
 
-  .flag {
+  div.flag {
     width: 22%;
     text-align: center;
   }
 
-  .department {
+  div.department {
     width: 22%;
     text-align: center;
 
@@ -55,56 +53,56 @@
     }
   }
 
-  .table-row.assistant .table-cell {
+  div.table-row.assistant div.table-cell {
     font-weight: bold;
     height: 2.5em;
   }
 
-  .table.committees {
+  div.table.committees {
     font-size: 90%;
     width: 100%;
 
-    .table-cell {
+    div.table-cell {
       padding: 0.75em 0.25em 0 0.25em;
     }
 
-    .table-cell.additional {
+    div.table-cell.additional {
       padding: 0 0.25em;
     }
 
-    .committee {
+    div.committee {
       width: 55%;
       text-align: left;
     }
 
-    .committee-chair {
+    div.committee-chair {
       width: 45%;
       text-align: left;
     }
   }
 
-  #committees {
+  div#committees {
     width: 100%;
     text-align: left;
   }
 }
 
-.term-info {
+div.term-info {
   text-align: center;
   font-style: italic;
 }
 
-#standing-committees {
+div#standing-committees {
   margin-top: 1.5em;
 
-  .table-cell {
+  div.table-cell {
     font-size: 90%;
     padding-bottom: 1em;
     line-height: 1.5em;
     padding-left: 0.5em;
   }
 
-  .table-header {
+  div.table-header {
     width: 50%;
     text-align: right;
     font-size: 1em;
@@ -116,7 +114,7 @@ div.assign-bridge input, div.assign-bridge select {
   margin: 0.5em;
 }
 
-div.assign-bridge .start-date {
+div.assign-bridge div.start-date {
   margin: 0.5em;
 
   select {
@@ -127,162 +125,6 @@ div.assign-bridge .start-date {
 div.assign-bridge small {
   font-style: italic;
 }
-
-.events-section-header {
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.35em;
-}
-
-.events-full-width {
-  width: 100%;
-
-  iframe {
-    width: 95%;
-    height: 70em;
-  }
-}
-
-.table.events {
-  width: 95%;
-  margin: 2em auto;
-  padding: 2em;
-
-  .table-cell {
-    vertical-align: top;
-  }
-
-  .event-title {
-    font-size: 120%;
-    color: $old-glory-red;
-    padding-bottom: 1em;
-  }
-
-  .catalog {
-    padding-top: 1em;
-    color: $birmingham-blue;
-  }
-
-  a.control {
-    display: block;
-    margin: 0.5em 0;
-  }
-
-  span.costs {
-    font-size: 80%;
-    color: lighten($old-glory-blue, 10%);
-  }
-
-  .top-left {
-    width: 40%;
-  }
-
-  .top-middle {
-  }
-
-  .top-right {
-    width: 25%;
-  }
-
-  .bottom-left {
-    width: 60%;
-    padding-top: 1em;
-  }
-
-  .bottom-right {
-    width: 30%;
-    padding-top: 1.5em;
-
-    div {
-      text-align: center;
-    }
-
-    img {
-      max-width: 10em;
-    }
-  }
-}
-
-div.events-table-mobile {
-  div.event-mobile-title {
-    font-size: 120%;
-    color: $old-glory-red;
-    font-weight: bold;
-  }
-
-  div.event-mobile-contents {
-    img {
-      max-width: 10em;
-    }
-  }
-
-  div.event-mobile-contents.spaced {
-    margin: 1em 0;
-  }
-
-  ul {
-    padding: 0;
-    list-style: none;
-  }
-}
-
-div#new-event {
-  width: 80%;
-  margin: 0 auto;
-
-  label {
-    font-weight: bold;
-  }
-
-  textarea {
-    width: 75%;
-    height: 7.5em;
-  }
-
-  div.left {
-    width: 49%;
-    float: left;
-    text-align: right;
-    margin-bottom: 1em;
-  }
-
-  div.right {
-    width: 49%;
-    float: right;
-    text-align: left;
-    margin-bottom: 1em;
-
-    small {
-      margin-left: 0.25em;
-    }
-  }
-
-  div.center {
-    width: 100%;
-    text-align: center;
-  }
-
-  br.clear {
-    clear: both;
-  }
-}
-
-ul#education {
-  padding: 0;
-  list-style: none;
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-
-  li {
-    @include blue-button;
-    width: 10em;
-    display: inline-block;
-    margin: 1em;
-  }
-}
-
 
 div.markdown {
   text-align: left;
@@ -307,7 +149,7 @@ div.markdown {
     max-width: 15em;
   }
 
-  .burgee svg {
+  div.burgee svg {
     max-width: 50%;
     height: auto;
     display: block;

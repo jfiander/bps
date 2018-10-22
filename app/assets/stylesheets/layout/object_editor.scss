@@ -1,0 +1,67 @@
+div#new {
+  width: 80%;
+  margin: 0 auto;
+
+  label {
+    font-weight: bold;
+  }
+
+  small {
+    display: block;
+    font-style: italic;
+  }
+
+  ul {
+    font-size: 80%;
+    list-style: none;
+    padding: 0;
+  }
+
+  textarea {
+    width: 75%;
+    height: 7.5em;
+
+    &.location {
+      width: 16em;
+    }
+
+    &.bulletted {
+      background-color: lighten($old-glory-blue, 80%);
+    }
+  }
+
+  img, iframe {
+    margin-top: 1em;
+  }
+
+  &.divided > div {
+    border-bottom: thin solid gray;
+  }
+
+  div.left {
+    width: 49%;
+    float: left;
+    text-align: right;
+    margin-bottom: 1em;
+  }
+
+  div.right {
+    width: 49%;
+    float: right;
+    text-align: left;
+    margin-bottom: 1em;
+
+    small {
+      margin-left: 0.25em;
+    }
+  }
+
+  div.center {
+    width: 100%;
+    text-align: center;
+  }
+
+  br.clear {
+    clear: both;
+  }
+}

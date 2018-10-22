@@ -2,7 +2,7 @@
 
 = form_for(@record, url: roster_past_commanders_path, multipart: true) do |f|
   = f.hidden_field :id
-  #new-event
+  #new
     .left
       span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
       = f.label :year

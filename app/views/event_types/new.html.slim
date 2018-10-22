@@ -1,7 +1,7 @@
 h1 = "#{@edit_action} Event Type"
 
 = form_for(@event_type, url: @submit_path, multipart: true) do |f|
-  #new-event
+  #new
     .left = f.label :event_category
     .right = f.select :event_category, options_for_select(@event_types.map { |et| [et.event_category.titleize, et.event_category] }.uniq, @event_type.event_category), required: true
     br.clear

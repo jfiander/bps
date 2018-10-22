@@ -1,7 +1,7 @@
 h1 = "#{@edit_action} Location"
 
 = form_for(@location, url: @submit_path, multipart: true) do |f|
-  #new-event
+  #new
     .left = f.label :address
     .right = f.text_area :address, class: "location"
     br.clear

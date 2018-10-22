@@ -2,7 +2,7 @@ div.field {
   margin: 1em 0;
 }
 
-#login {
+div#login {
   width: 75%;
   margin: 0 auto;
   padding-top: 2em;
@@ -12,17 +12,17 @@ div.field {
     min-height: 2em;
   }
 
-  .profile-section {
+  div.profile-section {
     width: 100%;
     height: auto;
     padding: 0.5em;
   }
 
-  .profile-photo {
+  div.profile-photo {
     width: 100%;
     height: auto;
 
-    .center {
+    div.center {
       margin-top: 0.5em;
     }
   }
@@ -41,30 +41,30 @@ div.field {
   div.confirm-password {
     margin-top: 0.5em;
 
-    .center {
+    div.center {
       margin-top: 1em;
     }
   }
 
-  .left {
+  div.left {
     width: 49%;
     font-weight: bold;
     float: left;
     text-align: right;
   }
 
-  .right {
+  div.right {
     width: 49%;
     float: right;
     text-align: left;
   }
 
-  .center {
+  div.center {
     width: 100%;
     float: left;
   }
 
-  .red {
+  div.red {
     font-size: 80%;
   }
 

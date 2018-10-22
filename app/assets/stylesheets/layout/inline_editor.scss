@@ -1,0 +1,41 @@
+div#editor-buttons {
+  padding-bottom: 1em;
+}
+
+div#editor {
+  background-color: lighten($background-blue, 3%);
+  display: none;
+
+  a.editor {
+    display: none;
+  }
+}
+
+div#editor.auto-show {
+  display: block;
+
+  a.editor.auto-show {
+    display: inline;
+  }
+}
+
+a#show-editor, a#hide-editor {
+  margin: 1em;
+  font-size: 1.1em;
+}
+
+a#show-editor {
+  display: inline;
+}
+
+a#hide-editor {
+  display: none;
+}
+
+a#show-editor.auto-show {
+  display: none;
+}
+
+a#hide-editor.auto-show {
+  display: inline;
+}

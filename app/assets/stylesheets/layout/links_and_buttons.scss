@@ -1,0 +1,50 @@
+a {
+  text-decoration: none;
+  color: $birmingham-blue;
+}
+
+a:hover, a:hover > i  {
+  color: darken($birmingham-blue, 20%);
+}
+
+a.red:hover, a.red:hover > i, a:hover > i.red {
+  color: lighten($old-glory-red, 10%);
+}
+
+a.blue-faded:hover, a.blue-faded:hover > i, a:hover > i.blue-faded {
+  color: lighten($old-glory-blue, 40%);
+}
+
+a.green:hover, a.green:hover > i, a:hover > i.green {
+  color: lighten(green, 10%);
+}
+
+input.big, button.big, a.big {
+  @include big-button;
+}
+
+input.medium, button.medium, a.medium {
+  @include medium-button;
+}
+
+input.medium.light, button.medium.light, a.medium.light {
+  @include medium-button($birmingham-blue-light);
+  color: $old-glory-blue;
+}
+
+input.cancel, button.cancel, a.cancel {
+  @include medium-button($old-glory-red);
+  min-width: 4em;
+}
+
+button.otw {
+  border: none;
+  background-color: lighten($background-blue, 8%);
+  font-size: 1.5em;
+}
+
+div.table-row.gray {
+  button.otw {
+    background-color: $background-blue;
+  }
+}

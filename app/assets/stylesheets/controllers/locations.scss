@@ -1,13 +1,13 @@
-.table.locations {
+div.table.locations {
   text-align: center;
 
-  .table-cell {
+  div.table-cell {
     width: 22%;
     padding: 1em 0;
     vertical-align: middle;
   }
 
-  .table-cell.actions {
+  div.table-cell.actions {
     width: 10%;
   }
 }

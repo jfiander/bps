@@ -14,7 +14,7 @@
       - else
         = render 'events/no/registrations'
   - else
-    #new-event
+    #new
       = form_for(@registration, url: long_register_path, method: :post) do |f|
         = f.hidden_field :event_id
         .left = f.label :name

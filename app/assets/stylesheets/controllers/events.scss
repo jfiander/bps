@@ -1,38 +1,3 @@
-// Place all the styles related to the events controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-div#new-event {
-  width: 95%;
-
-  &> div {
-    border-bottom: thin solid gray;
-  }
-
-  ul {
-    font-size: 80%;
-    list-style: none;
-    padding: 0;
-  }
-
-  textarea.location {
-    width: 16em;
-  }
-
-  textarea.bulletted {
-    background-color: lighten($old-glory-blue, 80%);
-  }
-
-  small {
-    display: block;
-    font-style: italic;
-  }
-
-  img, iframe {
-    margin-top: 1em;
-  }
-}
-
 input.map-link {
   width: 20em;
 }
@@ -43,5 +8,104 @@ div#registrations {
 
   div.table-cell {
     padding: 1em 0;
+  }
+}
+
+div.events-section-header {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.35em;
+}
+
+div.events-full-width {
+  width: 100%;
+
+  iframe {
+    width: 95%;
+    height: 70em;
+  }
+}
+
+div.table.events {
+  width: 95%;
+  margin: 2em auto;
+  padding: 2em;
+
+  div.table-cell {
+    vertical-align: top;
+  }
+
+  div.event-title {
+    font-size: 120%;
+    color: $old-glory-red;
+    padding-bottom: 1em;
+  }
+
+  div.catalog {
+    padding-top: 1em;
+    color: $birmingham-blue;
+  }
+
+  a.control {
+    display: block;
+    margin: 0.5em 0;
+  }
+
+  span.costs {
+    font-size: 80%;
+    color: lighten($old-glory-blue, 10%);
+  }
+
+  div.top-left {
+    width: 40%;
+  }
+
+  div.top-middle {
+  }
+
+  div.top-right {
+    width: 25%;
+  }
+
+  div.bottom-left {
+    width: 60%;
+    padding-top: 1em;
+  }
+
+  div.bottom-right {
+    width: 30%;
+    padding-top: 1.5em;
+
+    div {
+      text-align: center;
+    }
+
+    img {
+      max-width: 10em;
+    }
+  }
+}
+
+div.events-table-mobile {
+  div.event-mobile-title {
+    font-size: 120%;
+    color: $old-glory-red;
+    font-weight: bold;
+  }
+
+  div.event-mobile-contents {
+    img {
+      max-width: 10em;
+    }
+  }
+
+  div.event-mobile-contents.spaced {
+    margin: 1em 0;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
   }
 }

@@ -1,13 +1,9 @@
-// Place all the styles related to the user controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 // Profile
-#profile {
+div#profile {
   width: 65%;
   margin: 0 auto;
 
-  .table-header {
+  div.table-header {
     text-align: right;
     padding-right: 1em;
   }
@@ -16,11 +12,11 @@
     border: thin solid $old-glory-red;
   }
 
-  .field {
+  div.field {
     margin-bottom: 1.5em;
   }
 
-  .profile-photo {
+  div.profile-photo {
     text-align: center;
     vertical-align: middle;
 
@@ -34,7 +30,7 @@
     width: 12em;
   }
 
-  .insignia {
+  div.insignia {
     text-align: center;
     vertical-align: middle;
 
@@ -57,7 +53,7 @@ ul#profile-actions li {
 #profile-registrations {
   max-width: 85%;
 
-  .table-cell.name {
+  div.table-cell.name {
     text-align: right;
     padding-right: 2em;
   }
@@ -107,29 +103,29 @@ table#users {
     }
   }
 
-  .very-narrow {
+  div.very-narrow {
     width: 3em;
   }
 
-  .narrow {
+  div.narrow {
     width: 6em;
   }
 
-  .medium {
+  div.medium {
     width: 13em;
   }
 
-  .wide {
+  div.wide {
     width: 18em;
   }
 
-  .small-text {
+  div.small-text {
     font-size: 90%;
   }
 
-  .locked {
+  div.locked {
     background-color: lighten($old-glory-red, 50%);
-    color:            gray;
+    color: gray;
 
     a {
       color: $old-glory-red;
@@ -178,12 +174,12 @@ div#import-info {
     margin: 0.5em 0;
   }
 
-  .table.columns div {
+  div.table.columns div {
     width: 20%;
     font-family: 'Courier';
   }
 
-  .table.ranks div {
+  div.table.ranks div {
     width: 33%;
   }
 }

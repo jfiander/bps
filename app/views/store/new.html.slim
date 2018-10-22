@@ -3,7 +3,7 @@ h1 = "#{@edit_mode} Item"
 = form_for(@store_item, url: @submit_path, multipart: true) do |f|
   = f.hidden_field :id if @submit_path.match /\/update/
 
-  #new-event
+  #new
     .left = f.label :name
     .right = f.text_field :name
     br.clear

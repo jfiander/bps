@@ -1,32 +1,28 @@
-// Place all the styles related to the file controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-.table#files {
+div#files {
   width: 75%;
   margin: 0 auto;
   text-align: center;
 
-  .table-header {
+  div.table-header {
     width: 45%;
   }
 }
 
-.table#files.headers {
+div#files.headers {
   width: 35%;
 
-  .table-row {
+  div.table-row {
     height: 6em;
 
-    .table-cell {
+    div.table-cell {
       vertical-align: middle;
     }
 
-    .table-cell.left {
+    div.table-cell.left {
       width: 75%;
     }
 
-    .table-cell.right {
+    div.table-cell.right {
       width: 25%;
     }
   }

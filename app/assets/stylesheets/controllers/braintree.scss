@@ -36,11 +36,11 @@ div#payment-description {
   color: $old-glory-red;
   font-size: 1.25em;
 
-  .amount, .subject, .date {
+  div.amount, div.subject, div.date {
     margin-top: 0.5em;
   }
 
-  .amount, .subject {
+  div.amount, div.subject {
     font-weight: bold;
   }
 
@@ -48,11 +48,11 @@ div#payment-description {
     font-size: 0.85em;
   }
 
-  .amount {
+  div.amount {
     font-size: 1.3em;
   }
 
-  .desc {
+  div.desc {
     margin: 0.25em 0;
   }
 }
@@ -75,7 +75,7 @@ div.information {
   margin-top: 1em;
 }
 
-.terms {
+div.terms {
   padding: 0 0.5em;
   text-align: left;
 }

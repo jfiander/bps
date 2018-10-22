@@ -1,81 +1,21 @@
-
 body {
   font-family: Arial;
   color: $old-glory-blue;
-
   margin: 0 20%;
   padding: 0;
-
   background-color: $background-blue;
-}
-
-a {
-  text-decoration: none;
-  color: $birmingham-blue;
-}
-
-a:hover, a:hover > i  {
-  color: darken($birmingham-blue, 20%);
-}
-
-a.red:hover, a.red:hover > i, a:hover > i.red {
-  color: lighten($old-glory-red, 10%);
-}
-
-a.blue-faded:hover, a.blue-faded:hover > i, a:hover > i.blue-faded {
-  color: lighten($old-glory-blue, 40%);
-}
-
-a.green:hover, a.green:hover > i, a:hover > i.green {
-  color: lighten(green, 10%);
 }
 
 sup {
   font-size: 60%;
 }
 
-.clear {
-  clear: both;
-}
-
-br.clear-left {
-  clear: left;
-  line-height: 0;
-}
-
-br.clear-right {
-  clear: right;
-  line-height: 0;
-}
-
 hr {
   margin-bottom: 1.5em;
 }
 
-p.i {
-  font-style: italic;
-}
-
-input.number {
-  width: 5em;
-}
-
-input.big, button.big, a.big {
-  @include big-button;
-}
-
-input.medium, button.medium, a.medium {
-  @include medium-button;
-}
-
-input.medium.light, button.medium.light, a.medium.light {
-  @include medium-button($birmingham-blue-light);
-  color: $old-glory-blue;
-}
-
-input.cancel, button.cancel, a.cancel {
-  @include medium-button($old-glory-red);
-  min-width: 4em;
+.clear {
+  clear: both;
 }
 
 .center {
@@ -102,46 +42,22 @@ input.cancel, button.cancel, a.cancel {
   font-weight: bold;
 }
 
-div#editor {
-  background-color: lighten($background-blue, 3%);
+.hide {
   display: none;
 }
 
-a.editor {
-  display: none;
+p.i {
+  font-style: italic;
 }
 
-div#editor.auto-show {
-  display: block;
+br.clear-left {
+  clear: left;
+  line-height: 0;
 }
 
-a.editor.auto-show {
-  display: inline;
-}
-
-div#editor-buttons {
-  padding-bottom: 1em;
-}
-
-a#show-editor, a#hide-editor {
-  margin: 1em;
-  font-size: 1.1em;
-}
-
-a#show-editor {
-  display: inline;
-}
-
-a#hide-editor {
-  display: none;
-}
-
-a#show-editor.auto-show {
-  display: none;
-}
-
-a#hide-editor.auto-show {
-  display: inline;
+br.clear-right {
+  clear: right;
+  line-height: 0;
 }
 
 small.header {
@@ -153,8 +69,8 @@ ul.simple {
   padding: 0;
 }
 
-.hide {
-  display: none;
+input.number {
+  width: 5em;
 }
 
 div.red-background {
@@ -166,19 +82,9 @@ div.red-background {
   }
 }
 
-button.otw {
-  border: none;
-  background-color: lighten($background-blue, 8%);
-  font-size: 1.5em;
-}
-
 div.table-row.gray {
   div.table-cell {
     color: $old-glory-blue;
     background-color: $background-blue-faded;
-  }
-
-  button.otw {
-    background-color: $background-blue;
   }
 }

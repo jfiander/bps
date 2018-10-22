@@ -1,6 +1,4 @@
-// Place all the styles related to the members controller here.
-
-.red-border {
+div.red-border {
   margin: 1em 0;
   border-top: thin solid red;
   border-bottom: thin solid red;
@@ -33,25 +31,25 @@ div#user-ranks {
   margin: 0 auto;
   text-align: center;
 
-  .member {
+  div.member {
     margin: 1em auto;
   }
 
-  .rank, .grade {
+  div.rank, div.grade {
     float: left;
     width: 25%;
     min-height: 1em;
   }
 
-  .rank {
+  div.rank {
     text-align: right;
   }
 
-  .grade {
+  div.grade {
     text-align: left;
   }
 
-  .name {
+  div.name {
     float: left;
     width: 50%;
     min-width: 5em;
@@ -62,22 +60,22 @@ div#user-ranks {
 div.table.auto-permissions {
   width: 100%;
 
-  .table-row {
+  div.table-row {
     height: 1.5em;
   }
 
-  .table-row .table-cell {
+  div.table-row div.table-cell {
     margin: 1em 0;
   }
 
-  .table-cell.left {
+  div.table-cell.left {
     width: 50%;
     text-align: right;
     padding-right: 0.5em;
     font-weight: bold;
   }
 
-  .table-cell.right {
+  div.table-cell.right {
     width: 50%;
     padding-left: 0.5em;
   }

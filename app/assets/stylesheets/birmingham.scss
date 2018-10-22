@@ -4,30 +4,9 @@
 @import "global/sliders";
 @import "global/tables";
 
+@import "layout/**/*";
+@import "controllers/**/*";
+@import "media/**/*";
+
 @import "jquery.fancybox.min";
-
-@import "layout/general";
-@import "layout/main";
-@import "layout/flashes";
-@import "layout/navigation";
-@import "layout/font-awesome";
-
-@import "controllers/public";
-@import "controllers/members";
-@import "controllers/otw_trainings";
-@import "controllers/completions";
-@import "controllers/member_applications";
-@import "controllers/float_plan";
-@import "controllers/user";
-@import "controllers/store";
-@import "controllers/gallery";
-@import "controllers/file";
-@import "controllers/events";
-@import "controllers/locations";
-@import "controllers/versions";
-@import "controllers/devise";
-@import "controllers/braintree";
-
-@import "media/desktop";
-@import "media/mobile";
-@import "media/print";
+@import "font-awesome";
