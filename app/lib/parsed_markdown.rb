@@ -11,16 +11,10 @@ class ParsedMarkdown < String
   end
 
   def parse
-    parse_center
-    parse_reg
-    parse_list
-    parse_email
-    parse_burgee
-    parse_education
-    parse_image
-    parse_link
-    parse_fal
-    parse_fa
+    %i[center reg list email burgee education image link fal fa].each do |parser|
+      send("parse_#{parser}")
+    end
+    self
   end
 
 private
