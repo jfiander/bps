@@ -9,23 +9,13 @@
   .event-mobile-contents.birmingham-blue
     = FA::Icon.p('star', style: :regular)
     | In catalog
-- if !defined?(@event_catalog) && @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
-  br
 - if defined?(@event_catalog)
-  - if @current_user_permitted_event_type
-    = link_to(send("edit_#{event_type_param}_path", event), class: "control blue-faded") do
-      = FA::Icon.p('edit', fa: 'fw')
-      | Edit
-  - if user_signed_in?
-    = link_to(request_schedule_path(event.id), class: "control blue-faded", method: :put, remote: true, id: "request_link_#{event.id}_mobile") do
-      = FA::Icon.p('check-square', style: :regular, fa: 'fw')
-      | Request
+  .event-mobile-contents.spaced = render 'events/actions/catalog', event: event
 - else
   - if @current_user_permitted_event_type
-    .event-mobile-contents = render 'events/actions', event: event
+    .event-mobile-contents.spaced = render 'events/actions/schedule', event: event
   - unless defined?(@event_catalog)
-    br
-    .event-mobile-contents
+    .event-mobile-contents.spaced
       - if !long_form && !event.expired? && user_signed_in? && event.allow_member_registrations
         - if @registered&.has_key?(event.id)
           = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}_mobile", data: {confirm: "Are you sure you want to cancel this registration?"}) do
@@ -38,9 +28,7 @@
         - elsif !event.expired?
           = FA::Layer.p([{ name: 'calendar-check', options: { style: :regular } }, { name: 'ban', options: { style: :solid, css: :red } }])
           span.red Too late to register
-- if @current_user_permitted_event_type && !defined?(@event_catalog) && !event.expired?
-  br
-.event-mobile-contents
+.event-mobile-contents.spaced
   - if event.multiple_sessions?
     b Starts: 
   - if event.all_day

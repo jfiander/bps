@@ -1,0 +1,3 @@
+= event_action_link event, send("edit_#{event_type_param}_path", event), icon: 'edit',         text: 'Edit',    css: 'blue-faded',      if: @current_user_permitted_event_type
+= event_action_link event, send("copy_#{event_type_param}_path", event), icon: 'clone',        text: 'Clone',   css: 'blue-faded',      if: @current_user_permitted_event_type
+= event_action_link event, request_schedule_path(event.id),              icon: 'check-square', text: 'Request', css: 'birmingham-blue', if: user_signed_in?, method: :put, remote: true, id: "request_link_#{event.id}"

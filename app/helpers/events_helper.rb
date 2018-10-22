@@ -94,6 +94,9 @@ module EventsHelper
   end
 
   def event_action_link(event, path, **options)
+    return if options.key?(:if) && !options[:if]
+    return if options.key?(:expired) && options[:expired] != event&.expired?
+
     options = event_action_link_defaults(options[:css]).merge(options)
     confirm = options.delete(:confirm)
     options[:data][:confirm] = confirm if confirm.present?
