@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 
   before_action(
     :find_event, only: %i[
-      show copy edit update expire remind book unbook
+      show copy edit update expire archive remind book unbook
     ]
   )
   before_action :prepare_form, only: %i[new copy edit]
@@ -104,10 +104,17 @@ class EventsController < ApplicationController
 
   def expire
     redirect_with_status(
-      send("#{event_type_param}s_path"), object: event_type_param,
-      verb: 'expire'
+      send("#{event_type_param}s_path"), object: event_type_param, verb: 'expire'
     ) do
       @event.update(expires_at: Time.now)
+    end
+  end
+
+  def archive
+    redirect_with_status(
+      send("#{event_type_param}s_path"), object: event_type_param, verb: 'archive'
+    ) do
+      @event.update(start_at: @event.start_at - 2.years)
     end
   end
 
@@ -139,9 +146,7 @@ private
 
   def load_catalog
     if event_type_param == 'course'
-      catalog_list.slice(
-        'public', 'advanced_grade', 'elective'
-      ).symbolize_keys
+      catalog_list.slice('public', 'advanced_grade', 'elective').symbolize_keys
     else
       catalog_list[event_type_param]
     end

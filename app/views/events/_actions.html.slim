@@ -10,5 +10,7 @@
   = event_action_link(event, "book_#{event_type_param}_path", icon: 'calendar-check', text: 'Post to Calendar', css: 'birmingham-blue', method: :put)
 = event_action_link(event, "copy_#{event_type_param}_path", icon: 'clone', text: 'Clone', css: 'blue-faded')
 = event_action_link(event, "edit_#{event_type_param}_path", icon: 'edit', text: 'Edit', css: 'blue-faded')
-- unless event.expired?
-  = event_action_link(event, "expire_#{event_type_param}_path", icon: 'eye-slash', text: 'Expire', css: 'red', method: :delete, confirm: "Are you sure you want to force this #{event_type_param} to expire?")
+- if event.expired?
+  = event_action_link(event, "archive_#{event_type_param}_path", icon: 'archive', text: 'Archive', css: 'red', method: :delete, confirm: "Are you sure you want to archive this #{event_type_param}?")
+- else
+  = event_action_link(event, "expire_#{event_type_param}_path", icon: 'eye-slash', text: 'Hide', css: 'red', method: :delete, confirm: "Are you sure you want to hide this #{event_type_param}?")
