@@ -30,7 +30,7 @@ private
   end
 
   def update_instructors
-    clean_params[:instructors].split("\n").map(&:squish).each do |u|
+    clean_params[:instructors].split("\n").map(&:squish).each do |user|
       user = find_user_for_instructor(user)
       EventInstructor.create(event: @event, user: user) if user.present?
     end
