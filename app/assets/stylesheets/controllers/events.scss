@@ -47,11 +47,6 @@ div.table.events {
     color: $birmingham-blue;
   }
 
-  a.control {
-    display: block;
-    margin: 0.5em 0;
-  }
-
   span.costs {
     font-size: 80%;
     color: lighten($old-glory-blue, 10%);
@@ -112,4 +107,9 @@ div.events-table-mobile {
 
 div#expired-events-section {
   background-color: $old-glory-red-faded;
+}
+
+a.control {
+  display: inline-block;
+  padding: 0.5em;
 }
