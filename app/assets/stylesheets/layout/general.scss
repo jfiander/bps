@@ -108,7 +108,7 @@ input.number {
 }
 
 div.red-background {
-  background-color: lighten($old-glory-red, 50%);
+  background-color: $old-glory-red-faded;
   padding: 0.25em 0;
 }
 

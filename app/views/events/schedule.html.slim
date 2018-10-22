@@ -7,6 +7,16 @@ h1 = "Currently Scheduled #{event_type_param.titleize}s"
 - else
   = render "events/no/events", type: event_type_param
 - if @current_user_permitted_event_type && @expired_events.present? && !(event_type_param == 'course' && @expired_events.all? { |_,v| v.blank? })
-  hr
-  .events-section-header.red = "Expired #{event_type_param}s"
-  = render "events/tables", type: event_type_param, all_events: @expired_events, long_form: false
+  #expired-events-section
+    hr
+    .events-section-header.red = "Expired #{event_type_param}s"
+    .information
+      p This section is not visible to general members or the public.
+      p
+        = event_type_param.titleize
+        |s from the 
+        u current and previous calendar years
+        |  are displayed below.
+      p Archiving will remove them from this list.
+    hr
+    = render "events/tables", type: event_type_param, all_events: @expired_events, long_form: false
