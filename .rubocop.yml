@@ -10,6 +10,7 @@ AllCops:
     - config/**/*
     - db/**/*
     - vendor/**/*
+    - tmp/**/*
 Layout/IndentHash:
   EnforcedStyle: consistent
 Metrics/BlockLength:
