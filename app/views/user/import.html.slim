@@ -142,7 +142,7 @@ hr
     span.slider.round.red
       .description.lock-missing
   br
-  = spinner_button button_text: 'Upload', css_class: 'big'
+  = spinner_button button_text: 'Upload', css: 'big'
 
 - if defined?(@import_results)
   p = "Created #{@import_results[:created].count} new #{'user'.pluralize(@import_results[:created].count)}."
