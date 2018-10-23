@@ -20,19 +20,17 @@ RSpec.describe Payment, type: :model do
       expect(Payment.gateway).to be_a(Braintree::Gateway)
     end
 
-    it 'should return a valid client_token' do
-      expect { @token = token }.to output(braintree_api_token_regex).to_stdout_from_any_process
+    it 'should return valid client_tokens' do
+      @user = FactoryBot.create(:user)
 
+      expect { @token = token }.to output(braintree_api_token_regex).to_stdout_from_any_process
+      expect { @user_token = user_token }.to output(braintree_api_token_regex).to_stdout_from_any_process
       expect(@token).to be_a(String)
-      expect(@token.length).to eql(1940)
+      expect(@user_token).to be_a(String)
+      expect(@user_token.length).to be > @token.length
     end
 
     it 'should return a valid client_token when given a user_id' do
-      @user = FactoryBot.create(:user)
-      expect { @token = user_token }.to output(braintree_api_token_regex).to_stdout_from_any_process
-
-      expect(@token).to be_a(String)
-      expect(@token.length).to eql(2020)
     end
 
     it 'should post the client_token request' do
