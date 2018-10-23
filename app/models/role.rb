@@ -4,7 +4,7 @@ class Role < ApplicationRecord
   has_many :user_roles, dependent: :destroy
   has_many :users, through: :user_roles
   belongs_to :parent, class_name: 'Role', optional: true
-  has_many :children, class_name: 'Role', foreign_key: :parent_id
+  has_many :children, class_name: 'Role', foreign_key: :parent_id, inverse_of: :parent
 
   before_validation { self.parent ||= Role.find_by(name: 'admin') }
 

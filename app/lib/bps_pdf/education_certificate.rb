@@ -39,7 +39,8 @@ private
 
   def completion_contents(label, date)
     text_box(
-      label, at: [2, (ROW_HEIGHT - 5)], width: (COLUMN_WIDTH - 6), size: 7, align: :center,
+      label,
+      at: [2, (ROW_HEIGHT - 5)], width: (COLUMN_WIDTH - 6), size: 7, align: :center,
       style: :bold, inline_format: true
     )
     text_box date.to_s, at: [2, 10], width: (COLUMN_WIDTH - 6), size: 7, align: :center

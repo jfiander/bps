@@ -25,16 +25,11 @@ class User < ApplicationRecord
   has_many :float_plans
 
   belongs_to :parent, class_name: 'User', optional: true
-  has_many(
-    :children,
-    class_name: 'User',
-    inverse_of: :parent,
-    foreign_key: :parent_id
-  )
+  has_many(:children, class_name: 'User', inverse_of: :parent, foreign_key: :parent_id)
 
   has_many :course_completions
 
-  has_many :member_applications, foreign_key: :approver_id
+  has_many :member_applications, foreign_key: :approver_id, inverse_of: :approver
 
   has_many :event_instructors
   has_many :events, through: :event_instructors

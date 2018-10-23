@@ -17,8 +17,8 @@ private
     labeled_text('Color', "#{float_plan.hull_color} (hull)", x1: 300, x2: 375, y: 500)
     if float_plan.trim_color.present?
       draw_text(
-        "#{float_plan.trim_color} (trim)", size: 12,
-        at: [(420 + float_plan.hull_color.length * 4), 500]
+        "#{float_plan.trim_color} (trim)",
+        size: 12, at: [(420 + float_plan.hull_color.length * 4), 500]
       )
     end
     labeled_text('Reg num', float_plan.registration_number, x1: 300, x2: 375, y: 480)

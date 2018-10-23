@@ -68,8 +68,8 @@ private
     text title, size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
     move_down(10)
     text(
-      config_text[:merit][description_key], size: BpsPdf::Roster::Detailed::BODY_REG_SIZE,
-      align: :justify
+      config_text[:merit][description_key],
+      size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
     )
     collection_body(title, collection, honor, mm) if collection.count.positive?
   end

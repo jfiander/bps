@@ -6,7 +6,7 @@ module ViewHelper
     rank = office_rank(office)
 
     if mode == :svg
-      open(static_bucket.link("flags/SVG/#{rank}.svg")).read.html_safe
+      URI.parse(static_bucket.link("flags/SVG/#{rank}.svg")).open.read.html_safe
     elsif mode == :png
       image_tag static_bucket.link("flags/PNG/#{rank}.thumb.png")
     end

@@ -46,10 +46,8 @@ class EventsController < ApplicationController
   end
 
   def registrations
-    @current = Event.order(:start_at).current(event_type_param)
-                    .with_registrations
-    @expired = Event.order(:start_at).expired(event_type_param)
-                    .with_registrations
+    @current = Event.order(:start_at).current(event_type_param).with_registrations
+    @expired = Event.order(:start_at).expired(event_type_param).with_registrations
   end
 
   def show

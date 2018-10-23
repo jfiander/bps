@@ -57,8 +57,8 @@ private
     text "#{name} Award", size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
     move_down(10)
     text(
-      config_text[:awards][name.to_sym], size: BpsPdf::Roster::Detailed::BODY_REG_SIZE,
-      align: :justify
+      config_text[:awards][name.to_sym],
+      size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify
     )
     award_recipients(name, recipient, additional) if recipient.present?
   end
@@ -67,8 +67,8 @@ private
     move_down(10)
     winner = additional.present? ? 'winners were' : 'winner was'
     text(
-      "This year's #{winner}:", size: BpsPdf::Roster::Detailed::BODY_REG_SIZE,
-      style: :bold, align: :center
+      "This year's #{winner}:",
+      size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold, align: :center
     )
     current_recipient(name, recipient, additional)
   end

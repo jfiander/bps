@@ -40,21 +40,15 @@ private
   def ed_award_builder(options = {})
     ed_award_heading(options[:long_award], options[:y_1], options[:award])
     ed_award_image(options[:award], options[:x_pos])
-    left, right, size = ed_award_collections(
-      ed_ach: options[:ed_ach], ed_pro: options[:ed_pro]
-    )
-    ed_award_body(
-      y_pos: options[:y_2], key: options[:award],
-      left: left, right: right, size: size
-    )
+    left, right, size = ed_award_collections(ed_ach: options[:ed_ach], ed_pro: options[:ed_pro])
+    ed_award_body(y_pos: options[:y_2], key: options[:award], left: left, right: right, size: size)
   end
 
   def ed_awards_intro
     bounding_box([0, 540], width: 325, height: 20) do
       text(
         'We are proud of the educational accomplishments of our members!',
-        size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold,
-        align: :center
+        size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold, align: :center
       )
     end
   end
@@ -70,24 +64,19 @@ private
   def ed_award_title(award)
     text(
       "Educational #{award} Award",
-      size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold,
-      align: :center
+      size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
     )
   end
 
   def ed_award_description(award, key)
     text(
       config_text[:education][key],
-      size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify,
-      inline_format: true
+      size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
     )
   end
 
   def ed_award_image(award, x_pos)
-    svg(
-      ed_award_svg(ed_award_grade(award), (award == :EdPro)), width: 1325,
-      at: [x_pos, cursor]
-    )
+    svg(ed_award_svg(ed_award_grade(award), (award == :EdPro)), width: 1325, at: [x_pos, cursor])
   end
 
   def ed_award_grade(award)

@@ -8,8 +8,8 @@ class Event < ApplicationRecord
   include Concerns::Event::Cost
 
   belongs_to :event_type
-  has_many   :course_topics,   foreign_key: :course_id
-  has_many   :course_includes, foreign_key: :course_id
+  has_many   :course_topics,   foreign_key: :course_id, inverse_of: :course
+  has_many   :course_includes, foreign_key: :course_id, inverse_of: :course
   belongs_to :prereq, class_name: 'EventType', optional: true
   belongs_to :location, optional: true
 

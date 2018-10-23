@@ -21,8 +21,7 @@ private
 
   def logo
     insert_image(
-      'tmp/run/ABC-B.png', at: [0, cover_config[:logo][:y]],
-      width: cover_config[:logo][:width]
+      'tmp/run/ABC-B.png', at: [0, cover_config[:logo][:y]], width: cover_config[:logo][:width]
     )
   end
 
@@ -36,8 +35,8 @@ private
 
   def burgee
     insert_image(
-      'tmp/run/Burgee.png', at: [25, cover_config[:burgee][:y]],
-      width: cover_config[:burgee][:width]
+      'tmp/run/Burgee.png',
+      at: [25, cover_config[:burgee][:y]], width: cover_config[:burgee][:width]
     )
   end
 

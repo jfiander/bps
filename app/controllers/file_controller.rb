@@ -55,8 +55,8 @@ private
     options[:header] = @uploaded_file.id if type == :header
 
     redirect_with_status(
-      send("#{type}_path", options), object: type, verb: 'upload', past: 'uploaded',
-      ivar: @uploaded_file
+      send("#{type}_path", options),
+      object: type, verb: 'upload', past: 'uploaded', ivar: @uploaded_file
     ) do
       @uploaded_file.valid?
     end

@@ -31,8 +31,8 @@ RSpec.describe BpsPdf::Roster, type: :lib do
       FactoryBot.create(:user, city: 'Someplace', state: 'ST') do |u|
         FactoryBot.create(:bridge_office, user: u, office: :commander)
         FactoryBot.create(
-          :roster_award_recipient, user: u, year: today, award_name: 'Bill Booth Moose Milk',
-          photo: File.new(test_image(300, 500))
+          :roster_award_recipient,
+          user: u, year: today, award_name: 'Bill Booth Moose Milk', photo: File.new(test_image(300, 500))
         )
         FactoryBot.create(:roster_award_recipient, user: u, year: today, award_name: 'Master Mariner')
         FactoryBot.create(:roster_award_recipient, user: u, year: '2014-01-01', award_name: 'Bill Booth Moose Milk')

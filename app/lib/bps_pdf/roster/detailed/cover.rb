@@ -17,8 +17,8 @@ private
   def roster_title
     bounding_box([0, 490], width: 325, height: 35) do
       text(
-        'Membership Roster', size: BpsPdf::Roster::Detailed::TITLE_SIZE,
-        style: :bold, align: :center
+        'Membership Roster',
+        size: BpsPdf::Roster::Detailed::TITLE_SIZE, style: :bold, align: :center
       )
     end
   end
@@ -47,8 +47,8 @@ private
   def cover_text_sections
     config_text[:cover][:sections].each do |h, t|
       text(
-        "<b>#{h}</b>: #{t}", size: BpsPdf::Roster::Detailed::BODY_REG_SIZE,
-        inline_format: true, align: :justify
+        "<b>#{h}</b>: #{t}",
+        size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, inline_format: true, align: :justify
       )
       text('<br>', size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, inline_format: true)
     end

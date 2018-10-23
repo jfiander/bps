@@ -38,8 +38,8 @@ private
     base_y = roster_config[:base][:y] - row_index * (roster_config[:member][:height] + 20)
 
     bounding_box(
-      [base_x, base_y], width: roster_config[:member][:width],
-      height: roster_config[:member][:height]
+      [base_x, base_y],
+      width: roster_config[:member][:width], height: roster_config[:member][:height]
     ) do
       roster_for_member(user)
     end

@@ -15,17 +15,22 @@ module AdminMenuHelper
   end
 
   def show_link?(*roles, strict: false, **options)
+    rc, ra, nc, na = link_requirements(options)
+    return false unless current_user&.permitted?(roles, strict: strict, session: session)
+    return false if invalid?(rc, ra, nc, na)
+    true
+  end
+
+private
+
+  def link_requirements(options)
     req_cont = *options[:controller] || []
     req_action = *options[:action] || []
     not_cont = *options[:not_controller] || []
     not_action = *options[:not_action] || []
 
-    return false unless current_user&.permitted?(roles, strict: strict, session: session)
-    return false if invalid?(req_cont, req_action, not_cont, not_action)
-    true
+    [req_cont, req_action, not_cont, not_action]
   end
-
-private
 
   def admin_menus
     {

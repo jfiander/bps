@@ -63,8 +63,8 @@ private
   def contacts
     bounding_box([0, 170], width: 325, height: 170) do
       text(
-        'Other Contacts', size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE,
-        style: :bold, align: :center
+        'Other Contacts',
+        size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, style: :bold, align: :center
       )
       move_down(10)
       other_contacts_list

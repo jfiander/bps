@@ -64,8 +64,7 @@ class BridgeController < ApplicationController
     standing_committee = create_standing_committee
 
     redirect_with_status(
-      bridge_path, object: 'standing committee', verb: 'assign',
-      past: 'assigned'
+      bridge_path, object: 'standing committee', verb: 'assign', past: 'assigned'
     ) do
       standing_committee.save
     end

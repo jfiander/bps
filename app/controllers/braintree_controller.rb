@@ -64,10 +64,7 @@ private
   end
 
   def submit_transaction
-    @payment.sale!(
-      clean_params[:payment_method_nonce], email: @receipt,
-      user_id: current_user&.id
-    )
+    @payment.sale!(clean_params[:payment_method_nonce], email: @receipt, user_id: current_user&.id)
   end
 
   def process_result

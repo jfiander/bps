@@ -64,8 +64,8 @@ private
 
   def entry_format
     text(
-      'Roster Entry Format', size: BpsPdf::Roster::Detailed::HEADING_SIZE,
-      style: :bold, align: :center
+      'Roster Entry Format',
+      size: BpsPdf::Roster::Detailed::HEADING_SIZE, style: :bold, align: :center
     )
 
     roster_entry(config_text[:roster_info][:format], y_offset: 450)
