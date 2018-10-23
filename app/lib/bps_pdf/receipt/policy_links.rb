@@ -3,12 +3,12 @@
 module BpsPdf::Receipt::PolicyLinks
 private
 
-  def policy_links(payment)
-    policy_links_left(payment)
-    policy_links_right(payment)
+  def policy_links(_payment)
+    policy_links_left
+    policy_links_right
   end
 
-  def policy_links_left(payment)
+  def policy_links_left
     bounding_box([0, 80], width: 325, height: 80) do
       terms_link
       move_down(20)
@@ -16,7 +16,7 @@ private
     end
   end
 
-  def policy_links_right(payment)
+  def policy_links_right
     bounding_box([325, 80], width: 225, height: 80) do
       refund_link
       move_down(20)

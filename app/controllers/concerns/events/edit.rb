@@ -36,10 +36,7 @@ private
 
     flash.now[:alert] = "Unable to #{mode} #{event_type_param}."
     flash.now[:error] = @event.errors.full_messages
-    @submit_path = send("#{path}_#{event_type_param}_path")
-    @edit_mode = mode.to_s.titleize
-    @event_types = EventType.selector(event_type_param)
-    @event_title = event_type_param.titleize
+    reset_vars_for_failed(mode, path)
     render :new
   end
 
@@ -73,12 +70,23 @@ private
     return unless event_params['event_type_id'].blank?
 
     prepare_form
+    reset_vars_for_blank
+    flash[:alert] = "You must select a valid #{event_type_param} name."
+    render :new
+  end
+
+  def reset_vars_for_blank
     @submit_path = send("create_#{event_type_param}_path")
     @event = Event.new(event_params)
     @course_topics = clean_params[:includes]
     @course_includes = clean_params[:topics]
     @instructors = clean_params[:instructors]
-    flash[:alert] = "You must select a valid #{event_type_param} name."
-    render :new
+  end
+
+  def reset_vars_for_failed(mode, path)
+    @submit_path = send("#{path}_#{event_type_param}_path")
+    @edit_mode = mode.to_s.titleize
+    @event_types = EventType.selector(event_type_param)
+    @event_title = event_type_param.titleize
   end
 end

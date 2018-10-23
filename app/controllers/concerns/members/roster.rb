@@ -16,12 +16,6 @@ module Members::Roster
   end
 
   def upload_roster
-    if roster_params[:roster].blank? || roster_params[:roster].content_type != 'application/pdf'
-      flash[:alert] = 'You must upload a valid file.'
-      redirect_to update_roster_path
-      return
-    end
-
     files_bucket.upload(file: roster_params[:roster], key: roster_filename)
 
     flash[:success] = 'Roster file succesfully updated!'
@@ -37,6 +31,14 @@ module Members::Roster
   end
 
 private
+
+  def reject_invalid_file
+    return unless roster_params[:roster].present?
+    return unless roster_params[:roster].content_type == 'application/pdf'
+
+    flash[:alert] = 'You must upload a valid file.'
+    redirect_to update_roster_path
+  end
 
   def redirect_if_no_roster
     redirect_to root_path unless files_bucket.has?("roster/#{roster_filename}")

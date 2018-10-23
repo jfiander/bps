@@ -38,7 +38,7 @@ class BraintreeController < ApplicationController
       flash_error_message
     end
   rescue StandardError => e
-    generic_error_message
+    generic_error_message(e)
   end
 
   def done
@@ -97,6 +97,7 @@ private
 
   def send_receipt_email(transaction)
     return unless transaction.customer_details.email.present?
+
     ReceiptMailer.receipt(transaction, @payment).deliver
   end
 
@@ -107,7 +108,7 @@ private
     JS
   end
 
-  def generic_error_message
+  def generic_error_message(e)
     render js: <<~JS
       $('#alert').html('There was a problem processing the transaction.').removeClass('hide');
       $('#error').html('You have not been charged.').removeClass('hide');

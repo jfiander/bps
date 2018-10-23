@@ -10,8 +10,7 @@ module Concerns::Event::Boolean
   end
 
   def full?
-    registration_limit.to_i.positive? &&
-      registrations.count >= registration_limit.to_i
+    registration_limit.to_i.positive? && registrations.count >= registration_limit.to_i
   end
 
   def reminded?
@@ -32,9 +31,7 @@ module Concerns::Event::Boolean
   end
 
   def registerable?
-    return false if expired? || cutoff?
-    return false unless allow_any_registrations?
-    true
+    !expired? && !cutoff? && allow_any_registrations?
   end
 
 private

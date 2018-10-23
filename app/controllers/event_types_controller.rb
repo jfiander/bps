@@ -25,8 +25,8 @@ class EventTypesController < ApplicationController
     @event_type = EventType.new
     @edit_action = 'Add'
     @submit_path = create_event_type_path
-
     return if current_user&.permitted?(:admin, strict: true, session: session)
+
     @event_types = @event_types.where.not(event_category: 'meeting')
   end
 

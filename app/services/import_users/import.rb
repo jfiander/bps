@@ -40,6 +40,7 @@ module ImportUsers
     def record_results(user, changes)
       @certificates << user.certificate
       return @created << user if changes == :created
+
       @updated << { user.id => changes } if changes.present?
     end
 

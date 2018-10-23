@@ -17,6 +17,7 @@ module ImportUsers
 
     def clean_date
       return if @string.blank?
+
       datestring = @string.ljust(5, '0').ljust(6, '1')
       datestring[datestring.length - 1] = '1' if datestring.last(2) == '00'
       parse_date(datestring)
@@ -32,6 +33,7 @@ module ImportUsers
 
     def handle_invalid_date(error)
       raise error unless error.message == 'invalid date'
+
       puts 'Invalid date' unless Rails.env.test?
     end
   end

@@ -67,6 +67,7 @@ private
 
   def slack_notification
     return unless @float_plan.persisted?
+
     NotificationsMailer.float_plan(@float_plan).deliver
     SlackNotification.new(
       channel: 'floatplans', type: :info, title: 'Float Plan Submitted',

@@ -10,23 +10,16 @@ module Members::Minutes
   end
 
   def find_minutes
-    minute = MinutesFile.find_by(
-      year: minutes_params[:year].to_i, month: minutes_params[:month].to_i,
-      excom: params[:excom].present?
-    )
-
+    minute = find_minutes_issue
     return minute_not_found unless minute.present?
 
-    send_minute(minute, excom: params[:excom].present?)
+    send_minute(minute, excom: minutes_params[:minutes_excom].present?)
   end
 
   def upload_minutes
     verb = update_file(:minutes)
 
-    redirect_to(
-      minutes_path,
-      success: "Minutes #{@issue} #{verb} successfully."
-    )
+    redirect_to(minutes_path, success: "Minutes #{@issue} #{verb} successfully.")
   end
 
 private
@@ -40,11 +33,19 @@ private
   end
 
   def find_minutes_issue
-    MinutesFile.find_by(
-      year: minutes_params[:issue]['date(1i)'],
-      month: minutes_params[:issue]['date(2i)'],
-      excom: minutes_params[:minutes_excom].present?
-    )
+    MinutesFile.find_by(year: minutes_year, month: minutes_month, excom: minutes_excom)
+  end
+
+  def minutes_year
+    minutes_params[:year] || minutes_params[:issue]['date(1i)']
+  end
+
+  def minutes_month
+    minutes_params[:month] || minutes_params[:issue]['date(2i)']
+  end
+
+  def minutes_excom
+    params[:excom] || minutes_params[:minutes_excom].present?
   end
 
   def minute_not_found
@@ -63,8 +64,7 @@ private
 
   def minutes_params
     params.permit(
-      :file, :minutes_remove, :minutes_excom, :year, :month,
-      issue: ['date(1i)', 'date(2i)']
+      :file, :minutes_remove, :minutes_excom, :year, :month, issue: ['date(1i)', 'date(2i)']
     )
   end
 
@@ -82,11 +82,7 @@ private
   end
 
   def remove_minutes
-    MinutesFile.find_by(
-      year: minutes_params[:issue]['date(1i)'],
-      month: minutes_params[:issue]['date(2i)'],
-      excom: minutes_params[:minutes_excom].present?
-    )&.destroy
+    find_minutes_issue&.destroy
   end
 
   def create_minutes

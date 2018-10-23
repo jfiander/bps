@@ -23,18 +23,15 @@ class StandingCommitteeOffice < ApplicationRecord
   end
 
   def years_remaining
-    return 1 if executive?
-    ((term_expires_at - Time.now) / 1.year).ceil
+    executive? ? 1 : ((term_expires_at - Time.now) / 1.year).ceil
   end
 
   def term_year
-    return 1 if executive?
-    term_length - years_remaining + 1
+    executive? ? 1 : term_length - years_remaining + 1
   end
 
   def term_fraction
-    return '' if executive?
-    "[#{term_year}/#{term_length}]"
+    executive? ? '' : "[#{term_year}/#{term_length}]"
   end
 
 private
@@ -44,11 +41,8 @@ private
   end
 
   def only_one_chair
-    StandingCommitteeOffice
-      .current
-      .where(committee_name: committee_name)
-      .where(chair: true)
-      .count <= 1
+    StandingCommitteeOffice.current.where(committee_name: committee_name)
+                           .where(chair: true).count <= 1
   end
 
   def executive?

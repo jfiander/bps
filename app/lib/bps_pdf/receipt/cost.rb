@@ -20,12 +20,14 @@ private
 
   def cost_type(payment)
     return unless payment.cost_type.present? || payment.cost_type == 'General'
+
     text payment.cost_type, size: 12, align: :center, inline_format: true
   end
 
   def override_comment(payment)
     return unless payment.parent.respond_to?(:override_comment)
     return unless payment.parent.override_comment&.present?
+
     text payment.parent.override_comment, size: 12, align: :center, inline_format: true
   end
 end

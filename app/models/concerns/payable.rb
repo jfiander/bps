@@ -19,6 +19,7 @@ module Payable
 
   def paid?
     return nil unless self&.class&.payable?
+
     self&.payment&.paid
   end
 

@@ -108,13 +108,11 @@ private
   end
 
   def applicants
-    apps = additional_member_params.values.map(&:to_h).map(&:values).flatten
-
-    apps = apps.map(&:values).flatten.reject do |a|
+    additionals = additionals.map(&:values).flatten.reject do |a|
       a == true || a.is_a?(MemberApplication) || a.key?('_destroy')
     end
 
-    apps.each do |a|
+    additionals.each do |a|
       a[:member_application] = @member_application
       a[:primary] = false
     end
@@ -128,5 +126,9 @@ private
     primary_member_params.to_h.merge(
       primary: true, member_application: @member_application
     )
+  end
+
+  def additionals
+    @additionals ||= additional_member_params.values.map(&:to_h).map(&:values).flatten
   end
 end

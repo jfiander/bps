@@ -39,6 +39,7 @@ private
   def override_rank(html = true)
     return '' if rank_override == 'none'
     return rank_override if rank_override.present?
+
     cleanup_1st(rank, html)
   end
 
@@ -76,13 +77,16 @@ private
   def valid_rank
     return true if rank.nil?
     return true if rank.in? valid_ranks
+
     errors.add(:rank, 'must be nil or in valid_ranks')
   end
 
   def valid_grade
     return true if grade.nil?
+
     self.grade = grade.to_s.upcase
     return true if grade.in? valid_grades
+
     errors.add(:grade, 'must be nil or in valid_grades')
   end
 
@@ -95,8 +99,6 @@ private
   end
 
   def rank_priority
-    @rank_priority ||= YAML.safe_load(
-      File.read("#{Rails.root}/app/lib/rank_priority.yml")
-    )
+    @rank_priority ||= YAML.safe_load(File.read("#{Rails.root}/app/lib/rank_priority.yml"))
   end
 end

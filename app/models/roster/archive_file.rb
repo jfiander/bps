@@ -7,6 +7,7 @@ class Roster::ArchiveFile < UploadedFile
 
   def self.archive!
     return :current if roster_generated_at == last&.generated_at
+
     download_current_roster
     create_new_archive(roster_generated_at)
   end

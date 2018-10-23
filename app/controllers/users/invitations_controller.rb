@@ -4,7 +4,7 @@ class Users::InvitationsController < Devise::InvitationsController
   before_action :redirect_if_no_invitations, except: %i[edit update]
   before_action :block_inviting_invalid_users, only: :create
 
-  def after_invite_path_for(resource)
+  def after_invite_path_for(_resource)
     new_user_invitation_path
   end
 

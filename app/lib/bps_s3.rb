@@ -66,10 +66,9 @@ private
     raise 'Invalid bucket.' unless @bucket.in?(valid_buckets)
 
     @endpoint = @bucket
-
     @environment = nil if @bucket == :seo
-
     return unless @bucket == :static
+
     @endpoint = @environment = :static
     @bucket = :files
   end
@@ -95,6 +94,7 @@ private
 
   def sign?(signed = false)
     return true if @bucket.in?(%i[seo files bilge]) && @environment != :static
+
     signed
   end
 

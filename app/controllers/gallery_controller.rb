@@ -8,7 +8,6 @@ class GalleryController < ApplicationController
 
   def index
     @albums = Album.includes(:photos).all
-
     @album = Album.new
     @photo = Photo.new
   end
@@ -20,18 +19,15 @@ class GalleryController < ApplicationController
     if @album.save
       redirect_to photos_path, success: 'Successfully added album!'
     else
-      errors = @album.errors.full_messages
-      flash[:alert] = 'There was a problem creating the album.'
-      flash[:error] = errors
-      redirect_to photos_path
+      failed_to_save
     end
   end
 
   def show
     @album = Album.find_by(id: clean_params[:id])
     @photo = Photo.new
-
     return if @album.present?
+
     flash[:alert] = 'Album not found.'
     redirect_to photos_path
   end
@@ -107,5 +103,12 @@ private
     else
       redirect_to photos_path
     end
+  end
+
+  def failed_to_save
+    errors = @album.errors.full_messages
+    flash[:alert] = 'There was a problem creating the album.'
+    flash[:error] = errors
+    redirect_to photos_path
   end
 end

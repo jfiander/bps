@@ -55,6 +55,7 @@ private
 
   def formatted_params
     return clean_params if clean_params[:year].blank? || clean_params[:year].is_a?(Date)
+
     date = Date.strptime("#{clean_params[:year]}", '%Y')
     clean_params.to_h.merge(year: date)
   end
@@ -68,10 +69,8 @@ private
   end
 
   def render_or_redirect(success, render_sym)
-    if !success && render_sym.present?
-      render render_sym
-      return
-    end
+    return render(render_sym) if !success && render_sym.present?
+
     redirect_to send("#{model.to_s.underscore.gsub('/', '_')}s_path")
   end
 end

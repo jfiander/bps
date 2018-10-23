@@ -18,6 +18,7 @@ module AdminMenuHelper
     rc, ra, nc, na = link_requirements(options)
     return false unless current_user&.permitted?(roles, strict: strict, session: session)
     return false if invalid?(rc, ra, nc, na)
+
     true
   end
 

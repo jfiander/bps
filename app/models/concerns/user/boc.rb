@@ -9,6 +9,7 @@ module User::BOC
 
   def boc_display
     return nil unless boc.present?
+
     "-#{boc(endorsements: false)}"
   end
 
@@ -27,7 +28,6 @@ private
     return 'ACN' if boc_keys.include?(:BOC_ACN)
     return 'CN'  if boc_keys.include?(:BOC_CN)
     return 'IN'  if boc_keys.include?(:BOC_IN)
-    nil
   end
 
   def boc_endorsements

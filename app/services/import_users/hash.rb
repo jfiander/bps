@@ -41,6 +41,7 @@ module ImportUsers
       return @row['Rank']    if @row['Rank']
       return @row['SQ Rank'] if @row['SQ Rank']
       return @row['HQ Rank'] if @row['HQ Rank']
+
       nil
     end
 

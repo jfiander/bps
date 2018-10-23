@@ -33,6 +33,7 @@ module Concerns::Payment::BraintreeMethods
 
     def create_result_hash(result)
       return success_hash if result.success?
+
       failed_hash(result)
     end
 
@@ -114,6 +115,7 @@ module Concerns::Payment::BraintreeMethods
 
   def lookup_transaction
     return false unless paid?
+
     self.class.gateway.transaction.find(transaction_id)
   end
 

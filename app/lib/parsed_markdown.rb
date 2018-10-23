@@ -73,8 +73,7 @@ private
 
   def scan_layer_icons(original)
     original.scan(%r{([^/:;]+)(?::([^/:;]+))?}).map do |(icon, css)|
-      next if icon == '%fal'
-      { name: icon, options: { css: css } }
+      { name: icon, options: { css: css } } unless icon == '%fal'
     end.compact
   end
 

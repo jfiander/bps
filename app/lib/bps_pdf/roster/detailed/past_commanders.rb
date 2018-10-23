@@ -26,6 +26,7 @@ private
   def pc_table
     pcs = Roster::PastCommander.all
     return if pcs.blank?
+
     size = pcs.count > 60 ? 7 : 8
     left, right = halve(pcs)
 

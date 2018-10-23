@@ -34,9 +34,18 @@ private
   def roster_entry(user, row_index, col_index)
     return unless user.present?
 
-    base_x = roster_config[:base][:x] + col_index * (roster_config[:member][:width] + 10)
-    base_y = roster_config[:base][:y] - row_index * (roster_config[:member][:height] + 20)
+    entry_box(user, entry_box_x(col_index), entry_box_y(row_index))
+  end
 
+  def entry_box_x(col_index)
+    roster_config[:base][:x] + col_index * (roster_config[:member][:width] + 10)
+  end
+
+  def entry_box_y(row_index)
+    roster_config[:base][:y] - row_index * (roster_config[:member][:height] + 20)
+  end
+
+  def entry_box(user, base_x, base_y)
     bounding_box(
       [base_x, base_y],
       width: roster_config[:member][:width], height: roster_config[:member][:height]
@@ -52,9 +61,7 @@ private
     email(user)
     user.mailing_address(name: false).each { |a| text a, size: 9 }
     move_down(5)
-    text 'h ' + user.phone_h, size: 9 if user.phone_h.present?
-    text 'c ' + user.phone_c, size: 9 if user.phone_c.present?
-    text 'w ' + user.phone_w, size: 9 if user.phone_w.present?
+    phones(user)
   end
 
   def name(user)
@@ -73,6 +80,17 @@ private
       text(user.email, size: 9)
       move_down(5)
     end
+  end
+
+  def phones(user)
+    phone(user, :phone_h)
+    phone(user, :phone_c)
+    phone(user, :phone_w)
+  end
+
+  def phone(user, method)
+    letter = method.to_s.last
+    text "#{letter} " + user.send(method), size: 9 if user.send(method).present?
   end
 
   def footer

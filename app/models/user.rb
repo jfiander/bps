@@ -35,9 +35,7 @@ class User < ApplicationRecord
   has_many :events, through: :event_instructors
 
   def self.no_photo
-    ActionController::Base.helpers.image_path(
-      User.buckets[:static].link('no_profile.png')
-    )
+    ActionController::Base.helpers.image_path(User.buckets[:static].link('no_profile.png'))
   end
 
   def self.position_associations
@@ -47,8 +45,7 @@ class User < ApplicationRecord
   has_attached_file(
     :profile_photo,
     paperclip_defaults(:files).merge(
-      path: 'profile_photos/:id/:style/:filename',
-      styles: { medium: '500x500', thumb: '200x200' },
+      path: 'profile_photos/:id/:style/:filename', styles: { medium: '500x500', thumb: '200x200' },
       default_url: User.no_photo
     )
   )
@@ -107,9 +104,7 @@ class User < ApplicationRecord
 
   def excom?
     BridgeOffice.find_by(user_id: id).present? ||
-      StandingCommitteeOffice.find_by(
-        committee_name: :executive, user_id: id
-      ).present?
+      StandingCommitteeOffice.find_by(committee_name: :executive, user_id: id).present?
   end
 
   def completions
@@ -148,6 +143,7 @@ private
 
   def update_last_mm
     return unless mm.to_i > mm_cache.to_i
+
     self.mm_cache = mm
     self.last_mm_year = Date.today.beginning_of_year
   end

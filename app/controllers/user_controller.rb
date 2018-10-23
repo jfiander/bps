@@ -27,6 +27,7 @@ class UserController < ApplicationController
   before_action :find_registration, only: %i[override_cost set_override_cost]
   before_action :block_override, only: %i[override_cost set_override_cost]
   before_action :find_payment, only: %i[receipt paid_in_person]
+  before_action :profile_title, only: :show
   before_action(
     :users_for_select,
     only: %i[permissions_index assign_bridge assign_committee]
@@ -37,11 +38,7 @@ class UserController < ApplicationController
   title!('Instructors', only: :instructors)
 
   def show
-    @registrations = Registration.for_user(@user.id).current.reject do |r|
-      r.event.blank?
-    end
-
-    @profile_title = @user.id == current_user.id ? 'Current' : 'Selected'
+    @registrations = Registration.for_user(@user.id).current.reject { |r| r.event.blank? }
 
     insignia
 
@@ -71,6 +68,10 @@ class UserController < ApplicationController
   end
 
 private
+
+  def profile_title
+    @profile_title = @user.id == current_user.id ? 'Current' : 'Selected'
+  end
 
   def can_view_profile?
     unless clean_params[:id].to_i == current_user.id ||

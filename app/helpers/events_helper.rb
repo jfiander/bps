@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module EventsHelper
+  include EventsActionLinksHelper
+
   def event_type(event)
     @event_types.find_all { |e| e.id == event.event_type_id }.first
   end
@@ -93,18 +95,6 @@ module EventsHelper
     end
   end
 
-  def event_action_link(event, path, **options)
-    return if options.key?(:if) && !options[:if]
-    return if options.key?(:expired) && options[:expired] != event&.expired?
-
-    options = event_action_link_defaults(options[:css]).merge(options)
-    confirm = options.delete(:confirm)
-    options[:data][:confirm] = confirm if confirm.present?
-    icon = event_action_link_icon(options)
-
-    generate_event_action_link(event, path, icon, options)
-  end
-
   def reg_override_icon(reg)
     options = reg_override_options(reg)
     icon = FA::Icon.p(
@@ -127,31 +117,6 @@ module EventsHelper
       { title: 'Registration has already been paid', css: 'gray' }
     else
       { title: "#{reg_override_verb(reg)} override cost", css: 'green' }
-    end
-  end
-
-private
-
-  def event_action_link_defaults(css)
-    {
-      icon: '', text: '', class: "control #{css}",
-      confirm: '', data: {}, icon_options: { fa: :fw, style: :regular }
-    }
-  end
-
-  def event_action_link_icon(options)
-    FA::Icon.p(
-      options[:icon], **options.delete(:icon_options)
-    ) + options[:text].titleize
-  end
-
-  def generate_event_action_link(event, path, icon, options)
-    if path.present? && path.match?(/_path/)
-      link_to(send(path, event), **options) { icon }
-    elsif path.present?
-      link_to(path, **options) { icon }
-    else
-      icon
     end
   end
 end

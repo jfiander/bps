@@ -39,12 +39,16 @@ class Committee < ApplicationRecord
     return name unless name.match?('//')
 
     lines = name.split('//')
-    lines = lines.map { |l| ActionController::Base.helpers.sanitize(l) }
+    format_committee_lines(lines)
+  end
+
+private
+
+  def format_committee_lines(lines)
+    lines.map { |l| ActionController::Base.helpers.sanitize(l) }
     committee = lines.shift
     committee += '<small>'.html_safe
-    lines.each do |line|
-      committee += '<br>&nbsp;&nbsp;'.html_safe + line
-    end
+    lines.each { |line| committee += '<br>&nbsp;&nbsp;'.html_safe + line }
     committee += '</small>'.html_safe
   end
 end

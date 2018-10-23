@@ -9,6 +9,7 @@ module Public::Bilge
   def bilge
     bilge = pick_bilge
     return bilge_not_found unless bilge.present?
+
     send_bilge(bilge)
   end
 

@@ -57,7 +57,7 @@ private
     bounding_box([0, y_pos], width: 325, height: 70) do
       ed_award_title(award)
       move_down(10)
-      ed_award_description(award, key)
+      ed_award_description(key)
     end
   end
 
@@ -68,7 +68,7 @@ private
     )
   end
 
-  def ed_award_description(award, key)
+  def ed_award_description(key)
     text(
       config_text[:education][key],
       size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
@@ -80,8 +80,7 @@ private
   end
 
   def ed_award_grade(award)
-    return :sn if award == :EdAch
-    :ap
+    award == :EdAch ? :sn : :ap
   end
 
   def ed_award_svg(grade, ed_pro)
@@ -103,6 +102,7 @@ private
 
   def ed_award_results(users)
     return unless users.size.positive?
+
     left, right = halve(users)
     size = ed_award_result_size(users)
 
@@ -116,14 +116,18 @@ private
 
   def ed_award_body(options = {})
     bounding_box([0, options[:y_pos]], width: 325, height: options[:y_pos]) do
-      text(
-        config_text[:education]["#{options[:key]} proud".to_sym],
-        size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
-      )
+      ed_award_body_proud(options[:key])
 
       ed_award_column(options[:left], 20, options[:y_pos], options[:size])
       ed_award_column(options[:right], 175, options[:y_pos], options[:size])
     end
+  end
+
+  def ed_award_body_proud(key)
+    text(
+      config_text[:education]["#{key} proud".to_sym],
+      size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
+    )
   end
 
   def ed_award_column(collection, x_pos, y_pos, size)

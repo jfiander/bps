@@ -32,6 +32,7 @@ class EventType < ApplicationRecord
   def self.selector(type)
     return seminars.ordered.map(&:to_select_array) if type == 'seminar'
     return meetings.ordered.map(&:to_select_array) if type == 'event'
+
     course_selector_hash
   end
 
@@ -80,15 +81,14 @@ private
 
   def cleanup_title(title)
     title = title.split('-').map(&:titleize).join('-')
-    title_subs.each do |pattern, replacement|
-      title.gsub!(/#{pattern}/i, replacement)
-    end
+    title_subs.each { |pattern, replacement| title.gsub!(/#{pattern}/i, replacement) }
     title
   end
 
   def new_title(title)
     return title unless title.in?(NEW_TITLES.keys)
     return title unless new_title?
+
     NEW_TITLES[title]
   end
 
@@ -100,8 +100,7 @@ private
     # Configure acronyms in config/initializers/inflections.rb
 
     slashes = {
-      'VHF DSC' => 'VHF/DSC',
-      'CPR AED' => 'CPR/AED'
+      'VHF DSC' => 'VHF/DSC', 'CPR AED' => 'CPR/AED'
     }
 
     small_words = {

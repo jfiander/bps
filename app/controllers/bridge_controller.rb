@@ -115,16 +115,20 @@ private
   end
 
   def create_standing_committee
-    y = clean_params[:term_start_at]['(1i)']
-    m = clean_params[:term_start_at]['(2i)']
-    d = clean_params[:term_start_at]['(3i)']
-
     StandingCommitteeOffice.new(
       committee_name: clean_params[:committee_name],
       chair: clean_params[:chair],
       user_id: clean_params[:user_id],
-      term_start_at: "#{y}-#{m}-#{d}",
+      term_start_at: standing_committee_term_start_at,
       term_length: clean_params[:term_length]
     )
+  end
+
+  def standing_committee_term_start_at
+    y = clean_params[:term_start_at]['(1i)']
+    m = clean_params[:term_start_at]['(2i)']
+    d = clean_params[:term_start_at]['(3i)']
+
+    "#{y}-#{m}-#{d}"
   end
 end

@@ -37,13 +37,12 @@ private
   def seminar_color(seminar)
     return 'FFFFCC' if seminar['yellow']
     return 'CCFFCC' if seminar['green']
+
     'FFCCCC'
   end
 
   def seminar_name(seminar)
-    if seminar['code'].is_a?(String) || seminar['code'].nil?
-      return seminar['name']
-    end
+    return seminar['name'] if seminar['code'].is_a?(String) || seminar['code'].nil?
 
     seminar_any_name(seminar) if seminar['code'].keys.first == 'any'
   end
@@ -81,6 +80,7 @@ private
     return 'BOC<br>Adv. Coastal Navigator' if @completions['BOC_ACN'].present?
     return 'BOC<br>Coastal Navigator' if @completions['BOC_CN'].present?
     return 'BOC<br>Inland Navigator' if @completions['BOC_IN'].present?
+
     'Boat Operator Certification'
   end
 

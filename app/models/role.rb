@@ -16,10 +16,12 @@ class Role < ApplicationRecord
   def parents
     parent_role = parent
     parents_array = []
+
     while parent_role.present?
       parents_array << parent_role
       parent_role = parent_role.parent
     end
+
     parents_array
   end
 
@@ -28,6 +30,7 @@ private
   def descends_from_admin?
     return true if name == 'admin'
     return true if parents.map(&:name).include? 'admin'
+
     errors.add(:parent, 'must descend from :admin')
   end
 end

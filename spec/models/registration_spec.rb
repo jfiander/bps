@@ -59,8 +59,7 @@ RSpec.describe Registration, type: :model do
       it 'should not allow destroying a paid object' do
         @reg.payment.paid!('1234567890')
         expect { @reg.destroy }.to raise_error(
-          RuntimeError,
-          'This Registration has been paid, and cannot be destroyed.'
+          RuntimeError, 'This Registration has been paid, and cannot be destroyed.'
         )
       end
     end

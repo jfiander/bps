@@ -22,6 +22,7 @@ class MemberApplication < ApplicationRecord
   def payment_amount
     return (134 + additional.count) if additional.present?
     return 12 if primary.member_type == 'Apprentice'
+
     89
   end
 

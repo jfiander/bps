@@ -25,6 +25,7 @@ class EventsController < ApplicationController
   before_action :location_names, only: %i[new copy edit]
   before_action :set_create_path, only: %i[new copy]
   before_action :load_registrations, only: [:schedule], if: :user_signed_in?
+  before_action :event_not_found?, only: %i[show]
 
   def schedule
     @events = get_events(event_type_param, :current)
@@ -34,6 +35,7 @@ class EventsController < ApplicationController
     )
 
     return unless @current_user_permitted_event_type
+
     @registered_users = Registration.includes(:user).all.group_by(&:event_id)
     @expired_events = get_events(event_type_param, :expired)
   end
@@ -51,13 +53,11 @@ class EventsController < ApplicationController
   end
 
   def show
-    return if event_not_found?
-
     @locations = Location.searchable
     @event_title = event_type_param.titleize
     @registration = Registration.new(event_id: clean_params[:id])
-
     return unless user_signed_in?
+
     reg = Registration.find_by(event_id: clean_params[:id], user: current_user)
     @registered = { reg.event_id => reg.id } if reg.present?
   end
@@ -152,10 +152,9 @@ private
 
   def event_not_found?
     category = event_type_param == 'event' ? 'meeting' : event_type_param
-    return false unless @event.blank? || @event.category != category
+    return unless @event.blank? || @event.category != category
 
     flash[:notice] = "Couldn't find that #{event_type_param}."
     redirect_to send("#{event_type_param}s_path")
-    true
   end
 end

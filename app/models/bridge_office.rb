@@ -49,17 +49,14 @@ class BridgeOffice < ApplicationRecord
 
   def self.title(office)
     title = department(office)
-    if %w[Executive Educational Administrative].any? { |o| o.in? title }
-      "#{title} Officer"
-    else
-      title
-    end
+    %w[Executive Educational Administrative].any? { |o| o.in? title } ? "#{title} Officer" : title
   end
 
 private
 
   def valid_office
     return true if office.in? BridgeOffice.departments(assistants: true)
+
     errors.add(:office, 'must be in BridgeOffice.departments(assistants: true)')
   end
 end

@@ -34,11 +34,9 @@ private
   end
 
   def people(payment)
-    if payment.parent.respond_to?(:member_applicants)
-      return payment.parent&.member_applicants
-    elsif payment.parent.respond_to?(:children)
-      return payment.parent&.children
-    end
+    return payment.parent&.member_applicants if payment.parent.respond_to?(:member_applicants)
+    return payment.parent&.children if payment.parent.respond_to?(:children)
+
     []
   end
 

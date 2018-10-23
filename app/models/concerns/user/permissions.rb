@@ -17,6 +17,7 @@ module User::Permissions
 
   def permitted?(*required_roles, strict: false, session: nil)
     return false if locked?
+
     required = SIMPLIFY.call(required_roles)
     return false if required.blank? || required.all?(&:blank?)
 
@@ -39,9 +40,7 @@ module User::Permissions
 
   def unpermit!(role)
     user_roles = UserRole.where(user: self)
-    unless role == :all
-      user_roles = user_roles.where(role: Role.find_by(name: role.to_s))
-    end
+    user_roles = user_roles.where(role: Role.find_by(name: role.to_s)) unless role == :all
     user_roles.destroy_all.present?
   end
 
@@ -75,11 +74,7 @@ private
 
   def office_roles
     SIMPLIFY.call(
-      [
-        permitted_roles_from_bridge_office,
-        permitted_roles_from_committee,
-        (:excom if excom?)
-      ]
+      [permitted_roles_from_bridge_office, permitted_roles_from_committee, (:excom if excom?)]
     )
   end
 
@@ -102,9 +97,7 @@ private
   end
 
   def child_roles(parent_roles)
-    SIMPLIFY.call(
-      parent_roles.map { |role| User::Permissions.implicit_roles_hash[role] }
-    )
+    SIMPLIFY.call(parent_roles.map { |role| User::Permissions.implicit_roles_hash[role] })
   end
 
   def implicit_permissions
@@ -114,8 +107,7 @@ private
   end
 
   def permitted_roles_from_bridge_office
-    implicit_permissions['bridge_office'][cached_bridge_office&.office]
-      &.map(&:to_sym)
+    implicit_permissions['bridge_office'][cached_bridge_office&.office]&.map(&:to_sym)
   end
 
   def permitted_roles_from_committee

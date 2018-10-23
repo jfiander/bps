@@ -2,18 +2,15 @@
 
 module EventTypes::Refresh
   def refresh
-    # html_safe: No user content
-    @new_event_types = (+'').html_safe
-    @new_event_types << '<option value=\"\">'.html_safe
-    @new_event_types << refresh_prompt
-    @new_event_types << '</option>'.html_safe
-    @new_event_types << '<option value=\"\"></option>'.html_safe
+    # html_safe: Text is sanitized before display
+    @new_event_types = <<~HTML.html_safe
+      "<option value=\\\"\\\">#{refresh_prompt}</option>" +
+      "<option value=\\\"\\\"></option>" +
+    HTML
 
     event = Event.find_by(id: update_params[:id].to_i)
 
-    EventType.selector(refresh_params[:category]).each do |title, id|
-      add_option(title, id, event: event)
-    end
+    @new_event_types << new_options(event).html_safe
   end
 
 private
@@ -27,13 +24,21 @@ private
     "Please select #{article} #{refresh_params[:category]} type"
   end
 
+  def new_options(event)
+    EventType.selector(refresh_params[:category]).map do |group, options|
+      option_tags = options.map { |t, id| add_option(t, id, event: event) }.join(" +\n")
+      add_optgroup(group, option_tags)
+    end.join(" +\n")
+  end
+
+  def add_optgroup(group, option_tags)
+    "\"<optgroup label=\\\"#{group}\\\">\" +\n#{option_tags} +\n\"</optgroup>\""
+  end
+
   def add_option(title, id, event: nil)
-    @new_event_types << '<option value=\"'.html_safe
-    @new_event_types << id.to_s
-    @new_event_types << '\"'.html_safe
-    @new_event_types << ' selected=\"selected\"'.html_safe if id == event&.event_type_id
-    @new_event_types << '>'.html_safe
-    @new_event_types << (title.match?(/---/) ? title : title.titleize)
-    @new_event_types << '</option>'.html_safe
+    selected = ' selected=\"selected\"' if id == event&.event_type_id
+    title = title.match?(/---/) ? title : title.titleize
+
+    "\"<option value=\\\"#{id}\\\"#{selected}>#{sanitize(title)}</option>\""
   end
 end

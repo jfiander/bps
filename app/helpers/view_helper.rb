@@ -15,8 +15,8 @@ module ViewHelper
   def spinner_button(form = nil, button_text: 'Submit', disable_text: nil, name: 'button', css: '')
     disable_text ||= button_text == 'Submit' ? 'Submitting' : button_text.sub(/e$/, '') + 'ing'
     data_hash = { disable_with: (FA::Icon.p('spinner', fa: 'pulse') + "#{disable_text}...") }
-
     return form.button(button_text, data: data_hash, name: name, class: css) if form.present?
+
     button_tag(button_text, data: data_hash, name: name, class: css)
   end
 

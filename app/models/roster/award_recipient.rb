@@ -7,8 +7,7 @@ class Roster::AwardRecipient < ApplicationRecord
   has_attached_file(
     :photo,
     paperclip_defaults(:files).merge(
-      path: 'award_recipients/:id/:style/:filename',
-      styles: { medium: '500x500', thumb: '200x200' }
+      path: 'award_recipients/:id/:style/:filename', styles: { medium: '500x500', thumb: '200x200' }
     )
   )
 
@@ -32,6 +31,7 @@ class Roster::AwardRecipient < ApplicationRecord
   def display_name
     return name unless user_id.present?
     return user&.simple_name unless additional_user.present?
+
     "#{user&.simple_name} and #{additional_user&.simple_name}"
   end
 
@@ -40,8 +40,8 @@ class Roster::AwardRecipient < ApplicationRecord
   end
 
   def user_or_name
-    return true if user.present?
-    return true if name.present?
+    return true if user.present? || name.present?
+
     errors.add(:base, 'Must have a user or name')
   end
 end

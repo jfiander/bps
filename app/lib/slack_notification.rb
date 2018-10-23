@@ -66,6 +66,7 @@ private
 
     return default_channel if channel.blank?
     return channel if channel.in?(linked_channels)
+
     raise ArgumentError, 'That channel is not linked to this notifier.'
   end
 
@@ -83,8 +84,8 @@ private
 
   def validated_type(type = nil)
     valid_types = %i[success info warning failure]
-
     return type if type.blank? || type.in?(valid_types)
+
     raise ArgumentError, 'Unrecognized notification type.'
   end
 end

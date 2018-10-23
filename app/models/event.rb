@@ -19,8 +19,7 @@ class Event < ApplicationRecord
   has_many :registrations
 
   has_attached_file(
-    :flyer,
-    paperclip_defaults(:files).merge(path: 'event_flyers/:id/:filename')
+    :flyer, paperclip_defaults(:files).merge(path: 'event_flyers/:id/:filename')
   )
 
   attr_accessor :delete_attachment
@@ -35,8 +34,7 @@ class Event < ApplicationRecord
   validates :event_type, :start_at, :expires_at, :cutoff_at, presence: true
 
   validates_attachment_content_type(
-    :flyer,
-    content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
+    :flyer, content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
   )
 
   before_save :refresh_calendar!, if: :calendar_details_updated?
@@ -60,8 +58,7 @@ class Event < ApplicationRecord
   end
 
   def self.expired(category)
-    all_expired(category)
-      .where('start_at >= ?', Date.today.last_year.beginning_of_year)
+    all_expired(category).where('start_at >= ?', Date.today.last_year.beginning_of_year)
   end
 
   def self.with_registrations
@@ -69,7 +66,7 @@ class Event < ApplicationRecord
   end
 
   def formatted_length
-    return nil if length.blank?
+    return if length.blank?
 
     hour = length.hour
     min = length.min
@@ -88,15 +85,14 @@ class Event < ApplicationRecord
 
   def remind!
     return if reminded?
+
     registrations.each { |reg| RegistrationMailer.remind(reg).deliver }
     update(reminded_at: Time.now)
   end
 
   def link
     route = category == 'meeting' ? 'event' : category
-    Rails.application.routes.url_helpers.send(
-      "show_#{route}_url", id, host: ENV['DOMAIN']
-    )
+    Rails.application.routes.url_helpers.send("show_#{route}_url", id, host: ENV['DOMAIN'])
   end
 
   def display_title(event_type_cache = nil)

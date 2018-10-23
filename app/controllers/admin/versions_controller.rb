@@ -4,6 +4,7 @@ class Admin::VersionsController < ApplicationController
   secure!(:admin, strict: true)
 
   before_action :load_versions, only: %i[show diff revert]
+  before_action :find_version_numbers, only: %i[diff]
 
   def index
     return list_objects if clean_params[:model].present?
@@ -17,25 +18,16 @@ class Admin::VersionsController < ApplicationController
 
   def diff
     # html_safe: Text is sanitized before display
-    @a = clean_params[:a].to_i
-    @b = clean_params[:b].to_i
-    return if @a == @b
     fix_version_order
     return unless version_jsons.compact.count == 2
 
     @mode = clean_params[:mode]
-    @diff = sanitize(
-      Differ.send(diff_method, *version_jsons).format_as(:html)
-    ).html_safe
+    @diff = sanitize(Differ.send(diff_method, *version_jsons).format_as(:html)).html_safe
   end
 
   def revert
     @version = @versions.first(clean_params[:a].to_i).last
-    if @version.reify
-      @version.reify.save!
-    else
-      @version.item.destroy
-    end
+    @version.reify ? @version.reify.save! : @version.item.destroy
 
     redirect_to admin_show_versions_path
   end
@@ -55,6 +47,12 @@ private
     raise 'Unpermitted class.' unless clean_params[:model].in?(versioned_models)
 
     clean_params[:model].classify.constantize
+  end
+
+  def find_version_numbers
+    @a = clean_params[:a].to_i
+    @b = clean_params[:b].to_i
+    redirect_to versions_path if @a == @b
   end
 
   def load_versions

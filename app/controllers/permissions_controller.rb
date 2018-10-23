@@ -57,11 +57,11 @@ private
       @roles.delete('users')
     end
 
-    unless current_user&.permitted?(:education, session: session)
-      @roles.delete('education')
-      @roles.delete('course')
-      @roles.delete('seminar')
-    end
+    return if current_user&.permitted?(:education, session: session)
+
+    @roles.delete('education')
+    @roles.delete('course')
+    @roles.delete('seminar')
   end
 
   def find_user_and_role
@@ -91,24 +91,44 @@ private
   end
 
   def process_permissions_errors
-    if clean_params[:user_id].blank?
-      flash[:alert] = 'User was not selected.'
-    elsif clean_params[:role].blank?
-      flash[:alert] = 'Permission was not selected.'
-    elsif restricted_permission?(clean_params[:role])
-      flash[:alert] = 'Unable to add that permission.'
-    end
+    no_user_selected
+    no_role_selected
+    restricted_role
+  end
 
-    redirect_to permit_path if flash[:alert].present?
+  def no_user_selected
+    return unless clean_params[:user_id].blank?
+
+    redirect_to permit_path, alert: 'User was not selected.'
+  end
+
+  def no_role_selected
+    return unless clean_params[:role].blank?
+
+    redirect_to permit_path, alert: 'Permission was not selected.'
+  end
+
+  def restricted_role
+    return unless restricted_permission?(clean_params[:role])
+
+    redirect_to permit_path, alert: 'Unable to add that permission.'
   end
 
   def restricted_permission?(role)
     return true if role == 'admin'
-    return true if role.in?(%w[education course seminar]) &&
-                   !current_user&.permitted?(:education, session: session)
-    return true if role == 'users' &&
-                   !current_user&.permitted?(:admin, strict: true, session: session)
+    return true if restricted_education(role)
+    return true if restricted_admin(role)
+
     false
+  end
+
+  def restricted_education(role)
+    role.in?(%w[education course seminar]) &&
+      !current_user&.permitted?(:education, session: session)
+  end
+
+  def restricted_admin(role)
+    role.in?(%w[users]) && !current_user&.permitted?(:admin, strict: true, session: session)
   end
 
   def permission_notification(user_role, mode, by)
@@ -124,11 +144,9 @@ private
   end
 
   def calendar_id
-    if ENV['ASSET_ENVIRONMENT'] == 'production'
-      ENV['GOOGLE_CALENDAR_ID_GEN']
-    else
-      ENV['GOOGLE_CALENDAR_ID_TEST']
-    end
+    return ENV['GOOGLE_CALENDAR_ID_GEN'] if ENV['ASSET_ENVIRONMENT'] == 'production'
+
+    ENV['GOOGLE_CALENDAR_ID_TEST']
   end
 
   def update_calendar_acl(user)

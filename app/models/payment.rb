@@ -8,9 +8,7 @@ class Payment < ApplicationRecord
   belongs_to :parent, polymorphic: true
   has_secure_token
 
-  has_attached_file(
-    :receipt, paperclip_defaults(:files).merge(path: 'receipts/:id.pdf')
-  )
+  has_attached_file(:receipt, paperclip_defaults(:files).merge(path: 'receipts/:id.pdf'))
 
   validates_attachment_content_type :receipt, content_type: %r{\Aapplication/pdf\z}
 
@@ -81,6 +79,7 @@ private
 
   def set_cost_type
     return unless parent.class.name == 'Registration'
+
     parent.event.costs.select { |t, c| c == amount }.keys.first.to_s.titleize
   end
 end
