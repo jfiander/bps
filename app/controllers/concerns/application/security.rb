@@ -3,14 +3,10 @@
 module Application::Security
   module ClassMethods
     def secure!(*roles, strict: false, only: nil, except: nil)
-      before_action(only: only, except: except) do
-        authenticate_user!
-      end
-
+      before_action(only: only, except: except) { authenticate_user! }
       return if roles.blank?
-      before_action(only: only, except: except) do
-        require_permission(*roles, strict: strict)
-      end
+
+      before_action(only: only, except: except) { require_permission(*roles, strict: strict) }
     end
   end
 
@@ -33,34 +29,33 @@ private
 
   def require_permission(*roles, strict: false)
     return if current_user&.permitted?(*roles, strict: strict, session: session)
+
     redirect_to root_path
   end
 
   def authenticate_user!(*args)
     return super(*args) if user_signed_in?
+
     flash[:referrer] = request.original_fullpath
     flash[:notice] = 'You must login to continue.'
     redirect_to new_user_session_path
   end
 
   def authenticate_inviter!
-    unless current_user&.permitted?(:users, session: session)
-      redirect_to root_path
-      return
-    end
+    return redirect_to root_path unless current_user&.permitted?(:users, session: session)
 
     super
   end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(
-      :account_update,
-      keys: %i[profile_photo rank first_name last_name]
+      :account_update, keys: %i[profile_photo rank first_name last_name]
     )
   end
 
   def cache_user_permissions
     return unless current_user.present?
+
     session[:granted] = current_user.granted_roles
     session[:permitted] = current_user.permitted_roles
   end
