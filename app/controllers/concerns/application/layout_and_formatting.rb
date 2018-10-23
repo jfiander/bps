@@ -12,15 +12,9 @@ private
   end
 
   def pick_header_image
-    @header_image = files_bucket.link(find_header&.file&.path(:desktop))
-  end
-
-  def find_header
-    if new_header_params[:header].present?
-      HeaderImage.find_by(id: new_header_params[:header])
-    else
-      HeaderImage.all.sample
-    end
+    @header_image = files_bucket.link(
+      HeaderImage.pick(new_header_params[:header])&.file&.path(:desktop)
+    )
   end
 
   def new_header_params

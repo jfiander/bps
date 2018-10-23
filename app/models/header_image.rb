@@ -14,11 +14,13 @@ class HeaderImage < ApplicationRecord
     )
   )
 
-  validates_attachment_content_type(
-    :file, content_type: %r{\A(image/(jpe?g|png|gif))\z}
-  )
+  validates_attachment_content_type(:file, content_type: %r{\A(image/(jpe?g|png|gif))\z})
   validates :file, presence: true, if: :no_errors_yet?
   validate :correct_image_dimensions, if: :no_errors_yet?
+
+  def self.pick(id = nil)
+    id.present? ? find_by(id: id) : all.sample
+  end
 
 private
 

@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :header_image do
-    image_file ''
+    file ''
   end
 end
