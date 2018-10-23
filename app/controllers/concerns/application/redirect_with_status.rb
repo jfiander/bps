@@ -23,7 +23,7 @@ private
 
   def redirect_if(condition, path, options)
     if condition
-      past ||= "#{options[:verb]}d"
+      past = options[:past] || "#{options[:verb]}d"
       redirect_to(path, success: "Successfully #{past} #{options[:object]}.")
     else
       yield
