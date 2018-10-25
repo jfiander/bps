@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module User::ProfilePhoto
+  extend ActiveSupport::Concern
+
   def photo(style: :medium)
     if photo?
       User.buckets[:files].link(profile_photo.s3_object(style).key)

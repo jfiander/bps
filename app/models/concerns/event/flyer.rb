@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Concerns::Event::Flyer
+  extend ActiveSupport::Concern
+
   def get_flyer(event_types = nil)
     if use_course_book_cover?(event_types)
       get_book_cover(:courses, event_types)

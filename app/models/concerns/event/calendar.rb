@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Concerns::Event::Calendar
+  extend ActiveSupport::Concern
+
   def book!
     return if booked?
 

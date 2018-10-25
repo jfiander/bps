@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Concerns::FloatPlan::Formatting
+  extend ActiveSupport::Concern
+
   def fuel
     if fuel_capacity.present?
       "#{fuel_capacity} gallons"

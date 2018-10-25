@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Concerns::Event::Boolean
+  extend ActiveSupport::Concern
+
   def expired?
     expires_at.present? && expires_at < Time.now
   end

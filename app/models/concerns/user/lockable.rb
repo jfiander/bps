@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module User::Lockable
+  extend ActiveSupport::Concern
+
   def locked?
     locked_at.present?
   end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module User::BOC
+  extend ActiveSupport::Concern
+
   def boc(endorsements: true)
     return boc_level unless endorsements && boc_endorsements.present?
 

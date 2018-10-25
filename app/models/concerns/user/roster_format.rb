@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module User::RosterFormat
+  extend ActiveSupport::Concern
+
   def self.included(klass)
     klass.extend(ClassMethods)
   end

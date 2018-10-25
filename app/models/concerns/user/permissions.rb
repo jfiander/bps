@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module User::Permissions
+  extend ActiveSupport::Concern
+
   SIMPLIFY = proc { |roles| roles.flatten.uniq.compact }
 
   class << self

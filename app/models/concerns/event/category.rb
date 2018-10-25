@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Concerns::Event::Category
+  extend ActiveSupport::Concern
+
   def category(event_types = nil)
     @course_ids = courses_from_cache(event_types).map(&:id)
     @seminar_ids = seminars_from_cache(event_types).map(&:id)

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Concerns::Event::Cost
+  extend ActiveSupport::Concern
+
   def formatted_cost
     # html_safe: User content is restricted to integers
     return if cost.blank?

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module User::RanksAndGrades
+  extend ActiveSupport::Concern
+
   def valid_ranks
     @valid_ranks ||= YAML.safe_load(
       File.read("#{Rails.root}/app/models/concerns/user/valid_ranks.yml")

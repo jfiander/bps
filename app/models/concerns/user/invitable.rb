@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module User::Invitable
+  extend ActiveSupport::Concern
+
   def invitable?
     invitation_accepted_at.blank? &&
       current_sign_in_at.blank? &&

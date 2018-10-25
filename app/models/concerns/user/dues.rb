@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module User::Dues
+  extend ActiveSupport::Concern
+
   def dues
     if parent.present?
       { user_id: parent_id }
