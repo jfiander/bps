@@ -89,8 +89,8 @@ def assign_bridge_office(office, user)
 end
 
 def clear_test_calendar
-  puts "\n*** Specs complete! Clearing test calendar..."
-  GoogleCalendarAPI.new(auth: true).clear_test_calendar
+  # puts "\n*** Specs complete! Clearing test calendar..."
+  # GoogleCalendarAPI.new(auth: true).clear_test_calendar
 rescue Google::Apis::ClientError
   nil
 end

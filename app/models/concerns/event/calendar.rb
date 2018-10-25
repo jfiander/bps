@@ -15,7 +15,7 @@ module Concerns::Event::Calendar
   def unbook!
     return unless booked?
 
-    calendar_retry.call { calendar.delete(calendar_id, google_calendar_event_id) }
+    calendar_retry.call { calendar.delete(calendar_id, google_calendar_event_id) } if on_calendar?
     store_calendar_details(nil)
   rescue StandardError => e
     Bugsnag.notify(e)
@@ -23,6 +23,7 @@ module Concerns::Event::Calendar
 
   def refresh_calendar!
     return unless booked?
+    return book! unless on_calendar?
 
     calendar_retry.call { calendar.update(calendar_id, google_calendar_event_id, calendar_hash) }
   rescue StandardError => e
@@ -31,6 +32,13 @@ module Concerns::Event::Calendar
 
   def booked?
     google_calendar_event_id.present?
+  end
+
+  def on_calendar?
+    event = calendar.get(calendar_id, google_calendar_event_id)
+    event.present? && event.status != 'cancelled'
+  rescue Google::Apis::ClientError, 'notFound: Not Found'
+    false
   end
 
 private

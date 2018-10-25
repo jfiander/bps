@@ -121,6 +121,17 @@ RSpec.describe Event, type: :model do
         end
       end
 
+      describe 'calendar event not found silent error' do
+        before(:each) do
+          allow(@event).to(receive(:calendar).and_raise(Google::Apis::ClientError, 'notFound: Not Found'))
+        end
+
+        it 'should return false if an event is not found' do
+          @event.update(google_calendar_event_id: 'nonexistent-event-id')
+          expect(@event.on_calendar?).to be(false)
+        end
+      end
+
       describe 'calendar API silent failures' do
         before(:each) do
           allow(@event).to(receive(:calendar).and_raise('An error'))
