@@ -6,9 +6,7 @@ module Concerns::Event::Calendar
   def book!
     return if booked?
 
-    response = calendar_retry.call do
-      calendar.create(calendar_id, calendar_hash)
-    end
+    response = calendar_retry.call { calendar.create(calendar_id, calendar_hash) }
     store_calendar_details(response)
   rescue StandardError => e
     Bugsnag.notify(e)
@@ -17,9 +15,7 @@ module Concerns::Event::Calendar
   def unbook!
     return unless booked?
 
-    calendar_retry.call do
-      calendar.delete(calendar_id, google_calendar_event_id)
-    end
+    calendar_retry.call { calendar.delete(calendar_id, google_calendar_event_id) }
     store_calendar_details(nil)
   rescue StandardError => e
     Bugsnag.notify(e)
@@ -28,9 +24,7 @@ module Concerns::Event::Calendar
   def refresh_calendar!
     return unless booked?
 
-    calendar_retry.call do
-      calendar.update(calendar_id, google_calendar_event_id, calendar_hash)
-    end
+    calendar_retry.call { calendar.update(calendar_id, google_calendar_event_id, calendar_hash) }
   rescue StandardError => e
     Bugsnag.notify(e)
   end
@@ -61,12 +55,9 @@ private
 
   def calendar_hash
     {
-      start: start_date,
-      end: end_date,
-      summary: calendar_summary,
-      description: calendar_description,
-      location: location&.one_line,
-      recurrence: recurrence
+      start: start_date, end: end_date, recurrence: recurrence,
+      summary: calendar_summary, description: calendar_description,
+      location: location&.one_line
     }
   end
 
@@ -99,37 +90,29 @@ private
 
   def calendar_summary
     return summary if summary.present?
+    return "Course: #{event_type.display_title}" if category == 'course'
+    return "Seminar: #{event_type.display_title}" if category == 'seminar'
 
-    if category == 'course'
-      "Course: #{event_type.display_title}"
-    elsif category == 'seminar'
-      "Seminar: #{event_type.display_title}"
-    else
-      event_type.display_title
-    end
+    event_type.display_title
   end
 
   def calendar_description
-    Redcarpet::Markdown.new(Redcarpet::Render::StripDown).render(
-      description.to_s
-    ).gsub("\n", "\n\n") +
+    strip_markdown.render(description.to_s).gsub("\n", "\n\n") +
       "\n\n#{link}\n\n*** Booked automatically by #{ENV['DOMAIN']} ***"
   end
 
+  def strip_markdown
+    Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
+  end
+
   def calendar_details_updated?
-    will_save_change_to_event_type_id? ||
-      will_save_change_to_start_at? ||
-      will_save_change_to_length? ||
-      will_save_change_to_sessions? ||
-      will_save_change_to_description? ||
-      will_save_change_to_location_id?
+    %i[event_type_id start_at length sessions all_day description location_id].any? do |field|
+      send("will_save_change_to_#{field}?")
+    end
   end
 
   def store_calendar_details(response)
-    update(
-      google_calendar_event_id: response&.id,
-      google_calendar_link: response&.html_link
-    )
+    update(google_calendar_event_id: response&.id, google_calendar_link: response&.html_link)
   end
 
   def calendar_retry
