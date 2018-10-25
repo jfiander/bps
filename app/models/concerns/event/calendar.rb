@@ -59,28 +59,30 @@ private
 
   def calendar_hash
     {
-      start: start_date(all_day: all_day),
-      end: end_date(all_day: all_day),
+      start: start_date,
+      end: end_date,
       summary: calendar_summary,
       description: calendar_description,
       location: location&.one_line,
-      recurrence: recurrence(all_day: all_day)
+      recurrence: recurrence
     }
   end
 
-  def recurrence(all_day: false)
-    return unless sessions.present?
-
-    ["RRULE:FREQ=#{repeat_pattern};COUNT=#{sessions}"] unless all_day
+  def recurrence
+    ["RRULE:FREQ=#{repeat_pattern};COUNT=#{sessions}"] unless no_recurrence?
   end
 
-  def start_date(all_day: false)
+  def no_recurrence?
+    all_day || !(sessions.present? && sessions > 1)
+  end
+
+  def start_date
     return start_at.to_datetime unless all_day
 
     start_at.to_datetime.strftime('%Y-%m-%d')
   end
 
-  def end_date(all_day: false)
+  def end_date
     return calculate_end_date unless all_day
 
     (start_at.to_datetime + (sessions&.days || 1)).strftime('%Y-%m-%d')
