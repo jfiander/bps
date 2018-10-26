@@ -59,7 +59,7 @@ h1 = @user.full_name
               = FA::Icon.p('credit-card', style: :regular, title: 'Pay for registration', fa: 'fw')
         .table-cell = r.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
         .table-cell
-          = link_to(cancel_registration_path(id: r.id), method: :delete, remote: true, class: 'red control', id: "event_#{r.event_id}",
+          = link_to(cancel_registration_path(id: r.id), method: :delete, remote: true, class: 'red', id: "event_#{r.event_id}",
             data: {confirm: "Are you sure you want to cancel your registration for #{r.event.display_title} on #{r.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}?"}) { FA::Icon.p('minus-square') }
 
 hr
