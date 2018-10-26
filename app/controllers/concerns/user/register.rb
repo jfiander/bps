@@ -10,8 +10,6 @@ module User::Register
 
     if @registration.valid?
       successfully_registered
-    elsif Registration.find_by(@registration.attributes.slice(:user_id, :event_id))
-      already_registered
     else
       unable_to_register
     end
@@ -103,11 +101,6 @@ private
 
   def successfully_registered
     flash[:success] = 'Successfully registered!'
-  end
-
-  def already_registered
-    flash.now[:notice] = 'You are already registered for this course.'
-    render status: :unprocessable_entity
   end
 
   def unable_to_register
