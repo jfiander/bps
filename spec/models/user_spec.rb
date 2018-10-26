@@ -374,6 +374,21 @@ RSpec.describe User, type: :model do
       it 'should return the parent_id hash if a parent is assigned' do
         expect(@child.dues).to eql(user_id: @parent.id)
       end
+
+      describe 'payable?' do
+        it 'should return true for a parent' do
+          expect(@parent.payable?).to be(true)
+        end
+
+        it 'should return false for a child' do
+          expect(@child.payable?).to be(false)
+        end
+
+        it 'should return true for a recently-paid member' do
+          @parent.dues_paid!
+          expect(@parent.payable?).to be(true)
+        end
+      end
     end
   end
 

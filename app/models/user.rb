@@ -119,6 +119,11 @@ class User < ApplicationRecord
     payment_amount.to_d - Payment.discount(payment_amount)
   end
 
+  def payable?
+    # User payments are repeatable, so the default method doesn't work
+    !dues.is_a?(Hash) && dues&.positive?
+  end
+
   def valid_instructor?
     id_expr.present? && id_expr > Time.now
   end
