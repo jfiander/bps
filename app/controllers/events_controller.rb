@@ -14,18 +14,15 @@ class EventsController < ApplicationController
   include Events::Update
   include Concerns::Application::RedirectWithStatus
 
-  before_action(
-    :find_event, only: %i[
-      show copy edit update expire archive remind book unbook
-    ]
-  )
+  before_action :find_event, only: %i[show copy edit update expire archive remind book unbook]
   before_action :prepare_form, only: %i[new copy edit]
   before_action :check_for_blank, only: %i[create update]
   before_action :preload_events, only: %i[schedule catalog registrations show]
   before_action :location_names, only: %i[new copy edit]
   before_action :set_create_path, only: %i[new copy]
-  before_action :load_registrations, only: [:schedule], if: :user_signed_in?
+  before_action :load_registrations, only: %i[schedule], if: :user_signed_in?
   before_action :event_not_found?, only: %i[show]
+  before_action :block_multiple_reminders, only: %i[remind]
 
   def schedule
     @events = get_events(event_type_param, :current)
@@ -117,12 +114,6 @@ class EventsController < ApplicationController
   end
 
   def remind
-    if @event.reminded?
-      flash[:alert] = "Reminders already sent for that #{event_type_param}."
-      redirect_to send("#{event_type_param}s_path")
-      return
-    end
-
     @event.remind!
     flash[:success] = 'Successfully sent reminder emails.'
     redirect_to send("list_#{event_type_param}s_path")
@@ -143,11 +134,9 @@ class EventsController < ApplicationController
 private
 
   def load_catalog
-    if event_type_param == 'course'
-      catalog_list.slice('public', 'advanced_grade', 'elective').symbolize_keys
-    else
-      catalog_list[event_type_param]
-    end
+    return catalog_list[event_type_param] unless event_type_param == 'course'
+
+    catalog_list.slice('public', 'advanced_grade', 'elective').symbolize_keys
   end
 
   def event_not_found?
@@ -155,6 +144,13 @@ private
     return unless @event.blank? || @event.category != category
 
     flash[:notice] = "Couldn't find that #{event_type_param}."
+    redirect_to send("#{event_type_param}s_path")
+  end
+
+  def block_multiple_reminders
+    return unless  @event.reminded?
+
+    flash[:alert] = "Reminders already sent for that #{event_type_param}."
     redirect_to send("#{event_type_param}s_path")
   end
 end
