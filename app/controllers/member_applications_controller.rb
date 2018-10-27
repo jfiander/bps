@@ -108,6 +108,24 @@ private
   end
 
   def applicants
+    return applicant_attributes_hash(primary) if additionals.blank?
+
+    all_apps = process_additionals
+
+    applicant_attributes_hash(all_apps)
+  end
+
+  def applicant_attributes_hash(*applicants)
+    { 'member_applicants_attributes' => applicants }
+  end
+
+  def primary_applicant
+    primary_member_params.to_h.merge(
+      primary: true, member_application: @member_application
+    )
+  end
+
+  def process_additionals
     additionals = additionals.map(&:values).flatten.reject do |a|
       a == true || a.is_a?(MemberApplication) || a.key?('_destroy')
     end
@@ -117,15 +135,7 @@ private
       a[:primary] = false
     end
 
-    all_apps = [primary_applicant, apps].flatten
-
-    { 'member_applicants_attributes' => all_apps } unless all_apps.blank?
-  end
-
-  def primary_applicant
-    primary_member_params.to_h.merge(
-      primary: true, member_application: @member_application
-    )
+    [primary_applicant, apps].compact.flatten
   end
 
   def additionals
