@@ -62,12 +62,6 @@ table#users
           = user[:invited_at].strftime(ApplicationController::LONG_TIME_FORMAT)
         - else
           | Never logged in
-        - if admin
-          br
-          - if user[:new_layout]
-            = FA::Icon.p('desktop', css: 'green', title: 'New layout')
-          - else
-            = FA::Icon.p('desktop', css: 'gray', title: 'Old layout')
       td.center
         - if user[:locked]
           - if can_lock
