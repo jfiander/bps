@@ -2,10 +2,22 @@ div.table.versions div.table-row div.table-cell {
   padding: 0.5em 0.25em;
 }
 
+.differ {
+  font-size: 1.2em;
+}
+
 ins.differ {
   color: green;
 }
 
 del.differ {
   color: red;
+}
+
+pre.version-diff {
+  background-color: $background-blue;
+  max-width: 100%;
+  padding: 0.5em;
+  text-align: left;
+  white-space: pre-wrap;
 }

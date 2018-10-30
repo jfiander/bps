@@ -17,12 +17,14 @@ class Admin::VersionsController < ApplicationController
   end
 
   def diff
-    # html_safe: Text is sanitized before display
     fix_version_order
     return unless version_jsons.compact.count == 2
 
     @mode = clean_params[:mode]
-    @diff = sanitize(Differ.send(diff_method, *version_jsons).format_as(:html)).html_safe
+    @changer = User.find_by(id: version_b&.whodunnit.to_i)
+    @event = version_b&.event
+
+    generate_diff
   end
 
   def revert
@@ -67,18 +69,22 @@ private
   end
 
   def version_jsons
-    a = version_a
-    b = @versions.first(@b)&.last&.reify&.to_json
-
-    [a, b].map { |v| v&.gsub(',"', ', "')&.gsub('":', '": ') }
+    [
+      version_a_json,
+      version_b&.reify&.to_json
+    ].map { |v| v&.gsub(',"', ', "')&.gsub('":', '": ') }
   end
 
-  def version_a
+  def version_a_json
     if @a.zero?
       model_class.find_by(id: clean_params[:id]).to_json
     else
       @versions.first(@a)&.last&.reify&.to_json
     end
+  end
+
+  def version_b
+    @versions.first(@b)&.last
   end
 
   def diff_method
@@ -100,5 +106,12 @@ private
     c = @a.dup
     @b = @a
     @a = c
+  end
+
+  def generate_diff
+    # html_safe: Text is sanitized before display
+    jsons = version_jsons.map { |j| JSON.pretty_generate(JSON.parse(j), indent: '  ') }
+    differ = Differ.send(diff_method, *jsons).format_as(:html)
+    @diff = sanitize(differ).html_safe
   end
 end
