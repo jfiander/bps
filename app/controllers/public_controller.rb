@@ -4,10 +4,11 @@ class PublicController < ApplicationController
   include Public::Bilge
   include CalendarHelper
 
-  before_action :list_bilges, only: %i[newsletter bilge]
-  before_action :registration_attributes, only: [:register]
-  before_action :find_event,              only: [:register]
-  before_action :find_registration,       only: [:register]
+  before_action :list_bilges,             only: %i[newsletter bilge]
+  before_action :registration_attributes, only: %i[register]
+  before_action :find_event,              only: %i[register]
+  before_action :find_registration,       only: %i[register]
+  before_action :block_registration,      only: %i[register], if: :block_registration?
 
   title!('The Bilge Chatter', only: :newsletter)
   title!("Ship's Store", only: :store)
@@ -16,12 +17,6 @@ class PublicController < ApplicationController
   render_markdown_views
 
   def register
-    unless allow_registration?
-      category = Event.find_by(id: register_params[:event_id]).category
-      redirect_to send("#{category}s_path", id: register_params[:event_id])
-      return
-    end
-
     respond_to do |format|
       format.js { register_js }
       format.html { register_html }
@@ -57,11 +52,16 @@ private
     @registration ||= Registration.new(@registration_attributes)
   end
 
-  def allow_registration?
-    return true if @event.allow_public_registrations && @event.registerable?
+  def block_registration
+    redirect_to send("#{@event.category}s_path", id: @event.id)
+  end
+
+  def block_registration?
+    return false if @event.allow_public_registrations && @event.registerable?
 
     pub = @event.registerable? ? ' public' : ''
     flash[:alert] = "This course is not currently accepting#{pub} registrations."
+    true
   end
 
   def register_js
