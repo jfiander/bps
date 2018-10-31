@@ -44,10 +44,7 @@ private
       @registration_attributes = register_params.to_hash.symbolize_keys
     else
       @event_id = clean_params[:event_id]
-      @registration_attributes = {
-        event_id: @event_id,
-        email: clean_params[:email]
-      }
+      @registration_attributes = { event_id: @event_id, email: clean_params[:email] }
     end
   end
 
@@ -64,10 +61,7 @@ private
     return true if @event.allow_public_registrations && @event.registerable?
 
     pub = @event.registerable? ? ' public' : ''
-    flash[:alert] = 'This course is not currently accepting' +
-                    pub +
-                    ' registrations.'
-    false
+    flash[:alert] = "This course is not currently accepting#{pub} registrations."
   end
 
   def register_js
