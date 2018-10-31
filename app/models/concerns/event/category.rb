@@ -32,7 +32,7 @@ module Concerns::Event::Category
 private
 
   def courses_from_cache(event_types)
-    return EventType.courses if event_types.nil?
+    return ::EventType.courses if event_types.nil?
 
     event_types.find_all do |e|
       e.event_category.to_s.in?(%w[public advanced_grade elective])
@@ -40,13 +40,13 @@ private
   end
 
   def seminars_from_cache(event_types)
-    return EventType.seminars if event_types.nil?
+    return ::EventType.seminars if event_types.nil?
 
     event_types.find_all { |e| e.event_category.to_s.in?(['seminar']) }
   end
 
   def meetings_from_cache(event_types)
-    return EventType.meetings if event_types.nil?
+    return ::EventType.meetings if event_types.nil?
 
     event_types.find_all { |e| e.event_category.to_s.in?(['meeting']) }
   end
