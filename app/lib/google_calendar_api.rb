@@ -32,12 +32,13 @@ class GoogleCalendarAPI
 
   def delete(calendar_id, event_id)
     service.delete_event(calendar_id, event_id)
+  rescue Google::Apis::ClientError
+    :event_not_found
   end
 
   def permit(calendar, user)
     rule = Google::Apis::CalendarV3::AclRule.new(
-      scope: { type: 'user', value: user.email },
-      role: 'writer'
+      scope: { type: 'user', value: user.email }, role: 'writer'
     )
 
     result = service.insert_acl(calendar, rule)
@@ -46,6 +47,8 @@ class GoogleCalendarAPI
 
   def unpermit(calendar, user)
     service.delete_acl(calendar, user.calendar_rule_id)
+  rescue Google::Apis::ClientError
+    :permission_not_found
   end
 
 private
