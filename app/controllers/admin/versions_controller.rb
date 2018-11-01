@@ -20,8 +20,8 @@ class Admin::VersionsController < ApplicationController
     fix_version_order
     return unless version_jsons.compact.count == 2
 
-    @mode = clean_params[:mode]
-    @changer = User.find_by(id: version_b&.whodunnit.to_i)
+    @mode = clean_params[:mode] || 'line'
+    find_changers
     @event = version_b&.event
 
     generate_diff
@@ -60,8 +60,7 @@ private
   def load_versions
     @model = clean_params[:model]
     @id = clean_params[:id]
-    @versions = model_class&.find_by(id: @id)&.versions&.to_a
-                           &.sort_by(&:id)&.reverse
+    @versions = model_class&.find_by(id: @id)&.versions&.to_a&.sort_by(&:id)&.reverse
   end
 
   def clean_params
@@ -69,18 +68,19 @@ private
   end
 
   def version_jsons
-    [
-      version_a_json,
-      version_b&.reify&.to_json
-    ].map { |v| v&.gsub(',"', ', "')&.gsub('":', '": ') }
+    [version_a_json, version_b&.reify&.to_json].map { |v| v&.gsub(',"', ', "')&.gsub('":', '": ') }
   end
 
   def version_a_json
     if @a.zero?
       model_class.find_by(id: clean_params[:id]).to_json
     else
-      @versions.first(@a)&.last&.reify&.to_json
+      version_a&.reify&.to_json
     end
+  end
+
+  def version_a
+    @versions.first(@a)&.last
   end
 
   def version_b
@@ -88,7 +88,7 @@ private
   end
 
   def diff_method
-    case clean_params[:mode]
+    case @mode
     when 'word'
       :diff_by_word
     when 'line'
@@ -96,7 +96,7 @@ private
     when 'char'
       :diff_by_char
     else
-      :diff_by_word
+      :diff_by_line
     end
   end
 
@@ -106,6 +106,11 @@ private
     c = @a.dup
     @b = @a
     @a = c
+  end
+
+  def find_changers
+    @changer = User.find_by(id: version_b&.whodunnit.to_i)
+    @previous = User.find_by(id: version_a&.whodunnit.to_i)
   end
 
   def generate_diff

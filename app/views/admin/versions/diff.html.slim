@@ -5,16 +5,23 @@ p
   '
   = @event.titleize
 
-p
-  b By:
-  '
-  = mail_to(@changer.email, @changer.full_name)
+- if @changer.present?
+  p
+    b By:
+    '
+    = mail_to(@changer.email, @changer.full_name)
+
+- if @previous.present?
+  p
+    b Previous version by:
+    '
+    = mail_to(@previous.email, @previous.full_name)
 
 hr
 
 = form_tag do
   = label_tag :mode, 'Diff Mode: '
-  = select_tag :mode, options_for_select(%w[word line char], @mode), required: true
+  = select_tag :mode, options_for_select(%w[line word char], @mode), required: true
   = submit_tag 'Reload'
 
 hr
