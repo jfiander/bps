@@ -1,5 +1,12 @@
-div.table.versions div.table-row div.table-cell {
-  padding: 0.5em 0.25em;
+div.table.versions {
+  div.table-row div.table-cell {
+    padding: 0.5em 0.25em;
+    overflow-x: scroll;
+
+    pre.version-diff {
+      max-width: 25vw;
+    }
+  }
 }
 
 .differ {
@@ -16,7 +23,6 @@ del.differ {
 
 pre.version-diff {
   background-color: $background-blue;
-  max-width: 100%;
   padding: 0.5em;
   text-align: left;
   white-space: pre-wrap;

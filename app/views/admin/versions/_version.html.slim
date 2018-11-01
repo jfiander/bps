@@ -2,7 +2,8 @@
 .table-row
   .table-cell = version.event
   .table-cell = mail_to(who.email, who.full_name) if who.present?
-  .table-cell = JSON.parse(version.reify.to_json).to_s.gsub(',"', ', "').gsub('":', '": ')
+  .table-cell
+    pre.version-diff = pretty_json(version.reify.to_json)
   .table-cell = version.created_at
   .table-cell
     = link_to(admin_diff_versions_path(a: index + 1, b: index + 2)) { FA::Icon.p('exchange', style: :regular) } unless version == @versions.last

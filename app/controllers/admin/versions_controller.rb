@@ -115,8 +115,13 @@ private
 
   def generate_diff
     # html_safe: Text is sanitized before display
-    jsons = version_jsons.map { |j| JSON.pretty_generate(JSON.parse(j), indent: '  ') }
+    jsons = version_jsons.map { |j| pretty_json(j) }
     differ = Differ.send(diff_method, *jsons).format_as(:html)
     @diff = sanitize(differ).html_safe
   end
+
+  def pretty_json(json)
+    JSON.pretty_generate(JSON.parse(json), indent: '  ')
+  end
+  helper_method :pretty_json
 end
