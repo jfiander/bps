@@ -1,6 +1,6 @@
 <%= render 'application/update_flashes' %>
 
 <%- unless flash[:alert].present? %>
-  $("#request_link_<%= @event.id %>").html("Requested").addClass("red").removeClass("blue-faded").attr("href", "#");
-  $("#request_link_<%= @event.id %>_mobile").html("Requested").addClass("red").removeClass("blue-faded").attr("href", "#");
+  $("#request_link_<%= @event.id %>").html("Requested").addClass("red").removeClass("blue").attr("href", "#");
+  $("#request_link_<%= @event.id %>_mobile").html("Requested").addClass("red").removeClass("blue").attr("href", "#");
 <%- end %>

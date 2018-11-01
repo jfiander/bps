@@ -1,7 +1,7 @@
 h1
   | Edit Page
   = FA::Icon.p('markdown', style: :brands, title: 'Markdown')
-h2.blue-faded = @page.name.titleize
+h2.blue = @page.name.titleize
 
 = render "edit_markdown_form"
 

@@ -9,6 +9,7 @@ $background-blue-extra-faded: #EEF2F6;
 $gold: #D4AF37;
 $pending-green: #66BB66;
 
+$old-glory-blue-light: lighten($old-glory-blue, 20%);
 $old-glory-blue-faded: rgba($old-glory-blue, 0.3);
 $old-glory-red-faded: lighten($old-glory-red, 50%);
 
@@ -18,11 +19,7 @@ $old-glory-red-faded: lighten($old-glory-red, 50%);
 }
 
 .blue {
-  color: $old-glory-blue;
-}
-
-.blue-faded {
-  color: lighten($old-glory-blue, 20%);
+  color: $old-glory-blue-light;
 }
 
 .red {
