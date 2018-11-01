@@ -28,7 +28,8 @@ private
     @payment = Payment.find_by(token: @token)
 
     return payment_not_found if @payment.nil?
-    return payment_no_cost unless @payment.amount&.positive?
+    return payment_no_cost unless @payment.cost?
+    return payment_not_payable unless @payment.payable?
   end
 
   def payment_not_found
@@ -38,6 +39,11 @@ private
 
   def payment_no_cost
     flash[:notice] = 'That has no cost.'
+    redirect_to root_path
+  end
+
+  def payment_not_payable
+    flash[:notice] = 'That is not eligible to be paid.'
     redirect_to root_path
   end
 

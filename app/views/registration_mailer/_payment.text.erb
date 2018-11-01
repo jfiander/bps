@@ -1,0 +1,7 @@
+Payment
+
+If you would like to pay for this registration now, you can do so at <%= pay_url(token: @registration.payment.token) %>.
+
+<%- if @registration.event.advance_payment %>
+Please note: Advance payment is required by <%= @registration.event.cutoff_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT) %>.
+<%- end %>

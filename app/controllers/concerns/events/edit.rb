@@ -10,7 +10,7 @@ private
         summary location_id map_link start_at length sessions flyer all_day
         cutoff_at expires_at prereq_id allow_member_registrations repeat_pattern
         allow_public_registrations show_in_catalog delete_attachment
-        registration_limit
+        registration_limit advance_payment
       ]
     )
   end

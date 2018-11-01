@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_18_193834) do
+ActiveRecord::Schema.define(version: 2018_11_01_142524) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 2018_10_18_193834) do
     t.string "repeat_pattern", default: "WEEKLY"
     t.integer "registration_limit"
     t.integer "usps_cost"
+    t.boolean "advance_payment"
   end
 
   create_table "float_plan_onboards", force: :cascade do |t|

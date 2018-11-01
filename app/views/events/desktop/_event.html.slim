@@ -39,6 +39,9 @@
                 .table.row
                   .table-cell
                     span.costs = event.formatted_cost
+                    - if event.advance_payment
+                      br
+                      small.blue.bold.italic title=("Please register and pay before #{event.cutoff_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)}.") Advance payment required
               - if !defined?(@event_catalog) && @current_user_permitted_event_type && event.show_in_catalog
                 .table.row
                   .table-cell.catalog

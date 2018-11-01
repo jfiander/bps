@@ -23,6 +23,10 @@ class Payment < ApplicationRecord
     fee.floor(2)
   end
 
+  def payable?
+    parent&.payable?
+  end
+
   def amount
     parent&.payment_amount
   end

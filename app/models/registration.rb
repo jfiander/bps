@@ -32,6 +32,10 @@ class Registration < ApplicationRecord
     event.course? ? 'course' : event.event_type.event_category
   end
 
+  def payable?
+    super && !(event.cutoff? && event.advance_payment)
+  end
+
 private
 
   def email_or_user_present

@@ -8,10 +8,7 @@
   br
 
 - if @registration.payable?
-  p
-    | If you would like to, you can 
-    = link_to 'pay for this registration now', pay_url(token: @registration.payment.token)
-    | . You can also pay later.
+  = render 'payment'
 
 p
   | If you have any questions, or if you would like to cancel this registration, please email me at 

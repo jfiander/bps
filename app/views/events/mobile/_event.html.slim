@@ -50,6 +50,8 @@
         |  each
 - if event.cost.present?
   .event-mobile-contents.spaced = event.formatted_cost
+  - if event.advance_payment
+    small.blue.bold.italic title=("Please register and pay before #{event.cutoff_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)}.") Advance payment required
 - unless defined?(@event_catalog)
   .event-mobile-contents.spaced
     - if @locations[event.location_id].present?

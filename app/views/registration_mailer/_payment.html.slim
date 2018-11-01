@@ -1,0 +1,11 @@
+p
+  h3 Payment:
+  | If you would like to, you can 
+  = link_to 'pay for this registration now', pay_url(token: @registration.payment.token)
+  | . You can also pay later.
+
+- if @registration.event.advance_payment
+  p.italic
+    | Please note: Advance payment is required by 
+    = @registration.event.cutoff_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+    | .

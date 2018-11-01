@@ -52,6 +52,11 @@ RSpec.describe Registration, type: :model do
         expect(@reg.payable?).to be(true)
       end
 
+      it 'should not be payable if advance_payment is required' do
+        @reg.event.update(advance_payment: true, cutoff_at: Time.now - 1.hour)
+        expect(@reg.payable?).to be(false)
+      end
+
       it 'should allow destroying an unpaid object' do
         expect { @reg.destroy }.not_to raise_error
       end

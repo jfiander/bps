@@ -152,6 +152,18 @@ em
       br.clear
 
       .left
+        = f.label :advance_payment, 'Require advance payment'
+        ul
+          li Payment will be required before the registration cutoff.
+          li.red Late payments will not be processed.
+      .right
+        label.switch
+          = f.check_box :advance_payment, class: 'slider round'
+          span.slider.round.lightblue-red
+            .description.no.yes
+      br.clear
+
+      .left
         = f.label :cutoff_at, 'Do not allow registrations after', class: 'red'
         ul.red
           li Defaults to start time.

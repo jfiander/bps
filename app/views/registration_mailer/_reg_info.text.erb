@@ -8,8 +8,7 @@ View this event on Google Calendar: <%= @registration.event.google_calendar_link
 **********
 <%- end %>
 <%- if @registration.payable? %>
-
-If you would like to pay for this registration now, you can do so at <%= pay_url(token: @registration.payment.token) %>.
+<%= render 'payment' %>
 <%- end %>
 
 If you have any questions, or if you would like to cancel this registration,

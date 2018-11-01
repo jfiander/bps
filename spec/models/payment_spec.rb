@@ -83,6 +83,20 @@ RSpec.describe Payment, type: :model do
       expect(@registration.payment.paid).to be(true)
       expect(@registration.payment.transaction_id).to eql('in-person')
     end
+
+    describe 'payable' do
+      it 'should be payable when the parent is payable' do
+        @registration.event.update(cost: 1)
+        expect(@registration.payment.payable?).to eql(@registration.payable?)
+        expect(@registration.payment.payable?).to be(true)
+      end
+
+      it 'should not be payable when the parent is not payable' do
+        @registration.event.update(cost: 1, advance_payment: true, cutoff_at: Time.now - 1.hour)
+        expect(@registration.payment.payable?).to eql(@registration.payable?)
+        expect(@registration.payment.payable?).to be(false)
+      end
+    end
   end
 
   context 'membership application' do
