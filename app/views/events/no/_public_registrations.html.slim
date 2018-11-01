@@ -1,7 +1,2 @@
-p.i
-  | This 
-  = event_type_param
-  |  is only available to members.
-p.i
-  = link_to "Click here", join_path
-  |  for information on how to join!
+p.i = "This #{event_type_param} is only available to members."
+p.i = link_to('Become a member!', join_path)
