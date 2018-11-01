@@ -54,8 +54,8 @@ em
         .right
           label.switch
             = f.check_box :show_in_catalog, class: 'slider round'
-            span.slider.round.blue.inverse
-              .description.catalog
+            span.slider.round.darkblue-lightblue
+              .description.ignore.show
         br.clear
 
     #event-schedule
@@ -65,8 +65,8 @@ em
       .right
         label.switch
           = f.check_box :all_day, class: 'slider round', id: 'all_day_check'
-          span.slider.round.blue.inverse
-            .description.all_day
+          span.slider.round.darkblue-lightblue
+            .description.regular.all-day
       br.clear
 
       #regular_start_time class=(@event.all_day ? 'hide' : '')
@@ -135,16 +135,16 @@ em
       .right
         label.switch
           = f.check_box :allow_member_registrations, class: 'slider round'
-          span.slider.round.inverse
-            .description.member_registrations
+          span.slider.round.red-lightblue
+            .description.deny.allow
       br.clear
 
       .left = f.label :allow_public_registrations, 'Public registrations'
       .right
         label.switch
           = f.check_box :allow_public_registrations, class: 'slider round'
-          span.slider.round.inverse
-            .description.public_registrations
+          span.slider.round.red-lightblue
+            .description.deny.allow
       br.clear
 
       .left = f.label :registration_limit, 'Registrations limit'

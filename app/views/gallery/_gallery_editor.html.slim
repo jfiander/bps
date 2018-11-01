@@ -6,8 +6,8 @@
     br
     label.switch
       = check_box_tag :remove, class: "slider round"
-      span.slider.round
-        .description.create
+      span.slider.round.lightblue-red
+        .description.create.remove
     br
     = spinner_button(button_text: "Submit", css: 'big')
   = render 'upload_photos'

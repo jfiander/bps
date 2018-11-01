@@ -22,7 +22,9 @@ $slider-move: $switch-width - ($slider-size + 0.5em);
   }
 }
 
-.switch input {display:none;}
+.switch input {
+  display:none;
+}
 
 .slider {
   position: absolute;
@@ -56,49 +58,14 @@ input:checked + .slider {
   }
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px $old-glory-red;
-}
-
-input:checked + .slider.blue {
-  background-color: lighten($old-glory-blue, 10%);
-
-  div.description {
-    text-align: left;
-  }
-}
-
-input:focus + .slider.blue {
-  box-shadow: 0 0 1px lighten($old-glory-blue, 10%);
-}
-
-.slider.inverse {
-  background-color: $old-glory-red;
-}
-
-.slider.blue.inverse {
-  background-color: lighten($old-glory-blue, 10%);
-}
-
-input:checked + .slider.inverse {
-  background-color: $birmingham-blue;
-}
-
-input:focus + .slider.inverse {
-  box-shadow: 0 0 1px $birmingham-blue;
-}
-
-input:checked + .slider.blue.inverse {
-  background-color: $birmingham-blue;
-}
-
 input:checked + .slider:before {
   -webkit-transform: translateX($slider-move);
   -ms-transform: translateX($slider-move);
   transform: translateX($slider-move);
 }
 
-/* Rounded sliders */
+// Rounded sliders
+
 .slider.round {
   border-radius: 34px;
 }
@@ -107,60 +74,118 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/* Specific slider text changes */
-.slider div.description.chair:after,
-.slider div.description.excom:after {
-  content: "General";
+// Unchecked Colors
+
+.slider.darkblue-red {
+  background-color: lighten($old-glory-blue, 10%);
 }
 
-input:checked + .slider div.description.chair:after {
-  content: "Chair";
+.slider.darkblue-lightblue {
+  background-color: lighten($old-glory-blue, 10%);
 }
 
-input:checked + .slider div.description.excom:after {
-  content: "ExCom";
+.slider.lightblue-red {
+  background-color: $birmingham-blue;
 }
 
-.slider div.description.remove:after {
-  content: "Upload";
+.slider.lightblue-darkblue {
+  background-color: $birmingham-blue;
+}
+
+.slider.red-lightblue {
+  background-color: $old-glory-red;
+}
+
+.slider.red-darkblue {
+  background-color: $old-glory-red;
+}
+
+// Checked Colors
+
+input:checked + .slider.darkblue-red {
+  background-color: $old-glory-red;
+}
+
+input:checked + .slider.darkblue-lightblue {
+  background-color: $birmingham-blue;
+}
+
+input:checked + .slider.lightblue-red {
+  background-color: $old-glory-red;
+}
+
+input:checked + .slider.lightblue-darkblue {
+  background-color: lighten($old-glory-blue, 10%);
+}
+
+input:checked + .slider.red-lightblue {
+  background-color: $birmingham-blue;
+}
+
+input:checked + .slider.red-darkblue {
+  background-color: lighten($old-glory-blue, 10%);
+}
+
+// Unchecked slider text
+
+.slider div.description.no:after {
+  content: "No";
+}
+
+.slider div.description.ignore:after {
+  content: "Ignore";
+}
+
+.slider div.description.deny:after {
+  content: "Deny";
 }
 
 .slider div.description.create:after {
   content: "Create";
 }
 
-.slider div.description.all_day:after {
+.slider div.description.upload:after {
+  content: "Upload";
+}
+
+.slider div.description.regular:after {
   content: "Regular";
 }
 
-.slider div.description.catalog:after,
-.slider div.description.lock-missing:after {
-  content: "Ignore";
+.slider div.description.committee:after {
+  content: "General";
+}
+
+// Checked slider text
+
+input:checked + .slider div.description.yes:after {
+  content: "Yes";
+}
+
+input:checked + .slider div.description.show:after {
+  content: "Show";
+}
+
+input:checked + .slider div.description.allow:after {
+  content: "Allow";
+}
+
+input:checked + .slider div.description.remove:after {
+  content: "Remove";
+}
+
+input:checked + .slider div.description.committee.chair:after {
+  content: "Chair";
+}
+
+input:checked + .slider div.description.committee.excom:after {
+  content: "ExCom";
+}
+
+input:checked + .slider div.description.all-day:after {
+  content: "All-Day";
 }
 
 input:checked + .slider div.description.lock-missing:after {
   content: "Lock";
-}
-
-input:checked + .slider div.description.catalog:after {
-  content: "Show";
-}
-
-input:checked + .slider div.description.remove:after,
-input:checked + .slider div.description.create:after {
-  content: "Remove";
-}
-
-input:checked + .slider div.description.all_day:after {
-  content: "All-Day";
-}
-
-.slider div.description.member_registrations:after,
-.slider div.description.public_registrations:after {
-  content: "Deny";
-}
-
-input:checked + .slider div.description.member_registrations:after,
-input:checked + .slider div.description.public_registrations:after {
-  content: "Allow";
 }
