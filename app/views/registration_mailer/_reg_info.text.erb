@@ -8,6 +8,7 @@ View this event on Google Calendar: <%= @registration.event.google_calendar_link
 **********
 <%- end %>
 <%- if @registration.payable? %>
+
 <%= render 'payment' %>
 <%- end %>
 
