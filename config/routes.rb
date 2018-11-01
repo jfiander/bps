@@ -199,9 +199,9 @@ Rails.application.routes.draw do
   patch   '/users/:id/unlock', to: 'user#unlock', as: 'unlock_user'
 
   # Permissions
-  get     '/permit', to: 'permissions#index'
-  post    '/permit', to: 'permissions#add'
-  delete  '/permit', to: 'permissions#remove'
+  get     '/permit',            to: 'permissions#index'
+  post    '/permit',            to: 'permissions#add'
+  delete  '/permit/:permit_id', to: 'permissions#remove', as: 'remove_permit'
 
   # Bridge and committee management
   post    '/assign_bridge',                 to: 'bridge#assign_bridge'
