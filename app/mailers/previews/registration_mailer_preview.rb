@@ -5,6 +5,10 @@ class RegistrationMailerPreview < ActionMailer::Preview
     RegistrationMailer.registered(reg_member_free)
   end
 
+  def registered_paid
+    RegistrationMailer.registered(reg_member_paid)
+  end
+
   def cancelled
     RegistrationMailer.cancelled(reg_member_free)
   end
@@ -44,27 +48,19 @@ class RegistrationMailerPreview < ActionMailer::Preview
 private
 
   def reg_member_free
-    Registration.where.not(user: nil).select do |r|
-      r.payment_amount.zero?
-    end.last
+    Registration.where.not(user: nil).select { |r| !r.payable? }.last
   end
 
   def reg_member_paid
-    Registration.where.not(user: nil).select do |r|
-      r.payment_amount.positive?
-    end.last
+    Registration.where.not(user: nil).select(&:payable?).last
   end
 
   def reg_public_free
-    Registration.where(user: nil).select do |r|
-      r.payment_amount.zero?
-    end.last
+    Registration.where(user: nil).select { |r| !r.payable? }.last
   end
 
   def reg_public_paid
-    Registration.where(user: nil).select do |r|
-      r.payment_amount.positive?
-    end.last
+    Registration.where(user: nil).select(&:payable?).last
   end
 
   def registration_ao
