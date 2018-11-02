@@ -58,3 +58,11 @@ $old-glory-red-faded: lighten($old-glory-red, 50%);
 .highlight {
   background-color: lighten(green, 60%) !important;
 }
+
+.lowlight {
+  background-color: $background-blue !important;
+}
+
+.background {
+  color: lighten($background-blue, 8%);
+}

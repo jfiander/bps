@@ -12,7 +12,7 @@
 }
 
 div#main {
-  background-color: darken($background-blue, 5%);
+  background-color: $background-blue;
   @include shadow-box(4);
   @include border-radius(1em);
   margin: 0.5em 0 1em 0;

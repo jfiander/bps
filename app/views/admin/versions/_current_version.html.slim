@@ -1,8 +1,7 @@
 .table-row
   .table-cell current
   .table-cell
-  .table-cell
+  .table-cell.lowlight
     pre.version-diff = pretty_json(version.to_json)
   .table-cell
-  .table-cell = link_to(admin_diff_versions_path(a: 0, b: 1)) { FA::Icon.p('exchange', style: :regular) } unless no_versions
-  .table-cell
+  .table-cell = link_to(admin_diff_versions_path(a: 0, b: 1)) { FA::Icon.p('exchange', style: :regular, fa: :fw) } unless no_versions
