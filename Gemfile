@@ -64,6 +64,7 @@ gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
 gem 'sinatra',             '~> 2.0.3'
+gem 'loofah',              '~> 2.2.3'
 
 group :production do
   gem 'pg',                '~> 0.18.4'
