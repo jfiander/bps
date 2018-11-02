@@ -29,4 +29,5 @@ hr
 - if @diff.blank?
   p.red Diff not available.
 - else
-  pre.version-diff = @diff
+  .lowlight
+    pre.version-diff = @diff
