@@ -117,6 +117,7 @@ private
     # html_safe: Text is sanitized before display
     jsons = version_jsons.map { |j| pretty_json(j) }
     differ = Differ.send(diff_method, *jsons).format_as(:html)
+    differ.gsub!('<ins', "\n<ins") if diff_method == :diff_by_line
     @diff = sanitize(differ).html_safe
   end
 
