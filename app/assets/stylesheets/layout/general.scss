@@ -118,3 +118,8 @@ div.table-row.gray {
     background-color: $background-blue-faded;
   }
 }
+
+a.unclickable {
+  pointer-events: none;
+  cursor: default;
+}
