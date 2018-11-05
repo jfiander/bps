@@ -25,9 +25,6 @@
           = link_to(register_path(event_type_param, event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}_mobile") do
             = FA::Icon.p('calendar-check', fa: 'fw', style: :regular)
             | Register
-        - elsif !event.expired?
-          = FA::Layer.p([{ name: 'calendar-check', options: { style: :regular } }, { name: 'ban', options: { style: :solid, css: :red } }])
-          span.red Too late to register
 .event-mobile-contents.spaced
   - if event.multiple_sessions?
     b Starts: 

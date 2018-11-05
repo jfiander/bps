@@ -82,9 +82,6 @@
                       = link_to(register_path(event_type_param, event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
                         = FA::Icon.p('calendar-check', fa: 'fw', style: :regular)
                         | Register
-                    - elsif !event.expired?
-                      = FA::Layer.p([{ name: 'calendar-check', options: { style: :regular } }, { name: 'ban', options: { style: :solid, css: :red } }])
-                      span.red Too late to register
                   - elsif !long_form && !defined?(@event_catalog)
                     - if event.registerable? && event.allow_public_registrations
                       = render "events/register/public", event_id: event.id
