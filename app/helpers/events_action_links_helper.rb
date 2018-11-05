@@ -2,6 +2,7 @@
 
 module EventsActionLinksHelper
   def event_action_link(event, path, **options)
+    raise ArgumentError, 'No event provided.' if event.blank?
     return if options.key?(:if) && !options[:if]
     return if options.key?(:expired) && options[:expired] != event&.expired?
 
