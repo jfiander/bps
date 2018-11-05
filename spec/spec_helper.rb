@@ -16,6 +16,8 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
+require 'brakeman'
+
 SimpleCov.start('rails') do
   add_group 'Services', 'app/services'
   add_group 'Channels', 'app/channels'
@@ -88,9 +90,28 @@ def assign_bridge_office(office, user)
   bridge_office.update(user: user)
 end
 
+def run_brakeman
+  example_group = RSpec.describe('Brakeman Issues')
+  puts "\n\nBrakeman report available here: ./tmp/brakeman.html"
+  example = brakeman_example(example_group)
+  example_group.run
+  return if example.execution_result.status == :passed
+
+  RSpec.configuration.reporter.example_failed(example)
+end
+
+def brakeman_example(example_group)
+  example_group.example('must have 0 Critical Security Issues') do
+    result = Brakeman.run app_path: "#{Rails.root}", output_files: ['tmp/brakeman.html']
+    serious = result.warnings.count { |w| w.confidence == 0 }
+    puts "\nBrakeman Result:\n  Critical Security Issues = #{serious}"
+    expect(serious).to eq 0
+  end
+end
+
 def clear_test_calendar
-  # puts "\n*** Specs complete! Clearing test calendar..."
-  # GoogleCalendarAPI.new(auth: true).clear_test_calendar
+  puts "\n\n*** Specs complete! Clearing test calendar..."
+  GoogleCalendarAPI.new(auth: true).clear_test_calendar
 rescue Google::Apis::ClientError
   nil
 end
@@ -108,6 +129,8 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
+    run_brakeman
+
     DatabaseCleaner.clean_with(:truncation)
     Dir["#{Rails.root}/tmp/run/**/*"].each { |file| File.delete(file) }
 

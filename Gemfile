@@ -74,6 +74,7 @@ end
 group :development, :test do
   gem 'sqlite3',              '~> 1.3.11'
 
+  gem 'brakeman',             '~> 4.3'
   gem 'rubocop',              '~> 0.59'
   gem 'rubocop-rails_config', '~> 0.2'
   gem 'rubocop-rspec',        '~> 1.30'
