@@ -16,6 +16,11 @@ RSpec.describe ReceiptMailer, type: :mailer do
     payment(parent).sale!('fake-valid-nonce', email: user.email, user_id: user.id).transaction
   end
 
+  def ensure_transaction(parent)
+    $receipt_email ||= user.email
+    $tr ||= transaction_for(parent, user)
+  end
+
   # Collisions can occur between multiple simultaneous test suites. Restart any failed suites.
   let(:braintree_api_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 201} }
 
@@ -30,7 +35,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       describe 'mail' do
-        let(:mail) { ReceiptMailer.receipt(payment(reg), $tr) }
+        let(:mail) { ReceiptMailer.receipt(payment(reg), ensure_transaction(reg)) }
 
         it 'renders the headers' do
           expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
@@ -54,7 +59,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       describe 'mail' do
-        let(:mail) { ReceiptMailer.receipt(payment(app), $tr) }
+        let(:mail) { ReceiptMailer.receipt(payment(app), ensure_transaction(app)) }
 
         it 'renders the headers' do
           expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
@@ -78,7 +83,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       describe 'mail' do
-        let(:mail) { ReceiptMailer.receipt(payment(user), $tr) }
+        let(:mail) { ReceiptMailer.receipt(payment(user), ensure_transaction(user)) }
 
         it 'renders the headers' do
           expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
