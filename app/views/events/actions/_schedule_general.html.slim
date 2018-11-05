@@ -1,0 +1,20 @@
+- if @registered&.has_key?(event.id)
+  = event_action_link( \
+    event, cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, icon: 'calendar-times', \
+    text: 'Cancel Registration', css: 'control red', expired: false, \
+    if: user_signed_in? && event.allow_member_registrations \
+  )
+- else
+  = event_action_link( \
+    event, register_path(event_type_param, event.id), method: :put, remote: true, icon: 'calendar-check', \
+    text: 'Register', css: 'control', id: "event_#{event.id}", expired: false, \
+    if: user_signed_in? && event.allow_member_registrations && event.registerable? \
+  )
+
+- if user_signed_in?
+  = event_action_link(event, nil, icon: 'calendar-exclamation', text: 'Too late to register', css: 'gray', expired: false, if: event.cutoff?)
+- elsif event.registerable?
+  = render('events/no/public_registrations')             if !event.allow_public_registrations
+  = render('events/register/public', event_id: event.id) if  event.allow_public_registrations
+- else
+  = render('events/no/registrations')

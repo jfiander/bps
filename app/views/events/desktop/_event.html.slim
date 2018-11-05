@@ -41,7 +41,9 @@
                     span.costs = event.formatted_cost
                     - if event.advance_payment
                       br
-                      small.blue.bold.italic title=("Please register and pay before: #{event.cutoff_at.strftime(ApplicationController::EVENT_DATE_FORMAT)}") Advance payment required
+                      small.blue.bold.italic
+                        | Advance payment required by 
+                        = event.cutoff_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT)
               - if !defined?(@event_catalog) && @current_user_permitted_event_type && event.show_in_catalog
                 .table.row
                   .table-cell.catalog
@@ -57,7 +59,7 @@
                       | Location: 
                       - if @locations[event.location_id][:map_link].present?
                         = link_to(@locations[event.location_id][:map_link], target: :_blank) do
-                          = FA::Icon.p("map-marker-alt")
+                          = FA::Icon.p('map-marker-alt')
                           | Map
                 .table.row
                   .table-cell = simple_format(@locations[event.location_id][:address])
@@ -71,24 +73,8 @@
                 - if defined?(@event_catalog)
                   = render 'events/actions/catalog', event: event
                 - else
-                  - if @current_user_permitted_event_type
-                    = render 'events/actions/schedule', event: event
-                  - if !long_form && !event.expired? && user_signed_in? && event.allow_member_registrations
-                    - if @registered&.has_key?(event.id)
-                      = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}", data: {confirm: "Are you sure you want to cancel this registration?"}) do
-                        = FA::Icon.p('minus-square', fa: 'fw')
-                        | Cancel Registration
-                    - elsif event.registerable?
-                      = link_to(register_path(event_type_param, event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}") do
-                        = FA::Icon.p('calendar-check', fa: 'fw', style: :regular)
-                        | Register
-                  - elsif !long_form && !defined?(@event_catalog)
-                    - if event.registerable? && event.allow_public_registrations
-                      = render "events/register/public", event_id: event.id
-                    - elsif !user_signed_in? && event.registerable?
-                      = render "events/no/public_registrations"
-                    - elsif !event.registerable?
-                      = render 'events/no/registrations'
+                  = render 'events/actions/schedule', event: event if @current_user_permitted_event_type
+                  = render 'events/actions/schedule_general', event: event unless long_form
   .table-row
     .table
       .table-row

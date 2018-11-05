@@ -1,0 +1,16 @@
+#new
+  = form_for(@registration, url: long_register_path, method: :post) do |f|
+    = f.hidden_field :event_id
+    .left = f.label :name
+    .right = f.text_field :name, required: true
+    br.clear
+
+    .left = f.label :email
+    .right = f.email_field :email, required: true
+    br.clear
+
+    .left = f.label :phone
+    .right = f.text_field :phone
+    br.clear
+
+    .center = spinner_button(f, button_text: 'Register', css: 'big')

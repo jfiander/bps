@@ -112,6 +112,10 @@ div#expired-events-section {
 a.control {
   display: inline-block;
   padding: 0.5em;
+
+  &.no-float i {
+    float: none;
+  }
 }
 
 div.events-table span.fa-layers {

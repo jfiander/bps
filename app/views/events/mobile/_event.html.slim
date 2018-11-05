@@ -15,16 +15,7 @@
   - if @current_user_permitted_event_type
     .event-mobile-contents.spaced = render 'events/actions/schedule', event: event
   - unless defined?(@event_catalog)
-    .event-mobile-contents.spaced
-      - if !long_form && !event.expired? && user_signed_in? && event.allow_member_registrations
-        - if @registered&.has_key?(event.id)
-          = link_to(cancel_registration_path(id: @registered[event.id]), method: :delete, remote: true, class: "red control", id: "event_#{event.id}_mobile", data: {confirm: "Are you sure you want to cancel this registration?"}) do
-            = FA::Icon.p('minus-square', fa: 'fw')
-            | Cancel Registration
-        - elsif event.registerable?
-          = link_to(register_path(event_type_param, event.id), method: :put, remote: true, class: "control", id: "event_#{event.id}_mobile") do
-            = FA::Icon.p('calendar-check', fa: 'fw', style: :regular)
-            | Register
+    .event-mobile-contents.spaced = render 'events/actions/schedule_general', event: event unless long_form
 .event-mobile-contents.spaced
   - if event.multiple_sessions?
     b Starts: 
@@ -48,7 +39,9 @@
 - if event.cost.present?
   .event-mobile-contents.spaced = event.formatted_cost
   - if event.advance_payment
-    small.blue.bold.italic title=("Please register and pay before: #{event.cutoff_at.strftime(ApplicationController::EVENT_DATE_FORMAT)}") Advance payment required
+    small.blue.bold.italic
+      | Advance payment required by 
+      = event.cutoff_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT)
 - unless defined?(@event_catalog)
   .event-mobile-contents.spaced
     - if @locations[event.location_id].present?

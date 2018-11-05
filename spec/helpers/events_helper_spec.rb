@@ -111,7 +111,7 @@ RSpec.describe EventsHelper, type: :helper do
         )
       end
 
-      it 'should generate just an icon with a nil path' do
+      it 'should generate an unclickable link with a nil path' do
         @course = FactoryBot.create(:event, event_type: @ag)
 
         link = event_action_link(
@@ -121,7 +121,9 @@ RSpec.describe EventsHelper, type: :helper do
         )
 
         expect(link).to eql(
-          '<i class=\'far fa-fw fa-calendar-check fa-1x\' data-fa-transform=\'\' title=\'\'></i>Post To Calendar'
+          '<a icon="calendar-check" text="Post to Calendar" class="control birmingham-blue unclickable" ' \
+          'css="birmingham-blue" rel="nofollow" data-method="put" href="#">' \
+          "<i class='far fa-fw fa-calendar-check fa-1x' data-fa-transform='' title=''></i>Post To Calendar</a>"
         )
       end
     end
