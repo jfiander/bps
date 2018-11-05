@@ -24,17 +24,20 @@ h1.birmingham Transaction Receipt
 p
   h2 Transaction information:
   | Transaction # 
-  b = @transaction.id
+  b = @transaction[:id]
   br
   | Date: 
-  = @transaction.created_at.strftime('%Y-%m-%d')
+  = @transaction[:date]
   br
   | Total charged: 
-  b = number_to_currency(@transaction.amount)
+  b = number_to_currency(@transaction[:amount])
   br
-  - if @transaction.credit_card_details.card_type.present?
-    = image_tag @transaction.credit_card_details.image_url, alt: @transaction.credit_card_details.card_type, size: '32x20'
+  - if @transaction[:card_type].present?
+    - if @transaction[:image].present?
+      = image_tag @transaction[:image], alt: @transaction[:card_type], size: '32x20'
+    - else
+      = @transaction[:card_type]
     |  ending in **
-    b = @transaction.credit_card_details.last_4
+    b = @transaction[:last_4]
   - else
     | Paid via PayPal

@@ -98,7 +98,7 @@ private
   def send_receipt_email(transaction)
     return unless transaction.customer_details.email.present?
 
-    ReceiptMailer.receipt(transaction, @payment).deliver
+    ReceiptMailer.receipt(@payment, transaction).deliver
   end
 
   def flash_error_message

@@ -2,7 +2,11 @@
 
 class ReceiptMailerPreview < ActionMailer::Preview
   def receipt
-    ReceiptMailer.receipt(transaction, payment)
+    ReceiptMailer.receipt(payment, transaction)
+  end
+
+  def receipt_manual
+    ReceiptMailer.receipt(payment, manual_options)
   end
 
 private
@@ -33,6 +37,16 @@ private
       payment_method_nonce: fake_nonces.sample,
       options: { submit_for_settlement: true },
       customer: { email: 'test-customer@example.com' }
+    }
+  end
+
+  def manual_options
+    {
+      id: 'test-id',
+      amount: '11.00',
+      date: '2018-03-07',
+      card_type: 'Visa',
+      last_4: '1234'
     }
   end
 end

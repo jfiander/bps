@@ -4,12 +4,13 @@ class ReceiptMailer < ApplicationMailer
   default from: '"Birmingham Power Squadron" <receipts@bpsd9.org>'
   default subject: 'Your receipt from Birmingham Power Squadron'
 
-  def receipt(transaction, payment)
-    @transaction = transaction
+  def receipt(payment, transaction)
+    @transaction = transaction_details(transaction)
+
     @purchase_info = purchase_info(payment)
     @purchase_model = payment.parent_type
 
-    mail(to: @transaction.customer_details.email)
+    mail(to: @transaction[:email])
   end
 
   def self.paid(payment)
@@ -61,6 +62,20 @@ private
     {
       name: 'Annual dues',
       people: @payable.children.count
+    }
+  end
+
+  def transaction_details(transaction)
+    return transaction if transaction.is_a?(Hash)
+
+    @transaction = {
+      id: transaction.id,
+      date: transaction.created_at.strftime('%Y-%m-%d'),
+      amount: transaction.amount,
+      type: transaction.credit_card_details.card_type,
+      image: transaction.credit_card_details.image_url,
+      last_4: transaction.credit_card_details.last_4,
+      email: transaction.customer_details.email
     }
   end
 end

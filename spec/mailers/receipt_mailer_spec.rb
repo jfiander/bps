@@ -30,7 +30,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       describe 'mail' do
-        let(:mail) { ReceiptMailer.receipt($tr, payment(reg)) }
+        let(:mail) { ReceiptMailer.receipt(payment(reg), $tr) }
 
         it 'renders the headers' do
           expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
@@ -54,7 +54,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       describe 'mail' do
-        let(:mail) { ReceiptMailer.receipt($tr, payment(app)) }
+        let(:mail) { ReceiptMailer.receipt(payment(app), $tr) }
 
         it 'renders the headers' do
           expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
@@ -78,7 +78,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       describe 'mail' do
-        let(:mail) { ReceiptMailer.receipt($tr, payment(user)) }
+        let(:mail) { ReceiptMailer.receipt(payment(user), $tr) }
 
         it 'renders the headers' do
           expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')

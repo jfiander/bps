@@ -12,11 +12,11 @@ Transaction Receipt
 <%- end %>
 
 Transaction information:
-  Transaction # <%= @transaction.id %>
-  Date: <%= @transaction.created_at.strftime('%Y-%m-%d') %>
-  Total charged: <%= number_to_currency(@transaction.amount) %>
-  <%- if @transaction.credit_card_details.card_type.present? %>
-  <%= @transaction.credit_card_details.card_type %> ending in **<%= @transaction.credit_card_details.last_4 %>
+  Transaction # <%= @transaction[:id] %>
+  Date: <%= @transaction[:date] %>
+  Total charged: <%= number_to_currency(@transaction[:amount]) %>
+  <%- if @transaction[:card_type].present? %>
+  <%= @transaction[:card_type] %> ending in **<%= @transaction[:last_4] %>
   <%- else %>
   Paid via PayPal
   <%- end %>
