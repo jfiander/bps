@@ -108,7 +108,7 @@ private
   end
 
   def applicants
-    return applicant_attributes_hash(primary) if additionals.blank?
+    return applicant_attributes_hash(primary_applicant) if additionals.blank?
 
     all_apps = process_additionals
 
