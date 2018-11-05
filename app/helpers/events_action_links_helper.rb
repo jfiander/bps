@@ -33,12 +33,9 @@ private
   end
 
   def generate_event_action_link(event, path, icon, options)
-    if path.present? && path.match?(/_path/)
-      link_to(send(path, event), **options) { icon }
-    elsif path.present?
-      link_to(path, **options) { icon }
-    else
-      icon
-    end
+    return link_to(send(path, event), **options) { icon } if path.present? && path.match?(/_path/)
+    return link_to(path, **options) { icon } if path.present?
+
+    link_to('#', **options.merge(class: "#{options[:class]} unclickable")) { icon }
   end
 end
