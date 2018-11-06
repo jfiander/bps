@@ -13,11 +13,11 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
 
 table#users
   tr
-    th.wide User
-    th.center.narrow Certificate
-    th.center.narrow Roles
-    th.medium Current Login
-    th.center.narrow
+    th User
+    th.center Certificate
+    th.center Roles
+    th Current Login
+    th.center
   - @users.each do |user|
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
       td
@@ -70,7 +70,7 @@ table#users
             = FA::Icon.p('lock', fa: 'fw', title: 'Lock')
         - else
           - if admin
-            = link_to(user_path(user[:id])) { FA::Icon.p('user', title: user[:id], fa: 'fw') }
+            = link_to(user_path(user[:id])) { FA::Icon.p('user', title: "Profile for user #{user[:id]}", fa: 'fw') }
           - else
             = FA::Icon.p('user', title: user[:id], fa: 'fw')
           = link_to(user_certificate_path(id: user[:id]), target: :_blank) { FA::Icon.p('file-certificate', style: :regular, fa: 'fw', title: 'Educational certificate') }

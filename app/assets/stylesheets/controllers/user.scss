@@ -108,27 +108,11 @@ table#users {
     }
   }
 
-  div.very-narrow {
-    width: 3em;
-  }
-
-  div.narrow {
-    width: 6em;
-  }
-
-  div.medium {
-    width: 13em;
-  }
-
-  div.wide {
-    width: 18em;
-  }
-
-  div.small-text {
+  th.small-text {
     font-size: 90%;
   }
 
-  div.locked {
+  tr.locked td {
     background-color: lighten($old-glory-red, 50%);
     color: gray;
 
