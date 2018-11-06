@@ -1,12 +1,12 @@
 h1 = admin_header('Payments & Receipts')
 
-.table
+#receipts.table
   .table-row
     .table-cell.table-header ID
     .table-cell.table-header Parent
     .table-cell.table-header Customer
     .table-cell.table-header Amount
-    .table-cell.table-header Link
+    .table-cell.table-header Links
   - @payments.each do |payment|
     .table-row
       .table-cell = payment.id
@@ -19,12 +19,16 @@ h1 = admin_header('Payments & Receipts')
           = mail_to(payment.customer.email, payment.customer.full_name)
         - when MemberApplicant
           = mail_to(payment.customer.email, "#{payment.customer.first_name} #{payment.customer.last_name}")
-      .table-cell = payment.transaction_amount
       .table-cell
+        = FA::Icon.p('dollar-sign', style: :regular)
+        = payment.transaction_amount
+      .table-cell.receipts-actions
         - if payment.paid
-          = link_to(receipt_path(payment.token), class: 'blue') { FA::Icon.p('file-pdf', style: :regular) + 'Receipt'}
-          = FA::Icon.p('ellipsis-h', style: :regular, css: 'gray', title: 'Pending generation') unless payment.receipt.exists?
+          = link_to(receipt_path(payment.token), class: 'blue') do
+            = FA::Icon.p('file-pdf', style: :regular) + 'Receipt'
+            = FA::Icon.p('money-check-alt', style: :regular, title: 'Paid in-person') if payment.transaction_id == 'in-person'
+            = FA::Icon.p('ellipsis-h', style: :regular, css: 'gray', title: 'Pending generation') unless payment.receipt.exists?
         - else
           = link_to(pay_path(payment.token)) { FA::Icon.p('credit-card', style: :regular) + 'Pay' }
           = link_to(override_cost_path(payment.token), class: 'green') { FA::Icon.p('file-invoice-dollar', style: :regular) + 'Override' }
-          = link_to(paid_in_person_path(payment.token), class: 'admin', data: { confirm: 'Are you sure you want to mark this payment as paid in-person?' }) { FA::Icon.p('money-check-alt', style: :regular) + 'Paid In-Person' }
+          = link_to(paid_in_person_path(payment.token), class: 'admin', data: { confirm: 'Are you sure you want to mark this payment as paid in-person?' }) { FA::Icon.p('money-check-alt', style: :regular) + 'In-Person' }
