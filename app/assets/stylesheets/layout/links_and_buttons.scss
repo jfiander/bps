@@ -11,8 +11,12 @@ a.red:hover, a.red:hover > i, a:hover > i.red {
   color: lighten($old-glory-red, 10%);
 }
 
-a.blue-faded:hover, a.blue-faded:hover > i, a:hover > i.blue-faded {
+a.blue:hover, a.blue:hover > i, a:hover > i.blue {
   color: lighten($old-glory-blue, 40%);
+}
+
+a.admin:hover, a.admin:hover > i, a:hover > i.admin {
+  color: darken(purple, 20%);
 }
 
 a.green:hover, a.green:hover > i, a:hover > i.green {
