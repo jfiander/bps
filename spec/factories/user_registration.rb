@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :user_registration do
-    #
+    association :registration
   end
 end

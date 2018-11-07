@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe ReceiptMailer, type: :mailer do
   let(:user) { FactoryBot.create(:user) }
   let(:event) { FactoryBot.create(:event, cost: 10) }
-  let(:reg) { FactoryBot.create(:registration, user: user, event: event) }
+  let(:reg) { FactoryBot.create(:registration, :with_user, event: event) }
   let(:app) { FactoryBot.create(:family_application) }
 
   # Collisions can occur between multiple simultaneous test suites. Restart any failed suites.

@@ -3,10 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe RegistrationMailer, type: :mailer do
-  let(:ed_user_reg) { FactoryBot.create(:registration, :with_user) }
-  let(:ed_email_reg) { FactoryBot.create(:registration, :with_email) }
-  let(:event_user_reg) { FactoryBot.create(:event_registration, :with_user) }
-  let(:event_email_reg) { FactoryBot.create(:event_registration, :with_email) }
+  let(:course) { event_for_category('public').first }
+  let(:event) { event_for_category('meeting').first }
+  let(:ed_user_reg) { FactoryBot.create(:registration, :with_user, event: course) }
+  let(:ed_email_reg) { FactoryBot.create(:registration, :with_email, event: course) }
+  let(:event_user_reg) { FactoryBot.create(:registration, :with_user, event: event) }
+  let(:event_email_reg) { FactoryBot.create(:registration, :with_email, event: event) }
 
   before { generic_seo_and_ao }
 
@@ -71,7 +73,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'confirm' do
-      let(:mail) { RegistrationMailer.confirm(ed_user_reg) }
+      let(:mail) { RegistrationMailer.confirm(ed_user_reg.user_registrations.first) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -91,7 +93,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'confirm (event)' do
-      let(:mail) { RegistrationMailer.confirm(event_user_reg) }
+      let(:mail) { RegistrationMailer.confirm(event_user_reg.user_registrations.first) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -186,7 +188,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'confirm' do
-      let(:mail) { RegistrationMailer.confirm(ed_email_reg) }
+      let(:mail) { RegistrationMailer.confirm(ed_email_reg.user_registrations.first) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(

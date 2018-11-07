@@ -39,7 +39,7 @@ class UserController < ApplicationController
   title!('Instructors', only: :instructors)
 
   def show
-    @registrations = Registration.for_user(@user.id).current.reject { |r| r.event.blank? }
+    @registrations = Registration.current.for_user(@user.id).reject { |r| r.event.blank? }
 
     insignia
 

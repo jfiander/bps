@@ -131,10 +131,21 @@ end
 def register(event = nil, user: nil, email: nil, save: true)
   event ||= FactoryBot.create(:event)
   user = FactoryBot.create(:user) if user.blank? && email.blank?
-  reg = FactoryBot.build(:registration, event: event, user: user, email: email)
+  reg = FactoryBot.build(:registration, event: event)
+  ur = FactoryBot.build(
+    :user_registration, primary: true, registration: reg, user: user, email: email
+  )
+  reg.user_registrations << ur
   reg.save! if save
 
-  [reg, nil]
+  [reg, ur]
+end
+
+def event_for_category(category, title: nil)
+  event_type = FactoryBot.create(:event_type, event_category: category, title: title)
+  event = FactoryBot.create(:event, event_type: event_type)
+
+  [event, event_type]
 end
 
 def run_brakeman

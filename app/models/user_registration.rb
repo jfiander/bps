@@ -2,6 +2,7 @@
 
 class UserRegistration < ApplicationRecord
   belongs_to :registration
+  has_one :event, through: :registration
   belongs_to :user, optional: true
 
   before_validation :convert_email_to_user
@@ -10,11 +11,11 @@ class UserRegistration < ApplicationRecord
   validates :primary, uniqueness: { scope: :registration }
   validate :has_user_or_email?, :no_duplicates
 
-private
-
   def paid?
     registration.paid?
   end
+
+private
 
   def block_destroy
     raise 'The associated registration has been paid, so this cannot be destroyed.'

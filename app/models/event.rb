@@ -19,6 +19,7 @@ class Event < ApplicationRecord
   has_many :instructors, through: :event_instructors, source: :user
 
   has_many :registrations
+  has_many :user_registrations, through: :registrations
 
   scope :displayable, -> { where(archived_at: nil) }
 
@@ -89,7 +90,7 @@ class Event < ApplicationRecord
   end
 
   def register_user(user)
-    Registration.create(user: user, event: self)
+    Registration.register(user: user, event_id: id)
   end
 
   def assign_instructor(user)

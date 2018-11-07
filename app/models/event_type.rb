@@ -27,7 +27,7 @@ class EventType < ApplicationRecord
 
   validates :event_category, inclusion: %w[advanced_grade elective public seminar meeting]
 
-  before_save { self.title = title.downcase.tr(' ', '_') }
+  before_save { self.title = title.to_s.downcase.tr(' ', '_') }
 
   def self.selector(type, key: false)
     seminars_select = seminars.ordered.map(&:to_select_array)

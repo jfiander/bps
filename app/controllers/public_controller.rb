@@ -48,8 +48,9 @@ private
   end
 
   def find_registration
-    @registration = Registration.find_by(@registration_attributes.slice(:event_id, :email))
-    @registration ||= Registration.new(@registration_attributes)
+    @registration = Registration.register(
+      event_id: @registration_attributes[:event_id], email: @registration_attributes[:email]
+    )
   end
 
   def block_registration
@@ -65,10 +66,7 @@ private
   end
 
   def register_js
-    if @registration.persisted?
-      flash[:alert] = 'You are already registered for this course.'
-      render status: :unprocessable_entity
-    elsif @registration.save
+    if @registration.save
       flash[:success] = 'You have successfully registered!'
     else
       flash[:alert] = 'We are unable to register you at this time.'
@@ -77,18 +75,11 @@ private
   end
 
   def register_html
-    if @registration.persisted?
-      registration_existed
-    elsif @registration.save
+    if @registration.save
       registration_saved
     else
       registration_problem
     end
-  end
-
-  def registration_existed
-    flash[:alert] = 'You are already registered for this course.'
-    redirect_to send("show_#{register_event_type}_path", id: @event_id)
   end
 
   def registration_saved

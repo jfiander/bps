@@ -33,7 +33,7 @@ class EventController < ApplicationController
 
     return unless @current_user_permitted_event_type
 
-    @registered_users = Registration.includes(:user).all.group_by(&:event_id)
+    @registered_users = Registration.with_users.all.group_by(&:event_id)
     @expired_events = get_events(event_type_param, :expired)
   end
 
@@ -52,10 +52,11 @@ class EventController < ApplicationController
   def show
     @locations = Location.searchable
     @event_title = event_type_param.titleize
-    @registration = Registration.new(event_id: clean_params[:id])
     return unless user_signed_in?
 
-    reg = Registration.find_by(event_id: clean_params[:id], user: current_user)
+    reg = Registration.with_users.find_by(
+      event_id: clean_params[:id], user_registrations: { user: current_user }
+    )
     @registered = { reg.event_id => reg.id } if reg.present?
   end
 

@@ -39,17 +39,14 @@ RSpec.describe EventType, type: :model do
   end
 
   describe 'ordering' do
-    before do
+    it 'should correctly order event_types by name' do
       FactoryBot.create(:event_type, event_category: :seminar, title: 'paddle')
       FactoryBot.create(:event_type, event_category: :elective, title: 'sail')
       FactoryBot.create(:event_type, event_category: :meeting, title: 'member')
       FactoryBot.create(:event_type, event_category: :public)
       FactoryBot.create(:event_type, event_category: :advanced_grade, title: 'advanced_piloting')
-      @event_types = EventType.all
-    end
 
-    it 'correctlies order event_types by name' do
-      expect(@event_types.map(&:order_position)).to eql([8, 7, 9, 1, 4])
+      expect(EventType.all.map(&:order_position)).to eql([8, 7, 9, 1, 4])
     end
   end
 

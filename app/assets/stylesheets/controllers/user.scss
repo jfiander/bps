@@ -58,6 +58,10 @@ ul#profile-actions li {
 #profile-registrations {
   max-width: 85%;
 
+  div.table-cell {
+    height: 2em;
+  }
+
   div.table-cell.name {
     text-align: right;
     padding-right: 2em;

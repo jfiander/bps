@@ -5,11 +5,19 @@ FactoryBot.define do
     association :event
 
     trait :with_user do
-      association :user
+      before(:create) do |reg|
+        ur = FactoryBot.create(:user_registration, primary: true,  registration: reg, user: FactoryBot.create(:user))
+        reg.user_registrations << ur
+      end
     end
 
     trait :with_email do
-      email { "#{SecureRandom.hex(8)}@example.com" }
+      before(:create) do |reg|
+        ur = FactoryBot.create(
+          :user_registration, primary: true,  registration: reg, email: "#{SecureRandom.hex(8)}@example.com"
+        )
+        reg.user_registrations << ur
+      end
     end
 
     trait :event do

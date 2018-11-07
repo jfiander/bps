@@ -31,9 +31,7 @@ module Events
       @instructors = EventInstructor.where(event_id: @event.id).map(&:user)
       return unless map_to_text
 
-      @instructors = @instructors.map do |u|
-        "#{u.simple_name} / #{u.certificate}"
-      end.join("\n")
+      @instructors = @instructors.map { |u| "#{u.simple_name} / #{u.certificate}" }.join("\n")
     end
   end
 end

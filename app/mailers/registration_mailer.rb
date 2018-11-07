@@ -22,6 +22,7 @@ class RegistrationMailer < ApplicationMailer
 
   def confirm(user_registration)
     @user_registration = user_registration
+    @registration = @user_registration.registration
     @signature = signature_for_confirm
     to = @user_registration&.user&.email || @user_registration.email
     from = "\"#{@signature[:name]}\" <#{@signature[:email]}>"

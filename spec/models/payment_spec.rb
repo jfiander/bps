@@ -46,9 +46,8 @@ RSpec.describe Payment, type: :model do
     describe 'paid?' do
       before do
         generic_seo_and_ao
-        event = FactoryBot.create(:event)
-        reg = FactoryBot.create(:registration, event: event, email: 'example@example.com')
-        @payment = FactoryBot.create(:payment, parent: reg)
+        reg = register.first
+        @payment = reg.payment
       end
 
       it 'is false if not paid' do
@@ -149,18 +148,16 @@ RSpec.describe Payment, type: :model do
 
     it 'returns false if cost is nil' do
       event = FactoryBot.create(:event, cost: nil)
-      reg = FactoryBot.create(:registration, event: event, email: 'example@example.com')
-      payment = FactoryBot.create(:payment, parent: reg)
+      reg = register(event).first
 
-      expect(payment.cost?).to be(false)
+      expect(reg.payment.cost?).to be(false)
     end
 
     it 'returns true if cost is an Integer' do
       event = FactoryBot.create(:event, cost: 7)
-      reg = FactoryBot.create(:registration, event: event, email: 'example@example.com')
-      payment = FactoryBot.create(:payment, parent: reg)
+      reg = register(event).first
 
-      expect(payment.cost?).to be(true)
+      expect(reg.payment.cost?).to be(true)
     end
   end
 

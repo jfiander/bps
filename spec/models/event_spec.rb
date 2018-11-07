@@ -37,9 +37,8 @@ RSpec.describe Event, type: :model, slow: true do
 
     event_it 'filters with registrations' do
       FactoryBot.create_list(:event, 2)
-      user = FactoryBot.create(:user)
       event = Event.last
-      FactoryBot.create(:registration, event: event, user: user)
+      FactoryBot.create(:registration, :with_user, event: event)
       expect(Event.with_registrations.to_a).to eql([event])
     end
   end
@@ -293,9 +292,14 @@ RSpec.describe Event, type: :model, slow: true do
         user = FactoryBot.create(:user)
         event = FactoryBot.create(:event)
 
-        expect(Registration.where(event: event, user: user)).to be_blank
+        regs = Registration.where(event: event)
+        urs = regs.flat_map(&:user_registrations)&.select { |u| u.user == user }
+        expect(urs).to be_blank
+
         event.register_user(user)
-        expect(Registration.where(event: event, user: user)).not_to be_blank
+        regs = Registration.where(event: event)
+        urs = regs.flat_map(&:user_registrations)&.select { |u| u.user == user }
+        expect(urs).not_to be_blank
       end
     end
 

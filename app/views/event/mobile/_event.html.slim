@@ -89,11 +89,6 @@
   .event-mobile-contents.spaced.red
     b Prerequisite course:
     p = event_prereq(event).title.titleize
-- if @current_user_permitted_event_type && !defined?(@event_catalog) && @registered_users[event.id].present?
-  .event-mobile-contents.spaced
-    b Registered Users:
-    - @registered_users[event.id].each do |r|
-      = render 'event/register/member', r: r
 
 - if !defined?(@event_catalog) && !long_form
   - if !user_signed_in? && event.registerable? && event.allow_public_registrations

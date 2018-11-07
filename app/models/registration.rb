@@ -6,20 +6,59 @@ class Registration < ApplicationRecord
   belongs_to :event
   has_many :user_registrations
 
-  scope :current,  -> { all.find_all { |r| !r.event&.expired? } }
-  scope :expired,  -> { all.find_all { |r| r.event&.expired? } }
+  validates :user_registrations, presence: true
 
-  after_create :notify_on_create
-  after_create :confirm_to_registrants
+  scope :with_users, -> { includes(user_registrations: :user) }
+
+  def self.current
+    where(id: Event.where('expires_at < ?', Time.now).select(:id))
+  end
+
+  def self.expired
+    where(id: Event.where('expires_at >= ?', Time.now).select(:id))
+  end
+
+  def self.register(event: nil, event_id: nil, user: nil, email: nil)
+    validate_registration(event, event_id, user, email)
+    event_id ||= event.id
+
+    regs = Registration.where(event_id: event_id)
+    ur = UserRegistration.find_by(registration: regs, user: user, email: email)
+    return ur.registration if ur.present?
+
+    reg = Registration.new(event_id: event_id)
+    ur = UserRegistration.new(registration: reg, primary: true, user: user, email: email)
+    reg.user_registrations << ur
+    reg.save
+    reg
+  end
+
+  def self.validate_registration(event, event_id, user, email)
+    raise ArgumentError, 'Must specify a user or email' unless user.present? || email.present?
+    return if event.present? || event_id.present?
+
+    raise ArgumentError, 'Must specify an event or event_id'
+  end
 
   def self.for_user(user_id)
     UserRegistration.where(user_id: user_id).map(&:registration)
   end
 
+  def add(user: nil, email: nil)
+    self.user_registrations << UserRegistration.create(
+      registration: self, primary: false, user: user, email: email
+    )
+    self
+  end
+
+  def primary
+    user_registrations.find_by(primary: true)
+  end
+
   def payment_amount
     return override_cost if override_cost.present?
 
-    user_registrations.count * event&.get_cost(user_registrations&.primary&.user&.present?)
+    user_registrations.count * event&.get_cost(primary&.user.present?)
   end
 
   def cost?
@@ -39,12 +78,14 @@ class Registration < ApplicationRecord
   end
 
   def user
-    user_registrations.find_by(prinary: true)
+    primary.user
   end
 
-private
+  def email
+    primary.email
+  end
 
-  def notify_on_create
+  def notify_new
     RegistrationMailer.registered(self).deliver
   end
 

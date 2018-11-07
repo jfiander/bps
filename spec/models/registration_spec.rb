@@ -9,6 +9,29 @@ RSpec.describe Registration, type: :model do
     generic_seo_and_ao
   end
 
+  describe 'scopes' do
+    before(:each) do
+      @expired, = register(FactoryBot.create(:event, expires_at: 1.week.ago))
+      @current, = register(FactoryBot.create(:event, expires_at: Time.now + 1.week))
+    end
+
+    it 'current' do
+      expect(Registration.current.to_a).to eql([@current])
+    end
+
+    it 'expired' do
+      expect(Registration.expired.to_a).to eql([@expired])
+    end
+  end
+
+  it 'adds an additional person to a registration' do
+    reg = FactoryBot.create(:registration, :with_email)
+    email = reg.user_registrations.first.email
+    reg.add(email: 'someone_else@example.com')
+
+    expect(reg.user_registrations.map(&:email)).to eql([email, 'someone_else@example.com'])
+  end
+
   describe 'payable' do
     describe 'class.payable?' do
       it 'returns true for a payable class' do
@@ -26,17 +49,15 @@ RSpec.describe Registration, type: :model do
       end
 
       it 'returns the paid flag for a payable object' do
-        user = FactoryBot.create(:user)
-        reg = FactoryBot.create(:event_registration, user: user)
+        reg = FactoryBot.create(:registration, :with_user)
         expect(reg.paid?).to eql(reg.payment.paid)
       end
     end
 
     context 'with a registration' do
       before do
-        user = FactoryBot.create(:user)
         event = FactoryBot.create(:event, cost: 15)
-        @reg = FactoryBot.create(:registration, event: event, user: user)
+        @reg = FactoryBot.create(:registration, :with_user, event: event)
       end
 
       it 'returns the payable amount' do
@@ -71,107 +92,123 @@ RSpec.describe Registration, type: :model do
   end
 
   it 'converts a public registration user email to user' do
-    reg = FactoryBot.create(:registration, email: @user.email, event: @event)
+    reg = register(email: @user.email).first
     expect(reg.user).to eql(@user)
   end
 
   it 'requires an email or user' do
     reg = FactoryBot.build(:registration, event: @event)
     expect(reg.valid?).to be(false)
-    expect(reg.errors.messages).to eql(base: ['Must have a user or event'])
+    expect(reg.errors.messages).to eql(user_registrations: ["can't be blank"])
 
-    reg = FactoryBot.build(:registration, event: @event, email: @user.email)
-    expect(reg.valid?).to be(true)
+    reg = register(email: 'something@example.com', save: false).first
+    expect(reg.save!).to be(true)
 
-    reg = FactoryBot.build(:registration, event: @event, user: @user)
-    expect(reg.valid?).to be(true)
+    reg = register(user: FactoryBot.create(:user), save: false).first
+    expect(reg.save!).to be(true)
   end
 
-  it 'does not allow duplicate registrations' do
-    FactoryBot.create(:registration, event: @event, user: @user)
-    reg = FactoryBot.build(:registration, event: @event, user: @user)
-    expect(reg.valid?).to be(false)
-    expect(reg.errors.messages).to eql(base: ['Duplicate'])
+  it 'does not raise an error for public registrations' do
+    expect { FactoryBot.create(:registration, :with_email) }.not_to raise_error
   end
 
-  it 'sends a confirmation email for public registrations' do
-    expect { FactoryBot.create(:registration, email: 'nobody@example.com', event: @event) }.not_to raise_error
+  it 'does not raise an error from sending rendezvous new registration email' do
+    expect do
+      reg = register(event_for_category('meeting', title: 'rendezvous').first).first
+      reg.notify_new
+    end.not_to raise_error
+  end
+
+  it 'does not raise an error from sending rendezvous confirmation emails' do
+    expect do
+      reg = register(event_for_category('meeting', title: 'rendezvous').first).first
+      reg.confirm_to_registrants
+    end.not_to raise_error
   end
 
   it 'notifies the chair of registrations' do
     FactoryBot.create(:committee, user: generic_seo_and_ao[:ao].user, name: 'rendezvous')
-    event_type = FactoryBot.create(:event_type, event_category: 'meeting', title: 'rendezvous')
-    event = FactoryBot.create(:event, event_type: event_type)
-    expect { FactoryBot.create(:registration, user: @user, event: event) }.not_to raise_error
+    event = event_for_category('meeting', title: 'rendezvous').first
+    expect { FactoryBot.create(:registration, :with_user, event: event) }.not_to raise_error
   end
 
   it 'includes an attached PDF if present' do
     @event.flyer = File.open(Rails.root.join('spec', 'Blank.pdf'), 'r')
     @event.save
-    reg = FactoryBot.create(:registration, event: @event, user: @user)
+    reg = FactoryBot.create(:registration, :with_user, event: @event)
 
-    expect { RegistrationMailer.confirm(reg).deliver }.not_to raise_error
+    expect { RegistrationMailer.confirm(reg.user_registrations.first).deliver }.not_to raise_error
   end
 
   describe 'cost?' do
     it 'returns false without a cost' do
-      reg = FactoryBot.create(:registration, event: @event, user: @user)
+      reg = FactoryBot.create(:registration, :with_user, event: @event)
       expect(reg.cost?).to be(false)
     end
 
     it 'returns true with a cost' do
       @event.update(cost: 10)
-      reg = FactoryBot.create(:registration, event: @event, user: @user)
+      reg = FactoryBot.create(:registration, :with_user, event: @event)
       expect(reg.cost?).to be(true)
     end
   end
 
   describe 'user?' do
     it 'returns false without a user' do
-      reg = FactoryBot.create(:registration, event: @event, email: 'nobody@example.com')
+      reg = FactoryBot.create(:registration, :with_email)
       expect(reg.user?).to be(false)
     end
 
     it 'returns true with a user' do
-      reg = FactoryBot.create(:registration, event: @event, user: @user)
+      reg = FactoryBot.create(:registration, :with_user)
       expect(reg.user?).to be(true)
     end
   end
 
   describe 'type' do
     it 'returns course for public courses' do
-      event_type = FactoryBot.create(:event_type, event_category: 'public')
-      event = FactoryBot.create(:event, event_type: event_type)
-      reg = FactoryBot.create(:registration, event: event, user: @user)
+      event = event_for_category('public').first
+      reg = FactoryBot.create(:registration, :with_user, event: event)
       expect(reg.type).to eql('course')
     end
 
     it 'returns course for advanced grade courses' do
-      event_type = FactoryBot.create(:event_type, event_category: 'advanced_grade')
-      event = FactoryBot.create(:event, event_type: event_type)
-      reg = FactoryBot.create(:registration, event: event, user: @user)
+      event = event_for_category('advanced_grade').first
+      reg = FactoryBot.create(:registration, :with_user, event: event)
       expect(reg.type).to eql('course')
     end
 
     it 'returns course for elective courses' do
-      event_type = FactoryBot.create(:event_type, event_category: 'elective')
-      event = FactoryBot.create(:event, event_type: event_type)
-      reg = FactoryBot.create(:registration, event: event, user: @user)
+      event = event_for_category('elective').first
+      reg = FactoryBot.create(:registration, :with_user, event: event)
       expect(reg.type).to eql('course')
     end
 
     it 'returns seminar for seminars' do
-      event_type = FactoryBot.create(:event_type, event_category: 'seminar')
-      event = FactoryBot.create(:event, event_type: event_type)
-      reg = FactoryBot.create(:registration, event: event, user: @user)
+      event = event_for_category('seminar').first
+      reg = FactoryBot.create(:registration, :with_user, event: event)
       expect(reg.type).to eql('seminar')
     end
 
     it 'returns meeting for meetings' do
-      event_type = FactoryBot.create(:event_type, event_category: 'meeting')
-      event = FactoryBot.create(:event, event_type: event_type)
-      reg = FactoryBot.create(:registration, event: event, user: @user)
+      event = event_for_category('meeting').first
+      reg = FactoryBot.create(:registration, :with_user, event: event)
       expect(reg.type).to eql('meeting')
     end
+  end
+
+  it 'raises an error if no event is specified' do
+    expect { Registration.register(user: FactoryBot.create(:user)) }.to raise_error(
+      ArgumentError, 'Must specify an event or event_id'
+    )
+  end
+
+  it 'returns registrations for a specified user' do
+    user = FactoryBot.create(:user)
+    event = FactoryBot.create(:event)
+    reg = user.register_for(event)
+    FactoryBot.create(:user).register_for(event)
+
+    expect(Registration.for_user(user).to_a).to eql([reg])
   end
 end

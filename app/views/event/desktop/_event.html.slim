@@ -119,13 +119,6 @@
                 .table-cell.red
                   b Prerequisite course:
                   p = event_prereq(event).title.titleize
-            - if @current_user_permitted_event_type && !defined?(@event_catalog) && @registered_users[event.id].present?
-              .table.row
-                .table-cell
-                  b Registered Users:
-                  ul.simple
-                    - @registered_users[event.id].each do |r|
-                      li = render 'event/register/member', r: r
         .table-cell.bottom-right
           .table
             .table.row
