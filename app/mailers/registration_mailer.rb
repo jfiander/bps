@@ -20,10 +20,10 @@ class RegistrationMailer < ApplicationMailer
     cancelled_slack_notification
   end
 
-  def confirm(registration)
-    @registration = registration
+  def confirm(user_registration)
+    @user_registration = user_registration
     @signature = signature_for_confirm
-    to = @registration&.user&.email || @registration.email
+    to = @user_registration&.user&.email || @user_registration.email
     from = "\"#{@signature[:name]}\" <#{@signature[:email]}>"
     attach_pdf if attachable?
 
