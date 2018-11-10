@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     home about join requirements vsc education calendar civic history links
     members welcome user_help
   ].each do |md|
-    get   "/#{md}",      to: "public##{md}", as: md,    defaults: { page_name: md } unless md.in?(%i[home members user_help])
+    get   "/#{md}",      to: "public##{md}", as: md,    defaults: { page_name: md } unless md.in?(%i[home members user_help welcome])
     get   "/#{md}/edit", to: 'members#edit_markdown',   defaults: { page_name: md }
     patch "/#{md}/edit", to: 'members#update_markdown', defaults: { page_name: md }
   end
@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get     '/home',            to: redirect('/')
   get     '/members',         to: 'members#members'
   get     '/user_help',       to: 'members#user_help'
+  get     '/welcome',         to: 'members#welcome'
   get     '/edit/:page_name', to: 'members#edit_markdown',   as: 'edit_page'
   patch   '/edit/:page_name', to: 'members#update_markdown', as: 'update_page'
 
