@@ -74,7 +74,7 @@
                   = render 'events/actions/catalog', event: event
                 - else
                   = render 'events/actions/schedule', event: event if @current_user_permitted_event_type
-                  = render 'events/actions/schedule_general', event: event unless long_form
+                  = render 'events/actions/schedule_general', event: event unless long_form || event.expired?
   .table-row
     .table
       .table-row

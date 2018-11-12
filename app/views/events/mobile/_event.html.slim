@@ -11,11 +11,9 @@
     | In catalog
 - if defined?(@event_catalog)
   .event-mobile-contents.spaced = render 'events/actions/catalog', event: event
-- else
-  - if @current_user_permitted_event_type
-    .event-mobile-contents.spaced = render 'events/actions/schedule', event: event
-  - unless defined?(@event_catalog)
-    .event-mobile-contents.spaced = render 'events/actions/schedule_general', event: event unless long_form
+- elsif user_signed_in?
+  .event-mobile-contents.spaced = render 'events/actions/schedule', event: event if @current_user_permitted_event_type
+  .event-mobile-contents.spaced = render 'events/actions/schedule_general', event: event unless long_form || event.expired?
 .event-mobile-contents.spaced
   - if event.multiple_sessions?
     b Starts: 
