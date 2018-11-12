@@ -78,11 +78,11 @@ class Registration < ApplicationRecord
   end
 
   def user
-    primary.user
+    primary&.user
   end
 
   def email
-    primary.email
+    primary&.email
   end
 
   def notify_new

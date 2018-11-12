@@ -52,12 +52,10 @@ class EventController < ApplicationController
   def show
     @locations = Location.searchable
     @event_title = event_type_param.titleize
+    @registration = Registration.new(event_id: clean_params[:id])
     return unless user_signed_in?
 
-    reg = Registration.with_users.find_by(
-      event_id: clean_params[:id], user_registrations: { user: current_user }
-    )
-    @registered = { reg.event_id => reg.id } if reg.present?
+    load_registered_list
   end
 
   def slug
@@ -160,5 +158,12 @@ private
 
     flash[:alert] = "Reminders already sent for that #{event_type_param}."
     redirect_to send("#{event_type_param}s_path")
+  end
+
+  def load_registered_list
+    reg = Registration.with_users.find_by(
+      event_id: clean_params[:id], user_registrations: { user: current_user }
+    )
+    @registered = { reg.event_id => reg.id } if reg.present?
   end
 end
