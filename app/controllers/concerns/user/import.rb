@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
 module User::Import
+  ACCEPTABLE_CONTENT_TYPES ||= %w[
+    text/csv text/plain application/octet-stream application/vnd.ms-excel
+  ].freeze
+
   def import
     #
   end
 
   def do_import
     uploaded_file = clean_params[:import_file]
-    return only_csv unless uploaded_file.content_type == 'text/csv'
+    return only_csv unless uploaded_file.content_type.in?(ACCEPTABLE_CONTENT_TYPES)
 
     begin
       @import_results = ImportUsers::Import.new(
