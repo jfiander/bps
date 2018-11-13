@@ -60,26 +60,18 @@ private
   end
 
   def validated_channel(channel = nil)
-    default_channel = 'notifications'
-    linked_channels = slack_urls.keys
     channel = channel.delete('#')
+    raise ArgumentError, 'Unknown channel.' if channel.present? && !channel.in?(slack_urls.keys)
 
-    return default_channel if channel.blank?
-    return channel if channel.in?(linked_channels)
-
-    raise ArgumentError, 'That channel is not linked to this notifier.'
+    channel = 'notifications' if channel.blank?
+    channel = 'test' unless Rails.env.production?
+    channel
   end
 
   def slack_urls
-    # Find all Slack notifier URLs
-    keys = ENV.select { |k, _| k.match?(/SLACK_URL_/) }.keys.map do |k|
-      k.gsub('SLACK_URL_', '').downcase
-    end
-
-    # Build hash of URLs
-    urls = {}
-    keys.each { |key| urls[key] = ENV["SLACK_URL_#{key.upcase}"] }
-    urls
+    ENV.select { |k, _| k.match?(/SLACK_URL_/) }.map do |key, url|
+      { key.gsub('SLACK_URL_', '').downcase => url }
+    end.reduce({}, :merge)
   end
 
   def validated_type(type = nil)

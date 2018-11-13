@@ -111,7 +111,7 @@ RSpec.describe SlackNotification, type: :lib do
         dryrun: true
       )
     end.to raise_error(
-      ArgumentError, 'That channel is not linked to this notifier.'
+      ArgumentError, 'Unknown channel.'
     )
   end
 
