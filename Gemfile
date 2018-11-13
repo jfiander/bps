@@ -82,6 +82,7 @@ group :development, :test do
   # Specs
   gem 'database_cleaner',  '~> 1.6.2'
   gem 'factory_bot_rails', '~> 4.8.2'
+  gem 'fuubar',            '~> 2.3.2'
   gem 'rspec-rails',       '~> 3.7.1'
   gem 'simplecov',         '~> 0.15.1'
 

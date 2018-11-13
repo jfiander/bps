@@ -52,6 +52,11 @@ RSpec.configure do |config|
 
   config.include Devise::Test::ControllerHelpers, type: :controller
 
+  config.fuubar_progress_bar_options = {
+    progress_mark: ' ', remainder_mark: "\u{FF65}", title: 'Specs Run',
+    format: "  Elapsed %a (%R/sec) %E | %b\u{15E7}%i | %c/%C (%J%%) %t"
+  }
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.

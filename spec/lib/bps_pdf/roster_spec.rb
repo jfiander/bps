@@ -42,12 +42,7 @@ RSpec.describe BpsPdf::Roster, type: :lib do
         FactoryBot.create(:roster_past_commander,  user: u, year: '2015-01-01')
       end
 
-      expect { BpsPdf::Roster.detailed }.to output(
-        "*** Generating Cover...\n*** Generating Flags...\n*** Generating Bridge...\n*** Generating Merit...\n" \
-        "*** Generating Awards...\n*** Generating PastAwards...\n*** Generating PastCommanders...\n" \
-        "*** Generating EdAwards...\n*** Generating Benefits...\n*** Generating RosterInfo...\n" \
-        "*** Generating Directory...\n*** Roster generation complete!\n"
-      ).to_stdout_from_any_process
+      expect { BpsPdf::Roster.detailed }.to output(/\*\*\* Roster generation complete!/).to_stdout_from_any_process
     end
   end
 end
