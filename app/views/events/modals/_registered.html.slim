@@ -17,8 +17,12 @@ b Time:
 h3 Additional Registrants
 p If you would like to add more people to this registration, enter their certificate number or email below.
 #registered.scrollable.max-h-15
+  - if @registration.user_registrations.count > 1
+    ul.simple
+      - @registration.user_registrations.each do |reg|
+        li = reg.user&.full_name || reg.email
 #add-registrant
-  = form_for @registration, url: add_registrants_path, method: :patch, remote: true do |f|
+  = form_for @registration, url: add_registrants_path(id: @registration.id), method: :patch, remote: true do |f|
     = f.hidden_field :id, value: @registration.id
     = f.nested_fields_for :user_registrations do |ff|
       .registrant-field
@@ -26,7 +30,7 @@ p If you would like to add more people to this registration, enter their certifi
         = ff.text_field 'certificate', maxlength: 7, id: 'additional_cert'
       .registrant-field
         = ff.label 'email', 'Email'
-        = ff.email_field 'email', id: 'additional_email'
+        = ff.email_field 'email', id: 'additional_email', value: ''
     = spinner_button(f, css: 'big', button_text: 'Add')
 
 - if @registration.payable?

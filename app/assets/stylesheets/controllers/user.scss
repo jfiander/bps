@@ -213,6 +213,12 @@ div#receipts {
   }
 }
 
+div#add-registrant {
+  fieldset:not(:first-of-type) {
+    display: none;
+  }
+}
+
 input#user-filter {
   width: 15em;
   font-size: 1.5em;

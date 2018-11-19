@@ -25,10 +25,7 @@ $(document).ready ->
     $('#modal').fadeIn 'fast'
     $('#modal-box').fadeIn 'swing'
 
-    $('#modal').on 'click', (e) ->
-      if e.target == this
-        $(this).fadeOut 'fast'
-        $('body').removeClass 'no-scroll'
-        return
-      return
+$(document).ready ->
+  $('.modal-form').submit (event) ->
+    showModal()
   return

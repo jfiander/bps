@@ -19,7 +19,10 @@ class UserController < ApplicationController
     :admin, strict: true, only: %i[receipts receipt override_cost paid_in_person refunded_payment]
   )
   secure!(
-    :users, except: %i[current show register cancel_registration instructors certificate]
+    :users, except: %i[
+      current show register cancel_registration instructors add_registrants
+      collect_payment certificate
+    ]
   )
 
   before_action :can_view_profile?, only: %i[show certificate]
