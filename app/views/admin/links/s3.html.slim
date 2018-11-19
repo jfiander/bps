@@ -9,7 +9,7 @@ h1 = admin_header('S3 Link')
   = number_field_tag :t, @t || 1.week
   br
 
-  = submit_tag 'Generate Link'
+  = submit_tag 'Generate Link', class: 'big'
 
 - if @link.present?
   = link_to 'Copy this link', @link

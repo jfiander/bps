@@ -22,8 +22,8 @@ private
 
   def links
     {
-      'abc' => seo_link('Courses/ABC3-2015.zip'),
-      'abc-8hr' => seo_link('Courses/ABC3-2015-8hr.zip')
+      'abc' => seo_link('Courses/ABC3-16-hour.zip'),
+      'abc-8hr' => seo_link('Courses/ABC3-8-hour.zip')
     }
   end
 
