@@ -2,12 +2,6 @@ Hello, <%= @application.primary.first_name %>!
 
 You have successfully applied for membership<%= @application.additional.present? ? " for #{['yourself', @application.additional.map(&:first_name)].flatten.to_sentence}" : '' %>!
 
-<% if @application.paid? %>
 We will review your application, and let you know when its status is updated.
-<% else %>
-If you have not already paid your initial dues, you can <%= link_to 'return to the payment page', applied_url(token: @application.payment.token) %> at any time.
-
-Once you have paid your initial dues, we will review your application, and let you know when its status is updated.
-<% end %>
 
 If you have any questions, or if you would like to cancel this application, please email me at <%= @signature[:email] %>.

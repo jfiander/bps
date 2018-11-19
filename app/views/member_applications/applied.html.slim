@@ -1,32 +1,37 @@
-h1 Membership Application Complete
+h1 Membership Application Submitted!
 
-b You have successfully applied for membership!
-
-p Your application will be reviewed for approval, and you will be notified when its status is updated.
+p
+  - if @payment.paid
+    | Y
+  - else
+    | Once you have paid your initial dues, y
+  | our application will be reviewed, and you will be notified when its status is updated.
 
 - if @payment.paid
-  p
+  h4
     | Thank you for paying your initial annual dues of 
     = @payment.transaction_amount
     | !
-- else
-  p
+- elsif @payment.parent.payable?
+  h4
     | Your annual membership dues will be: 
     = @payment.transaction_amount
-    | .
-  - if @payment.parent.payable?
-    p If you would like to pay now, you can do so below.
 
-    p If you'd rather pay later, you can close this tab now.
+  p
+    | If you would like to pay now, you can do so below.
+    br
+    | If you'd rather pay later, you can close this tab now. There is a link to this page in your confirmation email.
+  
+  p.information.red Your application will not be considered complete until you have submitted your payment.
 
-    = render 'braintree/dropin'
+  = render 'braintree/dropin'
 
-    p
-      | You can also mail a check payable to 
-      b Birmingham Power Squadron
-      |  to:
+  p
+    | You can also mail a check payable to 
+    b Birmingham Power Squadron
+    |  to:
 
-    p
-      = content_tag(:ul, class: 'simple') do
-        - @address.map do |row|
-          = content_tag(:li, row)
+  p
+    = content_tag(:ul, class: 'simple') do
+      - @address.map do |row|
+        = content_tag(:li, row)

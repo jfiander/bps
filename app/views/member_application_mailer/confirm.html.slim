@@ -12,15 +12,7 @@ p
     = ['yourself', @application.additional.map(&:first_name)].flatten.to_sentence
     | .
 
-- if @application.paid?
-  p We will review your application, and let you know when its status is updated.
-- else
-  p
-    | If you have not already paid your initial dues, you can 
-    = link_to 'return to the payment page', applied_url(token: @application.payment.token)
-    |  at any time.
-
-  p Once you have paid your initial dues, we will review your application, and let you know when its status is updated.
+p We will review your application, and let you know when its status is updated.
 
 p
   | If you have any questions, or if you would like to cancel this application, please email me at 

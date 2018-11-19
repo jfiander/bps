@@ -21,7 +21,6 @@ class MemberApplicationsController < ApplicationController
       confirm_applied_path = applied_path(
         token: @member_application.payment.token
       )
-      MemberApplicationMailer.new_application(@member_application).deliver
       MemberApplicationMailer.confirm(@member_application).deliver
       render js: "window.location = '#{confirm_applied_path}'"
     else
