@@ -49,6 +49,6 @@ button.otw {
 
 div.table-row.gray {
   button.otw {
-    background-color: $background-blue;
+    background-color: lighten($background-blue, 3%);
   }
 }
