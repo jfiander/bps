@@ -2,7 +2,12 @@
   = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true, data: {confirm: 'Are you sure you want to cancel this registration?'}) { FA::Icon.p('minus-square') }
   - if current_user&.permitted?(:admin) && r.event&.cost&.positive?
     = reg_override_icon(r)
+  - if r.user_registrations.count > 1
+    - urs = r.user_registrations.map { |ur| ur.user&.full_name || ur.email }
+    - title = "Multiple registrants:\n\n" + r.user_registrations.map { |ur| ur.user&.full_name || ur.email }.join("\n")
   - if r.user&.full_name&.present?
-    = link_to("mailto:#{r.user.email}") { r.user.full_name }
+    = mail_to(r.user.email, r.user.full_name, title: title)
   - else
-    = mail_to(r.email || r.user&.email)
+    = mail_to(r.email || r.user&.email, nil, title: title)
+  - if r.user_registrations.count > 1
+    = FA::Icon.p('ellipsis-h', style: :regular)
