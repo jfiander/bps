@@ -72,8 +72,8 @@
               .table-cell
                 - if defined?(@event_catalog)
                   = render 'events/actions/catalog', event: event
-                - elsif user_signed_in?
-                  = render 'events/actions/schedule', event: event if @current_user_permitted_event_type
+                - else
+                  = render 'events/actions/schedule', event: event if user_signed_in? && @current_user_permitted_event_type
                   = render 'events/actions/schedule_general', event: event unless long_form || event.expired?
   .table-row
     .table
