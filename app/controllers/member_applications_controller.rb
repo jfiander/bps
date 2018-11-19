@@ -3,7 +3,7 @@
 class MemberApplicationsController < ApplicationController
   include BraintreeHelper
 
-  secure!(only: :review)
+  secure!(:excom, only: %i[review approve])
 
   before_action :load_payment, only: :applied
 
