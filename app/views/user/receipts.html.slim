@@ -7,8 +7,8 @@ h1 = admin_header('Payments & Receipts')
     .table-cell.table-header Customer
     .table-cell.table-header Amount
     .table-cell.table-header Links
-  - @payments.each do |payment|
-    .table-row
+  - @payments.reverse.each do |payment|
+    .table-row class=(cycle('', 'gray'))
       .table-cell = payment.id
       .table-cell = "#{payment.parent&.class&.name}##{payment.parent&.id}" if payment.parent.present?
       .table-cell
