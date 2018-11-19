@@ -3,11 +3,6 @@
 module BpsPdf
   class Receipt
     module TransactionInfo
-      # This module defines no public methods.
-      def _; end
-
-    private
-
       def transaction_info(payment)
         transaction_details(payment)
         purchase_subject(payment)
@@ -35,14 +30,13 @@ module BpsPdf
       end
 
       def model_specific_details(payment)
-        people_details(payment) unless payment.parent.class.name == 'Registration'
+        people_details(payment)
       end
 
       def people(payment)
         return payment.parent&.member_applicants if payment.parent.respond_to?(:member_applicants)
         return payment.parent&.children if payment.parent.respond_to?(:children)
-
-        []
+        return payment.parent&.user_registrations if payment.parent.respond_to?(:user_registrations)
       end
 
       def people_height(payment)
@@ -51,7 +45,20 @@ module BpsPdf
 
       def people_details(payment)
         people(payment).each do |person|
-          text "#{person.first_name} #{person.last_name}", size: 14, align: :center
+          user_details(person) if person.respond_to?(:first_name)
+          user_reg_details(person) if person.respond_to?(:user)
+        end
+      end
+
+      def user_details(person)
+        text "#{person.first_name} #{person.last_name}", size: 14, align: :center
+      end
+
+      def user_reg_details(person)
+        if person.user.present?
+          text "#{person.user.first_name} #{person.user.last_name}", size: 14, align: :center
+        else
+          text person.email, size: 14, align: :center
         end
       end
     end
