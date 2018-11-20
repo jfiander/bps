@@ -5,6 +5,8 @@ class MemberApplicationsController < ApplicationController
 
   secure!(only: :review)
 
+  before_action :load_payment, only: :applied
+
   def new
     @member_application = MemberApplication.new
     @member_application_person = MemberApplicant.new(
@@ -28,14 +30,12 @@ class MemberApplicationsController < ApplicationController
   end
 
   def applied
-    @token = applied_params[:token]
-    @payment = Payment.find_by(token: @token)
     transaction_details
+    @purchase_info[:registered] = @payment.parent.member_applicants
 
     @client_token = Payment.client_token(user_id: current_user&.id)
     @receipt = @payment.parent.primary.email
-    @address = BridgeOffice.includes(:user).find_by(office: :treasurer).user
-                           .mailing_address
+    @address = BridgeOffice.includes(:user).find_by(office: :treasurer).user.mailing_address
   end
 
   def review
@@ -82,6 +82,11 @@ private
     params.permit(:token)
   end
 
+  def load_payment
+    @token = applied_params[:token]
+    @payment = Payment.find_by(token: @token)
+  end
+
   def process_application
     MemberApplication.transaction do
       begin
@@ -96,8 +101,13 @@ private
 
   def create_application
     @member_application = MemberApplication.new
-    @member_application_persons = []
-    @member_application = MemberApplication.create!(applicants)
+    people = applicants['member_applicants_attributes'].first.map do |a|
+      person = MemberApplicant.new(a.merge(member_application: @member_application))
+      @member_application.member_applicants << person
+    end
+    @member_application_persons = [people]
+
+    @member_application.save!
   end
 
   def failed_application(e)
@@ -110,9 +120,7 @@ private
   def applicants
     return applicant_attributes_hash(primary_applicant) if additionals.blank?
 
-    all_apps = process_additionals
-
-    applicant_attributes_hash(all_apps)
+    applicant_attributes_hash(with_additionals)
   end
 
   def applicant_attributes_hash(*applicants)
@@ -125,17 +133,17 @@ private
     )
   end
 
-  def process_additionals
-    additionals = additionals.map(&:values).flatten.reject do |a|
+  def with_additionals
+    adds = additionals.reduce({}, :merge).values.reject do |a|
       a == true || a.is_a?(MemberApplication) || a.key?('_destroy')
     end
 
-    additionals.each do |a|
+    adds.each do |a|
       a[:member_application] = @member_application
       a[:primary] = false
     end
 
-    [primary_applicant, apps].compact.flatten
+    [primary_applicant, adds].compact.flatten
   end
 
   def additionals
