@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_01_142524) do
+ActiveRecord::Schema.define(version: 2018_11_20_001428) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -351,6 +351,7 @@ ActiveRecord::Schema.define(version: 2018_11_01_142524) do
     t.integer "receipt_file_size"
     t.datetime "receipt_updated_at"
     t.string "cost_type"
+    t.boolean "refunded"
   end
 
   create_table "photos", force: :cascade do |t|

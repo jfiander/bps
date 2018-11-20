@@ -19,7 +19,7 @@ h1 = admin_header('Payments & Receipts')
           = mail_to(payment.customer.email, payment.customer.full_name)
         - when MemberApplicant
           = mail_to(payment.customer.email, "#{payment.customer.first_name} #{payment.customer.last_name}")
-      .table-cell
+      .table-cell class=('red' if payment.refunded) title=('Refunded' if payment.refunded)
         = FA::Icon.p('dollar-sign', style: :regular)
         = payment.transaction_amount
       .table-cell.receipts-actions
