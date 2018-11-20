@@ -123,6 +123,11 @@ div.table-row.gray {
     color: $old-glory-red;
     background-color: $background-blue-faded;
   }
+
+  div.table-cell.gray {
+    color: gray;
+    background-color: $background-blue-faded;
+  }
 }
 
 a.unclickable {
