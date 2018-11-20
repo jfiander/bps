@@ -18,6 +18,16 @@
         b = @purchase_info[:date]
         |  at 
         b = @purchase_info[:time]
+    - if @purchase_info.key?(:registered)
+      .registered
+        b Covering:
+        .desc
+          ul.simple
+            - @purchase_info[:registered].each do |reg|
+              - if reg.is_a?(MemberApplicant)
+                li = "#{reg.first_name} #{reg.last_name}"
+              - else
+                li = reg&.user&.full_name || reg&.email
   = form_tag checkout_path, id: 'checkout', method: :post
     #dropin-container
     = label_tag :email, 'Send receipt to:'
