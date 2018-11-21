@@ -76,9 +76,10 @@ module BridgeHelper
   end
 
   def generate_committees(dept)
+    # html_safe: Text is sanitized before display.
     @all_committees[dept]&.map do |c|
       {
-        name: c.display_name,
+        name: sanitize(c.display_name).html_safe,
         user: get_user(c.user_id),
         id: c.id
       }
