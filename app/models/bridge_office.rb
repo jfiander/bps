@@ -52,6 +52,16 @@ class BridgeOffice < ApplicationRecord
     %w[Executive Educational Administrative].any? { |o| o.in? title } ? "#{title} Officer" : title
   end
 
+  def self.advance(new_ao_user_id = nil)
+    cdr = BridgeOffice.find_by(office: 'commander')
+    xo = BridgeOffice.find_by(office: 'executive')
+    ao = BridgeOffice.find_by(office: 'administrative')
+
+    cdr.update(user_id: xo.user_id)
+    xo.update(user_id: ao.user_id)
+    ao.update(user_id: new_ao_user_id)
+  end
+
 private
 
   def valid_office

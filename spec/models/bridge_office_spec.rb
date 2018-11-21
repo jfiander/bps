@@ -46,4 +46,29 @@ RSpec.describe BridgeOffice, type: :model do
     expect(@bridge.valid?).to be(false)
     expect(@bridge.errors.messages).to eql(office: ['must be in BridgeOffice.departments(assistants: true)'])
   end
+
+  describe 'advance' do
+    before(:each) do
+      @cdr = FactoryBot.create(:bridge_office, office: 'commander').user
+      @xo = FactoryBot.create(:bridge_office, office: 'executive').user
+      @ao = FactoryBot.create(:bridge_office, office: 'administrative').user
+    end
+
+    it 'should move officers without an AO id' do
+      BridgeOffice.advance
+
+      expect(BridgeOffice.find_by(office: 'commander').user).to eql(@xo)
+      expect(BridgeOffice.find_by(office: 'executive').user).to eql(@ao)
+      expect(BridgeOffice.find_by(office: 'administrative').user).to be_nil
+    end
+
+    it 'should move officers with an AO id' do
+      new_ao = FactoryBot.create(:user)
+      BridgeOffice.advance(new_ao.id)
+
+      expect(BridgeOffice.find_by(office: 'commander').user).to eql(@xo)
+      expect(BridgeOffice.find_by(office: 'executive').user).to eql(@ao)
+      expect(BridgeOffice.find_by(office: 'administrative').user).to eql(new_ao)
+    end
+  end
 end
