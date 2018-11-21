@@ -91,18 +91,16 @@ private
   end
 
   def process_permissions_errors
-    no_user_selected
-    no_role_selected
+    missing_selection
     restricted_role
   end
 
-  def no_user_selected
-    return unless clean_params[:user_id].blank?
+  def missing_selection
+    if clean_params[:user_id].blank?
+      redirect_to permit_path, alert: 'User was not selected.'
+      return
+    end
 
-    redirect_to permit_path, alert: 'User was not selected.'
-  end
-
-  def no_role_selected
     return unless clean_params[:role].blank?
 
     redirect_to permit_path, alert: 'Permission was not selected.'

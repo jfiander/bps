@@ -46,7 +46,7 @@ class Event < ApplicationRecord
   end
 
   def self.for_category(category)
-    where(event_type: EventType.send(category))
+    includes(:event_type).where(event_types: { event_category: category })
   end
 
   def self.current(category)

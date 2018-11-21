@@ -50,6 +50,7 @@ SimpleCov.start('rails') do
   ## used to improve markdown formatting
   add_filter 'app/lib/target_blank_renderer.rb'
   add_filter '/app/lib/parsed_markdown.rb'
+  add_filter '/app/lib/parsed_markdown/parsers.rb'
 
   # Config code located in app directory
   add_filter 'app/helpers/devise_helper.rb'

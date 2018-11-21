@@ -13,20 +13,14 @@ private
   end
 
   def calendar_id
-    Event.includes(:event_type).where(event_types: { event_category: 'meeting' })
-         .last.send(:calendar_id)
+    Event.for_category('meeting').last.send(:calendar_id)
   end
 
   def membership
-    {
-      start: Time.strptime('2018/01/09 18:00 EST', '%Y/%m/%d %H:%M %Z').to_datetime,
-      end: Time.strptime('2018/01/09 21:00 EST', '%Y/%m/%d %H:%M %Z').to_datetime,
+    meeting_hash(
       summary: 'Membership Meeting', description: membership_description,
-      location: "Kerby's Koney Island, 5407 Crooks Rd, Troy, MI 48098, USA",
-      recurrence: ['RRULE:FREQ=MONTHLY;BYMONTH=1,2,3,4,5,9,10,11,12;BYDAY=2TU'],
-      conference_data_version: 1,
-      conference_data: Google::Apis::CalendarV3::ConferenceData.new(**membership_meet)
-    }
+      months: [1, 2, 3, 4, 5, 9, 10, 11, 12], date: '09', week: '2', conference: membership_meet
+    )
   end
 
   def membership_description
@@ -39,15 +33,10 @@ private
   end
 
   def excom
-    {
-      start: Time.strptime('2018/01/02 18:00 EST', '%Y/%m/%d %H:%M %Z').to_datetime,
-      end: Time.strptime('2018/01/02 21:30 EST', '%Y/%m/%d %H:%M %Z').to_datetime,
+    meeting_hash(
       summary: 'Executive Committee Meeting', description: excom_description,
-      location: "Kerby's Koney Island, 5407 Crooks Rd, Troy, MI 48098, USA",
-      recurrence: ['RRULE:FREQ=MONTHLY;BYMONTH=1,2,3,4,5,6,9,10,11,12;BYDAY=1TU'],
-      conference_data_version: 1,
-      conference_data: Google::Apis::CalendarV3::ConferenceData.new(**excom_meet)
-    }
+      months: [1, 2, 3, 4, 5, 6, 9, 10, 11, 12], date: '02', week: '1', conference: excom_meet
+    )
   end
 
   def excom_description
@@ -81,5 +70,18 @@ private
         entry_point_type: 'video'
       )
     ]
+  end
+
+  def meeting_hash(**options)
+    months = options[:months].join('.')
+    {
+      start: Time.strptime("2018/01/#{options[:date]} 18:00 EST", '%Y/%m/%d %H:%M %Z').to_datetime,
+      end: Time.strptime("2018/01/#{options[:date]} 21:00 EST", '%Y/%m/%d %H:%M %Z').to_datetime,
+      summary: options[:summary], description: options[:description],
+      location: "Kerby's Koney Island, 5407 Crooks Rd, Troy, MI 48098, USA",
+      recurrence: ["RRULE:FREQ=MONTHLY;BYMONTH=#{months};BYDAY=#{options[:week]}TU"],
+      conference_data_version: 1,
+      conference_data: Google::Apis::CalendarV3::ConferenceData.new(**options[:conference])
+    }
   end
 end

@@ -6,8 +6,9 @@ module Concerns::Event::Calendar
   def book!
     return if booked?
 
-    response = calendar_retry.call { calendar.create(calendar_id, calendar_hash) }
-    store_calendar_details(response)
+    calendar_update(call_if: true, set_to: :response) do
+      calendar.create(calendar_id, calendar_hash)
+    end
   rescue StandardError => e
     Bugsnag.notify(e)
   end
@@ -15,17 +16,19 @@ module Concerns::Event::Calendar
   def unbook!
     return unless booked?
 
-    calendar_retry.call { calendar.delete(calendar_id, google_calendar_event_id) } if on_calendar?
-    store_calendar_details(nil)
+    calendar_update(call_if: on_calendar?, set_to: :nil) do
+      calendar.delete(calendar_id, google_calendar_event_id)
+    end
   rescue StandardError => e
     Bugsnag.notify(e)
   end
 
   def refresh_calendar!
-    return unless booked?
-    return book! unless on_calendar?
+    return book! unless booked? && on_calendar?
 
-    calendar_retry.call { calendar.update(calendar_id, google_calendar_event_id, calendar_hash) }
+    calendar_update(call_if: true) do
+      calendar.update(calendar_id, google_calendar_event_id, calendar_hash)
+    end
   rescue StandardError => e
     Bugsnag.notify(e)
   end
@@ -47,18 +50,14 @@ private
     @calendar ||= GoogleCalendarAPI.new(auth: true)
   end
 
-  def calendar_id(production: false)
-    if production || ENV['ASSET_ENVIRONMENT'] == 'production'
-      production_calendar_id
+  def calendar_id(prod: false)
+    return ENV['GOOGLE_CALENDAR_ID_TEST'] unless prod || ENV['ASSET_ENVIRONMENT'] == 'production'
+
+    if category.in?(%w[course seminar])
+      ENV['GOOGLE_CALENDAR_ID_EDUC']
     else
-      ENV['GOOGLE_CALENDAR_ID_TEST']
+      ENV['GOOGLE_CALENDAR_ID_GEN']
     end
-  end
-
-  def production_calendar_id
-    return ENV['GOOGLE_CALENDAR_ID_EDUC'] if category.in?(%w[course seminar])
-
-    ENV['GOOGLE_CALENDAR_ID_GEN']
   end
 
   def calendar_hash
@@ -70,11 +69,9 @@ private
   end
 
   def recurrence
-    ["RRULE:FREQ=#{repeat_pattern};COUNT=#{sessions}"] unless no_recurrence?
-  end
+    return if all_day || !(sessions.present? && sessions > 1)
 
-  def no_recurrence?
-    all_day || !(sessions.present? && sessions > 1)
+    ["RRULE:FREQ=#{repeat_pattern};COUNT=#{sessions}"]
   end
 
   def start_date
@@ -125,5 +122,13 @@ private
 
   def calendar_retry
     ExpRetry.new(exception: Google::Apis::RateLimitError, retries: 6)
+  end
+
+  def calendar_update(call_if: true, set_to: nil)
+    response = calendar_retry.call { yield } if call_if
+
+    set = response if set_to == :response
+    set = nil if set_to == :nil
+    store_calendar_details(set) if set_to.present?
   end
 end
