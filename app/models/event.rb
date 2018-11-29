@@ -46,6 +46,7 @@ class Event < ApplicationRecord
   end
 
   def self.for_category(category)
+    category = %w[public advanced_grade elective] if category.to_s == 'course'
     includes(:event_type).where(event_types: { event_category: category })
   end
 
