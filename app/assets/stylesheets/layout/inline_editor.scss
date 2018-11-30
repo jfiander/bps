@@ -5,18 +5,18 @@ div#editor-buttons {
 div#editor {
   background-color: lighten($background-blue, 3%);
   display: none;
+}
 
-  a.editor {
-    display: none;
-  }
+a.editor {
+  display: none;
 }
 
 div#editor.auto-show {
   display: block;
+}
 
-  a.editor.auto-show {
-    display: inline;
-  }
+a.editor.auto-show {
+  display: inline;
 }
 
 a#show-editor, a#hide-editor {
