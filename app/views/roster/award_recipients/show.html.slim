@@ -1,6 +1,6 @@
 h1 Award Recipients
 
-= link_to 'Add Award Recipient', new_roster_award_recipients_path
+= link_to 'Add Award Recipient', new_roster_award_recipients_path, class: 'big'
 
 - @collection.group_by { |ar| ar.award_name }.each do |award, recipients|
   h2 = award

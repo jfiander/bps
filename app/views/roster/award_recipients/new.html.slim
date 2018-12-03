@@ -23,7 +23,7 @@
     .right = f.select :additional_user_id, options_for_select(@users.map { |u| [u.full_name(html: false), u.id] }, @record.additional_user_id), include_blank: true
     br.clear
 
-    .left = f.label :name
+    .left = f.label :name, 'Name(s)'
     .right = f.text_field :name
     br.clear
 
