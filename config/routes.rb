@@ -219,6 +219,8 @@ Rails.application.routes.draw do
   delete  '/register/:id',       to: 'user#cancel_registration', as: 'cancel_registration'
   get     '/override_cost/:id',  to: 'user#override_cost',       as: 'override_cost'
   patch   '/override_cost/:id',  to: 'user#set_override_cost',   as: 'set_override_cost'
+  get     '/pay_advance/:token', to: 'user#collect_payment',     as: 'modal_registration_pay'
+  patch   '/refunded/:token',    to: 'user#refunded_payment',    as: 'refunded'
 
   # Request
   put     '/request/:id', to: 'user#request_schedule', as: 'request_schedule'

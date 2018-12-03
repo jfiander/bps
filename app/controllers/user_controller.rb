@@ -12,10 +12,12 @@ class UserController < ApplicationController
   include User::Instructors
   include User::Receipts
 
-  secure!
-  secure!(:admin, strict: true, only: %i[receipts receipt])
-  secure!(:admin, only: %i[assign_photo override_cost])
+  secure!(except: %i[add_registrants collect_payment])
   secure!(:education, only: :instructors)
+  secure!(:admin, only: %i[assign_photo])
+  secure!(
+    :admin, strict: true, only: %i[receipts receipt override_cost paid_in_person refunded_payment]
+  )
   secure!(
     :users, except: %i[current show register cancel_registration instructors certificate]
   )
@@ -25,7 +27,7 @@ class UserController < ApplicationController
   before_action :load_users, only: :list
   before_action :find_registration, only: %i[override_cost set_override_cost]
   before_action :block_override, only: %i[override_cost set_override_cost]
-  before_action :find_payment, only: %i[receipt paid_in_person]
+  before_action :find_payment, only: %i[receipt paid_in_person refunded_payment]
   before_action :profile_title, only: :show
   before_action(
     :users_for_select,

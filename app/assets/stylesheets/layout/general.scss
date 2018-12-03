@@ -85,6 +85,27 @@ h6 {
   display: none;
 }
 
+.scrollable {
+  overflow: scroll;
+  border: thin dotted darken($background-blue, 10%);
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.max-h-10 {
+  max-height: 10em;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
 p.i {
   font-style: italic;
 }

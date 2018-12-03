@@ -25,6 +25,12 @@ module User::Receipts
     redirect_to receipts_path
   end
 
+  def refunded_payment
+    @payment.update(refunded: true)
+    flash[:success] = 'Successfully marked as refunded.'
+    redirect_to receipts_path
+  end
+
 private
 
   def find_payment
