@@ -70,7 +70,7 @@ class User < ApplicationRecord
   scope :with_any_name,     -> { where.not(simple_name: [nil, '', ' ']) }
   scope :valid_instructors, -> { where('id_expr > ?', Time.now) }
   scope :include_positions, -> { includes(position_associations) }
-  scope :recent_mm,         -> { where('last_mm_year >= ?', Date.today.beginning_of_year - 1.year) }
+  scope :recent_mm,         -> { where('last_mm_year >= ?', Date.today.beginning_of_year) }
 
   def self.invitable
     unlocked.where('sign_in_count = 0').reject(&:placeholder_email?)
