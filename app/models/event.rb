@@ -92,6 +92,8 @@ class Event < ApplicationRecord
   end
 
   def link
+    return if id.blank?
+
     route = category == 'meeting' ? 'event' : category
     Rails.application.routes.url_helpers.send("show_#{route}_url", id, host: ENV['DOMAIN'])
   end

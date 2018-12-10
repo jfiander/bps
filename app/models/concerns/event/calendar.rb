@@ -4,7 +4,7 @@ module Concerns::Event::Calendar
   extend ActiveSupport::Concern
 
   def book!
-    return if booked?
+    return if booked? || id.blank?
 
     calendar_update(call_if: true, set_to: :response) do
       calendar.create(calendar_id, calendar_hash)
