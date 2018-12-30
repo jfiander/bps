@@ -45,7 +45,7 @@ private
     @event = Event.includes(:event_instructors, :instructors).find_by(id: id)
     @event_types = EventType.all
 
-    return unless @event.course?(@event_types) || @event.seminar?(@event_types)
+    return unless @event&.course?(@event_types) || @event&.seminar?(@event_types)
 
     map_to_text = action_name != 'show'
     load_includes(map_to_text: map_to_text)
