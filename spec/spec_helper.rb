@@ -142,7 +142,7 @@ def run_brakeman
   puts "\n\nBrakeman report available here: ./tmp/brakeman.html"
   example = brakeman_example(example_group)
   example_group.run
-  return if example.execution_result.status == :passed
+  return if example.execution_result.status.in?([:passed, nil])
 
   RSpec.configuration.reporter.example_failed(example)
 end
