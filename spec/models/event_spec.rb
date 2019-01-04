@@ -236,8 +236,13 @@ RSpec.describe Event, type: :model do
           expect(@event.registerable?).to be(false)
         end
 
-        it 'should return false if expiration date is past' do
+        it 'should return true if only expiration date is past' do
           @event.update(expires_at: Time.now - 1.day)
+          expect(@event.registerable?).to be(true)
+        end
+
+        it 'should return false if expiration date and start date are past' do
+          @event.update(expires_at: Time.now - 1.day, start_at: Time.now - 2.days)
           expect(@event.registerable?).to be(false)
         end
 

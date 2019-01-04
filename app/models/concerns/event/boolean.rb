@@ -33,7 +33,7 @@ module Concerns::Event::Boolean
   end
 
   def registerable?
-    !expired? && !cutoff? && allow_any_registrations?
+    allow_any_registrations? && !cutoff? && (!expired? || start_at > Time.now)
   end
 
 private
