@@ -319,10 +319,18 @@ RSpec.describe User, type: :model do
   end
 
   describe 'address' do
-    user = FactoryBot.create(:user, address_1: '123 ABC St', city: 'City', state: 'ST', zip: '12345')
+    user = FactoryBot.create(:user, address_1: '100 N Capitol Ave', city: 'Lansing', state: 'MI', zip: '48933')
 
     it 'should return a correct address array' do
       expect(user.mailing_address).to eql([user.full_name, user.address_1, "#{user.city} #{user.state} #{user.zip}"])
+    end
+
+    it 'should return valid Lat Lon' do
+      expect(user.lat_lon(human: false).join("\t")).to match(/-?\d{1,3}\.\d+\t-?\d{1,3}\.\d+/)
+    end
+
+    it 'should return valid human-readable Lat Lon' do
+      expect(user.lat_lon(human: true)).to match(/\d{1,3}° \d{1,2}\.\d{1,5}′ [NS]\t\d{1,3}° \d{1,2}\.\d{1,5}′ [EW]/)
     end
   end
 

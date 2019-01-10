@@ -44,6 +44,8 @@ gem 'sendgrid-ruby',       '~> 5.2'
 # gem 'sidekiq',           '~> 5.0'
 gem 'slack-notifier',      '~> 2.3'
 
+gem 'geocoder'
+
 # View Management
 gem 'fa_rails',            '~> 0.1.16'
 gem 'inline_svg',          '~> 1.3.0'
