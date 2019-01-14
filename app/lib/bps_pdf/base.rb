@@ -8,7 +8,7 @@ module BpsPdf
       font_families.update(
         'DejaVu Sans' => {
           normal: "#{Rails.root}/app/assets/fonts/DejaVuSans.ttf",
-          bold:   "#{Rails.root}/app/assets/fonts/DejaVuSans-Bold.ttf",
+          bold: "#{Rails.root}/app/assets/fonts/DejaVuSans-Bold.ttf",
           italic: "#{Rails.root}/app/assets/fonts/DejaVuSans-Oblique.ttf"
         }
       )

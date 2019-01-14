@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
   def self.render_markdown_views
     before_action :render_markdown, only: MarkdownHelper::VIEWS[controller_name]
-    MarkdownHelper::VIEWS[controller_name]&.each { |m| define_method(m) {} }
+    MarkdownHelper::VIEWS[controller_name]&.each { |m| define_method(m) { } }
   end
 
   def self.title!(title = nil, only: nil, except: nil)

@@ -89,14 +89,12 @@ private
 
   def process_application
     MemberApplication.transaction do
-      begin
-        create_application
-        return true
-      rescue ActiveRecord::RecordInvalid => e
-        failed_application(e)
-      end
+      create_application
+      return true
     end
     false
+  rescue ActiveRecord::RecordInvalid => e
+    failed_application(e)
   end
 
   def create_application

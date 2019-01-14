@@ -13,7 +13,7 @@ module ScssHelper
     Sass::Engine.new(
       text,
       syntax: :scss, cache: false, read_cache: false, style: :compressed,
-      sprockets:  {
+      sprockets: {
         context: view_context,
         environment: view_context.assets_environment
       }

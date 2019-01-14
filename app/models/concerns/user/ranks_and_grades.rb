@@ -27,11 +27,11 @@ module User::RanksAndGrades
 
   def long_grade
     {
-      'S'  => 'Seaman',
-      'P'  => 'Pilot',
+      'S' => 'Seaman',
+      'P' => 'Pilot',
       'AP' => 'Advanced Pilot',
       'JN' => 'Junior Navigator',
-      'N'  => 'Navigator',
+      'N' => 'Navigator',
       'SN' => 'Senior Navigator'
     }[grade]
   end
