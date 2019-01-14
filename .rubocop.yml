@@ -22,11 +22,13 @@ Layout/AlignHash:
   Enabled: true
 Layout/EmptyLineAfterGuardClause:
   Enabled: true
-Layout/SpaceInsideHashLiteralBraces:
-  Enabled: true
+Layout/SpaceInsideBlockBraces:
   EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: no_space
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: no_space
 Layout/SpaceInsideArrayLiteralBrackets:
-  Enabled: true
   EnforcedStyle: no_space
 
 Lint/UnusedMethodArgument:

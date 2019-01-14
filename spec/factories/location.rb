@@ -7,6 +7,6 @@ FactoryBot.define do
     end
     map_link 'https://maps.example.com'
     details 'address details'
-    picture { }
+    picture {}
   end
 end
