@@ -3,11 +3,11 @@
 h1.birmingham Paid Registration
 
 h2.red
-  | Amount paid: $
-  = @registration.payment_amount
+  | Amount paid: 
+  = number_to_currency(@registration.payment_amount)
 h3
-  | Received amount (est.): $
-  = @registration.payment.discounted_amount
+  | Received amount (est.): 
+  = number_to_currency(@registration.payment.discounted_amount)
 
 = render 'registration'
 = render 'registrant'

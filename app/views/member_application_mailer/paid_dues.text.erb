@@ -6,8 +6,8 @@ Someone has paidtheir annual dues!
 
 **********
 
-Amount paid: $<%= @user.payment_amount %>
-Received amount (est.): $<% @user.payment_amount - Payment.discount(@user.dues) %>
+Amount paid: <%= number_to_currency(@user.payment_amount) %>
+Received amount (est.): <%= number_to_currency(@user.payment_amount - Payment.discount(@user.dues)) %>
 
 **********
 

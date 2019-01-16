@@ -6,8 +6,8 @@ Someone has paid for their membership application!
 
 **********
 
-Amount paid: $<%= @application.payment_amount %>
-Received amount (est.): $<% @application.payment.discounted_amount %>
+Amount paid: <%= number_to_currency(@application.payment_amount) %>
+Received amount (est.): <%= number_to_currency(@application.payment.discounted_amount) %>
 
 **********
 

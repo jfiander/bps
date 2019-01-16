@@ -6,8 +6,8 @@ Someone has paid for a registration!
 
 **********
 
-Amount paid: $<%= @registration.payment_amount %>
-Received amount (est.): $<% @registration.payment.discounted_amount %>
+Amount paid: <%= number_to_currency(@registration.payment_amount) %>
+Received amount (est.): <%= number_to_currency(@registration.payment.discounted_amount) %>
 
 **********
 

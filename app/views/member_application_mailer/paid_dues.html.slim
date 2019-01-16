@@ -5,11 +5,11 @@ h1.birmingham Annual Dues Paid
 p Someone has paid their annual dues!
 
 h2.red
-  | Amount paid: $
-  = @user.payment_amount
+  | Amount paid: 
+  = number_to_currency(@user.payment_amount)
 h3
-  | Received amount (est.): $
-  = @user.payment_amount - Payment.discount(@user.dues)
+  | Received amount (est.): 
+  = number_to_currency(@user.payment_amount - Payment.discount(@user.dues))
 
 hr
 
