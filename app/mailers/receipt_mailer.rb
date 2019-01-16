@@ -72,7 +72,7 @@ private
       id: transaction.id,
       date: transaction.created_at.strftime('%Y-%m-%d'),
       amount: transaction.amount,
-      type: transaction.credit_card_details.card_type,
+      card_type: transaction.credit_card_details.card_type,
       image: transaction.credit_card_details.image_url,
       last_4: transaction.credit_card_details.last_4,
       email: transaction.customer_details.email
