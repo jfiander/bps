@@ -64,10 +64,12 @@ private
     pdf = BpsPdf::Roster.send(
       roster_orientation, include_blank: roster_params[:include_blank].present?
     )
-    upload_roster_to_s3(pdf.read)
 
-    pdf_file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'r+')
-    send_file(pdf_file, disposition: :inline, filename: roster_filename)
+    send_file(pdf, disposition: :inline, filename: roster_filename)
+
+    ExpRetry.for(exception: Aws::S3::Errors::BadDigest) do
+      upload_roster_to_s3(pdf.read)
+    end
   end
 
   def upload_roster_to_s3(pdf)
