@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Members::Roster
+  ROSTER_UPLOAD_RETRY_EXCEPTIONS ||= [
+    Aws::S3::Errors::BadDigest, Aws::S3::Errors::XAmzContentSHA256Mismatch
+  ].freeze
+
   def roster
     respond_to do |format|
       format.html
@@ -67,7 +71,7 @@ private
 
     send_file(pdf, disposition: :inline, filename: roster_filename)
 
-    ExpRetry.for(exception: Aws::S3::Errors::BadDigest) do
+    ExpRetry.for(exception: ROSTER_UPLOAD_RETRY_EXCEPTIONS) do
       upload_roster_to_s3(pdf.read)
     end
   end
