@@ -46,6 +46,8 @@ Rails.application.routes.draw do
   ### Static pages
   get     '/refunds',       to: 'braintree#refunds'
   get     '/payment_terms', to: 'braintree#terms'
+  get     '/flags',         to: 'flags#flags'
+  get     '/tridents',      to: 'flags#tridents'
 
   ### Pre-loaded pages
   get     '/ranks',            to: 'members#ranks'

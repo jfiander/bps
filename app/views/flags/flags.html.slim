@@ -1,0 +1,531 @@
+h1 Flag Images
+
+#flags-info
+  .information Click the links below each thumbnail to download the full-size PNG or SVG image.
+
+  .information
+    | Download all images as a zip archive here: 
+    = link_to 'PNG', @bucket.link('flags/ZIP/USPS_Flags.png.zip')
+    small
+      |  (
+      = number_to_human_size(@bucket.object('flags/ZIP/USPS_Flags.png.zip').content_length)
+      | )
+    |  | 
+    = link_to 'SVG', @bucket.link('flags/ZIP/USPS_Flags.svg.zip')
+    small
+      |  (
+      = number_to_human_size(@bucket.object('flags/ZIP/USPS_Flags.svg.zip').content_length)
+      | )
+  .information.italic The PNG archive contains multiple sizes of each image.
+
+  .information
+    | This code is available on 
+    = link_to 'GitHub', 'https://github.com/jfiander/usps-flags'
+    |  and as a 
+    = link_to 'Ruby gem', 'https://rubygems.org/gems/usps_flags'
+    | .
+  
+  .information
+    | Actual images generated (other than the US Ensign) are 
+    = link_to 'registered trademarks', 'http://www.usps.org/national/itcom/trademark.html'
+    |  of United States Power Squadrons.
+
+h2 Ensigns
+.flags.table
+  .table-row
+    .table-cell.table-header United States
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/US.thumb.png'), width: 191, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/US.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/US.svg'), disposition: 'inline'
+    .table-cell
+  .table-row
+    .table-cell.table-header USPS
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/ENSIGN.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/ENSIGN.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/ENSIGN.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/WHEEL.thumb.png'), width: 150, height: 150
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/WHEEL.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/WHEEL.svg'), disposition: 'inline'
+
+h2 USPS Officer Flags
+center
+  | For a detailed specification of Officer Flag tridents, please 
+  = link_to 'see this SVG', tridents_path(format: :svg)
+  | .
+  br
+  em Available parameters: fly, unit, scale
+
+h3 National
+.flags.table
+  .table-row
+    .table-cell.table-header.officer Officer
+    .table-cell.table-header Current
+    .table-cell.table-header Past
+    .table-cell.table-header Insignia
+  .table-row
+    .table-cell.table-header.officer Chief Commander
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/CC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/CC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/CC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/PCC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/PCC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/PCC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/CC.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/CC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/CC.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Vice Commander
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/VC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/VC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/VC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/PVC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/PVC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/PVC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/VC.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/VC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/VC.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Rear Commander
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/RC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/RC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/RC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/PRC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/PRC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/PRC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/RC.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/RC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/RC.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Staff Commander
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/STFC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/STFC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/STFC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/PSTFC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/PSTFC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/PSTFC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/STFC.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/STFC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/STFC.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer National Flag Lieutenant
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/NFLT.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/NFLT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/NFLT.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/NFLT.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/NFLT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/NFLT.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Aide to the Chief Commander
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/NAIDE.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/NAIDE.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/NAIDE.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/NAIDE.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/NAIDE.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/NAIDE.svg'), disposition: 'inline'
+
+h3 District
+.flags.table
+  .table-row
+    .table-cell.table-header.officer Officer
+    .table-cell.table-header Current
+    .table-cell.table-header Past
+    .table-cell.table-header Insignia
+  .table-row
+    .table-cell.table-header.officer District Commander
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/DC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/DC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/DC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/PDC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/PDC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/PDC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/DC.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/DC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/DC.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer District Lieutenant Commander
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/DLTC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/DLTC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/DLTC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/PDLTC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/PDLTC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/PDLTC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/DLTC.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/DLTC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/DLTC.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer District 1st Lieutenant
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/D1LT.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/D1LT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/D1LT.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/D1LT.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/D1LT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/D1LT.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer District Flag Lieutenant
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/DFLT.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/DFLT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/DFLT.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/DFLT.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/DFLT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/DFLT.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer District Lieutenant
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/DLT.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/DLT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/DLT.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/DLT.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/DLT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/DLT.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Aide to the District Commander
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/DAIDE.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/DAIDE.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/DAIDE.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/DAIDE.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/DAIDE.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/DAIDE.svg'), disposition: 'inline'
+
+h3 Squadron
+.flags.table
+  .table-row
+    .table-cell.table-header.officer Officer
+    .table-cell.table-header Current
+    .table-cell.table-header Past
+    .table-cell.table-header Insignia
+  .table-row
+    .table-cell.table-header.officer Commander
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/CDR.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/CDE.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/CDE.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/PC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/PC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/PC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/CDR.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/CDE.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/CDE.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Lieutenant Commander
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/LTC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/LTC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/LTC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/PLTC.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/PLTC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/PLTC.svg'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/LTC.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/LTC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/LTC.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer 1st Lieutenant
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/1LT.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/1LT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/1LT.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/1LT.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/1LT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/1LT.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Flag Lieutenant
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/FLT.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/FLT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/FLT.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/FLT.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/FLT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/FLT.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Lieutenant
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/LT.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/LT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/LT.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/LT.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/LT.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/LT.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Fleet Captain
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/FLEETCAP.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/FLEETCAP.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/FLEETCAP.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/FLEETCAP.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/FLEETCAP.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/FLEETCAP.svg'), disposition: 'inline'
+
+h3 Special
+.flags.table
+  .table-row
+    .table-cell.table-header.officer Name
+    .table-cell.table-header Flag
+    .table-cell.table-header
+    .table-cell.table-header Insignia
+  .table-row
+    .table-cell.table-header.officer Port Captain
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/PORTCAP.thumb.png'), width: 150, height: 100
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/PORTCAP.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/PORTCAP.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/insignia/PORTCAP.thumb.png'), height: 75
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/insignia/PORTCAP.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/insignia/PORTCAP.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Cruise Pennant
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/CRUISE.thumb.png'), width: 150, height: 25
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/CRUISE.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/CRUISE.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+  .table-row
+    .table-cell.table-header.officer Officer-in-Charge Pennant
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/OIC.thumb.png'), width: 150, height: 25
+      br
+      = link_to 'PNG', @bucket.link('flags/PNG/OIC.png'), disposition: 'inline'
+      |  | 
+      = link_to 'SVG', @bucket.link('flags/SVG/OIC.svg'), disposition: 'inline'
+    .table-cell
+    .table-cell
+
+h3 Grades and Membership
+.flags.table
+  .table-row
+    .table-cell.table-header.officer Description
+    .table-cell.table-header Insignia
+    .table-cell.table-header.italic with EdPro
+  .table-row
+    .table-cell.table-header.officer Seaman (S)
+    .table-cell
+      = image_tag @bucket.link('insignia/s.png'), height: 12
+      br
+      = link_to 'PNG', @bucket.link('insignia/s.png'), disposition: 'inline'
+    .table-cell
+  .table-row
+    .table-cell.table-header.officer Pilot (P)
+    .table-cell
+      = image_tag @bucket.link('insignia/p.png'), height: 12
+      br
+      = link_to 'PNG', @bucket.link('insignia/p.png'), disposition: 'inline'
+    .table-cell
+  .table-row
+    .table-cell.table-header.officer Advanced Pilot (AP)
+    .table-cell
+      = image_tag @bucket.link('insignia/ap.png'), height: 30
+      br
+      = link_to 'PNG', @bucket.link('insignia/ap.png'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('insignia/ap_edpro.png'), height: 50
+      br
+      = link_to 'PNG', @bucket.link('insignia/ap_edpro.png'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Junior Navigator (JN)
+    .table-cell
+      = image_tag @bucket.link('insignia/jn.png'), height: 30
+      br
+      = link_to 'PNG', @bucket.link('insignia/jn.png'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('insignia/jn_edpro.png'), height: 50
+      br
+      = link_to 'PNG', @bucket.link('insignia/jn_edpro.png'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Navigator (N)
+    .table-cell
+      = image_tag @bucket.link('insignia/n.png'), height: 30
+      br
+      = link_to 'PNG', @bucket.link('insignia/n.png'), disposition: 'inline'
+    .table-cell
+      = image_tag @bucket.link('insignia/n_edpro.png'), height: 50
+      br
+      = link_to 'PNG', @bucket.link('insignia/n_edpro.png'), disposition: 'inline'
+  .table-row
+    .table-cell.table-header.officer Senior Navigator (SN)
+    .table-cell
+      = image_tag @bucket.link('insignia/sn.png'), height: 60
+      br
+      = link_to 'PNG', @bucket.link('insignia/sn.png'), disposition: 'inline'
+    .table-cell
+  .table-row
+    .table-cell.table-header.officer Senior Member
+    .table-cell
+      = image_tag @bucket.link('insignia/senior.png'), width: 250
+      br
+      = link_to 'PNG', @bucket.link('insignia/senior.png'), disposition: 'inline'
+    .table-cell
+  .table-row
+    .table-cell.table-header.officer Life Member
+    .table-cell
+      = image_tag @bucket.link('insignia/life.png'), width: 250
+      br
+      = link_to 'PNG', @bucket.link('insignia/life.png'), disposition: 'inline'
+    .table-cell
+  .table-row
+    .table-cell.table-header.officer Merit Mark
+    .table-cell
+      = image_tag @bucket.link('insignia/mm.png'), height: 30
+      br
+      = link_to 'PNG', @bucket.link('insignia/mm.png'), disposition: 'inline'
+    .table-cell
+
+h3 Birmingham Power Squadron Burgee
+center
+  = image_tag @bucket.link('flags/Birmingham/Birmingham.svg'), width: 200, height: 125
+  br
+  = link_to 'PNG (L)', @bucket.link('flags/Birmingham/Birmingham.png'), disposition: 'inline'
+  |  | 
+  = link_to 'PNG (R)', @bucket.link('flags/Birmingham/Birmingham_right.png'), disposition: 'inline'
+  |  | 
+  = link_to 'SVG', @bucket.link('flags/Birmingham/Birmingham.svg'), disposition: 'inline'
