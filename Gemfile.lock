@@ -355,7 +355,7 @@ GEM
       rubyzip (~> 1.2, >= 1.2.1)
     usps_flags-burgees (0.0.19)
       usps_flags (~> 0.3, >= 0.3.18)
-    usps_flags-grades (0.0.5)
+    usps_flags-grades (0.0.6)
       usps_flags (~> 0.3, >= 0.3.18)
     warden (1.2.7)
       rack (>= 1.0)
@@ -421,10 +421,10 @@ DEPENDENCIES
   uglifier (~> 4.1)
   usps_flags (~> 0.3.20)
   usps_flags-burgees (~> 0.0.19)
-  usps_flags-grades (~> 0.0.5)
+  usps_flags-grades (~> 0.0.6)
 
 RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.5
+   1.17.3
