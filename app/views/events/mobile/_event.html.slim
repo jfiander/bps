@@ -86,7 +86,7 @@
     b = "Instructor".pluralize(event_instructors(event).count) + ":"
     p = simple_format(event_instructors(event).map(&:full_name).join("\n"))
 - if event_prereq(event).present?
-  .event-mobile-contents.spaced
+  .event-mobile-contents.spaced.red
     b Prerequisite course:
     p = event_prereq(event).title.titleize
 - if @current_user_permitted_event_type && !defined?(@event_catalog) && @registered_users[event.id].present?
