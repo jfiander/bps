@@ -21,8 +21,16 @@ class RegistrationMailerPreview < ActionMailer::Preview
     RegistrationMailer.confirm(registration_ao)
   end
 
-  def remind
+  def remind_public
     RegistrationMailer.remind(reg_public_free)
+  end
+
+  def remind_member
+    RegistrationMailer.remind(reg_member_paid)
+  end
+
+  def remind_member_paid
+    RegistrationMailer.remind(reg_member_already_paid)
   end
 
   def confirm_member_free
@@ -53,6 +61,11 @@ private
 
   def reg_member_paid
     Registration.where.not(user: nil).select(&:payable?).last
+  end
+
+  def reg_member_already_paid
+    Registration.includes(:user_registrations).where.not(user_registrations: { user: nil })
+                .select(&:paid?).last
   end
 
   def reg_public_free

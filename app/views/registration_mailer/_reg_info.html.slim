@@ -14,7 +14,7 @@ p
   = mail_to @signature[:email]
   | .
 
-- if @registration&.user.present?
+- if @registration&.user.present? && !@registration.paid?
   p 
     | You can also cancel this registration from 
     = link_to 'your profile page', profile_url

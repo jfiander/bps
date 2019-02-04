@@ -14,7 +14,7 @@ View this event on Google Calendar: <%= @registration.event.google_calendar_link
 
 If you have any questions, or if you would like to cancel this registration,
 please email me at <%= @signature[:email] %>.
-<%- if @registration&.user.present? %>
+<%- if @registration&.user.present? && !@registration.paid? %>
 
 You can also cancel this registration from your profile page on the website: <%= profile_url %>
 (You'll need to login first.)
