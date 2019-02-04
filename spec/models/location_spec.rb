@@ -53,7 +53,8 @@ RSpec.describe Location, type: :model do
         address: @location.address,
         map_link: @location.map_link,
         details: @location.details,
-        picture: @location.picture
+        picture: @location.picture,
+        price_comment: nil
       )
     end
   end

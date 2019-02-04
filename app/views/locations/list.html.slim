@@ -22,6 +22,9 @@ p.red.italic Do not add event-specific information to any location.
           br.mobile
           = link_to(files_bucket.link(location[:picture].path(:medium)), class: 'mobile') do
             = image_tag(files_bucket.link(location[:picture].path(:thumb)), class: 'mobile')
+        - if location[:price_comment].present?
+          hr
+          .red = location[:price_comment]
       .table-cell.picture = image_tag(files_bucket.link(location[:picture].path(:thumb))) if location[:picture].present?
       .table-cell.actions.pending
         = link_to(edit_location_path(id: location[:id])) { FA::Icon.p('edit') }

@@ -63,6 +63,8 @@
       b USPS members from other squadrons: 
       br
       | Please contact us for your discounted rate.
+  - if event&.location&.price_comment&.present?
+    p.red.italic = event.location.price_comment
 - if course_topics(event).present?
   .event-mobile-contents.spaced
     b Topics include:
