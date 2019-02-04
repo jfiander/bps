@@ -132,6 +132,10 @@ class User < ApplicationRecord
     completions&.key?('VSC_01')
   end
 
+  def cpr_aed?
+    cpr_aed_expires_at.present? && cpr_aed_expires_at > Time.now
+  end
+
 private
 
   def cached_committees

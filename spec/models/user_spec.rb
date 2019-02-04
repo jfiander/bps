@@ -456,6 +456,26 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'cpr_aed?' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+    end
+
+    it 'should return false without the flag set' do
+      expect(@user.cpr_aed?).to be(false)
+    end
+
+    it 'should return false with a past expiration date' do
+      @user.update(cpr_aed_expires_at: Time.now - 1.day)
+      expect(@user.cpr_aed?).to be(false)
+    end
+
+    it 'should return true with a future expiration date' do
+      @user.update(cpr_aed_expires_at: Time.now + 1.day)
+      expect(@user.cpr_aed?).to be(true)
+    end
+  end
+
   it 'should return the correct associations to include' do
     expect(User.position_associations).to eql(%i[bridge_office standing_committee_offices committees user_roles roles])
   end
