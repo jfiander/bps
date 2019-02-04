@@ -56,7 +56,7 @@ class UserController < ApplicationController
   end
 
   def certificate
-    @last_mm = @user.last_mm&.strftime('%Y') || clean_params[:last_mm]
+    @last_mm = @user.last_mm_year&.strftime('%Y') || clean_params[:last_mm]
 
     respond_to do |format|
       format.pdf { send_certificate }
