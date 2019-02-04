@@ -109,6 +109,7 @@ input.number {
 }
 
 div.red-background {
+  @include border-radius;
   background-color: $old-glory-red-faded;
   padding: 0.25em 0;
 }

@@ -10,10 +10,11 @@ class ParsedMarkdown < String
     @files_bucket = options[:files_bucket]
     @burgee_html = options[:burgee]
     @education_menu = options[:education]
+    @next_meeting = options[:next_meeting]
   end
 
   def parse
-    %i[center big reg list email burgee education image link fal fa].each do |parser|
+    %i[center big reg list email burgee education meeting image link fal fa].each do |parser|
       send("parse_#{parser}")
     end
     self

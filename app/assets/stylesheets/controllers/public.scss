@@ -184,3 +184,13 @@ iframe#calendar {
   height: 50%;
   min-height: 50vh;
 }
+
+div.next-meeting {
+  @include border-radius;
+  padding: 0.25em;
+  font-size: larger;
+  text-align: center;
+  color: $old-glory-blue-light;
+  background-color: $background-blue-faded;
+  line-height: 1.75em;
+}

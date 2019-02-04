@@ -32,6 +32,10 @@ private
     gsub!(%r{<p>%education</p>}, @education_menu) || self
   end
 
+  def parse_meeting
+    gsub!(%r{<p>%meeting</p>}, @next_meeting) || self
+  end
+
   def match_replace(pattern)
     match(pattern) { |m| gsub!(m[0], yield(m)) } while match?(pattern)
     self

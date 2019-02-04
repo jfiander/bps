@@ -61,6 +61,14 @@ private
     end
   end
 
+  def next_meeting(markdown)
+    if markdown&.match?(/%meeting/)
+      view_context.render('members/next_meeting')
+    else
+      ''
+    end
+  end
+
   def generate_markdown_div
     @markdown_div = +'<div class="markdown">'
     @markdown_div << redcarpet.render(@page_markdown.to_s)
@@ -88,7 +96,8 @@ private
       view_context: (view_context unless Rails.env.test?),
       files_bucket: files_bucket,
       burgee: burgee_html(@page_markdown),
-      education: education_menu(@page_markdown)
+      education: education_menu(@page_markdown),
+      next_meeting: next_meeting(@page_markdown)
     ).parse
   end
 
