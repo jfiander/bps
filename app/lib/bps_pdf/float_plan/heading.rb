@@ -10,7 +10,7 @@ module BpsPdf::FloatPlan::Heading
 private
 
   def load_header_image
-    header = BpsS3.new(:static).download('logos/ABC.long.birmingham.1000.png')
+    header = BpsS3.new(:static).download('logos/ABC/png/long/white/birmingham/1000.png')
     File.open('tmp/run/ABC.png', 'w+') { |f| f.write(header) }
   end
 end
