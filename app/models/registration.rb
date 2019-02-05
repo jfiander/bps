@@ -17,7 +17,9 @@ class Registration < ApplicationRecord
   after_create :confirm_to_registrant
 
   def payment_amount
-    override_cost || event&.get_cost(user.present?)
+    return override_cost if override_cost.present?
+
+    event&.get_cost(primary&.user&.present?)
   end
 
   def cost?

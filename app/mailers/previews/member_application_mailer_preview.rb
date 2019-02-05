@@ -32,14 +32,31 @@ class MemberApplicationPreview < ActionMailer::Preview
 private
 
   def application
-    MemberApplication.last
+    @application ||= MemberApplication.new
+    @application.member_applicants << applicant(@application)
+    @application.payment = Payment.new
+    @application
   end
 
   def large_application
-    MemberApplication.all.select { |m| m.member_applicants.count > 2 }.first
+    @large_application ||= MemberApplication.new
+    @large_application.member_applicants << applicants(@large_application)
+    @large_application
+  end
+
+  def applicant(application)
+    @applicant ||= MemberApplicant.new(member_application: application, primary: true, member_type: 'Active', boat_type: 'None')
+  end
+
+  def applicants(application)
+    @applicants ||= [
+      MemberApplicant.new(member_application: application, primary: true, member_type: 'Active', boat_type: 'None'),
+      MemberApplicant.new(member_application: application, primary: false, member_type: 'Family'),
+      MemberApplicant.new(member_application: application, primary: false, member_type: 'Family')
+    ]
   end
 
   def user
-    User.where(parent_id: nil).first
+    @user ||= User.new(parent_id: nil)
   end
 end

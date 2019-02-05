@@ -12,18 +12,19 @@ class NotificationsMailerPreview < ActionMailer::Preview
 private
 
   def bridge_office
-    BridgeOffice.last
+    user = User.new(email: "#{SecureRandom.hex(16)}@example.com")
+    BridgeOffice.new(office: 'Executive', user: user)
   end
 
   def previous
-    User.last
+    User.new(email: "#{SecureRandom.hex(16)}@example.com")
   end
 
   def by
-    User.first
+    User.new(email: "#{SecureRandom.hex(16)}@example.com")
   end
 
   def last_float_plan
-    FloatPlan.last
+    FloatPlan.new
   end
 end

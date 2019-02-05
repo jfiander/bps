@@ -2,7 +2,7 @@
 
 class OTWMailerPreview < ActionMailer::Preview
   def requested
-    OTWMailer.requested(OTWTrainingUser.last)
+    OTWMailer.requested(OTWTrainingUser.new(otw_training: OTWTraining.new, user: User.new))
   end
 
   def jumpstart

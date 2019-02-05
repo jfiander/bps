@@ -12,7 +12,7 @@ class ReceiptMailerPreview < ActionMailer::Preview
 private
 
   def payment
-    Registration.last.payment
+    Payment.new
   end
 
   def transaction
