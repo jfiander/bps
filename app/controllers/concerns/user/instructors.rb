@@ -12,17 +12,25 @@ private
 
   def load_instructor_data
     @highlight = clean_params[:key].to_s.upcase
-    @only = clean_params[:only] == '1' && @highlight != 'ABC'
-    @instructors = User.includes(:course_completions).where('id_expr > ? OR (cpr_aed_expires_at IS NOT NULL AND cpr_aed_expires_at > ?)', Time.now, Time.now)
+    @only = clean_params[:only] == '1'
+    @instructors = User.includes(:course_completions).where(
+      'id_expr > ? OR (cpr_aed_expires_at IS NOT NULL AND cpr_aed_expires_at > ?)',
+      Time.now, Time.now
+    )
     @keys = %w[ABC CPR/AED S P AP JN N CP EM ID ME MCS MES EN RA SA WE] << %w[Exam SN]
   end
 
   def filter_instructors
+    return abc_instructors if @highlight == 'ABC'
     return sn_instructors if @highlight == 'SN'
     return cpr_instructors if @highlight == 'CPR/AED'
     return me_instructors if @highlight.in?(%w[MCS MES EN])
 
     course_instructors
+  end
+
+  def abc_instructors
+    @instructors.select { |u| u.id_expr.present? && u.id_expr > Time.now }
   end
 
   def sn_instructors

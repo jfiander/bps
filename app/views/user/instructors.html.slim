@@ -38,7 +38,11 @@ hr
     - completions = user.completions.keys
     .table-row class=(cycle('', 'gray'))
       .table-cell = mail_to user.email, user.simple_name
-      .table-cell = user.id_expr&.strftime(ApplicationController::SIMPLE_DATE_FORMAT)
+      - id_expr = user.id_expr&.strftime(ApplicationController::SIMPLE_DATE_FORMAT)
+      - if user.id_expr.present? && user.id_expr > Time.now
+        .table-cell = id_expr
+      - else
+        .table-cell.red = id_expr || 'Not Certified'
       .table-cell.center class=('highlight' if @highlight == 'SN') class=(user.grade == 'SN' ? 'birmingham-blue' : '') = user.grade == 'SN' ? yes : no
       .table-cell.center class=('highlight' if @highlight == 'CPR/AED') class=(user.cpr_aed? ? 'birmingham-blue' : '') = user.cpr_aed? ? yes : no
       .table-cell.center class=('highlight' if @highlight == 'S') class=(completions.include?('S') ? 'birmingham-blue' : '') = completions.include?('S') ? yes : no
@@ -55,3 +59,9 @@ hr
       .table-cell.center class=('highlight' if @highlight == 'RA') class=(completions.include?('RA') ? 'birmingham-blue' : '') = completions.include?('RA') ? yes : no
       .table-cell.center class=('highlight' if @highlight == 'SA') class=(completions.include?('SA') ? 'birmingham-blue' : '') = completions.include?('SA') ? yes : no
       .table-cell.center class=('highlight' if @highlight == 'WE') class=(completions.include?('WE') ? 'birmingham-blue' : '') = completions.include?('WE') ? yes : no
+
+h3
+  | Email Visible Instructors (
+  = @instructors.count
+  | )
+textarea.large = @instructors.map(&:email).compact.uniq.join(', ')

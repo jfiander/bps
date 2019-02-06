@@ -108,6 +108,11 @@ input.number {
   width: 5em;
 }
 
+textarea.large {
+  width: 75%;
+  height: 10em;
+}
+
 div.red-background {
   @include border-radius;
   background-color: $old-glory-red-faded;
