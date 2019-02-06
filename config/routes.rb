@@ -242,4 +242,8 @@ Rails.application.routes.draw do
   ### Error codes
   match   '/404', to: 'errors#not_found',             via: :all
   match   '/500', to: 'errors#internal_server_error', via: :all
+
+  ### Reroutes
+  get     '/excom',          to: 'reroute#excom'
+  get     '/member_meeting', to: 'reroute#member_meeting'
 end
