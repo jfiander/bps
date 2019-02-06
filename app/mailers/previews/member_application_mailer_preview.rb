@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MemberApplicationPreview < ActionMailer::Preview
+class MemberApplicationPreview < ApplicationMailerPreview
   def new_application
     MemberApplicationMailer.new_application(application)
   end
@@ -40,23 +40,26 @@ private
 
   def large_application
     @large_application ||= MemberApplication.new
-    @large_application.member_applicants << applicants(@large_application)
+    @large_application.member_applicants << family(@large_application)
     @large_application
   end
 
   def applicant(application)
-    @applicant ||= MemberApplicant.new(member_application: application, primary: true, member_type: 'Active', boat_type: 'None')
+    @applicant ||= MemberApplicant.new(
+      member_application: application, primary: true, member_type: 'Active', first_name: 'John',
+      last_name: 'Public', email: email, address_1: '123 Street', city: 'City',
+      state: 'ST', zip: '12345', boat_type: 'None'
+    )
   end
 
-  def applicants(application)
-    @applicants ||= [
-      MemberApplicant.new(member_application: application, primary: true, member_type: 'Active', boat_type: 'None'),
-      MemberApplicant.new(member_application: application, primary: false, member_type: 'Family'),
-      MemberApplicant.new(member_application: application, primary: false, member_type: 'Family')
-    ]
+  def secondary(application)
+    MemberApplicant.new(
+      member_application: application, primary: false, member_type: 'Family', first_name: 'John',
+      last_name: 'Public', email: email
+    )
   end
 
-  def user
-    @user ||= User.new(parent_id: nil)
+  def family(application)
+    @family ||= [applicant(application), secondary(application), secondary(application)]
   end
 end

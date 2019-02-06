@@ -201,6 +201,10 @@ RSpec.describe Event, type: :model do
 
           expect(@event.category(event_types)).to eql('course')
         end
+
+        it 'should default to the associated EventType category' do
+          expect(@event.category([])).to eql(@event.event_type.event_category)
+        end
       end
 
       describe 'scheduling' do

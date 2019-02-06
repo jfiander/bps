@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ReceiptMailerPreview < ActionMailer::Preview
+class ReceiptMailerPreview < ApplicationMailerPreview
   def receipt
     ReceiptMailer.receipt(payment, transaction)
   end

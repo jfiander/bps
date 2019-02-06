@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class OTWMailerPreview < ActionMailer::Preview
+class OTWMailerPreview < ApplicationMailerPreview
   def requested
-    OTWMailer.requested(OTWTrainingUser.new(otw_training: OTWTraining.new, user: User.new))
+    OTWMailer.requested(OTWTrainingUser.new(otw_training: OTWTraining.new, user: user))
   end
 
   def jumpstart

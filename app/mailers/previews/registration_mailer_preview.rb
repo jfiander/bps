@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RegistrationMailerPreview < ActionMailer::Preview
+class RegistrationMailerPreview < ApplicationMailerPreview
   def registered
     RegistrationMailer.registered(reg_member_free)
   end
@@ -97,14 +97,6 @@ private
     reg.payment = Payment.new
     reg.payment.update(paid: true) if paid
     reg
-  end
-
-  def user
-    User.new(email: email)
-  end
-
-  def email
-    "#{SecureRandom.hex(16)}@example.com"
   end
 
   def event(category: 'seminar', cost: nil)
