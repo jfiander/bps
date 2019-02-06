@@ -40,7 +40,7 @@ module BpsPdf
     end
 
     def load_logo
-      logo = BpsS3.new(:static).download('logos/ABC.long.birmingham.1000.png')
+      logo = BpsS3.new(:static).download('logos/ABC/png/long/white/birmingham/1000.png')
       File.open('tmp/run/ABC-B.png', 'w+') { |f| f.write(logo) }
     end
   end
