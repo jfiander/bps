@@ -31,6 +31,8 @@ class BpsS3
   end
 
   def upload(file:, key:)
+    file = File.open(file, 'rb') if file.is_a?(String)
+
     object(key).upload_file(file.path)
   end
 
