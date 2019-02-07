@@ -48,22 +48,38 @@ hr
     .table-row
       .table-cell Birthday
       .table-cell Spouse
+      .table-cell Fax Phone
       .table-cell
       .table-cell
-      .table-cell
+
+  hr
+
   .center.birmingham-blue
-    | * – Not updated if the user already exists.
+    | * – Blue fields are not updated if the user already exists.
+
+  hr
+
   .center.red
-    | ** – Ranks are updated from the first matched field in order:
+    | ** – The imported rank is selected from the first matched field in this order:
   .table.ranks.red
     .table-row
       .table-cell
-        | (1) Rank
+        | (1) <code>Rank</code>
       .table-cell
-        | (2) SQ Rank
+        | (2) <code>SQ Rank</code>
       .table-cell
-        | (3) HQ Rank
-  .center.red.italic Automatic ranks from bridge offices will override this rank.
+        | (3) <code>HQ Rank</code>
+
+  hr
+
+  .center.red.italic
+    | A user's displayed rank will be the highest of the following:
+    ul.simple
+      li Bridge office rank
+      li Manual <code>override_rank</code>
+      li Imported rank
+      li Committee rank
+    | N.B. The Bridge Officers page always displays the relevant bridge office rank.
 
   hr
 
