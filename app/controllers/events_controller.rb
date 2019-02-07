@@ -101,7 +101,7 @@ class EventsController < ApplicationController
     redirect_with_status(
       send("#{event_type_param}s_path"), object: event_type_param, verb: 'expire'
     ) do
-      @event.update(expires_at: Time.now)
+      @event.expire!
     end
   end
 
@@ -109,7 +109,7 @@ class EventsController < ApplicationController
     redirect_with_status(
       send("#{event_type_param}s_path"), object: event_type_param, verb: 'archive'
     ) do
-      @event.update(start_at: @event.start_at - 2.years)
+      @event.archive!
     end
   end
 

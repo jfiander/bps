@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_04_204744) do
+ActiveRecord::Schema.define(version: 2019_02_07_194033) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 2019_02_04_204744) do
     t.integer "registration_limit"
     t.integer "usps_cost"
     t.boolean "advance_payment"
+    t.datetime "archived_at"
   end
 
   create_table "float_plan_onboards", force: :cascade do |t|

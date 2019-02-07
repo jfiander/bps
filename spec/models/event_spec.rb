@@ -106,6 +106,20 @@ RSpec.describe Event, type: :model do
         end
       end
 
+      describe 'hiding old events' do
+        it 'should expire the event' do
+          expect(@event.expires_at).to be > Time.now
+          @event.expire!
+          expect(@event.expires_at).to be < Time.now
+        end
+
+        it 'should archive the event' do
+          expect(@event.archived_at).to be_nil
+          @event.archive!
+          expect(@event.archived_at).to be < Time.now
+        end
+      end
+
       describe 'booked' do
         it 'should set the booked flag after booking' do
           @event.unbook!

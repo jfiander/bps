@@ -68,10 +68,10 @@ module EventsHelper
   end
 
   def scoped_events
-    expired = Date.today.last_year.beginning_of_year
+    auto_archive = Date.today.last_year.beginning_of_year
     @scoped_events ||= {
-      current: @all_events.find_all { |e| !e.expired? },
-      expired: @all_events.find_all { |e| e.expired? && e.start_at >= expired }
+      current: @all_events.displayable.find_all { |e| !e.expired? },
+      expired: @all_events.displayable.find_all { |e| e.expired? && e.start_at >= auto_archive }
     }
   end
 

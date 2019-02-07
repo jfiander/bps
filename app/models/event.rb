@@ -18,6 +18,8 @@ class Event < ApplicationRecord
 
   has_many :registrations
 
+  scope :displayable, -> { where(archived_at: nil) }
+
   has_attached_file(
     :flyer, paperclip_defaults(:files).merge(path: 'event_flyers/:id/:filename')
   )
@@ -89,6 +91,14 @@ class Event < ApplicationRecord
 
     registrations.each { |reg| RegistrationMailer.remind(reg).deliver }
     update(reminded_at: Time.now)
+  end
+
+  def expire!
+    update(expires_at: Time.now)
+  end
+
+  def archive!
+    update(archived_at: Time.now)
   end
 
   def link
