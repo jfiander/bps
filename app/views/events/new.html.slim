@@ -73,7 +73,7 @@ em
         .left
           span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
           = f.label :start_at
-        .right = f.datetime_field :start_at, required: !@event.all_day, disabled: @event.all_day, type: 'datetime-local'
+        .right = f.datetime_field :start_at, required: !@event.all_day, disabled: @event.all_day, type: 'datetime-local', value: (@event.start_at || Date.today.beginning_of_year).strftime(ApplicationController::ISO_TIME_FORMAT)
         br.clear
 
         .left = f.label :length, 'Session length'

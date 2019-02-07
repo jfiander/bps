@@ -9,4 +9,5 @@ module TimeHelper
   PUBLIC_DATE_FORMAT = '%b %-d'
   PUBLIC_TIME_FORMAT = '%l:%M %P %Z'
   DURATION_FORMAT = '%-kh %Mm'
+  ISO_TIME_FORMAT = '%Y-%m-%dT%H:%M'
 end
