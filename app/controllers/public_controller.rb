@@ -19,7 +19,7 @@ class PublicController < ApplicationController
 
   def register
     respond_to do |format|
-      format.js { register_js }
+      format.js { @registration.persisted? ? already_registered_js : register_js }
       format.html { register_html }
     end
   end
@@ -87,6 +87,12 @@ private
     else
       flash[:alert] = 'We are unable to register you at this time.'
       render status: :unprocessable_entity
+    end
+  end
+
+  def already_registered_js
+    modal(header: 'You are already registered!') do
+      render_to_string partial: 'events/modals/registered'
     end
   end
 
