@@ -53,6 +53,12 @@ class RegistrationMailerPreview < ApplicationMailerPreview
     RegistrationMailer.confirm(reg_public_multi_session)
   end
 
+  def confirm_public_already_paid
+    reg = reg_public_paid
+    reg.payment.paid = true
+    RegistrationMailer.confirm(reg)
+  end
+
   def request_schedule
     RegistrationMailer.request_schedule(
       EventType.new(event_category: 'seminar', title: 'Example'), by: user

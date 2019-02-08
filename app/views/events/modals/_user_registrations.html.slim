@@ -1,0 +1,5 @@
+#registered.scrollable.max-h-15
+  - if @registration.user_registrations.count > 1
+    ul.simple
+      - @registration.user_registrations.each do |reg|
+        li = reg.user&.full_name || reg.email

@@ -4,7 +4,7 @@ class PublicController < ApplicationController
   include Public::Bilge
   include CalendarHelper
 
-  before_action :block_if_paid,           only: %i[register]
+  # before_action :block_if_paid,           only: %i[register]
   before_action :list_bilges,             only: %i[newsletter bilge]
   before_action :registration_attributes, only: %i[register]
   before_action :find_event,              only: %i[register]
@@ -19,7 +19,7 @@ class PublicController < ApplicationController
 
   def register
     respond_to do |format|
-      format.js { @registration.persisted? ? already_registered_js : register_js }
+      format.js { register_js }
       format.html { register_html }
     end
   end
@@ -66,14 +66,14 @@ private
     true
   end
 
-  def block_if_paid
-    reg = Registration.with_users.find_by(user_registrations: { email: clean_params[:email] })
-    return unless reg&.paid?
+  # def block_if_paid
+  #   reg = Registration.with_users.find_by(user_registrations: { email: clean_params[:email] })
+  #   return unless reg&.paid?
 
-    flash[:alert] = 'That has already been paid for.'
-    category_path = send("#{reg.event.category}s_path")
-    render js: "window.location='#{category_path}'"
-  end
+  #   flash[:alert] = 'That has already been paid for.'
+  #   category_path = send("#{reg.event.category}s_path")
+  #   render js: "window.location='#{category_path}'"
+  # end
 
   def register_js
     if @registration.save
@@ -81,7 +81,7 @@ private
 
       return require_payment if @event.advance_payment
 
-      modal(header: 'You are now registered!') do
+      modal(header: 'You are registered!') do
         render_to_string partial: 'events/modals/registered'
       end
     else
@@ -90,11 +90,11 @@ private
     end
   end
 
-  def already_registered_js
-    modal(header: 'You are already registered!') do
-      render_to_string partial: 'events/modals/registered'
-    end
-  end
+  # def already_registered_js
+  #   modal(header: 'You are already registered!') do
+  #     render_to_string partial: 'events/modals/registered'
+  #   end
+  # end
 
   def register_html
     if @registration.save
@@ -107,8 +107,14 @@ private
   def require_payment
     # prepare_advance_payment
 
-    modal(header: 'Advance Payment Required', status: :payment_required) do
-      render_to_string partial: 'events/modals/registered'
+    if @registration.paid?
+      modal(header: 'You are already registered!', status: :payment_required) do
+        render_to_string partial: 'events/modals/registered'
+      end
+    else
+      modal(header: 'Advance Payment Required', status: :payment_required) do
+        render_to_string partial: 'events/modals/registered'
+      end
     end
   end
 

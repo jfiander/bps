@@ -31,6 +31,7 @@ class Registration < ApplicationRecord
     ur = UserRegistration.new(registration: reg, primary: true, user: user, email: email)
     reg.user_registrations << ur
     reg.save
+    ur.save
     reg
   end
 
