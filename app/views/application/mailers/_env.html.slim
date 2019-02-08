@@ -1,0 +1,5 @@
+- unless ENV['ASSET_ENVIRONMENT'] == 'production'
+  .red
+    | &lt;
+    = ENV['ASSET_ENVIRONMENT'].titleize
+    | &gt;
