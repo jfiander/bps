@@ -73,7 +73,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'confirm' do
-      let(:mail) { RegistrationMailer.confirm(ed_user_reg.user_registrations.first) }
+      let(:mail) { RegistrationMailer.confirm(ed_user_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -93,7 +93,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'confirm (event)' do
-      let(:mail) { RegistrationMailer.confirm(event_user_reg.user_registrations.first) }
+      let(:mail) { RegistrationMailer.confirm(event_user_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -188,7 +188,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'confirm' do
-      let(:mail) { RegistrationMailer.confirm(ed_email_reg.user_registrations.first) }
+      let(:mail) { RegistrationMailer.confirm(ed_email_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(

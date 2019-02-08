@@ -92,6 +92,7 @@ class Registration < ApplicationRecord
   end
 
   def confirm_to_registrants
-    user_registrations.each { |ur| RegistrationMailer.confirm(ur).deliver }
+    # user_registrations.each { |ur| RegistrationMailer.confirm(ur).deliver }
+    RegistrationMailer.confirm(self).deliver
   end
 end

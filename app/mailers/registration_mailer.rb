@@ -20,9 +20,9 @@ class RegistrationMailer < ApplicationMailer
     cancelled_slack_notification
   end
 
-  def confirm(user_registration)
-    @user_registration = user_registration
-    @registration = @user_registration.registration
+  def confirm(registration)
+    @registration = registration
+    @user_registration = @registration.user_registrations.first
     @signature = signature_for_confirm
     to = @user_registration&.user&.email || @user_registration.email
     from = "\"#{@signature[:name]}\" <#{@signature[:email]}>"

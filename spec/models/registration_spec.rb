@@ -137,7 +137,7 @@ RSpec.describe Registration, type: :model do
     @event.save
     reg = register(@event).first
 
-    expect { RegistrationMailer.confirm(reg.user_registrations.first).deliver }.not_to raise_error
+    expect { RegistrationMailer.confirm(reg).deliver }.not_to raise_error
   end
 
   describe 'cost?' do
