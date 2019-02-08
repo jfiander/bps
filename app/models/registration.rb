@@ -54,13 +54,13 @@ class Registration < ApplicationRecord
   end
 
   def primary
-    user_registrations.find_by(primary: true)
+    user_registrations.select { |u| u.primary }.first
   end
 
   def payment_amount
     return override_cost if override_cost.present?
 
-    user_registrations.count * event&.get_cost(primary&.user.present?)
+    user_registrations.size * event&.get_cost(primary&.user&.present?)
   end
 
   def cost?
