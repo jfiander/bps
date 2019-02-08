@@ -103,7 +103,7 @@ private
   def clean_params
     params.permit(
       :id, :type, :page_name, :import_file, :lock_missing, :photo, :redirect_to,
-      :member_date, :last_mm, :key, :only
+      :member_date, :last_mm, :key, :only, :token
     )
   end
 end

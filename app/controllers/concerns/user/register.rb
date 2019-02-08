@@ -32,7 +32,9 @@ module User::Register
   end
 
   def override_cost
-    #
+    return if @registration.is_a?(Registration)
+
+    redirect_to receipts_path, alert: 'Can only override registration costs.'
   end
 
   def set_override_cost
@@ -49,6 +51,7 @@ private
 
   def find_registration
     @registration = Registration.find_by(id: clean_params[:id])
+    @registration ||= Payment.find_by(token: clean_params[:token]).parent
   end
 
   def block_override

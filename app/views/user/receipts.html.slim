@@ -38,7 +38,7 @@ h1 = admin_header('Payments & Receipts')
           = link_to(receipt_path(payment.token), class: 'blue') do
             = FA::Icon.p('file-pdf', style: :regular, title: 'Receipt')
             = FA::Icon.p('ellipsis-h', style: :regular, css: 'gray', title: 'Pending generation') unless payment.receipt.exists?
-        - elsif !payment.refunded
+        - elsif !payment.refunded && payment.parent.is_a?(Registration)
           = link_to(override_cost_path(payment.token), class: 'green') { FA::Icon.p('file-invoice-dollar', style: :regular, title: 'Override Cost') }
       .table-cell.receipts-actions
         - if !payment.paid && !payment.refunded
