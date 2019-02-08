@@ -4,7 +4,7 @@ h1 = admin_header "America's Boating Club Logos"
 
 hr
 
-= form_tag(logo_path, method: :get) do
+= form_tag(admin_logo_path, method: :get) do
   .table
     .table-row
       .table-cell.table-header.left = label_tag(:orientation, 'Orientation')

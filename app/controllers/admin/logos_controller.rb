@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LogosController < ApplicationController
+class Admin::LogosController < ApplicationController
   secure!(:admin)
 
   def logo

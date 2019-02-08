@@ -81,6 +81,7 @@ Rails.application.routes.draw do
     post  '/versions/:model/:id/:a/:b', to: 'versions#diff'
     patch '/versions/:model/:id/:a',    to: 'versions#revert', as: 'revert_version'
     get   '/versions(/:model)',         to: 'versions#index',  as: 'versions'
+    get   '/logo',                      to: 'logos#logo'
   end
 
   # Newsletter
@@ -151,10 +152,6 @@ Rails.application.routes.draw do
   # get  '/update_roster',             to: 'members#update_roster', as: 'update_roster'
   # post '/update_roster',             to: 'members#upload_roster'
   get     '/roster/gen(/:orientation)', to: 'members#roster_gen',    as: 'roster_gen', defaults: { orientation: 'detailed' }
-
-  # Logos
-
-  get     '/logo', to: 'logos#logo'
 
   # OTW Trainings
   get     '/otw',            to: 'otw_trainings#user'
