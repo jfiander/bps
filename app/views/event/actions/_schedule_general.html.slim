@@ -21,9 +21,9 @@
     text: 'Register', css: 'control modal-link', id: "event_#{event.id}", expired: false, \
     if: event.allow_member_registrations && event.registerable? \
   )
-  = event_action_link(event, nil, icon: 'calendar-exclamation', text: 'Too late to register', css: 'gray', expired: false, if: event.cutoff?)
+- elsif event.registerable? && !event.allow_public_registrations
+  = render('events/no/public_registrations')
 - elsif event.registerable?
-  = render('events/no/public_registrations')             if !event.allow_public_registrations
-  = render('events/register/public', event_id: event.id) if  event.allow_public_registrations
+  = render('events/register/public', event_id: event.id)
 - else
   = render('event/no/registrations')
