@@ -65,7 +65,12 @@ RSpec.describe PublicController, type: :controller do
 
       post :register, params: params(event)
 
-      expect(response).to redirect_to(courses_path(id: event.id))
+      expect(response.body).to eql(
+        <<~JS
+          $("#modal-header").html("Too late to register");
+          $("#modal-content").html("<h3>We\\'re Sorry<\\/h3><p>It\\'s too late to register for this course.<\\/p>");
+        JS
+      )
     end
   end
 end

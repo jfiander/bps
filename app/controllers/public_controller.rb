@@ -55,7 +55,14 @@ private
   end
 
   def block_registration
-    redirect_to send("#{@event.category}s_path", id: @event.id)
+    respond_to do |format|
+      format.js do
+        modal(header: 'Too late to register') do
+          render_to_string partial: 'events/modals/too_late'
+        end
+      end
+      format.html { redirect_to send("#{@event.category}s_path", id: @event.id) }
+    end
   end
 
   def block_registration?
