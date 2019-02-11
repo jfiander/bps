@@ -99,8 +99,9 @@ private
     transaction = @result.transaction
     @payment.paid!(transaction.id)
     ReceiptMailer.paid(@payment).deliver
-    send_registration_email(@payment.parent)
-    send_application_email(@payment.parent)
+    registration = @payment.parent
+    send_registration_email(registration)
+    send_application_email(registration)
     send_receipt_email(transaction)
     slack_notification(@payment)
   end
