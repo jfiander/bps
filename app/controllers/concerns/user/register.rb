@@ -63,6 +63,7 @@ class User
     def collect_payment
       prepare_advance_payment(register: false)
 
+      @receipt = @registration.primary&.user&.email || @registration.primary&.email
       modal(header: 'Advance Payment Required', status: :payment_required) do
         render_to_string partial: 'braintree/dropin'
       end
