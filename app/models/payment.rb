@@ -57,6 +57,7 @@ class Payment < ApplicationRecord
 
     # Post-payment hooks
     parent.dues_paid! if parent_type == 'User'
+    self
   end
 
   def in_person!

@@ -97,7 +97,7 @@ private
 
   def process_success
     transaction = @result.transaction
-    @payment.paid!(transaction.id)
+    @payment.paid!(transaction.id).reload
     ReceiptMailer.paid(@payment).deliver
     registration = @payment.parent
     send_registration_email(registration)
