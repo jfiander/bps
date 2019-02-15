@@ -20,7 +20,7 @@ class Location < ApplicationRecord
 
   validate :valid_map_link?
 
-  default_scope { order(favorite: :desc) }
+  default_scope { order('favorite IS NULL, favorite DESC') }
 
   def display
     return { id: 0, address: 'TBD' } unless address.present?
