@@ -2,7 +2,10 @@
   code: BC
   exam:
 - name: Seamanship
-  code: S
+  code:
+    any:
+      - S
+      - BH
   exam_prefix: SE
 - name: Piloting
   code: P
