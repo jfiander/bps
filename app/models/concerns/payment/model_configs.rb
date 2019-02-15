@@ -40,7 +40,8 @@ private
       name: parent.event.display_title,
       type: type,
       date: parent.event.start_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT),
-      time: parent.event.start_at.strftime(ApplicationController::PUBLIC_TIME_FORMAT)
+      time: parent.event.start_at.strftime(ApplicationController::PUBLIC_TIME_FORMAT),
+      price_comment: parent.event.location.price_comment
     }
   end
 

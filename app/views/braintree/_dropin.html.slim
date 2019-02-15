@@ -23,6 +23,13 @@
     = label_tag :email, 'Send receipt to:'
     br
     = email_field_tag :email, @receipt, id: 'receipt-email', placeholder: 'Enter your email address to get a receipt', data: { 'braintree-name' => 'email' }
+  - if @purchase_info[:price_comment].present?
+    .information.red
+      = @purchase_info[:price_comment]
+      br
+      | Please 
+      = mail_to('payments@bpsd9.org', 'contact us', target: :_blank)
+      |  if the above price is not correct.
   button#pay-button
     | Pay $
     = @transaction_amount
