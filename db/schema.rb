@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_07_194033) do
+ActiveRecord::Schema.define(version: 2019_02_15_164914) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(version: 2019_02_07_194033) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "price_comment"
+    t.boolean "favorite"
   end
 
   create_table "markdown_files", force: :cascade do |t|

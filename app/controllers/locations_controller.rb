@@ -51,7 +51,7 @@ private
 
   def location_params
     params.require(:location).permit(
-      :address, :map_link, :details, :price_comment, :picture, :delete_attachment
+      :address, :map_link, :details, :favorite, :price_comment, :picture, :delete_attachment
     )
   end
 

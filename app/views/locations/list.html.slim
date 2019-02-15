@@ -11,7 +11,12 @@ p.red.italic Do not add event-specific information to any location.
     .table-cell
   - @locations.each do |location|
     .table-row
-      .table-cell = simple_format(location[:address])
+      .table-cell
+        = simple_format(location[:address])
+        .birmingham-blue
+          - if location[:favorite]
+            = FA::Icon.p('star', style: :regular)
+            | Favorite
       .table-cell
         - if location[:map_link].present?
           = link_to(location[:map_link]) do

@@ -20,6 +20,8 @@ class Location < ApplicationRecord
 
   validate :valid_map_link?
 
+  default_scope { order(favorite: :desc) }
+
   def display
     return { id: 0, address: 'TBD' } unless address.present?
 
@@ -41,7 +43,7 @@ class Location < ApplicationRecord
   end
 
   def details_hash
-    %i[name address map_link details price_comment picture].map do |method|
+    %i[name address map_link details favorite price_comment picture].map do |method|
       { method => send(method) }
     end.reduce({}, :merge)
   end
