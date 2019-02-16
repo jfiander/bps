@@ -17,13 +17,12 @@ class UserController < ApplicationController
   secure!(:admin, only: %i[assign_photo override_cost])
   secure!(:education, only: :instructors)
   secure!(
-    :users, except: %i[current show register cancel_registration instructors]
+    :users, except: %i[current show register cancel_registration instructors certificate]
   )
 
-  before_action :can_view_profile?, only: [:show]
-  before_action :can_view_profile?, only: [:certificate]
-  before_action :find_user, only: [:show, :certificate]
-  before_action :load_users, only: [:list]
+  before_action :can_view_profile?, only: %i[show certificate]
+  before_action :find_user, only: %i[show certificate]
+  before_action :load_users, only: :list
   before_action :find_registration, only: %i[override_cost set_override_cost]
   before_action :block_override, only: %i[override_cost set_override_cost]
   before_action :find_payment, only: %i[receipt paid_in_person]
