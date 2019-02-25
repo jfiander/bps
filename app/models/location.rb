@@ -42,6 +42,14 @@ class Location < ApplicationRecord
     end.reduce({}, :merge)
   end
 
+  def self.grouped
+    {
+      'TBD' => ['TBD'],
+      'Favorites' => where(favorite: true).map(&:display).pluck(:name, :id),
+      'Others' => where('favorite IS NULL OR favorite = ?', false).map(&:display).pluck(:name, :id)
+    }
+  end
+
   def details_hash
     %i[name address map_link details favorite price_comment picture].map do |method|
       { method => send(method) }

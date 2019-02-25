@@ -61,12 +61,7 @@ private
 
   def location_names
     @locations = Location.all.map(&:display)
-    @locations_grouped = {
-      'TBD' => ['TBD'],
-      'Favorites' => Location.where(favorite: true).map(&:display).pluck(:name, :id),
-      'Others' => Location.where('favorite IS NULL OR favorite = ?', false)
-                          .map(&:display).pluck(:name, :id)
-    }
+    @locations_grouped = Location.grouped
   end
 
   def set_create_path

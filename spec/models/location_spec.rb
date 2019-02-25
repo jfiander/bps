@@ -17,6 +17,14 @@ RSpec.describe Location, type: :model do
     end
   end
 
+  describe 'grouped' do
+    it 'should return a correctly-structrued hash' do
+      expect(Location.grouped).to have_key('TBD')
+      expect(Location.grouped).to have_key('Favorites')
+      expect(Location.grouped).to have_key('Others')
+    end
+  end
+
   describe 'map_links' do
     it 'should store a valid http link as provided' do
       @location.update(map_link: 'http://maps.example.com')
@@ -55,8 +63,7 @@ RSpec.describe Location, type: :model do
         price_comment: @location.price_comment,
         map_link: @location.map_link,
         details: @location.details,
-        picture: @location.picture,
-        price_comment: nil
+        picture: @location.picture
       )
     end
   end
