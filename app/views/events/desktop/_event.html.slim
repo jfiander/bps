@@ -108,7 +108,7 @@
               .table.row
                 .table-cell
                   b Student requirements:
-                  = simple_markdown(event.requirements)
+                  = simple_format(event.requirements)
             - if event_instructors(event).present? && !defined?(@event_catalog)
               .table.row
                 .table-cell

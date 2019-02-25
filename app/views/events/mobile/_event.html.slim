@@ -80,7 +80,7 @@
 - if event.requirements.present?
   .event-mobile-contents.spaced
     b Student requirements:
-    p = simple_markdown(event.requirements)
+    p = simple_format(event.requirements)
 - if event_instructors(event).present? && !defined?(@event_catalog)
   .event-mobile-contents.spaced
     b = "Instructor".pluralize(event_instructors(event).count) + ":"
