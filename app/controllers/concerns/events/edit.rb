@@ -64,7 +64,8 @@ private
     @locations_grouped = {
       'TBD' => ['TBD'],
       'Favorites' => Location.where(favorite: true).map(&:display).pluck(:name, :id),
-      'Others' => Location.where('favorite IS NULL OR favorite = 0').map(&:display).pluck(:name, :id)
+      'Others' => Location.where('favorite IS NULL OR favorite = ?', false)
+                          .map(&:display).pluck(:name, :id)
     }
   end
 
