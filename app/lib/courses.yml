@@ -35,14 +35,16 @@
   code: ME
   exam_prefix: ME
 - name: Instructor Development
-  code: ID
+  code:
+    any:
+      - ID
+      - IQ
+    all:
+      - IT
+      - IA
   exam_prefix:
-- name: Instructor Qualification
-  code: IQ
 - name: Instructor Aids
   code: IA
-- name: Instructor Training
-  code: IT
 - name: Sail
   code: SA
   exam_prefix: SA
