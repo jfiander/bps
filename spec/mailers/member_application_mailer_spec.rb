@@ -38,7 +38,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       it 'renders the body' do
         expect(mail.body.encoded).to include('You have successfully applied')
         expect(mail.body.encoded).not_to include('yourself')
-        expect(mail.body.encoded).to include('We will review your application')
+        expect(mail.body.encoded).to include('will review your application')
       end
     end
 
@@ -137,7 +137,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       it 'renders the body' do
         expect(mail.body.encoded).to include('You have successfully applied')
         expect(mail.body.encoded).to include('yourself')
-        expect(mail.body.encoded).to include('We will review your application')
+        expect(mail.body.encoded).to include('will review your application')
       end
     end
 
