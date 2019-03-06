@@ -60,8 +60,12 @@ private
       flash[:notice] = 'That registration has no cost.'
     end
 
+    redirect_to override_path
+  end
+
+  def override_path
     cat = @registration.event.category.to_s == 'meeting' ? 'event' : @registration.event.category
-    redirect_to send("#{cat}_registrations_path")
+    send("#{cat}_registrations_path")
   end
 
   def not_overrideable?

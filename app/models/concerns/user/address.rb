@@ -35,12 +35,14 @@ private
     dec = raw.abs - deg
     min = (dec * 60).round(5)
 
-    if raw.negative?
-      hemi_flag = hemi == :ns ? 'S' : 'W'
-    else
-      hemi_flag = hemi == :ns ? 'N' : 'E'
-    end
+    "#{deg}° #{min}′ #{hemi_flag(raw, hemi)}"
+  end
 
-    "#{deg}° #{min}′ #{hemi_flag}"
+  def hemi_flag(raw, hemi)
+    if raw.negative?
+      hemi == :ns ? 'S' : 'W'
+    else
+      hemi == :ns ? 'N' : 'E'
+    end
   end
 end

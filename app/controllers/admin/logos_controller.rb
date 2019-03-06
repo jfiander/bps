@@ -58,10 +58,14 @@ private
 
   def size
     if oversize_logo
-      @logo_params[:size] = logo_params[:orientation] == 'Long' ? 6600 : 600
+      @logo_params[:size] = max_size
     else
       logo_params[:size] == 'Full' ? 'Full' : logo_params[:size].to_i.floor(-2)
     end
+  end
+
+  def max_size
+    logo_params[:orientation] == 'Long' ? 6600 : 600
   end
 
   def text
