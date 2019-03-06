@@ -39,10 +39,9 @@ private
   end
 
   def hemi_flag(raw, hemi)
-    if raw.negative?
-      hemi == :ns ? 'S' : 'W'
-    else
-      hemi == :ns ? 'N' : 'E'
-    end
+    {
+      ns: { true => 'S', false => 'N' },
+      ew: { true => 'W', false => 'E' }
+    }[hemi][raw.negative?]
   end
 end
