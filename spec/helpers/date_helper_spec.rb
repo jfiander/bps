@@ -26,6 +26,14 @@ RSpec.describe DateHelper, type: :helper do
   end
 
   describe 'Membership' do
+    it 'should select the correct date for the current month' do
+      expect(next_membership(Date.strptime('2018-04-01')).to_date).to eql(Date.strptime('2018-04-10'))
+    end
+
+    it 'should select the correct date during the week after an ExCom' do
+      expect(next_membership(Date.strptime('2018-04-05')).to_date).to eql(Date.strptime('2018-04-10'))
+    end
+
     it 'should select the correct date for the next month' do
       expect(next_membership(Date.strptime('2018-04-15')).to_date).to eql(Date.strptime('2018-05-08'))
     end

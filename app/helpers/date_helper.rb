@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 module DateHelper
+  ###############
+  # ExCom
+
   def next_excom(date = Date.today)
     month = excom_in_session?(date) ? next_excom_month(date) : 'September'
     excom_date(month, date.strftime('%Y'))
   end
 
   def excom_in_session?(date = Date.today)
-    !date.between?(
-      excom_date('June', date.strftime('%Y')), excom_date('September', date.strftime('%Y'))
-    )
+    in_session?(date, 'June')
   end
 
   def excom_date(month = Date.today.strftime('%B'), year = Date.today.strftime('%Y'))
@@ -19,18 +20,43 @@ module DateHelper
   end
 
   def next_excom_month(date = Date.today)
-    date += 1.month if date > excom_date(date.strftime('%B'), date.strftime('%Y'))
-    date.strftime('%B')
+    next_month(date, excom_date(date.strftime('%B'), date.strftime('%Y')))
   end
 
   def next_excom_over_30_days?(date = Date.today)
     (next_excom(date) - date).to_i > 40
   end
 
-  def next_membership(date = Date.today)
-    excom = next_excom(date)
-    return excom + 1.week unless excom.strftime('%B') == 'June'
+  ###############
+  # Membership
 
-    next_excom(date + 1.month) + 1.week
+  def next_membership(date = Date.today)
+    month = membership_in_session?(date) ? next_membership_month(date) : 'September'
+    membership_date(month, date.strftime('%Y'))
+  end
+
+  def membership_in_session?(date = Date.today)
+    in_session?(date, 'May')
+  end
+
+  def membership_date(month = Date.today.strftime('%B'), year = Date.today.strftime('%Y'))
+    excom_date(month, year) + 1.week
+  end
+
+  def next_membership_month(date = Date.today)
+    next_month(date, membership_date(date.strftime('%B'), date.strftime('%Y')))
+  end
+
+private
+
+  def in_session?(date, month_a, month_b = 'September')
+    !date.between?(
+      membership_date(month_a, date.strftime('%Y')), membership_date(month_b, date.strftime('%Y'))
+    )
+  end
+
+  def next_month(date, meeting_date)
+    date += 1.month if date > meeting_date
+    date.strftime('%B')
   end
 end
