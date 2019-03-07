@@ -21,7 +21,7 @@ private
   end
 
   def parse_email
-    gsub!(/href='(.+@.+\.\w+)'.*?/, 'href="mailto:\1"') || self
+    gsub!(/href='(.+@.+\.\w+.*?)'.*?/, 'href="mailto:\1"') || self
   end
 
   def parse_burgee
