@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_15_164914) do
+ActiveRecord::Schema.define(version: 2019_03_07_175321) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -216,6 +216,9 @@ ActiveRecord::Schema.define(version: 2019_02_15_164914) do
     t.integer "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.integer "user_id"
+    t.string "hin"
+    t.string "deck_color"
+    t.string "sail_color"
   end
 
   create_table "header_images", force: :cascade do |t|

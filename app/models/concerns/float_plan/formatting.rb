@@ -37,7 +37,7 @@ module Concerns::FloatPlan::Formatting
 
   def epirb_freqs
     [
-      flag(epirb_16, 'Ch 15/16'),
+      flag(epirb_16, 'Ch 16'),
       flag(epirb_1215, '121.5 MHz'),
       flag(epirb_406, '406 MHz')
     ].compact.join(' / ')

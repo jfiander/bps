@@ -50,12 +50,11 @@ private
 
   def core_float_plan_params
     %i[
-      name phone boat_type subtype hull_color trim_color registration_number
-      length boat_name make model year engine_type_1 engine_type_2 horse_power
-      number_of_engines fuel_capacity pfds flares mirror horn smoke flashlight
-      raft epirb paddles food water anchor epirb_16 epirb_1215 epirb_406 radio
-      radio_vhf radio_ssb radio_cb radio_cell_phone channels_monitored
-      call_sign leave_from going_to leave_at return_at alert_at comments
+      name phone boat_type subtype hull_color trim_color deck_color sail_color registration_number
+      hin length boat_name make model year engine_type_1 engine_type_2 horse_power number_of_engines
+      fuel_capacity pfds flares mirror horn smoke flashlight raft epirb paddles food water anchor
+      epirb_16 epirb_1215 epirb_406 radio radio_vhf radio_ssb radio_cb radio_cell_phone
+      channels_monitored call_sign leave_from going_to leave_at return_at alert_at comments
       car_make car_model car_year car_color car_license_plate
       trailer_license_plate car_parked_at alert_name alert_phone
     ]

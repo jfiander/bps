@@ -2,9 +2,9 @@
 
 module BpsPdf::FloatPlan::PersonsOnboard
   def persons_onboard(float_plan)
-    @onboard_y = 220
+    @onboard_y = 200
     configure_colors('000099')
-    draw_text 'Persons Onboard', size: 16, at: [300, 240]
+    draw_text 'Persons Onboard', size: 16, at: [300, 220]
     float_plan.onboard.each { |person| person_onboard(person) }
     configure_colors
   end

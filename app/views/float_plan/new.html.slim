@@ -8,11 +8,19 @@ p
   | are required.
 
 - if @last.present?
-  .information.gray-background
+  .next-meeting
     p.red
-      | This form has been pre-populated with data from your most recent float plan, except for
+      | This form has been pre-populated with data from your most recent float plan,
       br
-      | the leave, return, and alert times, and any persons onboard.
+      | except for the 
+      b leave
+      | , 
+      b return
+      | , and 
+      b alert times
+      | , and any 
+      b persons onboard
+      | .
     p Please update it as necessary.
 
 = form_for(@float_plan, url: submit_float_plan_path, multipart: true) do |f|
@@ -42,21 +50,30 @@ p
       .table-row
         .table-cell.table-header
           span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          = f.label :length
+        .table-cell.field
+          = f.number_field :length, required: true
+          |  feet
+      .table-row
+        .table-cell.table-header
+          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
           = f.label :hull_color
         .table-cell.field = f.text_field :hull_color, required: true
       .table-row
         .table-cell.table-header = f.label :trim_color
         .table-cell.field = f.text_field :trim_color
       .table-row
-        .table-cell.table-header = f.label :registration_number
+        .table-cell.table-header = f.label :deck_color
+        .table-cell.field = f.text_field :deck_color
+      .table-row
+        .table-cell.table-header = f.label :sail_color
+        .table-cell.field = f.text_field :sail_color
+      .table-row
+        .table-cell.table-header = f.label :registration_number, 'Documentation or reg. number'
         .table-cell.field = f.text_field :registration_number
       .table-row
-        .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
-          = f.label :length
-        .table-cell.field
-          = f.number_field :length, required: true
-          |  feet
+        .table-cell.table-header = f.label :hin, 'HIN'
+        .table-cell.field = f.text_field :hin
       .table-row
         .table-cell.table-header = f.label :boat_name, 'Name'
         .table-cell.field = f.text_field :boat_name
@@ -91,7 +108,7 @@ p
     h2 Safety Equipment
     .table
       .table-row
-        .table-cell.table-header Emergency Equipment
+        .table-cell.table-header Select all onboard
         .table-cell.field
           .table
             .table-row
@@ -138,13 +155,10 @@ p
     h2 Radio
     .table
       .table-row
-        .table-cell.table-header EPIRB channels
+        .table-cell.table-header EPIRB Frequencies
         .table-cell.field
           .table
             .table-row
-              .table-cell
-                = f.check_box :epirb_16
-                = f.label :epirb_16, 'Ch 15/16'
               .table-cell
                 = f.check_box :epirb_1215
                 = f.label :epirb_1215, '121.5 MHz'
@@ -152,10 +166,7 @@ p
                 = f.check_box :epirb_406
                 = f.label :epirb_406, '406 MHz'
       .table-row
-        .table-cell.table-header = f.label :radio
-        .table-cell.field = f.text_field :radio
-      .table-row
-        .table-cell.table-header Radio types
+        .table-cell.table-header Radio equipment
         .table-cell.field
           .table
             .table-row
@@ -172,11 +183,14 @@ p
                 = f.check_box :radio_cell_phone
                 = f.label :radio_cell_phone, 'Cell phone'
       .table-row
-        .table-cell.table-header = f.label :channels_monitored
+        .table-cell.table-header = f.label :channels_monitored, 'Channels / frequencies monitored'
         .table-cell.field = f.text_field :channels_monitored
       .table-row
-        .table-cell.table-header = f.label :call_sign
+        .table-cell.table-header = f.label :call_sign, 'Call sign / MMSI'
         .table-cell.field = f.text_field :call_sign
+      .table-row
+        .table-cell.table-header = f.label :radio, 'Radio comments'
+        .table-cell.field = f.text_field :radio
 
     h2 Route Plan
     .table
@@ -249,7 +263,9 @@ p
         .table-cell.field = f.text_area :comments
 
     h2 Persons Onboard
-    p.italic You must report at least one person onboard.
+    p.italic
+      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+      | You must report at least one person onboard.
     #persons-onboard
       = f.nested_fields_for :float_plan_onboards do |ff|
         = render 'person_onboard', ff: ff
