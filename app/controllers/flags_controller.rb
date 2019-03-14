@@ -6,7 +6,9 @@ class FlagsController < ApplicationController
   end
 
   def tridents
-    svg = USPSFlags::Generate.spec(fly: fly, unit: unit, scale: scale)
+    svg = USPSFlags::Generate.spec(
+      fly: fly, unit: unit, scale: scale, scaled_border: params[:border].present?
+    )
 
     respond_to do |format|
       format.svg { render inline: svg }
@@ -16,7 +18,7 @@ class FlagsController < ApplicationController
 private
 
   def clean_params
-    params.permit(:flag_type, :format, :fly, :unit, :scale, :size)
+    params.permit(:flag_type, :format, :fly, :unit, :scale, :size, :border)
   end
 
   def fly
