@@ -53,7 +53,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
 
   config.fuubar_progress_bar_options = {
-    progress_mark: ' ', remainder_mark: "\u{FF65}", title: 'Specs Run',
+    progress_mark: ' ', remainder_mark: "\u{FF65}", title: 'Specs Run', autofinish: true,
     format: "  Elapsed %a (%R/sec) %E | %b\u{15E7}%i | %c/%C (%J%%) %t"
   }
 

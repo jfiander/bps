@@ -8,15 +8,18 @@ RSpec.describe OTWMailer, type: :mailer do
     let(:mail) { OTWMailer.requested(otw) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eql('On-the-Water training requested')
-      expect(mail.to).to eql(['seo@bpsd9.org', 'aseo@bpsd9.org'])
-      expect(mail.from).to eql(['support@bpsd9.org'])
+      expect(mail).to contain_mail_headers(
+        subject: 'On-the-Water training requested',
+        to: ['seo@bpsd9.org', 'aseo@bpsd9.org'],
+        from: ['support@bpsd9.org']
+      )
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to include('This is an automated message that was sent to')
-      expect(mail.body.encoded).to include('New Training Request')
-      expect(mail.body.encoded).to include('Training requested')
+      expect(mail.body.encoded).to contain_and_match(
+        'This is an automated message that was sent to',
+        'New Training Request', 'Training requested'
+      )
     end
   end
 
@@ -36,17 +39,19 @@ RSpec.describe OTWMailer, type: :mailer do
       let(:mail) { OTWMailer.jumpstart(options) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Jump Start training requested')
-        expect(mail.to).to eql(['seo@bpsd9.org', 'aseo@bpsd9.org'])
-        expect(mail.from).to eql(['support@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Jump Start training requested',
+          to: ['seo@bpsd9.org', 'aseo@bpsd9.org'],
+          from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('This is an automated message that was sent to')
-        expect(mail.body.encoded).to include('Jump Start Training Request')
-        expect(mail.body.encoded).to include('Phone')
-        expect(mail.body.encoded).to include('Boat, location, or knowledge')
-        expect(mail.body.encoded).to include('Availability')
+        expect(mail.body.encoded).to contain_and_match(
+          'This is an automated message that was sent to',
+          'Jump Start Training Request',
+          'Phone', 'Boat, location, or knowledge', 'Availability'
+        )
       end
     end
 
@@ -54,17 +59,21 @@ RSpec.describe OTWMailer, type: :mailer do
       let(:mail) { OTWMailer.jumpstart(options.except(:phone, :details)) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Jump Start training requested')
-        expect(mail.to).to eql(['seo@bpsd9.org', 'aseo@bpsd9.org'])
-        expect(mail.from).to eql(['support@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Jump Start training requested',
+          to: ['seo@bpsd9.org', 'aseo@bpsd9.org'],
+          from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('This is an automated message that was sent to')
-        expect(mail.body.encoded).to include('Jump Start Training Request')
+        expect(mail.body.encoded).to contain_and_match(
+          'This is an automated message that was sent to',
+          'Jump Start Training Request',
+          'Availability'
+        )
         expect(mail.body.encoded).not_to include('Phone')
         expect(mail.body.encoded).not_to include('Boat, location, or knowledge')
-        expect(mail.body.encoded).to include('Availability')
       end
     end
   end

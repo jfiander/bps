@@ -12,16 +12,18 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       let(:mail) { MemberApplicationMailer.new_application(single_application) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('New member application')
-        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
-        expect(mail.from).to eql(['support@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'New member application',
+          to: [generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email],
+          from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('This is an automated message that was sent to')
-        expect(mail.body.encoded).to include('Membership Application')
-        expect(mail.body.encoded).to include('ExCom')
-        expect(mail.body.encoded).to include('Primary Applicant')
+        expect(mail.body.encoded).to contain_and_match(
+          'This is an automated message that was sent to',
+          'Membership Application', 'ExCom', 'Primary Applicant'
+        )
         expect(mail.body.encoded).not_to include('Additional Applicant #')
       end
     end
@@ -30,15 +32,16 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       let(:mail) { MemberApplicationMailer.confirm(single_application) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Member application received!')
-        expect(mail.to).to eql([single_application.primary.email])
-        expect(mail.from).to eql(['ao@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Member application received!',
+          to: [single_application.primary.email],
+          from: ['ao@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('You have successfully applied')
+        expect(mail.body.encoded).to contain_and_match('You have successfully applied', 'will review your application')
         expect(mail.body.encoded).not_to include('yourself')
-        expect(mail.body.encoded).to include('will review your application')
       end
     end
 
@@ -46,15 +49,16 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       let(:mail) { MemberApplicationMailer.approved(single_application) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Member application approved!')
-        expect(mail.to).to eql([single_application.primary.email])
-        expect(mail.from).to eql(['ao@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Member application approved!',
+          to: [single_application.primary.email],
+          from: ['ao@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('Welcome Aboard!')
+        expect(mail.body.encoded).to contain_and_match('Welcome Aboard!', 'You are now a member')
         expect(mail.body.encoded).not_to include('are now members')
-        expect(mail.body.encoded).to include('You are now a member')
       end
     end
 
@@ -62,14 +66,15 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       let(:mail) { MemberApplicationMailer.approval_notice(single_application) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Member application approved')
-        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
-        expect(mail.from).to eql(['support@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Member application approved',
+          to: [generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email],
+          from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('Membership Application Approved')
-        expect(mail.body.encoded).to include('Primary Applicant')
+        expect(mail.body.encoded).to contain_and_match('Membership Application Approved', 'Primary Applicant')
         expect(mail.body.encoded).not_to include('Additional Applicant #')
       end
     end
@@ -78,14 +83,15 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       let(:mail) { MemberApplicationMailer.paid(single_application) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Membership application paid')
-        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
-        expect(mail.from).to eql(['support@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Membership application paid',
+          to: [generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email],
+          from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('Membership Application Paid')
-        expect(mail.body.encoded).to include('Primary Applicant')
+        expect(mail.body.encoded).to contain_and_match('Membership Application Paid', 'Primary Applicant')
       end
     end
 
@@ -94,14 +100,15 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       let(:mail) { MemberApplicationMailer.paid_dues(user) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Annual dues paid')
-        expect(mail.to).to eql([generic_seo_and_ao[:ao].user.email])
-        expect(mail.from).to eql(['support@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Annual dues paid',
+          to: [generic_seo_and_ao[:ao].user.email],
+          from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('Annual Dues Paid')
-        expect(mail.body.encoded).to include('Member information')
+        expect(mail.body.encoded).to contain_and_match('Annual Dues Paid', 'Member information')
       end
     end
   end
@@ -111,17 +118,18 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       let(:mail) { MemberApplicationMailer.new_application(family_application) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('New member application')
-        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
-        expect(mail.from).to eql(['support@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'New member application',
+          to: [generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email],
+          from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('This is an automated message that was sent to')
-        expect(mail.body.encoded).to include('Membership Application')
-        expect(mail.body.encoded).to include('ExCom')
-        expect(mail.body.encoded).to include('Primary Applicant')
-        expect(mail.body.encoded).to include('Additional Applicant #')
+        expect(mail.body.encoded).to contain_and_match(
+          'This is an automated message that was sent to', 'Membership Application', 'ExCom',
+          'Primary Applicant', 'Additional Applicant #'
+        )
       end
     end
 
@@ -129,15 +137,17 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       let(:mail) { MemberApplicationMailer.confirm(family_application) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Member application received!')
-        expect(mail.to).to eql([family_application.primary.email])
-        expect(mail.from).to eql(['ao@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Member application received!',
+          to: [family_application.primary.email],
+          from: ['ao@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('You have successfully applied')
-        expect(mail.body.encoded).to include('yourself')
-        expect(mail.body.encoded).to include('will review your application')
+        expect(mail.body.encoded).to contain_and_match(
+          'You have successfully applied', 'yourself', 'will review your application'
+        )
       end
     end
 
@@ -145,14 +155,15 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       let(:mail) { MemberApplicationMailer.approved(family_application) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Member application approved!')
-        expect(mail.to).to eql([family_application.primary.email])
-        expect(mail.from).to eql(['ao@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Member application approved!',
+          to: [family_application.primary.email],
+          from: ['ao@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('Welcome Aboard!')
-        expect(mail.body.encoded).to include('are now members')
+        expect(mail.body.encoded).to contain_and_match('Welcome Aboard!', 'are now members')
         expect(mail.body.encoded).not_to include('You are now a member')
       end
     end
@@ -161,15 +172,17 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
       let(:mail) { MemberApplicationMailer.approval_notice(family_application) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Member application approved')
-        expect(mail.to).to eql([generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email])
-        expect(mail.from).to eql(['support@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Member application approved',
+          to: [generic_seo_and_ao[:seo].user.email, generic_seo_and_ao[:ao].user.email],
+          from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('Membership Application Approved')
-        expect(mail.body.encoded).to include('Primary Applicant')
-        expect(mail.body.encoded).to include('Additional Applicant #')
+        expect(mail.body.encoded).to contain_and_match(
+          'Membership Application Approved', 'Primary Applicant', 'Additional Applicant #'
+        )
       end
     end
   end

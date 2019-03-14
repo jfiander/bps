@@ -2,6 +2,10 @@
 
 require 'rails_helper'
 
+def user_identifier(user)
+  "#{user.full_name} \\(#{user.certificate}, ##{user.id}\\)"
+end
+
 RSpec.describe NotificationsMailer, type: :mailer do
   describe 'bridge office updated' do
     before(:each) do
@@ -12,25 +16,18 @@ RSpec.describe NotificationsMailer, type: :mailer do
     end
 
     it 'renders the headers' do
-      expect(@mail.subject).to eql('Bridge Office Updated')
-      expect(@mail.to).to eql(['dev@bpsd9.org'])
-      expect(@mail.from).to eql(['support@bpsd9.org'])
+      expect(@mail).to contain_mail_headers(
+        subject: 'Bridge Office Updated', to: ['dev@bpsd9.org'], from: ['support@bpsd9.org']
+      )
     end
 
     it 'renders the body' do
-      expect(@mail.body.encoded).to include('The following bridge office has been updated.')
-      expect(@mail.body.encoded).to include('Office: Administrative Officer')
-      expect(@mail.body.encoded).to include(
-        <<~TEXT
-          Previous holder:
-          #{@previous.full_name} (#{@previous.certificate}, ##{@previous.id})
-
-          New holder:
-          #{generic_seo_and_ao[:ao].user.full_name} (#{generic_seo_and_ao[:ao].user.certificate}, ##{generic_seo_and_ao[:ao].user.id})
-
-          Updated by:
-          #{@by.full_name} (#{@by.certificate}, ##{@by.id})
-        TEXT
+      expect(@mail.body.encoded).to contain_and_match(
+        'The following bridge office has been updated.',
+        'Office: Administrative Officer',
+        /Previous holder:=0D\n#{user_identifier(@previous)}/,
+        /New holder:=0D\n#{user_identifier(generic_seo_and_ao[:ao].user)}/,
+        /Updated by:=0D\n#{user_identifier(@by)}/
       )
     end
   end
@@ -43,16 +40,18 @@ RSpec.describe NotificationsMailer, type: :mailer do
 
     context 'no monitors' do
       it 'renders the headers' do
-        expect(@mail.subject).to eql('Float Plan Submitted')
-        expect(@mail.to).to eql(['dev@bpsd9.org'])
-        expect(@mail.from).to eql(['support@bpsd9.org'])
+        expect(@mail).to contain_mail_headers(
+          subject: 'Float Plan Submitted', to: ['dev@bpsd9.org'], from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(@mail.body.encoded).to include('The following float plan has been submitted.')
-        expect(@mail.body.encoded).to include('follow up on this plan')
-        expect(@mail.body.encoded).to include('Contact')
-        expect(@mail.body.encoded).to include('Travel Times')
+        expect(@mail.body.encoded).to contain_and_match(
+          'The following float plan has been submitted.',
+          'follow up on this plan',
+          'Contact',
+          'Travel Times'
+        )
       end
     end
 

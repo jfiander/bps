@@ -91,6 +91,45 @@ def assign_bridge_office(office, user)
   bridge_office.update(user: user)
 end
 
+RSpec::Matchers.define :contain_and_match do |*expected|
+  match do |actual|
+    expected.all? do |pattern|
+      if pattern.is_a?(Regexp)
+        actual.match?(pattern)
+      else
+        actual.include?(pattern)
+      end
+    end
+  end
+
+  failure_message do |actual|
+    "expected that #{actual} would contain or match #{expected}"
+  end
+
+  failure_message_when_negated do |actual|
+    "expected that #{actual} would not contain or match #{expected}"
+  end
+end
+
+RSpec::Matchers.define :contain_mail_headers do |**expected|
+  match do |actual|
+    expected.all? do |key, value|
+      actual_header = actual.send(key)
+
+      if actual_header.is_a?(Array)
+        actual_header.sort == value.sort
+      else
+        actual_header == value
+      end
+    end
+  end
+
+  failure_message do |actual|
+    hash = expected.keys.each_with_object({}) { |k, h| h[k] = actual.send(k) }
+    "expected that #{hash} would match #{expected}"
+  end
+end
+
 def run_brakeman
   example_group = RSpec.describe('Brakeman Issues')
   puts "\n\nBrakeman report available here: ./tmp/brakeman.html"

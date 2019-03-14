@@ -38,15 +38,18 @@ RSpec.describe ReceiptMailer, type: :mailer do
         let(:mail) { ReceiptMailer.receipt(payment(reg), ensure_transaction(reg)) }
 
         it 'renders the headers' do
-          expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
-          expect(mail.to).to eql([$receipt_email])
-          expect(mail.from).to eql(['receipts@bpsd9.org'])
+          expect(mail).to contain_mail_headers(
+            subject: 'Your receipt from Birmingham Power Squadron',
+            to: [$receipt_email],
+            from: ['receipts@bpsd9.org']
+          )
         end
 
         it 'renders the body' do
-          expect(mail.body.encoded).to include('Transaction Receipt')
-          expect(mail.body.encoded).to include('Transaction information')
-          expect(mail.body.encoded).to match(/(ending in \*\*)|(Paid via PayPal)/)
+          expect(mail.body.encoded).to contain_and_match(
+            'Transaction Receipt', 'Transaction information',
+            /(ending in \*\*)|(Paid via PayPal)/
+          )
         end
       end
     end
@@ -62,15 +65,21 @@ RSpec.describe ReceiptMailer, type: :mailer do
         let(:mail) { ReceiptMailer.receipt(payment(app), ensure_transaction(app)) }
 
         it 'renders the headers' do
+          expect(mail).to contain_mail_headers(
+            subject: 'Your receipt from Birmingham Power Squadron',
+            to: [$receipt_email],
+            from: ['receipts@bpsd9.org']
+          )
           expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
           expect(mail.to).to eql([$receipt_email])
           expect(mail.from).to eql(['receipts@bpsd9.org'])
         end
 
         it 'renders the body' do
-          expect(mail.body.encoded).to include('Transaction Receipt')
-          expect(mail.body.encoded).to include('Transaction information')
-          expect(mail.body.encoded).to match(/(ending in \*\*)|(Paid via PayPal)/)
+          expect(mail.body.encoded).to contain_and_match(
+            'Transaction Receipt', 'Transaction information',
+            /(ending in \*\*)|(Paid via PayPal)/
+          )
         end
       end
     end
@@ -86,15 +95,21 @@ RSpec.describe ReceiptMailer, type: :mailer do
         let(:mail) { ReceiptMailer.receipt(payment(user), ensure_transaction(user)) }
 
         it 'renders the headers' do
+          expect(mail).to contain_mail_headers(
+            subject: 'Your receipt from Birmingham Power Squadron',
+            to: [$receipt_email],
+            from: ['receipts@bpsd9.org']
+          )
           expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
           expect(mail.to).to eql([$receipt_email])
           expect(mail.from).to eql(['receipts@bpsd9.org'])
         end
 
         it 'renders the body' do
-          expect(mail.body.encoded).to include('Transaction Receipt')
-          expect(mail.body.encoded).to include('Transaction information')
-          expect(mail.body.encoded).to match(/(ending in \*\*)|(Paid via PayPal)/)
+          expect(mail.body.encoded).to contain_and_match(
+            'Transaction Receipt', 'Transaction information',
+            /(ending in \*\*)|(Paid via PayPal)/
+          )
         end
       end
     end
@@ -105,15 +120,21 @@ RSpec.describe ReceiptMailer, type: :mailer do
       let(:mail) { ReceiptMailer.paid(payment(reg)) }
 
       it 'renders the headers' do
+        expect(mail).to contain_mail_headers(
+          subject: 'Registration paid',
+          to: ['seo@bpsd9.org', 'aseo@bpsd9.org', 'treasurer@bpsd9.org'],
+          from: ['support@bpsd9.org']
+        )
         expect(mail.subject).to eql('Registration paid')
         expect(mail.to).to eql(['seo@bpsd9.org', 'aseo@bpsd9.org', 'treasurer@bpsd9.org'])
         expect(mail.from).to eql(['support@bpsd9.org'])
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('This is an automated message that was sent to')
-        expect(mail.body.encoded).to include('Paid Registration')
-        expect(mail.body.encoded).to include('Amount paid: $')
+        expect(mail.body.encoded).to contain_and_match(
+          'This is an automated message that was sent to',
+          'Paid Registration', 'Amount paid: $'
+        )
       end
     end
 
@@ -121,15 +142,18 @@ RSpec.describe ReceiptMailer, type: :mailer do
       let(:mail) { ReceiptMailer.paid(payment(app)) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Membership application paid')
-        expect(mail.to.sort).to eql([generic_seo_and_ao[:ao].user.email, generic_seo_and_ao[:seo].user.email].sort)
-        expect(mail.from).to eql(['support@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Membership application paid',
+          to: [generic_seo_and_ao[:ao].user.email, generic_seo_and_ao[:seo].user.email].sort,
+          from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('This is an automated message that was sent to')
-        expect(mail.body.encoded).to include('Membership Application Paid')
-        expect(mail.body.encoded).to include('Amount paid: $')
+        expect(mail.body.encoded).to contain_and_match(
+          'This is an automated message that was sent to',
+          'Membership Application Paid', 'Amount paid: $'
+        )
       end
     end
 
@@ -137,15 +161,18 @@ RSpec.describe ReceiptMailer, type: :mailer do
       let(:mail) { ReceiptMailer.paid(payment(user)) }
 
       it 'renders the headers' do
-        expect(mail.subject).to eql('Annual dues paid')
-        expect(mail.to).to eql([generic_seo_and_ao[:ao].user.email])
-        expect(mail.from).to eql(['support@bpsd9.org'])
+        expect(mail).to contain_mail_headers(
+          subject: 'Annual dues paid',
+          to: [generic_seo_and_ao[:ao].user.email],
+          from: ['support@bpsd9.org']
+        )
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to include('This is an automated message that was sent to')
-        expect(mail.body.encoded).to include('Annual Dues Paid')
-        expect(mail.body.encoded).to include('Amount paid: $')
+        expect(mail.body.encoded).to contain_and_match(
+          'This is an automated message that was sent to',
+          'Annual Dues Paid', 'Amount paid: $'
+        )
       end
     end
   end
