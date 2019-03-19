@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_07_175321) do
+ActiveRecord::Schema.define(version: 2019_03_18_175211) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -94,6 +94,14 @@ ActiveRecord::Schema.define(version: 2019_03_07_175321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+  end
+
+  create_table "event_promo_codes", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "promo_code_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "event_types", force: :cascade do |t|
@@ -358,6 +366,7 @@ ActiveRecord::Schema.define(version: 2019_03_07_175321) do
     t.datetime "receipt_updated_at"
     t.string "cost_type"
     t.boolean "refunded"
+    t.integer "promo_code_id"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -369,6 +378,25 @@ ActiveRecord::Schema.define(version: 2019_03_07_175321) do
     t.integer "photo_file_file_size"
     t.datetime "photo_file_updated_at"
     t.datetime "deleted_at"
+  end
+
+  create_table "promo_codes", force: :cascade do |t|
+    t.string "code"
+    t.datetime "valid_at"
+    t.datetime "expires_at"
+    t.integer "discount_amount"
+    t.string "discount_type"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "registration_promo_codes", force: :cascade do |t|
+    t.integer "registration_id"
+    t.integer "promo_code_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "registrations", force: :cascade do |t|
