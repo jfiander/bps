@@ -69,7 +69,7 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'should have the correct transaction amount' do
-      expect(@registration.payment.transaction_amount).to eql("#{@registration.payment_amount}.00")
+      expect(@registration.payment.transaction_amount).to eql("$#{@registration.payment_amount}.00")
     end
 
     it 'should correctly update a paid payment' do
@@ -105,7 +105,7 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'should have the correct transaction amount' do
-      expect(@application.payment.transaction_amount).to eql("#{@application.payment_amount}.00")
+      expect(@application.payment.transaction_amount).to eql("$#{@application.payment_amount}.00")
     end
 
     it 'should correctly update a paid payment' do
@@ -122,7 +122,7 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'should have the correct transaction amount' do
-      expect(@payment.transaction_amount).to eql("#{@user.payment_amount}.00")
+      expect(@payment.transaction_amount).to eql("$#{@user.payment_amount}.00")
     end
 
     it 'should correctly update a paid payment' do
@@ -161,6 +161,51 @@ RSpec.describe Payment, type: :model do
       payment = FactoryBot.create(:payment, parent: reg)
 
       expect(payment.cost?).to be(true)
+    end
+  end
+
+  describe 'promo codes' do
+    describe 'attach' do
+      before(:each) do
+        event_type = FactoryBot.create(:event_type)
+        event = FactoryBot.create(:event, event_type: event_type)
+        reg, _ = register(event, email: 'test@example.com')
+        @payment = reg.payment
+      end
+
+      it 'should not have a promo code attached on create' do
+        expect(@payment.promo_code).to be_blank
+      end
+
+      it 'should not attach a promo code if not usable' do
+        FactoryBot.create(:promo_code, code: 'prior_code')
+        @payment.attach_promo_code('prior_code')
+
+        expect(@payment.promo_code).to be_blank
+      end
+
+      it 'should correctly attach a promo code when a match exists' do
+        FactoryBot.create(:promo_code, code: 'prior_code', valid_at: Time.now - 1.hour, discount_type: 'member')
+        @payment.attach_promo_code('prior_code')
+
+        expect(@payment.promo_code.code).to eql('prior_code')
+      end
+
+      it 'should correctly attach a promo code when a match does not exist' do
+        @payment.attach_promo_code('new_code', valid_at: Time.now - 1.hour, discount_type: 'member')
+
+        expect(@payment.promo_code.code).to eql('new_code')
+      end
+    end
+
+    it 'should use the discounted transaction amount' do
+      event_type = FactoryBot.create(:event_type)
+      event = FactoryBot.create(:event, event_type: event_type, cost: 20)
+      reg, _ = register(event, email: 'test@example.com')
+      payment = reg.payment
+      payment.attach_promo_code('new_code', valid_at: Time.now - 1.hour, discount_type: 'percent', discount_amount: 5)
+
+      expect(payment.transaction_amount).to eql('$19.00')
     end
   end
 end

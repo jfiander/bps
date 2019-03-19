@@ -447,17 +447,46 @@ RSpec.describe Event, type: :model do
     end
   end
 
-  describe 'display_title' do
+  describe 'titles' do
+    before(:each) do
+      @event_type = FactoryBot.create(:event_type)
+    end
+
     it 'should use the event_type display_title without a summary' do
-      event_type = FactoryBot.create(:event_type)
-      event = FactoryBot.create(:event, event_type: event_type)
-      expect(event.display_title).to eql(event_type.display_title)
+      event = FactoryBot.create(:event, event_type: @event_type)
+      expect(event.display_title).to eql(@event_type.display_title)
     end
 
     it 'should use the summary when present' do
-      event_type = FactoryBot.create(:event_type)
-      event = FactoryBot.create(:event, event_type: event_type, summary: 'Name')
+      event = FactoryBot.create(:event, event_type: @event_type, summary: 'Name')
       expect(event.display_title).to eql('Name')
+    end
+
+    it 'should generate the correct date_title' do
+      event = FactoryBot.create(:event, event_type: @event_type, start_at: '2018-04-07')
+      expect(event.date_title).to eql("America's Boating Course – 4/7/2018")
+    end
+  end
+
+  describe 'attach promo code' do
+    before(:each) do
+      @event_type = FactoryBot.create(:event_type)
+      @event = FactoryBot.create(:event, event_type: @event_type)
+    end
+
+    it 'should not have a promo code attached on create' do
+      expect(@event.promo_codes).to be_blank
+    end
+
+    it 'should correctly attach a promo code when a match exists' do
+      FactoryBot.create(:promo_code, code: 'prior_code')
+      @event.attach_promo_code('prior_code')
+      expect(@event.promo_codes.first.code).to eql('prior_code')
+    end
+
+    it 'should correctly attach a promo code when a match does not exist' do
+      @event.attach_promo_code('new_code')
+      expect(@event.promo_codes.first.code).to eql('new_code')
     end
   end
 end
