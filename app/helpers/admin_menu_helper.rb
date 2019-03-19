@@ -26,7 +26,7 @@ module AdminMenuHelper
   end
 
   def admin_current?
-    admin_markdown? || admin_events? || admin_otw? || admin_event_attachments?
+    admin_markdown? || admin_events? || admin_otw? || admin_event_attachments? || admin_promos?
   end
 
   def show_link?(*roles, strict: false, **options)
@@ -113,5 +113,9 @@ private
 
   def admin_event_attachments?
     show_link?(%i[event seminar course], controller: %w[event_types locations])
+  end
+
+  def admin_promos?
+    show_link?(:admin, strict: true, controller: 'promo_codes')
   end
 end

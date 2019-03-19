@@ -5,17 +5,13 @@ class BraintreeController < ApplicationController
 
   before_action :redirect_to_root, except: %i[refunds terms], unless: :braintree_enabled?
 
-  before_action :load_payment, only: %i[index ask_to_pay checkout]
+  before_action :load_payment, only: %i[index set_promo ask_to_pay checkout]
   before_action :prepare_receipt_email, only: %i[checkout]
 
-  before_action :transaction_details, only: %i[index ask_to_pay done]
-  before_action :generate_client_token, only: %i[index ask_to_pay]
-  before_action :block_duplicate_payments, if: :already_paid?, only: %i[
-    index ask_to_pay checkout
-  ]
-  before_action :require_user, if: :has_user?, only: %i[
-    index ask_to_pay checkout
-  ]
+  before_action :transaction_details, only: %i[index set_promo ask_to_pay done]
+  before_action :generate_client_token, only: %i[index set_promo ask_to_pay]
+  before_action :block_duplicate_payments, if: :already_paid?, only: %i[index set_promo ask_to_pay checkout]
+  before_action :require_user, if: :has_user?, only: %i[index set_promo ask_to_pay checkout]
 
   skip_before_action :verify_authenticity_token, only: [:checkout]
 
@@ -41,6 +37,17 @@ class BraintreeController < ApplicationController
     generic_error_message(e)
   end
 
+  def set_promo
+    if promo_params[:code].present?
+      @purchase_info[:promo_code] = promo_params[:code]
+      @payment.attach_promo_code(@purchase_info[:promo_code])
+      @transaction_amount = @payment.transaction_amount
+      @payment.parent.update(override_comment: "Promo Code: #{@purchase_info[:promo_code]}")
+    end
+
+    render :index
+  end
+
   def done
     #
   end
@@ -57,6 +64,10 @@ private
 
   def generate_client_token
     @client_token = Payment.client_token(user_id: current_user&.id)
+  end
+
+  def promo_params
+    params.permit(:code)
   end
 
   def prepare_receipt_email

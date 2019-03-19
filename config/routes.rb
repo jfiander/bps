@@ -74,14 +74,19 @@ Rails.application.routes.draw do
 
   # Admin utilities
   namespace :admin do
-    get   '/s3',                        to: 'links#s3'
-    post  '/s3',                        to: 'links#s3'
-    get   '/versions/:model/:id',       to: 'versions#show',   as: 'show_versions'
-    get   '/versions/:model/:id/:a/:b', to: 'versions#diff',   as: 'diff_versions'
-    post  '/versions/:model/:id/:a/:b', to: 'versions#diff'
-    patch '/versions/:model/:id/:a',    to: 'versions#revert', as: 'revert_version'
-    get   '/versions(/:model)',         to: 'versions#index',  as: 'versions'
-    get   '/logo',                      to: 'logos#logo'
+    get    '/s3',                        to: 'links#s3'
+    post   '/s3',                        to: 'links#s3'
+    get    '/versions/:model/:id',       to: 'versions#show',   as: 'show_versions'
+    get    '/versions/:model/:id/:a/:b', to: 'versions#diff',   as: 'diff_versions'
+    post   '/versions/:model/:id/:a/:b', to: 'versions#diff'
+    patch  '/versions/:model/:id/:a',    to: 'versions#revert', as: 'revert_version'
+    get    '/versions(/:model)',         to: 'versions#index',  as: 'versions'
+    get    '/logo',                      to: 'logos#logo'
+    get    '/promo_codes',               to: 'promo_codes#list'
+    get    '/promo_codes/new',           to: 'promo_codes#new',      as: 'new_promo_code'
+    put    '/promo_codes/new',           to: 'promo_codes#create',   as: 'create_promo_code'
+    patch  '/promo_codes/:id/activate',  to: 'promo_codes#activate', as: 'activate_promo_code'
+    delete '/promo_codes/:id/expire',    to: 'promo_codes#expire',   as: 'expire_promo_code'
   end
 
   # Newsletter
@@ -232,6 +237,7 @@ Rails.application.routes.draw do
 
   # Payments
   get     '/pay/:token',            to: 'braintree#index',      as: 'pay'
+  get     '/pay/:token(/:code)',    to: 'braintree#set_promo',  as: 'set_promo_code'
   get     '/please_pay(/:token)',   to: 'braintree#ask_to_pay', as: 'ask_to_pay'
   post    '/checkout',              to: 'braintree#checkout'
   get     '/paid(/:token)',         to: 'braintree#done',       as: 'transaction_complete'

@@ -20,7 +20,7 @@ private
   end
 
   def clean_params
-    params.permit(:payment_method_nonce, :token, :email)
+    params.permit(:payment_method_nonce, :token, :email, :code)
   end
 
   def load_payment
