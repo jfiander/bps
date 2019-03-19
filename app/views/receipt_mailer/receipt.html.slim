@@ -32,6 +32,10 @@ p
   | Total charged: 
   b = number_to_currency(@transaction[:amount])
   br
+  - if @transaction[:promo_code].present?
+    | Promo code: 
+    b = @transaction[:promo_code]
+    br
   - if @transaction[:card_type].present?
     - if @transaction[:image].present?
       = image_tag @transaction[:image], alt: @transaction[:card_type], size: '32x20'

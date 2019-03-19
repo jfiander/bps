@@ -9,10 +9,18 @@ class ReceiptMailerPreview < ApplicationMailerPreview
     ReceiptMailer.receipt(payment, manual_options)
   end
 
+  def receipt_with_promo_code
+    ReceiptMailer.receipt(payment_with_promo_code, transaction)
+  end
+
 private
 
   def payment
     Payment.new
+  end
+
+  def payment_with_promo_code
+    Payment.new(promo_code: PromoCode.new(code: 'testing123', valid_at: Time.now - 1.hour))
   end
 
   def transaction

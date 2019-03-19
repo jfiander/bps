@@ -5,7 +5,7 @@ class ReceiptMailer < ApplicationMailer
   default subject: 'Your receipt from Birmingham Power Squadron'
 
   def receipt(payment, transaction)
-    @transaction = transaction_details(transaction)
+    @transaction = transaction_details(transaction, payment&.promo_code&.code)
 
     @purchase_info = purchase_info(payment)
     @purchase_model = payment.parent_type
@@ -65,17 +65,23 @@ private
     }
   end
 
-  def transaction_details(transaction)
+  def transaction_details(transaction, promo_code)
     return transaction if transaction.is_a?(Hash)
 
     @transaction = {
       id: transaction.id,
       date: transaction.created_at.strftime('%Y-%m-%d'),
       amount: transaction.amount,
+      email: transaction.customer_details.email,
+      promo_code: promo_code
+    }.merge(card_details(transaction))
+  end
+
+  def card_details(transaction)
+    {
       card_type: transaction.credit_card_details.card_type,
       image: transaction.credit_card_details.image_url,
-      last_4: transaction.credit_card_details.last_4,
-      email: transaction.customer_details.email
+      last_4: transaction.credit_card_details.last_4
     }
   end
 end

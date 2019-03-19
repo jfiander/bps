@@ -15,6 +15,9 @@ Transaction information:
   Transaction # <%= @transaction[:id] %>
   Date: <%= @transaction[:date] %>
   Total charged: <%= number_to_currency(@transaction[:amount]) %>
+  <%- if @transaction[:promo_code].present? %>
+  Promo code: <%= @transaction[:promo_code] %>
+  <%- end %>
   <%- if @transaction[:card_type].present? %>
   <%= @transaction[:card_type] %> ending in **<%= @transaction[:last_4] %>
   <%- else %>
