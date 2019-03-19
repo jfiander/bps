@@ -6,3 +6,4 @@
 = link 'Event Types',                      path: event_types_path,                               fa: { name: 'list',            options: { style: :regular, fa: :fw } } if show_link?(:admin, strict: true, controller: %w[events courses seminars event_types], not_action: 'list')
 = link 'Add Event Type',                   path: new_event_type_path,                            fa: { name: 'plus-hexagon',    options: { style: :regular, fa: :fw } } if show_link?(:admin, strict: true, controller: 'event_types')
 = link 'Add Training',                     path: new_otw_path,                                   fa: { name: 'plus-hexagon',    options: { style: :regular, fa: :fw } } if show_link?(:education, controller: 'otw_trainings')
+= link 'Add Promo Code',                   path: admin_new_promo_code_path,                      fa: { name: 'hands-usd',    options: { style: :regular, fa: :fw } } if show_link?(:admin, strict: true, controller: 'promo_codes')

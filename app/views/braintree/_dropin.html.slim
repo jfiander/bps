@@ -1,9 +1,7 @@
 #payment-box
   #payment-description
     | You are about to pay 
-    .amount
-      | $
-      = @transaction_amount
+    .amount = @transaction_amount
     .desc for
     .subject
       = @purchase_info[:name]
@@ -28,6 +26,7 @@
                 li = "#{reg.first_name} #{reg.last_name}"
               - else
                 li = reg&.user&.full_name || reg&.email
+  = render 'braintree/promo_code'
   = form_tag checkout_path, id: 'checkout', method: :post
     #dropin-container
     = label_tag :email, 'Send receipt to:'
@@ -41,7 +40,7 @@
       = mail_to('payments@bpsd9.org', 'contact us', target: :_blank)
       |  if the above price is not correct.
   button#pay-button
-    | Pay $
+    | Pay 
     = @transaction_amount
   .information Don't worry if you click twice – only the first click will be processed.
   ul.policies

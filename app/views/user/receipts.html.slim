@@ -24,15 +24,17 @@ h1 = admin_header('Payments & Receipts')
       - payment_class = 'gray' unless payment.paid?
       - payment_class = 'red' if payment.refunded
       .table-cell class=(payment_class) title=('Refunded' if payment.refunded)
-        = FA::Icon.p('dollar-sign', style: :regular, css: 'float-left')
-        .float-right = payment.transaction_amount
+        = payment.transaction_amount
+        - if payment.promo_code.present?
+          br
+          small.green = payment.promo_code.code
       .table-cell.receipts-actions
         - if payment.paid
           - if payment.transaction_id == 'in-person'
             = FA::Icon.p('money-check-alt', style: :regular, css: 'admin', title: 'Paid In-Person')
           - else
             = FA::Icon.p('credit-card', style: :regular, css: 'birmingham-blue', title: 'Paid Online')
-          = link_to(refunded_path(payment.token), method: :patch, class: 'red', data: { confirm: 'Are you sure you want to mark this payment as refunded?' }) { FA::Icon.p('undo', style: :regular, title: 'Refunded') } if payment.paid && !payment.refunded
+          = link_to(refunded_path(payment.token), method: :patch, class: 'red', data: { confirm: 'Are you sure you want to mark this payment as refunded?' }) { FA::Icon.p('undo', style: :regular, title: 'Mark as refunded') } if payment.paid && !payment.refunded
       .table-cell.receipts-actions
         - if payment.paid
           = link_to(receipt_path(payment.token), class: 'blue') do
