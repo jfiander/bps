@@ -36,4 +36,8 @@
       });
     });
   });
+
+  $(document).ready(function() {
+    $('#promo-code').click(() => window.location = `/pay/${$('#token').val()}/${$('#code').val()}`);
+  });
 </script>
