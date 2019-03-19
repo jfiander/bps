@@ -92,10 +92,15 @@ private
       type: :info, title: 'Payment Received',
       fallback: 'A payment was successfully completed.',
       fields: {
-        'Amount' => "$#{payment.transaction_amount}",
+        'Amount' => payment.transaction_amount,
         'Payment Token' => payment.token
-      }
+      }.merge(promo_field(payment))
     ).notify!
+  end
+
+  def promo_field(payment)
+    promo = payment&.promo_code&.code
+    promo.present? ? { 'Promo code' => promo } : {}
   end
 
   def process_success
