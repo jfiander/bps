@@ -39,14 +39,21 @@ private
     {
       name: parent.event.display_title,
       type: type,
-      price_comment: parent.event.location.price_comment
-    }.merge(registration_times)
+      price_comment: parent.event&.location&.price_comment
+    }.merge(registration_times).merge(promo_info)
   end
 
   def registration_times
     {
       date: parent.event.start_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT),
       time: parent.event.start_at.strftime(ApplicationController::PUBLIC_TIME_FORMAT)
+    }
+  end
+
+  def promo_info
+    {
+      promo_code: parent.payment&.promo_code&.code,
+      codes_available: parent.event&.promo_codes&.any?
     }
   end
 

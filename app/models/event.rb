@@ -12,6 +12,8 @@ class Event < ApplicationRecord
   has_many   :course_includes, foreign_key: :course_id, inverse_of: :course
   belongs_to :prereq, class_name: 'EventType', optional: true
   belongs_to :location, optional: true
+  has_many :event_promo_codes
+  has_many :promo_codes, through: :event_promo_codes
 
   has_many :event_instructors
   has_many :instructors, through: :event_instructors, source: :user
@@ -113,6 +115,20 @@ class Event < ApplicationRecord
 
     event_type_cache ||= event_type
     event_type_cache.display_title
+  end
+
+  def date_title(event_type_cache = nil)
+    "#{display_title(event_type_cache)} – #{start_at.strftime(ApplicationController::SIMPLE_DATE_FORMAT)}"
+  end
+
+  def attach_promo_code(code, **args)
+    promo_code = PromoCode.find_or_create_by(code: code, **args)
+
+    unless (epc = EventPromoCode.find_by(event: self, promo_code: promo_code))
+      epc = EventPromoCode.create(event: self, promo_code: promo_code)
+    end
+
+    epc
   end
 
 private

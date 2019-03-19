@@ -4,9 +4,12 @@
 class Payment < ApplicationRecord
   include Concerns::Payment::ModelConfigs
   include Concerns::Payment::BraintreeMethods
+  include Concerns::Payment::PromoCodes
+  include ActionView::Helpers::NumberHelper
 
   belongs_to :parent, polymorphic: true
   has_secure_token
+  belongs_to :promo_code, optional: true
 
   has_attached_file(:receipt, paperclip_defaults(:files).merge(path: 'receipts/:id.pdf'))
 
@@ -28,7 +31,7 @@ class Payment < ApplicationRecord
   end
 
   def amount
-    parent&.payment_amount
+    promo_code&.usable? ? discount : parent&.payment_amount
   end
 
   def cost?
@@ -36,7 +39,7 @@ class Payment < ApplicationRecord
   end
 
   def transaction_amount
-    amount.is_a?(Integer) ? "#{amount}.00" : amount
+    number_to_currency(amount)
   end
 
   def discounted_amount
@@ -47,8 +50,9 @@ class Payment < ApplicationRecord
     paid.present?
   end
 
-  def paid!(transaction_id)
-    update(paid: true, transaction_id: transaction_id, cost_type: set_cost_type)
+  def paid!(transaction_id, promo_code: nil)
+    update!(paid: true, transaction_id: transaction_id, cost_type: set_cost_type)
+    update!(promo_code_id: PromoCode.find_by(code: promo_code)&.id) if promo_code.present?
     receipt!
 
     # Post-payment hooks
