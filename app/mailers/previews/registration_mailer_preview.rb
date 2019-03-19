@@ -94,8 +94,7 @@ private
   def new_registration(event:, user: nil, email: nil, paid: false)
     reg = Registration.new(event: event)
     reg.user_registrations << UserRegistration.new(registration: reg, user: user, email: email, primary: true)
-    reg.payment = Payment.new
-    reg.payment.update(paid: true) if paid
+    reg.payment = Payment.new(token: SecureRandom.base58(24), paid: paid)
     reg
   end
 
