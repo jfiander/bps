@@ -1,0 +1,53 @@
+div#modal {
+  display: none;
+  background-color: rgba(50, 50, 50, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+
+  div#modal-box {
+    @include shadow-box;
+    @include border-radius;
+    display: none;
+    position: relative;
+    text-align: center;
+    margin: 5% auto;
+    min-width: 50%;
+    width: 50%;
+    max-width: 90%;
+    min-height: 40%;
+    max-height: 90%;
+    background-color: $background-blue;
+    border: thin solid darken($background-blue, 10%);
+
+    div#modal-header {
+      @include border-radius(0.5em 0.5em 0 0);
+      margin-top: 0;
+      padding: 0.5em 0.1em;
+      font-size: 1.75em;
+      font-weight: bold;
+      background-color: darken($background-blue, 8%);
+      border-bottom: thin solid darken($background-blue, 10%);
+    }
+
+    div#modal-content {
+      margin-bottom: 4em;
+    }
+
+    div#modal-footer {
+      @include border-radius(0 0 0.5em 0.5em);
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      margin-top: 0.5em;
+      padding: 1em 0;
+      color: $old-glory-red;
+      font-style: italic;
+      background-color: darken($background-blue, 8%);
+      border-top: thin solid darken($background-blue, 10%);
+    }
+  }
+}
