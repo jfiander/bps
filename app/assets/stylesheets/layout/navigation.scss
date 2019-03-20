@@ -301,6 +301,7 @@ div#show-sidenav {
   font-size: larger;
   font-weight: bold;
   vertical-align: middle;
+  border-bottom: thin solid $old-glory-blue-faded;
 }
 
 div#sidenav {
@@ -312,6 +313,8 @@ div#sidenav {
   left: 0;
   background-color: $background-blue;
   overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   transition: 0.5s;
   border-right: thin solid $old-glory-blue-faded;
   text-align: center;
@@ -330,6 +333,7 @@ div#sidenav {
 
   a li {
     @include blue-button(0.5em);
+    @include shadow-box(0.4);
     width: 75%;
     height: 1.5em;
     line-height: 1.5em;
