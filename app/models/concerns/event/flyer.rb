@@ -17,7 +17,8 @@ private
 
   def get_book_cover(type, event_types = nil)
     filename = cover_file_name(event_types)
-    Event.buckets[:static].link("book_covers/#{type}/#{filename}.jpg")
+    path = "book_covers/#{type}/#{filename}.jpg"
+    Event.buckets[:static].link(path) if Event.buckets[:static].has?(path)
   end
 
   def cover_file_name(event_types = nil)
