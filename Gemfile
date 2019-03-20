@@ -27,10 +27,10 @@ gem 'paranoia',            '~> 2.4.1'
 gem 'sanitize_email',      '~> 1.2'
 
 # App Functionality
-gem 'aws-sdk',             '~> 2.11.89'
+gem 'aws-sdk',             '~> 2.11'
 gem 'aws-sdk-rails',       '~> 1.0.1'
-gem 'braintree',           '~> 2.83.0'
-gem 'devise',              '~> 4.4.3'
+gem 'braintree',           '~> 2.83'
+gem 'devise',              '~> 4.4'
 gem 'devise_invitable',    '~> 1.7'
 gem 'exp_retry',           '~> 0.0.8'
 gem 'google-api-client',   '~> 0.23.4'
