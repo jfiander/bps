@@ -21,3 +21,10 @@ $(document).ready ->
     $('body').removeClass 'no-scroll'
     return
   return
+
+$(document).ready ->
+  $('#modal').click ->
+    closeNav()
+    $('#modal').fadeOut 'fast'
+    $('body').removeClass 'no-scroll'
+    return
