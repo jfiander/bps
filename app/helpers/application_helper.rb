@@ -49,7 +49,7 @@ module ApplicationHelper
   end
 
   def main_menu
-    @main_menu ||= content_tag(:ul, render('application/navigation/links'))
+    @main_menu ||= content_tag(:ul, render('application/navigation/links'), class: 'simple')
   end
 
   def sanitize(text)

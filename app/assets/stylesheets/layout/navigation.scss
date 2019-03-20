@@ -294,3 +294,60 @@ div#navigation-mobile {
     }
   }
 }
+
+div#show-sidenav {
+  height: 2em;
+  line-height: 2em;
+  font-size: larger;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+div#sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background-color: $background-blue;
+  overflow-x: hidden;
+  transition: 0.5s;
+  border-right: thin solid $old-glory-blue-faded;
+  text-align: center;
+  padding-top: 2em;
+
+  a#hide-sidenav {
+    position: absolute;
+    top: 0.25em;
+    right: 0.25em;
+    font-size: 1.15em;
+  }
+
+  div.sidenav-spacer {
+    height: 5em;
+  }
+
+  a li {
+    @include blue-button(0.5em);
+    width: 75%;
+    height: 1.5em;
+    line-height: 1.5em;
+  }
+
+  a.red li {
+    @include blue-button(0.5em, $old-glory-red);
+  }
+
+  a.members li {
+    @include blue-button(0.5em, lighten($old-glory-blue, 20%));
+  }
+
+  a.admin li {
+    @include blue-button(0.5em, purple);
+  }
+
+  a li {
+    margin: 0.5em auto !important;
+  }
+}

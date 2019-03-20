@@ -16,6 +16,15 @@ html
       = render 'application/trackers/facebook_pixel', key: ENV['FACEBOOK_PIXEL_ID']
     = yield :head
   body
+    #sidenav
+      = link_to('#', id: 'hide-sidenav', class: 'red') { FA::Icon.p('times-square') + 'Close' }
+      h3 Navigation
+      = main_menu
+      - if current_user&.show_admin_menu? && admin_menu.values.any?
+        h3 Admin
+        ul.simple = safe_join(admin_menu.values)
+        / = render 'application/navigation/admin/nested', admin_links: admin_menu
+      .sidenav-spacer
     #main.flex
       header
         #desktop-header
@@ -23,17 +32,7 @@ html
           .logo = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
           .slogan For Boaters, By Boaters™
         #print-header = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
-      #navigation-mobile
-        h3
-          = FA::Icon.p('bars')
-          .nav-heading Navigation
-        .collapsible = main_menu
-        - if current_user&.show_admin_menu? && admin_menu.values.any?
-          h3.admin
-            = FA::Icon.p('cogs', style: :regular)
-            .nav-heading Admin
-          .collapsible
-            ul = safe_join(admin_menu.values)
+      #show-sidenav = FA::Icon.p('bars') + 'Navigation'
       #navigation = main_menu
       #content
         #content-top
