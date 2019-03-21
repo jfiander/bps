@@ -109,14 +109,13 @@ private
   end
 
   def failed_application(e)
-    flash.now[:error] = e.message
-                         .gsub('Member applicants base ', '')
-                         .gsub('Validation failed: ', '')
+    flash.now[:error] = e.message.gsub('Member applicants base ', '')
+                                 .gsub('Validation failed: ', '')
     raise ActiveRecord::Rollback
   end
 
   def applicants
-    return applicant_attributes_hash(primary_applicant) if additionals.blank?
+    return applicant_attributes_hash([primary_applicant]) if additionals.blank?
 
     applicant_attributes_hash(with_additionals)
   end

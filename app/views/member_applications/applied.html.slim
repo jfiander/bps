@@ -11,7 +11,7 @@ p Your application will be reviewed for approval, and you will be notified when 
     | !
 - else
   p
-    | Your annual membership dues will be $
+    | Your annual membership dues will be: 
     = @payment.transaction_amount
     | .
   - if @payment.parent.payable?
