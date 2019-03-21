@@ -10,6 +10,21 @@ module AdminMenuHelper
     end.compact.reduce({}, :merge)
   end
 
+  def admin_menu_groups
+    {
+      'Current Page' => 'sidenav-current',
+      'Files' => 'sidenav-files',
+      'Users' => 'sidenav-users',
+      'Education' => 'sidenav-education',
+      'Admin' => 'sidenav-admin'
+    }
+  end
+
+  def admin_menu_sidenav(menu_id)
+    menu = menu_id[8, menu_id.length]
+    render("application/navigation/admin/sidenav/#{menu}", admin_links: admin_menu)
+  end
+
   def admin_current?
     admin_markdown? || admin_events? || admin_otw? || admin_event_attachments?
   end

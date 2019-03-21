@@ -17,13 +17,20 @@ html
     = yield :head
   body
     #sidenav
-      = link_to('#', id: 'hide-sidenav', class: 'red') { FA::Icon.p('times-square') + 'Close' }
+      = link_to('#', id: 'hide-sidenav', class: 'red close-sidenav') { FA::Icon.p('times-square') + 'Close' }
       h3 Navigation
       = main_menu
       - if current_user&.show_admin_menu? && admin_menu.values.any?
         h3 Admin
-        ul.simple = safe_join(admin_menu.values)
-        / = render 'application/navigation/admin/nested', admin_links: admin_menu
+        - menu = []
+        - admin_menu_groups.each do |heading, menu_id|
+          - button_class = { 'Admin'  => 'admin', 'Current Page' => '' }[heading] || 'members'
+          - menu << link_to('#', id: "show-#{menu_id}", class: "show-sub-menu #{button_class}") { content_tag(:li, heading) }
+          div.sub-menu id=(menu_id)
+            = link_to('#', id: "hide-#{menu_id}", class: 'red close-sidenav') { FA::Icon.p('times-square') + 'Close' }
+            h3 = heading
+            ul.simple = admin_menu_sidenav(menu_id)
+        ul.simple = safe_join(menu)
       .sidenav-spacer
     #main.flex
       header

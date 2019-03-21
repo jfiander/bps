@@ -1,0 +1,12 @@
+- if show_link?(:users, :float, :roster, :education, :excom)
+  = admin_links[:users_top]
+  - if show_link?(:float, :education, :excom)
+    h4 Review
+    = admin_links[:review]
+  - if show_link?(:users, :roster)
+    h4 Upload
+    = admin_links[:upload]
+    h4 Roster
+    = admin_links[:roster]
+  h4 Misc
+  = admin_links[:users_bottom]

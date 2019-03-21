@@ -237,7 +237,7 @@ div#show-sidenav {
   border-bottom: thin solid $old-glory-blue-faded;
 }
 
-div#sidenav {
+div#sidenav, div.sub-menu {
   height: 100%;
   width: 0;
   position: fixed;
@@ -253,7 +253,7 @@ div#sidenav {
   text-align: center;
   padding-top: 2em;
 
-  a#hide-sidenav {
+  a.close-sidenav {
     position: absolute;
     top: 0.25em;
     right: 0.25em;
@@ -264,10 +264,16 @@ div#sidenav {
     height: 5em;
   }
 
+  a {
+    width: 75%;
+    margin: 0 auto;
+    display: block;
+  }
+
   a li {
     @include blue-button(0.5em);
     @include shadow-box(0.4);
-    width: 75%;
+    width: 90%;
     height: 1.5em;
     line-height: 1.5em;
   }
