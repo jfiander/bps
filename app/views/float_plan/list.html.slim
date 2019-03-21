@@ -1,18 +1,21 @@
 h1 Submitted Float Plans
 
-- @float_plans.each do |float_plan|
-  = "#{float_plan.id}: "
-  = float_plan.name
-  |  filed a float plan for 
-  = float_plan.leave_at
-  |  with an alert time of 
-  = float_plan.alert_at
-  | .
-  |  
-  - if float_plan.pdf.present?
-    = link_to 'PDF', float_plan.link
-    |  - 
-    = link_to 'Refresh', refresh_float_plan_path(id: float_plan.id), method: :patch
-  - else
-    = link_to 'Generate', refresh_float_plan_path(id: float_plan.id), method: :patch
-  hr
+#float-plans.table
+  .table-row
+    .table-cell.table-header ID
+    .table-cell.table-header Filed by
+    .table-cell.table-header Leave at
+    .table-cell.table-header Alert at
+    .table-cell.table-header
+    .table-cell.table-header
+  - @float_plans.each do |float_plan|
+    .table-row
+      .table-cell = float_plan.id
+      .table-cell = float_plan.name
+      .table-cell = float_plan.leave_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+      .table-cell = float_plan.alert_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+      - if float_plan.pdf.present?
+        .table-cell = link_to(float_plan.link) { FA::Icon.p('file-pdf', style: :regular, title: 'View PDF') }
+        .table-cell = link_to(refresh_float_plan_path(id: float_plan.id), method: :patch) { FA::Icon.p('redo', style: :regular, title: 'Refresh PDF', css: 'green') }
+      - else
+        .table-cell = link_to(refresh_float_plan_path(id: float_plan.id), method: :patch) { FA::Icon.p('file-plus', style: :regular, title: 'Generate PDF') }
