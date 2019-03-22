@@ -25,13 +25,15 @@ $(document).ready ->
   $('#show-sidenav').click (event) ->
     openNav()
     $('#modal').fadeIn 'fast'
+    $('body').addClass 'no-scroll'
     return
   return
 
 $(document).ready ->
   $('#hide-sidenav').click (event) ->
-    closeNav()
+    closeAllNav()
     $('#modal').fadeOut 'fast'
+    $('body').removeClass 'no-scroll'
     return
   return
 
@@ -52,4 +54,5 @@ $(document).ready ->
   $('#modal').click ->
     closeAllNav()
     $('#modal').fadeOut 'fast'
+    $('body').removeClass 'no-scroll'
     return

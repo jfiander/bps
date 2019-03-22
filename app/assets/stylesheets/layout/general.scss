@@ -6,6 +6,10 @@ body {
   background-color: $background-blue;
 }
 
+body.no-scroll {
+  overflow: hidden;
+}
+
 sup {
   font-size: 60%;
 }

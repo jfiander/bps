@@ -241,7 +241,7 @@ div#sidenav, div.sub-menu {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 9999;
+  z-index: 9998;
   top: 0;
   left: 0;
   background-color: $background-blue;
@@ -295,4 +295,8 @@ div#sidenav, div.sub-menu {
   a li {
     margin: 0.5em auto !important;
   }
+}
+
+div.sub-menu {
+  z-index: 9999;
 }

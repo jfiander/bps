@@ -30,6 +30,7 @@ html
             = link_to('#', id: "hide-#{menu_id}", class: 'red close-sidenav') { FA::Icon.p('times-square') + 'Close' }
             h3 = heading
             ul.simple = admin_menu_sidenav(menu_id)
+            .sidenav-spacer
         ul.simple = safe_join(menu)
       .sidenav-spacer
     #main.flex
