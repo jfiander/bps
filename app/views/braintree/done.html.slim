@@ -1,5 +1,11 @@
 h1 Payment Complete!
 
+- if ENV['ASSET_ENVIRONMENT'] == 'production' && ENV['FB_TRACK_PAYMENTS'] == 'enabled'
+  script
+    | fbq('track', 'Purchase', {value: 
+    = @transaction_amount.delete('$')
+    | , currency: 'USD'});
+
 p
   | You have successfully paid $
   = @transaction_amount
