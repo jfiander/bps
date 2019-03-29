@@ -57,7 +57,7 @@ private
       'replaced'
     else
       send("create_#{model}")
-      'uplodaed'
+      'uploaded'
     end
   end
 end

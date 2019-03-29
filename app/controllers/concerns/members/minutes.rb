@@ -77,7 +77,7 @@ private
       'replaced'
     else
       create_minutes
-      'uplodaed'
+      'uploaded'
     end
   end
 
