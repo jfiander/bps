@@ -69,12 +69,10 @@ class User < ApplicationRecord
   scope :with_name,         ->(name) { where(simple_name: name) }
   scope :with_any_name,     -> { where.not(simple_name: [nil, '', ' ']) }
   scope :valid_instructors, -> { where('id_expr > ?', Time.now) }
+  scope :invitable,         -> { unlocked.where('sign_in_count = 0').reject(&:placeholder_email?) }
+  scope :vessel_examiners,  -> { includes(:course_completions).where(course_completions: { course_key: 'VSC_01' }) }
   scope :include_positions, -> { includes(position_associations) }
   scope :recent_mm,         -> { where('last_mm_year >= ?', Date.today.beginning_of_year - 6.months) }
-
-  def self.invitable
-    unlocked.where('sign_in_count = 0').reject(&:placeholder_email?)
-  end
 
   def full_name(html: true, show_boc: false)
     # html_safe: Text is sanitized before storage

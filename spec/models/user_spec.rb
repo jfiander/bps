@@ -309,12 +309,26 @@ RSpec.describe User, type: :model do
   end
 
   describe 'scopes' do
-    it 'should get only invitable users' do
-      user = FactoryBot.create(:user)
-      FactoryBot.create(:user, :placeholder_email)
-      FactoryBot.create(:user, sign_in_count: 1)
+    before(:each) do
+      @user_inv = FactoryBot.create(:user)
+      @user_pe = FactoryBot.create(:user, email: 'nobody-asdfhjkl@bpsd9.org')
+      @user_inst = FactoryBot.create(:user, sign_in_count: 1, id_expr: Time.now + 1.year)
+      @user_vse = FactoryBot.create(:user, sign_in_count: 23)
+      @user_vse.course_completions << FactoryBot.create(
+        :course_completion, user: @user_vse, course_key: 'VSC_01', date: Time.now - 1.month
+      )
+    end
 
-      expect(User.include_positions.invitable.to_a).to eql([user])
+    it 'should return the list of invitable users' do
+      expect(User.invitable.to_a).to eql([@user_inv])
+    end
+
+    it 'should return the list of valid instructor users' do
+      expect(User.valid_instructors.to_a).to eql([@user_inst])
+    end
+
+    it 'should return the list of vessel examiner users' do
+      expect(User.vessel_examiners.to_a).to eql([@user_vse])
     end
   end
 
