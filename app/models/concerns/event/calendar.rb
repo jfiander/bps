@@ -47,7 +47,7 @@ module Concerns::Event::Calendar
 private
 
   def calendar
-    @calendar ||= GoogleCalendarAPI.new(auth: true)
+    @calendar ||= GoogleAPI::Calendar.new(auth: true)
   end
 
   def calendar_id(prod: false)

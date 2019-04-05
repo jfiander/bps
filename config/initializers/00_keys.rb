@@ -48,13 +48,7 @@ end
 
 decrypt_cf_key
 
-store_key('config/keys/google_calendar_token.yaml') do |f|
-  f.write("---\ndefault: '")
-  f.write(ENV['GOOGLE_CALENDAR_TOKEN'])
-  f.write("'\n")
-end
-
-store_key('config/keys/google_calendar_api_client.json') do |f|
+store_key('config/keys/google_api_client.json') do |f|
   f.write('{"installed":{"client_id":"')
   f.write(ENV['GOOGLE_CLIENT_ID'])
   f.write('","project_id":"charming-scarab-208718",')
@@ -68,7 +62,7 @@ store_key('config/keys/google_calendar_api_client.json') do |f|
   f.write('"http://localhost"]}}')
 end
 
-store_key('config/keys/google_calendar_token.yaml') do |f|
+store_key('config/keys/google_token.yaml') do |f|
   f.write("---\n")
   f.write("default: '")
   f.write('{"client_id":"')
@@ -77,7 +71,11 @@ store_key('config/keys/google_calendar_token.yaml') do |f|
   f.write(ENV['GOOGLE_ACCESS_TOKEN'])
   f.write('","refresh_token":"')
   f.write(ENV['GOOGLE_REFRESH_TOKEN'])
-  f.write('","scope":["https://www.googleapis.com/auth/calendar"],')
-  f.write('"expiration_time_millis":1530304405000}')
+  f.write('","scope":[')
+  f.write(ENV['GOOGLE_AUTH_SCOPES'])
+  f.write('],')
+  f.write('"expiration_time_millis":')
+  f.write(ENV['GOOGLE_AUTH_EXP'])
+  f.write('}')
   f.write("'\n")
 end

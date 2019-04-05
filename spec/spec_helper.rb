@@ -39,8 +39,7 @@ SimpleCov.start('rails') do
 
   # Invariant code
   ## used for configuring API access
-  add_filter 'app/lib/google_calendar_api.rb'
-  add_filter 'app/lib/google_calendar_api/clear_test_calendar.rb'
+  add_filter 'app/lib/google_api'
   add_filter 'app/models/concerns/payment/braintree_methods.rb'
   add_filter 'app/models/concerns/payment/model_configs.rb'
   ## used for configuring regular meetings
@@ -151,7 +150,7 @@ end
 
 def clear_test_calendar
   puts "\n\n*** Specs complete! Clearing test calendar..."
-  GoogleCalendarAPI.new(auth: true).clear_test_calendar
+  GoogleAPI::Calendar.new(auth: true).clear_test_calendar
 rescue Google::Apis::ClientError
   nil
 end
