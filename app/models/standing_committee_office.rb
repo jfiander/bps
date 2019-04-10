@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 class StandingCommitteeOffice < ApplicationRecord
+  include Excom
+
   belongs_to :user
 
   before_validation { self.chair = false if executive? }
   before_create { self.term_expires_at = term_start_at + term_length.years unless executive? }
   before_create { self.committee_name = committee_name.downcase }
+  after_save { update_excom_group if committee_name == 'executive' }
 
   validate :valid_committee_name, :only_one_chair
   validates :user_id, uniqueness: { scope: :committee_name }

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class BridgeOffice < ApplicationRecord
+  include Excom
+
   belongs_to :user, optional: true
 
   def self.departments(assistants: false)
@@ -13,6 +15,8 @@ class BridgeOffice < ApplicationRecord
     self.office = office.to_s
     BridgeOffice.other_than(office).where(user: user).update_all(user_id: nil)
   end
+
+  after_save { update_excom_group }
 
   validates :user_id, uniqueness: true, allow_nil: true
   validates :office,  uniqueness: true
