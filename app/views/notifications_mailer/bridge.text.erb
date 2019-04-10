@@ -9,10 +9,18 @@ The following bridge office has been updated.
 Office: <%= @bridge_office.title %>
 
 Previous holder:
+<%- if @previous.present? -%>
 <%= @previous.full_name %> (<%= @previous.certificate %>, #<%= @previous.id %>)
+<%- else -%>
+TBD
+<%- end -%>
 
 New holder:
+<%- if @bridge_office.user.present? -%>
 <%= @bridge_office.user.full_name %> (<%= @bridge_office.user.certificate %>, #<%= @bridge_office.user.id %>)
+<%- else -%>
+TBD
+<%- end -%>
 
 Updated by:
 <%= @by.full_name %> (<%= @by.certificate %>, #<%= @by.id %>)

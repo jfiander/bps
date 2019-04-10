@@ -8,20 +8,27 @@ h2 Office
 p = @bridge_office.title
 
 h2 Previous holder
-p
-  = @previous.full_name
-  br
-  = @previous.certificate
-  | , #
-  = @previous.id
+- if @previous.present?
+  p
+    = @previous.full_name
+    br
+    = @previous.certificate
+    | , #
+    = @previous.id
+- else
+  p TBD
+
 
 h2 New holder
-p
-  = @bridge_office.user.full_name
-  br
-  = @bridge_office.user.certificate
-  | , #
-  = @bridge_office.user.id
+- if @bridge_office.user.present?
+  p
+    = @bridge_office.user.full_name
+    br
+    = @bridge_office.user.certificate
+    | , #
+    = @bridge_office.user.id
+- else
+  p TBD
 
 h2 Updated by
 p
