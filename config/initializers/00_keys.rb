@@ -72,7 +72,7 @@ store_key('config/keys/google_token.yaml') do |f|
   f.write('","refresh_token":"')
   f.write(ENV['GOOGLE_REFRESH_TOKEN'])
   f.write('","scope":[')
-  f.write(ENV['GOOGLE_AUTH_SCOPES'])
+  f.write(ENV.select { |k, v| k =~ /GOOGLE_AUTH_SCOPE_/ }.values.map { |s| "\"#{s}\"" }.join(','))
   f.write('],')
   f.write('"expiration_time_millis":')
   f.write(ENV['GOOGLE_AUTH_EXP'])
