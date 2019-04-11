@@ -38,9 +38,11 @@ module GoogleAPI
     end
 
     def unpermit(calendar, user)
-      service.delete_acl(calendar, user.calendar_rule_id)
+      service.delete_acl(calendar, user&.calendar_rule_id)
     rescue Google::Apis::ClientError
       :permission_not_found
+    ensure
+      user.update(calendar_rule_id: nil)
     end
 
   private
