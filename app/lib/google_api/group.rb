@@ -8,21 +8,21 @@ module GoogleAPI
     end
 
     def get
-      service.get_group(@group_id)
+      call(:get_group, @group_id)
     end
 
     def members
-      service.list_members(@group_id)
+      call(:list_members, @group_id)
     end
 
     def add(email)
-      service.insert_member(@group_id, member(email))
+      call(:insert_member, @group_id, member(email))
     rescue Google::Apis::ClientError, 'duplicate: Member already exists.'
       :already_exists
     end
 
     def remove(email)
-      service.delete_member(@group_id, email)
+      call(:delete_member, @group_id, email)
     rescue Google::Apis::ClientError, '(required: Missing required field: memberKey)'
       :not_found
     end

@@ -7,23 +7,23 @@ module GoogleAPI
     LAST_TOKEN_PATH = "#{Rails.root}/tmp/run/last_page_token"
 
     def create(calendar_id, event_options = {})
-      service.insert_event(calendar_id, event(event_options), conference_data_version: 1)
+      call(:insert_event, calendar_id, event(event_options), conference_data_version: 1)
     end
 
     def list(calendar_id, max_results: 2500, page_token: nil)
-      service.list_events(calendar_id, max_results: max_results, page_token: page_token)
+      call(:list_events, calendar_id, max_results: max_results, page_token: page_token)
     end
 
     def get(calendar_id, event_id)
-      service.get_event(calendar_id, event_id)
+      call(:get_event, calendar_id, event_id)
     end
 
     def update(calendar_id, event_id, event_options = {})
-      service.update_event(calendar_id, event_id, event(event_options))
+      call(:update_event, calendar_id, event_id, event(event_options))
     end
 
     def delete(calendar_id, event_id)
-      service.delete_event(calendar_id, event_id)
+      call(:delete_event, calendar_id, event_id)
     rescue Google::Apis::ClientError
       :event_not_found
     end
@@ -33,12 +33,12 @@ module GoogleAPI
         scope: { type: 'user', value: user.email }, role: 'writer'
       )
 
-      result = service.insert_acl(calendar, rule)
+      result = call(:insert_acl, calendar, rule)
       user.update(calendar_rule_id: result.id)
     end
 
     def unpermit(calendar, user)
-      service.delete_acl(calendar, user&.calendar_rule_id)
+      call(:delete_acl, calendar, user&.calendar_rule_id)
     rescue Google::Apis::ClientError
       :permission_not_found
     ensure

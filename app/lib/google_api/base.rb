@@ -15,5 +15,9 @@ module GoogleAPI
 
       @service ||= service_class.new
     end
+
+    def call(method, *args)
+      ExpRetry.for(exception: Google::Apis::TransmissionError) { service.send(method, *args) }
+    end
   end
 end
