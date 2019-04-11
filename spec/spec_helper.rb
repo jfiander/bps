@@ -150,7 +150,7 @@ end
 
 def clear_test_calendar
   puts "\n\n*** Specs complete! Clearing test calendar..."
-  GoogleAPI::Calendar.new(auth: true).clear_test_calendar
+  GoogleAPI::Calendar.new.clear_test_calendar
 rescue Google::Apis::ClientError
   nil
 end

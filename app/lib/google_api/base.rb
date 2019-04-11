@@ -4,7 +4,7 @@ module GoogleAPI
   class Base
     include GoogleAPI::Concerns::Authorization
 
-    def initialize(auth: false)
+    def initialize(auth: true)
       self.authorize! if auth
     end
 

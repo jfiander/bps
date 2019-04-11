@@ -2,7 +2,7 @@
 
 module GoogleAPI
   class Group < GoogleAPI::Base
-    def initialize(id, auth: false)
+    def initialize(id, auth: true)
       @group_id = id
       super(auth: auth)
     end
