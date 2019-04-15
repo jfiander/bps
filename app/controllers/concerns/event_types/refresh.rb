@@ -25,7 +25,7 @@ private
   end
 
   def new_options(event)
-    EventType.selector(refresh_params[:category]).map do |group, options|
+    EventType.selector(refresh_params[:category], key: true).map do |group, options|
       option_tags = options.map { |t, id| add_option(t, id, event: event) }.join(" +\n")
       add_optgroup(group, option_tags)
     end.join(" +\n")

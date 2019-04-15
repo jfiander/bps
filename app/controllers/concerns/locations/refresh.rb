@@ -6,22 +6,34 @@ module Locations::Refresh
     @new_locations = <<~HTML.html_safe
       "<option value=\\\"\\\">Please select a location</option>" +
       "<option value=\\\"\\\"></option>" +
-      "<option value=\\\"TBD\\\">TBD</option>" +
+      "<optgroup label="TBD"><option value=\\\"TBD\\\">TBD</option></optgroup>" +
     HTML
 
+    @locations = Location.grouped
     event = Event.find_by(id: update_params[:id].to_i)
 
-    @new_locations << new_options(event).html_safe
+    add_group('Favorites', event)
+    add_group('Others', event)
   end
 
 private
 
-  def new_options(event)
-    Location.searchable.map { |id, l| add_option(l, id, event: event) }.join(" +\n")
+  def new_options
+    Location.searchable.map { |id, l| add_option(l, id) }
+  end
+
+  def add_optgroup(group)
+    "\"<optgroup label=\\\"#{group}\\\">\" +\n#{yield} +\n\"</optgroup>\""
   end
 
   def add_option(l, id, event: nil)
     selected = ' selected=\"selected\"' if id == event&.location_id
-    "\"<option value=\\\"#{id}\\\"#{selected}>#{sanitize(l[:name].strip)}</option>\""
+    "\"<option value=\\\"#{id}\\\"#{selected}>#{sanitize(l.strip)}</option>\""
+  end
+
+  def add_group(key, event)
+    @new_locations << add_optgroup(key) do
+      @locations[key].map { |loc| add_option(loc[0], loc[1], event: event) }
+    end
   end
 end

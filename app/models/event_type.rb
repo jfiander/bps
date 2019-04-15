@@ -29,9 +29,11 @@ class EventType < ApplicationRecord
 
   before_save { self.title = title.downcase.tr(' ', '_') }
 
-  def self.selector(type)
-    return seminars.ordered.map(&:to_select_array) if type == 'seminar'
-    return meetings.ordered.map(&:to_select_array) if type == 'event'
+  def self.selector(type, key: false)
+    seminars_select = seminars.ordered.map(&:to_select_array)
+    meetings_select = meetings.ordered.map(&:to_select_array)
+    return key ? ({ 'Seminars' => seminars_select }) : seminars_select if type == 'seminar'
+    return key ? ({ 'Events' => meetings_select }) : meetings_select if type == 'event'
 
     course_selector_hash
   end
