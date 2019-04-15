@@ -21,6 +21,8 @@ class Location < ApplicationRecord
   validate :valid_map_link?
 
   default_scope { order(Arel.sql('favorite IS NULL, favorite DESC')) }
+  scope :favorites, -> { where(favorite: true) }
+  scope :others, -> { where('favorite IS NULL OR favorite = ?', false) }
 
   def display
     return { id: 0, address: 'TBD' } unless address.present?
@@ -45,8 +47,8 @@ class Location < ApplicationRecord
   def self.grouped
     {
       'TBD' => ['TBD'],
-      'Favorites' => where(favorite: true).map(&:display).pluck(:name, :id),
-      'Others' => where('favorite IS NULL OR favorite = ?', false).map(&:display).pluck(:name, :id)
+      'Favorites' => favorites.map(&:display).pluck(:name, :id),
+      'Others' => others.map(&:display).pluck(:name, :id)
     }
   end
 
