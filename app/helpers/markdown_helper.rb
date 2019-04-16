@@ -62,11 +62,11 @@ private
   end
 
   def next_meeting(markdown)
-    if markdown&.match?(/%meeting/)
-      view_context.render('members/next_meeting')
-    else
-      ''
-    end
+    markdown&.match?(/%meeting/) ? view_context.render('members/next_meeting') : ''
+  end
+
+  def next_excom_meeting(markdown)
+    markdown&.match?(/%excom/) ? view_context.render('members/next_excom') : ''
   end
 
   def generate_markdown_div
@@ -97,7 +97,8 @@ private
       files_bucket: files_bucket,
       burgee: burgee_html(@page_markdown),
       education: education_menu(@page_markdown),
-      next_meeting: next_meeting(@page_markdown)
+      next_meeting: next_meeting(@page_markdown),
+      next_excom: next_excom_meeting(@page_markdown)
     ).parse
   end
 

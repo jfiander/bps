@@ -2,6 +2,10 @@
 
 # Custom string class for parsing markdown helpers
 class ParsedMarkdown < String
+  PARSERS ||= %i[
+    center big reg list email burgee education meeting excom image link fal fa
+  ].freeze
+
   include ParsedMarkdown::Parsers
 
   def initialize(string, **options)
@@ -11,12 +15,11 @@ class ParsedMarkdown < String
     @burgee_html = options[:burgee]
     @education_menu = options[:education]
     @next_meeting = options[:next_meeting]
+    @next_excom = options[:next_excom]
   end
 
   def parse
-    %i[center big reg list email burgee education meeting image link fal fa].each do |parser|
-      send("parse_#{parser}")
-    end
+    PARSERS.each { |parser| send("parse_#{parser}") }
     self
   end
 

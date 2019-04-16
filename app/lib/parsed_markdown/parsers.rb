@@ -36,6 +36,10 @@ private
     gsub!(%r{<p>%meeting</p>}, @next_meeting) || self
   end
 
+  def parse_excom
+    gsub!(%r{<p>%excom</p>}, @next_excom) || self
+  end
+
   def match_replace(pattern)
     match(pattern) { |m| gsub!(m[0], yield(m)) } while match?(pattern)
     self
