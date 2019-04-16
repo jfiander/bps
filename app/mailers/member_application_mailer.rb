@@ -53,9 +53,8 @@ private
   def new_app_to
     [
       BridgeOffice.includes(:user).heads.map(&:user).map(&:email),
-      StandingCommitteeOffice.current.where(committee_name: 'executive')
-                             .map(&:user).map(&:email)
-    ].flatten.uniq
+      StandingCommitteeOffice.current.where(committee_name: 'executive').map { |c| c&.user&.email }
+    ].flatten.uniq.compact
   end
 
   def prep_external(application)
