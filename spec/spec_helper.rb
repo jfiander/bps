@@ -129,6 +129,15 @@ RSpec::Matchers.define :contain_mail_headers do |**expected|
   end
 end
 
+def register(event = nil, user: nil, email: nil, save: true)
+  event ||= FactoryBot.create(:event)
+  user = FactoryBot.create(:user) if user.blank? && email.blank?
+  reg = FactoryBot.build(:registration, event: event, user: user, email: email)
+  reg.save! if save
+
+  [reg, nil]
+end
+
 def run_brakeman
   example_group = RSpec.describe('Brakeman Issues')
   puts "\n\nBrakeman report available here: ./tmp/brakeman.html"

@@ -19,7 +19,7 @@ class Registration < ApplicationRecord
   def payment_amount
     return override_cost if override_cost.present?
 
-    event&.get_cost(primary&.user&.present?)
+    event&.get_cost(user&.present?)
   end
 
   def cost?
@@ -47,8 +47,7 @@ private
   end
 
   def no_duplicate_registrations
-    return if Registration.where(user: user, email: email, event: event)
-                          .where.not(id: id).blank?
+    return if Registration.where(user: user, email: email, event: event).where.not(id: id).blank?
 
     errors.add(:base, 'Duplicate')
   end

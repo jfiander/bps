@@ -165,6 +165,10 @@ RSpec.describe Payment, type: :model do
   end
 
   describe 'promo codes' do
+    before(:each) do
+      generic_seo_and_ao
+    end
+
     describe 'attach' do
       before(:each) do
         event_type = FactoryBot.create(:event_type)
