@@ -7,6 +7,8 @@ class User
 
       return if no_member_registrations? || no_registrations?
 
+      return require_payment if @event.advance_payment
+
       register_for_event!
 
       if @registration.valid?
@@ -16,17 +18,27 @@ class User
       end
     end
 
-    def cancel_registration
-      @reg = Registration.find_by(id: clean_params[:id])
+    def add_registrants
+      @registration = Registration.find_by(id: reg_params[:id])
+      certificate = additional_params[:certificate]
+      email = additional_params[:email]
+      UserRegistration.create(
+        registration: @registration, primary: false, certificate: certificate, email: email
+      )
 
+      load_registered_list
+    end
+
+    def cancel_registration
       return unless can_cancel_registration?
 
-      @cancel_link = (@reg&.user == current_user)
+      @cancel_link = (@registration&.user == current_user)
 
-      if @reg&.paid?
+      if @registration&.paid?
         cannot_cancel_paid
-      elsif @reg&.destroy
+      elsif @registration&.destroy
         successfully_cancelled
+        render content_type: 'text/javascript'
       else
         unable_to_cancel
       end
@@ -48,12 +60,15 @@ class User
       redirect_to send("#{@registration.event.category}_registrations_path")
     end
 
-  private
+    def collect_payment
+      prepare_advance_payment(register: false)
 
-    def find_registration
-      @registration = Registration.find_by(id: clean_params[:id])
-      @registration ||= Payment.find_by(token: clean_params[:token]).parent
+      modal(header: 'Advance Payment Required', status: :payment_required) do
+        render_to_string partial: 'braintree/dropin'
+      end
     end
+
+  private
 
     def block_override
       return unless not_overrideable?
@@ -77,7 +92,29 @@ class User
     end
 
     def reg_params
-      params.require(:registration).permit(:override_cost, :override_comment)
+      params.require(:registration).permit(:id, :override_cost, :override_comment)
+    end
+
+    def additional_params
+      params.require(:registration).permit(
+        user_registrations_attributes: [:certificate, :email]
+      )[:user_registrations_attributes]['0']
+    end
+
+    def payment_params
+      params.permit(:token)
+    end
+
+    def load_registered_list
+      # html_safe: Text is sanitized before display
+      @registered = view_context.content_tag(:ul, class: 'simple') do
+        view_context.safe_join(
+          @registration.user_registrations.map do |ur|
+            contents = sanitize(ur&.user&.full_name || ur&.email)
+            view_context.content_tag(:li, contents).html_safe
+          end
+        )
+      end
     end
 
     def set_flash
@@ -110,6 +147,43 @@ class User
 
     def successfully_registered
       flash[:success] = 'Successfully registered!'
+      @registration.notify_new
+      @registration.confirm_to_registrants
+
+      modal(header: 'You are now registered!') do
+        render_to_string partial: 'events/modals/registered'
+      end
+    end
+
+    def require_payment
+      prepare_advance_payment
+
+      modal(header: 'Advance Payment Required', status: :payment_required) do
+        render_to_string partial: 'events/modals/registered'
+      end
+    end
+
+    def prepare_advance_payment(register: true)
+      reg_and_token_for_advance(register)
+      @client_token = Payment.client_token(user_id: current_user&.id)
+      @transaction_amount = @registration.payment.transaction_amount
+      @purchase_info = reg_purchase_info
+    end
+
+    def reg_and_token_for_advance(register)
+      @registration = current_user.register_for(@event) if current_user && register
+      @token ||= @registration&.payment&.token || payment_params[:token]
+      @registration ||= Payment.find_by(token: @token).parent
+      @event ||= @registration.event
+    end
+
+    def reg_purchase_info
+      {
+        name: @event.display_title, type: @event.category,
+        date: @event.start_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT),
+        time: @event.start_at.strftime(ApplicationController::PUBLIC_TIME_FORMAT),
+        codes_available: @event.promo_codes.any?
+      }
     end
 
     def unable_to_register
@@ -126,13 +200,13 @@ class User
     end
 
     def allowed_to_cancel?
-      (@reg&.user == current_user) ||
+      (@registration&.user == current_user) ||
         current_user&.permitted?(:course, :seminar, :event, session: session)
     end
 
     def successfully_cancelled
       flash[:success] = 'Successfully cancelled registration!'
-      RegistrationMailer.cancelled(@reg).deliver if @cancel_link
+      RegistrationMailer.cancelled(@registration).deliver if @cancel_link
     end
 
     def unable_to_cancel

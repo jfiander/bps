@@ -1,0 +1,51 @@
+h3 Registration information
+b
+  = @registration.event.category.to_s.titleize
+  | : 
+= @registration.event.display_title
+br
+b Date: 
+= @registration.event.start_at.strftime('%-d %B %Y')
+br
+b Time:  
+= @registration.event.start_at.strftime('%-l:%M %P')
+
+- if @registration.event.google_calendar_link.present?
+  h3 Google Calendar
+  p = link_to 'View this event on Google Calendar', @registration.event.google_calendar_link, target: :_blank
+
+h3 Additional Registrants
+p If you would like to add more people to this registration, enter their certificate number or email below.
+#registered.scrollable.max-h-15
+#add-registrant
+  = form_for @registration, url: add_registrants_path, method: :patch, remote: true do |f|
+    = f.hidden_field :id, value: @registration.id
+    = f.nested_fields_for :user_registrations do |ff|
+      .registrant-field
+        = ff.label 'certificate', 'Certificate'
+        = ff.text_field 'certificate', maxlength: 7, id: 'additional_cert'
+      .registrant-field
+        = ff.label 'email', 'Email'
+        = ff.email_field 'email', id: 'additional_email'
+    = spinner_button(f, css: 'big', button_text: 'Add')
+
+- if @registration.payable?
+  h3 Payment
+  - if @registration.event.advance_payment
+    p.italic If you would like to add additional people to this registration. please do so first.
+    p = link_to 'Pay Now!', modal_registration_pay_url(token: @registration.payment.token), class: 'big',  remote: true
+    hr
+    p
+      | If you are unable to pay now, you can 
+      = link_to 'pay for this registration', pay_url(token: @registration.payment.token)
+      |  before 
+      = @registration.event.cutoff_at.strftime(ApplicationController::EVENT_DATE_FORMAT)
+      | .
+    p.italic Please note that you will not be registered until you have paid.
+  - else
+    p
+      | If you would like to, you can 
+      = link_to 'pay for this registration now', pay_url(token: @registration.payment.token)
+      | .
+    p.italic This link will remain active until this registration has been paid for.
+

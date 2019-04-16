@@ -122,3 +122,13 @@ div.events-table span.fa-layers {
   display: block;
   float: left;
 }
+
+div.registrant-field {
+  display: inline-block;
+  margin: 1em;
+
+  label {
+    padding: 0 0.5em;
+    font-weight: bold;
+  }
+}

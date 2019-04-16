@@ -38,7 +38,7 @@ RSpec.describe Event, type: :model, slow: true do
     event_it 'filters with registrations' do
       FactoryBot.create_list(:event, 2)
       event = Event.last
-      FactoryBot.create(:registration, :with_user, event: event)
+      register(event)
       expect(Event.with_registrations.to_a).to eql([event])
     end
   end

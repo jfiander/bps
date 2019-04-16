@@ -25,7 +25,7 @@ class UserController < ApplicationController
   before_action :can_view_profile?, only: %i[show certificate]
   before_action :find_user, only: %i[show certificate]
   before_action :load_users, only: :list
-  before_action :find_registration, only: %i[override_cost set_override_cost]
+  before_action :find_registration, only: %i[override_cost set_override_cost cancel_registration]
   before_action :block_override, only: %i[override_cost set_override_cost]
   before_action :find_payment, only: %i[receipt paid_in_person refunded_payment]
   before_action :profile_title, only: :show
@@ -39,7 +39,7 @@ class UserController < ApplicationController
   title!('Instructors', only: :instructors)
 
   def show
-    @registrations = Registration.current.for_user(@user.id).reject { |r| r.event.blank? }
+    @registrations = Registration.current.for_user(@user.id).compact.reject { |r| r.event.blank? }
 
     insignia
 

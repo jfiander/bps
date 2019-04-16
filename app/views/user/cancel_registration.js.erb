@@ -2,10 +2,10 @@
 
 <%- if flash[:alert].blank? %>
   <%- if @cancel_link %>
-    $("#event_<%= @reg.event.id %>").html("Cancelled").attr("href", "#");
-    $("#event_<%= @reg.event.id %>_mobile").html("Cancelled").attr("href", "#");
+    $("#event_<%= @registration.event.id %>").html("Cancelled").attr("href", "#").addClass("unclickable");
+    $("#event_<%= @registration.event.id %>_mobile").html("Cancelled").attr("href", "#").addClass("unclickable");
   <% end %>
 
-  $("#registration_<%= @reg.id %>").fadeOut();
-  $("#registration_<%= @reg.id %>_mobile").fadeOut();
+  $("#registration_<%= @registration.id %>").fadeOut();
+  $("#registration_<%= @registration.id %>_mobile").fadeOut();
 <% end %>

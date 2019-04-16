@@ -28,6 +28,7 @@
                 li = reg&.user&.full_name || reg&.email
   = render 'braintree/promo_code'
   = form_tag checkout_path, id: 'checkout', method: :post
+    = hidden_field_tag :token, @token if @token.present?
     #dropin-container
     = label_tag :email, 'Send receipt to:'
     br

@@ -37,17 +37,17 @@ private
 
   def payment_not_found
     flash[:alert] = 'Payment not found.'
-    redirect_to root_path
+    redirect_to root_path, status: :not_found
   end
 
   def payment_no_cost
     flash[:notice] = 'That has no cost.'
-    redirect_to root_path
+    redirect_to root_path, status: :bad_request
   end
 
   def payment_not_payable
     flash[:notice] = 'That is not eligible to be paid.'
-    redirect_to root_path
+    redirect_to root_path, status: :bad_request
   end
 
   def already_paid?

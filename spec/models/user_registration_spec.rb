@@ -35,4 +35,26 @@ RSpec.describe UserRegistration, type: :model do
     expect(ur_2.valid?).to be(false)
     expect(ur_2.errors.messages).to eql(base: ['Duplicate'])
   end
+
+  describe 'certificate input' do
+    before(:each) do
+      @reg = register.first
+      @urs = @reg.user_registrations.to_a
+    end
+
+    it 'should not add unknown certificates' do
+      @reg.add(certificate: 'X123456')
+      expect { @reg.validate! }.to raise_error(
+        ActiveRecord::RecordInvalid,
+        'Validation failed: User registrations user or email must be present'
+      )
+    end
+
+    it 'should convert a certificate to that user' do
+      user = FactoryBot.create(:user, certificate: 'E987654')
+      @reg.add(certificate: 'E987654')
+      expect(@reg.user_registrations.map(&:id)).not_to eql(@urs.map(&:id))
+      expect(@reg.user_registrations.last.user).to eql(user)
+    end
+  end
 end

@@ -40,6 +40,18 @@ div#payment-description {
     margin-top: 0.5em;
   }
 
+  div.registered {
+    margin-top: 1em;
+
+    div.desc {
+      margin: 0.25em 0;
+
+      ul {
+        margin: 0;
+      }
+    }
+  }
+
   div.amount, div.subject {
     font-weight: bold;
   }
@@ -55,6 +67,13 @@ div#payment-description {
   div.desc {
     margin: 0.25em 0;
   }
+}
+
+div#modal div#payment-description {
+  @include border_radius;
+  max-height: 10em;
+  overflow: scroll;
+  border: thin solid darken($background-blue, 15%);
 }
 
 button#pay-button {

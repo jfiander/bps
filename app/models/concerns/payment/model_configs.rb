@@ -37,13 +37,14 @@ module Concerns
         %w[course seminar]
       end
 
-      def registration_info(type = nil)
-        {
-          name: parent.event.display_title,
-          type: type,
-          price_comment: parent.event&.location&.price_comment
-        }.merge(registration_times).merge(promo_info)
-      end
+  def registration_info(type = nil)
+    {
+      name: parent.event.display_title,
+      registered: parent.user_registrations,
+      type: type,
+      price_comment: parent.event&.location&.price_comment
+    }.merge(registration_times).merge(promo_info)
+  end
 
       def registration_times
         {

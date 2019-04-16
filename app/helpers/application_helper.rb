@@ -39,6 +39,16 @@ module ApplicationHelper
     HTML
   end
 
+  def modal(header: 'Done!', contents: nil, status: :ok)
+    @header = header
+    @contents = block_given? ? yield : contents
+
+    render(
+      partial: 'application/modal', locals: { header: @header, contents: @contents },
+      format: :js, content_type: 'text/javascript', status: status
+    )
+  end
+
   def auto_show(partial)
     session[:auto_shows]&.include?(partial) ? 'auto-show' : ''
   end

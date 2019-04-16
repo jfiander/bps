@@ -5,6 +5,7 @@ class Registration < ApplicationRecord
 
   belongs_to :event
   has_many :user_registrations
+  accepts_nested_attributes_for :user_registrations
 
   validates :user_registrations, presence: true
 
@@ -40,14 +41,15 @@ class Registration < ApplicationRecord
     raise ArgumentError, 'Must specify an event or event_id'
   end
 
-  def self.for_user(user_id)
-    UserRegistration.where(user_id: user_id).map(&:registration)
+  def self.for_user(user)
+    with_users.where(user_registrations: { user_id: user })
   end
 
-  def add(user: nil, email: nil)
+  def add(user: nil, email: nil, certificate: nil)
     self.user_registrations << UserRegistration.create(
-      registration: self, primary: false, user: user, email: email
+      registration: self, primary: false, user: user, email: email, certificate: certificate
     )
+    save
     self
   end
 

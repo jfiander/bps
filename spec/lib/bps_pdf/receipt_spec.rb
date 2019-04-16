@@ -8,24 +8,24 @@ RSpec.describe BpsPdf::Receipt, type: :lib do
   end
 
   it 'successfully generates a receipt for a user registration' do
-    reg = FactoryBot.create(:registration, :with_user)
+    reg = register.first
     reg.payment.paid!('1234567890')
     reg.payment.update(cost_type: 'Member')
     expect { reg.payment.receipt! }.not_to raise_error
   end
 
   it 'successfully generates a receipt for an email registration' do
-    reg = FactoryBot.create(:registration, :with_email)
+    reg = register(email: 'test@example.com').first
     expect { reg.payment.receipt! }.not_to raise_error
   end
 
   it 'successfully generates a receipt with an override cost' do
-    reg = FactoryBot.create(:registration, :with_email)
+    reg = register(email: 'test@example.com').first
     reg.update(override_cost: 1, override_comment: 'Overridden')
     expect { reg.payment.receipt! }.not_to raise_error
   end
 
-  it 'successfullies generate a receipt for a member application' do
+  it 'successfully generates a receipt for a member application' do
     member_app = FactoryBot.create(:member_application, :with_primary)
     expect { member_app.payment.receipt! }.not_to raise_error
   end

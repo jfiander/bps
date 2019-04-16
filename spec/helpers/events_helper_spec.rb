@@ -132,7 +132,7 @@ RSpec.describe EventsHelper, type: :helper do
   describe 'override_icon' do
     before do
       generic_seo_and_ao
-      @reg = FactoryBot.create(:registration, :with_user)
+      @reg = register.first
     end
 
     it 'generates the correct normal icon' do

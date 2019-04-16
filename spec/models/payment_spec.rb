@@ -64,7 +64,7 @@ RSpec.describe Payment, type: :model do
   context 'with a registration' do
     before do
       generic_seo_and_ao
-      @registration = FactoryBot.create(:registration, :with_user)
+      @registration = register.first
     end
 
     it 'has the correct transaction amount' do

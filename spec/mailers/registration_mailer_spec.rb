@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe RegistrationMailer, type: :mailer do
   let(:course) { event_for_category('public').first }
   let(:event) { event_for_category('meeting').first }
-  let(:ed_user_reg) { FactoryBot.create(:registration, :with_user, event: course) }
-  let(:ed_email_reg) { FactoryBot.create(:registration, :with_email, event: course) }
-  let(:event_user_reg) { FactoryBot.create(:registration, :with_user, event: event) }
-  let(:event_email_reg) { FactoryBot.create(:registration, :with_email, event: event) }
+  let(:ed_user_reg) { register(course).first }
+  let(:ed_email_reg) { register(course, email: 'test@example.com').first }
+  let(:event_user_reg) { register(event).first }
+  let(:event_email_reg) { register(event, email: 'test@example.com').first }
 
   before { generic_seo_and_ao }
 
