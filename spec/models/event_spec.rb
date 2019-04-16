@@ -81,6 +81,18 @@ RSpec.describe Event, type: :model do
         end
       end
 
+      describe 'archival' do
+        it 'should return true when archived' do
+          @event.update(archived_at: Time.now - 1.day)
+          expect(@event.archived?).to be(true)
+        end
+
+        it 'should return false when not archived' do
+          @event.update(archived_at: Time.now + 1.day)
+          expect(@event.archived?).to be(false)
+        end
+      end
+
       describe 'cutoff' do
         it 'should return true when not accepting registrations' do
           @event.update(cutoff_at: Time.now - 1.day)

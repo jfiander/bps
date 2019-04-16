@@ -7,6 +7,10 @@ module Concerns::Event::Boolean
     expires_at.present? && expires_at < Time.now
   end
 
+  def archived?
+    archived_at.present? && archived_at < Time.now
+  end
+
   def cutoff?
     (cutoff_at.present? && cutoff_at < Time.now) || full?
   end
