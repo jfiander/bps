@@ -24,6 +24,7 @@ module Concerns::Event::Calendar
   end
 
   def refresh_calendar!
+    return true if expired? || archived? # Skip, but allow update to continue
     return book! unless booked? && on_calendar?
 
     calendar_update(call_if: true) do
