@@ -51,10 +51,7 @@ class MemberApplicationMailer < ApplicationMailer
 private
 
   def new_app_to
-    [
-      BridgeOffice.includes(:user).heads.map(&:user).map(&:email),
-      StandingCommitteeOffice.current.where(committee_name: 'executive').map { |c| c&.user&.email }
-    ].flatten.uniq.compact
+    [BridgeOffice.mail_all, StandingCommitteeOffice.mail_all(:executive)].flatten.uniq
   end
 
   def prep_external(application)

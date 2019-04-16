@@ -71,4 +71,22 @@ RSpec.describe BridgeOffice, type: :model do
       expect(BridgeOffice.find_by(office: 'administrative').user).to eql(new_ao)
     end
   end
+
+  describe 'mail_all' do
+    before(:each) do
+      @commander = FactoryBot.create(:bridge_office, office: 'commander')
+      @seo = FactoryBot.create(:bridge_office, office: 'educational')
+      @aseo = FactoryBot.create(:bridge_office, office: 'asst_secretary')
+    end
+
+    it 'should generate the correct mailing list' do
+      expect(BridgeOffice.mail_all.sort).to eql([@commander.user.email, @seo.user.email].sort)
+    end
+
+    it 'should generate the correct mailing list including assistants' do
+      expect(BridgeOffice.mail_all(include_asst: true).sort).to eql(
+        [@commander.user.email, @seo.user.email, @aseo.user.email].sort
+      )
+    end
+  end
 end

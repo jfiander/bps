@@ -30,6 +30,12 @@ class BridgeOffice < ApplicationRecord
     all.map { |b| { b.user_id => b.office } }.reduce({}, :merge)
   end
 
+  def self.mail_all(include_asst: false)
+    bridge = BridgeOffice.includes(:user)
+    bridge = bridge.heads unless include_asst
+    bridge.map { |b| b&.user&.email }.uniq.compact
+  end
+
   def department
     BridgeOffice.department(office)
   end

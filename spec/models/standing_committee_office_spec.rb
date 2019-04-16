@@ -50,4 +50,12 @@ RSpec.describe StandingCommitteeOffice, type: :model do
       end
     end
   end
+
+  it 'should generate the correct mailing list' do
+    e1 = FactoryBot.create(:standing_committee_office, committee_name: 'executive')
+    e2 = FactoryBot.create(:standing_committee_office, committee_name: 'executive')
+    FactoryBot.create(:standing_committee_office, committee_name: 'auditing')
+
+    expect(StandingCommitteeOffice.mail_all(:executive).sort).to eql([e1.user.email, e2.user.email].sort)
+  end
 end

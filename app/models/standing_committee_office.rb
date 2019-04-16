@@ -25,6 +25,10 @@ class StandingCommitteeOffice < ApplicationRecord
     committees.map(&:titleize)
   end
 
+  def self.mail_all(committee_name)
+    current.where(committee_name: committee_name).map { |c| c&.user&.email }.uniq.compact
+  end
+
   def years_remaining
     executive? ? 1 : ((term_expires_at - Time.now) / 1.year).ceil
   end
