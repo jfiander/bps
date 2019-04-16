@@ -22,6 +22,6 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - bundle exec rubocop
-  - bundle exec rspec
+  - bundle exec rspec --format progress --color
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

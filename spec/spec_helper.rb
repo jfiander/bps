@@ -177,7 +177,7 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    run_brakeman
+    run_brakeman if ENV['CONTINUOUS_INTEGRATION'] == 'true'
 
     DatabaseCleaner.clean_with(:truncation)
     Dir["#{Rails.root}/tmp/run/**/*"].each { |file| File.delete(file) }
