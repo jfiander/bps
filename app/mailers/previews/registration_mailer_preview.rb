@@ -18,7 +18,7 @@ class RegistrationMailerPreview < ApplicationMailerPreview
   end
 
   def confirm_event
-    RegistrationMailer.confirm(ur(reg_member_event))
+    RegistrationMailer.confirm(reg_member_event)
   end
 
   def remind_public
@@ -34,19 +34,19 @@ class RegistrationMailerPreview < ApplicationMailerPreview
   end
 
   def confirm_member_free
-    RegistrationMailer.confirm(ur(reg_member_free))
+    RegistrationMailer.confirm(reg_member_free)
   end
 
   def confirm_member_paid
-    RegistrationMailer.confirm(ur(reg_member_paid))
+    RegistrationMailer.confirm(reg_member_paid)
   end
 
   def confirm_public_free
-    RegistrationMailer.confirm(ur(reg_public_free))
+    RegistrationMailer.confirm(reg_public_free)
   end
 
   def confirm_public_paid
-    RegistrationMailer.confirm(ur(reg_public_paid))
+    RegistrationMailer.confirm(reg_public_paid)
   end
 
   def request_schedule
@@ -92,8 +92,7 @@ private
   end
 
   def new_registration(event:, user: nil, email: nil, paid: false)
-    reg = Registration.new(event: event)
-    reg.user_registrations << UserRegistration.new(registration: reg, user: user, email: email, primary: true)
+    reg = Registration.new(event: event, user: user, email: email)
     reg.payment = Payment.new(token: SecureRandom.base58(24), paid: paid)
     reg
   end
@@ -101,9 +100,5 @@ private
   def event(category: 'seminar', cost: nil)
     event_type = EventType.new(event_category: category, title: 'Example')
     Event.new(event_type: event_type, start_at: Time.now + 1.week, cost: cost)
-  end
-
-  def ur(reg)
-    reg.user_registrations.first
   end
 end
