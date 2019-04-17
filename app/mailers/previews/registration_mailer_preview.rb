@@ -68,8 +68,6 @@ class RegistrationMailerPreview < ApplicationMailerPreview
 private
 
   def reg_member_free
-    # Registration.includes(:user_registrations).where.not(user_registrations: { user: nil })
-    #             .select { |r| !r.payable? }.last
     new_registration(event: event, user: user)
   end
 
@@ -78,26 +76,18 @@ private
   end
 
   def reg_member_paid
-    # Registration.includes(:user_registrations).where.not(user_registrations: { user: nil })
-    #             .select(&:payable?).last
     new_registration(event: event(cost: 5), user: user)
   end
 
   def reg_member_already_paid
-    # Registration.includes(:user_registrations).where.not(user_registrations: { user: nil })
-    #             .select(&:paid?).last
     new_registration(event: event(cost: 5), user: user, paid: true)
   end
 
   def reg_public_free
-    # Registration.includes(:user_registrations).where(user_registrations: { user: nil })
-    #             .select { |r| !r.payable? }.last
     new_registration(event: event, email: email)
   end
 
   def reg_public_paid
-    # Registration.includes(:user_registrations).where(user_registrations: { user: nil })
-    #             .select(&:payable?).last
     new_registration(event: event(cost: 5), email: email)
   end
 
@@ -106,7 +96,8 @@ private
   end
 
   def new_registration(event:, user: nil, email: nil, paid: false)
-    reg = Registration.new(event: event, user: user, email: email)
+    reg = Registration.new(event: event)
+    reg.user_registrations << UserRegistration.new(registration: reg, user: user, email: email, primary: true)
     reg.payment = Payment.new(token: SecureRandom.base58(24), paid: paid)
     reg
   end

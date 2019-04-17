@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class User
+module User
   module Receipts
     def receipts
       page_title('Receipts')
 
       @payments = [
-        Payment.where(parent_type: 'Registration').includes(parent: :user),
+        Payment.where(parent_type: 'Registration').includes(parent: { user_registrations: :user }),
         Payment.where(parent_type: 'MemberApplication').includes(parent: :member_applicants),
         Payment.where(parent_type: 'User').includes(:parent)
       ].flatten.compact.sort { |a, b| b.created_at <=> a.created_at }.select(&:cost?)
