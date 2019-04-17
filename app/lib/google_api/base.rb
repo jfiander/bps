@@ -2,6 +2,8 @@
 
 module GoogleAPI
   class Base
+    RETRIES ||= [Google::Apis::TransmissionError, Google::Apis::ServerError].freeze
+
     include GoogleAPI::Concerns::Authorization
 
     def initialize(auth: true)
@@ -17,7 +19,7 @@ module GoogleAPI
     end
 
     def call(method, *args)
-      ExpRetry.for(exception: Google::Apis::TransmissionError) { service.send(method, *args) }
+      ExpRetry.for(exception: RETRIES) { service.send(method, *args) }
     end
   end
 end
