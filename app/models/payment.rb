@@ -43,7 +43,7 @@ class Payment < ApplicationRecord
   end
 
   def discounted_amount
-    transaction_amount.to_d - Payment.discount(transaction_amount)
+    amount.to_d - Payment.discount(amount)
   end
 
   def paid?
