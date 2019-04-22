@@ -24,7 +24,7 @@ openSubSubNav = (id) ->
 $(document).ready ->
   $('#show-sidenav').click (event) ->
     openNav()
-    $('#modal').fadeIn 'fast'
+    $('#nav-modal').fadeIn 'fast'
     $('body').addClass 'no-scroll'
     return
   return
@@ -32,7 +32,7 @@ $(document).ready ->
 $(document).ready ->
   $('#hide-sidenav').click (event) ->
     closeAllNav()
-    $('#modal').fadeOut 'fast'
+    $('#nav-modal').fadeOut 'fast'
     $('body').removeClass 'no-scroll'
     return
   return
@@ -51,8 +51,8 @@ $(document).ready ->
     return
 
 $(document).ready ->
-  $('#modal').click ->
+  $('#nav-modal').click ->
     closeAllNav()
-    $('#modal').fadeOut 'fast'
+    $('#nav-modal').fadeOut 'fast'
     $('body').removeClass 'no-scroll'
     return
