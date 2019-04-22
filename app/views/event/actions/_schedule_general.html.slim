@@ -1,29 +1,37 @@
-- if user_signed_in? && @registered&.has_key?(event.id) && @registered[event.id].is_a?(Hash) && @registered[event.id][:paid] == true
-  = event_action_link(event, nil, text: 'Paid – Thank you!', css: 'control unclickable', icon: 'check')
-- elsif user_signed_in? && @registered&.has_key?(event.id) && event.advance_payment
-  = event_action_link( \
-    event, pay_path(token: @registered[event.id][:paid]), icon: 'credit-card', \
-    text: 'Please Pay', css: 'control', expired: false, id: "event_#{event.id}", \
-    if: event.allow_member_registrations \
-  )
-- elsif user_signed_in? && @registered&.has_key?(event.id)
-  = event_action_link( \
-    event, cancel_registration_path(id: @registered[event.id][:id]), method: :delete, remote: true, icon: 'calendar-times', \
-    text: 'Cancel Registration', css: 'control red', expired: false, id: "event_#{event.id}", \
-    data: { confirm: 'Are you sure you want to cancel your registration?' }, \
-    if: event.allow_member_registrations \
-  )
-- elsif user_signed_in? && event.cutoff?
-  = event_action_link(event, nil, icon: 'calendar-exclamation', text: 'Too late to register', css: 'gray', expired: false)
-- elsif user_signed_in?
-  = event_action_link( \
-    event, register_path(event_type_param, event.id), method: :put, remote: true, icon: 'calendar-check', \
-    text: 'Register', css: 'control modal-link', id: "event_#{event.id}", expired: false, \
-    if: event.allow_member_registrations && event.registerable? \
-  )
-- elsif event.registerable? && !event.allow_public_registrations
-  = render('events/no/public_registrations')
+- if user_signed_in?
+  - if @registered&.key?(event.id)
+    - if @registered[event.id].key?(:paid) && @registered[event.id][:paid] == true
+      = event_action_link(event, nil, text: 'Paid – Thank you!', css: 'control unclickable', icon: 'check')
+    - elsif event.advance_payment
+      = event_action_link( \
+        event, pay_path(token: @registered[event.id][:paid]), icon: 'credit-card', \
+        text: 'Please Pay', css: 'control', expired: false, id: "event_#{event.id}", \
+        if: event.allow_member_registrations \
+      )
+    - else
+      = event_action_link( \
+        event, pay_path(token: @registered[event.id][:paid]), icon: 'credit-card', \
+        text: 'Pay for Registration', css: 'control', expired: false, id: "event_#{event.id}", \
+        if: event.allow_member_registrations \
+      )
+      = event_action_link( \
+        event, cancel_registration_path(id: @registered[event.id][:id]), method: :delete, remote: true, icon: 'calendar-times', \
+        text: 'Cancel Registration', css: 'control red', expired: false, id: "event_#{event.id}", \
+        data: { confirm: 'Are you sure you want to cancel your registration?' }, \
+        if: event.allow_member_registrations \
+      )
+  - elsif event.cutoff?
+    = event_action_link(event, nil, icon: 'calendar-exclamation', text: 'Too late to register', css: 'gray', expired: false)
+  - elsif user_signed_in?
+    = event_action_link( \
+      event, register_path(event_type_param, event.id), method: :put, remote: true, icon: 'calendar-check', \
+      text: 'Register', css: 'control modal-link', id: "event_#{event.id}", expired: false, \
+      if: event.allow_member_registrations && event.registerable? \
+    )
 - elsif event.registerable?
-  = render('events/register/public', event_id: event.id)
+  - if !event.allow_public_registrations
+    = render('events/no/public_registrations')
+  - else
+    = render('events/register/public', event_id: event.id)
 - else
   = render('event/no/registrations')
