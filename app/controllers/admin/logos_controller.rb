@@ -25,7 +25,7 @@ private
     logo_params[:orientation].in?(%w[Short Long]) &&
       logo_params[:type].in?(%w[PNG SVG]) &&
       logo_params[:background].in?(%w[Transparent White]) &&
-      logo_params[:text].in?(%w[Birmingham Slogan Simple])
+      logo_params[:text].in?(%w[Birmingham Burgee Slogan Simple])
   end
 
   def validate_size
@@ -33,8 +33,7 @@ private
   end
 
   def oversize_logo
-    (logo_params[:orientation] == 'Long' && logo_params[:size].to_i > 6600) ||
-      (logo_params[:orientation] == 'Short' && logo_params[:size].to_i > 600)
+    logo_params[:size].to_i > max_size
   end
 
   def invalid_logo
@@ -65,16 +64,11 @@ private
   end
 
   def max_size
-    logo_params[:orientation] == 'Long' ? 6600 : 600
+    logo_params[:orientation] == 'Long' ? 6500 : 600
   end
 
   def text
-    if logo_params[:orientation] == 'Short' && logo_params[:text] == 'Birmingham'
-      @logo_params[:text] = 'Slogan'
-      'Slogan'
-    else
-      logo_params[:text]
-    end
+    @logo_params[:text] = logo_params[:text]
   end
 
   def png_key
@@ -103,7 +97,9 @@ private
   def generate_logo
     time = Time.now.to_i
     svg = static_bucket.download("logos/ABC/#{svg_key}")
-    USPSFlags::Generate.png(svg, outfile: "#{Rails.root}/tmp/run/logo-#{time}.png")
+    USPSFlags::Generate.png(
+      svg, outfile: "#{Rails.root}/tmp/run/logo-#{time}.png", background: background == 'white' ? '#FFFFFF' : 'none'
+    )
     USPSFlags::Helpers.resize_png(
       "#{Rails.root}/tmp/run/logo-#{time}.png",
       outfile: "#{Rails.root}/tmp/run/logo-#{time}_sized.png", size: size
