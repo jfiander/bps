@@ -121,6 +121,10 @@ class Event < ApplicationRecord
     "#{display_title(event_type_cache)} – #{start_at.strftime(ApplicationController::SIMPLE_DATE_FORMAT)}"
   end
 
+  def repeat_description
+    repeat_pattern == 'DAILY' ? 'over consecutive days' : 'every week'
+  end
+
   def attach_promo_code(code, **args)
     promo_code = PromoCode.find_or_create_by(code: code, **args)
 

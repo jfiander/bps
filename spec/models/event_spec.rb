@@ -501,4 +501,20 @@ RSpec.describe Event, type: :model do
       expect(@event.promo_codes.first.code).to eql('new_code')
     end
   end
+
+  describe 'repeat description' do
+    before(:each) do
+      event_type = FactoryBot.create(:event_type)
+      @event = FactoryBot.create(:event, event_type: event_type, repeat_pattern: 'WEEKLY')
+    end
+
+    it 'should  return the correct description for a daily event' do
+      @event.repeat_pattern = 'DAILY'
+      expect(@event.repeat_description).to eql('over consecutive days')
+    end
+
+    it 'should  return the correct description for a weekly event' do
+      expect(@event.repeat_description).to eql('every week')
+    end
+  end
 end

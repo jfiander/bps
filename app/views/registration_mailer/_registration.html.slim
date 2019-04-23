@@ -5,8 +5,18 @@ p
     | : 
   = @registration.event.display_title
   br
-  b Date: 
-  = @registration.event.start_at.strftime('%-d %B %Y')
+  - if @registration.event.sessions.present? && @registration.event.sessions > 1
+    b Start date: 
+    = @registration.event.start_at.strftime('%-d %B %Y')
+    br
+    b Number of sessions: 
+    = @registration.event.sessions
+    |  (
+    = @registration.event.repeat_description
+    | )
+  - else
+    b Date: 
+    = @registration.event.start_at.strftime('%-d %B %Y')
   br
   b Time:  
   = @registration.event.start_at.strftime('%-l:%M %P')

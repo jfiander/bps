@@ -1,6 +1,11 @@
 Registration information:
   <%= @registration.event.category.to_s.titleize %>: <%= @registration.event.display_title %>
+  <%- if @registration.event.sessions.present? && @registration.event.sessions > 1 -%>
+  Start date: <%= @registration.event.start_at.strftime('%-d %B %Y') %>
+  Number of sessions: <%= @registration.event.sessions %> (<%= @registration.event.repeat_description %>)
+  <%- else -%>
   Date: <%= @registration.event.start_at.strftime('%-d %B %Y') %>
+  <%- end -%>
   Time: <%= @registration.event.start_at.strftime('%-l:%M %P') %>
   <%- if @registration.event.location.present? && !controller.action_name.in?(%w[confirm remind]) %>
   Location: <%= @registration.event.location.address.split("\n").first %>

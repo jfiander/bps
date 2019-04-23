@@ -49,6 +49,10 @@ class RegistrationMailerPreview < ApplicationMailerPreview
     RegistrationMailer.confirm(reg_public_paid)
   end
 
+  def confirm_multi_session
+    RegistrationMailer.confirm(reg_public_multi_session)
+  end
+
   def request_schedule
     RegistrationMailer.request_schedule(
       EventType.new(event_category: 'seminar', title: 'Example'), by: user
@@ -91,14 +95,18 @@ private
     new_registration(event: event(cost: 5), email: email)
   end
 
+  def reg_public_multi_session
+    new_registration(event: event(cost: 5, sessions: 2), email: email)
+  end
+
   def new_registration(event:, user: nil, email: nil, paid: false)
     reg = Registration.new(event: event, user: user, email: email)
     reg.payment = Payment.new(token: SecureRandom.base58(24), paid: paid)
     reg
   end
 
-  def event(category: 'seminar', cost: nil)
+  def event(category: 'seminar', cost: nil, sessions: 1)
     event_type = EventType.new(event_category: category, title: 'Example')
-    Event.new(event_type: event_type, start_at: Time.now + 1.week, cost: cost)
+    Event.new(event_type: event_type, start_at: Time.now + 1.week, cost: cost, sessions: sessions)
   end
 end
