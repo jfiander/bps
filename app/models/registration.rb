@@ -60,7 +60,7 @@ class Registration < ApplicationRecord
   def payment_amount
     return override_cost if override_cost.present?
 
-    user_registrations.size * event&.get_cost(primary&.user&.present?)
+    user_registrations.map { |u| event&.get_cost(u.user.present?) }.sum
   end
 
   def cost?
