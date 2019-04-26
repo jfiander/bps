@@ -107,7 +107,7 @@ private
 
   def register_event_type
     event_type = @event.category
-    event_type = :event if event_type == :meeting
+    event_type = 'event' if event_type == 'meeting'
     event_type
   end
 end
