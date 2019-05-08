@@ -4,9 +4,9 @@ module Events::Preload
 private
 
   def load_registrations
-    @registered = Registration.includes(:user).where(user_id: current_user.id)
-                              .map { |r| { r.event_id => r.id } }
-                              .reduce({}, :merge)
+    @registered = Registration.for_user(current_user).each_with_object({}) do |reg, hash|
+      hash[reg.event_id] = { id: reg.id, paid: reg.paid? ? true : reg&.payment&.token }
+    end
   end
 
   def load_includes(map_to_text: false)
