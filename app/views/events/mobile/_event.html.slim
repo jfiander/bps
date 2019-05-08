@@ -53,7 +53,7 @@
         - if @locations[event.location_id][:picture].present?
           = image_tag files_bucket.link(@locations[event.location_id][:picture].path(:thumb))
         - if @locations[event.location_id][:details].present?
-          small = simple_format(@locations[event.location_id][:details])
+          small = simple_markdown(@locations[event.location_id][:details])
     - else
       | Location TBD
 .event-mobile-contents.spaced

@@ -136,7 +136,7 @@
               .table-cell
                 - unless defined?(@event_catalog)
                   - if @locations[event.location_id].present? && @locations[event.location_id][:details].present?
-                    = simple_format(@locations[event.location_id][:details])
+                    = simple_markdown(@locations[event.location_id][:details])
             .table.row
               .table-cell
                 - unless defined?(@event_catalog)

@@ -22,7 +22,7 @@ p.red.italic Do not add event-specific information to any location.
           = link_to(location[:map_link]) do
             = FA::Icon.p('map-marker-alt')
       .table-cell
-        = simple_format(location[:details])
+        = simple_markdown(location[:details])
         - if location[:picture].present?
           br.mobile
           = link_to(files_bucket.link(location[:picture].path(:medium)), class: 'mobile') do
