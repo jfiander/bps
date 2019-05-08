@@ -1,4 +1,4 @@
-- if user_signed_in? && @registered&.has_key?(event.id) && @registered[event.id][:paid] == true
+- if user_signed_in? && @registered&.has_key?(event.id) && @registered[event.id].is_a?(Hash) && @registered[event.id][:paid] == true
   = event_action_link(event, nil, text: 'Paid – Thank you!', css: 'control unclickable', icon: 'check')
 - elsif user_signed_in? && @registered&.has_key?(event.id) && event.advance_payment
   = event_action_link( \
