@@ -42,6 +42,7 @@ class Event < ApplicationRecord
   )
 
   before_save :refresh_calendar!, if: :calendar_details_updated?
+  # before_create { self.length += 1.hour if Time.now.strftime('%Z') == 'EDT' }
   after_create { book! }
   before_destroy { unbook! }
 
