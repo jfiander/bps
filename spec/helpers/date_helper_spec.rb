@@ -23,6 +23,10 @@ RSpec.describe DateHelper, type: :helper do
     it 'should select the correct end-of-summer date' do
       expect(next_excom(Date.strptime('2018-06-15')).to_date).to eql(Date.strptime('2018-09-04'))
     end
+
+    it 'should select the correct date for a meeting day' do
+      expect(next_excom(Date.strptime('2018-06-05')).to_date).to eql(Date.strptime('2018-06-05'))
+    end
   end
 
   describe 'Membership' do
@@ -40,6 +44,10 @@ RSpec.describe DateHelper, type: :helper do
 
     it 'should select the correct end-of-summer date' do
       expect(next_membership(Date.strptime('2018-05-15')).to_date).to eql(Date.strptime('2018-09-11'))
+    end
+
+    it 'should select the correct date for a meeting day' do
+      expect(next_membership(Date.strptime('2018-05-08')).to_date).to eql(Date.strptime('2018-05-08'))
     end
   end
 end

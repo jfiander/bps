@@ -50,7 +50,7 @@ module DateHelper
 private
 
   def in_session?(date, month_a, month_b = 'September')
-    !date.between?(
+    !date.yesterday.between?(
       membership_date(month_a, date.strftime('%Y')), membership_date(month_b, date.strftime('%Y'))
     )
   end
