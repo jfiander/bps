@@ -1,4 +1,4 @@
-= event_action_link event, "show_#{event_type_param}_path",                     icon: 'share-square',   text: 'Share',                css: 'green',           expired: false
+= event_action_link event, event.public_link,                                   icon: 'share-square',   text: 'Share',                css: 'green',           expired: false
 = event_action_link event, event.google_calendar_link,                          icon: 'calendar-alt',   text: 'Calendar Event',       css: 'green',           expired: false, if: event.google_calendar_link.present?
 = event_action_link event, nil,                                                 icon: 'bell-slash',     text: 'Reminded',             css: 'gray',            expired: false, if: event.reminded?
 = event_action_link event, "remind_#{event_type_param}_path",  method: :put,    icon: 'bell',           text: 'Remind',               css: 'birmingham-blue', expired: false, if: !event.reminded?

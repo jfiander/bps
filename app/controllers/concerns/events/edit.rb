@@ -10,13 +10,13 @@ private
         summary location_id map_link start_at length sessions flyer all_day
         cutoff_at expires_at prereq_id allow_member_registrations repeat_pattern
         allow_public_registrations show_in_catalog delete_attachment
-        registration_limit advance_payment
+        registration_limit advance_payment slug
       ]
     )
   end
 
   def clean_params
-    params.permit(:id, :includes, :topics, :instructors, :locations)
+    params.permit(:id, :includes, :topics, :instructors, :locations, :slug)
   end
 
   def event_type_title_from(formatted)

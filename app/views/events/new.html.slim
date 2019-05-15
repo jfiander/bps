@@ -32,6 +32,10 @@ em
         .right = f.text_field :summary, placeholder: 'optional'
         br.clear
 
+      .left = f.label :slug, 'Short URL'
+      .right = f.text_field :slug, placeholder: 'optional'
+      br.clear
+
       .left 
         = f.label :location
         ul

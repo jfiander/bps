@@ -517,4 +517,21 @@ RSpec.describe Event, type: :model do
       expect(@event.repeat_description).to eql('every week')
     end
   end
+
+  describe 'public_link' do
+    before(:each) do
+      event_type = FactoryBot.create(:event_type)
+      @event = FactoryBot.create(:event, event_type: event_type, repeat_pattern: 'WEEKLY')
+    end
+
+    it 'should generate a normal link without a slug' do
+      expect(@event.public_link).to match(%r{courses/\d+\z})
+    end
+
+    it 'should generate a slug link with a slug' do
+      slug = SecureRandom.hex(16)
+      @event.update(slug: slug)
+      expect(@event.public_link).to match(%r{e/#{slug}\z})
+    end
+  end
 end

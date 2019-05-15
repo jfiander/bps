@@ -59,6 +59,13 @@ class EventsController < ApplicationController
     @registered = { reg.event_id => reg.id } if reg.present?
   end
 
+  def slug
+    event = Event.find_by(slug: clean_params[:slug])
+    return redirect_to(event.link) if event.present?
+
+    redirect_to(root_path, alert: 'Unknown short URL.')
+  end
+
   def new
     @event = Event.new
   end

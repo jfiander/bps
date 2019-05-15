@@ -36,12 +36,14 @@ class Event < ApplicationRecord
 
   validates :repeat_pattern, inclusion: { in: %w[DAILY WEEKLY] << nil }
   validates :event_type, :start_at, :expires_at, :cutoff_at, presence: true
+  validates :slug, uniqueness: true, if: -> { slug.present? }
 
   validates_attachment_content_type(
     :flyer, content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
   )
 
   before_save :refresh_calendar!, if: :calendar_details_updated?
+  before_save { self.slug = slug.gsub('/', '_') if slug.present? }
   after_create { book! }
   before_destroy { unbook! }
 
@@ -101,6 +103,19 @@ class Event < ApplicationRecord
 
   def archive!
     update(archived_at: Time.now)
+  end
+
+  def public_link
+    path = if slug.present?
+      ['event_slug_url', slug]
+    else
+      return if id.blank?
+
+      route = category == 'meeting' ? 'event' : category
+      ["show_#{route}_url", id]
+    end
+
+    Rails.application.routes.url_helpers.send(*path, host: ENV['DOMAIN'])
   end
 
   def link
