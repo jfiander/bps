@@ -454,6 +454,16 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "deleted_at"
   end
 
+  create_table "user_registrations", force: :cascade do |t|
+    t.integer "registration_id"
+    t.integer "user_id"
+    t.string "email"
+    t.boolean "primary"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_roles", force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
