@@ -60,7 +60,7 @@ class EventsController < ApplicationController
   end
 
   def slug
-    event = Event.find_by(slug: clean_params[:slug])
+    event = Event.find_by(slug: clean_params[:slug].downcase)
     return redirect_to(event.link) if event.present?
 
     redirect_to(root_path, alert: 'Unknown short URL.')

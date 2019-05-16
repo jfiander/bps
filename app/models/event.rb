@@ -43,7 +43,7 @@ class Event < ApplicationRecord
   )
 
   before_save :refresh_calendar!, if: :calendar_details_updated?
-  before_save { self.slug = slug.gsub('/', '_') if slug.present? }
+  before_save { self.slug = slug.downcase.gsub('/', '_') if slug.present? }
   after_create { book! }
   before_destroy { unbook! }
 

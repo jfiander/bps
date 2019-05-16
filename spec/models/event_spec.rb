@@ -533,5 +533,11 @@ RSpec.describe Event, type: :model do
       @event.update(slug: slug)
       expect(@event.public_link).to match(%r{e/#{slug}\z})
     end
+
+    it 'should save a downcased slug' do
+      slug = SecureRandom.hex(16).upcase
+      @event.update(slug: slug)
+      expect(@event.public_link).to match(%r{e/#{slug.downcase}\z})
+    end
   end
 end
