@@ -12,6 +12,7 @@ class EventController < ApplicationController
   include Events::Preload
   include Events::Edit
   include Events::Update
+  include Events::QuickActions
   include Concerns::Application::RedirectWithStatus
 
   before_action :find_event, only: %i[show copy edit update expire archive remind book unbook]
@@ -101,40 +102,6 @@ class EventController < ApplicationController
     else
       failed_to_save_event(mode: :modify)
     end
-  end
-
-  def expire
-    redirect_with_status(
-      send("#{event_type_param}s_path"), object: event_type_param, verb: 'expire'
-    ) do
-      @event.expire!
-    end
-  end
-
-  def archive
-    redirect_with_status(
-      send("#{event_type_param}s_path"), object: event_type_param, verb: 'archive'
-    ) do
-      @event.archive!
-    end
-  end
-
-  def remind
-    @event.remind!
-    flash[:success] = 'Successfully sent reminder emails.'
-    redirect_to send("#{event_type_param}s_path")
-  end
-
-  def book
-    @event.book!
-    flash[:success] = "Successfully booked #{event_type_param}."
-    redirect_to send("#{event_type_param}s_path")
-  end
-
-  def unbook
-    @event.unbook!
-    flash[:success] = "Successfully unbooked #{event_type_param}."
-    redirect_to send("#{event_type_param}s_path")
   end
 
 private
