@@ -16,6 +16,8 @@ Layout/IndentHash:
   EnforcedStyle: consistent
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: true
 Layout/AlignArray:
   Enabled: true
 Layout/AlignHash:
