@@ -4,9 +4,10 @@ h1 = @user.full_name
   .table-row
     .table-cell.profile-photo = image_tag(@user.photo)
     .table-cell.insignia
-      p = image_tag(static_bucket.link("flags/PNG/#{@rank_flag}.500.png"), class: 'flag') if @user.auto_rank.present?
-      p = image_tag(static_bucket.link("insignia/#{@insignia[:grade]}.png"), title: @insignia_title[:grade]) if @insignia[:grade].present?
-      p = image_tag(static_bucket.link("insignia/#{@insignia[:membership]}.png"), title: @insignia_title[:membership]) if @insignia[:membership].present?
+      .long
+        p = image_tag(static_bucket.link("flags/PNG/#{@rank_flag}.500.png"), class: 'flag') if @user.auto_rank.present?
+        p = image_tag(static_bucket.link("insignia/PNG/#{@insignia[:grade]}.png"), title: @insignia_title[:grade]) if @insignia[:grade].present?
+        p = image_tag(static_bucket.link("insignia/PNG/#{@insignia[:membership]}.png"), title: @insignia_title[:membership]) if @insignia[:membership].present?
       #merit-marks title=(@insignia_title[:mm])
         - @user.mm&.times do
           = image_tag(static_bucket.link('insignia/mm.png'))
