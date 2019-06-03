@@ -29,7 +29,7 @@ module Concerns::Event::Boolean
   end
 
   def length?
-    length.present? && length&.strftime('%-kh %Mm') != '0h 00m'
+    length.present? && length&.strftime('%H%M') != '0000'
   end
 
   def multiple_sessions?

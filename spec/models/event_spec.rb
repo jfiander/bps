@@ -220,21 +220,19 @@ RSpec.describe Event, type: :model do
       end
 
       describe 'scheduling' do
-        let(:zero_time) { Time.now.beginning_of_day } # .strptime('%-kh %Mm')
-
         describe 'length' do
           it 'should return false when blank' do
-            @event.length = nil
+            @event.update(length_h: nil)
             expect(@event.length?).to be(false)
           end
 
           it 'should return false when zero length' do
-            @event.update(length: zero_time)
+            @event.update(length_h: 0)
             expect(@event.length?).to be(false)
           end
 
           it 'should return true when a valid length is set' do
-            @event.update(length: zero_time + 2.hours)
+            @event.update(length_h: 2)
             expect(@event.length?).to be(true)
           end
         end
@@ -375,19 +373,18 @@ RSpec.describe Event, type: :model do
         end
 
         it 'should correctly format a nil length' do
-          @event.length = nil
+          @event.update(length_h: nil)
           expect(@event.formatted_length).to be_nil
         end
 
         it 'should correctly format a whole-hour length' do
-          @event.length = Time.now.beginning_of_day + 1.hour
-          @event.save
+          @event.update(length_h: 1)
 
           expect(@event.formatted_length).to eql('1 hour')
         end
 
         it 'should correctly format a length with minutes' do
-          @event.length = Time.now.beginning_of_day + 2.hours + 15.minutes
+          @event.update(length_h: 2, length_m: 15)
           @event.save
 
           expect(@event.formatted_length).to eql('2 hours 15 mins')

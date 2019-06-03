@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_15_232933) do
+ActiveRecord::Schema.define(version: 2019_06_03_155418) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -121,7 +121,6 @@ ActiveRecord::Schema.define(version: 2019_05_15_232933) do
     t.string "requirements"
     t.string "map_link"
     t.datetime "start_at"
-    t.time "length"
     t.integer "sessions"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -149,6 +148,8 @@ ActiveRecord::Schema.define(version: 2019_05_15_232933) do
     t.boolean "advance_payment"
     t.datetime "archived_at"
     t.string "slug"
+    t.integer "length_h"
+    t.integer "length_m"
   end
 
   create_table "float_plan_onboards", force: :cascade do |t|

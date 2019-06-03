@@ -7,7 +7,7 @@ FactoryBot.define do
     cutoff_at Time.now + 2.weeks
     expires_at Time.now + 3.weeks
     show_in_catalog false
-    length Time.now + 2.hours
+    length_h 2
     repeat_pattern 'WEEKLY'
 
     trait :with_instructor do

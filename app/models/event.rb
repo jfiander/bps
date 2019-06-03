@@ -72,8 +72,14 @@ class Event < ApplicationRecord
     includes(:registrations).select { |e| e.registrations.present? }
   end
 
+  def length
+    hour = length_h.to_s.rjust(2, '0')
+    min = length_m.present? ? length_m.to_s.rjust(2, '0') : '00'
+    Time.strptime("#{hour}#{min}", '%H%M')
+  end
+
   def formatted_length
-    return if length.blank?
+    return unless length?
 
     hour = length.hour
     min = length.min

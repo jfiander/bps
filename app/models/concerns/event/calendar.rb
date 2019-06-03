@@ -112,9 +112,9 @@ private
   end
 
   def calendar_details_updated?
-    %i[event_type_id start_at length sessions all_day description location_id].any? do |field|
-      send("will_save_change_to_#{field}?")
-    end
+    %i[
+      event_type_id start_at length_h length_m sessions all_day description location_id
+    ].any? { |field| send("will_save_change_to_#{field}?") }
   end
 
   def store_calendar_details(response)
