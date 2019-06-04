@@ -52,8 +52,8 @@ gem 'inline_svg',          '~> 1.3.0'
 gem 'nested_form_fields',  '~> 0.8.2'
 gem 'redcarpet',           '~> 3.4.0'
 gem 'slim',                '~> 3.0.6'
-gem 'usps_flags',          '~> 0.4.0'
-gem 'usps_flags-burgees',  '~> 0.0.19'
+gem 'usps_flags',          '~> 0.4.1'
+gem 'usps_flags-burgees',  '~> 0.0.22'
 gem 'usps_flags-grades',   '~> 0.0.12'
 
 # Logging
