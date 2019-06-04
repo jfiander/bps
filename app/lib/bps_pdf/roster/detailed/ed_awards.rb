@@ -76,7 +76,7 @@ private
   end
 
   def ed_award_image(award, x_pos)
-    svg(ed_award_svg(ed_award_grade(award), (award == :EdPro)), width: 1325, at: [x_pos, cursor])
+    svg(ed_award_svg(ed_award_grade(award), (award == :EdPro)), width: 450, at: [x_pos, cursor + 5])
   end
 
   def ed_award_grade(award)
