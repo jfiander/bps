@@ -156,6 +156,10 @@ input:checked + .slider.red-darkblue {
   content: "General";
 }
 
+.slider div.description.all:after {
+  content: "All";
+}
+
 // Checked slider text
 
 input:checked + .slider div.description.yes:after {
@@ -188,4 +192,8 @@ input:checked + .slider div.description.all-day:after {
 
 input:checked + .slider div.description.lock-missing:after {
   content: "Lock";
+}
+
+input:checked + .slider div.description.eligible:after {
+  content: "Eligible";
 }

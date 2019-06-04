@@ -3,12 +3,16 @@ h1 Current Instructors
 = image_tag static_bucket.link('insignia/CI/CI.350.png'), class: 'lamp'
 
 = form_tag do
-  = label_tag :key, 'Find instructors for '
-  = select_tag :key, options_for_select(@keys, @highlight), required: true
-  = submit_tag 'Find Instructors'
-  br
-  = check_box_tag :only, '1', @only
-  = label_tag :only, 'Show only eligible instructors'
+  div
+    = submit_tag 'Find Instructors', class: 'medium'
+    | for 
+    = select_tag :key, options_for_select(@keys, @highlight), required: true
+
+  label.switch
+    = check_box_tag :only, '1', @only, class: 'slider round'
+    span.slider.round.lightblue-darkblue
+      .description.all.eligible
+  
 hr
 
 - yes = FA::Icon.p('check', css: 'birmingham-blue')
