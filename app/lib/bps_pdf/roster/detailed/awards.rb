@@ -40,7 +40,7 @@ private
 
   def award_block(name, bottom: false)
     recipient = find_recipient(name)
-    additional = Roster::AwardRecipient.current(name)&.additional_user&.simple_name
+    additional = ::Roster::AwardRecipient.current(name)&.additional_user&.simple_name
 
     y_pos = bottom ? 240 : 490
     bounding_box([0, y_pos], width: 325, height: 210) do
@@ -49,8 +49,8 @@ private
   end
 
   def find_recipient(name)
-    Roster::AwardRecipient.current(name)&.user&.simple_name ||
-      Roster::AwardRecipient.current(name)&.name
+    ::Roster::AwardRecipient.current(name)&.user&.simple_name ||
+      ::Roster::AwardRecipient.current(name)&.name
   end
 
   def award_block_body(name, recipient, additional)
@@ -91,7 +91,7 @@ private
   end
 
   def load_award_images
-    Roster::AwardRecipient.current.each do |award|
+    ::Roster::AwardRecipient.current.each do |award|
       next unless BpsS3.new(:files)&.has?(award&.photo&.path)
 
       photo = BpsS3.new(:files)&.download(award&.photo&.path)

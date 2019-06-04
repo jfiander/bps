@@ -24,7 +24,7 @@ private
   end
 
   def pc_table
-    pcs = Roster::PastCommander.all
+    pcs = ::Roster::PastCommander.all
     return if pcs.blank?
 
     size = pcs.count > 60 ? 7 : 8
