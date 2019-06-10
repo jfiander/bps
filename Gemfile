@@ -65,8 +65,8 @@ gem 'awesome_print',       '~> 1.8.0'
 gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
-gem 'sinatra',             '~> 2.0.3'
 gem 'loofah',              '~> 2.2.3'
+gem 'sinatra',             '~> 2.0.3'
 
 group :production do
   gem 'pg',                '~> 0.18.4'
@@ -78,6 +78,7 @@ group :development, :test do
 
   gem 'brakeman',             '~> 4.3'
   gem 'rubocop',              '~> 0.59'
+  gem 'rubocop-performance',  '~> 1.3.0'
   gem 'rubocop-rails_config', '~> 0.2'
   gem 'rubocop-rspec',        '~> 1.30'
 

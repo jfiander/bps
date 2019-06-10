@@ -1,0 +1,24 @@
+Metrics/LineLength:
+  Max: 120
+Metrics/BlockLength:
+  Enabled: false
+Style/GlobalVars:
+  Enabled: false
+Naming/UncommunicativeMethodParamName:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+RSpec/InstanceVariable:
+  Enabled: false
+  # AssignmentOnly: true
+RSpec/NestedGroups:
+  Max: 10
+
+# Temporary cops
+RSpec/MultipleExpectations:
+  Max: 10
+Style/MixinUsage:
+  Enabled: false
