@@ -38,14 +38,12 @@ private
   end
 
   def int_scale?
-    clean_params[:scale].present? && clean_params[:scale].to_i > 0
+    clean_params[:scale].present? && clean_params[:scale].to_i.positive?
   end
 
   def float_scale?
-    clean_params[:scale].present? && clean_params[:scale].to_f > 0
+    clean_params[:scale].present? && clean_params[:scale].to_f.positive?
   end
 
-  def cache_file(key)
-    #
-  end
+  def cache_file(key); end
 end

@@ -7,7 +7,7 @@
 #
 # No route should point to this controller directly. Security is handled by each
 # sub-controller, as appropriate.
-class EventsController < ApplicationController
+class EventsBaseController < ApplicationController
   include EventsHelper
   include Events::Preload
   include Events::Edit
@@ -155,7 +155,7 @@ private
   end
 
   def block_multiple_reminders
-    return unless  @event.reminded?
+    return unless @event.reminded?
 
     flash[:alert] = "Reminders already sent for that #{event_type_param}."
     redirect_to send("#{event_type_param}s_path")

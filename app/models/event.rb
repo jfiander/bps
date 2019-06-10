@@ -43,7 +43,7 @@ class Event < ApplicationRecord
   )
 
   before_save :refresh_calendar!, if: :calendar_details_updated?
-  before_save { self.slug = slug.downcase.gsub('/', '_') if slug.present? }
+  before_save { self.slug = slug.downcase.tr('/', '_') if slug.present? }
   after_create { book! }
   before_destroy { unbook! }
 
@@ -112,16 +112,7 @@ class Event < ApplicationRecord
   end
 
   def public_link
-    path = if slug.present?
-      ['event_slug_url', slug]
-    else
-      return if id.blank?
-
-      route = category == 'meeting' ? 'event' : category
-      ["show_#{route}_url", id]
-    end
-
-    Rails.application.routes.url_helpers.send(*path, host: ENV['DOMAIN'])
+    Rails.application.routes.url_helpers.send(*public_link_path, host: ENV['DOMAIN'])
   end
 
   def link
@@ -139,7 +130,8 @@ class Event < ApplicationRecord
   end
 
   def date_title(event_type_cache = nil)
-    "#{display_title(event_type_cache)} – #{start_at.strftime(ApplicationController::SIMPLE_DATE_FORMAT)}"
+    start_at_formatted = start_at.strftime(ApplicationController::SIMPLE_DATE_FORMAT)
+    "#{display_title(event_type_cache)} – #{start_at_formatted}"
   end
 
   def repeat_description
@@ -161,5 +153,14 @@ private
   def validate_dates
     self.cutoff_at = start_at if cutoff_at.blank?
     self.expires_at = start_at + 1.week if expires_at.blank?
+  end
+
+  def public_link_path
+    if slug.present?
+      ['event_slug_url', slug]
+    elsif id.present?
+      route = category == 'meeting' ? 'event' : category
+      ["show_#{route}_url", id]
+    end
   end
 end

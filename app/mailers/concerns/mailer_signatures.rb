@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module MailerSignatures
+  # This module defines no public methods.
+  def _; end
+
 private
 
   def ao_signature

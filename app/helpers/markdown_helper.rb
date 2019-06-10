@@ -7,17 +7,13 @@ module MarkdownHelper
   }.freeze
 
   def render_markdown
-    unless action_name == 'home'
-      page_title(StaticPage.find_by(name: action_name).title)
-    end
+    page_title(StaticPage.find_by(name: action_name).title) unless action_name == 'home'
 
     render layout: 'application', inline: render_markdown_raw(name: action_name)
   end
 
   def render_markdown_raw(name: nil, markdown: nil)
-    unless name.present? || markdown.present?
-      raise ArgumentError, 'Must provide name or markdown.'
-    end
+    raise ArgumentError, 'Must provide name or markdown.' unless name.present? || markdown.present?
 
     @page_markdown = markdown
 

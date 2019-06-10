@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module BraintreeHelper
+  # This module defines no public methods.
+  def _; end
+
 private
 
   def braintree_enabled?
@@ -51,7 +54,7 @@ private
     @payment&.paid
   end
 
-  def has_user?
+  def user?
     @payment&.parent_type == 'Registration' && @payable&.user?
   end
 

@@ -9,7 +9,7 @@ FactoryBot.define do
     end
 
     trait :with_email do
-      email "#{SecureRandom.hex(8)}@example.com"
+      email { "#{SecureRandom.hex(8)}@example.com" }
     end
 
     trait :event do

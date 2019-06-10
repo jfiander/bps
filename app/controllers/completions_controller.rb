@@ -11,9 +11,7 @@ class CompletionsController < ApplicationController
   before_action :exam_list
   before_action :boc_skills_list
 
-  def list
-    #
-  end
+  def list; end
 
   def ytd
     render :list

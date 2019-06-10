@@ -3,12 +3,12 @@
 FactoryBot.define do
   factory :event do
     association :event_type
-    start_at Time.now + 1.week
-    cutoff_at Time.now + 2.weeks
-    expires_at Time.now + 3.weeks
-    show_in_catalog false
-    length_h 2
-    repeat_pattern 'WEEKLY'
+    start_at { Time.now + 1.week }
+    cutoff_at { Time.now + 2.weeks }
+    expires_at { Time.now + 3.weeks }
+    show_in_catalog { false }
+    length_h { 2 }
+    repeat_pattern { 'WEEKLY' }
 
     trait :with_instructor do
       after(:create) do |event|
@@ -35,7 +35,7 @@ FactoryBot.define do
     end
 
     trait :not_public_registerable do
-      allow_public_registrations false
+      allow_public_registrations { false }
     end
   end
 end

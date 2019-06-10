@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe MemberApplicant, type: :model do
-  context 'primary' do
-    before(:each) do
+  context 'with only a primary applicant' do
+    before do
       @application = FactoryBot.build(:member_application)
       @applicant = FactoryBot.build(
         :member_applicant,
@@ -15,7 +15,7 @@ RSpec.describe MemberApplicant, type: :model do
       )
     end
 
-    it 'should require names, full address, and a phone number' do
+    it 'requires names, full address, and a phone number' do
       @applicant.validate
       expect(@applicant.errors.messages).to eql(
         first_name: ["can't be blank"],
@@ -29,18 +29,18 @@ RSpec.describe MemberApplicant, type: :model do
     end
   end
 
-  context 'additional' do
-    before(:each) do
+  context 'with an additional member' do
+    before do
       @application = FactoryBot.build(:member_application)
       @applicant = FactoryBot.build(:member_applicant, member_application: @application, first_name: '', last_name: '')
     end
 
-    it 'should require names' do
+    it 'requires names' do
       @applicant.validate
       expect(@applicant.errors.messages).to eql(first_name: ["can't be blank"], last_name: ["can't be blank"])
     end
 
-    it "should refuse an application with a member's email address" do
+    it "refuses an application with a member's email address" do
       FactoryBot.create(:user, email: @applicant.email)
       @applicant.validate
       expect(@applicant.errors.messages).to eql(

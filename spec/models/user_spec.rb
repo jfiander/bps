@@ -5,38 +5,38 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:blank_photo) { 'https://static.bpsd9.org/no_profile.png' }
 
-  context 'new user' do
-    before(:each) do
+  context 'with a new user' do
+    before do
       @user = FactoryBot.build(:user)
     end
 
-    it 'should default to the blank profile photo' do
+    it 'defaults to the blank profile photo' do
       expect(@user.photo).to eql(blank_photo)
     end
   end
 
   describe 'validations' do
-    it 'should reject invalid ranks' do
+    it 'rejects invalid ranks' do
       user = FactoryBot.build(:user, rank: 'D/F/Lt/C')
       expect(user).not_to be_valid
     end
 
-    it 'should accept valid ranks' do
+    it 'accepts valid ranks' do
       user = FactoryBot.build(:user, rank: 'D/F/Lt')
       expect(user).to be_valid
     end
 
-    it 'should reject invalid grades' do
+    it 'rejects invalid grades' do
       user = FactoryBot.build(:user, grade: 'SP')
       expect(user).not_to be_valid
     end
 
-    it 'should accept valid grades' do
+    it 'accepts valid grades' do
       user = FactoryBot.build(:user, grade: 'JN')
       expect(user).to be_valid
     end
 
-    it 'should replace blank ranks with nil' do
+    it 'replaces blank ranks with nil' do
       user = FactoryBot.build(:user, rank: ' ')
       user.validate
       expect(user.rank).to be_nil
@@ -44,83 +44,83 @@ RSpec.describe User, type: :model do
   end
 
   context 'with specified user' do
-    before(:each) do
+    before do
       @user = FactoryBot.create(:user, first_name: 'John', last_name: 'Doe', rank: 'Lt/C', grade: 'AP')
     end
 
     describe 'auto_rank' do
-      it 'should correctly detect Cdr' do
+      it 'correctlies detect Cdr' do
         assign_bridge_office('commander', @user)
         expect(@user.auto_rank).to eql('Cdr')
       end
 
-      it 'should correctly detect Lt/C' do
+      it 'correctlies detect Lt/C' do
         assign_bridge_office('executive', @user)
         expect(@user.auto_rank).to eql('Lt/C')
       end
 
-      it 'should correctly detect 1st/Lt' do
+      it 'correctlies detect 1st/Lt' do
         @user.rank = nil
         assign_bridge_office('asst_secretary', @user)
         expect(@user.auto_rank(html: false)).to eql('1st/Lt')
       end
 
-      it 'should return the correct string for a formatted rank' do
+      it 'returns the correct string for a formatted rank' do
         @user.rank = nil
         assign_bridge_office('asst_educational', @user)
         expect(@user.auto_rank).to eql('1<sup>st</sup>/Lt')
       end
 
-      it 'should return the correct string for a simple rank' do
+      it 'returns the correct string for a simple rank' do
         expect(@user.auto_rank).to eql('Lt/C')
       end
     end
 
     describe 'formatting' do
-      before(:each) do
+      before do
         @user = FactoryBot.create(:user, first_name: 'John', last_name: 'Doe', rank: 'Lt/C', grade: 'AP')
       end
 
-      it 'should have the correct simple_name' do
+      it 'has the correct simple_name' do
         expect(@user.simple_name).to eql('John Doe')
       end
 
-      it 'should have the correct full_name' do
+      it 'has the correct full_name' do
         expect(@user.full_name).to eql('Lt/C John Doe, AP')
       end
 
       describe 'BOC' do
-        it 'should return nil for no BOC level' do
+        it 'returns nil for no BOC level' do
           expect(FactoryBot.create(:user).boc).to be_nil
         end
 
         describe 'with BOC level' do
-          before(:each) do
+          before do
             @user = FactoryBot.create(:user)
             FactoryBot.create(:course_completion, user: @user, course_key: 'BOC_IN')
           end
 
-          it 'should return the correct BOC level' do
+          it 'returns the correct BOC level' do
             expect(@user.boc).to eql('IN')
           end
 
           describe 'with endorsements' do
-            before(:each) do
+            before do
               FactoryBot.create(:course_completion, user: @user, course_key: 'BOC_CAN')
             end
 
-            it 'should return the correct BOC level with endorsements' do
+            it 'returns the correct BOC level with endorsements' do
               expect(@user.boc).to eql('IN (CAN)')
             end
 
-            it 'should generate the correct grade suffix' do
+            it 'generates the correct grade suffix' do
               expect(@user.boc_display).to eql('-IN')
             end
           end
         end
       end
 
-      it 'should return the correct bridge_hash' do
+      it 'returns the correct bridge_hash' do
         expect(@user.bridge_hash).to eql(
           full_name: 'Lt/C&nbsp;John&nbsp;Doe,&nbsp;AP',
           simple_name: 'John&nbsp;Doe',
@@ -131,47 +131,47 @@ RSpec.describe User, type: :model do
   end
 
   describe 'inviting' do
-    before(:each) do
+    before do
       @user = FactoryBot.create(:user)
       @placeholder_user = FactoryBot.create(:user, :placeholder_email)
     end
 
-    it 'should be invitable by default' do
+    it 'is invitable by default' do
       expect(@user.invitable?).to be(true)
     end
 
-    it 'should not have accepted an invitation' do
+    it 'does not have accepted an invitation' do
       @user.update(invitation_accepted_at: Time.now)
       expect(@user.invitable?).to be(false)
     end
 
-    it 'should not be logged in' do
+    it 'is not logged in' do
       @user.update(current_sign_in_at: Time.now)
       expect(@user.invitable?).to be(false)
     end
 
-    it 'should not be locked' do
+    it 'is not locked' do
       @user.lock
       expect(@user.invitable?).to be(false)
     end
 
-    it 'should not have a sign in count' do
+    it 'does not have a sign in count' do
       @user.update(sign_in_count: 1)
       expect(@user.invitable?).to be(false)
     end
 
-    it 'should not have a placeholder email' do
+    it 'does not have a placeholder email' do
       expect(@placeholder_user.invitable?).to be(false)
     end
 
-    it 'should have received but not accepted an invitation' do
+    it 'has received but not accepted an invitation' do
       @user.update(invitation_sent_at: Time.now)
       expect(@user.invited?).to be(true)
     end
   end
 
   describe 'registration' do
-    it 'should create a valid registration' do
+    it 'creates a valid registration' do
       @user = FactoryBot.create(
         :user,
         first_name: 'John',
@@ -197,65 +197,62 @@ RSpec.describe User, type: :model do
   end
 
   describe 'permissions' do
-    before(:all) do
+    before do
       @admin = FactoryBot.build(:role, name: 'admin').save(validate: false)
       @child = FactoryBot.create(:role, name: 'child', parent: Role.find_by(name: 'admin'))
-    end
-
-    before(:each) do
       @user = FactoryBot.create(:user)
     end
 
-    it 'should add permissions correctly' do
+    it 'adds permissions correctly' do
       user_role = @user.permit! :child
       expect(user_role.user).to eql(@user)
       expect(user_role.role.name).to eql('child')
     end
 
     describe 'removal' do
-      before(:each) do
+      before do
         @user.permit! :admin
         @user.permit! :child
       end
 
-      it 'should remove permissions correctly' do
+      it 'removes permissions correctly' do
         @user.unpermit! :child
         expect(@user.permitted_roles).to include(:admin)
       end
 
-      it 'should remove all permissions correctly' do
+      it 'removes all permissions correctly' do
         @user.unpermit! :all
         expect(@user.permitted_roles).to be_blank
       end
     end
 
-    it 'should return true when user has the required permission' do
+    it 'returns true when user has the required permission' do
       @user.permit! :child
       @user.reload
       expect(@user.permitted?(:child)).to be(true)
     end
 
-    it 'should return true when user has a parent of the required permission' do
+    it 'returns true when user has a parent of the required permission' do
       @user.permit! :admin
       @user.reload
       expect(@user.permitted?(:child)).to be(true)
     end
 
-    it 'should return false when user does not have the required permission' do
+    it 'returns false when user does not have the required permission' do
       @user.reload
       expect(@user.permitted?(:child)).to be(false)
     end
 
-    it "should return false when a role doesn't exist" do
+    it "returns false when a role doesn't exist" do
       expect(@user.permitted?(:not_a_permission)).to be(false)
     end
 
-    it 'should return true when user has the required cached permission' do
+    it 'returns true when user has the required cached permission' do
       session = { permitted: [:child], granted: [:child] }
       expect(@user.permitted?(:child, session: session)).to be(true)
     end
 
-    it 'should return false for invalid/empty permissions' do
+    it 'returns false for invalid/empty permissions' do
       expect(@user.permitted?(nil)).to be(false)
       expect(@user.permitted?([])).to be(false)
       expect(@user.permitted?({})).to be(false)
@@ -264,43 +261,43 @@ RSpec.describe User, type: :model do
       expect(@user.permitted?(nil, [], {}, '', ' ')).to be(false)
     end
 
-    it 'should return the correct lists of permissions' do
+    it 'returns the correct lists of permissions' do
       @user.permit! :admin
       expect(@user.granted_roles).to eql([:admin])
       expect(@user.permitted_roles).to eql(%i[admin child])
     end
 
     describe 'show_admin_menu?' do
-      before(:each) do
+      before do
         @page = FactoryBot.create(:role, name: 'page')
       end
 
-      it 'should show the admin menu for correct users' do
+      it 'shows the admin menu for correct users' do
         @user.permit! :page
         expect(@user.show_admin_menu?).to be(true)
       end
 
-      it 'should not show the admin menu for other users' do
+      it 'does not show the admin menu for other users' do
         expect(@user.show_admin_menu?).to be(false)
       end
     end
   end
 
   describe 'locking' do
-    before(:each) do
+    before do
       @user = FactoryBot.create(:user)
     end
 
-    it 'should not create locked users' do
+    it 'does not create locked users' do
       expect(@user.locked?).to be(false)
     end
 
-    it 'should correctly lock users' do
+    it 'correctlies lock users' do
       @user.lock
       expect(@user.locked?).to be(true)
     end
 
-    it 'should correctly unlock users' do
+    it 'correctlies unlock users' do
       @user.lock
       expect(@user.locked?).to be(true)
       @user.unlock
@@ -309,7 +306,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'scopes' do
-    before(:each) do
+    before do
       @user_inv = FactoryBot.create(:user)
       @user_pe = FactoryBot.create(:user, email: 'nobody-asdfhjkl@bpsd9.org')
       @user_inst = FactoryBot.create(:user, sign_in_count: 1, id_expr: Time.now + 1.year)
@@ -319,15 +316,15 @@ RSpec.describe User, type: :model do
       )
     end
 
-    it 'should return the list of invitable users' do
+    it 'returns the list of invitable users' do
       expect(User.invitable.to_a).to eql([@user_inv])
     end
 
-    it 'should return the list of valid instructor users' do
+    it 'returns the list of valid instructor users' do
       expect(User.valid_instructors.to_a).to eql([@user_inst])
     end
 
-    it 'should return the list of vessel examiner users' do
+    it 'returns the list of vessel examiner users' do
       expect(User.vessel_examiners.to_a).to eql([@user_vse])
     end
   end
@@ -335,78 +332,78 @@ RSpec.describe User, type: :model do
   describe 'address' do
     user = FactoryBot.create(:user, address_1: '100 N Capitol Ave', city: 'Lansing', state: 'MI', zip: '48933')
 
-    it 'should return a correct address array' do
+    it 'returns a correct address array' do
       expect(user.mailing_address).to eql([user.full_name, user.address_1, "#{user.city} #{user.state} #{user.zip}"])
     end
 
-    it 'should return valid Lat Lon' do
+    it 'returns valid Lat Lon' do
       expect(user.lat_lon(human: false).join("\t")).to match(/-?\d{1,3}\.\d+\t-?\d{1,3}\.\d+/)
     end
 
-    it 'should return valid human-readable Lat Lon' do
+    it 'returns valid human-readable Lat Lon' do
       expect(user.lat_lon(human: true)).to match(/\d{1,3}° \d{1,2}\.\d{1,5}′ [NS]\t\d{1,3}° \d{1,2}\.\d{1,5}′ [EW]/)
     end
   end
 
   describe 'profile photo' do
-    before(:each) do
+    before do
       @user = FactoryBot.create(:user)
       @photo = File.new(test_image(500, 750))
       @key = 'profile_photos/0/original/blank.jpg'
     end
 
-    it 'should return the default photo if not present' do
+    it 'returns the default photo if not present' do
       expect(@user.photo).to eql(User.no_photo)
     end
 
-    it 'should require a file path' do
+    it 'requires a file path' do
       expect { @user.assign_photo }.to raise_error(ArgumentError, 'missing keyword: local_path')
 
       expect { @user.assign_photo(local_path: @photo.path) }.not_to raise_error
     end
 
-    it 'should have a photo after attaching' do
+    it 'has a photo after attaching' do
       @user.assign_photo(local_path: @photo.path)
       expect(@user.photo).to eql(User.buckets[:files].link(@user.profile_photo.s3_object(:medium).key))
     end
   end
 
   describe 'dues' do
-    before(:each) do
+    before do
       @parent = FactoryBot.create(:user)
     end
 
-    it 'should return the correct single member amount' do
-      expect(@parent.dues).to eql(89)
+    it 'returns the correct single member amount' do
+      expect(@parent.dues).to be(89)
     end
 
-    it 'should return the correct discounted amount' do
-      expect(@parent.discounted_amount).to eql(86.75)
+    it 'returns the correct discounted amount' do
+      expect(@parent.discounted_amount).to eq(86.75)
     end
 
-    context 'family' do
-      before(:each) do
+    context 'with family' do
+      before do
         @child = FactoryBot.create(:user, parent: @parent)
       end
 
-      it 'should return the correct family amount' do
-        expect(@parent.dues).to eql(134)
+      it 'returns the correct family amount' do
+        expect(@parent.dues).to eq(134)
       end
 
-      it 'should return the parent_id hash if a parent is assigned' do
+      it 'returns the parent_id hash if a parent is assigned' do
         expect(@child.dues).to eql(user_id: @parent.id)
       end
 
       describe 'payable?' do
-        it 'should return true for a parent' do
+        it 'returns true for a parent' do
           expect(@parent.payable?).to be(true)
         end
 
-        it 'should return false for a child' do
+        it 'returns false for a child' do
           expect(@child.payable?).to be(false)
         end
 
-        it 'should return true for a recently-paid member' do
+        it 'returns true for a recently-paid member' do
           @parent.dues_paid!
           expect(@parent.payable?).to be(true)
         end
@@ -415,82 +412,82 @@ RSpec.describe User, type: :model do
   end
 
   describe 'dues_due' do
-    before(:each) do
+    before do
       @parent = FactoryBot.create(:user)
       @child = FactoryBot.create(:user, parent: @parent)
     end
 
-    it 'should return false with if not the head of a family' do
+    it 'returns false with if not the head of a family' do
       expect(@child.dues_due?).to be(false)
     end
 
-    it 'should return false with dues paid within 11 months' do
+    it 'returns false with dues paid within 11 months' do
       @parent.update(dues_last_paid_at: 3.months.ago)
       expect(@parent.dues_due?).to be(false)
     end
 
-    it 'should return true with dues paid over 11 months ago' do
+    it 'returns true with dues paid over 11 months ago' do
       @parent.update(dues_last_paid_at: 11.months.ago)
       expect(@parent.dues_due?).to be(true)
     end
   end
 
   describe 'valid_instructor?' do
-    before(:each) do
+    before do
       @user = FactoryBot.create(:user)
     end
 
-    it 'should return false for a nil id_expr' do
+    it 'returns false for a nil id_expr' do
       expect(@user.valid_instructor?).to be(false)
     end
 
-    it 'should return false for a past id_expr' do
+    it 'returns false for a past id_expr' do
       @user.update(id_expr: Time.now - 1.month)
       expect(@user.valid_instructor?).to be(false)
     end
 
-    it 'should return true for a future id_expr' do
+    it 'returns true for a future id_expr' do
       @user.update(id_expr: Time.now + 1.month)
       expect(@user.valid_instructor?).to be(true)
     end
   end
 
   describe 'vessel_examiner?' do
-    before(:each) do
+    before do
       @user = FactoryBot.create(:user)
     end
 
-    it 'should return false without VSC training' do
+    it 'returns false without VSC training' do
       expect(@user.vessel_examiner?).to be(false)
     end
 
-    it 'should return true with VSC training' do
+    it 'returns true with VSC training' do
       FactoryBot.create(:course_completion, user: @user, course_key: 'VSC_01', date: Date.today)
       expect(@user.vessel_examiner?).to be(true)
     end
   end
 
   describe 'cpr_aed?' do
-    before(:each) do
+    before do
       @user = FactoryBot.create(:user)
     end
 
-    it 'should return false without the flag set' do
+    it 'returns false without the flag set' do
       expect(@user.cpr_aed?).to be(false)
     end
 
-    it 'should return false with a past expiration date' do
+    it 'returns false with a past expiration date' do
       @user.update(cpr_aed_expires_at: Time.now - 1.day)
       expect(@user.cpr_aed?).to be(false)
     end
 
-    it 'should return true with a future expiration date' do
+    it 'returns true with a future expiration date' do
       @user.update(cpr_aed_expires_at: Time.now + 1.day)
       expect(@user.cpr_aed?).to be(true)
     end
   end
 
-  it 'should return the correct associations to include' do
+  it 'returns the correct associations to include' do
     expect(User.position_associations).to eql(%i[bridge_office standing_committee_offices committees user_roles roles])
   end
 end

@@ -3,26 +3,26 @@
 require 'rails_helper'
 
 RSpec.describe BpsPdf::Roster, type: :lib do
-  context 'default user' do
-    before(:each) do
+  context 'with a default user' do
+    before do
       FactoryBot.create_list(:user, 15)
       FactoryBot.create(:user, rank: '1/Lt')
       FactoryBot.create(:user, email: 'nobody-1234567890@bpsd9.org')
     end
 
-    it 'should successfully generate a portrait roster' do
+    it 'successfullies generate a portrait roster' do
       expect { BpsPdf::Roster.portrait }.not_to raise_error
     end
 
-    it 'should successfully generate a landscape roster' do
+    it 'successfullies generate a landscape roster' do
       expect { BpsPdf::Roster.landscape }.not_to raise_error
     end
 
-    it 'should successfully generate a landscape roster with a blank page' do
+    it 'successfullies generate a landscape roster with a blank page' do
       expect { BpsPdf::Roster.landscape(include_blank: true) }.not_to raise_error
     end
 
-    it 'should successfully generate a detailed roster' do
+    it 'successfullies generate a detailed roster' do
       today = Date.today.strftime('%Y-%m-%d')
       FactoryBot.create(:user, grade: 'SN', ed_ach: '2018-01-01', life: '2017-03-05', mm: 35)
       FactoryBot.create(:user, grade: 'SN', ed_ach: '2002-01-01', life: '2001-03-05', mm: 50)

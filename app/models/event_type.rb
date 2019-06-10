@@ -32,8 +32,8 @@ class EventType < ApplicationRecord
   def self.selector(type, key: false)
     seminars_select = seminars.ordered.map(&:to_select_array)
     meetings_select = meetings.ordered.map(&:to_select_array)
-    return key ? ({ 'Seminars' => seminars_select }) : seminars_select if type == 'seminar'
-    return key ? ({ 'Events' => meetings_select }) : meetings_select if type == 'event'
+    return key ? { 'Seminars' => seminars_select } : seminars_select if type == 'seminar'
+    return key ? { 'Events' => meetings_select } : meetings_select if type == 'event'
 
     course_selector_hash
   end
@@ -108,7 +108,7 @@ private
     small_words = {
       ' A ' => ' a ', ' To ' => ' to ', ' Of ' => ' of ', ' And ' => ' and ',
       ' On ' => ' on ', ' In ' => ' in ', ' For ' => ' for ',
-      '([- ])The([- ])' => '\1the\2',
+      '([- ])The([- ])' => '\1the\2'
     }
 
     [slashes, small_words].inject(&:merge)

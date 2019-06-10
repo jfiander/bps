@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :import_log do
-    json '{:created=>[], :updated=>{}, :completions=>[], :families=>{}, :locked=>:skipped}'
+    json { '{:created=>[], :updated=>{}, :completions=>[], :families=>{}, :locked=>:skipped}' }
   end
 end

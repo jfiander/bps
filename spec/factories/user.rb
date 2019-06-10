@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :user do
     sequence(:first_name) { |n| "First_#{n}" }
     sequence(:last_name) { |n| "Last_#{n}" }
-    grade 'AP'
+    grade { 'AP' }
     email { "example-#{SecureRandom.hex(8)}@example.com" }
     certificate { SecureRandom.hex(4) }
     password { SecureRandom.hex(16) }

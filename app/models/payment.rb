@@ -18,7 +18,7 @@ class Payment < ApplicationRecord
   scope :recent, -> { where('created_at > ?', 11.months.ago) }
   scope :for_user, ->(user) { where(parent_type: 'User', parent_id: user.id) }
   scope :paid, -> { where(paid: true) }
-  scope :unpaid, -> { not(paid) }
+  scope :unpaid, -> { !paid }
 
   def self.discount(amount)
     # Fee is rounded down to the nearest cent
@@ -88,6 +88,6 @@ private
   def set_cost_type
     return unless parent.class.name == 'Registration'
 
-    parent.event.costs.select { |t, c| c == amount }.keys.first.to_s.titleize
+    parent.event.costs.select { |_t, c| c == amount }.keys.first.to_s.titleize
   end
 end

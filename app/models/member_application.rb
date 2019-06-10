@@ -12,11 +12,11 @@ class MemberApplication < ApplicationRecord
   scope :pending, -> { where(approved_at: nil).includes(:member_applicants) }
 
   def primary
-    member_applicants.select { |m| m.primary }.first
+    member_applicants.select(&:primary).first
   end
 
   def additional
-    member_applicants.reject { |m| m.primary }
+    member_applicants.reject(&:primary)
   end
 
   def payment_amount

@@ -53,9 +53,7 @@ private
   def restrict_roles
     @roles.delete('admin')
 
-    unless current_user&.permitted?(:admin, strict: true, session: session)
-      @roles.delete('users')
-    end
+    @roles.delete('users') unless current_user&.permitted?(:admin, strict: true, session: session)
 
     return if current_user&.permitted?(:education, session: session)
 

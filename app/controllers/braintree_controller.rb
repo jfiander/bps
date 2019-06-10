@@ -10,18 +10,16 @@ class BraintreeController < ApplicationController
 
   before_action :transaction_details, only: %i[index set_promo ask_to_pay done]
   before_action :generate_client_token, only: %i[index set_promo ask_to_pay]
-  before_action :block_duplicate_payments, if: :already_paid?, only: %i[index set_promo ask_to_pay checkout]
-  before_action :require_user, if: :has_user?, only: %i[index set_promo ask_to_pay checkout]
+  before_action(
+    :block_duplicate_payments, if: :already_paid?, only: %i[index set_promo ask_to_pay checkout]
+  )
+  before_action :require_user, if: :user?, only: %i[index set_promo ask_to_pay checkout]
 
   skip_before_action :verify_authenticity_token, only: [:checkout]
 
-  def index
-    #
-  end
+  def index; end
 
-  def ask_to_pay
-    #
-  end
+  def ask_to_pay; end
 
   def checkout
     @result = submit_transaction
@@ -48,17 +46,11 @@ class BraintreeController < ApplicationController
     render :index
   end
 
-  def done
-    #
-  end
+  def done; end
 
-  def refunds
-    #
-  end
+  def refunds; end
 
-  def terms
-    #
-  end
+  def terms; end
 
 private
 

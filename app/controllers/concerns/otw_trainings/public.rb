@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-module OTWTrainings::Public
-  def public
-    #
-  end
+module OTWTrainings
+  module Public
+    def public; end
 
-  def public_request
-    OTWMailer.jumpstart(otw_public_params)
-  end
+    def public_request
+      OTWMailer.jumpstart(otw_public_params)
+    end
 
-private
+  private
 
-  def otw_public_params
-    params.permit(:name, :email, :phone, :details, :availability)
+    def otw_public_params
+      params.permit(:name, :email, :phone, :details, :availability)
+    end
   end
 end

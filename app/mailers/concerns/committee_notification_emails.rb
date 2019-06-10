@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module CommitteeNotificationEmails
+  # This module defines no public methods.
+  def _; end
+
 private
 
   def to_list

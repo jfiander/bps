@@ -63,16 +63,18 @@ class User < ApplicationRecord
   validates_attachment_file_name :profile_photo, matches: /(\.png|\.jpe?g)\z/
   validates :certificate, uniqueness: true, allow_nil: true
 
-  scope :locked,            -> { where.not(locked_at: nil) }
-  scope :unlocked,          -> { where.not(id: locked) }
-  scope :alphabetized,      -> { order(:last_name) }
-  scope :with_name,         ->(name) { where(simple_name: name) }
-  scope :with_any_name,     -> { where.not(simple_name: [nil, '', ' ']) }
+  scope :locked, -> { where.not(locked_at: nil) }
+  scope :unlocked, -> { where.not(id: locked) }
+  scope :alphabetized, -> { order(:last_name) }
+  scope :with_name, ->(name) { where(simple_name: name) }
+  scope :with_any_name, -> { where.not(simple_name: [nil, '', ' ']) }
   scope :valid_instructors, -> { where('id_expr > ?', Time.now) }
-  scope :invitable,         -> { unlocked.where('sign_in_count = 0').reject(&:placeholder_email?) }
-  scope :vessel_examiners,  -> { includes(:course_completions).where(course_completions: { course_key: 'VSC_01' }) }
+  scope :invitable, -> { unlocked.where('sign_in_count = 0').reject(&:placeholder_email?) }
+  scope :vessel_examiners, (lambda do
+    includes(:course_completions).where(course_completions: { course_key: 'VSC_01' })
+  end)
   scope :include_positions, -> { includes(position_associations) }
-  scope :recent_mm,         -> { where('last_mm_year >= ?', Date.today.beginning_of_year - 6.months) }
+  scope :recent_mm, -> { where('last_mm_year >= ?', Date.today.beginning_of_year - 6.months) }
 
   def full_name(html: true, show_boc: false)
     # html_safe: Text is sanitized before storage

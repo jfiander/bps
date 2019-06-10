@@ -1,62 +1,64 @@
 # frozen_string_literal: true
 
-module Application::Security
-  module ClassMethods
-    def secure!(*roles, strict: false, only: nil, except: nil)
-      before_action(only: only, except: except) { authenticate_user! }
-      return if roles.blank?
+module Application
+  module Security
+    module ClassMethods
+      def secure!(*roles, strict: false, only: nil, except: nil)
+        before_action(only: only, except: except) { authenticate_user! }
+        return if roles.blank?
 
-      before_action(only: only, except: except) { require_permission(*roles, strict: strict) }
+        before_action(only: only, except: except) { require_permission(*roles, strict: strict) }
+      end
     end
-  end
 
-  def self.included(klass)
-    klass.extend(ClassMethods)
-  end
+    def self.included(klass)
+      klass.extend(ClassMethods)
+    end
 
-private
+  private
 
-  def ssl_configured?
-    Rails.env.production?
-  end
+    def ssl_configured?
+      Rails.env.production?
+    end
 
-  def handle_unverified_request
-    flash[:alert] = 'Sorry, please try that again.'
-    redirect_to :back
-  rescue StandardError
-    redirect_to root_path
-  end
+    def handle_unverified_request
+      flash[:alert] = 'Sorry, please try that again.'
+      redirect_to :back
+    rescue StandardError
+      redirect_to root_path
+    end
 
-  def require_permission(*roles, strict: false)
-    return if current_user&.permitted?(*roles, strict: strict, session: session)
+    def require_permission(*roles, strict: false)
+      return if current_user&.permitted?(*roles, strict: strict, session: session)
 
-    redirect_to root_path
-  end
+      redirect_to root_path
+    end
 
-  def authenticate_user!(*args)
-    return super(*args) if user_signed_in?
+    def authenticate_user!(*args)
+      return super(*args) if user_signed_in?
 
-    flash[:referrer] = request.original_fullpath
-    flash[:notice] = 'You must login to continue.'
-    redirect_to new_user_session_path
-  end
+      flash[:referrer] = request.original_fullpath
+      flash[:notice] = 'You must login to continue.'
+      redirect_to new_user_session_path
+    end
 
-  def authenticate_inviter!
-    return redirect_to root_path unless current_user&.permitted?(:users, session: session)
+    def authenticate_inviter!
+      return redirect_to root_path unless current_user&.permitted?(:users, session: session)
 
-    super
-  end
+      super
+    end
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(
-      :account_update, keys: %i[profile_photo rank first_name last_name]
-    )
-  end
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(
+        :account_update, keys: %i[profile_photo rank first_name last_name]
+      )
+    end
 
-  def cache_user_permissions
-    return unless current_user.present?
+    def cache_user_permissions
+      return unless current_user.present?
 
-    session[:granted] = current_user.granted_roles
-    session[:permitted] = current_user.permitted_roles
+      session[:granted] = current_user.granted_roles
+      session[:permitted] = current_user.permitted_roles
+    end
   end
 end

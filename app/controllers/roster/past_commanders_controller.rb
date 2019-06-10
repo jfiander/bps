@@ -1,15 +1,20 @@
 # frozen_string_literal: true
 
-class Roster::PastCommandersController < RosterController
-private
+module Roster
+  class PastCommandersController < RosterController
+    # This class defines no public methods.
+    def _; end
 
-  def model
-    Roster::PastCommander
-  end
+  private
 
-  def clean_params
-    params.require(:roster_past_commander).permit(
-      :id, :user_id, :name, :year, :deceased
-    )
+    def model
+      Roster::PastCommander
+    end
+
+    def clean_params
+      params.require(:roster_past_commander).permit(
+        :id, :user_id, :name, :year, :deceased
+      )
+    end
   end
 end

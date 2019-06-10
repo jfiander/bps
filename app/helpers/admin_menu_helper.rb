@@ -30,9 +30,9 @@ module AdminMenuHelper
   end
 
   def show_link?(*roles, strict: false, **options)
-    rc, ra, nc, na = link_requirements(options)
+    req_cont, req_act, not_cont, not_act = link_requirements(options)
     return false unless current_user&.permitted?(roles, strict: strict, session: session)
-    return false if invalid?(rc, ra, nc, na)
+    return false if invalid?(req_cont, req_act, not_cont, not_act)
 
     true
   end
@@ -58,21 +58,24 @@ private
     }
   end
 
-  def invalid?(rc, ra, nc, na)
-    invalid_controller?(rc, ra, nc, na) || invalid_action?(rc, ra, nc, na) ||
-      invalid_combination?(rc, ra, nc, na)
+  def invalid?(req_cont, req_act, not_cont, not_act)
+    invalid_controller?(req_cont, req_act, not_cont, not_act) ||
+      invalid_action?(req_cont, req_act, not_cont, not_act) ||
+      invalid_combination?(req_cont, req_act, not_cont, not_act)
   end
 
-  def invalid_controller?(rc, ra, nc, na)
-    (missing_controller?(rc) && ra.blank?) || (wrong_controller?(nc) && na.blank?)
+  def invalid_controller?(req_cont, req_act, not_cont, not_act)
+    (missing_controller?(req_cont) && req_act.blank?) ||
+      (wrong_controller?(not_cont) && not_act.blank?)
   end
 
-  def invalid_action?(rc, ra, nc, na)
-    (missing_action?(ra) && rc.blank?) || (wrong_action?(na) && nc.blank?)
+  def invalid_action?(req_cont, req_act, not_cont, not_act)
+    (missing_action?(req_act) && req_cont.blank?) || (wrong_action?(not_act) && not_cont.blank?)
   end
 
-  def invalid_combination?(rc, ra, nc, na)
-    (missing_controller?(rc) && missing_action?(ra)) || (wrong_controller?(nc) && wrong_action?(na))
+  def invalid_combination?(req_cont, req_act, not_cont, not_act)
+    (missing_controller?(req_cont) && missing_action?(req_act)) ||
+      (wrong_controller?(not_cont) && wrong_action?(not_act))
   end
 
   def missing_controller?(req_controller = nil)

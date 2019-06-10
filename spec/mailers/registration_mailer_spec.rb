@@ -8,7 +8,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
   let(:event_user_reg) { FactoryBot.create(:event_registration, :with_user) }
   let(:event_email_reg) { FactoryBot.create(:event_registration, :with_email) }
 
-  before(:each) { generic_seo_and_ao }
+  before { generic_seo_and_ao }
 
   context 'with user' do
     describe 'registered' do

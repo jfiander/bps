@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe UserRole, type: :model do
-  it 'should preload correctly' do
+  it 'preloads correctly' do
     admin = FactoryBot.create(:role, name: 'admin')
     child = FactoryBot.create(:role, name: 'child', parent: admin)
     users = FactoryBot.create_list(:user, 2)

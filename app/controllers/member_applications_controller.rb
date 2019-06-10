@@ -109,7 +109,7 @@ private
 
   def failed_application(e)
     flash.now[:error] = e.message.gsub('Member applicants base ', '')
-                                 .gsub('Validation failed: ', '')
+                         .gsub('Validation failed: ', '')
     raise ActiveRecord::Rollback
   end
 

@@ -2,6 +2,9 @@
 
 module BpsPdf
   class Base < Prawn::Document
+    # This class defines no public methods.
+    def _; end
+
   private
 
     def specify_font

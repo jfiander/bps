@@ -5,9 +5,10 @@ require 'rails_helper'
 RSpec.describe MemberApplicationMailer, type: :mailer do
   let(:single_application) { FactoryBot.create(:single_application) }
   let(:family_application) { FactoryBot.create(:family_application) }
-  before(:each) { generic_seo_and_ao }
 
-  context 'single application' do
+  before { generic_seo_and_ao }
+
+  context 'with a single application' do
     describe 'new_application' do
       let(:mail) { MemberApplicationMailer.new_application(single_application) }
 
@@ -113,7 +114,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
     end
   end
 
-  context 'family application' do
+  context 'with a family application' do
     describe 'new_application' do
       let(:mail) { MemberApplicationMailer.new_application(family_application) }
 

@@ -7,8 +7,15 @@ class PromoCode < ApplicationRecord
   has_many :events, through: :event_promo_codes
 
   scope :expired, -> { where('expires_at < ?', Time.now) }
-  scope :current, -> { where('valid_at < ? AND (expires_at > ? OR expires_at IS NULL)', Time.now, Time.now) }
-  scope :pending, -> { where('(valid_at > ? OR valid_at IS NULL) AND (expires_at > ? OR expires_at IS NULL)', Time.now, Time.now) }
+  scope :current, (lambda do
+    where('valid_at < ? AND (expires_at > ? OR expires_at IS NULL)', Time.now, Time.now)
+  end)
+  scope :pending, (lambda do
+    where(
+      '(valid_at > ? OR valid_at IS NULL) AND (expires_at > ? OR expires_at IS NULL)',
+      Time.now, Time.now
+    )
+  end)
 
   validates :code, presence: true
 

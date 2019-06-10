@@ -5,8 +5,8 @@ FactoryBot.define do
     address do
       "#{SecureRandom.hex(8)}\n#{SecureRandom.hex(8)}\n#{SecureRandom.hex(8)}"
     end
-    map_link 'https://maps.example.com'
-    details 'address details'
+    map_link { 'https://maps.example.com' }
+    details { 'address details' }
     picture {}
   end
 end

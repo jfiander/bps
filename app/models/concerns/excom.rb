@@ -12,10 +12,10 @@ module Excom
 private
 
   def excom_emails
-    bridge = BridgeOffice.includes(:user).heads.map(&:user)
-    at_large = StandingCommitteeOffice.includes(:user).where(committee_name: 'executive').map(&:user)
+    bridge = BridgeOffice.includes(:user).heads
+    at_large = StandingCommitteeOffice.includes(:user).where(committee_name: 'executive')
 
-    [bridge, at_large].flatten.compact.map(&:email)
+    [bridge, at_large].flatten.map(&:user).compact.map(&:email)
   end
 
   def excom_group_members

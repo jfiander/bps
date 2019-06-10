@@ -67,7 +67,7 @@ private
       fields: new_application_slack_fields(
         "#{@application.primary.first_name} #{@application.primary.last_name}",
         @application.primary.email,
-        @application.member_applicants.count,
+        @application.member_applicants.count
       )
     )
   end

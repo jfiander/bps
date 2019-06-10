@@ -17,13 +17,13 @@ module GoogleAPI
 
     def add(email)
       call(:insert_member, @group_id, member(email))
-    rescue Google::Apis::ClientError, 'duplicate: Member already exists.'
+    rescue Google::Apis::ClientError
       :already_exists
     end
 
     def remove(email)
       call(:delete_member, @group_id, email)
-    rescue Google::Apis::ClientError, '(required: Missing required field: memberKey)'
+    rescue Google::Apis::ClientError
       :not_found
     end
 

@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :album do
-    name 'Test Album'
+    name { 'Test Album' }
   end
 end

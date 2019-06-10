@@ -13,9 +13,7 @@ class OTWTrainingsController < ApplicationController
   before_action :add_formatting, only: %i[new create]
   before_action :edit_formatting, only: %i[edit update]
 
-  def list
-    #
-  end
+  def list; end
 
   def list_requests
     @otw_requests = OTWTrainingUser.all

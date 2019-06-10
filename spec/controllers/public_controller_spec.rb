@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe PublicController, type: :controller do
-  before(:each) { generic_seo_and_ao }
+  before { generic_seo_and_ao }
+
   render_views
 
-  it 'should correctly render the general structure' do
+  it 'correctlies render the general structure' do
     get :home
     expect(response).to have_http_status(:ok)
 
@@ -14,19 +15,19 @@ RSpec.describe PublicController, type: :controller do
   end
 
   describe 'META tags' do
-    it 'should render the title tag' do
+    it 'renders the title tag' do
       get :home
 
       expect(response.body).to match(%r{<title>America&#39;s Boating Club – Birmingham Squadron</title>})
     end
 
-    it 'should render the description tag' do
+    it 'renders the description tag' do
       get :home
 
       expect(response.body).to match(%r{<meta[^>]*?name="description" />})
     end
 
-    it 'should render the keywords tag' do
+    it 'renders the keywords tag' do
       get :home
 
       expect(response.body).to match(%r{<meta[^>]*?name="keywords" />})
@@ -38,8 +39,8 @@ RSpec.describe PublicController, type: :controller do
       { registration: { event_id: event.id, email: 'someone@example.com' }, format: :js }
     end
 
-    context 'accepting registrations' do
-      before(:each) do
+    context 'when accepting registrations' do
+      before do
         @event = FactoryBot.create(:event)
       end
 
@@ -49,7 +50,7 @@ RSpec.describe PublicController, type: :controller do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'allows registering to a registerable event' do
+      it 'returns the correct error response for an already-registered event' do
         FactoryBot.create(:registration, event: @event, email: 'someone@example.com')
 
         post :register, params: params(@event)

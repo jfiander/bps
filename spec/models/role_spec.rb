@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Role, type: :model do
-  it 'should descend from admin' do
+  it 'descends from admin' do
     orphan = FactoryBot.build(:role, name: 'orphan')
 
     expect(orphan.valid?).to be(false)

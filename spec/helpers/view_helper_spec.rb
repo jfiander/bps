@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe ViewHelper, type: :helper do
   describe 'officer flags' do
-    it 'should get the correct SVG for Lt/C' do
+    it 'gets the correct SVG for Lt/C' do
       expect(ViewHelper.officer_flag('educational')).to include(
         '<svg ',
         '<title>LTC</title>',
@@ -13,7 +13,7 @@ RSpec.describe ViewHelper, type: :helper do
       )
     end
 
-    it 'should get the correct SVG for Cdr' do
+    it 'gets the correct SVG for Cdr' do
       ViewHelper.officer_flag('commander').inspect
       expect(ViewHelper.officer_flag('commander')).to include(
         '<svg ',
@@ -23,7 +23,7 @@ RSpec.describe ViewHelper, type: :helper do
       )
     end
 
-    it 'should get the correct SVG for 1st/Lt' do
+    it 'gets the correct SVG for 1st/Lt' do
       expect(ViewHelper.officer_flag('asst_secretary')).to include(
         '<svg ',
         '<title>1LT</title>',

@@ -36,9 +36,7 @@ private
   end
 
   def parse_nav_classes
-    if @options[:title].is_a?(Symbol)
-      @options[:title] = @options[:title].to_s.titleize
-    end
+    @options[:title] = @options[:title].to_s.titleize if @options[:title].is_a?(Symbol)
     @classes = [@options[:css_class]]
     @classes << @options[:permit] if @options[:permit]
     @classes << 'active' if @options[:active]
@@ -87,8 +85,6 @@ private
   def user_not_permitted?(permit)
     permit.present? && !current_user&.permitted?(permit, session: session)
   end
-
-private
 
   def logout_link
     @options[:title] = 'Logout'

@@ -28,7 +28,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def self.ordered
-    path = "#{Rails.root}/app/models/concerns/#{self.name.underscore}/order.sql"
+    path = "#{Rails.root}/app/models/concerns/#{name.underscore}/order.sql"
     return unless File.exist?(path)
 
     order(Arel.sql(File.read(path)))

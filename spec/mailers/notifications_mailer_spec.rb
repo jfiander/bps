@@ -8,7 +8,7 @@ end
 
 RSpec.describe NotificationsMailer, type: :mailer do
   describe 'bridge office updated' do
-    before(:each) do
+    before do
       generic_seo_and_ao
       @previous = FactoryBot.create(:user)
       @by = FactoryBot.create(:user)
@@ -33,12 +33,12 @@ RSpec.describe NotificationsMailer, type: :mailer do
   end
 
   describe 'new float plan' do
-    before(:each) do
+    before do
       @float_plan = FactoryBot.create(:float_plan, :one_onboard)
       @mail = NotificationsMailer.float_plan(@float_plan)
     end
 
-    context 'no monitors' do
+    context 'with no monitors' do
       it 'renders the headers' do
         expect(@mail).to contain_mail_headers(
           subject: 'Float Plan Submitted', to: ['dev@bpsd9.org'], from: ['support@bpsd9.org']

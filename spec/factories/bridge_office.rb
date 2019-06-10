@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :bridge_office do
-    office 'commander'
+    office { 'commander' }
     association :user
   end
 end

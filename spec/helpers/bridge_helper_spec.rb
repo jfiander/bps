@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe BridgeHelper, type: :helper do
-  before(:each) do
+  before do
     cdr = FactoryBot.create(:user, first_name: 'John', last_name: 'Doe')
     com = FactoryBot.create(:user, first_name: 'Jane', last_name: 'Dore')
     stand = FactoryBot.create(:user, first_name: 'Jack', last_name: 'Dodd')
@@ -63,7 +63,7 @@ RSpec.describe BridgeHelper, type: :helper do
     }
   end
 
-  it 'should generate the correct values for the bridge selectors' do
+  it 'generates the correct values for the bridge selectors' do
     expect(BridgeHelper.bridge_selectors).to eql(
       departments: [
         %w[Commander commander],
@@ -93,7 +93,7 @@ RSpec.describe BridgeHelper, type: :helper do
     )
   end
 
-  it 'should build the correct bridge list' do
+  it 'builds the correct bridge list' do
     expect(BridgeHelper.build_bridge_list).to eql(departments: departments, standing_committees: standing_committees)
   end
 end

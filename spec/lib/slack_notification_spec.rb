@@ -31,7 +31,7 @@ RSpec.describe SlackNotification, type: :lib do
     notification
   end
 
-  before(:all) do
+  before do
     base_notification_details = {
       type: :info, title: 'Test Notification',
       fallback: 'This is a test notification',
@@ -63,19 +63,19 @@ RSpec.describe SlackNotification, type: :lib do
     @live_notification.dryrun = false
   end
 
-  it 'should generate a valid notification with fields hash' do
+  it 'generates a valid notification with fields hash' do
     expect(@hash_notification.notify!).to eql(notification_with_short_three)
   end
 
-  it 'should generate a valid notification with fields array' do
+  it 'generates a valid notification with fields array' do
     expect(@array_notification.notify!).to eql(notification_with_long_three)
   end
 
-  it 'should generate a valid notification with fields array' do
+  it 'generates a valid notification with string' do
     expect(@string_notification.notify!).to eql(notification_with_string)
   end
 
-  it 'should reject invalid types of fields' do
+  it 'rejects invalid types of fields' do
     expect do
       SlackNotification.new(
         type: :info, title: 'Test Notification',
@@ -88,7 +88,7 @@ RSpec.describe SlackNotification, type: :lib do
     )
   end
 
-  it 'should reject invalid types of notifications' do
+  it 'rejects invalid types of notifications' do
     expect do
       SlackNotification.new(
         type: :not_valid, title: 'Test Notification',
@@ -101,7 +101,7 @@ RSpec.describe SlackNotification, type: :lib do
     )
   end
 
-  it 'should reject unlinked channels' do
+  it 'rejects unlinked channels' do
     expect do
       SlackNotification.new(
         channel: 'not-valid',
@@ -115,7 +115,7 @@ RSpec.describe SlackNotification, type: :lib do
     )
   end
 
-  it 'should successfully send a notification' do
+  it 'successfullies send a notification' do
     expect { @live_notification.notify! }.not_to raise_error
   end
 end

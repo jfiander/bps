@@ -8,6 +8,9 @@ RSpec.describe ReceiptMailer, type: :mailer do
   let(:reg) { FactoryBot.create(:registration, user: user, event: event) }
   let(:app) { FactoryBot.create(:family_application) }
 
+  # Collisions can occur between multiple simultaneous test suites. Restart any failed suites.
+  let(:braintree_api_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 201} }
+
   def payment(parent)
     FactoryBot.create(:payment, parent: parent)
   end
@@ -21,14 +24,11 @@ RSpec.describe ReceiptMailer, type: :mailer do
     $tr ||= transaction_for(parent, user)
   end
 
-  # Collisions can occur between multiple simultaneous test suites. Restart any failed suites.
-  let(:braintree_api_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 201} }
-
-  before(:each) { generic_seo_and_ao }
+  before { generic_seo_and_ao }
 
   describe 'receipt' do
     describe 'registration' do
-      it 'should submit the transaction successfully' do
+      it 'submits the transaction successfully' do
         $receipt_email = user.email
         expect { $tr = transaction_for(reg, user) }.to output(braintree_api_regex).to_stdout_from_any_process
         expect($tr.status).to be_in(%w[submitted_for_settlement gateway_rejected])
@@ -55,7 +55,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'member application' do
-      it 'should submit the transaction successfully' do
+      it 'submits the transaction successfully' do
         $receipt_email = user.email
         expect { $tr = transaction_for(app, user) }.to output(braintree_api_regex).to_stdout_from_any_process
         expect($tr.status).to be_in(%w[submitted_for_settlement gateway_rejected])
@@ -85,7 +85,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'dues' do
-      it 'should submit the transaction successfully' do
+      it 'submits the transaction successfully' do
         $receipt_email = user.email
         expect { $tr = transaction_for(user, user) }.to output(braintree_api_regex).to_stdout_from_any_process
         expect($tr.status).to be_in(%w[submitted_for_settlement gateway_rejected])
