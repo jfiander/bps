@@ -10,7 +10,8 @@ module DateHelper
   end
 
   def excom_in_session?(date = Date.today)
-    in_session?(date, 'June')
+    year = date.strftime('%Y')
+    !date.yesterday.between?(excom_date('June', year), excom_date('September', year))
   end
 
   def excom_date(month = Date.today.strftime('%B'), year = Date.today.strftime('%Y'))
@@ -23,7 +24,7 @@ module DateHelper
     next_month(date, excom_date(date.strftime('%B'), date.strftime('%Y')))
   end
 
-  def next_excom_over_30_days?(date = Date.today)
+  def next_excom_over_40_days?(date = Date.today)
     (next_excom(date) - date).to_i > 40
   end
 
@@ -36,7 +37,8 @@ module DateHelper
   end
 
   def membership_in_session?(date = Date.today)
-    in_session?(date, 'May')
+    year = date.strftime('%Y')
+    !date.yesterday.between?(membership_date('May', year), membership_date('September', year))
   end
 
   def membership_date(month = Date.today.strftime('%B'), year = Date.today.strftime('%Y'))
@@ -48,12 +50,6 @@ module DateHelper
   end
 
 private
-
-  def in_session?(date, month_a, month_b = 'September')
-    !date.yesterday.between?(
-      membership_date(month_a, date.strftime('%Y')), membership_date(month_b, date.strftime('%Y'))
-    )
-  end
 
   def next_month(date, meeting_date)
     date += 1.month if date > meeting_date
