@@ -3,6 +3,6 @@ h1 = "Catalog of All #{event_type_param.titleize}s"
 = render "application/navigation/education", active: {courses: (event_type_param == 'course'), seminars: (event_type_param == 'seminar')}, catalog: true if event_type_param.in? %w[course seminar]
 
 - if @event_catalog.present?
-  = render "events/tables", type: event_type_param, all_events: @event_catalog, long_form: false
+  = render "event/tables", type: event_type_param, all_events: @event_catalog, long_form: false
 - else
-  = render "events/no/catalog", type: event_type_param
+  = render "event/no/catalog", type: event_type_param

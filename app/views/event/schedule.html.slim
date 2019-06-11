@@ -3,9 +3,9 @@ h1 = "Currently Scheduled #{event_type_param.titleize}s"
 = render "application/navigation/education", active: {courses: (event_type_param == 'course'), seminars: (event_type_param == 'seminar')} if event_type_param.in? %w[course seminar]
 
 - if (@events.is_a?(Array) && @events.count.positive?) || (@events.is_a?(Hash) && (@events[:public].count.positive? || @events[:advanced_grade].count.positive? || @events[:elective].count.positive?))
-  = render "events/tables", type: event_type_param, all_events: @events, long_form: false
+  = render "event/tables", type: event_type_param, all_events: @events, long_form: false
 - else
-  = render "events/no/events", type: event_type_param
+  = render "event/no/events", type: event_type_param
 - if @current_user_permitted_event_type && @expired_events.present? && !(event_type_param == 'course' && @expired_events.all? { |_,v| v.blank? })
   #expired-events-section
     hr
@@ -19,4 +19,4 @@ h1 = "Currently Scheduled #{event_type_param.titleize}s"
         |  are displayed below.
       p Archiving will remove them from this list.
     hr
-    = render "events/tables", type: event_type_param, all_events: @expired_events, long_form: false
+    = render "event/tables", type: event_type_param, all_events: @expired_events, long_form: false

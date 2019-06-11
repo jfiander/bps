@@ -22,8 +22,8 @@
     if: user_signed_in? && event.allow_member_registrations && event.registerable? \
   )
 - elsif event.registerable? && !event.allow_public_registrations
-  = render('events/no/public_registrations')
+  = render('event/no/public_registrations')
 - elsif event.allow_public_registrations
-  = render('events/register/public', event_id: event.id)
+  = render('event/register/public', event_id: event.id)
 - else
-  = render('events/no/registrations')
+  = render('event/no/registrations')

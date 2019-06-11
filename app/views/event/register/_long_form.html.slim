@@ -16,8 +16,8 @@
           if: @event.allow_member_registrations \
         )
   - elsif @event.allow_public_registrations?
-    = render 'events/register/long_form_public_form'
+    = render 'event/register/long_form_public_form'
   - else
-    = render 'events/no/public_registrations'
+    = render 'event/no/public_registrations'
 - else
-  = render 'events/no/registrations'
+  = render 'event/no/registrations'

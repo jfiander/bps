@@ -7,7 +7,7 @@
 #
 # No route should point to this controller directly. Security is handled by each
 # sub-controller, as appropriate.
-class EventsBaseController < ApplicationController
+class EventController < ApplicationController
   include EventsHelper
   include Events::Preload
   include Events::Edit

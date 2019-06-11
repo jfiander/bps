@@ -71,10 +71,10 @@
             .table.row
               .table-cell
                 - if defined?(@event_catalog)
-                  = render 'events/actions/catalog', event: event
+                  = render 'event/actions/catalog', event: event
                 - else
-                  = render 'events/actions/schedule', event: event if user_signed_in? && @current_user_permitted_event_type
-                  = render 'events/actions/schedule_general', event: event unless long_form || event.expired?
+                  = render 'event/actions/schedule', event: event if user_signed_in? && @current_user_permitted_event_type
+                  = render 'event/actions/schedule_general', event: event unless long_form || event.expired?
   .table-row
     .table
       .table-row
@@ -125,7 +125,7 @@
                   b Registered Users:
                   ul.simple
                     - @registered_users[event.id].each do |r|
-                      li = render 'events/register/member', r: r
+                      li = render 'event/register/member', r: r
         .table-cell.bottom-right
           .table
             .table.row

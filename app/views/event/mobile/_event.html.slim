@@ -10,10 +10,10 @@
     = FA::Icon.p('star', style: :regular)
     | In catalog
 - if defined?(@event_catalog)
-  .event-mobile-contents.spaced = render 'events/actions/catalog', event: event
+  .event-mobile-contents.spaced = render 'event/actions/catalog', event: event
 - else
-  .event-mobile-contents.spaced = render 'events/actions/schedule', event: event if user_signed_in? && @current_user_permitted_event_type
-  .event-mobile-contents.spaced = render 'events/actions/schedule_general', event: event unless long_form || event.expired?
+  .event-mobile-contents.spaced = render 'event/actions/schedule', event: event if user_signed_in? && @current_user_permitted_event_type
+  .event-mobile-contents.spaced = render 'event/actions/schedule_general', event: event unless long_form || event.expired?
 .event-mobile-contents.spaced
   - if event.multiple_sessions?
     b Starts: 
@@ -93,15 +93,15 @@
   .event-mobile-contents.spaced
     b Registered Users:
     - @registered_users[event.id].each do |r|
-      = render 'events/register/member', r: r
+      = render 'event/register/member', r: r
 
 - if !defined?(@event_catalog) && !long_form
   - if !user_signed_in? && event.registerable? && event.allow_public_registrations
-    = render 'events/register/public', event_id: event.id, mobile: true
+    = render 'event/register/public', event_id: event.id, mobile: true
   - elsif !user_signed_in? && event.registerable?
-    = render 'events/no/public_registrations'
+    = render 'event/no/public_registrations'
   - elsif !user_signed_in?
-    = render 'events/no/registrations'
+    = render 'event/no/registrations'
 
 .event-mobile-contents.spaced
   - if event.get_flyer(@event_types).present? && event.flyer_content_type != 'application/pdf'
