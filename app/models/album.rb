@@ -6,6 +6,6 @@ class Album < ApplicationRecord
   validates :name, uniqueness: true
 
   def cover
-    photos.first
+    cover_id.present? ? photos.select { |p| p.id == cover_id }.first : photos.first
   end
 end

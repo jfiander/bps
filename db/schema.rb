@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_03_155418) do
+ActiveRecord::Schema.define(version: 2019_06_11_150941) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.integer "cover_id"
   end
 
   create_table "award_recipients", force: :cascade do |t|
@@ -402,8 +403,6 @@ ActiveRecord::Schema.define(version: 2019_06_03_155418) do
   end
 
   create_table "registrations", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "email"
     t.integer "event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -412,6 +411,8 @@ ActiveRecord::Schema.define(version: 2019_06_03_155418) do
     t.string "phone"
     t.integer "override_cost"
     t.string "override_comment"
+    t.integer "user_id"
+    t.string "email"
   end
 
   create_table "roles", force: :cascade do |t|
