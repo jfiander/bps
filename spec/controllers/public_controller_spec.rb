@@ -49,15 +49,6 @@ RSpec.describe PublicController, type: :controller do
 
         expect(response).to have_http_status(:ok)
       end
-
-      it 'returns the correct error response for an already-registered event' do
-        FactoryBot.create(:registration, event: @event, email: 'someone@example.com')
-
-        post :register, params: params(@event)
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(flash[:alert]).to eql('You are already registered for this course.')
-      end
     end
 
     it 'does not allow registering to a closed event' do

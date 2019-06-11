@@ -46,7 +46,7 @@ class Registration < ApplicationRecord
   end
 
   def add(user: nil, email: nil, certificate: nil)
-    self.user_registrations << UserRegistration.create(
+    user_registrations << UserRegistration.create(
       registration: self, primary: false, user: user, email: email, certificate: certificate
     )
     save
@@ -54,7 +54,7 @@ class Registration < ApplicationRecord
   end
 
   def primary
-    user_registrations.select { |u| u.primary }.first
+    user_registrations.select(&:primary).first
   end
 
   def payment_amount

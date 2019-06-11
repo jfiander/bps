@@ -10,9 +10,9 @@ RSpec.describe Registration, type: :model do
   end
 
   describe 'scopes' do
-    before(:each) do
+    before do
       @expired, = register(FactoryBot.create(:event, expires_at: 1.week.ago))
-      @current, = register(FactoryBot.create(:event, expires_at: Time.now + 1.week))
+      @current, = register(FactoryBot.create(:event, expires_at: Time.zone.now + 1.week))
     end
 
     it 'current' do

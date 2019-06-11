@@ -39,7 +39,7 @@ RSpec.describe EventType, type: :model do
   end
 
   describe 'ordering' do
-    it 'should correctly order event_types by name' do
+    it 'correctlies order event_types by name' do
       FactoryBot.create(:event_type, event_category: :seminar, title: 'paddle')
       FactoryBot.create(:event_type, event_category: :elective, title: 'sail')
       FactoryBot.create(:event_type, event_category: :meeting, title: 'member')

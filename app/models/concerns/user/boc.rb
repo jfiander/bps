@@ -18,11 +18,11 @@ class User
 
   private
 
-  def boc_keys
-    @boc_keys ||= course_completions.where(
-      course_key: %i[BOC_IN BOC_CN BOC_ACN BOC_ON BOC_SA BOC_PAD BOC_IW BOC_CAN BOC_MEX]
-    ).map { |c| c.course_key.to_sym }
-  end
+    def boc_keys
+      @boc_keys ||= course_completions.where(
+        course_key: %i[BOC_IN BOC_CN BOC_ACN BOC_ON BOC_SA BOC_PAD BOC_IW BOC_CAN BOC_MEX]
+      ).map { |c| c.course_key.to_sym }
+    end
 
     def boc_level
       return 'ON'  if boc_keys.include?(:BOC_ON)

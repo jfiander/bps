@@ -11,7 +11,7 @@ class UserRegistration < ApplicationRecord
   before_destroy :block_destroy, if: :paid?
 
   validates_uniqueness_of :primary, if: :primary, scope: :registration_id
-  validate :has_user_or_email?, :no_duplicates
+  validate :user_or_email?, :no_duplicates
 
   def paid?
     registration.paid?
@@ -23,7 +23,7 @@ private
     raise 'The associated registration has been paid, so this cannot be destroyed.'
   end
 
-  def has_user_or_email?
+  def user_or_email?
     return true if user.present? || email.present?
 
     errors.add(:user, 'or email must be present')
