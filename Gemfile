@@ -74,13 +74,14 @@ group :production do
 end
 
 group :development, :test do
-  gem 'sqlite3',              '~> 1.3.11'
+  gem 'sqlite3', '~> 1.3.11'
 
-  gem 'brakeman',             '~> 4.3'
-  gem 'rubocop',              '~> 0.59'
-  gem 'rubocop-performance',  '~> 1.3.0'
-  gem 'rubocop-rails_config', '~> 0.2'
-  gem 'rubocop-rspec',        '~> 1.30'
+  gem 'brakeman',                 '~> 4.3'
+  gem 'rails-controller-testing', '~> 1.0.4'
+  gem 'rubocop',                  '~> 0.59'
+  gem 'rubocop-performance',      '~> 1.3.0'
+  gem 'rubocop-rails_config',     '~> 0.2'
+  gem 'rubocop-rspec',            '~> 1.30'
 
   # Specs
   gem 'database_cleaner',  '~> 1.6.2'
