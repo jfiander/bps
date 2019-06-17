@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Event, type: :model do
+RSpec.describe Event, type: :model, slow: true do
   before { generic_seo_and_ao }
 
   describe 'scopes' do
