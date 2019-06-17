@@ -157,7 +157,6 @@ def brakeman_example(example_group)
 end
 
 def clear_test_calendar
-  puts "\n\n*** Specs complete! Clearing test calendar..."
   GoogleAPI::Calendar.new.clear_test_calendar
 rescue Google::Apis::ClientError
   nil
@@ -169,10 +168,6 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
     FileUtils.mkdir_p(Rails.root.join('tmp', 'run'))
-  end
-
-  config.after do
-    Event.where.not(google_calendar_event_id: nil)&.map(&:unbook!)
   end
 
   config.after(:suite) do
