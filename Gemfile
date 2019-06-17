@@ -80,7 +80,7 @@ group :development, :test do
   gem 'rails-controller-testing', '~> 1.0.4'
   gem 'rubocop',                  '~> 0.59'
   gem 'rubocop-performance',      '~> 1.3.0'
-  gem 'rubocop-rails_config',     '~> 0.2'
+  gem 'rubocop-rails_config',     '~> 0.6'
   gem 'rubocop-rspec',            '~> 1.30'
 
   # Specs

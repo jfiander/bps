@@ -3,9 +3,9 @@
 FactoryBot.define do
   factory :event do
     association :event_type
-    start_at { Time.now + 1.week }
-    cutoff_at { Time.now + 2.weeks }
-    expires_at { Time.now + 3.weeks }
+    start_at { Time.zone.now + 1.week }
+    cutoff_at { Time.zone.now + 2.weeks }
+    expires_at { Time.zone.now + 3.weeks }
     show_in_catalog { false }
     length_h { 2 }
     repeat_pattern { 'WEEKLY' }

@@ -17,14 +17,14 @@ RSpec.describe Event, type: :model do
     it 'filters by current' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
       FactoryBot.create_list(:event, 2, event_type: event_type)
-      FactoryBot.create(:event, event_type: event_type, expires_at: Time.now)
+      FactoryBot.create(:event, event_type: event_type, expires_at: Time.zone.now)
       expect(Event.current('seminar').to_a).to eql(Event.first(2))
     end
 
     it 'filters by expired' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
       FactoryBot.create_list(:event, 2, event_type: event_type)
-      FactoryBot.create(:event, event_type: event_type, expires_at: Time.now)
+      FactoryBot.create(:event, event_type: event_type, expires_at: Time.zone.now)
       expect(Event.expired('seminar').to_a).to eql([Event.last])
     end
 
@@ -71,36 +71,36 @@ RSpec.describe Event, type: :model do
     describe 'flags' do
       describe 'expiration' do
         it 'returns true when expired' do
-          @event.update(expires_at: Time.now - 1.day)
+          @event.update(expires_at: Time.zone.now - 1.day)
           expect(@event.expired?).to be(true)
         end
 
         it 'returns false when not expired' do
-          @event.update(expires_at: Time.now + 1.day)
+          @event.update(expires_at: Time.zone.now + 1.day)
           expect(@event.expired?).to be(false)
         end
       end
 
       describe 'archival' do
         it 'returns true when archived' do
-          @event.update(archived_at: Time.now - 1.day)
+          @event.update(archived_at: Time.zone.now - 1.day)
           expect(@event.archived?).to be(true)
         end
 
         it 'returns false when not archived' do
-          @event.update(archived_at: Time.now + 1.day)
+          @event.update(archived_at: Time.zone.now + 1.day)
           expect(@event.archived?).to be(false)
         end
       end
 
       describe 'cutoff' do
         it 'returns true when not accepting registrations' do
-          @event.update(cutoff_at: Time.now - 1.day)
+          @event.update(cutoff_at: Time.zone.now - 1.day)
           expect(@event.cutoff?).to be(true)
         end
 
         it 'returns false when accepting registrations' do
-          @event.update(cutoff_at: Time.now + 1.day)
+          @event.update(cutoff_at: Time.zone.now + 1.day)
           expect(@event.cutoff?).to be(false)
         end
       end
@@ -120,15 +120,15 @@ RSpec.describe Event, type: :model do
 
       describe 'hiding old events' do
         it 'expires the event' do
-          expect(@event.expires_at).to be > Time.now
+          expect(@event.expires_at).to be > Time.zone.now
           @event.expire!
-          expect(@event.expires_at).to be < Time.now
+          expect(@event.expires_at).to be < Time.zone.now
         end
 
         it 'archives the event' do
           expect(@event.archived_at).to be_nil
           @event.archive!
-          expect(@event.archived_at).to be < Time.now
+          expect(@event.archived_at).to be < Time.zone.now
         end
       end
 
@@ -181,12 +181,12 @@ RSpec.describe Event, type: :model do
 
       describe 'within a week' do
         it 'returns false if the start date is more than 1 week away' do
-          @event.start_at = Time.now + 2.weeks
+          @event.start_at = Time.zone.now + 2.weeks
           expect(@event.within_a_week?).to be(false)
         end
 
         it 'returns true if the start date is less than 1 week away' do
-          @event.start_at = Time.now + 3.days
+          @event.start_at = Time.zone.now + 3.days
           expect(@event.within_a_week?).to be(true)
         end
       end
@@ -260,22 +260,22 @@ RSpec.describe Event, type: :model do
         end
 
         it 'returns false if cutoff date is past' do
-          @event.update(cutoff_at: Time.now - 1.day)
+          @event.update(cutoff_at: Time.zone.now - 1.day)
           expect(@event.registerable?).to be(false)
         end
 
         it 'returns true if only expiration date is past' do
-          @event.update(expires_at: Time.now - 1.day)
+          @event.update(expires_at: Time.zone.now - 1.day)
           expect(@event.registerable?).to be(true)
         end
 
         it 'returns false if expiration date and start date are past' do
-          @event.update(expires_at: Time.now - 1.day, start_at: Time.now - 2.days)
+          @event.update(expires_at: Time.zone.now - 1.day, start_at: Time.zone.now - 2.days)
           expect(@event.registerable?).to be(false)
         end
 
         it 'returns true if both cutoff not expiration are future' do
-          @event.update(cutoff_at: Time.now + 1.days, expires_at: Time.now + 2.days)
+          @event.update(cutoff_at: Time.zone.now + 1.day, expires_at: Time.zone.now + 2.days)
           expect(@event.registerable?).to be(true)
         end
       end

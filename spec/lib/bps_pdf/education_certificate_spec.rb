@@ -63,22 +63,22 @@ RSpec.describe BpsPdf::EducationCertificate, type: :lib do
   end
 
   it 'works with Life Member' do
-    user = FactoryBot.create(:user, life: Date.today)
+    user = FactoryBot.create(:user, life: Time.zone.today)
     expect { BpsPdf::EducationCertificate.for(user) }.not_to raise_error
   end
 
   it 'works with Senior Member' do
-    user = FactoryBot.create(:user, senior: Date.today)
+    user = FactoryBot.create(:user, senior: Time.zone.today)
     expect { BpsPdf::EducationCertificate.for(user) }.not_to raise_error
   end
 
   it 'works with EdPro' do
-    user = FactoryBot.create(:user, ed_pro: Date.today)
+    user = FactoryBot.create(:user, ed_pro: Time.zone.today)
     expect { BpsPdf::EducationCertificate.for(user) }.not_to raise_error
   end
 
   it 'works with EdAch' do
-    user = FactoryBot.create(:user, ed_ach: Date.today)
+    user = FactoryBot.create(:user, ed_ach: Time.zone.today)
     expect { BpsPdf::EducationCertificate.for(user) }.not_to raise_error
   end
 end

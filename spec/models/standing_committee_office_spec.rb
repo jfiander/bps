@@ -9,7 +9,7 @@ RSpec.describe StandingCommitteeOffice, type: :model do
         @standing = FactoryBot.create(
           :standing_committee_office,
           committee_name: 'executive',
-          term_start_at: Time.now.beginning_of_year,
+          term_start_at: Time.zone.now.beginning_of_year,
           term_length: 3
         )
       end
@@ -32,7 +32,7 @@ RSpec.describe StandingCommitteeOffice, type: :model do
         @standing = FactoryBot.create(
           :standing_committee_office,
           committee_name: 'auditing',
-          term_start_at: Time.now.beginning_of_year - 1.year,
+          term_start_at: Time.zone.now.beginning_of_year - 1.year,
           term_length: 3
         )
       end

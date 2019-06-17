@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe ImportUsers, type: :service do
-  let(:import) { File.open(File.join(Rails.root, 'spec', 'import.csv'), 'r+') }
+  let(:import) { File.open(Rails.root.join('spec', 'import.csv'), 'r+') }
 
   before do
-    FileUtils.cp(File.join(Rails.root, 'spec', 'demo_import.csv'), File.join(Rails.root, 'spec', 'import.csv'))
+    FileUtils.cp(Rails.root.join('spec', 'demo_import.csv'), Rails.root.join('spec', 'import.csv'))
   end
 
   describe 'user handling' do

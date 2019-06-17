@@ -92,7 +92,7 @@ RSpec.describe Payment, type: :model do
       end
 
       it 'is not payable when the parent is not payable' do
-        @registration.event.update(cost: 1, advance_payment: true, cutoff_at: Time.now - 1.hour)
+        @registration.event.update(cost: 1, advance_payment: true, cutoff_at: Time.zone.now - 1.hour)
         expect(@registration.payment.payable?).to eql(@registration.payable?)
         expect(@registration.payment.payable?).to be(false)
       end
@@ -189,14 +189,14 @@ RSpec.describe Payment, type: :model do
       end
 
       it 'correctlies attach a promo code when a match exists' do
-        FactoryBot.create(:promo_code, code: 'prior_code', valid_at: Time.now - 1.hour, discount_type: 'member')
+        FactoryBot.create(:promo_code, code: 'prior_code', valid_at: Time.zone.now - 1.hour, discount_type: 'member')
         @payment.attach_promo_code('prior_code')
 
         expect(@payment.promo_code.code).to eql('prior_code')
       end
 
       it 'correctlies attach a promo code when a match does not exist' do
-        @payment.attach_promo_code('new_code', valid_at: Time.now - 1.hour, discount_type: 'member')
+        @payment.attach_promo_code('new_code', valid_at: Time.zone.now - 1.hour, discount_type: 'member')
 
         expect(@payment.promo_code.code).to eql('new_code')
       end
@@ -207,7 +207,9 @@ RSpec.describe Payment, type: :model do
       event = FactoryBot.create(:event, event_type: event_type, cost: 20)
       reg, = register(event, email: 'test@example.com')
       payment = reg.payment
-      payment.attach_promo_code('new_code', valid_at: Time.now - 1.hour, discount_type: 'percent', discount_amount: 5)
+      payment.attach_promo_code(
+        'new_code', valid_at: Time.zone.now - 1.hour, discount_type: 'percent', discount_amount: 5
+      )
 
       expect(payment.transaction_amount).to eql('$19.00')
     end

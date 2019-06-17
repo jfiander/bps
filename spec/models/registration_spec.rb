@@ -53,7 +53,7 @@ RSpec.describe Registration, type: :model do
       end
 
       it 'is not payable if advance_payment is required' do
-        @reg.event.update(advance_payment: true, cutoff_at: Time.now - 1.hour)
+        @reg.event.update(advance_payment: true, cutoff_at: Time.zone.now - 1.hour)
         expect(@reg.payable?).to be(false)
       end
 
@@ -106,7 +106,7 @@ RSpec.describe Registration, type: :model do
   end
 
   it 'includes an attached PDF if present' do
-    @event.flyer = File.open(File.join(Rails.root, 'spec', 'Blank.pdf'), 'r')
+    @event.flyer = File.open(Rails.root.join('spec', 'Blank.pdf'), 'r')
     @event.save
     reg = FactoryBot.create(:registration, event: @event, user: @user)
 

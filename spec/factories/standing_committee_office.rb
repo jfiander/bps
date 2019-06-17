@@ -5,7 +5,7 @@ FactoryBot.define do
     committee_name { 'executive' }
     association :user
     chair { false }
-    term_start_at { DateTime.now }
+    term_start_at { Time.zone.today }
     term_length { 1 }
   end
 end

@@ -141,12 +141,12 @@ RSpec.describe User, type: :model do
     end
 
     it 'does not have accepted an invitation' do
-      @user.update(invitation_accepted_at: Time.now)
+      @user.update(invitation_accepted_at: Time.zone.now)
       expect(@user.invitable?).to be(false)
     end
 
     it 'is not logged in' do
-      @user.update(current_sign_in_at: Time.now)
+      @user.update(current_sign_in_at: Time.zone.now)
       expect(@user.invitable?).to be(false)
     end
 
@@ -165,7 +165,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'has received but not accepted an invitation' do
-      @user.update(invitation_sent_at: Time.now)
+      @user.update(invitation_sent_at: Time.zone.now)
       expect(@user.invited?).to be(true)
     end
   end
@@ -309,10 +309,10 @@ RSpec.describe User, type: :model do
     before do
       @user_inv = FactoryBot.create(:user)
       @user_pe = FactoryBot.create(:user, email: 'nobody-asdfhjkl@bpsd9.org')
-      @user_inst = FactoryBot.create(:user, sign_in_count: 1, id_expr: Time.now + 1.year)
+      @user_inst = FactoryBot.create(:user, sign_in_count: 1, id_expr: Time.zone.now + 1.year)
       @user_vse = FactoryBot.create(:user, sign_in_count: 23)
       @user_vse.course_completions << FactoryBot.create(
-        :course_completion, user: @user_vse, course_key: 'VSC_01', date: Time.now - 1.month
+        :course_completion, user: @user_vse, course_key: 'VSC_01', date: Time.zone.now - 1.month
       )
     end
 
@@ -442,12 +442,12 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns false for a past id_expr' do
-      @user.update(id_expr: Time.now - 1.month)
+      @user.update(id_expr: Time.zone.now - 1.month)
       expect(@user.valid_instructor?).to be(false)
     end
 
     it 'returns true for a future id_expr' do
-      @user.update(id_expr: Time.now + 1.month)
+      @user.update(id_expr: Time.zone.now + 1.month)
       expect(@user.valid_instructor?).to be(true)
     end
   end
@@ -462,7 +462,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns true with VSC training' do
-      FactoryBot.create(:course_completion, user: @user, course_key: 'VSC_01', date: Date.today)
+      FactoryBot.create(:course_completion, user: @user, course_key: 'VSC_01', date: Time.zone.today)
       expect(@user.vessel_examiner?).to be(true)
     end
   end
@@ -477,12 +477,12 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns false with a past expiration date' do
-      @user.update(cpr_aed_expires_at: Time.now - 1.day)
+      @user.update(cpr_aed_expires_at: Time.zone.now - 1.day)
       expect(@user.cpr_aed?).to be(false)
     end
 
     it 'returns true with a future expiration date' do
-      @user.update(cpr_aed_expires_at: Time.now + 1.day)
+      @user.update(cpr_aed_expires_at: Time.zone.now + 1.day)
       expect(@user.cpr_aed?).to be(true)
     end
   end

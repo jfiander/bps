@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :course_completion do
     association :user
     course_key { 'SE' }
-    date { Date.today.beginning_of_year }
+    date { Time.zone.today.beginning_of_year }
   end
 end

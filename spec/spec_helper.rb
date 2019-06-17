@@ -71,11 +71,11 @@ end
 # then refer to the appropriate officer as:
 # generic_seo_and_ao[:seo] # .user
 def generic_seo_and_ao
-  unless (seo = BridgeOffice.find_by(office: 'educational')).present?
+  if (seo = BridgeOffice.find_by(office: 'educational')).blank?
     seo = FactoryBot.create(:bridge_office, office: 'educational')
   end
 
-  unless (ao = BridgeOffice.find_by(office: 'administrative')).present?
+  if (ao = BridgeOffice.find_by(office: 'administrative')).blank?
     ao = FactoryBot.create(:bridge_office, office: 'administrative')
   end
 
@@ -83,7 +83,7 @@ def generic_seo_and_ao
 end
 
 def assign_bridge_office(office, user)
-  unless (bridge_office = BridgeOffice.find_by(office: office)).present?
+  if (bridge_office = BridgeOffice.find_by(office: office)).blank?
     bridge_office = FactoryBot.create(:bridge_office, office: office)
   end
 
@@ -169,7 +169,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
-    FileUtils.mkdir_p("#{Rails.root}/tmp/run")
+    FileUtils.mkdir_p(Rails.root.join('tmp', 'run'))
   end
 
   config.after do
@@ -180,7 +180,7 @@ RSpec.configure do |config|
     run_brakeman if ENV['CONTINUOUS_INTEGRATION'] == 'true'
 
     DatabaseCleaner.clean_with(:truncation)
-    Dir["#{Rails.root}/tmp/run/**/*"].each { |file| File.delete(file) }
+    Dir[Rails.root.join('tmp', 'run', '**', '*')].each { |file| File.delete(file) }
 
     clear_test_calendar
   end

@@ -23,7 +23,7 @@ RSpec.describe BpsPdf::Roster, type: :lib do
     end
 
     it 'successfullies generate a detailed roster' do
-      today = Date.today.strftime('%Y-%m-%d')
+      today = Time.zone.today.strftime('%Y-%m-%d')
       FactoryBot.create(:user, grade: 'SN', ed_ach: '2018-01-01', life: '2017-03-05', mm: 35)
       FactoryBot.create(:user, grade: 'SN', ed_ach: '2002-01-01', life: '2001-03-05', mm: 50)
       FactoryBot.create(:user, grade: 'N',  ed_pro: '2017-01-01', senior: '2013-01-01', mm: 5)
