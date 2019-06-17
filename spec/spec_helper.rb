@@ -27,31 +27,31 @@ SimpleCov.start('rails') do
   add_filter '/config'
   add_filter '/app/mailers/previews'
 
-  # Exclude controller code from specs
+  # Exclude controller code
   add_filter '/app/controllers'
 
-  # Exclude static view-oriented helper code from specs
+  # Exclude static view-oriented helper code
   add_filter '/app/helpers/application_helper.rb'
   add_filter '/app/helpers/admin_menu_helper.rb'
   add_filter '/app/helpers/view_helper.rb'
   add_filter '/app/helpers/markdown_helper.rb'
   add_filter '/app/helpers/braintree_helper.rb'
 
+  # Config code located in app/helpers
+  add_filter '/app/helpers/devise_helper.rb'
+
   # Invariant code
   ## used for configuring API access
-  add_filter 'app/models/concerns/payment/braintree_methods.rb'
-  add_filter 'app/models/concerns/payment/model_configs.rb'
+  add_filter '/app/models/concerns/payment/braintree_methods.rb'
+  add_filter '/app/models/concerns/payment/model_configs.rb'
   ## used for configuring regular meetings
-  add_filter 'app/lib/regular_meetings.rb'
+  add_filter '/app/lib/regular_meetings.rb'
   ## used for fetching git information
-  add_filter 'app/lib/git_info.rb'
+  add_filter '/app/lib/git_info.rb'
   ## used to improve markdown formatting
-  add_filter 'app/lib/target_blank_renderer.rb'
+  add_filter '/app/lib/target_blank_renderer.rb'
   add_filter '/app/lib/parsed_markdown.rb'
   add_filter '/app/lib/parsed_markdown/parsers.rb'
-
-  # Config code located in app directory
-  add_filter 'app/helpers/devise_helper.rb'
 end
 SimpleCov.minimum_coverage(100)
 
