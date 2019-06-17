@@ -8,9 +8,8 @@ module BpsPdf
 
     def self.create_pdf(orientation = :portrait, include_blank: false)
       @orientation = orientation
-      BpsPdf::Roster.generate(
-        'tmp/run/Roster.pdf', page_layout: @orientation, page_size: [612, page_width]
-      ) do
+      size = [612, page_width]
+      path = BpsPdf::Roster.generate('Roster', page_layout: @orientation, page_size: size) do
         specify_font
         configure_colors
 
@@ -18,7 +17,7 @@ module BpsPdf
         roster_pages(User.unlocked.alphabetized, orientation)
       end
 
-      File.open('tmp/run/Roster.pdf', 'r+')
+      File.open(path, 'r+')
     end
 
     def self.portrait(_ignored = nil)

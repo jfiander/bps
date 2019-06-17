@@ -2,8 +2,12 @@
 
 module BpsPdf
   class Base < Prawn::Document
-    # This class defines no public methods.
-    def _; end
+    def self.generate(filename, **options)
+      timestamp = Time.zone.now.to_i
+      full_path = Rails.root.join('tmp', 'run', "#{filename}_#{timestamp}.pdf")
+      super(full_path, options)
+      full_path
+    end
 
   private
 

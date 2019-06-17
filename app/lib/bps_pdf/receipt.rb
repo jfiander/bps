@@ -9,7 +9,7 @@ module BpsPdf
     MODULES.each { |c| include "BpsPdf::Receipt::#{c}".constantize }
 
     def self.create_pdf(payment)
-      BpsPdf::Receipt.generate('tmp/run/Receipt.pdf') do
+      path = BpsPdf::Receipt.generate('Receipt') do
         specify_font_awesome
         specify_font
         configure_colors
@@ -21,7 +21,7 @@ module BpsPdf
         MODULES.each { |m| send(m.underscore, payment) }
       end
 
-      File.open('tmp/run/Receipt.pdf', 'r+')
+      File.open(path, 'r+')
     end
 
   private

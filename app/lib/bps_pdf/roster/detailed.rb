@@ -18,12 +18,10 @@ module BpsPdf
       BODY_REG_SIZE ||= 8
       BODY_SM_SIZE ||= 7
 
-      PDF_FILE_PATH ||= "#{Rails.root}/tmp/run/Roster.pdf"
-
       MODULES.each { |c| include "BpsPdf::Roster::Detailed::#{c}".constantize }
 
       def self.create_pdf
-        BpsPdf::Roster::Detailed.generate(PDF_FILE_PATH, page_size: [396, 612]) do
+        path = BpsPdf::Roster::Detailed.generate('Roster', page_size: [396, 612]) do
           specify_font
           configure_colors
 
@@ -34,7 +32,7 @@ module BpsPdf
           puts '*** Roster generation complete!'
         end
 
-        File.open(PDF_FILE_PATH, 'r+')
+        File.open(path, 'r+')
       end
     end
   end

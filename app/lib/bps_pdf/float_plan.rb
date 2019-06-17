@@ -11,12 +11,12 @@ module BpsPdf
     MODULES.each { |c| include "BpsPdf::FloatPlan::#{c}".constantize }
 
     def self.for(float_plan)
-      BpsPdf::FloatPlan.generate('tmp/run/Float_Plan.pdf') do
+      path = BpsPdf::FloatPlan.generate('Float_Plan') do
         configure_colors
         MODULES.each { |m| send(m.underscore, float_plan) }
       end
 
-      File.open('tmp/run/Float_Plan.pdf', 'r+')
+      File.open(path, 'r+')
     end
 
   private
