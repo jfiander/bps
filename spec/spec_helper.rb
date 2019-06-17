@@ -176,12 +176,14 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    run_brakeman if ENV['CONTINUOUS_INTEGRATION'] == 'true'
+    run_brakeman if ENV['RUN_BRAKEMAN'] == 'true'
 
     DatabaseCleaner.clean_with(:truncation)
     Dir[Rails.root.join('tmp', 'run', '**', '*')].each { |file| File.delete(file) }
 
-    clear_test_calendar
+    clear_test_calendar if ENV['AUTO_CLEAR_CALENDAR'] == 'true'
+
+    true
   end
 
   # rspec-expectations config goes here. You can use an alternate

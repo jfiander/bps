@@ -32,7 +32,7 @@ gem 'aws-sdk-rails',       '~> 1.0.1'
 gem 'braintree',           '~> 2.83'
 gem 'devise',              '~> 4.4'
 gem 'devise_invitable',    '~> 1.7'
-gem 'exp_retry',           '~> 0.0.8'
+gem 'exp_retry',           '~> 0.0.11'
 gem 'google-api-client',   '~> 0.23.4'
 gem 'mini_magick',         '~> 4.8'
 gem 'paperclip',           '~> 5.3.0'
@@ -46,7 +46,7 @@ gem 'slack-notifier',      '~> 2.3'
 
 gem 'geocoder'
 
-gem 'bps-google-api',      '~> 0.1.3'
+gem 'bps-google-api',      '~> 0.1.5'
 
 # View Management
 gem 'fa_rails',            '~> 0.1.16'
