@@ -39,7 +39,6 @@ SimpleCov.start('rails') do
 
   # Invariant code
   ## used for configuring API access
-  add_filter 'app/lib/google_api'
   add_filter 'app/models/concerns/payment/braintree_methods.rb'
   add_filter 'app/models/concerns/payment/model_configs.rb'
   ## used for configuring regular meetings
