@@ -126,14 +126,12 @@ module Concerns
       end
 
       def calendar_retry
-        ExpRetry.new(exception: Google::Apis::RateLimitError, retries: 6)
+        ExpRetry.new(exception: Google::Apis::RateLimitError, retries: 3)
       end
 
       def calendar_update(call_if: true, set_to: nil)
         response = calendar_retry.call { yield } if call_if
-
-        set = response if set_to == :response
-        set = nil if set_to == :nil
+        set = { response: response, nil: nil }[set_to]
         store_calendar_details(set) if set_to.present?
       end
     end
