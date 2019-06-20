@@ -23,7 +23,7 @@ private
   end
 
   def excom_group
-    @excom_group ||= GoogleAPI::Group.new('excom@bpsd9.org')
+    @excom_group ||= GoogleAPI::Configured::Group.new('excom@bpsd9.org')
   end
 
   def update_group_emails(add, remove)

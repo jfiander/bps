@@ -9,7 +9,7 @@ module Concerns
         return if booked? || id.blank?
 
         calendar_update(call_if: true, set_to: :response) do
-          calendar.create(calendar_id, calendar_hash)
+          calendar.create(calendar_hash)
         end
       rescue StandardError => e
         Bugsnag.notify(e)
@@ -19,7 +19,7 @@ module Concerns
         return unless booked?
 
         calendar_update(call_if: on_calendar?, set_to: :nil) do
-          calendar.delete(calendar_id, google_calendar_event_id)
+          calendar.delete(google_calendar_event_id)
         end
       rescue StandardError => e
         Bugsnag.notify(e)
@@ -30,7 +30,7 @@ module Concerns
         return book! unless booked? && on_calendar?
 
         calendar_update(call_if: true) do
-          calendar.update(calendar_id, google_calendar_event_id, calendar_hash)
+          calendar.update(google_calendar_event_id, calendar_hash)
         end
       rescue StandardError => e
         Bugsnag.notify(e)
@@ -41,7 +41,7 @@ module Concerns
       end
 
       def on_calendar?
-        event = calendar.get(calendar_id, google_calendar_event_id)
+        event = calendar.get(google_calendar_event_id)
         event.present? && event.status != 'cancelled'
       rescue Google::Apis::ClientError
         false
@@ -50,7 +50,7 @@ module Concerns
     private
 
       def calendar
-        @calendar ||= GoogleAPI::Calendar.new
+        @calendar ||= GoogleAPI::Configured::Calendar.new(calendar_id)
       end
 
       def calendar_id(prod: false)
