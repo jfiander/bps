@@ -7,41 +7,46 @@ class ParsedMarkdown
 
   private
 
+    def gsubs!(pattern, replacement)
+      gsub!(pattern, replacement)
+      self
+    end
+
     def parse_center
-      gsub!(/<p>(\+?)@/, '<p class="center">\1') || self
+      gsubs!(/<p>(\+?)@/, '<p class="center">\1')
     end
 
     def parse_big
-      gsub!(/<p class="center">\+/, '<p class="center bigger bold">') || self
-      gsub!('<p>+', '<p class="bigger bold">') || self
+      gsubs!(/<p class="center">\+/, '<p class="center bigger bold">')
+      gsubs!('<p>+', '<p class="bigger bold">')
     end
 
     def parse_reg
-      gsub!('&reg;', '<sup>&reg;</sup>') || self
+      gsubs!('&reg;', '<sup>&reg;</sup>')
     end
 
     def parse_list
-      gsub!('<ul>', '<ul class="md">') || self
+      gsubs!('<ul>', '<ul class="md">')
     end
 
     def parse_email
-      gsub!(/href='(.+@.+\.\w+.*?)'.*?/, 'href="mailto:\1"') || self
+      gsubs!(/href='(.+@.+\.\w+.*?)'.*?/, 'href="mailto:\1"')
     end
 
     def parse_burgee
-      gsub!(%r{<p>%burgee</p>}, center_html('burgee') { @burgee_html }) || self
+      gsubs!(%r{<p>%burgee</p>}, center_html('burgee') { @burgee_html })
     end
 
     def parse_education
-      gsub!(%r{<p>%education</p>}, @education_menu) || self
+      gsubs!(%r{<p>%education</p>}, @education_menu)
     end
 
     def parse_meeting
-      gsub!(%r{<p>%meeting</p>}, @next_meeting) || self
+      gsubs!(%r{<p>%meeting</p>}, @next_meeting)
     end
 
     def parse_excom
-      gsub!(%r{<p>%excom</p>}, @next_excom) || self
+      gsubs!(%r{<p>%excom</p>}, @next_excom)
     end
 
     def match_replace(pattern)
@@ -58,12 +63,13 @@ class ParsedMarkdown
     end
 
     def parse_fal
-      return self unless match?(%r{%fal/[^/]*/})
+      layer_regexp = %r{%fal/[^/]*/}
+      return self unless match?(layer_regexp)
 
-      while match?(%r{%fal/[^/]*/})
-        original = match(%r{%fal/[^/]*/})[0]
+      while match?(layer_regexp)
+        original = match(layer_regexp)[0]
         icons = scan_layer_icons(original)
-        gsub!(original, FA::Layer.p(icons))
+        gsubs!(original, FA::Layer.p(icons))
       end
     end
 
@@ -74,7 +80,15 @@ class ParsedMarkdown
     end
 
     def parse_fa
+      parse_fa_with_class
+      parse_fa_bare
+    end
+
+    def parse_fa_with_class
       match_replace(%r{%fa/([^/:]+):([^/]*)/}) { |match| FA::Icon.p(match[1], css: match[2]) }
+    end
+
+    def parse_fa_bare
       match_replace(%r{%fa/([^/]+)/}) { |match| FA::Icon.p(match[1]) }
     end
   end
