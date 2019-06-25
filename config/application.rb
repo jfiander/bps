@@ -6,6 +6,7 @@ require 'rails/all'
 require 'csv'
 require 'differ/string'
 require 'fa'
+require 'google_api'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -35,4 +36,3 @@ module Bps
 end
 
 require 'redcarpet/render_strip'
-require 'google_api'
