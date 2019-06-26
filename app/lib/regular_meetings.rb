@@ -1,41 +1,46 @@
 # frozen_string_literal: true
 
 class RegularMeetings
-  def book_regular_meetings!
-    calendar.create(calendar_id, membership)
-    calendar.create(calendar_id, excom)
+  def book!
+    calendar.create(membership)
+    calendar.create(excom)
   end
 
 private
 
   def calendar
-    Event.last.send(:calendar)
+    @calendar ||= GoogleAPI::Configured::Calendar.new(calendar_id)
   end
 
   def calendar_id
     Event.for_category('meeting').last.send(:calendar_id)
   end
 
+  def months_except(*except)
+    (1..12).to_a - except
+  end
+
   def membership
     meeting_hash(
       summary: 'Membership Meeting', description: membership_description,
-      months: [1, 2, 3, 4, 5, 9, 10, 11, 12], date: '09', week: '2', conference: membership_meet
+      months: months_except(6, 7, 8), date: '09', week: '2', conference: {
+        conference: { id: ENV['MEMBERSHIP_MEET_ID'], signature: ENV['MEMBERSHIP_MEET_SIGNATURE'] }
+      }
     )
   end
 
   def membership_description
-    "Monthly general membership meeting.\n\nIf you would like to join this meeting remotely, " \
-    'please notify a bridge officer ahead of time.'
-  end
-
-  def membership_meet
-    meet(ENV['MEMBERSHIP_MEET_ID'], ENV['MEMBERSHIP_MEET_SIGNATURE'])
+    "Monthly general membership meeting.\n\n" \
+    "All members and their guests are welcome to attend!\n\n" \
+    'If you would like to join this meeting remotely, please notify a bridge officer ahead of time.'
   end
 
   def excom
     meeting_hash(
       summary: 'Executive Committee Meeting', description: excom_description,
-      months: [1, 2, 3, 4, 5, 6, 9, 10, 11, 12], date: '02', week: '1', conference: excom_meet
+      months: months_except(7, 8), date: '02', week: '1', conference: {
+        conference: { id: ENV['EXCOM_MEET_ID'], signature: ENV['EXCOM_MEET_SIGNATURE'] }
+      }
     )
   end
 
@@ -45,43 +50,16 @@ private
     'If you would like to join this meeting remotely, please notify a bridge officer ahead of time.'
   end
 
-  def excom_meet
-    meet(ENV['EXCOM_MEET_ID'], ENV['EXCOM_MEET_SIGNATURE'])
-  end
-
-  def meet(conf_id, signature)
-    {
-      conference_id: conf_id, conference_solution: meet_solution,
-      entry_points: meet_entry(conf_id), signature: signature
-    }
-  end
-
-  def meet_solution
-    Google::Apis::CalendarV3::ConferenceSolution.new(
-      icon_uri: ENV['GOOGLE_CALENDAR_ICON_URI'], name: 'Hangouts Meet',
-      key: Google::Apis::CalendarV3::ConferenceSolutionKey.new(type: 'hangoutsMeet')
-    )
-  end
-
-  def meet_entry(conf_id)
-    [
-      Google::Apis::CalendarV3::EntryPoint.new(
-        label: "meet.google.com/#{conf_id}", uri: "https://meet.google.com/#{conf_id}",
-        entry_point_type: 'video'
-      )
-    ]
-  end
-
   def meeting_hash(**options)
     months = options[:months].join('.')
+
     {
       start: Time.strptime("2018/01/#{options[:date]} 18:00 EST", '%Y/%m/%d %H:%M %Z').to_datetime,
       end: Time.strptime("2018/01/#{options[:date]} 21:00 EST", '%Y/%m/%d %H:%M %Z').to_datetime,
       summary: options[:summary], description: options[:description],
       location: "Kerby's Koney Island, 5407 Crooks Rd, Troy, MI 48098, USA",
       recurrence: ["RRULE:FREQ=MONTHLY;BYMONTH=#{months};BYDAY=#{options[:week]}TU"],
-      conference_data_version: 1,
-      conference_data: Google::Apis::CalendarV3::ConferenceData.new(**options[:conference])
+      conference: options[:conference]
     }
   end
 end
