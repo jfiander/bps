@@ -48,6 +48,8 @@ gem 'geocoder'
 
 gem 'bps-google-api',      '~> 0.3.2'
 
+gem 'encrypted-keystore',  '~> 0.0.5'
+
 # View Management
 gem 'fa_rails',            '~> 0.1.16'
 gem 'inline_svg',          '~> 1.3.0'

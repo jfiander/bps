@@ -7,6 +7,7 @@ require 'csv'
 require 'differ/string'
 require 'fa'
 require 'google_api'
+require 'encrypted_keystore'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
