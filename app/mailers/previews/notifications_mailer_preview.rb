@@ -25,6 +25,7 @@ private
 
   def mock_float_plan
     @float_plan ||= FloatPlan.new(
+      user: User.first,
       name: 'Jack Member', phone: '123-456-7890',
       leave_at: Time.now + 1.week,
       return_at: Time.now + 2.weeks,

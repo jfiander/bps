@@ -77,13 +77,20 @@ private
 
   def slack_fields
     [
-      { title: 'Name', value: @float_plan.name, short: true },
-      { title: 'Phone', value: @float_plan.phone, short: true },
+      slack_by_field,
+      { title: 'Contact Name', value: @float_plan.name, short: true },
+      { title: 'Contact Phone', value: @float_plan.phone, short: true },
       { title: 'Depart', value: format_fp_time(:leave_at), short: true },
       { title: 'Return', value: format_fp_time(:return_at), short: true },
       { title: 'Alert', value: format_fp_time(:alert_at), short: true },
       { title: 'Float Plan PDF', value: @float_plan.link, short: false }
-    ]
+    ].compact
+  end
+
+  def slack_by_field
+    return unless @float_plan.user.present?
+
+    { title: 'Submitted by', value: @float_plan.user.full_name, short: false }
   end
 
   def format_fp_time(method)

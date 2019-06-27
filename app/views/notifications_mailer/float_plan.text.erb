@@ -9,6 +9,12 @@ Please check the dates and times and plan to follow up on this plan as appropria
 
 <%= @float_plan.link %>
 
+<%- if @float_plan.user.present? -%>
+Submitted by
+  <%= @float_plan.user.full_name %>
+  <%= @float_plan.user.email %>
+<%- end -%>
+
 Contact
   <%= @float_plan.name %>
   <%= @float_plan.phone %>
