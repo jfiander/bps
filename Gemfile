@@ -46,9 +46,9 @@ gem 'slack-notifier',      '~> 2.3'
 
 gem 'geocoder'
 
-gem 'bps-google-api',      '~> 0.4.0-1'
+gem 'bps-google-api',      '~> 0.4.3'
 
-gem 'encrypted-keystore',  '~> 0.0.5'
+gem 'encrypted-keystore',  '~> 0.0.6'
 
 # View Management
 gem 'fa_rails',            '~> 0.1.16'
