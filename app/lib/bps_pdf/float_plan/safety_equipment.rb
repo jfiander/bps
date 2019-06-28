@@ -4,16 +4,21 @@ module BpsPdf
   class FloatPlan
     module SafetyEquipment
       def safety_equipment(float_plan)
-        draw_text 'Safety Equipment', size: 16, at: [300, 380]
-        safety_row(float_plan, y: 360, left: 'PFDs', right: 'Flares')
-        safety_row(float_plan, y: 340, left: 'Mirror', right: 'Horn / Whistle')
-        safety_row(float_plan, y: 320, left: 'Smoke', right: 'Flashlight')
-        safety_row(float_plan, y: 300, left: 'EPIRB / PLB', right: 'Raft')
-        safety_row(float_plan, y: 280, left: 'Anchor', right: 'Paddles')
-        safety_row(float_plan, y: 260, left: 'Food', right: 'Water')
+        draw_text 'Safety Equipment', size: 16, at: [300, @right_y]
+        safety_row(float_plan, y: safety_row_y, left: 'PFDs', right: 'Flares')
+        safety_row(float_plan, y: safety_row_y, left: 'Mirror', right: 'Horn / Whistle')
+        safety_row(float_plan, y: safety_row_y, left: 'Smoke', right: 'Flashlight')
+        safety_row(float_plan, y: safety_row_y, left: 'EPIRB / PLB', right: 'Raft')
+        safety_row(float_plan, y: safety_row_y, left: 'Anchor', right: 'Paddles')
+        safety_row(float_plan, y: safety_row_y, left: 'Food', right: 'Water')
       end
 
     private
+
+      def safety_row_y
+        @safety_y ||= @right_y - 10
+        @safety_y -= 20
+      end
 
       def safety_row(float_plan, y:, left:, right:)
         safety_left(left, float_plan.send(left.split(' / ').first.downcase), y)
