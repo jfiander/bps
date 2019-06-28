@@ -17,12 +17,9 @@ class FloatPlanController < ApplicationController
   def submit
     @float_plan = FloatPlan.new(float_plan_params.merge(user_id: current_user&.id))
     onboards = float_plan_params[:float_plan_onboards_attributes]
-    if onboards.blank?
-      flash.now[:alert] = 'You must include who will be onboard.'
-      render :new
-      return
-    end
+    return no_onboards if onboards.blank?
 
+    append_problem_timestamps
     @float_plan.save!
   end
 
@@ -95,5 +92,22 @@ private
 
   def format_fp_time(method)
     @float_plan.send(method)&.strftime(ApplicationController::LONG_TIME_FORMAT)
+  end
+
+  def no_onboards
+    flash.now[:alert] = 'You must include who will be onboard.'
+    render :new
+  end
+
+  def append_to_comments(text)
+    @float_plan.update(comments: @float_plan.comments + "\n #{text}")
+  end
+
+  def append_problem_timestamps
+    %i[leave_at return_at alert_at].each do |method|
+      next if @float_plan.send(method)
+
+      append_to_comments("#{method.to_s.titleize}: #{float_plan_params[method]}")
+    end
   end
 end
