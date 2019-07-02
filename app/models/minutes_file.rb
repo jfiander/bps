@@ -24,4 +24,8 @@ class MinutesFile < UploadedFile
   def link
     self.class.buckets[:files].link(file.s3_object.key)
   end
+
+  def invalidate!
+    Invalidation.submit(:files, "/uploaded/minutes_files/#{id}/#{year}-#{month}.pdf")
+  end
 end

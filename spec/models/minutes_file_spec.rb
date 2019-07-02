@@ -3,15 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe MinutesFile, type: :model do
+  before do
+    @minutes = FactoryBot.create(:minutes_file, year: 2017, month: 9, file: File.open(test_image(200, 500), 'r'))
+  end
+
   it 'has the correct number of issues' do
     expect(MinutesFile.issues.count).to be(10)
   end
 
   describe 'issues' do
-    before do
-      @minutes = FactoryBot.create(:minutes_file, year: 2017, month: 9, file: File.open(test_image(200, 500), 'r'))
-    end
-
     it 'returns the correct issue' do
       expect(@minutes.issue).to eql('Sep')
     end
@@ -25,5 +25,9 @@ RSpec.describe MinutesFile, type: :model do
         %r{\Ahttps://files.development.bpsd9.org/uploaded/minutes_files/\d+/test_image.jpg\?}
       )
     end
+  end
+
+  it 'does not return an error on invalidate!' do
+    expect { @minutes.invalidate! }.not_to raise_error
   end
 end

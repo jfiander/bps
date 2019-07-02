@@ -51,4 +51,9 @@ RSpec.describe FloatPlan, type: :model do
     @float_plan = FactoryBot.create(:float_plan_with_car)
     expect { @float_plan.generate_pdf }.not_to raise_error
   end
+
+  it 'does not return an error on invalidate!' do
+    @float_plan = FactoryBot.create(:float_plan, :one_onboard)
+    expect { @float_plan.invalidate! }.not_to raise_error
+  end
 end

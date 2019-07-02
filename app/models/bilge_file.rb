@@ -29,4 +29,8 @@ class BilgeFile < UploadedFile
   def link
     self.class.buckets[:bilge].link(file.s3_object.key)
   end
+
+  def invalidate!
+    Invalidation.submit(:bilge, "/#{id}/Bilge_Chatter.pdf")
+  end
 end

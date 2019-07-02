@@ -27,4 +27,8 @@ class FloatPlan < ApplicationRecord
   def link
     FloatPlan.buckets[:floatplans].link("#{id}.pdf")
   end
+
+  def invalidate!
+    Invalidation.submit(:files, "/float_plans/#{id}.pdf")
+  end
 end
