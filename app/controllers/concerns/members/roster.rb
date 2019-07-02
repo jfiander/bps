@@ -19,10 +19,11 @@ module Members
     def update_roster; end
 
     def upload_roster
-      files_bucket.upload(file: roster_params[:roster], key: roster_filename)
+      files_bucket.upload(file: roster_params[:roster], key: "roster/#{roster_filename}")
+      # Invalidation.submit(:files, "roster/#{roster_filename}")
 
       flash[:success] = 'Roster file succesfully updated!'
-      flash[:notice] = 'There may be a ~24 hour delay in the live file changing.'
+      flash[:notice] = 'There may be a delay in the live file changing.'
       redirect_to root_path
     end
 
@@ -82,6 +83,7 @@ module Members
 
       pdf_file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'r+')
       files_bucket.upload(file: pdf_file, key: "roster/#{roster_filename}")
+      # Invalidation.submit(:files, "roster/#{roster_filename}")
     end
   end
 end

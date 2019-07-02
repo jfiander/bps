@@ -94,5 +94,11 @@ module Members
         file: minutes_params[:file]
       )
     end
+
+    def invalidate_minutes(file)
+      Invalidation.submit(
+        :files, "/uploaded/minutes_files/#{file.id}/#{file.year}-#{file.month}.pdf"
+      )
+    end
   end
 end
