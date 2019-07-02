@@ -39,12 +39,7 @@ include ViewHelper
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-Aws.config[:stub_responses] = true
-Aws.config[:s3] = {
-  stub_responses: {
-    get_object: { body: StringIO.new('something goes here') }
-  }
-}
+require_relative('aws_stub_responses')
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

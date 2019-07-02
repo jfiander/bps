@@ -1,0 +1,48 @@
+# frozen_string_literal: true
+
+Aws.config[:stub_responses] = true
+
+Aws.config[:s3] = {
+  stub_responses: {
+    get_object: {
+      body: StringIO.new('something goes here')
+    }
+  }
+}
+
+Aws.config[:cloudfront] = {
+  stub_responses: {
+    create_invalidation: {
+      invalidation: {
+        id: 'test_invalidation', status: 'InProgress', create_time: Time.zone.now,
+        invalidation_batch: {
+          paths: { quantity: 1, items: ['/dev/test_file'] },
+          caller_reference: 'test_caller_reference'
+        }
+      }
+    },
+    list_distributions: {
+      distribution_list: {
+        items: [
+          {
+            id: 'test_distro_id', status: 'Deployed',
+            arn: 'arn:aws:cloudfront::test_distro:distribution:test_distro_id',
+            domain_name: 'something.cloudfront.net', last_modified_time: Time.zone.now,
+            aliases: { items: ['files.development.bpsd9.org'], quantity: 1 },
+            origins: { items: [{ id: 'stub', domain_name: 'stub.bpsd9.org' }], quantity: 1 },
+            default_cache_behavior: {
+              target_origin_id: 'stub', viewer_protocol_policy: 'stub', min_ttl: 1,
+              forwarded_values: { query_string: false, cookies: { forward: 'stub' } },
+              trusted_signers: { enabled: true, quantity: 1, items: ['stub'] }
+            },
+            cache_behaviors: { quantity: 0 }, custom_error_responses: { quantity: 0 },
+            restrictions: { geo_restriction: { restriction_type: 'none', quantity: 0 } },
+            comment: 'stub', price_class: 'Standard', enabled: true,
+            viewer_certificate: {}, web_acl_id: 'stub', http_version: '1.2', is_ipv6_enabled: false
+          }
+        ],
+        marker: '12345', max_items: 1, is_truncated: false, quantity: 1
+      }
+    }
+  }
+}
