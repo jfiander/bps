@@ -2,6 +2,10 @@ Metrics/LineLength:
   Max: 120
 Metrics/BlockLength:
   Enabled: false
+Metrics/MethodLength:
+  Enabled: true
+  Exclude:
+    - aws_stub_responses.rb
 Style/GlobalVars:
   Enabled: false
 Naming/UncommunicativeMethodParamName:
