@@ -125,12 +125,8 @@ module Concerns
         update(google_calendar_event_id: response&.id, google_calendar_link: response&.html_link)
       end
 
-      def calendar_retry
-        ExpRetry.new(exception: Google::Apis::RateLimitError, retries: 3)
-      end
-
       def calendar_update(call_if: true, set_to: nil)
-        response = calendar_retry.call { yield } if call_if
+        response = yield if call_if
         set = { response: response, nil: nil }[set_to]
         store_calendar_details(set) if set_to.present?
       end
