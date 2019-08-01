@@ -194,3 +194,23 @@ div.next-meeting {
   background-color: $background-blue-faded;
   line-height: 1.75em;
 }
+
+div.notice {
+  @include border-radius;
+  padding: 0.25em;
+  font-size: larger;
+  text-align: center;
+  color: $old-glory-blue-light;
+  background-color: $background-blue-faded;
+  line-height: 1.75em;
+  width: 99%;
+  margin: 0;
+  display: table;
+
+  div.icon {
+    display: table-cell;
+    font-size: 2em;
+    padding-left: 0.5em;
+    vertical-align: middle;
+  }
+}

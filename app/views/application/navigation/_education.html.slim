@@ -1,13 +1,15 @@
 ul#education
   - if defined?(@event_catalog)
-    = link 'Course Catalog', path: course_catalog_path, active: active[:courses]
-    = link 'Seminar Catalog', path: seminar_catalog_path, active: active[:seminars]
-    br
-    = link 'Show Course Schedule', path: courses_path, fa: { name: 'calendar-alt', options: { style: :regular } }, css_class: 'catalog-button' if active[:courses]
-    = link 'Show Seminar Schedule', path: seminars_path, fa: { name: 'calendar-alt', options: { style: :regular } }, css_class: 'catalog-button' if active[:seminars]
+    div
+      = link 'Course Catalog', path: course_catalog_path, active: active[:courses]
+      = link 'Seminar Catalog', path: seminar_catalog_path, active: active[:seminars]
+    div
+      = link 'Show Course Schedule', path: courses_path, fa: { name: 'calendar-alt', options: { style: :duotone } }, css_class: 'catalog-button' if active[:courses]
+      = link 'Show Seminar Schedule', path: seminars_path, fa: { name: 'calendar-alt', options: { style: :duotone } }, css_class: 'catalog-button' if active[:seminars]
   - else
-    = link 'Course Schedule', path: courses_path, active: active[:courses]
-    = link 'Seminar Schedule', path: seminars_path, active: active[:seminars]
-    br
-    = link 'Show Course Catalog', path: course_catalog_path, fa: { name: 'list' }, css_class: 'catalog-button' if active[:courses]
-    = link 'Show Seminar Catalog', path: seminar_catalog_path, fa: { name: 'list' }, css_class: 'catalog-button' if active[:seminars]
+    div
+      = link 'Course Schedule', path: courses_path, active: active[:courses]
+      = link 'Seminar Schedule', path: seminars_path, active: active[:seminars]
+    div
+      = link 'Show Course Catalog', path: course_catalog_path, fa: { name: 'list', style: :duotone }, css_class: 'catalog-button' if active[:courses]
+      = link 'Show Seminar Catalog', path: seminar_catalog_path, fa: { name: 'list', style: :duotone }, css_class: 'catalog-button' if active[:seminars]

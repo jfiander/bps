@@ -47,7 +47,7 @@
               - if !defined?(@event_catalog) && @current_user_permitted_event_type && event.show_in_catalog
                 .table.row
                   .table-cell.catalog
-                    = FA::Icon.p('star', style: :regular)
+                    = FA::Icon.p('star', style: :duotone)
                     | In catalog
         .table-cell.top-middle
           - unless defined?(@event_catalog)
@@ -59,7 +59,7 @@
                       | Location: 
                       - if @locations[event.location_id][:map_link].present?
                         = link_to(@locations[event.location_id][:map_link], target: :_blank) do
-                          = FA::Icon.p('map-marker-alt')
+                          = FA::Icon.p('map-marker-alt', style: :duotone)
                           | Map
                 .table.row
                   .table-cell = simple_format(@locations[event.location_id][:address])

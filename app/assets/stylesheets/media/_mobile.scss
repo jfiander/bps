@@ -2,6 +2,15 @@
   div#print-footer {
     display: none;
   }
+
+  div.notice {
+    display: block;
+
+    div.icon {
+      display: block;
+      margin-top: 0.25em;
+    }
+  }
 }
 
 @media all and (max-width: 750px) {

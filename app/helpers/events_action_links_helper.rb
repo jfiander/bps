@@ -24,7 +24,7 @@ private
   def event_action_link_defaults(css)
     {
       icon: '', text: '', class: "control #{css}",
-      confirm: '', data: {}, icon_options: { fa: :fw, style: :regular }
+      confirm: '', data: {}, icon_options: { fa: :fw, style: :duotone }
     }
   end
 

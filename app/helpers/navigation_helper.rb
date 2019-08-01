@@ -47,9 +47,21 @@ private
     icon_tag = @fa.present? ? FA::Icon.p(@fa) : ''
     @link_options = @link_options.merge(title: @options[:title])
     @link_options[:class] = @css_class unless @link_options[:class].present?
+    icon_tag.present? ? link_contents_with_icon(icon_tag) : link_contents_no_icon
+  end
+
+  def link_contents_with_icon(icon_tag)
+    link_to(@options[:path], @link_options) do
+      content_tag(:li, class: [@css_class, 'nav-with-icon'].join(' ')) do
+        content_tag(:div, icon_tag + @options[:title], class: 'nav-icon-contents')
+      end
+    end + @options[:suffix]
+  end
+
+  def link_contents_no_icon
     link_to(@options[:path], @link_options) do
       content_tag(:li, class: @css_class) do
-        icon_tag + @options[:title]
+        @options[:title]
       end
     end + @options[:suffix]
   end
@@ -90,13 +102,13 @@ private
     @options[:title] = 'Logout'
     @options[:path] = destroy_user_session_path
     @link_options = { method: :delete, class: 'red' }
-    @fa = { name: 'sign-out', options: { style: :regular } }
+    @fa = { name: 'sign-out', options: { style: :duotone } }
   end
 
   def login_link
     @options[:title] = 'Member Login'
     @options[:path] = new_user_session_path
     @link_options = { class: 'members' }
-    @fa = { name: 'sign-in', options: { style: :regular } }
+    @fa = { name: 'sign-in', options: { style: :duotone } }
   end
 end

@@ -101,11 +101,11 @@ module EventsHelper
       'file-invoice-dollar',
       style: reg_override_style(reg), css: options[:css], title: options[:title]
     )
-    reg.paid? ? icon : link_to(override_cost_path(reg.id)) { icon }
+    reg.paid? ? icon : link_to(override_cost_path(reg.payment.token)) { icon }
   end
 
   def reg_override_style(reg)
-    reg.override_cost.present? ? :solid : :regular
+    reg.override_cost.present? ? :solid : :duotone
   end
 
   def reg_override_verb(reg)

@@ -18,4 +18,4 @@ h1 Archived Rosters
         .table-cell = archive.created_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
         .table-cell = link_to 'View', archive.link, target: :_blank
         .table-cell
-          = link_to(roster_archive_files_path(id: archive.id), class: 'red', method: :delete, data: { confirm: 'Are you sure you want to remove this archived roster?' }) { FA::Icon.p('minus-square') }
+          = link_to(roster_archive_files_path(id: archive.id), class: 'red', method: :delete, data: { confirm: 'Are you sure you want to remove this archived roster?' }) { FA::Icon.p('minus-square', style: :duotone) }

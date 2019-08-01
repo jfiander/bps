@@ -9,5 +9,5 @@ p Every time the site is loaded, a random image listed from this page will be di
           .table-cell.left
             a data-fancybox="album_headers" href=(files_bucket.link(header.file.path))
               = image_tag files_bucket.link(header.file.path(:thumb))
-          .table-cell = link_to FA::Icon.p('eye', style: :regular, title: 'View this header on the page'), "?header=#{header.id}"
-          .table-cell.right = link_to(remove_header_path(header.id), method: :delete, class: 'red', data: {confirm: 'Are you sure you want to remove this header image?'}) { FA::Icon.p('minus-square') }
+          .table-cell = link_to FA::Icon.p('eye', style: :duotone, title: 'View this header on the page'), "?header=#{header.id}"
+          .table-cell.right = link_to(remove_header_path(header.id), method: :delete, class: 'red', data: {confirm: 'Are you sure you want to remove this header image?'}) { FA::Icon.p('minus-square', style: :duotone) }

@@ -4,13 +4,13 @@
   = f.hidden_field :id
   #new
     .left
-      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+      span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
       = f.label :award_name
     .right = f.select :award_name, options_for_select(@awards, @record.award_name), prompt: 'Please select an award.', include_blank: true, required: true
     br.clear
 
     .left
-      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+      span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
       = f.label :year
     .right = f.number_field :year, value: (@record.year || Date.today).strftime('%Y'), class: 'number', required: true
     br.clear

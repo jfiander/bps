@@ -14,8 +14,8 @@ h1 Event Types
       .table-row
         .table-cell = event_type[:title]
         .table-cell.actions.pending
-          = link_to(edit_event_type_path(id: event_type[:id])) { FA::Icon.p('edit') }
+          = link_to(edit_event_type_path(id: event_type[:id])) { FA::Icon.p('edit', style: :duotone) }
           - if Event.where(event_type_id: event_type[:id]).count.zero?
-            = link_to(remove_event_type_path(id: event_type[:id]), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this event type?' }) { FA::Icon.p('minus-square') }
+            = link_to(remove_event_type_path(id: event_type[:id]), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this event type?' }) { FA::Icon.p('minus-square', style: :duotone) }
           - else
             span.italic title="You cannot remove event types currently in use." In Use

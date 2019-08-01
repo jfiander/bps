@@ -41,7 +41,9 @@ private
     key = get_uploaded_file_name(id)
     link_title = title || key
     link_path = @files_bucket.link("#{prefix}/#{key}")
-    @view_context.link_to(link_path, target: :_blank) { FA::Icon.p('download') + link_title }
+    @view_context.link_to(link_path, target: :_blank) do
+      FA::Icon.p('download', style: :duotone) + link_title
+    end
   end
 
   def image(id)

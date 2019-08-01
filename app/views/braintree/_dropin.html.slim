@@ -44,9 +44,9 @@
     = @transaction_amount
   .information Don't worry if you click twice – only the first click will be processed.
   ul.policies
-    li = link_to(payment_terms_path, target: :_blank) { FA::Icon.p('file-alt', style: :regular) + 'Terms & Conditions' }
-    li = link_to(refunds_path, target: :_blank) { FA::Icon.p('file-invoice-dollar', style: :regular) + 'Refund Policy' }
+    li = link_to(payment_terms_path, target: :_blank) { FA::Icon.p('file-alt', style: :duotone) + 'Terms & Conditions' }
+    li = link_to(refunds_path, target: :_blank) { FA::Icon.p('file-invoice-dollar', style: :duotone) + 'Refund Policy' }
   ul.policies
-    li = link_to('https://www.braintreepayments.com/features/data-security', target: :_blank) { FA::Icon.p('lock', style: :regular) + 'Data Security' + content_tag(:sup, FA::Icon.p('external-link-alt', style: :solid)) }
-    li = mail_to('payments@bpsd9.org', target: :_blank) { FA::Icon.p('envelope', style: :regular) + 'Contact us at payments@bpsd9.org' }
+    li = link_to('https://www.braintreepayments.com/features/data-security', target: :_blank) { FA::Icon.p('lock', style: :duotone) + 'Data Security' + content_tag(:sup, FA::Icon.p('external-link-alt', style: :duotone)) }
+    li = mail_to('payments@bpsd9.org', target: :_blank) { FA::Icon.p('envelope', style: :duotone) + 'Contact us at payments@bpsd9.org' }
   = render 'braintree/dropin_script'

@@ -15,7 +15,7 @@ h1 Submitted Float Plans
       .table-cell = float_plan.leave_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
       .table-cell = float_plan.alert_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
       - if float_plan.pdf.present?
-        .table-cell = link_to(float_plan.link) { FA::Icon.p('file-pdf', style: :regular, title: 'View PDF') }
-        .table-cell = link_to(refresh_float_plan_path(id: float_plan.id), method: :patch) { FA::Icon.p('redo', style: :regular, title: 'Refresh PDF', css: 'green') }
+        .table-cell = link_to(float_plan.link) { FA::Icon.p('file-pdf', style: :duotone, title: 'View PDF') }
+        .table-cell = link_to(refresh_float_plan_path(id: float_plan.id), method: :patch) { FA::Icon.p('redo', style: :duotone, title: 'Refresh PDF', css: 'green') }
       - else
-        .table-cell = link_to(refresh_float_plan_path(id: float_plan.id), method: :patch) { FA::Icon.p('file-plus', style: :regular, title: 'Generate PDF') }
+        .table-cell = link_to(refresh_float_plan_path(id: float_plan.id), method: :patch) { FA::Icon.p('file-plus', style: :duotone, title: 'Generate PDF') }

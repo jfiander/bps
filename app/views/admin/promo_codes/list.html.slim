@@ -19,8 +19,8 @@ h1 = admin_header('Promo Codes')
       - @promo_codes[scope].each do |promo_code|
         .table-row
           .table-cell
-            = FA::Icon.p('usd-circle', fa: :fw, css: 'birmingham-blue', title: 'Usable promo code.') if promo_code.usable?
-            = FA::Icon.p('usd-circle', fa: :fw, css: 'red', title: 'Unusable promo code.') if !promo_code.usable? && promo_code.active?
+            = FA::Icon.p('usd-circle', style: :duotone, fa: :fw, css: 'birmingham-blue', title: 'Usable promo code.') if promo_code.usable?
+            = FA::Icon.p('usd-circle', style: :duotone, fa: :fw, css: 'red', title: 'Unusable promo code.') if !promo_code.usable? && promo_code.active?
             code = promo_code.code
           .table-cell = promo_code.discount_display
           .table-cell = promo_code.valid_at&.strftime(ApplicationController::MEDIUM_TIME_FORMAT) || 'Never'
@@ -29,7 +29,7 @@ h1 = admin_header('Promo Codes')
           .table-cell = promo_code.payments.count
           .table-cell
             = link_to(admin_expire_promo_code_path(promo_code), method: :delete, class: 'red', \
-              data: { confirm: "Are you sure you want to expire promo code #{promo_code.code} immediately?" }) { FA::Icon.p('minus-square', fa: :fw) } unless promo_code.expired?
+              data: { confirm: "Are you sure you want to expire promo code #{promo_code.code} immediately?" }) { FA::Icon.p('minus-square', style: :duotone, fa: :fw) } unless promo_code.expired?
           .table-cell
             = link_to(admin_activate_promo_code_path(promo_code), method: :patch, class: 'green', \
-              data: { confirm: "Are you sure you want to activate promo code #{promo_code.code} immediately?" }) { FA::Icon.p('check-square', fa: :fw) } if promo_code.activatable?
+              data: { confirm: "Are you sure you want to activate promo code #{promo_code.code} immediately?" }) { FA::Icon.p('check-square', style: :duotone, fa: :fw) } if promo_code.activatable?

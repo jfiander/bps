@@ -16,6 +16,6 @@ h1 Award Recipients
           .table-cell = recipient.user&.simple_name || recipient.name
           .table-cell = recipient.additional_user&.simple_name
           .table-cell
-            = link_to(edit_roster_award_recipients_path(id: recipient.id)) { FA::Icon.p('edit') }
-            = link_to(roster_award_recipients_path(id: recipient.id), class: 'red', method: :delete, data: { confirm: 'Are you sure you want to remove this award recipient?' }) { FA::Icon.p('minus-square') }
+            = link_to(edit_roster_award_recipients_path(id: recipient.id)) { FA::Icon.p('edit', style: :duotone) }
+            = link_to(roster_award_recipients_path(id: recipient.id), class: 'red', method: :delete, data: { confirm: 'Are you sure you want to remove this award recipient?' }) { FA::Icon.p('minus-square', style: :duotone) }
 

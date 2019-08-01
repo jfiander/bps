@@ -14,5 +14,5 @@ h1 Current OTW Trainings
       .table-cell = otw.boc_level
       .table-cell = otw.course_key
       .table-cell
-        = link_to(edit_otw_path(id: otw)) { FA::Icon.p('edit', fa: :fw) }
-        = link_to(remove_otw_path(id: otw), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this OTW Training?' }) { FA::Icon.p('minus-square', fa: :fw) }
+        = link_to(edit_otw_path(id: otw)) { FA::Icon.p('edit', style: :duotone, fa: :fw) }
+        = link_to(remove_otw_path(id: otw), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this OTW Training?' }) { FA::Icon.p('minus-square', style: :duotone, fa: :fw) }

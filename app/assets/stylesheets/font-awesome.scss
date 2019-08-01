@@ -1,13 +1,32 @@
-span.icon, i.fas, i.far, i.fal, i.fab {
-  display: inline;
-  margin: 0.1em 0.25em;
+span.icon, i.fas, i.far, i.fal, i.fad, i.fab {
+  display: inline-block;
+  margin: 0 0.25em;
+  height: 1em;
+  line-height: 1em;
 }
 
 span.fa-layers {
   margin: 0;
+  padding: 0;
   display: inline-block;
+  height: 1em;
+  line-height: 1em;
 
-  span.icon, i.fas, i.far, i.fal, i.fab {
+  span.icon, i.fas, i.far, i.fal, i.fad, i.fab {
     margin: 0;
+    padding: 0;
   }
+}
+
+span.icon.fa-fw, i.fa-fw {
+  width: 1.5em;
+  margin: 0 0.25em;
+}
+
+div.arrow i.fa-fw {
+  width: 1em;
+}
+
+div#nested-navigation i.fa-fw {
+  width: 1.25em;
 }

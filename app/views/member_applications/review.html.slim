@@ -18,6 +18,6 @@ h1 Review Member Applications
         - app.member_applicants.reject(&:primary).each do |applicant|
           = render 'review_applicant', applicant: applicant
       = link_to 'Approve this application', approve_application_path(app.id), method: :patch, remote: true, class: 'big',
-        data: { confirm: 'Are you sure you want to approve this application and invite all applicants to the website?', disable_with: (FA::Icon.p('spinner', fa: 'pulse') + 'Approving application...') }
+        data: { confirm: 'Are you sure you want to approve this application and invite all applicants to the website?', disable_with: (FA::Icon.p('spinner', style: :duotone, fa: 'pulse') + 'Approving application...') }
 - else
   h2.red There are currently no pending applications.

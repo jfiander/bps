@@ -2,7 +2,7 @@ h1 = admin_header('Create Promo Code')
 
 em
   | Fields marked with
-  = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+  = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
   | are required.
 
 = form_for(@promo_code, url: admin_create_promo_code_path, method: :put) do |f|
@@ -11,13 +11,13 @@ em
       h2 Configure Promo
 
       .left
-        span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+        span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
         = f.label :code
       .right = f.text_field :code, required: true
       br.clear
 
       .left
-        span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+        span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
         = f.label :valid_at
       .right = f.datetime_field :valid_at, required: true
       br.clear
@@ -27,13 +27,13 @@ em
       br.clear
 
       .left
-        span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+        span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
         = f.label :event_ids, 'Events'
       .right = f.select :event_ids, grouped_options_for_select(@events), { required: true }, multiple: true
       br.clear
 
       .left
-        span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+        span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
         = f.label :discount_type
       .right = f.select :discount_type, options_for_select(@discount_types), include_blank: true, required: true, prompt: 'Please select a discount type'
       br.clear

@@ -4,24 +4,26 @@ p Please fill out the following form to generate a float plan for your trip.
 
 p
   | Fields marked with
-  span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+  span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
   | are required.
 
 - if @last.present?
-  .next-meeting
-    p.red
-      | This form has been pre-populated with data from your most recent float plan,
-      br
-      | except for the 
-      b leave
-      | , 
-      b return
-      | , and 
-      b alert times
-      | , and any 
-      b persons onboard
-      | .
-    p Please update it as necessary.
+  .notice
+    .table-cell.icon = FA::Icon.p('exclamation-triangle', style: :duotone)
+    .table-cell
+      p 
+        | This form has been pre-populated with data from your most recent float plan,
+        br
+        | except for the 
+        b leave
+        | , 
+        b return
+        | , and 
+        b alert times
+        | , and any 
+        b persons onboard
+        | .
+      p.italic Please update it as necessary.
 
 = form_for(@float_plan, url: submit_float_plan_path, multipart: true) do |f|
   #float-plan
@@ -29,12 +31,12 @@ p
     .table
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :name
         .table-cell.field = f.text_field :name, required: true
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :phone
         .table-cell.field = f.text_field :phone, required: true
 
@@ -42,21 +44,21 @@ p
     .table
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :boat_type
         .table-cell
           = f.select :boat_type, options_for_select(%w[Power Sail Paddle Other], @float_plan.boat_type), include_blank: true, required: true
           = f.text_field :subtype, class: 'shorter'
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :length
         .table-cell.field
           = f.number_field :length, required: true
           |  feet
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :hull_color
         .table-cell.field = f.text_field :hull_color, required: true
       .table-row
@@ -79,7 +81,7 @@ p
         .table-cell.field = f.text_field :boat_name
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :make
         .table-cell.field = f.text_field :make, required: true
       .table-row
@@ -196,22 +198,22 @@ p
     .table
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :leave_from
         .table-cell.field = f.text_field :leave_from, required: true
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :going_to
         .table-cell.field = f.text_field :going_to, required: true
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :leave_at
         .table-cell.field = f.datetime_field :leave_at, required: true
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :return_at
         .table-cell.field = f.datetime_field :return_at, required: true
 
@@ -220,12 +222,12 @@ p
     .table
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :alert_at, 'Alert time'
         .table-cell.field = f.datetime_field :alert_at, required: true
       .table-row
         .table-cell.table-header
-          span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+          span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :alert_name, 'Who to alert'
         .table-cell.field = f.text_field :alert_name, value: 'US Coast Guard', required: true
       .table-row
@@ -264,7 +266,7 @@ p
 
     h2 Persons Onboard
     p.italic
-      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+      span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
       | You must report at least one person onboard.
     #persons-onboard
       = f.nested_fields_for :float_plan_onboards do |ff|

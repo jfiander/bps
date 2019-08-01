@@ -17,7 +17,7 @@ html
     = yield :head
   body
     #sidenav
-      = link_to('#', id: 'hide-sidenav', class: 'red close-sidenav') { FA::Icon.p('times-square') + 'Close' }
+      = link_to('#', id: 'hide-sidenav', class: 'red close-sidenav') { FA::Icon.p('times-square', style: :duotone) + 'Close' }
       h3 Navigation
       = main_menu
       - if current_user&.show_admin_menu? && admin_menu.values.any?
@@ -27,7 +27,7 @@ html
           - button_class = { 'Admin'  => 'admin', 'Current Page' => '' }[heading] || 'members'
           - menu << link_to('#', id: "show-#{menu_id}", class: "show-sub-menu #{button_class}") { content_tag(:li, heading) }
           div.sub-menu id=(menu_id)
-            = link_to('#', id: "hide-#{menu_id}", class: 'red close-sidenav') { FA::Icon.p('times-square') + 'Close' }
+            = link_to('#', id: "hide-#{menu_id}", class: 'red close-sidenav') { FA::Icon.p('times-square', style: :duotone) + 'Close' }
             h3 = heading
             ul.simple = admin_menu_sidenav(menu_id)
             .sidenav-spacer
@@ -40,7 +40,9 @@ html
           .logo = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
           .slogan For Boaters, By Boaters™
         #print-header = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
-      #show-sidenav = FA::Icon.p('bars') + 'Navigation'
+      #show-sidenav
+        = FA::Icon.p('bars', style: :duotone)
+        .nav Navigation
       #navigation = main_menu
       #content
         #content-top

@@ -3,7 +3,7 @@
 <%- unless flash[:alert].present? %>
   <% if @registration.payable? %>
     <% pay_link = ask_to_pay_path(token: @registration.payment.token) %>
-    <% pay_icon = FA::Icon.p('credit-card', style: :regular, title: 'Pay for registration') %>
+    <% pay_icon = FA::Icon.p('credit-card', style: :duotone, title: 'Pay for registration') %>
     $("#event_<%= @event.id %>")
       .attr("href", "<%= pay_link %>")
       .removeAttr("data-method").removeAttr("data-remote")

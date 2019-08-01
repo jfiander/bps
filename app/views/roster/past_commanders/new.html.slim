@@ -4,7 +4,7 @@
   = f.hidden_field :id
   #new
     .left
-      span.red = FA::Icon.p('dot-circle', style: :regular, css: 'red', shrink: 4)
+      span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
       = f.label :year
     .right = f.number_field :year, value: (@record.year || Date.today).strftime('%Y'), class: 'number', required: true
     br.clear

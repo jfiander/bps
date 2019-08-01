@@ -44,7 +44,7 @@ module ApplicationHelper
   end
 
   def admin_header(header_text)
-    admin_icon = FA::Icon.p('shield-check', style: :regular)
+    admin_icon = FA::Icon.p('shield-check', style: :duotone)
     admin_icon + header_text + admin_icon
   end
 

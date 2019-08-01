@@ -10,7 +10,7 @@
     margin: 0 0.25em;
     padding: 0;
 
-    .far, .fas, .fal, .fab {
+    .far, .fas, .fal, .fad, .fab {
       display: inline-block;
       margin-right: 0.5em;
     }
@@ -61,8 +61,13 @@ ul#education {
   li.catalog-button {
     @include blue-button(0.5em, lighten($old-glory-blue, 20%));
     width: 15em;
-    margin-top: 0.5em;
-    margin-bottom: 2em;
+    margin: 0.5em auto 2em auto;
+    display: table;
+
+    div {
+      display: table-cell;
+      vertical-align: middle;
+    }
   }
 
   li.active {
@@ -235,6 +240,15 @@ div#show-sidenav {
   font-weight: bold;
   vertical-align: middle;
   border-bottom: thin solid $old-glory-blue-faded;
+
+  i {
+    vertical-align: middle;
+  }
+
+  div.nav {
+    display: inline;
+    vertical-align: middle;
+  }
 }
 
 div#sidenav, div.sub-menu {
@@ -299,4 +313,15 @@ div#sidenav, div.sub-menu {
 
 div.sub-menu {
   z-index: 9999;
+}
+
+li.nav-with-icon {
+  display: table;
+  overflow: hidden;
+
+  div.nav-icon-contents {
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+  }
 }

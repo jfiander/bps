@@ -2,15 +2,15 @@ h1 = admin_header("Versions of #{@model} ##{@id}")
 
 .instructions
   | Blue diff
-  = FA::Icon.p('exchange', style: :regular, css: 'birmingham-blue', fa: :fw)
+  = FA::Icon.p('exchange', style: :duotone, css: 'birmingham-blue', fa: :fw)
   | is between that version and its parent.
 .instructions
   | Green diff
-  = FA::Icon.p('arrow-from-top', style: :regular, css: :green, fa: :fw)
+  = FA::Icon.p('arrow-from-top', style: :duotone, css: :green, fa: :fw)
   | is between current and that version.
 .instructions
   | Revert
-  = FA::Icon.p('undo', style: :regular, css: :red, fa: :fw)
+  = FA::Icon.p('undo', style: :duotone, css: :red, fa: :fw)
   | returns the object to that version.
 hr
 

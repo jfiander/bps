@@ -1,5 +1,5 @@
 .registration id=("registration_#{r.id}_mobile")
-  = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true, data: {confirm: 'Are you sure you want to cancel this registration?'}) { FA::Icon.p('minus-square') }
+  = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true, data: {confirm: 'Are you sure you want to cancel this registration?'}) { FA::Icon.p('minus-square', style: :duotone) }
   - if current_user&.permitted?(:admin) && r.event&.cost&.positive?
     = reg_override_icon(r)
   - if r.user&.full_name&.present?

@@ -11,6 +11,6 @@
     - if version == @versions.last
       = FA::Icon.p('square', css: 'background')
     - else
-      = link_to(admin_diff_versions_path(a: index + 1, b: index + 2)) { FA::Icon.p('exchange', style: :regular, fa: :fw) }
-    = link_to(admin_diff_versions_path(a: 0, b: index + 2)) { FA::Icon.p('arrow-from-top', style: :regular, fa: :fw, css: :green) }
-    = link_to(admin_revert_version_path(a: index + 1), method: :patch, data: { confirm: "Are you sure you want to go back #{index + 1} #{'version'.pluralize(index + 1)}?" }, class: 'red') { FA::Icon.p('undo', style: :regular, fa: :fw) }
+      = link_to(admin_diff_versions_path(a: index + 1, b: index + 2)) { FA::Icon.p('exchange', style: :duotone, fa: :fw) }
+    = link_to(admin_diff_versions_path(a: 0, b: index + 2)) { FA::Icon.p('arrow-from-top', style: :duotone, fa: :fw, css: :green) }
+    = link_to(admin_revert_version_path(a: index + 1), method: :patch, data: { confirm: "Are you sure you want to go back #{index + 1} #{'version'.pluralize(index + 1)}?" }, class: 'red') { FA::Icon.p('undo', style: :duotone, fa: :fw) }

@@ -18,7 +18,7 @@ table#users
     th User
     th.center Certificate
     th.center Roles
-    th Current Login
+    / th Current Login
     th.center
   - @users.each do |user|
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
@@ -30,7 +30,7 @@ table#users
         - else
           = mail_to(user[:email], user[:name])
       td.center
-        = user[:certificate] || FA::Icon.p('question-circle', css: 'red', style: :regular, title: 'Invalid certificate')
+        = user[:certificate] || FA::Icon.p('question-circle', css: 'red', style: :duotone, title: 'Invalid certificate')
         - if user[:senior] || user[:life]
           br
           - if user[:life]
@@ -52,40 +52,40 @@ table#users
           ul.roles.red
             - (user[:permitted_roles] - user[:granted_roles]).each do |p|
               = content_tag(:li, p)
-      td.center.small-text
-        - if user[:current_login_at].present?
-          = user[:current_login_at].strftime(ApplicationController::LONG_TIME_FORMAT)
-          br
-          | from: 
-          = user[:current_login_from]
-        - elsif user[:invited_at].present?
-          | Invited:
-          br
-          = user[:invited_at].strftime(ApplicationController::LONG_TIME_FORMAT)
-        - else
-          | Never logged in
+      / td.center.small-text
+      /   - if user[:current_login_at].present?
+      /     = user[:current_login_at].strftime(ApplicationController::LONG_TIME_FORMAT)
+      /     br
+      /     | from: 
+      /     = user[:current_login_from]
+      /   - elsif user[:invited_at].present?
+      /     | Invited:
+      /     br
+      /     = user[:invited_at].strftime(ApplicationController::LONG_TIME_FORMAT)
+      /   - else
+      /     | Never logged in
       td.center
         - if user[:locked]
           - if can_lock
-            = link_to(unlock_user_path(user[:id]), class: 'unlock', method: :patch) { FA::Icon.p('lock', fa: 'fw', title: 'Unlock') }
+            = link_to(unlock_user_path(user[:id]), class: 'unlock', method: :patch) { FA::Icon.p('lock', style: :duotone, fa: 'fw', title: 'Unlock') }
           - else
-            = FA::Icon.p('lock', fa: 'fw', title: 'Lock')
+            = FA::Icon.p('lock', style: :duotone, fa: 'fw', title: 'Lock')
         - else
           - if admin
-            = link_to(user_path(user[:id])) { FA::Icon.p('user', title: "Profile for user #{user[:id]}", fa: 'fw') }
+            = link_to(user_path(user[:id])) { FA::Icon.p('user', style: :duotone, title: "Profile for user #{user[:id]}", fa: 'fw') }
           - else
-            = FA::Icon.p('user', title: user[:id], fa: 'fw')
-          = link_to(user_certificate_path(id: user[:id]), target: :_blank) { FA::Icon.p('file-certificate', style: :regular, fa: 'fw', title: 'Educational certificate') }
+            = FA::Icon.p('user', style: :duotone, title: user[:id], fa: 'fw')
+          = link_to(user_certificate_path(id: user[:id]), target: :_blank) { FA::Icon.p('file-certificate', style: :duotone, fa: 'fw', title: 'Educational certificate') }
           - if user[:invited]
-            = link_to(invite_path(id: user[:id]), method: :put) { FA::Icon.p('envelope-open', css: 'pending', fa: 'fw', title: 'Re-send invitation') }
+            = link_to(invite_path(id: user[:id]), method: :put) { FA::Icon.p('envelope-open', style: :duotone, css: 'pending', fa: 'fw', title: 'Re-send invitation') }
           - elsif user[:invitable]
-            = link_to(invite_path(id: user[:id]), method: :put) { FA::Icon.p('envelope', fa: 'fw', title: 'Send invitation') }
+            = link_to(invite_path(id: user[:id]), method: :put) { FA::Icon.p('envelope', style: :duotone, fa: 'fw', title: 'Send invitation') }
           - elsif user[:placeholder_email]
             = FA::Layer.p([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address')
           - else
             = FA::Layer.p([{ name: 'envelope', options: { css: :gray } }, { name: 'check', options: { css: :green } }], title: 'Logged in successfully')
           - if can_lock && !user[:permitted_roles].include?(:admin)
-            = link_to(lock_user_path(user[:id]), class: 'lock', method: :patch) { FA::Icon.p('unlock', fa: 'fw', title: 'Lock') }
+            = link_to(lock_user_path(user[:id]), class: 'lock', method: :patch) { FA::Icon.p('unlock', style: :duotone, fa: 'fw', title: 'Lock') }
           - elsif can_lock && user[:permitted_roles].include?(:admin)
             = FA::Layer.p([{ name: 'unlock', options: { css: :gray } }, { name: 'ban', options: { css: :red } }], title: 'Cannot lock admins')
 
