@@ -88,7 +88,7 @@ RSpec.describe EventsHelper, type: :helper do
           '<a icon="calendar-check" text="Post to Calendar" ' \
           'class="control birmingham-blue" css="birmingham-blue" ' \
           'rel="nofollow" data-method="put" href="/courses/2/book">' \
-          '<i class=\'far fa-fw fa-calendar-check fa-1x\' ' \
+          '<i class=\'fad fa-fw fa-calendar-check fa-1x\' ' \
           'data-fa-transform=\'\' title=\'\'></i>Post To Calendar</a>'
         )
       end
@@ -106,7 +106,7 @@ RSpec.describe EventsHelper, type: :helper do
           '<a icon="calendar-check" text="Post to Calendar" ' \
           'class="control birmingham-blue" css="birmingham-blue" ' \
           'rel="nofollow" data-method="put" href="http://example.com">' \
-          '<i class=\'far fa-fw fa-calendar-check fa-1x\' ' \
+          '<i class=\'fad fa-fw fa-calendar-check fa-1x\' ' \
           'data-fa-transform=\'\' title=\'\'></i>Post To Calendar</a>'
         )
       end
@@ -123,7 +123,7 @@ RSpec.describe EventsHelper, type: :helper do
         expect(link).to eql(
           '<a icon="calendar-check" text="Post to Calendar" class="control birmingham-blue unclickable" ' \
           'css="birmingham-blue" rel="nofollow" data-method="put" href="#">' \
-          "<i class='far fa-fw fa-calendar-check fa-1x' data-fa-transform='' title=''></i>Post To Calendar</a>"
+          "<i class='fad fa-fw fa-calendar-check fa-1x' data-fa-transform='' title=''></i>Post To Calendar</a>"
         )
       end
     end
@@ -139,8 +139,8 @@ RSpec.describe EventsHelper, type: :helper do
 
     it 'generates the correct normal icon' do
       expect(reg_override_icon(@reg)).to eql(
-        "<a href=\"/override_cost/1\"><i class='far green fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
-        "title='Set override cost'></i></a>"
+        "<a href=\"/override_cost/#{@reg.payment.token}\"><i class='fad green fa-file-invoice-dollar fa-1x' " \
+        "data-fa-transform='' title='Set override cost'></i></a>"
       )
     end
 
@@ -148,8 +148,8 @@ RSpec.describe EventsHelper, type: :helper do
       @reg.update(override_cost: 1)
 
       expect(reg_override_icon(@reg)).to eql(
-        "<a href=\"/override_cost/1\"><i class='fas green fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
-        "title='Update override cost'></i></a>"
+        "<a href=\"/override_cost/#{@reg.payment.token}\"><i class='fas green fa-file-invoice-dollar fa-1x' " \
+        "data-fa-transform='' title='Update override cost'></i></a>"
       )
     end
 
@@ -157,7 +157,7 @@ RSpec.describe EventsHelper, type: :helper do
       @reg.payment.paid!('1234567890')
 
       expect(reg_override_icon(@reg)).to eql(
-        "<i class='far gray fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
+        "<i class='fad gray fa-file-invoice-dollar fa-1x' data-fa-transform='' " \
         "title='Registration has already been paid'></i>"
       )
     end
