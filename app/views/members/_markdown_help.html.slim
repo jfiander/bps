@@ -239,22 +239,55 @@
       | ) is available, if you want to use a particular icon somewhere in a page.
     p You can specify arbitrary CSS classes on each icon. (Separate classes with spaces.)
     p
-      | Some useful classes:
+      b Colors:
       ul
         li.bold.birmingham-blue birmingham-blue
         li.bold.blue blue
         li.bold.red red
         li.bold.green green
         li.bold.gray gray
-        li
-          span.bold far
-          |   (hollow)
-        li
-          span.bold fal
-          |  (thin)
-        li
-          span.bold fa-fw
-          |  (fixed width)
+
+    p.bold Icon styles:
+    .table
+      .table-row.bold.center
+        .table-cell Class
+        .table-cell Description
+        .table-cell Examples
+      .table-row.center
+        .table-cell fas
+        .table-cell solid
+        .table-cell
+          = FA::Icon.p('file-certificate', style: :solid)
+          = FA::Icon.p('users', style: :solid)
+          = FA::Icon.p('bars', style: :solid)
+      .table-row.center
+        .table-cell far
+        .table-cell hollow
+        .table-cell
+          = FA::Icon.p('file-certificate', style: :regular)
+          = FA::Icon.p('users', style: :regular)
+          = FA::Icon.p('bars', style: :regular)
+      .table-row.center
+        .table-cell fal
+        .table-cell thin
+        .table-cell
+          = FA::Icon.p('file-certificate', style: :light)
+          = FA::Icon.p('users', style: :light)
+          = FA::Icon.p('bars', style: :light)
+      .table-row.center
+        .table-cell fad
+        .table-cell duotone
+        .table-cell
+          = FA::Icon.p('file-certificate', style: :duotone)
+          = FA::Icon.p('users', style: :duotone)
+          = FA::Icon.p('bars', style: :duotone)
+      .table-row.center
+        .table-cell fa-fw
+        .table-cell fixed-width
+        .table-cell
+          = FA::Icon.p('file-certificate', fa: :fw)
+          = FA::Icon.p('users', fa: :fw)
+          = FA::Icon.p('bars', fa: :fw)
     p
       span.bold.red %fa/
       | icon-name
