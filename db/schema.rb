@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_11_150941) do
+ActiveRecord::Schema.define(version: 2019_08_06_153556) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["office"], name: "index_bridge_offices_on_office"
+    t.index ["user_id"], name: "index_bridge_offices_on_user_id"
   end
 
   create_table "committees", force: :cascade do |t|
@@ -62,6 +64,9 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["department"], name: "index_committees_on_department"
+    t.index ["name"], name: "index_committees_on_name"
+    t.index ["user_id"], name: "index_committees_on_user_id"
   end
 
   create_table "course_completions", force: :cascade do |t|
@@ -71,6 +76,7 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["user_id"], name: "index_course_completions_on_user_id"
   end
 
   create_table "course_includes", force: :cascade do |t|
@@ -79,6 +85,7 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["course_id"], name: "index_course_includes_on_course_id"
   end
 
   create_table "course_topics", force: :cascade do |t|
@@ -87,6 +94,7 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["course_id"], name: "index_course_topics_on_course_id"
   end
 
   create_table "event_instructors", force: :cascade do |t|
@@ -95,6 +103,8 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["event_id"], name: "index_event_instructors_on_event_id"
+    t.index ["user_id"], name: "index_event_instructors_on_user_id"
   end
 
   create_table "event_promo_codes", force: :cascade do |t|
@@ -103,6 +113,8 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_event_promo_codes_on_event_id"
+    t.index ["promo_code_id"], name: "index_event_promo_codes_on_promo_code_id"
   end
 
   create_table "event_types", force: :cascade do |t|
@@ -151,6 +163,7 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.string "slug"
     t.integer "length_h"
     t.integer "length_m"
+    t.index ["event_type_id"], name: "index_events_on_event_type_id"
   end
 
   create_table "float_plan_onboards", force: :cascade do |t|
@@ -370,6 +383,9 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.string "cost_type"
     t.boolean "refunded"
     t.integer "promo_code_id"
+    t.index ["parent_type", "parent_id"], name: "index_payments_on_parent_type_and_parent_id"
+    t.index ["token"], name: "index_payments_on_token"
+    t.index ["transaction_id"], name: "index_payments_on_transaction_id"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -381,6 +397,7 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.integer "photo_file_file_size"
     t.datetime "photo_file_updated_at"
     t.datetime "deleted_at"
+    t.index ["album_id"], name: "index_photos_on_album_id"
   end
 
   create_table "promo_codes", force: :cascade do |t|
@@ -392,6 +409,7 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_promo_codes_on_code"
   end
 
   create_table "registration_promo_codes", force: :cascade do |t|
@@ -413,6 +431,7 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.string "override_comment"
     t.integer "user_id"
     t.string "email"
+    t.index ["event_id"], name: "index_registrations_on_event_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -421,6 +440,8 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "updated_at", null: false
     t.integer "parent_id"
     t.datetime "deleted_at"
+    t.index ["name"], name: "index_roles_on_name"
+    t.index ["parent_id"], name: "index_roles_on_parent_id"
   end
 
   create_table "roster_archive_files", force: :cascade do |t|
@@ -444,6 +465,8 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["committee_name"], name: "index_standing_committee_offices_on_committee_name"
+    t.index ["user_id"], name: "index_standing_committee_offices_on_user_id"
   end
 
   create_table "static_pages", force: :cascade do |t|
@@ -452,6 +475,7 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["name"], name: "index_static_pages_on_name"
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -460,6 +484,9 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["role_id"], name: "index_user_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_user_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -531,6 +558,7 @@ ActiveRecord::Schema.define(version: 2019_06_11_150941) do
     t.string "mmsi"
     t.string "call_sign"
     t.datetime "cpr_aed_expires_at"
+    t.index ["certificate"], name: "index_users_on_certificate"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
