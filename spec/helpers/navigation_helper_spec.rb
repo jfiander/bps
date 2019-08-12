@@ -11,7 +11,7 @@ RSpec.describe NavigationHelper, type: :helper do
       expect(link(:login_or_logout)).to eql(
         '<a class="red" title="Logout" rel="nofollow" data-method="delete" href="/logout"><li class=" nav-with-icon">' \
         '<div class="nav-icon-contents">' \
-        "<i class='fad fa-sign-out fa-1x' data-fa-transform='' title=''></i>Logout</div></li></a>"
+        "<i class='fad fa-sign-out fa-1x' style='' data-fa-transform='' title=''></i>Logout</div></li></a>"
       )
     end
 
@@ -39,7 +39,7 @@ RSpec.describe NavigationHelper, type: :helper do
       expect(link(:login_or_logout)).to eql(
         '<a class="members" title="Member Login" href="/login"><li class=" nav-with-icon">' \
         '<div class="nav-icon-contents">' \
-        "<i class='fad fa-sign-in fa-1x' data-fa-transform='' title=''></i>" \
+        "<i class='fad fa-sign-in fa-1x' style='' data-fa-transform='' title=''></i>" \
         'Member Login</div></li></a>'
       )
     end
