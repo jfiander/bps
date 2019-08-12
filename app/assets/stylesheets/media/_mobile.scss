@@ -2,15 +2,6 @@
   div#print-footer {
     display: none;
   }
-
-  div.notice {
-    display: block;
-
-    div.icon {
-      display: block;
-      margin-top: 0.25em;
-    }
-  }
 }
 
 @media all and (max-width: 750px) {
@@ -22,6 +13,20 @@
 
     * {
       overflow-x: hidden;
+    }
+  }
+
+  span.icon, i.fas, i.far, i.fal, i.fad, i.fab {
+    vertical-align: middle;
+    height: 1.25em;
+    line-height: 1.25em;
+  }
+
+  div.notice {
+    display: block;
+
+    div.icon {
+      display: block;
     }
   }
 
@@ -153,10 +158,6 @@
     max-width: 100vw;
     width: 100vw;
     height: 75vh;
-  }
-
-  div#bridge .fa, div#standing-committees .fa {
-    display: block;
   }
 
   div#profile {
