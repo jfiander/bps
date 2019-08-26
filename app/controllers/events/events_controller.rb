@@ -2,7 +2,7 @@
 
 module Events
   class EventsController < EventController
-    secure!(:event, except: %i[schedule catalog show])
+    secure!(:event, except: %i[schedule catalog show slug])
     title!('Events')
 
     def event_type_param

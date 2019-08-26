@@ -194,7 +194,7 @@ Rails.application.routes.draw do
     delete  "/#{event_type}s/:id/unbook",    to: "events/#{event_type}s#unbook",        as: "unbook_#{event_type}"
   end
 
-  get     '/e/:slug', to: 'events#slug', as: 'event_slug'
+  get     '/e/:slug', to: 'events/events#slug', as: 'event_slug'
 
   ### User management
 
