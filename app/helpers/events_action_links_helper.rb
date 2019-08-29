@@ -33,6 +33,7 @@ private
   end
 
   def generate_event_action_link(event, path, icon, options)
+    options[:protocol] = 'https' unless ENV['ASSET_ENVIRONMENT'] == 'development'
     return link_to(send(path, event), **options) { icon } if path.present? && path.match?(/_path/)
     return link_to(path, **options) { icon } if path.present?
 
