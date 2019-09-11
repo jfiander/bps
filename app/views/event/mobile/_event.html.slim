@@ -25,7 +25,7 @@
   .event-mobile-contents
     - if event.multiple_sessions?
       - if event.all_day
-        b = "#{event.sessions - 1} days"
+        b = "#{event.sessions} days"
       - else
         b = "#{event.sessions} sessions"
         - if event.length?
