@@ -36,7 +36,7 @@ gem 'sendgrid-ruby',       '~> 5.2'
 gem 'slack-notifier',      '~> 2.3'
 
 # General Functionality
-gem 'devise',              '~> 4.4'
+gem 'devise',              '~> 4.7.1'
 gem 'devise_invitable',    '~> 1.7'
 gem 'encrypted-keystore',  '~> 0.0.6'
 gem 'exp_retry',           '~> 0.0.13'
