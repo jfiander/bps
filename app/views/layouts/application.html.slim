@@ -1,5 +1,5 @@
 doctype html
-html
+html lang='en'
   head
     title = @title
     = csrf_meta_tags
@@ -36,7 +36,7 @@ html
     #main.flex
       header
         #desktop-header
-          .header = image_tag @header_image, class: 'header' if @header_image.present?
+          .header = image_tag @header_image, class: 'header', alt: 'Header Photo' if @header_image.present?
           .logo = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
           .slogan For Boaters, By Boaters™
         #print-header = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
