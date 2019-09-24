@@ -151,8 +151,12 @@ class Event < ApplicationRecord
 private
 
   def validate_dates
-    self.cutoff_at = start_at if cutoff_at.blank?
-    self.expires_at = start_at + 1.week if expires_at.blank?
+    self.cutoff_at = start_at if cutoff_at.blank? || out_of_date(:cutoff_at)
+    self.expires_at = start_at + 1.week if expires_at.blank? || out_of_date(:expires_at)
+  end
+
+  def out_of_date(field)
+    start_at_changed? && !send("#{field}_changed?") && send(field) < start_at
   end
 
   def public_link_path
