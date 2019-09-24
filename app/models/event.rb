@@ -6,6 +6,7 @@ class Event < ApplicationRecord
   include Concerns::Event::Flyer
   include Concerns::Event::Boolean
   include Concerns::Event::Cost
+  include Concerns::Event::Actions
 
   belongs_to :event_type
   has_many   :course_topics,   foreign_key: :course_id, inverse_of: :course
@@ -88,29 +89,6 @@ class Event < ApplicationRecord
     "#{hours}#{mins}"
   end
 
-  def register_user(user)
-    Registration.create(user: user, event: self)
-  end
-
-  def assign_instructor(user)
-    EventInstructor.create(event: self, user: user)
-  end
-
-  def remind!
-    return if reminded?
-
-    registrations.each { |reg| RegistrationMailer.remind(reg).deliver }
-    update(reminded_at: Time.now)
-  end
-
-  def expire!
-    update(expires_at: Time.now)
-  end
-
-  def archive!
-    update(archived_at: Time.now)
-  end
-
   def public_link
     Rails.application.routes.url_helpers.send(*public_link_path, host: ENV['DOMAIN'])
   end
@@ -136,16 +114,6 @@ class Event < ApplicationRecord
 
   def repeat_description
     repeat_pattern == 'DAILY' ? 'over consecutive days' : 'every week'
-  end
-
-  def attach_promo_code(code, **args)
-    promo_code = PromoCode.find_or_create_by(code: code, **args)
-
-    unless (epc = EventPromoCode.find_by(event: self, promo_code: promo_code))
-      epc = EventPromoCode.create(event: self, promo_code: promo_code)
-    end
-
-    epc
   end
 
 private
