@@ -41,9 +41,7 @@ em
         ul
           li.red If you need to add a new location, do that before continuing.
           li
-            | You can also save this 
-            = event_type_param
-            | , create the location, then add it here later.
+            | You can also save now, then add a location here later.
       .right
         - if @locations.present?
           / = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: 'Please select a location', required: true
@@ -172,15 +170,17 @@ em
 
       .left
         = f.label :cutoff_at, 'Do not allow registrations after', class: 'red'
-        ul.red
+        ul
           li Defaults to start time.
+          li.red Updates automatically if start time changes to after this.
       .right = f.datetime_field :cutoff_at
       br.clear
 
       .left
         = f.label :expires_at, "Do not display this #{event_type_param} after", class: 'red'
-        ul.red
+        ul
           li Defaults to one week after start time.
+          li.red Updates automatically if start time changes to after this.
       .right = f.datetime_field :expires_at
       br.clear
 
