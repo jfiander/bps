@@ -81,7 +81,7 @@ private
       { title: 'Depart', value: format_fp_time(:leave_at), short: true },
       { title: 'Return', value: format_fp_time(:return_at), short: true },
       { title: 'Alert', value: format_fp_time(:alert_at), short: true },
-      { title: 'Float Plan PDF', value: @float_plan.link, short: false }
+      { title: 'Link', value: "<#{@float_plan.link}|PDF>", short: true }
     ].compact
   end
 

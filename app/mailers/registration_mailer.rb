@@ -3,6 +3,7 @@
 class RegistrationMailer < ApplicationMailer
   include CommitteeNotificationEmails
   include MailerSignatures
+  include Rails.application.routes.url_helpers
 
   def registered(registration)
     @registration = registration
@@ -98,7 +99,7 @@ private
       type: type, title: title,
       fallback: fallback,
       fields: {
-        'Event name' => @registration.event.display_title,
+        'Event' => "<#{show_event_url(@registration.event)}|#{@registration.event.display_title}>",
         'Event date' => slack_start_time,
         'Registrant name' => @registration&.user&.full_name,
         'Registrant email' => @registration&.user&.email || @registration&.email
