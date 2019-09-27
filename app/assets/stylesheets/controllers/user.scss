@@ -40,8 +40,26 @@ div#profile {
       max-width: 40vw;
     }
 
-    div.long img {
-      width: 20em;
+    div.long {
+      img {
+        width: 20em;
+      }
+
+      img.s {
+        width: 2.5em;
+      }
+
+      img.p {
+        width: 6em;
+      }
+
+      img.ap, img.ap_edpro, img.jn, img.jn_edpro {
+        width: 10.5em;
+      }
+
+      img.n, img.n_edpro {
+        width: 18em;
+      }
     }
 
     img.pin {

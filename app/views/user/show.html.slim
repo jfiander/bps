@@ -6,7 +6,7 @@ h1 = @user.full_name
     .table-cell.insignia
       .long
         p = image_tag(static_bucket.link("flags/PNG/#{@rank_flag}.500.png"), class: 'flag') if @user.auto_rank.present?
-        p = image_tag(static_bucket.link("insignia/PNG/#{@insignia[:grade]}.png"), title: @insignia_title[:grade]) if @insignia[:grade].present?
+        p = image_tag(static_bucket.link("insignia/PNG/#{@insignia[:grade]}.png"), title: @insignia_title[:grade], class: @insignia[:grade]) if @insignia[:grade].present?
         p = image_tag(static_bucket.link("insignia/PNG/#{@insignia[:membership]}.png"), title: @insignia_title[:membership]) if @insignia[:membership].present?
       #merit-marks title=(@insignia_title[:mm])
         - @user.mm&.times do
