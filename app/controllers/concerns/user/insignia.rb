@@ -13,7 +13,7 @@ class User
         mm: @user.mm&.positive? ? "#{@user.mm} Merit Marks" : nil
       }
 
-      @rank_flag = @user.auto_rank&.delete('/')&.upcase
+      @rank_flag = @user.auto_rank(html: false)&.delete('/')&.upcase
       @rank_flag = 'PRC' if @rank_flag == 'PNFLT'
     end
 
