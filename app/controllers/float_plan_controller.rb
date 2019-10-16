@@ -67,7 +67,7 @@ private
 
     NotificationsMailer.float_plan(@float_plan).deliver
     SlackNotification.new(
-      channel: 'floatplans', type: :info, title: 'Float Plan Submitted',
+      channel: :floatplans, type: :info, title: 'Float Plan Submitted',
       fallback: 'Someone has submitted a float plan.',
       fields: slack_fields
     ).notify!

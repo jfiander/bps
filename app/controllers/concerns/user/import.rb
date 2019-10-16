@@ -55,7 +55,7 @@ class User
       title = type == :success ? 'Complete' : 'Failed'
       fallback = type == :success ? 'successfully imported' : 'failed to import'
       SlackNotification.new(
-        type: type, title: "User Data Import #{title}",
+        channel: :notifications, type: type, title: "User Data Import #{title}",
         fallback: "User information has #{fallback}.",
         fields: [
           { title: 'By', value: current_user.full_name, short: true },

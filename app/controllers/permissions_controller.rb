@@ -129,7 +129,7 @@ private
 
   def permission_notification(user_role, mode, by)
     SlackNotification.new(
-      type: :info, title: "Permission #{mode.to_s.titleize}",
+      channel: :notifications, type: :info, title: "Permission #{mode.to_s.titleize}",
       fallback: "A permission was #{mode}.",
       fields: [
         { title: 'User', value: user_role.user.full_name,  short: true },

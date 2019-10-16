@@ -29,7 +29,7 @@ private
 
   def slack_notification(name)
     SlackNotification.new(
-      type: :info, title: 'OTW Training Requested',
+      channel: :notifications, type: :info, title: 'OTW Training Requested',
       fallback: 'Someone has requested OTW training.',
       fields: {
         'Training' => name,

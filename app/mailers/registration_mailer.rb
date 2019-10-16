@@ -96,7 +96,7 @@ private
 
   def slack_notification(type, title, fallback)
     SlackNotification.new(
-      type: type, title: title,
+      channel: :notifications, type: type, title: title,
       fallback: fallback,
       fields: {
         'Event' => "<#{show_event_url(@registration.event)}|#{@registration.event.display_title}>",

@@ -81,7 +81,7 @@ private
 
   def slack_notification(payment)
     SlackNotification.new(
-      type: :info, title: 'Payment Received',
+      channel: :notifications, type: :info, title: 'Payment Received',
       fallback: 'A payment was successfully completed.',
       fields: {
         'Amount' => payment.transaction_amount,

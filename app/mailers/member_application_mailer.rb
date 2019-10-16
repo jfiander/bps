@@ -62,7 +62,7 @@ private
 
   def new_application_slack_notification
     SlackNotification.new(
-      type: :info, title: 'Membership Application Received',
+      channel: :notifications, type: :info, title: 'Membership Application Received',
       fallback: 'Someone has applied for membership.',
       fields: new_application_slack_fields(
         "#{@application.primary.first_name} #{@application.primary.last_name}",

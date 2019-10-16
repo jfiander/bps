@@ -25,7 +25,7 @@ private
 
   def bridge_slack_notification
     SlackNotification.new(
-      type: :info, title: 'Bridge Office Updated',
+      channel: :notifications, type: :info, title: 'Bridge Office Updated',
       fallback: 'A bridge office has been updated.',
       fields: {
         'Office' => @bridge_office.title,
