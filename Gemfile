@@ -35,6 +35,8 @@ gem 'geocoder',            '~> 1.5.0'
 gem 'sendgrid-ruby',       '~> 5.2'
 gem 'slack-notifier',      '~> 2.3'
 
+gem 'slack-notification',  '~> 0.1.7'
+
 # General Functionality
 gem 'devise',              '~> 4.7.1'
 gem 'devise_invitable',    '~> 1.7'

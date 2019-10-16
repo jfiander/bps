@@ -13,7 +13,7 @@ RSpec.describe SlackNotification, type: :lib do
         { 'title' => 'Three', 'value' => 'three', 'short' => true }
       ],
       'color' => '#99CEFF',
-      'footer' => 'development'
+      'footer' => 'test'
     }
   end
 
@@ -27,16 +27,14 @@ RSpec.describe SlackNotification, type: :lib do
   let(:notification_with_string) do
     notification = notification_with_short_three.dup
     notification['title'] = 'Just one field'
-    notification.delete('fields')
+    notification['fields'] = []
     notification
   end
 
   before do
     base_notification_details = {
-      type: :info, title: 'Test Notification',
-      fallback: 'This is a test notification',
-      fields: nil,
-      dryrun: true
+      channel: 'test', type: :info, fields: nil, dryrun: true,
+      title: 'Test Notification', fallback: 'This is a test notification'
     }
 
     @hash_notification = SlackNotification.new(
@@ -80,7 +78,7 @@ RSpec.describe SlackNotification, type: :lib do
       SlackNotification.new(
         type: :info, title: 'Test Notification',
         fallback: 'This is a test notification',
-        fields: Set.new,
+        fields: Set.new, channel: 'test',
         dryrun: true
       )
     end.to raise_error(
@@ -93,7 +91,7 @@ RSpec.describe SlackNotification, type: :lib do
       SlackNotification.new(
         type: :not_valid, title: 'Test Notification',
         fallback: 'This is a test notification',
-        fields: 'String',
+        fields: 'String', channel: 'test',
         dryrun: true
       )
     end.to raise_error(
@@ -111,11 +109,11 @@ RSpec.describe SlackNotification, type: :lib do
         dryrun: true
       )
     end.to raise_error(
-      ArgumentError, 'Unknown channel.'
+      ArgumentError, 'Unknown channel: not-valid'
     )
   end
 
-  it 'successfullies send a notification' do
+  it 'successfully sends a notification' do
     expect { @live_notification.notify! }.not_to raise_error
   end
 end
