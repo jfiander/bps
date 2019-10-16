@@ -71,6 +71,7 @@ gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
 gem 'loofah',              '~> 2.2.3'
+gem 'rubyzip',             '>= 1.3.0'
 gem 'sinatra',             '~> 2.0.3'
 
 group :production do
