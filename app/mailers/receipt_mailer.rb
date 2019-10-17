@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class ReceiptMailer < ApplicationMailer
-  default from: '"Birmingham Power Squadron" <receipts@bpsd9.org>'
-  default subject: 'Your receipt from Birmingham Power Squadron'
+  default from: '"Birmingham Power Squadron" <receipts@bpsd9.org>',
+          reply_to: '"BPS Support" <support@bpsd9.org>',
+          subject: 'Your receipt from Birmingham Power Squadron'
 
   def receipt(payment, transaction)
     @transaction = transaction_details(transaction, payment&.promo_code&.code)
