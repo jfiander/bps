@@ -3,11 +3,13 @@
 module BpsPdf
   class Roster
     class Detailed
+      CONFIG_TEXT ||= YAML.safe_load(
+        File.read("#{Rails.root}/app/lib/bps_pdf/roster/detailed/text.yml")
+      ).deep_symbolize_keys!
+
       module Helpers
         def config_text
-          @config_text ||= YAML.safe_load(
-            File.read("#{Rails.root}/app/lib/bps_pdf/roster/detailed/text.yml")
-          ).deep_symbolize_keys!
+          CONFIG_TEXT
         end
 
         def body_text(string, align: :justify)

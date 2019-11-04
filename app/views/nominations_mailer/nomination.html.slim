@@ -1,0 +1,25 @@
+= render 'application/mailers/auto'
+
+h1.birmingham Award Nomination Submitted
+
+p
+  h3 Nominator:
+  = @nominator.full_name
+
+p
+  h3 Award:
+  = @award
+  |  Award
+
+p
+  h3 Nominee:
+  = @nominee
+
+p
+  br
+  | This submission has been sent to the 
+  b #{@target}
+  |  for review.
+
+p
+  | If necessary, please reach out to the nominator for any more information.

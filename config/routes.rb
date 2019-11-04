@@ -247,6 +247,10 @@ Rails.application.routes.draw do
   get     '/receipts',              to: 'user#receipts'
   get     '/receipts/:token',       to: 'user#receipt',         as: 'receipt'
 
+  # Award Nominations
+  get     '/nominate', to: 'members#nominations'
+  put     '/nominate', to: 'members#nominate'
+
   ### Miscellaneous
   get     '/sitemap.xml',    to: 'sitemap#index',  as: 'sitemap', format: 'xml'
   get     '/robots.:format', to: 'sitemap#robots', as: 'robots'

@@ -1,0 +1,17 @@
+<%= render 'application/mailers/auto' %>
+Award Nomination Submitted
+
+
+Nominator:
+  <%= @nominator.full_name %>
+
+Award:
+  <%= @award %> Award
+
+Nominee:
+  <%= @nominee %>
+
+
+This submission has been sent to the <%= @target %> for review.
+
+If necessary, please reach out to the nominator for any more information.

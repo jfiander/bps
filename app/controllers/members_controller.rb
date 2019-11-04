@@ -6,6 +6,7 @@ class MembersController < ApplicationController
   include Members::Roster
   include Members::Markdown
   include Members::Dues
+  include Members::Nominations
   include BraintreeHelper
 
   secure!
