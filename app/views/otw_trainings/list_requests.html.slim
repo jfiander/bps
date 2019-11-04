@@ -5,6 +5,6 @@ h1 OTW Training Requests
     .table-cell.table-header Training
     .table-cell.table-header Requested By
   - @otw_requests.each do |otw|
-    .table-row
+    .table-row class=(cycle('gray', ''))
       .table-cell = otw.otw_training.name
       .table-cell = mail_to otw.user.email, otw.user.full_name
