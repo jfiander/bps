@@ -4,14 +4,13 @@ module Members
   module Nominations
     def nominations
       @awards = BpsPdf::Roster::Detailed::CONFIG_TEXT[:awards]
+      @description = @awards.delete(:top)
     end
 
     def nominate
-      return redirect_to(nominate_path) if nominations_params.blank?
+      return redirect_to(nominate_path) if submitted_nominations.blank?
 
-      nominations_params.each do |award, nominee|
-        NominationsMailer.nomination(current_user, award, nominee, award_target(award)).deliver
-      end
+      nomination_mails
 
       redirect_to(nominate_path, success: success_notice)
     end
@@ -19,7 +18,15 @@ module Members
   private
 
     def nominations_params
-      params.permit(nominations: {})['nominations'].reject { |_, v| v.blank? }
+      params.permit(nominations: {}, descriptions: {})
+    end
+
+    def submitted_nominations
+      nominations_params['nominations'].reject { |_, v| v.blank? }
+    end
+
+    def submitted_descriptions
+      nominations_params['descriptions']
     end
 
     def award_target(award_name)
@@ -39,6 +46,14 @@ module Members
       else
         'Your nomination has been successfully submitted.'
       end
+    end
+  end
+
+  def nomination_mails
+    submitted_nominations.each do |award, nominee|
+      NominationsMailer.nomination(
+        current_user, award, nominee, submitted_descriptions[award], award_target(award)
+      ).deliver
     end
   end
 end

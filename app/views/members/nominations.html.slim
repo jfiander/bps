@@ -1,17 +1,22 @@
 h1 Nominate Members for Awards
 
-= @awards.delete(:top)
+= @description
 
 p If you would like to nominate a member for any of the awards below, simply enter their name in the box. Your nominations will be automatically submitted to toe appropriate officer(s) for review.
 hr
 
-= form_tag(nominate_path, method: :put) do
+= form_tag(nominate_path, method: :put, id: 'nominations') do
   - @awards.each do |name, description|
     h3 #{name.to_s} Award
     p = description
     = label_tag("nominations[#{name}]", "Nominee:", class: 'bold')
     br
     = text_field_tag("nominations[#{name}]")
+    br
+
+    = label_tag("nominations[#{name}]", "Description:", class: 'bold')
+    br
+    = text_area_tag("descriptions[#{name}]")
     hr
 
   = submit_tag('Submit Nominations', class: 'big')

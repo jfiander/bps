@@ -12,6 +12,7 @@ RSpec.describe NominationsMailer, type: :mailer do
           nominator,
           'Bill Booth Moose Milk',
           'John Q Public',
+          'For good work.',
           'Executive Committee'
         )
       end
@@ -39,6 +40,7 @@ RSpec.describe NominationsMailer, type: :mailer do
           nominator,
           'Outstanding Service',
           'John Q Public',
+          'For good work.',
           'Commander'
         )
       end
@@ -66,6 +68,7 @@ RSpec.describe NominationsMailer, type: :mailer do
           nominator,
           'Education',
           'John Q Public',
+          'For good work.',
           'SEO'
         )
       end
