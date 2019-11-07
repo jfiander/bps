@@ -9,6 +9,10 @@
   .event-mobile-contents.birmingham-blue
     = FA::Icon.p('star', style: :duotone)
     | In catalog
+- if !defined?(@event_catalog) && @current_user_permitted_event_type && event.activity_feed
+  .event-mobile-contents.birmingham-blue
+    = FA::Icon.p('stream', style: :duotone)
+    | Available for activity feed
 - if defined?(@event_catalog)
   .event-mobile-contents.spaced = render 'event/actions/catalog', event: event
 - else

@@ -49,6 +49,11 @@
                   .table-cell.catalog
                     = FA::Icon.p('star', style: :duotone)
                     | In catalog
+              - if !defined?(@event_catalog) && @current_user_permitted_event_type && event.activity_feed
+                .table.row
+                  .table-cell.catalog
+                    = FA::Icon.p('stream', style: :duotone)
+                    | Available for activity feed
         .table-cell.top-middle
           - unless defined?(@event_catalog)
             .table
