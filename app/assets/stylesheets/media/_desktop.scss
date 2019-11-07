@@ -74,6 +74,26 @@
   body {
     margin: 0 7%;
   }
+
+  div#main div#content-main {
+    flex-flow: row wrap;
+
+    div.markdown {
+      width: 100%;
+    }
+
+    div#activity-feed {
+      width: 100%;
+      border: 0;
+    }
+  }
+}
+
+@media all and (min-width: 1051px) {
+  div#main div#content div#content-main.activity {
+    padding-right: 0;
+    height: 95%;
+  }
 }
 
 @media all and (min-width: 751px) {

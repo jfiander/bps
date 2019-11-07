@@ -61,6 +61,16 @@
 
       div#content-main {
         margin: 0.5em;
+        flex-flow: row wrap;
+
+        div.markdown {
+          width: 100%;
+        }
+
+        div#activity-feed {
+          width: 100%;
+          border: 0;
+        }
       }
     }
   }
