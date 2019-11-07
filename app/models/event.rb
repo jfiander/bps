@@ -70,7 +70,7 @@ class Event < ApplicationRecord
   end
 
   def self.activity_feed
-    include_details.where('expires_at > ? AND activity_feed = ?', Time.now, true)
+    include_details.order(:start_at).where('expires_at > ? AND activity_feed = ?', Time.now, true)
   end
 
   def self.with_registrations
