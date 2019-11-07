@@ -8,15 +8,22 @@ module Events
   private
 
     def event_params
-      params.require(:event).permit(
+      ep = params.require(:event).permit(
         %i[
           id event_type_id description cost member_cost usps_cost requirements
           summary location_id map_link start_at length_h length_m sessions flyer
           cutoff_at expires_at prereq_id allow_member_registrations repeat_pattern
           allow_public_registrations show_in_catalog delete_attachment
-          registration_limit advance_payment slug all_day
+          registration_limit advance_payment slug all_day activity_feed
         ]
       )
+
+      filter_activity_feed(ep)
+    end
+
+    def filter_activity_feed(ep)
+      ep[:event].delete(:activity_feed) unless current_user.authorized_for_activity_feed?
+      ep
     end
 
     def clean_params

@@ -61,6 +61,15 @@ em
               .description.ignore.show
         br.clear
 
+      - if current_user.authorized_for_activity_feed?
+        .left = f.label :activity_feed, "Show in Activity Feed"
+        .right
+          label.switch
+            = f.check_box :activity_feed, class: 'slider round'
+            span.slider.round.darkblue-lightblue
+              .description.ignore.show
+        br.clear
+
     #event-schedule
       h2 Schedule
 

@@ -59,6 +59,10 @@ class User
       SIMPLIFY.call([explicit_roles, implicit_roles])
     end
 
+    def authorized_for_activity_feed?
+      permitted?(:admin) || permitted?(:education, strict: true)
+    end
+
   private
 
     def searchable_roles(strict = false, session: nil)
