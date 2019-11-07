@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_06_153556) do
+ActiveRecord::Schema.define(version: 2019_11_07_193948) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(version: 2019_08_06_153556) do
     t.string "slug"
     t.integer "length_h"
     t.integer "length_m"
+    t.boolean "activity_feed"
     t.index ["event_type_id"], name: "index_events_on_event_type_id"
   end
 

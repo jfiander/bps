@@ -69,6 +69,10 @@ class Event < ApplicationRecord
     all_expired(category).where('start_at >= ?', Date.today.last_year.beginning_of_year)
   end
 
+  def self.activity_feed
+    include_details.where('expires_at > ? AND activity_feed = ?', Time.now, true)
+  end
+
   def self.with_registrations
     includes(:registrations).select { |e| e.registrations.present? }
   end
@@ -98,6 +102,13 @@ class Event < ApplicationRecord
 
     route = category == 'meeting' ? 'event' : category
     Rails.application.routes.url_helpers.send("show_#{route}_url", id, host: ENV['DOMAIN'])
+  end
+
+  def path
+    return if id.blank?
+
+    route = category == 'meeting' ? 'event' : category
+    Rails.application.routes.url_helpers.send("show_#{route}_path", id)
   end
 
   def display_title(event_type_cache = nil)

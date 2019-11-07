@@ -49,6 +49,11 @@ class ParsedMarkdown
       gsubs!(%r{<p>%excom</p>}, @next_excom)
     end
 
+    def parse_activity
+      gsubs!(%r{<p>%activity</p>}, '')
+      self << @activity if activity_feed?
+    end
+
     def match_replace(pattern)
       match(pattern) { |m| gsub!(m[0], yield(m)) } while match?(pattern)
       self
@@ -91,5 +96,9 @@ class ParsedMarkdown
     def parse_fa_bare
       match_replace(%r{%fa/([^/]+)/}) { |match| FA::Icon.p(match[1]) }
     end
+  end
+
+  def activity_feed?
+    Event.activity_feed.any?
   end
 end

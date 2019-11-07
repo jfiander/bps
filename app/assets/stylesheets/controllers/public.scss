@@ -128,6 +128,11 @@ div.assign-bridge small {
 
 div.markdown {
   text-align: left;
+  width: 75%;
+
+  &:only-child {
+    width: 100%;
+  }
 
   h1 {
     text-align: center;
@@ -213,4 +218,31 @@ div.notice {
     padding-left: 0.5em;
     vertical-align: middle;
   }
+}
+
+div#activity-feed {
+  background-color: $background-blue-faded;
+  border-left: thin solid $old-glory-blue-faded;
+  text-align: center;
+  width: 25%;
+  height: 100%;
+
+  ul li {
+    margin: 1em 0;
+
+    div {
+      line-height: 1.25em;
+    }
+
+    div.name {
+      font-weight: bold;
+      margin-bottom: 0.5em;
+    }
+  }
+}
+
+div#main div#content div#content-main.activity {
+  display: flex;
+  padding-right: 0;
+  height: 95%;
 }

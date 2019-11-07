@@ -65,6 +65,11 @@ private
     markdown&.match?(/%excom/) ? view_context.render('members/next_excom') : ''
   end
 
+  def activity_feed(markdown)
+    @activity_feed = Event.activity_feed.first(5)
+    markdown&.match?(/%activity/) ? view_context.render('public/activity') : ''
+  end
+
   def generate_markdown_div
     @markdown_div = +'<div class="markdown">'
     @markdown_div << redcarpet.render(@page_markdown.to_s)
@@ -94,7 +99,8 @@ private
       burgee: burgee_html(@page_markdown),
       education: education_menu(@page_markdown),
       next_meeting: next_meeting(@page_markdown),
-      next_excom: next_excom_meeting(@page_markdown)
+      next_excom: next_excom_meeting(@page_markdown),
+      activity: activity_feed(@page_markdown)
     ).parse
   end
 
