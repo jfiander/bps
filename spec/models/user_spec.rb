@@ -281,6 +281,36 @@ RSpec.describe User, type: :model do
         expect(@user.show_admin_menu?).to be(false)
       end
     end
+
+    describe 'authorized_for_activity_feed?' do
+      it 'does not allow a regular user to edit' do
+        expect(@user.authorized_for_activity_feed?).to be(false)
+      end
+
+      it 'allows an admin to edit' do
+        @user.permit! :admin
+        @user.reload
+        expect(@user.authorized_for_activity_feed?).to be(true)
+      end
+
+      context 'with education permissions' do
+        before do
+          FactoryBot.create(:role, name: 'education', parent: Role.find_by(name: 'admin'))
+        end
+
+        it 'allows granted education permissions to edit' do
+          @user.permit! :education
+          @user.reload
+          expect(@user.authorized_for_activity_feed?).to be(true)
+        end
+
+        it 'allows implied education permissions to edit' do
+          FactoryBot.create(:bridge_office, office: 'asst_educational', user: @user)
+          @user.reload
+          expect(@user.authorized_for_activity_feed?).to be(true)
+        end
+      end
+    end
   end
 
   describe 'locking' do

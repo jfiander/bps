@@ -543,5 +543,9 @@ RSpec.describe Event, type: :model, slow: true do
       @event.update(slug: slug)
       expect(@event.public_link).to match(%r{e/#{slug.downcase}\z})
     end
+
+    event_it 'generates the correct local path' do
+      expect(@event.path).to match(%r{courses/\d+\z})
+    end
   end
 end

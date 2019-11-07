@@ -60,7 +60,7 @@ class User
     end
 
     def authorized_for_activity_feed?
-      permitted?(:admin) || permitted?(:education, strict: true)
+      permitted?(:admin) || permitted?(:education)
     end
 
   private
