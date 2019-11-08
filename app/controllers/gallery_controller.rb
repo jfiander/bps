@@ -7,7 +7,7 @@ class GalleryController < ApplicationController
   title!('Photos')
 
   def index
-    @albums = Album.includes(:photos).all
+    @albums = Album.includes(:photos).order(created_at: :desc).all
     @album = Album.new
     @photo = Photo.new
   end
