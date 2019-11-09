@@ -70,7 +70,7 @@ gem 'awesome_print',       '~> 1.8.0'
 gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
-gem 'loofah',              '~> 2.2.3'
+gem 'loofah',              '~> 2.3.1'
 gem 'rubyzip',             '>= 1.3.0'
 gem 'sinatra',             '~> 2.0.3'
 
