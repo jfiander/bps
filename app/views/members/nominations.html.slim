@@ -5,6 +5,12 @@ h1 Nominate Members for Awards
 p If you would like to nominate a member for any of the awards below, simply enter their name in the box. Your nominations will be automatically submitted to toe appropriate officer(s) for review.
 hr
 
+.italic
+  | Nominations for #{Date.today.year} awards must be submitted by 
+  span.bold = (excom_date('November', Date.today.year) + 12.hours).strftime(ApplicationController::FULL_TIME_FORMAT)
+  | .
+hr
+
 = form_tag(nominate_path, method: :put, id: 'nominations') do
   - @awards.each do |name, description|
     h3 #{name.to_s} Award

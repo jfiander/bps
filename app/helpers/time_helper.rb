@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module TimeHelper
+  FULL_TIME_FORMAT = '%A %d %B %Y at %H%M %Z'
   LONG_TIME_FORMAT = '%a %d %b %Y @ %H%M %Z'
   MEDIUM_TIME_FORMAT = '%-m/%-d/%Y @ %H%M'
   SHORT_TIME_FORMAT = '%-m/%-d @ %H%M'
