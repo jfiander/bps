@@ -2,9 +2,12 @@
 
 module Members
   module Nominations
+    include DateHelper
+
     def nominations
       @awards = BpsPdf::Roster::Detailed::CONFIG_TEXT[:awards].dup
       @description = @awards.delete(:top)
+      due_date
     end
 
     def nominate
@@ -47,13 +50,20 @@ module Members
         'Your nomination has been successfully submitted.'
       end
     end
-  end
 
-  def nomination_mails
-    submitted_nominations.each do |award, nominee|
-      NominationsMailer.nomination(
-        current_user, award, nominee, submitted_descriptions[award], award_target(award)
-      ).deliver
+    def due_date
+      @due_date = excom_date('November', Date.today.year) + 12.hours
+      return @due_date unless Time.now > @due_date
+
+      @due_date = excom_date('November', Date.today.year + 1) + 12.hours
+    end
+
+    def nomination_mails
+      submitted_nominations.each do |award, nominee|
+        NominationsMailer.nomination(
+          current_user, award, nominee, submitted_descriptions[award], award_target(award)
+        ).deliver
+      end
     end
   end
 end
