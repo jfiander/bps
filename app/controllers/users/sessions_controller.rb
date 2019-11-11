@@ -39,7 +39,7 @@ module Users
       %w[
         members minutes profile permit invitation/new header file import
         user_help profile(/edit)? ranks auto_permissions event_types locations
-        float_plans? otw(/list)? receipts
+        float_plans? otw(/list)? receipts nominate
       ]
     end
 
