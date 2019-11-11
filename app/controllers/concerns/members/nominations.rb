@@ -3,7 +3,7 @@
 module Members
   module Nominations
     def nominations
-      @awards = BpsPdf::Roster::Detailed::CONFIG_TEXT[:awards]
+      @awards = BpsPdf::Roster::Detailed::CONFIG_TEXT[:awards].dup
       @description = @awards.delete(:top)
     end
 
