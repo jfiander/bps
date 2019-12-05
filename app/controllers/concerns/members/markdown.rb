@@ -33,9 +33,7 @@ module Members
       # html_safe: Text is sanitized before display
       @page = StaticPage.find_by(name: clean_params[:page_name])
       @new_markdown = sanitize(static_page_params[:markdown])
-      @preview_html = render_markdown_raw(
-        markdown: @new_markdown
-      ).html_safe
+      @preview_html = render_markdown_raw(markdown: @new_markdown).html_safe
     end
   end
 end

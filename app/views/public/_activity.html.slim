@@ -9,5 +9,5 @@ div#activity-feed
         - if event.flyer.present?
           .flyer = link_to('Flyer', event.get_flyer)
 
-script type='text/javascript'
-  | $("div#content-main").addClass("activity");
+- unless @new_markdown.present?
+  script type='text/javascript' $("div#content-main").addClass("activity");

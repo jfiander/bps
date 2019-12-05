@@ -5,7 +5,11 @@ h2 = @page.name.titleize
   h3.red This is only a preview! Your changes have not yet been saved.
   h4.red Your changes will be lost if you refresh or leave this page.
 
-.red-border = @preview_html
+  - if @activity_feed.any? && @new_markdown.present? && @new_markdown =~ /%activity/
+    hr
+    b.red Note: The Activity Feed will not be displayed correctly below.
+
+#preview.red-border = @preview_html
 
 = render "edit_markdown_form", markdown: @new_markdown
 
