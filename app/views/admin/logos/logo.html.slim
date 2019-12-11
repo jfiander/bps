@@ -26,7 +26,7 @@ hr
 
     .table-row
       .table-cell.table-header.left title='"Birmingham" not available for Short' = label_tag(:text, 'Text')
-      .table-cell.right = select_tag(:text, options_for_select(%w[Birmingham Burgee Slogan Simple], selected: @logo_params[:text]), required: true)
+      .table-cell.right = select_tag(:text, options_for_select(%w[Birmingham Burgee Slogan Plain], selected: @logo_params[:text]), required: true)
 
   .center = spinner_button(button_text: 'Get logo', disable_text: 'Getting logo', css: 'big')
 
