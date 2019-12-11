@@ -28,7 +28,7 @@ module Admin
       logo_params[:orientation].in?(%w[Short Long]) &&
         logo_params[:type].in?(%w[PNG SVG]) &&
         logo_params[:background].in?(%w[Transparent White]) &&
-        logo_params[:text].in?(%w[Birmingham Burgee Slogan Simple])
+        logo_params[:text].in?(%w[Birmingham Burgee Slogan Plain])
     end
 
     def validate_size
