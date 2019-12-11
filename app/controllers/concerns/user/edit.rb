@@ -5,7 +5,7 @@ class User
     def assign_photo
       photo = clean_params[:photo]
 
-      if User.find_by(id: clean_params[:id]).assign_photo(local_path: photo.path)
+      if photo.present? && User.find_by(id: clean_params[:id]).assign_photo(local_path: photo.path)
         flash[:success] = 'Successfully assigned profile photo!'
       else
         flash[:alert] = 'Unable to assign profile photo.'
