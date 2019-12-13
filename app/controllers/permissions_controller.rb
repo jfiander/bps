@@ -148,6 +148,6 @@ private
   def update_calendar_acl(user)
     method = user.permitted?(:calendar) ? :permit : :unpermit
 
-    GoogleCalendarAPI.new(auth: true).send(method, calendar_id, user)
+    GoogleAPI::Configured::Calendar.new(calendar_id).send(method, user)
   end
 end
