@@ -1,5 +1,7 @@
 h1= admin_header("Birthdays for #{Date::MONTHNAMES[@month]}")
 
+= render('admin/birthdays/choose_month', month: @month)
+
 .table
   .table-row.bold
     .table-cell Member
