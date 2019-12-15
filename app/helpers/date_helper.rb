@@ -35,6 +35,7 @@ module DateHelper
 
   def next_membership(date = Date.today)
     month = membership_in_session?(date) ? next_membership_month(date) : 'September'
+    date += 1.year if month == 'January'
     membership_date(month, date.strftime('%Y'))
   end
 
