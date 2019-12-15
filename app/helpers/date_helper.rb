@@ -6,6 +6,7 @@ module DateHelper
 
   def next_excom(date = Date.today)
     month = excom_in_session?(date) ? next_excom_month(date) : 'September'
+    date += 1.year if month == 'January'
     excom_date(month, date.strftime('%Y'))
   end
 
@@ -17,6 +18,7 @@ module DateHelper
   def excom_date(month = Date.today.strftime('%B'), year = Date.today.strftime('%Y'))
     date = Date.strptime("#{year} #{month}", '%Y %B')
     date += 1.day until date.strftime('%A') == 'Tuesday'
+    date += 1.week if date == date.beginning_of_year
     date
   end
 

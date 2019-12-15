@@ -24,6 +24,14 @@ RSpec.describe DateHelper, type: :helper do
       expect(next_excom(Date.strptime('2018-06-15')).to_date).to eql(Date.strptime('2018-09-04'))
     end
 
+    it 'selects the correct start-of-year date' do
+      expect(next_excom(Date.strptime('2019-12-20')).to_date).to eql(Date.strptime('2020-01-07'))
+    end
+
+    it 'selects the correct start-of-year date when the year starts on a Tuesday' do
+      expect(next_excom(Date.strptime('2018-12-20')).to_date).to eql(Date.strptime('2019-01-08'))
+    end
+
     it 'selects the correct date for a meeting day' do
       expect(next_excom(Date.strptime('2018-06-05')).to_date).to eql(Date.strptime('2018-06-05'))
     end
