@@ -54,6 +54,14 @@ RSpec.describe DateHelper, type: :helper do
       expect(next_membership(Date.strptime('2018-05-15')).to_date).to eql(Date.strptime('2018-09-11'))
     end
 
+    it 'selects the correct start-of-year date' do
+      expect(next_membership(Date.strptime('2019-12-20')).to_date).to eql(Date.strptime('2020-01-14'))
+    end
+
+    it 'selects the correct start-of-year date when the year starts on a Tuesday' do
+      expect(next_membership(Date.strptime('2018-12-20')).to_date).to eql(Date.strptime('2019-01-15'))
+    end
+
     it 'selects the correct date for a meeting day' do
       expect(next_membership(Date.strptime('2018-05-08')).to_date).to eql(Date.strptime('2018-05-08'))
     end
