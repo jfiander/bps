@@ -1,4 +1,8 @@
 @media print {
+  .no-print {
+    display: none;
+  }
+
   body, body div#main, body div#main div#content {
     background-color: white;
   }
