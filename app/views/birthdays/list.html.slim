@@ -1,6 +1,6 @@
 h1= admin_header("Birthdays for #{Date::MONTHNAMES[@month]}")
 
-= render('admin/birthdays/choose_month', month: @month)
+= render('birthdays/choose_month', month: @month)
 
 .table
   .table-row.bold
