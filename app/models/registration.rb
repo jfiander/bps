@@ -17,6 +17,7 @@ class Registration < ApplicationRecord
   after_create :confirm_to_registrant
 
   def payment_amount
+    convert_email_to_user && save
     return override_cost if override_cost.present?
 
     event&.get_cost(user&.present?)
@@ -68,7 +69,7 @@ private
     return unless public_registration?
     return unless (user = User.find_by(email: email))
 
-    self.user = user
     self.email = nil
+    self.user = user
   end
 end
