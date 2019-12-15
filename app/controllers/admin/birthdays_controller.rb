@@ -4,15 +4,12 @@ module Admin
   class BirthdaysController < ApplicationController
     secure!(:admin)
 
-    def month
-      @month = clean_params[:month].to_i
-      @birthdays = sorted_users
-      render(:list)
-    end
-
-    def current
-      @month = Date.today.strftime('%m').to_i
-      @birthdays = sorted_users
+    def birthdays
+      if clean_params[:month].to_i.positive?
+        month
+      else
+        current
+      end
       render(:list)
     end
 
@@ -22,8 +19,18 @@ module Admin
       params.permit(:month)
     end
 
+    def month
+      @month = clean_params[:month].to_i
+      @birthdays = sorted_users
+    end
+
+    def current
+      @month = Date.today.strftime('%m').to_i
+      @birthdays = sorted_users
+    end
+
     def users_for_month
-      User.where("#{month_query} = '?'", @month).map do |u|
+      User.where("#{month_query} = '?' OR #{month_query} = '0?'", @month, @month).map do |u|
         { name: u.full_name, birthday: u.birthday }
       end
     end
