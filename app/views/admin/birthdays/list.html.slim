@@ -1,0 +1,10 @@
+h1= admin_header("Birthdays for #{Date::MONTHNAMES[@month]}")
+
+.table
+  .table-row.bold
+    .table-cell Member
+    .table-cell Birthday
+  - @birthdays.each do |birthday|
+    .table-row
+      .table-cell = birthday[:name]
+      .table-cell = birthday[:birthday].strftime('%b %d')

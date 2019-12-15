@@ -87,6 +87,8 @@ Rails.application.routes.draw do
     put    '/promo_codes/new',           to: 'promo_codes#create',   as: 'create_promo_code'
     patch  '/promo_codes/:id/activate',  to: 'promo_codes#activate', as: 'activate_promo_code'
     delete '/promo_codes/:id/expire',    to: 'promo_codes#expire',   as: 'expire_promo_code'
+    get    '/current',                   to: 'birthdays#current',    as: 'birthdays'
+    get    '/month/:month',              to: 'birthdays#month',      as: 'birthdays_for_month'
   end
 
   # Newsletter
@@ -176,6 +178,10 @@ Rails.application.routes.draw do
   # Course Completions
   get     '/completions',     to: 'completions#list'
   get     '/completions/ytd', to: 'completions#ytd'
+
+  # Birthdays
+  get     '/current',      to: 'birthdays#current', as: 'birthdays'
+  get     '/month/:month', to: 'birthdays#month',   as: 'birthdays_for_month'
 
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",               to: "events/#{event_type}s#schedule"
