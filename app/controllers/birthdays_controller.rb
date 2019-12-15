@@ -41,6 +41,9 @@ private
   end
 
   def month_query
-    ENV['ASSET_ENVIRONMENT'] == 'development' ? 'strftime("%m", birthday)' : 'MONTH(birthday)'
+    # SQLite: strftime("%m", birthday)
+    # MySQL: MONTH(birthday)
+    # PG: EXTRACT(MONTH FROM birthday)
+    ENV['ASSET_ENVIRONMENT'] == 'development' ? 'strftime("%m", birthday)' : 'EXTRACT(MONTH FROM birthday)'
   end
 end
