@@ -66,7 +66,7 @@ private
   end
 
   def activity_feed(markdown)
-    @activity_feed = Event.activity_feed.first(5)
+    @activity_feed = Event.activity_feed.first(ENV['ACTIVITY_FEED_LENGTH'].to_i)
     markdown&.match?(/%activity/) ? view_context.render('public/activity') : ''
   end
 

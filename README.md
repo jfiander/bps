@@ -49,6 +49,7 @@ rails s
 ```sh
 # General
 LANG # en_US.UTF-8
+ACTIVITY_FEED_LENGTH
 
 # Flags
 ALLOW_BULK_INVITE # false
