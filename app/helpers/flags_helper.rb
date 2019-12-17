@@ -44,7 +44,7 @@ module FlagsHelper
 
   def mm_insignia
     content_tag(:div, class: 'mm-insignia') do
-      concat flag_image("insignia/PNG/mm.png", height: 30)
+      concat flag_image('insignia/PNG/mm.png', height: 30)
       concat tag(:br)
       concat dl_link('PNG', 'insignia/PNG/mm.png')
       concat content_tag(:span, ' | ')
