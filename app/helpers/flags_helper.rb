@@ -54,12 +54,16 @@ module FlagsHelper
 
 private
 
+  def bucket
+    static_bucket
+  end
+
   def flag_image(path, **options)
-    image_tag(@bucket.link(path), **options)
+    image_tag(bucket.link(path), **options)
   end
 
   def dl_link(text, path)
-    link_to(text, @bucket.link(path), disposition: 'inline', title: dl_link_title(text))
+    link_to(text, bucket.link(path), disposition: 'inline', title: dl_link_title(text))
   end
 
   def dl_link_title(text)
