@@ -30,14 +30,7 @@ module FlagsHelper
     content_tag(:div, class: 'grade-insignia') do
       concat flag_image("insignia/PNG/grades/tr/#{grade}#{edpro_tag}.png", height: height)
       concat tag(:br)
-      concat content_tag(:span, 'PNG: ')
-      concat dl_link('T', "insignia/PNG/grades/tr/#{grade}#{edpro_tag}.png")
-      concat content_tag(:span, ' ')
-      concat dl_link('B', "insignia/PNG/grades/black/#{grade}#{edpro_tag}.png")
-      concat content_tag(:span, ' ')
-      concat dl_link('W', "insignia/PNG/grades/white/#{grade}#{edpro_tag}.png")
-      concat content_tag(:span, ' | ')
-      concat dl_link('SVG', "insignia/SVG/grades/#{grade}#{edpro_tag}.svg")
+      link_list('insignia/PNG/grades') { "#{grade}#{edpro_tag}" }
     end
   end
 
@@ -45,14 +38,7 @@ module FlagsHelper
     content_tag(:div, class: 'membership-insignia') do
       concat flag_image("insignia/PNG/membership/tr/#{membership}.png", width: 250)
       concat tag(:br)
-      concat content_tag(:span, 'PNG: ')
-      concat dl_link('T', "insignia/PNG/membership/tr/#{membership}.png")
-      concat content_tag(:span, ' ')
-      concat dl_link('B', "insignia/PNG/membership/black/#{membership}.png")
-      concat content_tag(:span, ' ')
-      concat dl_link('W', "insignia/PNG/membership/white/#{membership}.png")
-      concat content_tag(:span, ' | ')
-      concat dl_link('SVG', "insignia/SVG/membership/#{membership}.svg")
+      link_list('insignia/PNG/membership') { membership }
     end
   end
 
@@ -84,5 +70,17 @@ private
       'B' => 'Black backgeround',
       'W' => 'White background'
     }[text]
+  end
+
+  def link_list(base_path)
+    filename = yield
+    concat content_tag(:span, 'PNG: ')
+    concat dl_link('T', "#{base_path}/tr/#{filename}.png")
+    concat content_tag(:span, ' ')
+    concat dl_link('B', "#{base_path}/black/#{filename}.png")
+    concat content_tag(:span, ' ')
+    concat dl_link('W', "#{base_path}/white/#{filename}.png")
+    concat content_tag(:span, ' | ')
+    concat dl_link('SVG', "#{base_path.sub(/PNG/, 'SVG')}/#{filename}.svg")
   end
 end
