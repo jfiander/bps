@@ -24,12 +24,12 @@ RSpec.describe FlagsHelper, type: :helper do
   end
 
   it 'generates the correct pennant HTML' do
-    expect(officer_insignia('OIC')).to eql(
-      '<div class="officer-insignia"><img height="75" ' \
-      'src="https://static.bpsd9.org/flags/PNG/insignia/OIC.thumb.png" /><br />' \
-      '<a disposition="inline" href="https://static.bpsd9.org/flags/PNG/insignia/OIC.png">PNG</a>' \
+    expect(pennant('OIC')).to eql(
+      '<div class="officer-flags"><img width="150" height="25" ' \
+      'src="https://static.bpsd9.org/flags/PNG/OIC.thumb.png" /><br />' \
+      '<a disposition="inline" href="https://static.bpsd9.org/flags/PNG/OIC.png">PNG</a>' \
       '<span> | </span><a disposition="inline" ' \
-      'href="https://static.bpsd9.org/flags/SVG/insignia/OIC.svg">SVG</a></div>'
+      'href="https://static.bpsd9.org/flags/SVG/OIC.svg">SVG</a></div>'
     )
   end
 
