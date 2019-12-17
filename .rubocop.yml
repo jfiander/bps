@@ -86,3 +86,6 @@ Security/JSONLoad:
   Enabled: true
 Security/YAMLLoad:
   Enabled: true
+
+Performance/Count:
+  SafeMode: false
