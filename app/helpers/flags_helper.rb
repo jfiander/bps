@@ -3,7 +3,7 @@
 module FlagsHelper
   def officer_flags(rank, height = 100)
     content_tag(:div, class: 'officer-flags') do
-      concat image_tag(@bucket.link("flags/PNG/#{rank}.thumb.png"), width: 150, height: height)
+      concat flag_image("flags/PNG/#{rank}.thumb.png", width: 150, height: height)
       concat tag(:br)
       concat dl_link('PNG', "flags/PNG/#{rank}.png")
       concat content_tag(:span, ' | ')
@@ -13,7 +13,7 @@ module FlagsHelper
 
   def officer_insignia(rank)
     content_tag(:div, class: 'officer-insignia') do
-      concat image_tag(@bucket.link("flags/PNG/insignia/#{rank}.thumb.png"), height: 75)
+      concat flag_image("flags/PNG/insignia/#{rank}.thumb.png", height: 75)
       concat tag(:br)
       concat dl_link('PNG', "flags/PNG/insignia/#{rank}.png")
       concat content_tag(:span, ' | ')
@@ -28,14 +28,14 @@ module FlagsHelper
   def grade_insignia(grade, height, edpro: false)
     edpro_tag = edpro ? '_edpro' : ''
     content_tag(:div, class: 'grade-insignia') do
-      concat image_tag(@bucket.link("insignia/PNG/grades/tr/#{grade}#{edpro_tag}.png"), height: height)
+      concat flag_image("insignia/PNG/grades/tr/#{grade}#{edpro_tag}.png", height: height)
       concat tag(:br)
       concat content_tag(:span, 'PNG: ')
-      concat dl_link('T', "insignia/PNG/grades/tr/#{grade}#{edpro_tag}.png", 'Transparent background')
+      concat dl_link('T', "insignia/PNG/grades/tr/#{grade}#{edpro_tag}.png")
       concat content_tag(:span, ' ')
-      concat dl_link('B', "insignia/PNG/grades/black/#{grade}#{edpro_tag}.png", 'Black background')
+      concat dl_link('B', "insignia/PNG/grades/black/#{grade}#{edpro_tag}.png")
       concat content_tag(:span, ' ')
-      concat dl_link('W', "insignia/PNG/grades/white/#{grade}#{edpro_tag}.png", 'White background')
+      concat dl_link('W', "insignia/PNG/grades/white/#{grade}#{edpro_tag}.png")
       concat content_tag(:span, ' | ')
       concat dl_link('SVG', "insignia/SVG/grades/#{grade}#{edpro_tag}.svg")
     end
@@ -43,14 +43,14 @@ module FlagsHelper
 
   def membership_insignia(membership)
     content_tag(:div, class: 'membership-insignia') do
-      concat image_tag(@bucket.link("insignia/PNG/membership/tr/#{membership}.png"), width: 250)
+      concat flag_image("insignia/PNG/membership/tr/#{membership}.png", width: 250)
       concat tag(:br)
       concat content_tag(:span, 'PNG: ')
-      concat dl_link('T', "insignia/PNG/membership/tr/#{membership}.png", 'Transparent background')
+      concat dl_link('T', "insignia/PNG/membership/tr/#{membership}.png")
       concat content_tag(:span, ' ')
-      concat dl_link('B', "insignia/PNG/membership/black/#{membership}.png", 'Black background')
+      concat dl_link('B', "insignia/PNG/membership/black/#{membership}.png")
       concat content_tag(:span, ' ')
-      concat dl_link('W', "insignia/PNG/membership/white/#{membership}.png", 'White background')
+      concat dl_link('W', "insignia/PNG/membership/white/#{membership}.png")
       concat content_tag(:span, ' | ')
       concat dl_link('SVG', "insignia/SVG/membership/#{membership}.svg")
     end
@@ -58,7 +58,7 @@ module FlagsHelper
 
   def mm_insignia
     content_tag(:div, class: 'mm-insignia') do
-      concat image_tag(@bucket.link('insignia/PNG/mm.png'), height: 30)
+      concat flag_image("insignia/PNG/mm.png", height: 30)
       concat tag(:br)
       concat dl_link('SVG', 'insignia/PNG/mm.png')
       concat content_tag(:span, ' | ')
@@ -68,7 +68,21 @@ module FlagsHelper
 
 private
 
-  def dl_link(text, path, title = nil)
-    link_to(text, @bucket.link(path), disposition: 'inline', title: title)
+  def flag_image(path, **options)
+    image_tag(@bucket.link(path), **options)
+  end
+
+  def dl_link(text, path)
+    link_to(text, @bucket.link(path), disposition: 'inline', title: dl_link_title(text))
+  end
+
+  def dl_link_title(text)
+    return unless text.in?(%w[T B W])
+
+    {
+      'T' => 'Transparent background',
+      'B' => 'Black backgeround',
+      'W' => 'White background'
+    }[text]
   end
 end
