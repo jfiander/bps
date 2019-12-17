@@ -44,10 +44,11 @@ Rails.application.routes.draw do
   patch   '/edit/:page_name', to: 'members#update_markdown', as: 'update_page'
 
   ### Static pages
-  get     '/refunds',       to: 'braintree#refunds'
-  get     '/payment_terms', to: 'braintree#terms'
-  get     '/flags',         to: 'flags#flags'
-  get     '/tridents',      to: 'flags#tridents'
+  get     '/refunds',        to: 'braintree#refunds'
+  get     '/payment_terms',  to: 'braintree#terms'
+  get     '/flags',          to: 'flags#flags'
+  get     '/flags/national', to: 'flags#national'
+  get     '/tridents',       to: 'flags#tridents'
 
   ### Pre-loaded pages
   get     '/ranks',            to: 'members#ranks'

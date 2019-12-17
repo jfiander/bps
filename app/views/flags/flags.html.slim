@@ -206,7 +206,7 @@ h3 Grades and Membership
   .table-row
     .table-cell.table-header.officer Description
     .table-cell.table-header Insignia
-    .table-cell.table-header.italic with EdPro
+    .table-cell.table-header.italic with Educational Proficiency
   .table-row
     .table-cell.table-header.officer Seaman (S)
     .table-cell = grade_insignia(:s, 12)
@@ -244,12 +244,13 @@ h3 Grades and Membership
     .table-cell = mm_insignia
     .table-cell
 
-h3 Birmingham Power Squadron Burgee
-center
-  = image_tag @bucket.link('flags/Birmingham/Birmingham.svg'), width: 200, height: 125
-  br
-  = link_to 'PNG (L)', @bucket.link('flags/Birmingham/Birmingham.png'), disposition: 'inline'
-  |  | 
-  = link_to 'PNG (R)', @bucket.link('flags/Birmingham/Birmingham_right.png'), disposition: 'inline'
-  |  | 
-  = link_to 'SVG', @bucket.link('flags/Birmingham/Birmingham.svg'), disposition: 'inline'
+- if @show_birmingham
+  h3 Birmingham Power Squadron Burgee
+  center
+    = image_tag @bucket.link('flags/Birmingham/Birmingham.svg'), width: 200, height: 125
+    br
+    = link_to 'PNG (L)', @bucket.link('flags/Birmingham/Birmingham.png'), disposition: 'inline'
+    |  | 
+    = link_to 'PNG (R)', @bucket.link('flags/Birmingham/Birmingham_right.png'), disposition: 'inline'
+    |  | 
+    = link_to 'SVG', @bucket.link('flags/Birmingham/Birmingham.svg'), disposition: 'inline'

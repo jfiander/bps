@@ -1,0 +1,44 @@
+doctype html
+html lang='en'
+  head
+    title = @title
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application'
+    meta name='description' content=(@site_description)
+    meta name='keywords' content=(@site_keywords)
+    meta name='viewport' content='width=device-width, initial-scale=1.0'
+    = favicon_link_tag static_bucket.link('favicon.ico')
+    = FA::Link.kit(ENV['FONTAWESOME_KIT'])
+    - if ENV['ASSET_ENVIRONMENT'].in? ['production', 'staging']
+      = render 'application/trackers/analytics', keys: ENV.select { |k, _| k.match?(/\AGA_TRACKING_ID/) }.values
+    - if ENV['ASSET_ENVIRONMENT'].in? ['production']
+      = render 'application/trackers/facebook_pixel', key: ENV['FACEBOOK_PIXEL_ID']
+    = yield :head
+  body
+    #main.flex
+      header = image_tag(@generic_logo, alt: "America's Boating Club")
+      #content
+        #content-top
+          #flashes
+            #success class=(success ? '' : 'hide') = success
+            #notice class=(notice ? '' : 'hide') = notice
+            #alert class=(alert ? '' : 'hide') = alert
+            #error class=(error ? '' : 'hide') = formatted_error_flash(error)
+        #content-main = yield
+      footer
+        - if current_user&.permitted?(:admin, strict: true, session: session) && ::GIT_INFORMATION.local_ref.present?
+          .gray = ::GIT_INFORMATION.local_ref
+        #main-footer
+          .table
+            .table-row
+              .table-cell.footer-center
+                ul.links
+                  li = link_to "Trademarks", "https://www.usps.org/images/secretary/itcom/trademark.pdf", title: 'Trademarks'
+                  li = link_to "Privacy Statement", "https://www.usps.org/images/secretary/itcom/privacy.pdf", title: 'Privacy Statement'
+                  li = link_to "Disclaimer", "https://www.usps.org/images/secretary/itcom/disclaimer.pdf", title: 'Disclaimer'
+                  li = mail_to "webmaster@bpsd9.org", "Webmaster", title: 'Email the Webmaster'
+                .copyright Copyright &copy; 2017 Birmingham Power Squadron
+        #print-footer
+          .copyright Copyright &copy; 2017 Birmingham Power Squadron
+  
