@@ -42,7 +42,7 @@ class MemberApplicationsController < ApplicationController
   end
 
   def approve
-    @member_application = MemberApplication.find_by(id: applied_params[:id])
+    @member_application = MemberApplication.find_by(id: approve_params[:id])
 
     if @member_application.approve!(current_user) == { requires: :excom }
       flash.now[:alert] = 'Only ExCom members can approve applications.'
@@ -79,6 +79,10 @@ private
 
   def applied_params
     params.permit(:token)
+  end
+
+  def approve_params
+    params.permit(:id)
   end
 
   def load_payment
