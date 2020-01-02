@@ -6,7 +6,7 @@ module DateHelper
 
   def next_excom(date = Date.today)
     month = excom_in_session?(date) ? next_excom_month(date) : 'September'
-    date += 1.year if month == 'January' && date.strftime('%B') == 'December'
+    date += 1.year if add_year?(month, date)
     excom_date(month, date.strftime('%Y'))
   end
 
@@ -35,7 +35,7 @@ module DateHelper
 
   def next_membership(date = Date.today)
     month = membership_in_session?(date) ? next_membership_month(date) : 'September'
-    date += 1.year if month == 'January' && date.strftime('%B') == 'December'
+    date += 1.year if add_year?(month, date)
     membership_date(month, date.strftime('%Y'))
   end
 
@@ -57,5 +57,9 @@ private
   def next_month(date, meeting_date)
     date += 1.month if date > meeting_date
     date.strftime('%B')
+  end
+
+  def add_year?(month, date)
+    month == 'January' && date.strftime('%B') == 'December'
   end
 end
