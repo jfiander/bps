@@ -58,7 +58,6 @@ MARK_EXTERNAL_LINKS # enabled
 NEW_HEADER # enabled
 RAILS_LOG_TO_STDOUT # enabled
 RAILS_SERVE_STATIC_FILES # enabled
-USE_NEW_AG_TITLES # disabled, or CSV old course titles
 
 # Stage
 DOMAIN # staging.bpsd9.org

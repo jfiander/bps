@@ -1,14 +1,6 @@
 # frozen_string_literal: true
 
 class EventType < ApplicationRecord
-  NEW_TITLES ||= {
-    'Seamanship' => 'Boat Handling',
-    'Piloting' => 'Marine Navigation',
-    'Advanced Piloting' => 'Advanced Marine Navigation',
-    'Junior Navigation' => 'Offshore Navigation',
-    'Navigation' => 'Celestial Navigation'
-  }.freeze
-
   has_many :events
 
   scope :advanced_grades, -> { where(event_category: :advanced_grade) }
@@ -57,8 +49,7 @@ class EventType < ApplicationRecord
   end
 
   def display_title
-    t = cleanup_title(title)
-    new_title(t)
+    cleanup_title(title)
   end
 
   def self.order_positions
@@ -87,17 +78,6 @@ private
     title
   end
 
-  def new_title(title)
-    return title unless title.in?(NEW_TITLES.keys)
-    return title unless new_title?
-
-    NEW_TITLES[title]
-  end
-
-  def new_title?
-    ENV['USE_NEW_AG_TITLES'] == 'enabled' || title.in?(ENV['USE_NEW_AG_TITLES'].split(','))
-  end
-
   def title_subs
     # Configure acronyms in config/initializers/inflections.rb
 
@@ -107,7 +87,7 @@ private
 
     small_words = {
       ' A ' => ' a ', ' To ' => ' to ', ' Of ' => ' of ', ' And ' => ' and ',
-      ' On ' => ' on ', ' In ' => ' in ', ' For ' => ' for ',
+      ' On ' => ' on ', ' In ' => ' in ', ' For ' => ' for ', ' With ' => ' with ',
       '([- ])The([- ])' => '\1the\2'
     }
 
