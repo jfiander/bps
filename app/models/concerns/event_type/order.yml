@@ -1,0 +1,15 @@
+  public: 1
+  advanced_grade:
+    seamanship: 2
+    boat_handling: 3
+    piloting: 4
+    marine_navigation: 5
+    advanced_piloting: 6
+    advanced_marine_navigation: 7
+    junior_navigation: 8
+    offshore_navigation: 9
+    navigation: 10
+    celestialnavigation: 11
+  elective: 12
+  seminar: 13
+  meeting: 14

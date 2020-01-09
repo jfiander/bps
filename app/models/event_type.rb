@@ -53,14 +53,7 @@ class EventType < ApplicationRecord
   end
 
   def self.order_positions
-    {
-      'public' => 1,
-      'advanced_grade' => {
-        'seamanship' => 2, 'piloting' => 3, 'advanced_piloting' => 4,
-        'junior_navigation' => 5, 'navigation' => 6
-      },
-      'elective' => 7, 'seminar' => 8, 'meeting' => 9
-    }
+    YAML.safe_load(File.read("#{Rails.root}/app/models/concerns/event_type/order.yml"))
   end
 
   def order_position
