@@ -49,7 +49,7 @@ RSpec.describe EventType, type: :model do
     end
 
     it 'correctlies order event_types by name' do
-      expect(@event_types.map(&:order_position)).to eql([8, 7, 9, 1, 4])
+      expect(@event_types.map(&:order_position)).to eql(%w[8 7 9 1 4a])
     end
   end
 end
