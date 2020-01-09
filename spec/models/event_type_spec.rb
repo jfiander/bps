@@ -49,23 +49,7 @@ RSpec.describe EventType, type: :model do
     end
 
     it 'correctlies order event_types by name' do
-      expect(@event_types.map(&:order_position)).to eql([8, 7, 9, 1, 4])
-    end
-  end
-
-  describe 'new titles' do
-    before do
-      @event_type = FactoryBot.create(:event_type, event_category: 'advanced_grade', title: 'Junior Navigation')
-    end
-
-    it 'uses the correct old title' do
-      allow(ENV).to receive(:[]).with('USE_NEW_AG_TITLES').and_return('disabled')
-      expect(@event_type.display_title).to eql('Junior Navigation')
-    end
-
-    it 'uses the correct new title' do
-      allow(ENV).to receive(:[]).with('USE_NEW_AG_TITLES').and_return('enabled')
-      expect(@event_type.display_title).to eql('Offshore Navigation')
+      expect(@event_types.map(&:order_position)).to eql([13, 12, 14, 1, 6])
     end
   end
 end
