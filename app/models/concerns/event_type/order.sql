@@ -3,8 +3,8 @@ CASE
   WHEN event_category = 'advanced_grade' THEN CASE
     WHEN title = 'seamanship'                 THEN '2a'
     WHEN title = 'boat_handling'              THEN '2b'
-    WHEN title = 'marine_navigation'          THEN '3a'
-    WHEN title = 'piloting'                   THEN '3b'
+    WHEN title = 'piloting'                   THEN '3a'
+    WHEN title = 'marine_navigation'          THEN '3b'
     WHEN title = 'advanced_piloting'          THEN '4a'
     WHEN title = 'advanced_marine_navigation' THEN '4b'
     WHEN title = 'junior_navigation'          THEN '5a'
