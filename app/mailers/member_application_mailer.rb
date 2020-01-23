@@ -69,7 +69,7 @@ private
         @application.primary.email,
         @application.member_applicants.count
       )
-    )
+    ).notify!
   end
 
   def new_application_slack_fields(name, email, number)
