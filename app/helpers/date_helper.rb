@@ -26,10 +26,6 @@ module DateHelper
     next_month(date, excom_date(date.strftime('%B'), date.strftime('%Y')))
   end
 
-  def next_excom_over_40_days?(date = Date.today)
-    (next_excom(date) - date).to_i > 40
-  end
-
   ###############
   # Membership
 
