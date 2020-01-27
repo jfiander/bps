@@ -1,11 +1,9 @@
 - who = User.find_by(id: version.whodunnit)
-.table-row
-  .table-cell
+.table-row: .table-cell
 .table-row
   .table-cell = version.event
   .table-cell = mail_to(who.email, who.full_name) if who.present?
-  .table-cell.lowlight
-    pre.version-diff = pretty_json(version.reify.to_json)
+  .table-cell.lowlight: pre.version-diff = pretty_json(version.reify.to_json)
   .table-cell = version.created_at
   .table-cell
     - if version == @versions.last

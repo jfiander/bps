@@ -1,15 +1,14 @@
 h1 = admin_header('S3 Link')
 
 = form_tag do
-  = label_tag :r, 'Link: '
-  = select_tag :r, options_for_select(@link_keys, @r), required: true
+  = label_tag(:r, 'Link: ')
+  = select_tag(:r, options_for_select(@link_keys, @r), required: true)
   br
 
-  = label_tag :t, 'Expiration (seconds): '
-  = number_field_tag :t, @t || 1.week
+  = label_tag(:t, 'Expiration (seconds): ')
+  = number_field_tag(:t, @t || 1.week)
   br
 
-  = submit_tag 'Generate Link', class: 'big'
+  = submit_tag('Generate Link', class: 'big')
 
-- if @link.present?
-  = link_to 'Copy this link', @link
+= link_to('Copy this link', @link) if @link.present?

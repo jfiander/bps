@@ -10,10 +10,7 @@ h1 = "#{@edit_action} Location"
       = f.label :map_link
       ul
         li Include a link to a verified map of the location.
-        li
-          | Use 
-          = link_to('Google Maps', 'https://maps.google.com')
-          | , if possible.
+        li Use #{link_to('Google Maps', 'https://maps.google.com')}, if possible.
     .right = f.text_field :map_link, class: "map-link", placeholder: "https://maps.google.com/..."
     br.clear
 
@@ -25,14 +22,12 @@ h1 = "#{@edit_action} Location"
     .right
       label.switch
         = f.check_box :favorite, class: 'slider round'
-        span.slider.round.darkblue-lightblue
-          .description.no.yes
+        span.slider.round.darkblue-lightblue: .description.no.yes
     br.clear
 
     .left
       = f.label :price_comment
-      ul
-        li If all events located at this location are subject to any special pricing rules or discounts, describe them here.
+      ul: li If all events located at this location are subject to any special pricing rules or discounts, describe them here.
     .right = f.text_area :price_comment, placeholder: 'Details of special pricing relevant to this location.'
     br.clear
 
@@ -46,9 +41,7 @@ h1 = "#{@edit_action} Location"
       - if @location.picture.present?
         br
         = image_tag(files_bucket.link(@location.picture.s3_object(:thumb).key))
-        p
-          | Remove picture: 
-          = f.check_box :delete_attachment, id: 'location_picture_remove'
+        p Remove picture: #{f.check_box(:delete_attachment, id: 'location_picture_remove')}
     br.clear
 
     .center = f.submit "#{@edit_action} Location", class: 'big'

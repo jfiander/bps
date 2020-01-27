@@ -12,9 +12,7 @@ h2 Previous holder
   p
     = @previous.full_name
     br
-    = @previous.certificate
-    | , #
-    = @previous.id
+    | #{@previous.certificate}, ##{@previous.id}
 - else
   p TBD
 
@@ -24,9 +22,7 @@ h2 New holder
   p
     = @bridge_office.user.full_name
     br
-    = @bridge_office.user.certificate
-    | , #
-    = @bridge_office.user.id
+    | #{@bridge_office.user.certificate}, ##{@bridge_office.user.id}
 - else
   p TBD
 
@@ -34,6 +30,4 @@ h2 Updated by
 p
   = @by.full_name
   br
-  = @by.certificate
-  | , #
-  = @by.id
+  | #{@by.certificate}, ##{@by.id}

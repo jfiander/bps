@@ -2,32 +2,28 @@ h1 = admin_header("Version Diff of #{@model} ##{@id} – #{@a}:#{@b}")
 
 p
   b Change:
-  '
-  = @event.titleize
+  =< @event.titleize
 
 - if @changer.present?
   p
     b By:
-    '
-    = mail_to(@changer.email, @changer.full_name)
+    =< mail_to(@changer.email, @changer.full_name)
 
 - if @previous.present?
   p
     b Previous version by:
-    '
-    = mail_to(@previous.email, @previous.full_name)
+    =< mail_to(@previous.email, @previous.full_name)
 
 hr
 
 = form_tag do
-  = label_tag :mode, 'Diff Mode: '
-  = select_tag :mode, options_for_select(%w[line word char], @mode), required: true
-  = submit_tag 'Reload'
+  = label_tag(:mode, 'Diff Mode: ')
+  = select_tag(:mode, options_for_select(%w[line word char], @mode), required: true)
+  = submit_tag('Reload')
 
 hr
 
 - if @diff.blank?
   p.red Diff not available.
 - else
-  .lowlight
-    pre.version-diff = @diff
+  .lowlight: pre.version-diff = @diff

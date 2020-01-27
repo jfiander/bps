@@ -21,23 +21,23 @@
     p Ideally, headings should be arranged hierarchically.
     p.i Do not use more than one Title on any page.
     h1
-      span.bold.red #
-      |  Title
+      span.bold.red> #
+      | Title
     h2
-      span.bold.red ##
-      |  Heading
+      span.bold.red> ##
+      | Heading
     h3
-      span.bold.red ###
-      |  Sub-Heading
+      span.bold.red> ###
+      | Sub-Heading
     h4
-      span.bold.red ####
-      |  Section Heading
+      span.bold.red> ####
+      | Section Heading
     h5
-      span.bold.red ######
-      |  Sub-Section Heading
+      span.bold.red> ######
+      | Sub-Section Heading
     h6
-      span.bold.red ######
-      |  Sub-Sub-Section Heading
+      span.bold.red> ######
+      | Sub-Sub-Section Heading
 
     h3 Other Paragraph Styles
     p
@@ -83,10 +83,7 @@
     hr
 
     h2 Links
-    p
-      | Bare URLs (e.g. 
-      b https://bpsd9.org
-      | ) will be automatically linked.
+    p Bare URLs (e.g. <b>https://bpsd9.org</b>) will be automatically linked.
     p
       span.bold.red
         | [
@@ -150,8 +147,7 @@
     hr
 
     h2 Horizontal line
-    p
-      span.bold.red ---
+    p: span.bold.red ---
     hr
 
     h2 Bulleted list
@@ -159,30 +155,30 @@
     p You must leave a space between the dash and text.
     p
       | You can indent items one level by preceeding the 
-      span.bold.red -
-      |  with two spaces
+      span.bold.red> -
+      | with two spaces
     p
-      span.bold.red -
-      |  Item 1
+      span.bold.red> -
+      | Item 1
       br
-      span.bold.red -
-      |  Item 2
+      span.bold.red> -
+      | Item 2
     hr
 
     h2 Table
     p
       | You can create a table using 
-      span.bold.red |
-      |  and 
-      span.bold.red -
-      |  as shown below.
+      span.bold.red> |
+      | and 
+      span.bold.red> -
+      | as shown below.
     p
       | You can also add 
       span.bold.red
-        | :
-      |  at the ends of the row of 
-      span.bold.red -
-      |  to specify the alignment of each column. (The default is left.) 
+        ' :
+      | at the ends of the row of 
+      span.bold.red> -
+      | to specify the alignment of each column. (The default is left.) 
     p
       pre
         span.bold.red | 
@@ -214,9 +210,7 @@
 
     h2 Uploaded files
     p
-      | To link to uploaded files or display uploaded images, go to the 
-      = link_to "upload files page", file_path
-      |  and copy the "Markdown key"
+      | To link to uploaded files or display uploaded images, go to the #{link_to('upload files page', file_path)} and copy the "Markdown key"
       br
       | into where you want it to display on the page.
     p The format of these keys follows this pattern:
@@ -232,9 +226,7 @@
 
     h2 FontAwesome Pro Icons
     p
-      | The 
-      = link_to "FontAwesome Pro", "https://fontawesome.com/icons?d=listing", target: :_blank
-      |   icon library (up to 
+      | The #{link_to("FontAwesome Pro", "https://fontawesome.com/icons?d=listing", target: :_blank)} icon library (up to 
       = ENV['FONTAWESOME_VERSION']
       | ) is available, if you want to use a particular icon somewhere in a page.
     p You can specify arbitrary CSS classes on each icon. (Separate classes with spaces.)

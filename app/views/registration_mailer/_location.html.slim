@@ -1,10 +1,8 @@
 h3 Location:
 p
-  b Address:
+  b> Address:
   - if @registration.event.location.map_link.present?
-    |  (
-    = link_to 'Map', @registration.event.location.map_link
-    | )
+    | (#{link_to('Map', @registration.event.location.map_link)})
   br
   - @registration.event.location.address.split(/\r?\n/).each do |line|
     = line

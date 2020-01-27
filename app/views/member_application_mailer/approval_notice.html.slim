@@ -12,9 +12,7 @@ h2 Primary Applicant
 - if @application.additional.present?
   h2 Additional Household Applicants
   - @application.additional.each_with_index do |applicant, index|
-    h3
-      | Additional Applicant #
-      = index + 1
+    h3 Additional Applicant ##{index + 1}
     = render 'member_application_mailer/applicant', applicant: applicant, primary: false
 
 hr

@@ -30,15 +30,12 @@ html lang='en'
         - if current_user&.permitted?(:admin, strict: true, session: session) && ::GIT_INFORMATION.local_ref.present?
           .gray = ::GIT_INFORMATION.local_ref
         #main-footer
-          .table
-            .table-row
-              .table-cell.footer-center
-                ul.links
-                  li = link_to "Trademarks", "https://www.usps.org/images/secretary/itcom/trademark.pdf", title: 'Trademarks'
-                  li = link_to "Privacy Statement", "https://www.usps.org/images/secretary/itcom/privacy.pdf", title: 'Privacy Statement'
-                  li = link_to "Disclaimer", "https://www.usps.org/images/secretary/itcom/disclaimer.pdf", title: 'Disclaimer'
-                  li = mail_to "webmaster@bpsd9.org", "Webmaster", title: 'Email the Webmaster'
-                .copyright Copyright &copy; 2017 Birmingham Power Squadron
-        #print-footer
-          .copyright Copyright &copy; 2017 Birmingham Power Squadron
+          .table: .table-row: .table-cell.footer-center
+            ul.links
+              li = link_to "Trademarks", "https://www.usps.org/images/secretary/itcom/trademark.pdf", title: 'Trademarks'
+              li = link_to "Privacy Statement", "https://www.usps.org/images/secretary/itcom/privacy.pdf", title: 'Privacy Statement'
+              li = link_to "Disclaimer", "https://www.usps.org/images/secretary/itcom/disclaimer.pdf", title: 'Disclaimer'
+              li = mail_to "webmaster@bpsd9.org", "Webmaster", title: 'Email the Webmaster'
+            .copyright Copyright &copy; 2017 Birmingham Power Squadron
+        #print-footer: .copyright Copyright &copy; 2017 Birmingham Power Squadron
   

@@ -1,26 +1,22 @@
 p
   h3 Registration information:
-  b
-    = @registration.event.category.to_s.titleize
-    | : 
+  b> #{@registration.event.category.to_s.titleize}:
   = @registration.event.display_title
   br
   - if @registration.event.sessions.present? && @registration.event.sessions > 1
-    b Start date: 
+    b> Start date:
     = @registration.event.start_at.strftime('%-d %B %Y')
     br
-    b Number of sessions: 
-    = @registration.event.sessions
-    |  (
-    = @registration.event.repeat_description
-    | )
+    b> Number of sessions:
+    => @registration.event.sessions
+    | (#{@registration.event.repeat_description})
   - else
-    b Date: 
+    b> Date:
     = @registration.event.start_at.strftime('%-d %B %Y')
   br
-  b Time:  
+  b> Time:
   = @registration.event.start_at.strftime('%-l:%M %P')
   - if @registration.event.location.present? && !controller.action_name.in?(%w[confirm remind])
     br
-    b Location: 
+    b> Location:
     = @registration.event.location.address.split("\n").first

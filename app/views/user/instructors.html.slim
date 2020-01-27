@@ -5,13 +5,12 @@ h1 Current Instructors
 = form_tag do
   div
     = submit_tag 'Find Instructors', class: 'medium'
-    | for 
+    ' for
     = select_tag :key, options_for_select(@keys, @highlight), required: true
 
   label.switch
     = check_box_tag :only, '1', @only, class: 'slider round'
-    span.slider.round.lightblue-darkblue
-      .description.all.eligible
+    span.slider.round.lightblue-darkblue: .description.all.eligible
   
 hr
 
@@ -64,8 +63,5 @@ hr
       .table-cell.center class=('highlight' if @highlight == 'SA') class=(completions.include?('SA') ? 'birmingham-blue' : '') = completions.include?('SA') ? yes : no
       .table-cell.center class=('highlight' if @highlight == 'WE') class=(completions.include?('WE') ? 'birmingham-blue' : '') = completions.include?('WE') ? yes : no
 
-h3
-  | Email Visible Instructors (
-  = @instructors.count
-  | )
+h3 Email Visible Instructors (#{@instructors.count})
 textarea.large = @instructors.map(&:email).compact.uniq.join(', ')

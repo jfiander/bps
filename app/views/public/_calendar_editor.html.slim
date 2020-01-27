@@ -1,11 +1,6 @@
 hr
 .center
-  | Please go to 
-  = link_to "Google Calendar", "http://calendar.bpsd9.org", target: :_blank
-  |  to make changes.
+  | Please go to #{link_to('Google Calendar', 'http://calendar.bpsd9.org', target: :_blank)} to make changes.
   br
-  small
-    | Email 
-    = mail_to "webmaster@bpsd9.org"
-    |  if you need edit access.
+  small Email #{mail_to('webmaster@bpsd9.org')} if you need edit access.
 hr

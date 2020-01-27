@@ -8,7 +8,6 @@ h1 Squadron Photos
   p Please check back again later!
 - else
   - @albums.each do |album|
-    h2
-      = album.name.titleize
+    h2 = album.name.titleize
     = render 'cover', album: album
     hr

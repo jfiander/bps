@@ -3,18 +3,16 @@ h1.birmingham Transaction Receipt
 - if @payment.parent.present?
   - if @payment.parent_type == 'Registration'
     p
-      h2
-        = @purchase_model.titleize
-        |  information:
+      h2 #{@purchase_model.titleize} information:
       = @purchase_info[:type].titleize
-      | : 
-      b = @purchase_info[:name]
+      | :
+      b< = @purchase_info[:name]
       br
-      | Date: 
-      b = @purchase_info[:date]
+      | Date:
+      b< = @purchase_info[:date]
       br
-      | Time: 
-      b = @purchase_info[:time]
+      | Time:
+      b< = @purchase_info[:time]
   - elsif @payment.parent_type == 'MemberApplication'
     p
       h2 Membership application
@@ -23,25 +21,25 @@ h1.birmingham Transaction Receipt
 
 p
   h2 Transaction information:
-  | Transaction # 
-  b = @transaction[:id]
+  | Transaction #
+  b< = @transaction[:id]
   br
   | Date: 
   = @transaction[:date]
   br
-  | Total charged: 
-  b = number_to_currency(@transaction[:amount])
+  | Total charged:
+  b< = number_to_currency(@transaction[:amount])
   br
   - if @transaction[:promo_code].present?
-    | Promo code: 
-    b = @transaction[:promo_code]
+    | Promo code:
+    b< = @transaction[:promo_code]
     br
   - if @transaction[:card_type].present?
     - if @transaction[:image].present?
-      = image_tag @transaction[:image], alt: @transaction[:card_type], size: '32x20'
+      => image_tag @transaction[:image], alt: @transaction[:card_type], size: '32x20'
     - else
-      = @transaction[:card_type]
-    |  ending in **
+      => @transaction[:card_type]
+    | ending in **
     b = @transaction[:last_4]
   - else
     | Paid via PayPal

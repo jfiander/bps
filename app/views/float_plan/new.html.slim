@@ -14,15 +14,7 @@ p
       p 
         | This form has been pre-populated with data from your most recent float plan,
         br
-        | except for the 
-        b leave
-        | , 
-        b return
-        | , and 
-        b alert times
-        | , and any 
-        b persons onboard
-        | .
+        | except for the <b>leave</b>, <b>return</b>, and <b>alert times</b>, and any <b>persons onboard</b>.
       p.italic Please update it as necessary.
 
 = form_for(@float_plan, url: submit_float_plan_path, multipart: true) do |f|
@@ -103,9 +95,7 @@ p
         .table-cell.field = f.number_field :number_of_engines
       .table-row
         .table-cell.table-header = f.label :fuel_capacity
-        .table-cell.field
-          = f.number_field :fuel_capacity
-          |  gallons
+        .table-cell.field #{f.number_field(:fuel_capacity)} gallons
 
     h2 Safety Equipment
     .table

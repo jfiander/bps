@@ -1,17 +1,8 @@
 h1 = admin_header("Versions of #{@model} ##{@id}")
 
-.instructions
-  | Blue diff
-  = FA::Icon.p('exchange', style: :duotone, css: 'birmingham-blue', fa: :fw)
-  | is between that version and its parent.
-.instructions
-  | Green diff
-  = FA::Icon.p('arrow-from-top', style: :duotone, css: :green, fa: :fw)
-  | is between current and that version.
-.instructions
-  | Revert
-  = FA::Icon.p('undo', style: :duotone, css: :red, fa: :fw)
-  | returns the object to that version.
+.instructions Blue diff#{FA::Icon.p('exchange', style: :duotone, css: 'birmingham-blue', fa: :fw)} is between that version and its parent.
+.instructions Green diff#{FA::Icon.p('arrow-from-top', style: :duotone, css: :green, fa: :fw)} is between current and that version.
+.instructions Revert#{FA::Icon.p('undo', style: :duotone, css: :red, fa: :fw)} returns the object to that version.
 hr
 
 .table.versions
@@ -21,6 +12,6 @@ hr
     .table-cell.table-header Previous Version
     .table-cell.table-header Date
     .table-cell.table-header Actions
-  = render 'admin/versions/current_version', version: @current_version, no_versions: @versions&.count == 0 || @versions.blank?
+  = render('admin/versions/current_version', version: @current_version, no_versions: @versions&.count == 0 || @versions.blank?)
   - @versions&.each_with_index do |version, index|
-    = render 'admin/versions/version', version: version, index: index
+    = render('admin/versions/version', version: version, index: index)

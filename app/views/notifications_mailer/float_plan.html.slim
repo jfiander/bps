@@ -18,12 +18,6 @@ p = @float_plan.name
 p = @float_plan.phone
 
 h2 Travel Times
-p
-  | Leave at: 
-  = @float_plan.leave_at
-p
-  | Return at: 
-  = @float_plan.return_at
-p
-  | Alert at: 
-  = @float_plan.alert_at
+p Leave at: #{@float_plan.leave_at}
+p Return at: #{@float_plan.return_at}
+p Alert at: #{@float_plan.alert_at}

@@ -6,8 +6,7 @@ h2 Additional Household Applicant
 .left
   span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
   = ff.label 'first_name', 'First name'
-.right
-  = ff.text_field 'first_name', required: true
+.right = ff.text_field 'first_name', required: true
 br.clear
 
 .left = ff.label 'middle_name', 'Middle name'
@@ -22,8 +21,7 @@ br.clear
 
 .left
   = ff.label 'dob', 'Date of Birth'
-  ul
-    li Your date of birth will not be displayed anywhere.
+  ul: li Your date of birth will not be displayed anywhere.
 .right = ff.date_field 'dob', class: 'date'
 br.clear
 
@@ -53,8 +51,7 @@ br.clear
 
   .left
     = ff.label 'previous_certificate', 'Previous USPS Certificate'
-    ul
-      li If you have ever been a member of USPS in the past, enter your prior certificate number here.
+    ul: li If you have ever been a member of USPS in the past, enter your prior certificate number here.
   .right = ff.text_field 'previous_certificate', maxlength: 7
   br.clear
 br.clear

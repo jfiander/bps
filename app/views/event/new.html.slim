@@ -1,12 +1,9 @@
 h1 = "#{@edit_mode} #{@event_title}"
 
-em
-  | Fields marked with
-  = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
-  | are required.
+em Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)} are required.
 
 = form_for(@event, url: @submit_path, multipart: true) do |f|
-  = f.hidden_field :id if @submit_path.match /\/update/
+  = f.hidden_field(:id) if @submit_path.match(%r{/update})
 
   #new.divided
     #event-general
@@ -40,11 +37,9 @@ em
         = f.label :location
         ul
           li.red If you need to add a new location, do that before continuing.
-          li
-            | You can also save now, then add a location here later.
+          li You can also save now, then add a location here later.
       .right
         - if @locations.present?
-          / = f.select :location_id, options_for_select(['', 'TBD'] + @locations.map { |l| [l[:name], l[:id]] }, @event.location_id), include_blank: 'Please select a location', required: true
           = f.select :location_id, grouped_options_for_select(@locations_grouped, @event.location_id), required: true
         ul
           li = link_to(locations_path, target: :_blank) { FA::Icon.p('edit', style: :duotone) + 'Manage Locations' }
@@ -57,8 +52,7 @@ em
         .right
           label.switch
             = f.check_box :show_in_catalog, class: 'slider round'
-            span.slider.round.darkblue-lightblue
-              .description.ignore.show
+            span.slider.round.darkblue-lightblue: .description.ignore.show
         br.clear
 
       - if current_user.authorized_for_activity_feed?
@@ -66,8 +60,7 @@ em
         .right
           label.switch
             = f.check_box :activity_feed, class: 'slider round'
-            span.slider.round.darkblue-lightblue
-              .description.ignore.show
+            span.slider.round.darkblue-lightblue: .description.ignore.show
         br.clear
 
     #event-schedule
@@ -77,8 +70,7 @@ em
       .right
         label.switch
           = f.check_box :all_day, class: 'slider round', id: 'all_day_check'
-          span.slider.round.darkblue-lightblue
-            .description.regular.all-day
+          span.slider.round.darkblue-lightblue: .description.regular.all-day
       br.clear
 
       .left = f.label :online, "Available Online"
@@ -144,9 +136,9 @@ em
         ul
           li This will automatically add a note to the end of the description.
           li.red
-            | Must be 
-            u between
-            |  the two above costs.
+            | Must be
+            u<> between
+            | the two above costs.
           li.red Only enter if applicable.
       .right
         = FA::Icon.p('dollar-sign', style: :duotone)
@@ -157,16 +149,14 @@ em
       .right
         label.switch
           = f.check_box :allow_member_registrations, class: 'slider round'
-          span.slider.round.red-lightblue
-            .description.deny.allow
+          span.slider.round.red-lightblue: .description.deny.allow
       br.clear
 
       .left = f.label :allow_public_registrations, 'Public registrations'
       .right
         label.switch
           = f.check_box :allow_public_registrations, class: 'slider round'
-          span.slider.round.red-lightblue
-            .description.deny.allow
+          span.slider.round.red-lightblue: .description.deny.allow
       br.clear
 
       .left = f.label :registration_limit, 'Registrations limit'
@@ -181,8 +171,7 @@ em
       .right
         label.switch
           = f.check_box :advance_payment, class: 'slider round'
-          span.slider.round.lightblue-red
-            .description.no.yes
+          span.slider.round.lightblue-red: .description.no.yes
       br.clear
 
       .left
@@ -220,15 +209,13 @@ em
 
         .left
           = label_tag :topics, 'Course topics'
-          ul
-            li Put each topic on a separate line.
+          ul: li Put each topic on a separate line.
         .right = text_area_tag :topics, @course_topics, class: 'bulletted'
         br.clear
 
         .left
           = label_tag :includes, 'Course materials'
-          ul
-            li Put each item on a separate line.
+          ul: li Put each item on a separate line.
         .right = text_area_tag :includes, @course_includes, class: 'bulletted'
         br.clear
 
@@ -254,9 +241,7 @@ em
             iframe src=(@event.get_flyer) width='200'
           - elsif @event.get_flyer&.downcase&.match(/\.(jpe?g|png)$/)
             = image_tag @event.get_flyer, width: 100
-          p
-            | Remove flyer: 
-            = f.check_box :delete_attachment, id: 'event_flyer_remove'
+          p Remove flyer: #{f.check_box(:delete_attachment, id: 'event_flyer_remove')}
       br.clear
 
       - if event_type_param.in? %w[course seminar]

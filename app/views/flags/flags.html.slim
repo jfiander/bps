@@ -6,29 +6,23 @@ h1 Flag Images
   .information
     | Download all images as a zip archive here: 
     = link_to 'PNG', @bucket.link('flags/ZIP/USPS_Flags.png.zip')
-    small
-      |  (
-      = number_to_human_size(@bucket.object('flags/ZIP/USPS_Flags.png.zip').content_length)
-      | )
-    |  | 
-    = link_to 'SVG', @bucket.link('flags/ZIP/USPS_Flags.svg.zip')
-    small
-      |  (
-      = number_to_human_size(@bucket.object('flags/ZIP/USPS_Flags.svg.zip').content_length)
-      | )
+    small> (#{number_to_human_size(@bucket.object('flags/ZIP/USPS_Flags.png.zip').content_length)})
+    | |
+    =< link_to 'SVG', @bucket.link('flags/ZIP/USPS_Flags.svg.zip')
+    small (#{number_to_human_size(@bucket.object('flags/ZIP/USPS_Flags.svg.zip').content_length)})
   .information.italic The PNG archive contains multiple sizes of each image.
 
   .information
-    | This code is available on 
-    = link_to 'GitHub', 'https://github.com/jfiander/usps-flags'
-    |  and as a 
-    = link_to 'Ruby gem', 'https://rubygems.org/gems/usps_flags'
+    | This code is available on
+    =<> link_to('GitHub', 'https://github.com/jfiander/usps-flags')
+    | and as a
+    =< link_to('Ruby gem', 'https://rubygems.org/gems/usps_flags')
     | .
   
   .information
-    | Actual images generated (other than the US Ensign) are 
-    = link_to 'registered trademarks', 'http://www.usps.org/national/itcom/trademark.html'
-    |  of United States Power Squadrons.
+    | Actual images generated (other than the US Ensign) are
+    =<> link_to('registered trademarks', 'http://www.usps.org/national/itcom/trademark.html')
+    | of United States Power Squadrons.
 
 h2 Ensigns
 .flags.table
@@ -37,29 +31,29 @@ h2 Ensigns
     .table-cell
       = image_tag @bucket.link('flags/PNG/US.thumb.png'), width: 191, height: 100
       br
-      = link_to 'PNG', @bucket.link('flags/PNG/US.png'), disposition: 'inline'
-      |  | 
-      = link_to 'SVG', @bucket.link('flags/SVG/US.svg'), disposition: 'inline'
+      => link_to 'PNG', @bucket.link('flags/PNG/US.png'), disposition: 'inline'
+      | |
+      =< link_to 'SVG', @bucket.link('flags/SVG/US.svg'), disposition: 'inline'
     .table-cell
   .table-row
     .table-cell.table-header USPS
     .table-cell
       = image_tag @bucket.link('flags/PNG/ENSIGN.thumb.png'), width: 150, height: 100
       br
-      = link_to 'PNG', @bucket.link('flags/PNG/ENSIGN.png'), disposition: 'inline'
-      |  | 
-      = link_to 'SVG', @bucket.link('flags/SVG/ENSIGN.svg'), disposition: 'inline'
+      => link_to 'PNG', @bucket.link('flags/PNG/ENSIGN.png'), disposition: 'inline'
+      | |
+      =< link_to 'SVG', @bucket.link('flags/SVG/ENSIGN.svg'), disposition: 'inline'
     .table-cell
       = image_tag @bucket.link('flags/PNG/WHEEL.thumb.png'), width: 150, height: 150
       br
-      = link_to 'PNG', @bucket.link('flags/PNG/WHEEL.png'), disposition: 'inline'
-      |  | 
-      = link_to 'SVG', @bucket.link('flags/SVG/WHEEL.svg'), disposition: 'inline'
+      => link_to 'PNG', @bucket.link('flags/PNG/WHEEL.png'), disposition: 'inline'
+      | |
+      =< link_to 'SVG', @bucket.link('flags/SVG/WHEEL.svg'), disposition: 'inline'
 
 h2 USPS Officer Flags
 center
-  | For a detailed specification of Officer Flag tridents, please 
-  = link_to 'see this SVG', tridents_path(format: :svg)
+  | For a detailed specification of Officer Flag tridents, please
+  =< link_to 'see this SVG', tridents_path(format: :svg)
   | .
   br
   em Available parameters: fly, unit, scale
@@ -249,8 +243,8 @@ h3 Grades and Membership
   center
     = image_tag @bucket.link('flags/Birmingham/Birmingham.svg'), width: 200, height: 125
     br
-    = link_to 'PNG (L)', @bucket.link('flags/Birmingham/Birmingham.png'), disposition: 'inline'
-    |  | 
-    = link_to 'PNG (R)', @bucket.link('flags/Birmingham/Birmingham_right.png'), disposition: 'inline'
-    |  | 
-    = link_to 'SVG', @bucket.link('flags/Birmingham/Birmingham.svg'), disposition: 'inline'
+    => link_to 'PNG (L)', @bucket.link('flags/Birmingham/Birmingham.png'), disposition: 'inline'
+    | |
+    =<> link_to 'PNG (R)', @bucket.link('flags/Birmingham/Birmingham_right.png'), disposition: 'inline'
+    | |
+    =< link_to 'SVG', @bucket.link('flags/Birmingham/Birmingham.svg'), disposition: 'inline'

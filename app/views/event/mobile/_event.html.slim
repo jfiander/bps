@@ -41,9 +41,7 @@
 - if event.cost.present?
   .event-mobile-contents.spaced = event.formatted_cost
   - if event.advance_payment
-    small.blue.bold.italic
-      | Advance payment required by 
-      = event.cutoff_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT)
+    small.blue.bold.italic Advance payment required by #{event.cutoff_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT)}
 - unless defined?(@event_catalog)
   .event-mobile-contents.spaced
     - if @locations[event.location_id].present?
@@ -51,8 +49,7 @@
       - if @locations[event.location_id][:map_link].present?
         .event-mobile-contents
           = link_to(@locations[event.location_id][:map_link], target: :_blank) do
-            = FA::Icon.p("map-marker-alt", style: :duotone)
-            | Map
+            | #{FA::Icon.p("map-marker-alt", style: :duotone)} Map
       - unless defined?(@event_catalog)
         - if @locations[event.location_id][:picture].present?
           = image_tag files_bucket.link(@locations[event.location_id][:picture].path(:thumb))

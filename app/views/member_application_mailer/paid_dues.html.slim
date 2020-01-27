@@ -4,25 +4,19 @@ h1.birmingham Annual Dues Paid
 
 p Someone has paid their annual dues!
 
-h2.red
-  | Amount paid: 
-  = number_to_currency(@user.payment_amount)
-h3
-  | Received amount (est.): 
-  = number_to_currency(@user.payment_amount - Payment.discount(@user.dues))
+h2.red Amount paid: #{number_to_currency(@user.payment_amount)}
+h3 Received amount (est.): #{number_to_currency(@user.payment_amount - Payment.discount(@user.dues))}
 
 hr
 
 p
   h3 Member information:
-  b Name: 
+  b> Name:
   = @user.full_name(html: false)
   - if @user.certificate.present?
-    |  (
-    = @user.certificate
-    | )
+    |  (#{@user.certificate})
   br
-  b Email: 
+  b> Email:
   = @user.email
 
 hr

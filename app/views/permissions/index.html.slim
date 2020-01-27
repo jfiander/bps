@@ -11,17 +11,14 @@ h1#profile-title = t('grant_permission')
 
 .spacer
 
-h1#profile-title = "Current Permissions"
+h1#profile-title Current Permissions
 
-p
-  | Note: Bridge officers and committee chairs are automatically granted relevant permissions 
-  = link_to 'ex officio', auto_permissions_path
-  | .
+p Note: Bridge officers and committee chairs are automatically granted relevant permissions #{link_to('ex officio', auto_permissions_path)}.
 
 table#permissions
   tr
-    th = "User"
-    th = "Permission"
+    th User
+    th Permission
     th
   - UserRole.all.order(:user_id).includes(:user, :role).each do |p|
     - next if p.role.name.in?(%w[admin users]) && !current_user.permitted?(:admin, strict: true)

@@ -1,4 +1,1 @@
-p.gray
-  em
-    | This is an automated message that was sent to: 
-    = @to_list.join(', ')
+p.gray: em This is an automated message that was sent to: #{@to_list.join(', ')}

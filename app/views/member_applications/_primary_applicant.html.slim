@@ -5,8 +5,7 @@ h2 Primary Applicant
 .left
   span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
   = label_tag 'first_name', 'First name'
-.right
-  = text_field_tag 'first_name', '', required: true
+.right = text_field_tag 'first_name', '', required: true
 br.clear
 
 .left = label_tag 'middle_name', 'Middle name'
@@ -21,8 +20,7 @@ br.clear
 
 .left
   = label_tag 'dob', 'Date of Birth'
-  ul
-    li Your date of birth will not be displayed anywhere.
+  ul: li Your date of birth will not be displayed anywhere.
 .right = date_field_tag 'dob', '', class: 'date'
 br.clear
 
@@ -121,8 +119,7 @@ br.clear
 
   .left
     = label_tag 'previous_certificate', 'Previous USPS Certificate'
-    ul
-      li If you have ever been a member of USPS in the past, enter your prior certificate number here.
+    ul: li If you have ever been a member of USPS in the past, enter your prior certificate number here.
   .right = text_field_tag 'previous_certificate', '', maxlength: 7
   br.clear
 br.clear

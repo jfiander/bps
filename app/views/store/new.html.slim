@@ -13,9 +13,7 @@ h1 = "#{@edit_mode} Item"
     br.clear
 
     .left = f.label :price
-    .right 
-      |  $
-      = f.number_field :price, step: :any, min: 0, class: "number"
+    .right $#{f.number_field :price, step: :any, min: 0, class: "number"}
     br.clear
 
     .left = f.label :stock

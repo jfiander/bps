@@ -1,6 +1,4 @@
-h1
-  | Completions
-  = @ytd ? ' – YTD' : nil
+h1 Completions#{' – YTD' if @ytd}
 
 .table#completions
   .table-row

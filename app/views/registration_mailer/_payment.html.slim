@@ -1,13 +1,7 @@
 h3 Payment:
-p
-  | If you would like to, you can 
-  = link_to 'pay for this registration now', pay_url(token: @registration.payment.token)
-  | .
+p If you would like to, you can #{link_to('pay for this registration now', pay_url(token: @registration.payment.token))}.
 
 - if @registration.event.advance_payment
-  p.italic
-    | Please note that advance payment is required by 
-    = @registration.event.cutoff_at.strftime(ApplicationController::EVENT_DATE_FORMAT)
-    | .
+  p.italic Please note that advance payment is required by #{@registration.event.cutoff_at.strftime(ApplicationController::EVENT_DATE_FORMAT)}.
 - else
   p This link will remain valid until the registration is paid.

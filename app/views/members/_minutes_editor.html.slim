@@ -6,12 +6,10 @@ hr
   br
   label.switch
     = check_box_tag :minutes_excom, class: "slider round"
-    span.slider.round.lightblue-darkblue
-      .description.committee.excom
+    span.slider.round.lightblue-darkblue: .description.committee.excom
   label.switch
     = check_box_tag :minutes_remove, class: "slider round"
-    span.slider.round.lightblue-red
-      .description.upload.remove
+    span.slider.round.lightblue-red: .description.upload.remove
   br
   = spinner_button(button_text: "Submit", css: 'big')
 small Uploading to an issue that has already been uploaded will overwrite the previous version.

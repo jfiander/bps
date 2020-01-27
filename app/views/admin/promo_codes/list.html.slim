@@ -27,9 +27,7 @@ h1 = admin_header('Promo Codes')
           .table-cell = promo_code.expires_at&.strftime(ApplicationController::MEDIUM_TIME_FORMAT) || 'Never'
           .table-cell = promo_code.events.map { |e| link_to(e.id, e.link) }.join(', ').html_safe
           .table-cell = promo_code.payments.count
-          .table-cell
-            = link_to(admin_expire_promo_code_path(promo_code), method: :delete, class: 'red', \
+          .table-cell = link_to(admin_expire_promo_code_path(promo_code), method: :delete, class: 'red', \
               data: { confirm: "Are you sure you want to expire promo code #{promo_code.code} immediately?" }) { FA::Icon.p('minus-square', style: :duotone, fa: :fw) } unless promo_code.expired?
-          .table-cell
-            = link_to(admin_activate_promo_code_path(promo_code), method: :patch, class: 'green', \
+          .table-cell = link_to(admin_activate_promo_code_path(promo_code), method: :patch, class: 'green', \
               data: { confirm: "Are you sure you want to activate promo code #{promo_code.code} immediately?" }) { FA::Icon.p('check-square', style: :duotone, fa: :fw) } if promo_code.activatable?

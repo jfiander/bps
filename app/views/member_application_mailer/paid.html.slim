@@ -4,12 +4,8 @@ h1.birmingham Membership Application Paid
 
 p Someone has paid for their membership application!
 
-h2.red
-  | Amount paid: 
-  = number_to_currency(@application.payment_amount)
-h3
-  | Received amount (est.): 
-  = number_to_currency(@application.payment.discounted_amount)
+h2.red Amount paid: #{number_to_currency(@application.payment_amount)}
+h3 Received amount (est.): #{number_to_currency(@application.payment.discounted_amount)}
 
 hr
 
@@ -19,9 +15,7 @@ h2 Primary Applicant
 - if @application.additional.present?
   h2 Additional Household Applicants
   - @application.additional.each_with_index do |applicant, index|
-    h3
-      | Additional Applicant #
-      = index + 1
+    h3 Additional Applicant ##{index + 1}
     = render 'member_application_mailer/applicant', applicant: applicant, primary: false
 
 hr

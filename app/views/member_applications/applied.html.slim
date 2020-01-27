@@ -8,14 +8,9 @@ p
   | our application will be reviewed, and you will be notified when its status is updated.
 
 - if @payment.paid
-  h4
-    | Thank you for paying your initial annual dues of 
-    = @payment.transaction_amount
-    | !
+  h4 Thank you for paying your initial annual dues of #{@payment.transaction_amount}!
 - elsif @payment.parent.payable?
-  h4
-    | Your annual membership dues will be: 
-    = @payment.transaction_amount
+  h4 Your annual membership dues will be: #{@payment.transaction_amount}
 
   p
     | If you would like to pay now, you can do so below.
@@ -26,10 +21,7 @@ p
 
   = render 'braintree/dropin'
 
-  p
-    | You can also mail a check payable to 
-    b Birmingham Power Squadron
-    |  to:
+  p You can also mail a check payable to <b>Birmingham Power Squadron</b> to:
 
   p
     = content_tag(:ul, class: 'simple') do

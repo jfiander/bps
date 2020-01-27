@@ -1,15 +1,13 @@
 p
   h3 Registrant information:
   - if @registration.user.present?
-    b Name: 
-    = @registration.user.full_name(html: false)
+    b> Name:
+    => @registration.user.full_name(html: false)
     - if @registration.user.certificate.present?
-      |  (
-      = @registration.user.certificate
-      | )
+      | (#{@registration.user.certificate})
     br
-    b Email: 
+    b> Email:
     = @registration.user.email
   - else
-    b Email: 
+    b>Email:
     = @registration.email

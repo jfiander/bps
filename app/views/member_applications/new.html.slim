@@ -12,10 +12,7 @@ p
     li Families are billed $134 + $1 / additional member
 
 hr
-em
-  | Fields marked with
-  = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
-  | are required.
+em Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)} are required.
 
 hr
 #application
@@ -28,6 +25,5 @@ hr
     p
       | I agree to contribute skills and time to further the objectives of
       br
-      b America's Boating Club – Birmingham Squadron
-      | .
+      | <b>America's Boating Club – Birmingham Squadron</b>.
     = spinner_button(f, css: 'big')

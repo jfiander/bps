@@ -5,11 +5,8 @@ p
 - if defined?(@signature)
   b = @signature[:name]
   br
-  | &nbsp;&nbsp;
-  = @signature[:office]
-  |  Officer
+  | &nbsp;&nbsp;#{@signature[:office]} Officer
   br
-  | &nbsp;&nbsp;
-  | America's Boating Club – Birmingham Squadron
+  | &nbsp;&nbsp;America's Boating Club – Birmingham Squadron
 - else
   b America's Boating Club – Birmingham Squadron
