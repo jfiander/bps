@@ -2,7 +2,7 @@ h1#profile-title = t('grant_permission')
 
 / Add a new role assignment
 #add-permissions
-  = form_tag "/permit", id: "add-permission", name: "add-permission"
+  = form_tag permit_path, id: "add-permission", name: "add-permission"
     = select_tag "user_id", options_for_select(@users), class: "add-permission", include_blank: true, required: true, prompt: "Please select a user"
     = select_tag "role", options_for_select(@roles.sort), class: "add-permission", include_blank: true, required: true, prompt: "Please select a permission"
     br
