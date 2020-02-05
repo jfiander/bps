@@ -12,6 +12,10 @@ class ParsedMarkdown
       self
     end
 
+    def parse_comments
+      gsubs!(%r{<p>//}, '<p style="display: none;">')
+    end
+
     def parse_center
       gsubs!(/<p>(\+?)@/, '<p class="center">\1')
     end

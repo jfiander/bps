@@ -26,6 +26,12 @@ RSpec.describe MarkdownHelper, type: :helper do
       )
     end
 
+    it 'correctlies render a comented section' do
+      expect(MarkdownHelper.render_markdown_raw(markdown: '//Commented')).to eql(
+        "<div class=\"markdown\"><p style=\"display: none;\">Commented</p>\n</div>"
+      )
+    end
+
     it 'correctlies render a centered section' do
       expect(MarkdownHelper.render_markdown_raw(markdown: '@Centered')).to eql(
         "<div class=\"markdown\"><p class=\"center\">Centered</p>\n</div>"
