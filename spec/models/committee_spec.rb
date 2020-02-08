@@ -41,4 +41,15 @@ RSpec.describe Committee, type: :model do
       expect(@committee.display_name).to eql('Something<small><br>&nbsp;&nbsp;With a subtitle</small>')
     end
   end
+
+  describe 'mail_all' do
+    it 'gets the emails for the assigned users' do
+      user = FactoryBot.create(:user)
+      FactoryBot.create(:committee, department: :executive, name: 'This One', user: user)
+      other_user = FactoryBot.create(:user)
+      FactoryBot.create(:committee, name: 'Not That One', user: other_user)
+
+      expect(Committee.mail_all(:executive, 'This One')).to eql([user.email])
+    end
+  end
 end

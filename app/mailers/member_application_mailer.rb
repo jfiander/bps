@@ -51,7 +51,11 @@ class MemberApplicationMailer < ApplicationMailer
 private
 
   def new_app_to
-    [BridgeOffice.mail_all, StandingCommitteeOffice.mail_all(:executive)].flatten.uniq
+    [
+      BridgeOffice.mail_all,
+      StandingCommitteeOffice.mail_all(:executive),
+      Committee.mail_all(:administrative, 'Membership')
+    ].flatten.uniq
   end
 
   def prep_external(application)
