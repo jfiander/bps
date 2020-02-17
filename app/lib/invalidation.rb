@@ -82,10 +82,12 @@ private
   end
 
   def valid_key?(key, leading_slash: true, trailing_slash: false)
-    key_chunk = '[0-9a-zA-Z\-_.]'
+    key_chunk = '[0-9a-zA-Z\-_.*]'
     lead = leading_slash ? '/' : ''
     trail = trailing_slash ? '/' : ''
 
-    key.match?(%r{\A#{lead}#{key_chunk}+(/?#{key_chunk})*#{trail}\z})
+    match = key.match?(%r{\A#{lead}#{key_chunk}+(/?#{key_chunk})*#{trail}\z})
+    max_one_wildcard = key.gsub(/[^*]/, '').in?(['', '*'])
+    match && max_one_wildcard
   end
 end
