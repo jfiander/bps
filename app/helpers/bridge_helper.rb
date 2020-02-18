@@ -2,12 +2,12 @@
 
 module BridgeHelper
   def bridge_selectors
-    @select = {}
-    @select[:departments] = BridgeOffice.departments.map { |b| [b.titleize, b] }
-    @select[:bridge_offices] = bridge_select_offices
-    @select[:standing_committees] = StandingCommitteeOffice.committee_titles
-    @select[:users] = bridge_select_users
-    @select
+    @select = {
+      departments: BridgeOffice.departments.map { |b| [b.titleize, b] },
+      bridge_offices: bridge_select_offices,
+      standing_committees: StandingCommitteeOffice.committee_titles,
+      users: bridge_select_users
+    }
   end
 
   def preload_user_data
@@ -30,16 +30,13 @@ module BridgeHelper
   end
 
   def assemble_departments
-    dept_data = {}
-
-    BridgeOffice.departments.each do |dept|
-      dept_data[dept.to_sym] = {}
-      dept_data[dept.to_sym][:head] = generate_officer_hash(head(dept))
-      dept_data[dept.to_sym][:assistant] = generate_officer_hash(asst(dept))
-      dept_data[dept.to_sym][:committees] = generate_committees(dept)
+    BridgeOffice.departments.each_with_object({}) do |dept, hash|
+      hash[dept.to_sym] = {
+        head: generate_officer_hash(head(dept)),
+        assistant: generate_officer_hash(asst(dept)),
+        committees: generate_committees(dept)
+      }
     end
-
-    dept_data
   end
 
   def assemble_standing_committees
@@ -103,7 +100,7 @@ private
   end
 
   def bridge_select_users
-    [['TBD', nil]] + @users.to_a.map! do |user|
+    [['TBD', nil]] + @users.to_a.map do |user|
       [
         user&.full_name.blank? ? user.email : user.full_name(html: false),
         user.id
