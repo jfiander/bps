@@ -36,11 +36,11 @@ committee:
   Newsletter Editor:
     - newsletter
   Meetings & Programs:
-    - events
+    - event
   Rendezvous:
-    - events
+    - event
   Change of Watch:
-    - events
+    - event
   Membership:
     - users
   Roster / Database:
