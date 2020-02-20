@@ -1,14 +1,20 @@
 # frozen_string_literal: true
 
 module ViewHelper
-  # html_safe: No user content
   def officer_flag(office, mode: :svg)
-    rank = office_rank(office)
+    rank_flag(office_rank(office), mode: mode)
+  end
+
+  # html_safe: No user content
+  def rank_flag(rank, mode: :png)
+    return if rank.blank?
+
+    rank_path = rank.delete('/').upcase.gsub(/1ST/, '1')
 
     if mode == :svg
-      URI.parse(static_bucket.link("flags/SVG/#{rank}.svg")).open.read.html_safe
+      URI.parse(static_bucket.link("flags/SVG/#{rank_path}.svg")).open.read.html_safe
     elsif mode == :png
-      image_tag static_bucket.link("flags/PNG/#{rank}.thumb.png")
+      image_tag(static_bucket.link("flags/PNG/#{rank_path}.thumb.png"))
     end
   end
 

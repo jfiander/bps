@@ -15,6 +15,7 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
 
 table#users
   tr
+    th
     th User
     th.center Certificate
     th.center Roles
@@ -22,6 +23,7 @@ table#users
     th.center
   - @users.each do |user|
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
+      td = rank_flag(user[:rank], mode: :png)
       td
         - if user[:name].blank?
           = user[:email]
