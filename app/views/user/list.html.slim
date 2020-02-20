@@ -16,6 +16,7 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
 table#users
   tr
     th
+    th
     th User
     th.center Certificate
     th.center Roles
@@ -23,7 +24,12 @@ table#users
     th.center
   - @users.each do |user|
     tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
-      td = rank_flag(user[:rank], mode: :png)
+      td.rank = rank_flag(user[:rank], mode: :png) if user[:rank].present?
+      td.grade
+        - if user[:grade].present?
+          - long_grade = user[:grade].downcase
+          - long_grade += '_edpro' if user[:edpro] && user[:grade] != 'SN'
+          = image_tag(static_bucket.link("insignia/PNG/grades/tr/#{long_grade}.png"), class: long_grade)
       td
         - if user[:name].blank?
           = user[:email]

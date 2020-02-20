@@ -95,6 +95,29 @@ table#users {
   	height: 2em;
   }
 
+  td.grade img {
+    width: 3em;
+    height: auto;
+
+    &.s {
+      width: 0.35em;
+    }
+
+    &.p {
+      width: 0.8em;
+    }
+
+    &.ap, &.ap_edpro, &.jn, &.jn_edpro {
+      width: 1.5em;
+    }
+
+    &.n, &.n_edpro {
+      width: 2.8em;
+    }
+
+    // .sn = full size
+  }
+
   img.membership {
     width: 6em;
     height: auto;
