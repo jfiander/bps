@@ -18,9 +18,9 @@ filterUsers = ->
 
   i = 0
   while i < tr.length
-    name = tr[i].getElementsByTagName('td')[0]
-    cert = tr[i].getElementsByTagName('td')[1]
-    role = tr[i].getElementsByTagName('td')[2]
+    name = tr[i].getElementsByTagName('td')[2]
+    cert = tr[i].getElementsByTagName('td')[3]
+    role = tr[i].getElementsByTagName('td')[4]
 
     if name || cert || role
       nameValue = name.textContent or name.innerText

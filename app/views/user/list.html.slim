@@ -11,12 +11,12 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
 - admin = current_user&.permitted?(:admin, session: session)
 - can_lock = current_user&.permitted?(:users, session: session)
 
-= text_field_tag 'user-filter', nil, placeholder: 'Filter users...'
+= text_field_tag 'user-filter', nil, placeholder: 'Filter by name, certificate, or role'
 
 table#users
   tr
-    th
-    th
+    th.rank
+    th.grade
     th User
     th.center Certificate
     th.center Roles
