@@ -104,7 +104,7 @@ module BpsPdf
         end
 
         def load_life_member
-          insignia = BpsS3.new(:static).download('insignia/life.png')
+          insignia = BpsS3.new(:static).download('insignia/PNG/membership/tr/life.png')
           File.open('tmp/run/Life.png', 'w+') { |f| f.write(insignia) }
         end
       end

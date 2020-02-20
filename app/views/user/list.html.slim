@@ -34,9 +34,9 @@ table#users
         - if user[:senior] || user[:life]
           br
           - if user[:life]
-            = image_tag(static_bucket.link('insignia/life.png'), class: 'membership')
+            = image_tag(static_bucket.link('insignia/PNG/membership/tr/life.png'), class: 'membership')
           - elsif user[:senior]
-            = image_tag(static_bucket.link('insignia/senior.png'), class: 'membership')
+            = image_tag(static_bucket.link('insignia/PNG/membership/tr/senior.png'), class: 'membership')
       td.center
         - if user[:bridge_office].present?
           = officer_flag(user[:bridge_office], mode: :png)

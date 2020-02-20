@@ -10,7 +10,7 @@ h1 = @user.full_name
         p = image_tag(static_bucket.link("insignia/PNG/#{@insignia[:membership]}.png"), title: @insignia_title[:membership]) if @insignia[:membership].present?
       #merit-marks title=(@insignia_title[:mm])
         - @user.mm&.times do
-          = image_tag(static_bucket.link('insignia/mm.png'))
+          = image_tag(static_bucket.link('insignia/PNG/mm.png'))
       p
         = image_tag(static_bucket.link('insignia/CI/CI.350.png'), class: 'pin', title: 'Certified Instructor') if @user.valid_instructor?
         = image_tag(static_bucket.link('insignia/VE/VE.350.png'), class: 'pin', title: 'Certified Vessel Examiner') if @user.vessel_examiner?
