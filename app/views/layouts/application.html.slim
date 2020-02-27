@@ -38,7 +38,7 @@ html lang='en'
         #desktop-header
           .header = image_tag @header_image, class: 'header', alt: 'Header Photo' if @header_image.present?
           .logo = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
-          .slogan For Boaters, By Boaters™
+          .slogan For Boaters, By Boaters<sup>&reg;</sup>
         #print-header = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
       #show-sidenav
         = FA::Icon.p('bars', style: :duotone)
