@@ -137,12 +137,11 @@ Rails.application.routes.draw do
   put     '/invite_all', to: 'user#invite_all'
 
   # Markdown files and header images
-  get     '/file',               to: 'file#new',            as: 'file'
-  post    '/file/upload',        to: 'file#create',         as: 'upload_file'
-  delete  '/file/:id/destroy',   to: 'file#destroy',        as: 'remove_file'
-  get     '/header',             to: 'file#new_header',     as: 'header'
-  post    '/header/upload',      to: 'file#create_header',  as: 'upload_header'
-  delete  '/header/:id/destroy', to: 'file#destroy_header', as: 'remove_header'
+  %i[file header].each do |model|
+    get     "/#{model}",         to: "files/#{model}s#new",     as: "#{model}"
+    post    "/file/upload",      to: "files/#{model}s#create",  as: "upload_#{model}"
+    delete  "/file/:id/destroy", to: "files/#{model}s#destroy", as: "remove_#{model}"
+  end
 
   # Locations and Event Types
   %i[location event_type].each do |model|
