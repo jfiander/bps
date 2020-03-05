@@ -23,6 +23,10 @@ module Members
       redirect_to(minutes_path, success: "Minutes #{@issue} #{verb} successfully.")
     end
 
+    included do
+      before_action :list_minutes, only: %i[minutes find_minutes find_minutes_excom]
+    end
+
   private
 
     def list_minutes

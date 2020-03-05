@@ -2,6 +2,11 @@
 
 class User
   module Register
+    included do
+      before_action :find_registration, only: %i[override_cost set_override_cost]
+      before_action :block_override, only: %i[override_cost set_override_cost]
+    end
+
     def register
       @event = Event.find_by(id: clean_params[:id])
 

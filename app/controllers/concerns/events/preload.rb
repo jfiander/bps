@@ -5,6 +5,10 @@ module Events
     # This module defines no public methods.
     def _; end
 
+    included do
+      before_action :load_registrations, only: %i[schedule], if: :user_signed_in?
+    end
+
   private
 
     def load_registrations
