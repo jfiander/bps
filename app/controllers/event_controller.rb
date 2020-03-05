@@ -18,12 +18,6 @@ class EventController < ApplicationController
   before_action :current, only: %i[schedule]
   before_action :load_catalog, only: %i[catalog]
   before_action :registered_users, only: %i[schedule catalog]
-  before_action :find_event, only: %i[show copy edit update expire archive remind book unbook]
-  before_action :prepare_form, only: %i[new copy edit]
-  before_action :check_for_blank, only: %i[create update]
-  before_action :location_names, only: %i[new copy edit]
-  before_action :set_create_path, only: %i[new copy]
-  before_action :load_registrations, only: %i[schedule], if: :user_signed_in?
   before_action :event_not_found?, only: %i[show]
   before_action :block_multiple_reminders, only: %i[remind]
 

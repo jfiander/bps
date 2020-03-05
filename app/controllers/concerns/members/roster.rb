@@ -34,6 +34,11 @@ module Members
       end
     end
 
+    included do
+      before_action :redirect_if_no_roster, only: :roster
+      before_action :reject_invalid_file, only: :upload_roster
+    end
+
   private
 
     def reject_invalid_file

@@ -6,6 +6,10 @@ module Members
       dues_not_payable unless @payment.present?
     end
 
+    included do
+      before_action :prepare_dues, only: :dues, if: :current_user_dues_due?
+    end
+
   private
 
     def current_user_dues_due?

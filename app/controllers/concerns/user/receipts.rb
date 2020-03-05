@@ -2,6 +2,14 @@
 
 class User
   module Receipts
+    included do
+      secure!(
+        :admin, strict: true, only: %i[receipts receipt override_cost paid_in_person refunded_payment]
+      )
+
+      before_action :find_payment, only: %i[receipt paid_in_person refunded_payment]
+    end
+
     def receipts
       @payments = [
         payments.where(parent_type: 'Registration').includes(parent: :user),

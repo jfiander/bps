@@ -6,7 +6,6 @@ class PublicController < ApplicationController
   include Public::Donations
   include CalendarHelper
 
-  before_action :list_bilges,             only: %i[newsletter bilge]
   before_action :registration_attributes, only: %i[register]
   before_action :find_event,              only: %i[register]
   before_action :find_registration,       only: %i[register]

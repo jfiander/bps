@@ -2,6 +2,10 @@
 
 class User
   module Edit
+    included do
+      secure!(:admin, only: %i[assign_photo])
+    end
+
     def assign_photo
       photo = clean_params[:photo]
 

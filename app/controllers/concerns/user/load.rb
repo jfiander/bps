@@ -5,6 +5,15 @@ class User
     # This module defines no public methods.
     def _; end
 
+    included do
+      before_action :find_user, only: %i[show certificate]
+      before_action :load_users, only: :list
+      before_action(
+        :users_for_select,
+        only: %i[permissions_index assign_bridge assign_committee]
+      )
+    end
+
   private
 
     def find_user

@@ -2,6 +2,10 @@
 
 class User
   module Instructors
+    included do
+      secure!(:education, only: :instructors)
+    end
+
     def instructors
       load_instructor_data
       return unless @highlight.present? && @only

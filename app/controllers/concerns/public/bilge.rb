@@ -15,6 +15,10 @@ module Public
       send_bilge(bilge)
     end
 
+    included do
+      before_action :list_bilges,             only: %i[newsletter bilge]
+    end
+
   private
 
     def list_bilges
