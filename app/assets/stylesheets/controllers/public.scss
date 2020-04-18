@@ -25,6 +25,26 @@ div#bilge {
   }
 }
 
+input#new-announcement-title {
+  font-size: 1.1em;
+  width: 20em;
+}
+
+div#announcements {
+  width: 90%;
+  margin: 0 auto;
+
+  div.table-cell {
+    height: 3em;
+    vertical-align: middle;
+    padding: 0 0.5em;
+  }
+
+  a.download {
+    @include blue-button(0.25em);
+  }
+}
+
 div#bridge {
   width: 100%;
   text-align: left;

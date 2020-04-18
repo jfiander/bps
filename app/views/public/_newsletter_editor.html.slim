@@ -1,4 +1,5 @@
 hr
+h3 Bilge Chatter
 = form_tag upload_bilge_path, multipart: true
   = FA::Icon.p("file-pdf", style: :duotone, css: "file-type")
   = file_field_tag :file, accept: 'application/pdf', required: true
@@ -11,4 +12,12 @@ hr
   br
   = spinner_button(button_text: "Submit", css: 'big')
 small Uploading to an issue that has already been uploaded will overwrite the previous version.
+hr
+h3 Announcements
+= form_tag(upload_announcement_path, multipart: true)
+  = FA::Icon.p('file-pdf', style: :duotone, css: 'file-type')
+  = file_field_tag(:file, accept: 'application/pdf', required: true)
+  = text_field_tag(:title, '', placeholder: 'Enter an Announcement Title', required: true, id: 'new-announcement-title')
+  br
+  = spinner_button(button_text: 'Submit', css: 'big')
 hr

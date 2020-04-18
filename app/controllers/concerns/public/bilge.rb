@@ -5,6 +5,7 @@ module Public
     def newsletter
       @public_ids = BilgeFile.last_18.map(&:id)
       @issues = BilgeFile.issues
+      load_announcements
     end
 
     def bilge

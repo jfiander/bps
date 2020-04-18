@@ -2,6 +2,7 @@
 
 class PublicController < ApplicationController
   include Public::Bilge
+  include Public::Announcements
   include CalendarHelper
 
   before_action :list_bilges,             only: %i[newsletter bilge]

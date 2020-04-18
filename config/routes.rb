@@ -96,6 +96,13 @@ Rails.application.routes.draw do
   post    '/bilge',              to: 'members#upload_bilge', as: 'upload_bilge'
   get     '/bilge(/:year)',      to: redirect('/newsletter')
 
+  # Announcements
+  get     '/announcement/:id', to: 'public#announcement_direct',  as: 'announcement'
+  post    '/announcement',     to: 'members#upload_announcement', as: 'upload_announcement'
+  delete  '/announcement/:id', to: 'members#remove_announcement', as: 'remove_announcement'
+  get     '/announcement',     to: redirect('/newsletter')
+  get     '/announcements',    to: redirect('/newsletter')
+
   # Minutes
   get     '/minutes',              to: 'members#minutes'
   post    '/minutes',              to: 'members#upload_minutes', as: 'upload_minutes'

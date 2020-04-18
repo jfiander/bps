@@ -1,0 +1,14 @@
+.table#announcements
+  .table-row
+    .table-cell.table-header Title
+    .table-cell.table-header Uploaded
+    .table-cell
+    .table-cell
+  - @announcements.each do |announcement|
+    .table-row class=(cycle('', 'gray'))
+      .table-cell = announcement.title
+      .table-cell = announcement.created_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+      .table-cell.center = link_to('Download', announcement.link, target: :_blank, class: 'download')
+      .table-cell.center
+        - if current_user&.permitted?(:newsletter, session: session)
+          = link_to(remove_announcement_path(announcement), method: :delete, class: 'red') { FA::Icon.p('minus-square', style: :duotone, fa: :fw) }
