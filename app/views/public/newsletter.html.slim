@@ -8,17 +8,7 @@ h3 Click on a button below to view or download that issue.
 - if user_signed_in?
   .information Only the 18 most recent issues (with lighter buttons) are displayed to the public.
 
-.table#bilge
-  - @bilges.sort_by { |b| [-b.year, b.month] }.group_by(&:year).each do |year, bilges|
-    .table-row class=(cycle('', 'gray'))
-      .table-cell.table-header = year
-      - @issues.keys.each do |month|
-        .table-cell
-          - if month.in?(bilges.map(&:month))
-            - bilge = bilges.select { |b| b.month == month }.first
-            = link_to(bilge.issue, bilge.link, target: :_blank, class: (bilge.id.in?(@public_ids) ? '' : 'members'))
-          - else
-            | -
+= render('bilge_table')
 
 hr
 = link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag static_bucket.link("acrobat_reader.png") }
