@@ -20,31 +20,31 @@ RSpec.describe MarkdownHelper, type: :helper do
       @page = FactoryBot.create(:static_page)
     end
 
-    it 'correctlies render a page' do
+    it 'correctly renders a page' do
       expect(MarkdownHelper.render_markdown_raw(name: @page.name)).to eql(
         "<div class=\"markdown\"><p>Just some text</p>\n</div>"
       )
     end
 
-    it 'correctlies render a comented section' do
+    it 'correctly renders a comented section' do
       expect(MarkdownHelper.render_markdown_raw(markdown: '//Commented')).to eql(
         "<div class=\"markdown\"><p style=\"display: none;\">Commented</p>\n</div>"
       )
     end
 
-    it 'correctlies render a centered section' do
+    it 'correctly renders a centered section' do
       expect(MarkdownHelper.render_markdown_raw(markdown: '@Centered')).to eql(
         "<div class=\"markdown\"><p class=\"center\">Centered</p>\n</div>"
       )
     end
 
-    it 'correctlies render a bigger section' do
+    it 'correctly renders a bigger section' do
       expect(MarkdownHelper.render_markdown_raw(markdown: '+Bigger')).to eql(
         "<div class=\"markdown\"><p class=\"bigger bold\">Bigger</p>\n</div>"
       )
     end
 
-    describe 'should correctly render a centered bigger section' do
+    describe 'correctly renders a centered bigger section' do
       it 'with centered first' do
         expect(MarkdownHelper.render_markdown_raw(markdown: '@+Big Centered')).to eql(
           "<div class=\"markdown\"><p class=\"center bigger bold\">Big Centered</p>\n</div>"
@@ -58,13 +58,13 @@ RSpec.describe MarkdownHelper, type: :helper do
       end
     end
 
-    it 'correctlies superscript the registered trademark symbol' do
+    it 'correctly superscripts the registered trademark symbol' do
       expect(MarkdownHelper.render_markdown_raw(markdown: '&reg;')).to eql(
         "<div class=\"markdown\"><p><sup>&reg;</sup></p>\n</div>"
       )
     end
 
-    it 'correctlies render the burgee' do
+    it 'correctly renders the burgee' do
       expect(MarkdownHelper.render_markdown_raw(markdown: '%burgee')).to(
         include(
           '<svg',
@@ -75,7 +75,7 @@ RSpec.describe MarkdownHelper, type: :helper do
       )
     end
 
-    it 'correctlies link an email address' do
+    it 'correctly links an email address' do
       expect(MarkdownHelper.render_markdown_raw(markdown: 'test@bpsd9.org')).to(
         eql(
           "<div class=\"markdown\"><p><a target='_blank' " \
@@ -86,7 +86,7 @@ RSpec.describe MarkdownHelper, type: :helper do
     end
   end
 
-  it 'correctlies parse using simple_markdown' do
+  it 'correctly parses using simple_markdown' do
     expect(MarkdownHelper.simple_markdown('This is **bold** text.')).to eql(
       "<p>This is <strong>bold</strong> text.</p>\n"
     )
