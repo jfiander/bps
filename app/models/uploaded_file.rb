@@ -3,13 +3,28 @@
 class UploadedFile < ApplicationRecord
   self.abstract_class = true
 
-  has_attached_file(
-    :file,
-    paperclip_defaults(:files).merge(path: 'uploaded/:class/:id/:filename')
-  )
+  ACCEPTABLE_CONTENT_TYPES = %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
 
-  validates_attachment_content_type(
-    :file, content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
-  )
-  validates :file, presence: true
+  def self.bucket
+    :files
+  end
+
+  def self.path_pattern
+    'uploaded/:class/:id/:filename'
+  end
+
+  has_attached_file(:file, paperclip_defaults(bucket).merge(path: path_pattern))
+
+  validates_attachment_content_type(:file, content_type: ACCEPTABLE_CONTENT_TYPES)
+  validates(:file, presence: true)
+
+  def link(permalinks = false)
+    return permalink if permalinks
+
+    self.class.buckets[self.class.bucket].link(file.s3_object.key)
+  end
+
+  def invalidate!
+    Invalidation.submit(self.class.bucket, file.s3_object.key)
+  end
 end

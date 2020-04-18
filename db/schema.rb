@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_18_185158) do
+ActiveRecord::Schema.define(version: 2020_04_18_195431) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -570,6 +570,7 @@ ActiveRecord::Schema.define(version: 2020_04_18_185158) do
     t.string "mmsi"
     t.string "call_sign"
     t.datetime "cpr_aed_expires_at"
+    t.boolean "permalinks", default: false
     t.index ["certificate"], name: "index_users_on_certificate"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true

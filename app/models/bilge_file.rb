@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
 class BilgeFile < UploadedFile
-  has_attached_file(
-    :file, paperclip_defaults(:bilge).merge(path: ':id/Bilge_Chatter.pdf')
-  )
+  def self.bucket
+    :bilge
+  end
+
+  def self.path_pattern
+    ':id/Bilge_Chatter.pdf'
+  end
+
+  has_attached_file(:file, paperclip_defaults(bucket).merge(path: path_pattern))
 
   validates :year, presence: true
   validates :month, presence: true
@@ -26,11 +32,7 @@ class BilgeFile < UploadedFile
     "#{year} #{issue}"
   end
 
-  def link
-    self.class.buckets[:bilge].link(file.s3_object.key)
-  end
-
-  def invalidate!
-    Invalidation.submit(:bilge, "/#{id}/Bilge_Chatter.pdf")
+  def permalink
+    Rails.application.routes.url_helpers.bilge_path(year: year, month: month)
   end
 end

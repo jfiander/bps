@@ -19,9 +19,15 @@ RSpec.describe BilgeFile, type: :model do
     it 'returns the correct full_issue' do
       expect(@bilge.full_issue).to eql('2017 Sep')
     end
+  end
 
+  describe 'links' do
     it 'returns a valid link' do
       expect(@bilge.link).to match(%r{\Ahttps://bilge.development.bpsd9.org/\d+/Bilge_Chatter.pdf\?})
+    end
+
+    it 'returns a valid permalink' do
+      expect(@bilge.link(true)).to match(%r{\A/bilge/\d+/\d+$})
     end
   end
 

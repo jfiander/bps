@@ -10,7 +10,13 @@ RSpec.describe AnnouncementFile, type: :model do
   end
 
   it 'returns a valid link' do
-    expect(@announcement.link).to match(%r{\Ahttps://files.development.bpsd9.org/announcements/\d+.pdf\?})
+    expect(@announcement.link).to match(
+      %r{\Ahttps://files.development.bpsd9.org/uploaded/announcement_files/\d+/test_image.jpg\?}
+    )
+  end
+
+  it 'returns a valid permalink' do
+    expect(@announcement.link(true)).to match(%r{\A/announcement/\d+$})
   end
 
   it 'does not return an error on invalidate!' do

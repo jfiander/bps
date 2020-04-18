@@ -21,11 +21,10 @@ class MinutesFile < UploadedFile
     "#{year} #{issue}"
   end
 
-  def link
-    self.class.buckets[:files].link(file.s3_object.key)
-  end
+  def permalink
+    r = Rails.application.routes.url_helpers
+    return r.get_minutes_path(year: year, month: month) unless excom
 
-  def invalidate!
-    Invalidation.submit(:files, "/uploaded/minutes_files/#{id}/#{year}-#{month}.pdf")
+    r.get_minutes_excom_path(year: year, month: month)
   end
 end
