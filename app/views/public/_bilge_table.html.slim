@@ -6,6 +6,6 @@
         .table-cell
           - if month.in?(bilges.map(&:month))
             - bilge = bilges.select { |b| b.month == month }.first
-            = link_to(bilge.issue, bilge.link(current_user.permalinks), target: :_blank, class: (bilge.id.in?(@public_ids) ? '' : 'members'))
+            = link_to(bilge.issue, bilge.link(current_user&.permalinks), target: :_blank, class: (bilge.id.in?(@public_ids) ? '' : 'members'))
           - else
             | -
