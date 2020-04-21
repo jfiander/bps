@@ -60,6 +60,8 @@
           small = simple_markdown(@locations[event.location_id][:details])
     - else
       | Location TBD
+    - if event.online
+      = link_to(event.conference_link, target: :_blank) { FA::Icon.p('laptop', style: :duotone) + 'Attend Online' }
 .event-mobile-contents.spaced
   = simple_markdown(event.description) if event.description.present?
   - if !defined?(@event_catalog) && event.usps_cost.present?

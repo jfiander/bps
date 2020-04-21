@@ -47,6 +47,20 @@ module Concerns
         false
       end
 
+      def conference_id
+        info = calendar.conference_info(google_calendar_event_id)
+        info[:id] unless info.nil?
+      end
+
+      def conference_link
+        "http://meet.google.com/#{conference_id}"
+      end
+
+      def conference!(state = true)
+        update(online: state)
+        refresh_calendar!
+      end
+
     private
 
       def calendar
@@ -66,11 +80,14 @@ module Concerns
       end
 
       def calendar_hash
-        {
+        hash = {
           start: start_date, end: end_date, recurrence: recurrence,
           summary: calendar_summary, description: calendar_description,
           location: location&.one_line
         }
+        hash[:conference] = { id: :new } if online && conference_id.nil?
+
+        hash
       end
 
       def recurrence

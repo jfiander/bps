@@ -71,6 +71,8 @@
               - else
                 .table.row
                   .table-cell Location TBD
+              - if event.online
+                = link_to(event.conference_link, target: :_blank) { FA::Icon.p('laptop', style: :duotone) + 'Attend Online' }
         .table-cell.top-right
           .table
             .table.row
