@@ -81,6 +81,14 @@ em
             .description.regular.all-day
       br.clear
 
+      .left = f.label :online, "Available Online"
+      .right
+        label.switch
+          = f.check_box :online, class: 'slider round'
+          span.slider.round.red-lightblue
+            .description.yes.no
+      br.clear
+
       #regular_start_time class=(@event.all_day ? 'hide' : '')
         .left
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
