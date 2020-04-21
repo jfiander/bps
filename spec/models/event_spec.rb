@@ -186,6 +186,38 @@ RSpec.describe Event, type: :model, slow: true do
         end
       end
 
+      describe 'conference data' do
+        before { @event.book! }
+
+        event_it 'returns nil when conference data is not available' do
+          expect(@event.conference_id).to be(nil)
+        end
+
+        context 'with conference specified' do
+          before { @event.conference! }
+
+          event_it 'sets conference data correctly' do
+            expect(@event.online).to be(true)
+            expect(@event.conference_id).not_to be(nil)
+          end
+
+          event_it 'clears conference data correctly' do
+            @event.conference!(false)
+
+            expect(@event.online).to be(false)
+            expect(@event.conference_id).to be(nil)
+          end
+
+          event_it 'sets the conference_id correctly' do
+            expect(@event.conference_id).to match(/[a-z]{3}-[a-z]{4}-[a-z]{3}/)
+          end
+
+          event_it 'returns a valid conference_link' do
+            expect(@event.conference_link).to match(%r(http://meet\.google\.com/[a-z]{3}-[a-z]{4}-[a-z]{3}))
+          end
+        end
+      end
+
       describe 'within a week' do
         event_it 'returns false if the start date is more than 1 week away' do
           @event.start_at = Time.zone.now + 2.weeks
