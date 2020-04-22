@@ -7,6 +7,11 @@ View this event on Google Calendar: <%= @registration.event.google_calendar_link
 
 **********
 <%- end %>
+<%- if @registration.event.conference_link.present? -%>
+Attend Online: <%= link_to 'Attend via Google Meet', @registration.event.conference_link %>
+
+**********
+<%- end %>
 <%- if @registration.payable? %>
 
 <%= render 'payment' %>
