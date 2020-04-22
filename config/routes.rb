@@ -18,6 +18,13 @@ Rails.application.routes.draw do
     }
   )
 
+  ### Short URLs
+  get     '/e/:slug',         to: 'events/events#slug',         as: 'event_slug'
+  get     '/a/:id',           to: 'public#announcement_direct', as: 'short_announcement'
+  get     '/b/:year/:month',  to: 'public#bilge',               as: 'short_bilge'
+  get     '/m/:year/:month',  to: 'members#find_minutes',       as: 'short_minutes'
+  get     '/ex/:year/:month', to: 'members#find_minutes',       as: 'short_excom', defaults: { minutes_excom: true }
+
   ### Profile management
   as :user do
     get   '/profile',      to: 'user#show'
@@ -205,8 +212,6 @@ Rails.application.routes.draw do
     put     "/#{event_type}s/:id/book",      to: "events/#{event_type}s#book",          as: "book_#{event_type}"
     delete  "/#{event_type}s/:id/unbook",    to: "events/#{event_type}s#unbook",        as: "unbook_#{event_type}"
   end
-
-  get     '/e/:slug', to: 'events/events#slug', as: 'event_slug'
 
   ### User management
 
