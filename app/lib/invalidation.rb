@@ -65,6 +65,8 @@ private
     raise 'Unrecognized distribution alias.' unless @alias_name.in?(AVAILABLE_DISTROS)
     return @alias_name if @alias_name.in?(GLOBAL_DISTROS)
 
+    return @alias_name.to_s if ENV['ASSET_ENVIRONMENT'] == 'production'
+
     "#{@alias_name}.#{ENV['ASSET_ENVIRONMENT']}"
   end
 

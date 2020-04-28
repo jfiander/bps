@@ -10,6 +10,12 @@ RSpec.describe Invalidation, type: :lib do
       expect(invalidation.send(:subdomain)).to eql('files.development')
     end
 
+    it 'generates the correct subdomain for production' do
+      allow(ENV).to receive(:[]).with('ASSET_ENVIRONMENT').and_return('production')
+
+      expect(invalidation.send(:subdomain)).to eql('files')
+    end
+
     it 'fixes simple invalid keys' do
       expect(invalidation.keys.first).to eql('/dev/test_file')
     end
