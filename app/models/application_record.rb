@@ -45,4 +45,10 @@ private
   def sanitize(text)
     ActionController::Base.helpers.sanitize text
   end
+
+  def email_or_user_present
+    return if user.present? || email.present?
+
+    errors.add(:base, 'Must have a user or email')
+  end
 end

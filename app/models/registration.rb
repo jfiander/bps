@@ -49,12 +49,6 @@ class Registration < ApplicationRecord
 
 private
 
-  def email_or_user_present
-    return if user.present? || email.present?
-
-    errors.add(:base, 'Must have a user or event')
-  end
-
   def no_duplicate_registrations
     return if Registration.where(user: user, email: email, event: event).where.not(id: id).blank?
 

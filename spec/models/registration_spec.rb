@@ -78,7 +78,7 @@ RSpec.describe Registration, type: :model do
   it 'requires an email or user' do
     reg = FactoryBot.build(:registration, event: @event)
     expect(reg.valid?).to be(false)
-    expect(reg.errors.messages).to eql(base: ['Must have a user or event'])
+    expect(reg.errors.messages).to eql(base: ['Must have a user or email'])
 
     reg = FactoryBot.build(:registration, event: @event, email: @user.email)
     expect(reg.valid?).to be(true)
