@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GenericPayment < ApplicationRecord
   payable
   belongs_to :user, optional: true

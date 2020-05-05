@@ -9,9 +9,7 @@ module Concerns
       def purchase_info
         case parent_type
         when 'Registration'
-          type = parent.type
-          type = nil unless type.in?(displayable_registration_types)
-          registration_info(type)
+          registration_info
         when 'MemberApplication'
           member_application_info
         when 'User'
@@ -24,8 +22,7 @@ module Concerns
       def purchase_subject
         case parent_type
         when 'Registration'
-          "#{parent.event.display_title} on " \
-          "#{parent.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}"
+          registration_subject
         when 'MemberApplication'
           'Membership application'
         when 'User'
@@ -41,12 +38,19 @@ module Concerns
         %w[course seminar]
       end
 
-      def registration_info(type = nil)
+      def registration_info
+        type = parent.type if parent.type.in?(displayable_registration_types)
+
         {
           name: parent.event.display_title,
           type: type,
           price_comment: parent.event&.location&.price_comment
         }.merge(registration_times).merge(promo_info)
+      end
+
+      def registration_subject
+        "#{parent.event.display_title} on " \
+        "#{parent.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}"
       end
 
       def registration_times
