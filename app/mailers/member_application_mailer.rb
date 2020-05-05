@@ -9,8 +9,8 @@ class MemberApplicationMailer < ApplicationMailer
     @to_list = new_app_to
     @next_excom = next_excom
 
-    mail(to: @to_list, subject: 'New member application')
     new_application_slack_notification
+    mail(to: @to_list, subject: 'New member application')
   end
 
   def confirm(application)

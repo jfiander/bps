@@ -7,8 +7,8 @@ class NotificationsMailer < ApplicationMailer
     @previous = previous
     @to_list = ['dev@bpsd9.org']
 
-    mail(to: @to_list, subject: 'Bridge Office Updated')
     bridge_slack_notification
+    mail(to: @to_list, subject: 'Bridge Office Updated')
   end
 
   def float_plan(float_plan)

@@ -9,16 +9,16 @@ class RegistrationMailer < ApplicationMailer
     @registration = registration
     @to_list = to_list
 
-    mail(to: @to_list, subject: 'New registration')
     registered_slack_notification
+    mail(to: @to_list, subject: 'New registration')
   end
 
   def cancelled(registration)
     @registration = registration
     @to_list = to_list
 
-    mail(to: @to_list, subject: 'Cancelled registration')
     cancelled_slack_notification
+    mail(to: @to_list, subject: 'Cancelled registration')
   end
 
   def confirm(registration)

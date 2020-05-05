@@ -9,8 +9,8 @@ class NominationsMailer < ApplicationMailer
     @target = target
     @to_list = to_list
 
-    mail(to: @to_list, subject: 'Award nomination submitted')
     slack_notification if @target == 'Executive Committee'
+    mail(to: @to_list, subject: 'Award nomination submitted')
   end
 
 private

@@ -6,16 +6,16 @@ class OTWMailer < ApplicationMailer
     @user = otw_training_user.user
     @to_list = to_list
 
-    mail(to: @to_list, subject: 'On-the-Water training requested')
     slack_notification(@otw.name)
+    mail(to: @to_list, subject: 'On-the-Water training requested')
   end
 
   def jumpstart(options = {})
     @options = options.symbolize_keys!
     @to_list = to_list
 
-    mail(to: @to_list, subject: 'Jump Start training requested')
     slack_notification('Jump Start')
+    mail(to: @to_list, subject: 'Jump Start training requested')
   end
 
 private
