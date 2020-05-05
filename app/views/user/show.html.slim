@@ -52,16 +52,9 @@ h1 = @user.full_name
     - @registrations.each do |r|
       .table-row
         .table-cell.name = r.event.display_title
-        .table-cell
-          - if r.paid?
-            = FA::Layer.p([{ name: 'credit-card', options: { style: :duotone, css: :gray } }, { name: 'check', options: { style: :regular, css: :green, grow: 12 } }], title: 'Paid – Thank you!')
-          - elsif r.payable?
-            = link_to(pay_path(token: r.payment.token)) do
-              = FA::Icon.p('credit-card', style: :duotone, title: 'Pay for registration', fa: 'fw')
+        .table-cell = pay_reg_link(r)
         .table-cell = r.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
-        .table-cell
-          = link_to(cancel_registration_path(id: r.id), method: :delete, remote: true, class: 'red', id: "event_#{r.event_id}",
-            data: {confirm: "Are you sure you want to cancel your registration for #{r.event.display_title} on #{r.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}?"}) { FA::Icon.p('minus-square', style: :duotone) }
+        .table-cell = cancel_reg_link(r)
 
 hr
 = editor('photo_editor', id: @user.id) if current_user&.permitted?(:admin, session: session) && current_user.id != @user.id
