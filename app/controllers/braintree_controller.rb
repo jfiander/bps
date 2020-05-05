@@ -114,8 +114,8 @@ private
   def send_registration_email(registration)
     return unless registration.is_a?(Registration) && registration.event.advance_payment
 
-    registration.notify_new
-    registration.confirm_to_registrants
+    registration.notify_on_create
+    registration.confirm_to_registrant
   end
 
   def send_application_email(member_application)

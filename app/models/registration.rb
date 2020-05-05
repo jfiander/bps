@@ -39,6 +39,14 @@ class Registration < ApplicationRecord
     super && !(event.cutoff? && event.advance_payment)
   end
 
+  def notify_on_create
+    RegistrationMailer.registered(self).deliver
+  end
+
+  def confirm_to_registrant
+    RegistrationMailer.confirm(self).deliver
+  end
+
 private
 
   def email_or_user_present
@@ -51,14 +59,6 @@ private
     return if Registration.where(user: user, email: email, event: event).where.not(id: id).blank?
 
     errors.add(:base, 'Duplicate')
-  end
-
-  def notify_on_create
-    RegistrationMailer.registered(self).deliver
-  end
-
-  def confirm_to_registrant
-    RegistrationMailer.confirm(self).deliver
   end
 
   def public_registration?
