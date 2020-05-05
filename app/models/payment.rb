@@ -67,7 +67,7 @@ class Payment < ApplicationRecord
     case parent.class.name
     when 'MemberApplication'
       parent.primary
-    when 'Registration'
+    when 'Registration', 'GenericPayment'
       parent.user || parent.email
     when 'User'
       parent

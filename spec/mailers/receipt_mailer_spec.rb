@@ -7,6 +7,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
   let(:event) { FactoryBot.create(:event, cost: 10) }
   let(:reg) { FactoryBot.create(:registration, user: user, event: event) }
   let(:app) { FactoryBot.create(:family_application) }
+  let(:generic) { FactoryBot.create(:generic_payment, email: 'nobody@example.com') }
 
   # Collisions can occur between multiple simultaneous test suites. Restart any failed suites.
   let(:braintree_api_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 201} }
@@ -172,6 +173,24 @@ RSpec.describe ReceiptMailer, type: :mailer do
         expect(mail.body.encoded).to contain_and_match(
           'This is an automated message that was sent to',
           'Annual Dues Paid', 'Amount paid: $'
+        )
+      end
+    end
+
+    describe 'generic payment' do
+      let(:mail) { ReceiptMailer.paid(payment(generic)) }
+
+      it 'renders the headers' do
+        expect(mail).to contain_mail_headers(
+          subject: 'Payment received',
+          to: ['treasurer@bpsd9.org', 'webmaster@bpsd9.org'].sort,
+          from: ['support@bpsd9.org']
+        )
+      end
+
+      it 'renders the body' do
+        expect(mail.body.encoded).to contain_and_match(
+          'Someone has submitted a payment.'
         )
       end
     end

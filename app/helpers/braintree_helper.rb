@@ -81,7 +81,7 @@ private
   end
 
   def valid_payable_models
-    %w[registration member_application user]
+    %w[registration member_application user generic_payment]
   end
 
   def payable_payment?

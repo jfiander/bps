@@ -1,0 +1,29 @@
+<%= render 'application/mailers/auto' %>
+Payment Received
+
+
+Someone has submitted a payment.
+
+**********
+
+Amount paid: <%= number_to_currency(@generic_payment.payment_amount) %>
+Received amount (est.): <%= number_to_currency(@generic_payment.payment.discounted_amount) %>
+
+**********
+
+Description
+
+<%= @generic_payment.description %>
+
+Payment submitted by:
+<%- if @generic_payment.user.present? %>
+  Name: <%= @generic_payment.user.full_name(html: false) -%>
+  <%- if @generic_payment.user.certificate.present? %>
+  Certificate: <%= @generic_payment.user.certificate %>
+  <%- end %>
+  Email: <%= @generic_payment.user.email %>
+<%- else %>
+  Email: <%= @generic_payment.email %>
+<%- end %>
+
+**********

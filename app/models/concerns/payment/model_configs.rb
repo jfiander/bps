@@ -16,6 +16,8 @@ module Concerns
           member_application_info
         when 'User'
           dues_info
+        when 'GenericPayment'
+          generic_info
         end
       end
 
@@ -28,6 +30,8 @@ module Concerns
           'Membership application'
         when 'User'
           'Annual dues'
+        when 'GenericPayment'
+          parent.description
         end
       end
 
@@ -65,6 +69,10 @@ module Concerns
 
       def dues_info
         { name: 'Annual dues', people: parent.children.count }
+      end
+
+      def generic_info
+        { name: parent.description }
       end
     end
   end

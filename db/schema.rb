@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_21_202206) do
+ActiveRecord::Schema.define(version: 2020_05_05_185223) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -256,6 +256,16 @@ ActiveRecord::Schema.define(version: 2020_04_21_202206) do
     t.string "hin"
     t.string "deck_color"
     t.string "sail_color"
+  end
+
+  create_table "generic_payments", force: :cascade do |t|
+    t.string "description"
+    t.integer "amount"
+    t.integer "user_id"
+    t.string "email"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "header_images", force: :cascade do |t|

@@ -22,6 +22,8 @@ class ReceiptMailer < ApplicationMailer
       MemberApplicationMailer.paid(payment.parent)
     when 'User'
       MemberApplicationMailer.paid_dues(payment.parent)
+    when 'GenericPayment'
+      GenericPaymentMailer.paid(payment.parent) # Notify treasurer and webmaster
     end
   end
 

@@ -1,0 +1,35 @@
+= render 'application/mailers/auto'
+
+h1.birmingham Payment Received
+
+p Someone has submitted a payment.
+
+h2.red
+  | Amount paid: 
+  = number_to_currency(@generic_payment.payment_amount)
+h3
+  | Received amount (est.): 
+  = number_to_currency(@generic_payment.payment.discounted_amount)
+
+hr
+
+h2 Description
+= @generic_payment.description
+
+p
+  h3 Payment submitted by:
+  - if @generic_payment.user.present?
+    b Name: 
+    = @generic_payment.user.full_name(html: false)
+    - if @generic_payment.user.certificate.present?
+      |  (
+      = @generic_payment.user.certificate
+      | )
+    br
+    b Email: 
+    = @generic_payment.user.email
+  - else
+    b Email: 
+    = @generic_payment.email
+
+hr
