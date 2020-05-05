@@ -5,3 +5,6 @@ require_relative 'application'
 
 # Initialize the Rails application.
 Rails.application.initialize!
+
+# Copy mailer default URL config to application
+Rails.application.default_url_options = Rails.application.config.action_mailer.default_url_options
