@@ -50,10 +50,14 @@ module Concerns
       def conference_id
         info = calendar.conference_info(google_calendar_event_id)
         info[:id] unless info.nil?
+      rescue Google::Apis::ClientError
+        nil
       end
 
       def conference_link
-        "http://meet.google.com/#{conference_id}"
+        return unless (id = conference_id)
+
+        "http://meet.google.com/#{id}"
       end
 
       def conference!(state = true)
