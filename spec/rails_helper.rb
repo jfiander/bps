@@ -18,6 +18,7 @@ include DateHelper
 include EventsHelper
 include MarkdownHelper
 include NavigationHelper
+include RegistrationHelper
 include ViewHelper
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
