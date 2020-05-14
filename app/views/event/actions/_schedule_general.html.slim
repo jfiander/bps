@@ -17,7 +17,7 @@
   = event_action_link(event, nil, icon: 'calendar-exclamation', text: 'Too late to register', css: 'gray', expired: false)
 - elsif user_signed_in?
   = event_action_link( \
-    event, register_path(event_type_param, event.id), method: :put, remote: true, icon: 'calendar-check', \
+    event, register_path(event.id), method: :put, remote: true, icon: 'calendar-check', \
     text: 'Register', css: 'control', id: "event_#{event.id}", expired: false, \
     if: user_signed_in? && event.allow_member_registrations && event.registerable? \
   )

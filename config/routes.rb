@@ -240,7 +240,7 @@ Rails.application.routes.draw do
 
   # Registration
   patch   '/register/add/:id',      to: 'user#add_registrants',     as: 'add_registrants'
-  put     '/register/:type/:id',    to: 'user#register',            as: 'register'
+  put     '/register/:id',          to: 'user#register',            as: 'register'
   delete  '/register/:id',          to: 'user#cancel_registration', as: 'cancel_registration'
   get     '/override_cost/:token',  to: 'user#override_cost',       as: 'override_cost'
   patch   '/override_cost/:token',  to: 'user#set_override_cost',   as: 'set_override_cost'

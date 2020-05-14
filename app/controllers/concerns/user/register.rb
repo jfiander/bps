@@ -21,6 +21,7 @@ class User
 
       return unless can_cancel_registration?
 
+      @event = @reg.event
       @cancel_link = (@reg&.user == current_user)
 
       if @reg&.paid?
