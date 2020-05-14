@@ -24,13 +24,9 @@ class User
       @event = @reg.event
       @cancel_link = (@reg&.user == current_user)
 
-      if @reg&.paid?
-        cannot_cancel_paid
-      elsif @reg&.destroy
-        successfully_cancelled
-      else
-        unable_to_cancel
-      end
+      return cannot_cancel_paid if @reg&.paid?
+
+      @reg&.destroy ? successfully_cancelled : unable_to_cancel
     end
 
     def override_cost
