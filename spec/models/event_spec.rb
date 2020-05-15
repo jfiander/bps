@@ -361,10 +361,22 @@ RSpec.describe Event, type: :model, slow: true do
           expect(event).to have_attributes(cost: 18, usps_cost: nil, member_cost: 12)
         end
 
+        event_it 'rejects member_cost when equal to cost' do
+          event.update(cost: 15, member_cost: 15)
+
+          expect(event).to have_attributes(cost: 15, usps_cost: nil, member_cost: nil)
+        end
+
         event_it 'rejects usps_cost when below range' do
           event.update(cost: 20, usps_cost: 12, member_cost: 15)
 
           expect(event).to have_attributes(cost: 20, usps_cost: nil, member_cost: 15)
+        end
+
+        event_it 'rejects usps_cost when equal to range boundary' do
+          event.update(cost: 19, usps_cost: 14, member_cost: 14)
+
+          expect(event).to have_attributes(cost: 19, usps_cost: nil, member_cost: 14)
         end
 
         event_it 'rejects usps_cost when above range' do
