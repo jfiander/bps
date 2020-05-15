@@ -157,6 +157,7 @@ ul#admin-menu {
   #nested-navigation ul li {
     position: relative;
     display: inline-block;
+    max-width: 20%; // Maximum of 5 menus visible at once
     margin: 0;
     padding: 0;
     @include border-radius(0.25em 0.25em 0 0);
