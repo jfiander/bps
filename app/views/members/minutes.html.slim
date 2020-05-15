@@ -15,18 +15,18 @@ h3 Click on a button below to view or download that issue.
         .table-cell
           - if minutes.present? && month.in?(minutes.map(&:month))
             - minute = minutes.select { |m| m.month == month }.first
-            = link_to(minute.issue, minute.link(current_user.permalinks), target: :_blank)
-          - else
-            | -
+            = link_to(minute.issue, minute.link(current_user.permalinks), target: :_blank, title: "Membership minutes for #{MinutesFile.issues[month]} #{year}")
+          - elsif year < Date.today.year || month < membership_date.month
+            = FA::Icon.p(:ban, style: :duotone, css: 'gray', title: "No Membership minutes posted for #{MinutesFile.issues[month]} #{year}")
     .table-row class=(gray)
       .table-cell.table-header
       - @issues.keys.each do |month|
         .table-cell
           - if excom_minutes.present? && month.in?(excom_minutes.map(&:month))
             - minute = excom_minutes.select { |m| m.month == month }.first
-            = link_to(minute.issue, minute.link(current_user.permalinks), target: :_blank, class: 'members')
-          - else
-            | -
+            = link_to(minute.issue, minute.link(current_user.permalinks), target: :_blank, class: 'members', title: "ExCom minutes for #{MinutesFile.issues[month]} #{year}")
+          - elsif year < Date.today.year || month < excom_date.month
+            = FA::Icon.p(:ban, style: :duotone, css: 'gray', title: "No ExCom minutes posted for #{MinutesFile.issues[month]} #{year}")
 
 hr
-= link_to("https://get.adobe.com/reader/", target: :_blank) { image_tag static_bucket.link("acrobat_reader.png") }
+= link_to('https://get.adobe.com/reader/', target: :_blank) { image_tag(static_bucket.link('acrobat_reader.png')) }

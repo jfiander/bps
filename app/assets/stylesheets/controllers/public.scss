@@ -14,10 +14,11 @@ div#bilge {
 
   a {
     @include blue-button(0.25em);
+    font-size: 0.9em;
   }
 
   a.members {
-    @include blue-button(0.25em, lighten($old-glory-blue, 20%));
+    background-color: lighten($old-glory-blue, 20%);
   }
 
   div.table-cell.excom a {

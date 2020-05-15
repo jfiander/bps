@@ -143,12 +143,9 @@
     }
   }
 
-  table#bilge {
+  div#bilge {
     width: 100%;
-
-    a {
-      font-size: 0.6em;
-    }
+    font-size: 0.7em;
 
     * {
       overflow-x: visible;
@@ -157,12 +154,6 @@
 
   table#users {
     font-size: 0.65em;
-  }
-
-  table#items {
-    img {
-      max-width: 25vw;
-    }
   }
 
   iframe#calendar {
