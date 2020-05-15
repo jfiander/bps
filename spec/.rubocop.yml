@@ -13,6 +13,8 @@ Naming/UncommunicativeMethodParamName:
 
 RSpec/ExampleLength:
   Enabled: false
+RSpec/ExpectChange:
+  Enabled: false
 RSpec/MessageSpies:
   EnforcedStyle: receive
 RSpec/InstanceVariable:
