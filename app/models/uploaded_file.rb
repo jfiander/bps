@@ -3,7 +3,7 @@
 class UploadedFile < ApplicationRecord
   self.abstract_class = true
 
-  ACCEPTABLE_CONTENT_TYPES = %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
+  ACCEPTABLE_CONTENT_TYPES = %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}.freeze
 
   def self.bucket
     :files

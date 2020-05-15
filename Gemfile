@@ -22,15 +22,15 @@ gem 'sass-rails',          '~> 5.0'
 gem 'uglifier',            '~> 4.1'
 
 # Model Behavior
-gem 'paperclip',           '~> 5.3.0'
 gem 'paper_trail',         '~> 9.2.0'
+gem 'paperclip',           '~> 5.3.0'
 gem 'paranoia',            '~> 2.4.1'
 
 # APIs and External Services
 gem 'aws-sdk',             '~> 2.11'
 gem 'aws-sdk-rails',       '~> 1.0.1'
-gem 'braintree',           '~> 2.83'
 gem 'bps-google-api',      '~> 0.4.5'
+gem 'braintree',           '~> 2.83'
 gem 'geocoder',            '~> 1.5.0'
 gem 'sendgrid-ruby',       '~> 5.2'
 gem 'slack-notifier',      '~> 2.3'
@@ -93,7 +93,6 @@ group :development, :test do
   # Rubocop
   gem 'rubocop',                  '~> 0.59'
   gem 'rubocop-performance',      '~> 1.3.0'
-  gem 'rubocop-rails_config',     '~> 0.6'
   gem 'rubocop-rspec',            '~> 1.30'
 
   gem 'brakeman',                 '~> 4.3'

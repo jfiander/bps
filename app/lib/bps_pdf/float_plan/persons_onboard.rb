@@ -51,12 +51,8 @@ module BpsPdf
 
       def person_onboard_new_page(person)
         text "#{person.name} (#{person.age})", size: 12
-        if person.phone.present?
-          text person.phone, size: 12
-        end
-        if person.address.present?
-          text person.address, size: 12
-        end
+        text person.phone, size: 12 if person.phone.present?
+        text person.address, size: 12 if person.address.present?
         move_down 10
       end
     end

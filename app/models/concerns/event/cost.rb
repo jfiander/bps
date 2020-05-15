@@ -31,10 +31,8 @@ module Concerns
       def validate_costs
         return clear_costs if cost.blank?
 
-        if member_cost.present?
-          swap_member_cost if member_cost > cost
-          clear_member_cost if member_cost == cost
-        end
+        swap_member_cost
+        clear_member_cost if member_cost == cost
         clear_usps_cost if usps_cost.present? && invalid_usps_cost?
       end
 
@@ -52,13 +50,11 @@ module Concerns
       end
 
       def swap_member_cost
+        return unless member_cost.present? && member_cost > cost
+
         old_cost = cost
         self.cost = member_cost
         self.member_cost = old_cost
-      end
-
-      def invalid_member_cost?
-        member_cost >= cost
       end
 
       def invalid_usps_cost?
