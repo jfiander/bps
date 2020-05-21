@@ -43,7 +43,10 @@ module Application
     end
 
     def authenticate_inviter!
-      return redirect_to root_path unless current_user&.permitted?(:users, session: session)
+      unless current_user&.permitted?(:users)
+        redirect_to(root_path)
+        return
+      end
 
       super
     end
