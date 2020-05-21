@@ -18,7 +18,10 @@
     br.clear
 
     .left = f.label :deceased
-    .right = f.check_box :deceased
+    .right
+      label.switch
+        = f.check_box :deceased, class: 'slider round'
+        span.slider.round.lightblue-red: .description.no.yes
     br.clear
 
     .center = f.submit 'Submit Past Commander', class: 'big'
