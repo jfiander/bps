@@ -49,36 +49,23 @@ em Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'red', shr
 
       - if event_type_param.in? %w[course seminar]
         .left = f.label :show_in_catalog, "Show in #{@event_title} Catalog"
-        .right
-          label.switch
-            = f.check_box :show_in_catalog, class: 'slider round'
-            span.slider.round.darkblue-lightblue: .description.ignore.show
+        .right = switch_box(f, :show_in_catalog, 'darkblue-lightblue', 'ignore show')
         br.clear
 
       - if current_user.authorized_for_activity_feed?
         .left = f.label :activity_feed, "Show in Activity Feed"
-        .right
-          label.switch
-            = f.check_box :activity_feed, class: 'slider round'
-            span.slider.round.darkblue-lightblue: .description.ignore.show
+        .right = switch_box(f, :activity_feed, 'darkblue-lightblue', 'ignore show')
         br.clear
 
     #event-schedule
       h2 Schedule
 
       .left = f.label :all_day
-      .right
-        label.switch
-          = f.check_box :all_day, class: 'slider round', id: 'all_day_check'
-          span.slider.round.darkblue-lightblue: .description.regular.all-day
+      .right = switch_box(f, :all_day, 'darkblue-lightblue', 'regular all-day', id: 'all_day_check')
       br.clear
 
       .left = f.label :online, "Available Online"
-      .right
-        label.switch
-          = f.check_box :online, class: 'slider round'
-          span.slider.round.red-lightblue
-            .description.yes.no
+      .right = switch_box(f, :online, 'red-lightblue', 'yes no')
       br.clear
 
       #regular_start_time class=(@event.all_day ? 'hide' : '')
@@ -146,17 +133,11 @@ em Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'red', shr
       br.clear
 
       .left = f.label :allow_member_registrations, 'Member registrations'
-      .right
-        label.switch
-          = f.check_box :allow_member_registrations, class: 'slider round'
-          span.slider.round.red-lightblue: .description.deny.allow
+      .right = switch_box(f, :allow_member_registrations, 'red-lightblue', 'deny allow')
       br.clear
 
       .left = f.label :allow_public_registrations, 'Public registrations'
-      .right
-        label.switch
-          = f.check_box :allow_public_registrations, class: 'slider round'
-          span.slider.round.red-lightblue: .description.deny.allow
+      .right = switch_box(f, :allow_public_registrations, 'red-lightblue', 'deny allow')
       br.clear
 
       .left = f.label :registration_limit, 'Registrations limit'
@@ -168,10 +149,7 @@ em Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'red', shr
         ul
           li Payment will be required before the registration cutoff.
           li.red Late payments will not be processed.
-      .right
-        label.switch
-          = f.check_box :advance_payment, class: 'slider round'
-          span.slider.round.lightblue-red: .description.no.yes
+      .right = switch_box(f, :advance_payment, 'lightblue-red', 'no yes')
       br.clear
 
       .left

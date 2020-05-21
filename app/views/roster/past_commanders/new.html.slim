@@ -18,10 +18,7 @@
     br.clear
 
     .left = f.label :deceased
-    .right
-      label.switch
-        = f.check_box :deceased, class: 'slider round'
-        span.slider.round.lightblue-red: .description.no.yes
+    .right = switch_box(f, :deceased, 'lightblue-red', 'no yes')
     br.clear
 
     .center = f.submit 'Submit Past Commander', class: 'big'

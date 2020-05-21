@@ -19,10 +19,7 @@ h1 = "#{@edit_action} Location"
     br.clear
 
     .left = f.label :favorite
-    .right
-      label.switch
-        = f.check_box :favorite, class: 'slider round'
-        span.slider.round.darkblue-lightblue: .description.no.yes
+    .right = switch_box(f, :favorite, 'darkblue-lightblue', 'no yes')
     br.clear
 
     .left

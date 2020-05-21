@@ -42,9 +42,7 @@ h2 Assign to Standing Committee
     = range_field_tag :term_length, 3, min: 1, max: 3, required: true, class: "number"
     | 3
     br
-    label.switch
-      = check_box_tag :chair, class: "slider round"
-      span.slider.round.lightblue-darkblue: .description.committee.chair
+    = switch_box(nil, :chair, 'lightblue-darkblue', 'committee chair')
     br
     small Term lengths and chair status do not apply to the Executive Committee.
     br

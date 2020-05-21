@@ -4,9 +4,7 @@
   = form_for(@album, url: new_album_path, multipart: true) do |f|
     = f.text_field :name, required: true, placeholder: 'Enter album name'
     br
-    label.switch
-      = check_box_tag :remove, class: "slider round"
-      span.slider.round.lightblue-red: .description.create.remove
+    = switch_box(nil, :remove, 'lightblue-red', 'create remove')
     br
     = spinner_button(button_text: "Submit", css: 'big')
   = render 'upload_photos'

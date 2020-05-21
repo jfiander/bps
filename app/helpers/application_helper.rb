@@ -55,4 +55,27 @@ module ApplicationHelper
   def sanitize(text)
     ActionController::Base.helpers.sanitize text
   end
+
+  def switch_box(f, field, color, description, **options)
+    content_tag(:label, class: 'switch') do
+      concat(switch_box_field(f, field, options[:value], id: options[:id]))
+      concat(switch_box_span(color, description))
+    end
+  end
+
+private
+
+  def switch_box_field(f, field, value = nil, id: nil)
+    if f.nil?
+      check_box_tag(field, '1', value, class: 'slider round', id: id)
+    else
+      f.check_box(field, class: 'slider round')
+    end
+  end
+
+  def switch_box_span(color, description)
+    content_tag(:span, class: "slider round #{color}") do
+      content_tag(:div, '', class: "description #{description}")
+    end
+  end
 end

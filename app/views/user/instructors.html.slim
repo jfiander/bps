@@ -8,9 +8,7 @@ h1 Current Instructors
     ' for
     = select_tag :key, options_for_select(@keys, @highlight), required: true
 
-  label.switch
-    = check_box_tag :only, '1', @only, class: 'slider round'
-    span.slider.round.lightblue-darkblue: .description.all.eligible
+= switch_box(nil, :only, 'lightblue-darkblue', 'all eligible', value: @only)
   
 hr
 

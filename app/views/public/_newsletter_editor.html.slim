@@ -5,9 +5,7 @@ h3 Bilge Chatter
   = file_field_tag :file, accept: 'application/pdf', required: true
   = summer_months(date_select(:issue, :date, start_year: 2015, discard_day: true, required: true), mode: :summer)
   br
-  label.switch
-    = check_box_tag :bilge_remove, class: "slider round"
-    span.slider.round.lightblue-red: .description.upload.remove
+  = switch_box(nil, :bilge_remove, 'lightblue-red', 'upload remove')
   br
   = spinner_button(button_text: "Submit", css: 'big')
 small Uploading to an issue that has already been uploaded will overwrite the previous version.
