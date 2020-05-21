@@ -7,6 +7,8 @@ module Roster
     validate :user_or_name
     validates :year, presence: true
 
+    default_scope { order(:year) }
+
     def display_name
       return name unless user.present?
 

@@ -47,8 +47,8 @@ RSpec.describe Roster::AwardRecipient, type: :model do
     end
 
     describe 'past' do
-      it 'returns all except the latest from each award' do
-        expect(Roster::AwardRecipient.past.to_a).to eql([@ar2, @ar3])
+      it 'returns all except the latest from each award in chronological order' do
+        expect(Roster::AwardRecipient.past.to_a).to eql([@ar3, @ar2])
       end
     end
   end

@@ -17,6 +17,8 @@ module Roster
     validate :user_or_name
     validates :year, presence: true
 
+    default_scope { order(:year) }
+
     scope :for, ->(award_name) { where(award_name: award_name) }
 
     def self.current(name = nil)
