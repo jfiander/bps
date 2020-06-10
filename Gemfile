@@ -31,7 +31,7 @@ gem 'aws-sdk',             '~> 2.11'
 gem 'aws-sdk-rails',       '~> 1.0.1'
 gem 'bps-google-api',      '~> 0.4.5'
 gem 'braintree',           '~> 2.83'
-gem 'geocoder',            '~> 1.5.0'
+gem 'geocoder',            '~> 1.6.1'
 gem 'sendgrid-ruby',       '~> 5.2'
 gem 'slack-notifier',      '~> 2.3'
 
