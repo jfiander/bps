@@ -45,8 +45,10 @@ class Event < ApplicationRecord
 
   before_save :refresh_calendar!, if: :calendar_details_updated?
   before_save { self.slug = slug.downcase.tr('/', '_') if slug.present? }
-  after_create { book! }
   before_destroy { unbook! }
+
+  after_create { book! }
+  after_commit { conference! if online && online_changed? }
 
   def self.include_details
     includes(:event_type, :course_topics, :course_includes, :prereq)
