@@ -1,7 +1,7 @@
 div.table.versions {
   div.table-row div.table-cell {
     padding: 0.5em 0.25em;
-    overflow-x: scroll;
+    overflow-x: auto;
 
     pre.version-diff {
       max-width: 25vw;
