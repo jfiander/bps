@@ -24,6 +24,16 @@ class FlagsController < ApplicationController
     end
   end
 
+  def intersections
+    svg = USPSFlags::Generate.intersection_spec(
+      scale: scale, scaled_border: params[:border].present?
+    )
+
+    respond_to do |format|
+      format.svg { render inline: svg }
+    end
+  end
+
 private
 
   def clean_params
