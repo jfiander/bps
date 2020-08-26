@@ -138,7 +138,7 @@ module Concerns
 
       def calendar_details_updated?
         %i[
-          event_type_id start_at length_h length_m sessions all_day description location_id
+          event_type_id start_at length_h length_m sessions all_day description location_id online
         ].any? { |field| send("will_save_change_to_#{field}?") }
       end
 

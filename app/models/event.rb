@@ -43,12 +43,11 @@ class Event < ApplicationRecord
     :flyer, content_type: %r{\A(image/(jpe?g|png|gif))|(application/pdf)\z}
   )
 
-  before_save :refresh_calendar!, if: :calendar_details_updated?
   before_save { self.slug = slug.downcase.tr('/', '_') if slug.present? }
   before_destroy { unbook! }
 
   after_create { book! }
-  after_commit { conference! if online && online_changed? }
+  after_commit :refresh_calendar!, if: :calendar_details_updated?
 
   def self.include_details
     includes(:event_type, :course_topics, :course_includes, :prereq)
