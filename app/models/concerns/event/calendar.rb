@@ -147,9 +147,11 @@ module Concerns
       end
 
       def calendar_update(call_if: true, set_to: nil)
-        response = yield if call_if
-        set = { response: response, nil: nil }[set_to]
-        store_calendar_details(set) if set_to.present?
+        Rails.logger.silence do
+          response = yield if call_if
+          set = { response: response, nil: nil }[set_to]
+          store_calendar_details(set) if set_to.present?
+        end
       end
     end
   end
