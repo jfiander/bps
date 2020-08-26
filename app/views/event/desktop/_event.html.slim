@@ -53,7 +53,7 @@
                 .table.row: table-cell = simple_format(@locations[event.location_id][:address])
               - else
                 .table.row: .table-cell Location TBD
-              - if event.online
+              - if event.online && event.conference_link
                 = link_to(event.conference_link, target: :_blank) { FA::Icon.p('laptop', style: :duotone) + 'Attend Online' }
         .table-cell.top-right: .table: .table.row: .table-cell
           - if defined?(@event_catalog)
