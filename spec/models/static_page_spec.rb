@@ -6,7 +6,7 @@ RSpec.describe StaticPage, type: :model do
   describe 'class methods' do
     it 'returns a list of names' do
       FactoryBot.create_list(:static_page, 3)
-      expect(StaticPage.names).to eql(StaticPage.all.map(&:name))
+      expect(described_class.names).to eql(described_class.all.map(&:name))
     end
   end
 

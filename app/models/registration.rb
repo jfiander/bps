@@ -20,7 +20,7 @@ class Registration < ApplicationRecord
     convert_email_to_user && save
     return override_cost if override_cost.present?
 
-    event&.get_cost(user&.present?)
+    event&.get_cost(member: user&.present?)
   end
 
   def cost?

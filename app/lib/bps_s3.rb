@@ -11,7 +11,7 @@ class BpsS3
   end
 
   def link(key, signed: false, time: nil)
-    sign?(signed) ? signed_link(key, time) : cf_link(key)
+    sign?(signed: signed) ? signed_link(key, time) : cf_link(key)
   end
 
   def list(prefix = '')
@@ -94,7 +94,7 @@ private
     @endpoint.in?(%i[seo static]) || ENV['ASSET_ENVIRONMENT'] == 'production'
   end
 
-  def sign?(signed = false)
+  def sign?(signed: false)
     return true if @bucket.in?(%i[seo files bilge]) && @environment != :static
 
     signed

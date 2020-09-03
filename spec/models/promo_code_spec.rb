@@ -135,11 +135,11 @@ RSpec.describe PromoCode, type: :model do
     end
 
     it 'returns the list of current codes' do
-      expect(PromoCode.current.to_a).to eql([@current])
+      expect(described_class.current.to_a).to eql([@current])
     end
 
     it 'returns the list of pending codes' do
-      expect(PromoCode.pending.to_a).to eql([@pending])
+      expect(described_class.pending.to_a).to eql([@pending])
     end
   end
 end

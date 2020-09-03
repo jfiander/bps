@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe OTWMailer, type: :mailer do
   describe 'requested' do
     let(:otw) { FactoryBot.create(:otw_training_user) }
-    let(:mail) { OTWMailer.requested(otw) }
+    let(:mail) { described_class.requested(otw) }
 
     it 'renders the headers' do
       expect(mail).to contain_mail_headers(
@@ -33,10 +33,10 @@ RSpec.describe OTWMailer, type: :mailer do
         availability: 'Whenever'
       }
     end
-    let(:mail) { OTWMailer.jumpstart(options) }
+    let(:mail) { described_class.jumpstart(options) }
 
     context 'with details' do
-      let(:mail) { OTWMailer.jumpstart(options) }
+      let(:mail) { described_class.jumpstart(options) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -56,7 +56,7 @@ RSpec.describe OTWMailer, type: :mailer do
     end
 
     context 'with only availability' do
-      let(:mail) { OTWMailer.jumpstart(options.except(:phone, :details)) }
+      let(:mail) { described_class.jumpstart(options.except(:phone, :details)) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(

@@ -8,7 +8,7 @@ RSpec.describe BilgeFile, type: :model do
   end
 
   it 'has the correct number of issues' do
-    expect(BilgeFile.issues.count).to be(11)
+    expect(described_class.issues.count).to be(11)
   end
 
   describe 'issues' do
@@ -27,7 +27,7 @@ RSpec.describe BilgeFile, type: :model do
     end
 
     it 'returns a valid permalink' do
-      expect(@bilge.link(true)).to match(%r{\A/bilge/\d+/\d+$})
+      expect(@bilge.link(permalinks: true)).to match(%r{\A/bilge/\d+/\d+$})
     end
   end
 

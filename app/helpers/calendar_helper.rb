@@ -3,10 +3,7 @@
 module CalendarHelper
   def render_calendar(calendar_data = ENV['CALENDARS'])
     @calendar_data = calendar_data
-    'https://calendar.google.com/calendar/b/2/embed?' +
-      calendar_options +
-      '&' +
-      calendars
+    "https://calendar.google.com/calendar/b/2/embed?#{calendar_options}&#{calendars}"
   end
 
 private

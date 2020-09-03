@@ -5,29 +5,29 @@ require 'rails_helper'
 RSpec.describe BpsS3, type: :lib do
   describe 'bucket namess' do
     it 'generates the correct static bucket name' do
-      expect(BpsS3.new(:static).full_bucket).to eql('bps-static-files')
+      expect(described_class.new(:static).full_bucket).to eql('bps-static-files')
     end
 
     it 'generates the correct files bucket name' do
-      expect(BpsS3.new(:files).full_bucket).to eql('bps-development-files')
+      expect(described_class.new(:files).full_bucket).to eql('bps-development-files')
     end
 
     it 'generates the correct bilge bucket name' do
-      expect(BpsS3.new(:bilge).full_bucket).to eql('bps-development-bilge')
+      expect(described_class.new(:bilge).full_bucket).to eql('bps-development-bilge')
     end
 
     it 'generates the correct photos bucket name' do
-      expect(BpsS3.new(:photos).full_bucket).to eql('bps-development-photos')
+      expect(described_class.new(:photos).full_bucket).to eql('bps-development-photos')
     end
 
     it 'generates the correct float plans bucket name' do
-      expect(BpsS3.new(:floatplans).full_bucket).to eql('bps-development-floatplans')
+      expect(described_class.new(:floatplans).full_bucket).to eql('bps-development-floatplans')
     end
   end
 
   describe 'behaviors' do
     before do
-      @bps_s3 = BpsS3.new(:files)
+      @bps_s3 = described_class.new(:files)
     end
 
     it 'detects files' do
@@ -65,8 +65,8 @@ RSpec.describe BpsS3, type: :lib do
 
   describe 'CloudFront subdomains' do
     before do
-      @files_bucket = BpsS3.new(:files)
-      @static_bucket = BpsS3.new(:static)
+      @files_bucket = described_class.new(:files)
+      @static_bucket = described_class.new(:static)
     end
 
     context 'when in development' do

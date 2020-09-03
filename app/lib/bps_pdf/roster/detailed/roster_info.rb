@@ -51,7 +51,7 @@ module BpsPdf
 
         def roster_info_abbr_table(key, width)
           bounding_box([0, 130], width: width, height: 130) do
-            config_text[:roster_info][key].keys.each do |abbr|
+            config_text[:roster_info][key].each_key do |abbr|
               text abbr.to_s, size: BpsPdf::Roster::Detailed::BODY_REG_SIZE, style: :bold
             end
           end
@@ -59,7 +59,7 @@ module BpsPdf
 
         def roster_info_desc_table(key, gap, width)
           bounding_box([gap, 130], width: width, height: 130) do
-            config_text[:roster_info][key].values.each do |desc|
+            config_text[:roster_info][key].each_value do |desc|
               body_text desc.to_s, align: :left
             end
           end

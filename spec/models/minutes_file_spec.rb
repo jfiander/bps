@@ -8,7 +8,7 @@ RSpec.describe MinutesFile, type: :model do
   end
 
   it 'has the correct number of issues' do
-    expect(MinutesFile.issues.count).to be(10)
+    expect(described_class.issues.count).to be(10)
   end
 
   describe 'issues' do
@@ -29,7 +29,7 @@ RSpec.describe MinutesFile, type: :model do
     end
 
     it 'returns a valid permalink' do
-      expect(@minutes.link(true)).to match(
+      expect(@minutes.link(permalinks: true)).to match(
         %r{\A/minutes/\d+/\d+$}
       )
     end
@@ -37,7 +37,7 @@ RSpec.describe MinutesFile, type: :model do
     it 'returns a valid excom permalink' do
       @minutes.excom = true
 
-      expect(@minutes.link(true)).to match(
+      expect(@minutes.link(permalinks: true)).to match(
         %r{\A/excom/\d+/\d+$}
       )
     end

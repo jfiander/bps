@@ -75,11 +75,11 @@ module Admin
     end
 
     def png_key
-      (File.join('png', logo_params[:orientation], background, text, size.to_s) + '.png').downcase
+      File.join('png', logo_params[:orientation], background, text, "#{size}.png").downcase
     end
 
     def svg_key
-      (File.join('svg', logo_params[:orientation], text) + '.svg').downcase
+      File.join('svg', logo_params[:orientation], "#{text}.svg").downcase
     end
 
     def find_logo

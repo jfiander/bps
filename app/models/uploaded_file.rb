@@ -18,7 +18,7 @@ class UploadedFile < ApplicationRecord
   validates_attachment_content_type(:file, content_type: ACCEPTABLE_CONTENT_TYPES)
   validates(:file, presence: true)
 
-  def link(permalinks = false)
+  def link(permalinks: false)
     return permalink if permalinks
 
     self.class.buckets[self.class.bucket].link(file.s3_object.key)

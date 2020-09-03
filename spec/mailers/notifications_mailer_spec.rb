@@ -12,7 +12,7 @@ RSpec.describe NotificationsMailer, type: :mailer do
       generic_seo_and_ao
       @previous = FactoryBot.create(:user)
       @by = FactoryBot.create(:user)
-      @mail = NotificationsMailer.bridge(generic_seo_and_ao[:ao], by: @by, previous: @previous)
+      @mail = described_class.bridge(generic_seo_and_ao[:ao], by: @by, previous: @previous)
     end
 
     it 'renders the headers' do
@@ -35,7 +35,7 @@ RSpec.describe NotificationsMailer, type: :mailer do
   describe 'new float plan' do
     before do
       @float_plan = FactoryBot.create(:float_plan, :one_onboard)
-      @mail = NotificationsMailer.float_plan(@float_plan)
+      @mail = described_class.float_plan(@float_plan)
     end
 
     context 'with no monitors' do

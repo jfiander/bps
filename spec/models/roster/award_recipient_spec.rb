@@ -42,13 +42,13 @@ RSpec.describe Roster::AwardRecipient, type: :model do
 
     describe 'current' do
       it 'returns only the latest from each award' do
-        expect(Roster::AwardRecipient.current.to_a).to eql([@ar1])
+        expect(described_class.current.to_a).to eql([@ar1])
       end
     end
 
     describe 'past' do
       it 'returns all except the latest from each award in chronological order' do
-        expect(Roster::AwardRecipient.past.to_a).to eql([@ar3, @ar2])
+        expect(described_class.past.to_a).to eql([@ar3, @ar2])
       end
     end
   end

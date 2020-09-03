@@ -19,7 +19,7 @@ class User
     end
 
     def ranks(html: true)
-      [bridge_rank(html), override_rank(html), committee_rank].reject(&:blank?)
+      [bridge_rank(html: html), override_rank(html: html), committee_rank].reject(&:blank?)
     end
 
     def formatted_grade
@@ -39,14 +39,14 @@ class User
 
   private
 
-    def override_rank(html = true)
+    def override_rank(html: true)
       return '' if rank_override == 'none'
       return rank_override if rank_override.present?
 
-      cleanup_1st(rank, html)
+      cleanup_1st(rank, html: html)
     end
 
-    def bridge_rank(html = true)
+    def bridge_rank(html: true)
       # html_safe: No user content
       case cached_bridge_office&.office
       when 'commander'
@@ -71,7 +71,7 @@ class User
       return 'Lt' if cached_standing_committees.present? || cached_committees.present?
     end
 
-    def cleanup_1st(output_rank, html = true)
+    def cleanup_1st(output_rank, html: true)
       # html_safe: No user content
       r = output_rank&.gsub(%r{1/}, '1st/')
       html ? r&.gsub(/1st/, '1<sup>st</sup>')&.html_safe : r

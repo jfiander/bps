@@ -11,15 +11,15 @@ RSpec.describe BpsPdf::Roster, type: :lib do
     end
 
     it 'successfullies generate a portrait roster' do
-      expect { BpsPdf::Roster.portrait }.not_to raise_error
+      expect { described_class.portrait }.not_to raise_error
     end
 
     it 'successfullies generate a landscape roster' do
-      expect { BpsPdf::Roster.landscape }.not_to raise_error
+      expect { described_class.landscape }.not_to raise_error
     end
 
     it 'successfullies generate a landscape roster with a blank page' do
-      expect { BpsPdf::Roster.landscape(include_blank: true) }.not_to raise_error
+      expect { described_class.landscape(include_blank: true) }.not_to raise_error
     end
 
     it 'successfullies generate a detailed roster' do
@@ -42,7 +42,7 @@ RSpec.describe BpsPdf::Roster, type: :lib do
         FactoryBot.create(:roster_past_commander,  user: u, year: '2015-01-01')
       end
 
-      expect { BpsPdf::Roster.detailed }.to output(/\*\*\* Roster generation complete!/).to_stdout_from_any_process
+      expect { described_class.detailed }.to output(/\*\*\* Roster generation complete!/).to_stdout_from_any_process
     end
   end
 end

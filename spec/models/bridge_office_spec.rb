@@ -28,7 +28,7 @@ RSpec.describe BridgeOffice, type: :model do
     asec = FactoryBot.create(:user)
     FactoryBot.create(:bridge_office, user: asec, office: 'asst_secretary')
 
-    expect(BridgeOffice.preload).to eql(cdr.id => 'commander', seo.id => 'educational', asec.id => 'asst_secretary')
+    expect(described_class.preload).to eql(cdr.id => 'commander', seo.id => 'educational', asec.id => 'asst_secretary')
   end
 
   it 'returns the correct department' do
@@ -55,20 +55,20 @@ RSpec.describe BridgeOffice, type: :model do
     end
 
     it 'moves officers without an AO id' do
-      BridgeOffice.advance
+      described_class.advance
 
-      expect(BridgeOffice.find_by(office: 'commander').user).to eql(@xo)
-      expect(BridgeOffice.find_by(office: 'executive').user).to eql(@ao)
-      expect(BridgeOffice.find_by(office: 'administrative').user).to be_nil
+      expect(described_class.find_by(office: 'commander').user).to eql(@xo)
+      expect(described_class.find_by(office: 'executive').user).to eql(@ao)
+      expect(described_class.find_by(office: 'administrative').user).to be_nil
     end
 
     it 'moves officers with an AO id' do
       new_ao = FactoryBot.create(:user)
-      BridgeOffice.advance(new_ao.id)
+      described_class.advance(new_ao.id)
 
-      expect(BridgeOffice.find_by(office: 'commander').user).to eql(@xo)
-      expect(BridgeOffice.find_by(office: 'executive').user).to eql(@ao)
-      expect(BridgeOffice.find_by(office: 'administrative').user).to eql(new_ao)
+      expect(described_class.find_by(office: 'commander').user).to eql(@xo)
+      expect(described_class.find_by(office: 'executive').user).to eql(@ao)
+      expect(described_class.find_by(office: 'administrative').user).to eql(new_ao)
     end
   end
 
@@ -80,11 +80,11 @@ RSpec.describe BridgeOffice, type: :model do
     end
 
     it 'generates the correct mailing list' do
-      expect(BridgeOffice.mail_all.sort).to eql([@commander.user.email, @seo.user.email].sort)
+      expect(described_class.mail_all.sort).to eql([@commander.user.email, @seo.user.email].sort)
     end
 
     it 'generates the correct mailing list including assistants' do
-      expect(BridgeOffice.mail_all(include_asst: true).sort).to eql(
+      expect(described_class.mail_all(include_asst: true).sort).to eql(
         [@commander.user.email, @seo.user.email, @aseo.user.email].sort
       )
     end

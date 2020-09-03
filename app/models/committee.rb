@@ -8,7 +8,7 @@ class Committee < ApplicationRecord
       commander executive educational administrative secretary treasurer
       asst_educational asst_secretary
     ],
-    message: '%{value} is not a valid department'
+    message: '%<value> is not a valid department'
   }
 
   scope :for_department, ->(department) { where(department: department.to_s) }

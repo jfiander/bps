@@ -10,7 +10,7 @@ RSpec.describe BridgeHelper, type: :helper do
     @bridge_office = FactoryBot.create(:bridge_office, user: cdr)
     @committee = FactoryBot.create(:committee, user: com)
     @standing_committee_office = FactoryBot.create(:standing_committee_office, user: stand)
-    BridgeHelper.preload_user_data
+    described_class.preload_user_data
   end
 
   let(:departments) do
@@ -64,7 +64,7 @@ RSpec.describe BridgeHelper, type: :helper do
   end
 
   it 'generates the correct values for the bridge selectors' do
-    expect(BridgeHelper.bridge_selectors).to eql(
+    expect(described_class.bridge_selectors).to eql(
       departments: [
         %w[Commander commander],
         %w[Executive executive],
@@ -94,6 +94,6 @@ RSpec.describe BridgeHelper, type: :helper do
   end
 
   it 'builds the correct bridge list' do
-    expect(BridgeHelper.build_bridge_list).to eql(departments: departments, standing_committees: standing_committees)
+    expect(described_class.build_bridge_list).to eql(departments: departments, standing_committees: standing_committees)
   end
 end

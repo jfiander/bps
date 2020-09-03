@@ -15,7 +15,7 @@ module Concerns
         "<b>Members:</b>&nbsp;$#{member_cost}#{u}, <b>Non-members:</b>&nbsp;$#{cost}".html_safe
       end
 
-      def get_cost(member = false)
+      def get_cost(member: false)
         return member_cost if member && member_cost.present?
         return cost if cost.present?
 

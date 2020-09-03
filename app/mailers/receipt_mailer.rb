@@ -33,11 +33,12 @@ private
     @payment = payment
     @payable = @payment.parent
 
-    if @payment.parent_type == 'Registration'
+    case @payment.parent_type
+    when 'Registration'
       registration_details
-    elsif @payment.parent_type == 'MemberApplication'
+    when 'MemberApplication'
       member_application_details
-    elsif @payment.parent_type == 'User'
+    when 'User'
       dues_details
     end
   end

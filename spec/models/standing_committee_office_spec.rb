@@ -56,6 +56,6 @@ RSpec.describe StandingCommitteeOffice, type: :model do
     e2 = FactoryBot.create(:standing_committee_office, committee_name: 'executive')
     FactoryBot.create(:standing_committee_office, committee_name: 'auditing')
 
-    expect(StandingCommitteeOffice.mail_all(:executive).sort).to eql([e1.user.email, e2.user.email].sort)
+    expect(described_class.mail_all(:executive).sort).to eql([e1.user.email, e2.user.email].sort)
   end
 end

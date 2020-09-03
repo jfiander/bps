@@ -12,7 +12,7 @@ RSpec.describe Registration, type: :model do
   describe 'payable' do
     describe 'class.payable?' do
       it 'returns true for a payable class' do
-        expect(Registration.payable?).to be(true)
+        expect(described_class.payable?).to be(true)
       end
 
       it 'returns false for a non-payable class' do

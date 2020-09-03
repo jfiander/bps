@@ -24,9 +24,10 @@ module ImportUsers
     end
 
     def parse_date(datestring)
-      if datestring.length == 6
+      case datestring.length
+      when 6
         Date.strptime(datestring, '%Y%m')
-      elsif datestring.length == 8
+      when 8
         Date.strptime(datestring, '%Y%m%d')
       end
     end

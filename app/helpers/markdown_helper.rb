@@ -109,7 +109,8 @@ private
 
     @markdown_div = @markdown_div.gsub(
       %r{(<a.*?href=['"]https?://.*?['"].*?>.*?)</a>},
-      '\1' + "<sup>#{@ext}</sup></a>"
+      '\1' \
+      "<sup>#{@ext}</sup></a>"
     )
   end
 end

@@ -7,7 +7,7 @@ RSpec.describe EventType, type: :model do
     FactoryBot.create(:event_type, event_category: 'public', title: 'ABC')
     FactoryBot.create(:event_type, event_category: 'seminar', title: '123')
 
-    expect(EventType.searchable).to eql([%w[public abc], %w[seminar 123]])
+    expect(described_class.searchable).to eql([%w[public abc], %w[seminar 123]])
   end
 
   describe 'form selectors' do
@@ -21,7 +21,7 @@ RSpec.describe EventType, type: :model do
 
     it 'generates the correct course select field data' do
       allow(ENV).to receive(:[]).with('USE_NEW_AG_TITLES').and_return('disabled')
-      select_data = EventType.selector('course')
+      select_data = described_class.selector('course')
 
       expect(select_data).to eql(
         'Public' => [["America's Boating Course", @abc.id]],
@@ -32,7 +32,7 @@ RSpec.describe EventType, type: :model do
 
     it 'generates the correct seminar select field data' do
       allow(ENV).to receive(:[]).with('USE_NEW_AG_TITLES').and_return('disabled')
-      select_data = EventType.selector('seminar')
+      select_data = described_class.selector('seminar')
 
       expect(select_data).to eql([['Emergencies Onboard', @eob.id]])
     end
@@ -45,7 +45,7 @@ RSpec.describe EventType, type: :model do
       FactoryBot.create(:event_type, event_category: :meeting, title: 'member')
       FactoryBot.create(:event_type, event_category: :public)
       FactoryBot.create(:event_type, event_category: :advanced_grade, title: 'advanced_piloting')
-      @event_types = EventType.all
+      @event_types = described_class.all
     end
 
     it 'correctlies order event_types by name' do

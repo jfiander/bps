@@ -347,15 +347,15 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns the list of invitable users' do
-      expect(User.invitable.to_a).to eql([@user_inv])
+      expect(described_class.invitable.to_a).to eql([@user_inv])
     end
 
     it 'returns the list of valid instructor users' do
-      expect(User.valid_instructors.to_a).to eql([@user_inst])
+      expect(described_class.valid_instructors.to_a).to eql([@user_inst])
     end
 
     it 'returns the list of vessel examiner users' do
-      expect(User.vessel_examiners.to_a).to eql([@user_vse])
+      expect(described_class.vessel_examiners.to_a).to eql([@user_vse])
     end
   end
 
@@ -383,7 +383,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns the default photo if not present' do
-      expect(@user.photo).to eql(User.no_photo)
+      expect(@user.photo).to eql(described_class.no_photo)
     end
 
     it 'requires a file path' do
@@ -394,7 +394,7 @@ RSpec.describe User, type: :model do
 
     it 'has a photo after attaching' do
       @user.assign_photo(local_path: @photo.path)
-      expect(@user.photo).to eql(User.buckets[:files].link(@user.profile_photo.s3_object(:medium).key))
+      expect(@user.photo).to eql(described_class.buckets[:files].link(@user.profile_photo.s3_object(:medium).key))
     end
   end
 
@@ -518,6 +518,8 @@ RSpec.describe User, type: :model do
   end
 
   it 'returns the correct associations to include' do
-    expect(User.position_associations).to eql(%i[bridge_office standing_committee_offices committees user_roles roles])
+    expect(described_class.position_associations).to eql(
+      %i[bridge_office standing_committee_offices committees user_roles roles]
+    )
   end
 end

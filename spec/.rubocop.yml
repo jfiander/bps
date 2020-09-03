@@ -1,14 +1,17 @@
-Metrics/LineLength:
+AllCops:
+  NewCops: enable
+
+Layout/LineLength:
   Max: 120
+
 Metrics/BlockLength:
   Enabled: false
 Metrics/MethodLength:
   Enabled: true
   Exclude:
     - aws_stub_responses.rb
-Style/GlobalVars:
-  Enabled: false
-Naming/UncommunicativeMethodParamName:
+
+Naming/MethodParameterName:
   Enabled: false
 
 RSpec/ExampleLength:
@@ -22,11 +25,13 @@ RSpec/InstanceVariable:
   # AssignmentOnly: true
 RSpec/NestedGroups:
   Max: 10
-
 RSpec/EmptyExampleGroup:
   Enabled: true
   Exclude:
     - models/event_spec.rb
+
+Style/GlobalVars:
+  Enabled: false
 
 # Temporary cops
 RSpec/MultipleExpectations:

@@ -87,9 +87,10 @@ module BpsPdf
       end
 
       def seminar_any_name(seminar)
-        if seminar['name'] == 'VSC Training'
+        case seminar['name']
+        when 'VSC Training'
           vsc_name(seminar)
-        elsif seminar['name'] == 'Boat Operator Certification'
+        when 'Boat Operator Certification'
           boc_name
         end
       end

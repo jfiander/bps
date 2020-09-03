@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe BucketHelper, type: :helper do
   before do
-    @static = BucketHelper.static_bucket
-    @files = BucketHelper.files_bucket
-    @bilge = BucketHelper.bilge_bucket
-    @photos = BucketHelper.photos_bucket
+    @static = described_class.static_bucket
+    @files = described_class.files_bucket
+    @bilge = described_class.bilge_bucket
+    @photos = described_class.photos_bucket
   end
 
   it 'returns the correct static bucket' do

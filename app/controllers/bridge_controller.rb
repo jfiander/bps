@@ -96,11 +96,12 @@ private
   end
 
   def prep_for_committee_removal(type = :general)
-    if type == :general
+    case type
+    when :general
       @committee_id = clean_params[:id]
       @standing = ''
       @klass = Committee
-    elsif type == :standing
+    when :standing
       @standing_committee_id = clean_params[:id]
       @standing = ' standing'
       @klass = StandingCommitteeOffice

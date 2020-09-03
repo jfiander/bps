@@ -9,19 +9,19 @@ RSpec.describe Location, type: :model do
 
   describe 'searchable' do
     it 'returns a hash' do
-      expect(Location.searchable).to be_a(Hash)
+      expect(described_class.searchable).to be_a(Hash)
     end
 
     it 'has integer keys' do
-      expect(Location.searchable.keys.all? { |k| k.is_a?(Integer) }).to be(true)
+      expect(described_class.searchable.keys.all? { |k| k.is_a?(Integer) }).to be(true)
     end
   end
 
   describe 'grouped' do
     it 'returns a correctly-structrued hash' do
-      expect(Location.grouped).to have_key('TBD')
-      expect(Location.grouped).to have_key('Favorites')
-      expect(Location.grouped).to have_key('Others')
+      expect(described_class.grouped).to have_key('TBD')
+      expect(described_class.grouped).to have_key('Favorites')
+      expect(described_class.grouped).to have_key('Others')
     end
   end
 

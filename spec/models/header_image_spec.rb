@@ -11,12 +11,12 @@ RSpec.describe HeaderImage, type: :model do
     end
 
     it 'picks the selected image, if specified' do
-      20.times { @picks << HeaderImage.pick(@pick.id) }
+      20.times { @picks << described_class.pick(@pick.id) }
       expect(@picks.uniq.count).to be(1)
     end
 
     it 'picks multiple images, if not specified' do
-      20.times { @picks << HeaderImage.pick }
+      20.times { @picks << described_class.pick }
       expect(@picks.uniq.count).to be > 1
     end
   end

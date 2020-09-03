@@ -10,7 +10,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
 
   context 'with a single application' do
     describe 'new_application' do
-      let(:mail) { MemberApplicationMailer.new_application(single_application) }
+      let(:mail) { described_class.new_application(single_application) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -30,7 +30,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
     end
 
     describe 'confirm' do
-      let(:mail) { MemberApplicationMailer.confirm(single_application) }
+      let(:mail) { described_class.confirm(single_application) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -47,7 +47,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
     end
 
     describe 'approved' do
-      let(:mail) { MemberApplicationMailer.approved(single_application) }
+      let(:mail) { described_class.approved(single_application) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -64,7 +64,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
     end
 
     describe 'approval_notice' do
-      let(:mail) { MemberApplicationMailer.approval_notice(single_application) }
+      let(:mail) { described_class.approval_notice(single_application) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -81,7 +81,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
     end
 
     describe 'paid' do
-      let(:mail) { MemberApplicationMailer.paid(single_application) }
+      let(:mail) { described_class.paid(single_application) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -98,7 +98,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
 
     describe 'paid_dues' do
       let(:user) { FactoryBot.create(:user) }
-      let(:mail) { MemberApplicationMailer.paid_dues(user) }
+      let(:mail) { described_class.paid_dues(user) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -116,7 +116,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
 
   context 'with a family application' do
     describe 'new_application' do
-      let(:mail) { MemberApplicationMailer.new_application(family_application) }
+      let(:mail) { described_class.new_application(family_application) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -135,7 +135,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
     end
 
     describe 'confirm' do
-      let(:mail) { MemberApplicationMailer.confirm(family_application) }
+      let(:mail) { described_class.confirm(family_application) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -153,7 +153,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
     end
 
     describe 'approved' do
-      let(:mail) { MemberApplicationMailer.approved(family_application) }
+      let(:mail) { described_class.approved(family_application) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -170,7 +170,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
     end
 
     describe 'approval_notice' do
-      let(:mail) { MemberApplicationMailer.approval_notice(family_application) }
+      let(:mail) { described_class.approval_notice(family_application) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(

@@ -8,7 +8,7 @@ RSpec.describe NominationsMailer, type: :mailer do
 
     context 'with an ExCom award' do
       let(:mail) do
-        NominationsMailer.nomination(
+        described_class.nomination(
           nominator,
           'Bill Booth Moose Milk',
           'John Q Public',
@@ -36,7 +36,7 @@ RSpec.describe NominationsMailer, type: :mailer do
 
     context 'with a Commander award' do
       let(:mail) do
-        NominationsMailer.nomination(
+        described_class.nomination(
           nominator,
           'Outstanding Service',
           'John Q Public',
@@ -64,7 +64,7 @@ RSpec.describe NominationsMailer, type: :mailer do
 
     context 'with an SEO award' do
       let(:mail) do
-        NominationsMailer.nomination(
+        described_class.nomination(
           nominator,
           'Education',
           'John Q Public',

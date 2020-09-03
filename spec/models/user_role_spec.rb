@@ -10,6 +10,6 @@ RSpec.describe UserRole, type: :model do
     users.each { |u| FactoryBot.create(:user_role, user: u, role: child) }
     user_roles_hash = { 1 => [:child], 2 => [:child] }
 
-    expect(UserRole.preload).to eql(user_roles_hash)
+    expect(described_class.preload).to eql(user_roles_hash)
   end
 end

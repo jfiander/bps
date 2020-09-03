@@ -3,21 +3,21 @@
 require 'rails_helper'
 
 RSpec.describe Payment, type: :model do
-  let(:token) { Payment.client_token }
-  let(:user_token) { Payment.client_token(user_id: @user.id) }
+  let(:token) { described_class.client_token }
+  let(:user_token) { described_class.client_token(user_id: @user.id) }
 
   let(:braintree_api_token_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/client_token 201} }
   let(:braintree_api_customer_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/customers 201} }
 
   it 'uses the correct discount rate' do
-    expect(Payment.discount(1)).to eq(0.32)
-    expect(Payment.discount(100)).to eq(2.50)
-    expect(Payment.discount(200)).to eq(4.70)
+    expect(described_class.discount(1)).to eq(0.32)
+    expect(described_class.discount(100)).to eq(2.50)
+    expect(described_class.discount(200)).to eq(4.70)
   end
 
   describe 'general methods' do
     it 'returns a Braintree gateway' do
-      expect(Payment.gateway).to be_a(Braintree::Gateway)
+      expect(described_class.gateway).to be_a(Braintree::Gateway)
     end
 
     it 'returns valid client_tokens' do

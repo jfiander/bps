@@ -5,15 +5,16 @@ module ViewHelper
   def officer_flag(office, mode: :svg)
     rank = office_rank(office)
 
-    if mode == :svg
+    case mode
+    when :svg
       URI.parse(static_bucket.link("flags/SVG/#{rank}.svg")).open.read.html_safe
-    elsif mode == :png
+    when :png
       image_tag static_bucket.link("flags/PNG/#{rank}.thumb.png")
     end
   end
 
   def spinner_button(form = nil, button_text: 'Submit', disable_text: nil, name: 'button', css: '')
-    disable_text ||= button_text == 'Submit' ? 'Submitting' : button_text.sub(/e$/, '') + 'ing'
+    disable_text ||= button_text == 'Submit' ? 'Submitting' : "#{button_text.sub(/e$/, '')}ing"
     data_hash = { disable_with: (FA::Icon.p('spinner', fa: 'pulse') + "#{disable_text}...") }
     return form.button(button_text, data: data_hash, name: name, class: css) if form.present?
 

@@ -60,7 +60,7 @@ module Concerns
         "http://meet.google.com/#{id}"
       end
 
-      def conference!(state = true)
+      def conference!(state: true)
         update(online: state)
         refresh_calendar!
       end

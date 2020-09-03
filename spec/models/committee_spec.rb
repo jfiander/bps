@@ -49,7 +49,7 @@ RSpec.describe Committee, type: :model do
       other_user = FactoryBot.create(:user)
       FactoryBot.create(:committee, name: 'Not That One', user: other_user)
 
-      expect(Committee.mail_all(:executive, 'This One')).to eql([user.email])
+      expect(described_class.mail_all(:executive, 'This One')).to eql([user.email])
     end
   end
 end

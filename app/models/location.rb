@@ -10,6 +10,7 @@ class Location < ApplicationRecord
   )
 
   attr_accessor :delete_attachment
+
   before_validation { picture.clear if delete_attachment == '1' }
 
   before_validation { prefix_map_link }

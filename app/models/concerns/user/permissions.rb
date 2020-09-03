@@ -24,7 +24,7 @@ class User
       required = SIMPLIFY.call(required_roles)
       return false if required.blank? || required.all?(&:blank?)
 
-      permitted = searchable_roles(strict, session: session).any? do |p|
+      permitted = searchable_roles(strict: strict, session: session).any? do |p|
         p.in?(required.map(&:to_sym))
       end
 
@@ -65,7 +65,7 @@ class User
 
   private
 
-    def searchable_roles(strict = false, session: nil)
+    def searchable_roles(strict: false, session: nil)
       return session_roles(strict, session) if session.present?
 
       lookup_roles(strict)

@@ -27,7 +27,7 @@ class ParsedMarkdown < String
 private
 
   def center_html(classes = '')
-    "<div class='center #{classes}'>" + yield + '</div>'
+    "<div class='center #{classes}'>#{yield}</div>"
   end
 
   def static_link(id, title: nil)

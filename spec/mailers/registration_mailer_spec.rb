@@ -12,7 +12,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
 
   context 'with user' do
     describe 'registered' do
-      let(:mail) { RegistrationMailer.registered(ed_user_reg) }
+      let(:mail) { described_class.registered(ed_user_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -32,7 +32,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'registered (event)' do
-      let(:mail) { RegistrationMailer.registered(event_user_reg) }
+      let(:mail) { described_class.registered(event_user_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -52,7 +52,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'cancelled' do
-      let(:mail) { RegistrationMailer.cancelled(ed_user_reg) }
+      let(:mail) { described_class.cancelled(ed_user_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -71,7 +71,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'confirm' do
-      let(:mail) { RegistrationMailer.confirm(ed_user_reg) }
+      let(:mail) { described_class.confirm(ed_user_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -91,7 +91,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'confirm (event)' do
-      let(:mail) { RegistrationMailer.confirm(event_user_reg) }
+      let(:mail) { described_class.confirm(event_user_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -111,7 +111,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'paid' do
-      let(:mail) { RegistrationMailer.paid(event_user_reg) }
+      let(:mail) { described_class.paid(event_user_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -127,7 +127,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'request_schedule' do
-      let(:mail) { RegistrationMailer.request_schedule(ed_user_reg.event.event_type) }
+      let(:mail) { described_class.request_schedule(ed_user_reg.event.event_type) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -147,7 +147,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
 
   context 'with email' do
     describe 'registered' do
-      let(:mail) { RegistrationMailer.registered(ed_email_reg) }
+      let(:mail) { described_class.registered(ed_email_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -167,7 +167,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'cancelled' do
-      let(:mail) { RegistrationMailer.cancelled(ed_email_reg) }
+      let(:mail) { described_class.cancelled(ed_email_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -186,7 +186,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'confirm' do
-      let(:mail) { RegistrationMailer.confirm(ed_email_reg) }
+      let(:mail) { described_class.confirm(ed_email_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -206,7 +206,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
     end
 
     describe 'remind' do
-      let(:mail) { RegistrationMailer.remind(ed_email_reg) }
+      let(:mail) { described_class.remind(ed_email_reg) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(

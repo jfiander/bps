@@ -22,8 +22,8 @@ gem 'sass-rails',          '~> 5.0'
 gem 'uglifier',            '~> 4.1'
 
 # Model Behavior
-gem 'paper_trail',         '~> 9.2.0'
 gem 'paperclip',           '~> 5.3.0'
+gem 'paper_trail',         '~> 9.2.0'
 gem 'paranoia',            '~> 2.4.1'
 
 # APIs and External Services
@@ -91,7 +91,7 @@ group :development, :test do
   gem 'simplecov',                '~> 0.15.1'
 
   # Rubocop
-  gem 'rubocop',                  '~> 0.59'
+  gem 'rubocop',                  '~> 0.90'
   gem 'rubocop-rspec',            '~> 1.30'
 
   gem 'brakeman',                 '~> 4.3'

@@ -37,11 +37,11 @@ RSpec.describe SlackNotification, type: :lib do
       title: 'Test Notification', fallback: 'This is a test notification'
     }
 
-    @hash_notification = SlackNotification.new(
+    @hash_notification = described_class.new(
       base_notification_details.merge(fields: { 'One' => 'one', 'Two' => 'two', 'Three' => 'three' })
     )
 
-    @array_notification = SlackNotification.new(
+    @array_notification = described_class.new(
       base_notification_details.merge(
         fields: [
           { 'title' => 'One', 'value' => 'one', 'short' => true },
@@ -51,11 +51,11 @@ RSpec.describe SlackNotification, type: :lib do
       )
     )
 
-    @string_notification = SlackNotification.new(
+    @string_notification = described_class.new(
       base_notification_details.merge(fields: 'Just one field')
     )
 
-    @live_notification = SlackNotification.new(
+    @live_notification = described_class.new(
       base_notification_details.merge(fields: 'Just one field', channel: :test)
     )
     @live_notification.dryrun = false
@@ -75,7 +75,7 @@ RSpec.describe SlackNotification, type: :lib do
 
   it 'rejects invalid types of fields' do
     expect do
-      SlackNotification.new(
+      described_class.new(
         type: :info, title: 'Test Notification',
         fallback: 'This is a test notification',
         fields: Set.new, channel: 'test',
@@ -88,7 +88,7 @@ RSpec.describe SlackNotification, type: :lib do
 
   it 'rejects invalid types of notifications' do
     expect do
-      SlackNotification.new(
+      described_class.new(
         type: :not_valid, title: 'Test Notification',
         fallback: 'This is a test notification',
         fields: 'String', channel: 'test',
@@ -101,7 +101,7 @@ RSpec.describe SlackNotification, type: :lib do
 
   it 'rejects unlinked channels' do
     expect do
-      SlackNotification.new(
+      described_class.new(
         channel: 'not-valid',
         type: :info, title: 'Test Notification',
         fallback: 'This is a test notification',

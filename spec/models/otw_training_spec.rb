@@ -10,7 +10,7 @@ RSpec.describe OTWTraining, type: :model do
     FactoryBot.create(:otw_training, boc_level: 'Inland Navigator', name: '2')
     FactoryBot.create(:otw_training, boc_level: 'Coastal Navigator', name: '1')
 
-    expect(OTWTraining.all.ordered.map { |o| [o.boc_level, o.name] }).to eql(
+    expect(described_class.all.ordered.map { |o| [o.boc_level, o.name] }).to eql(
       [
         ['Inland Navigator', '2'],
         ['Coastal Navigator', '1'],

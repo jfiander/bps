@@ -23,9 +23,9 @@ module BpsPdf
 
   private
 
-    def completion_row(row)
+    def completion_row(row, &block)
       y = 370 - (ROW_HEIGHT * (row - 1))
-      bounding_box([0, y], width: 510, height: ROW_HEIGHT) { yield }
+      bounding_box([0, y], width: 510, height: ROW_HEIGHT, &block)
     end
 
     def completion_box(column, label, date = nil, color: 'FFFFCC')

@@ -54,11 +54,9 @@ private
   end
 
   def find_distro_id
-    distro_id = cloud_front.list_distributions.distribution_list.items.select do |distro|
+    cloud_front.list_distributions.distribution_list.items.select do |distro|
       distro.aliases.items.first == "#{subdomain}.bpsd9.org"
     end.first&.id
-
-    distro_id
   end
 
   def subdomain

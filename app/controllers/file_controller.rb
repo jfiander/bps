@@ -63,9 +63,10 @@ private
   end
 
   def create_file(type)
-    if type == :file
+    case type
+    when :file
       MarkdownFile.create(file_params)
-    elsif type == :header
+    when :header
       HeaderImage.create(header_params)
     end
   end

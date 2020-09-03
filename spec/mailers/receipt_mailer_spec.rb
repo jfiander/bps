@@ -36,7 +36,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       describe 'mail' do
-        let(:mail) { ReceiptMailer.receipt(payment(reg), ensure_transaction(reg)) }
+        let(:mail) { described_class.receipt(payment(reg), ensure_transaction(reg)) }
 
         it 'renders the headers' do
           expect(mail).to contain_mail_headers(
@@ -63,7 +63,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       describe 'mail' do
-        let(:mail) { ReceiptMailer.receipt(payment(app), ensure_transaction(app)) }
+        let(:mail) { described_class.receipt(payment(app), ensure_transaction(app)) }
 
         it 'renders the headers' do
           expect(mail).to contain_mail_headers(
@@ -93,7 +93,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
       end
 
       describe 'mail' do
-        let(:mail) { ReceiptMailer.receipt(payment(user), ensure_transaction(user)) }
+        let(:mail) { described_class.receipt(payment(user), ensure_transaction(user)) }
 
         it 'renders the headers' do
           expect(mail).to contain_mail_headers(
@@ -118,7 +118,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
   describe 'paid' do
     describe 'registration' do
-      let(:mail) { ReceiptMailer.paid(payment(reg)) }
+      let(:mail) { described_class.paid(payment(reg)) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -140,7 +140,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'member application' do
-      let(:mail) { ReceiptMailer.paid(payment(app)) }
+      let(:mail) { described_class.paid(payment(app)) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -159,7 +159,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'dues' do
-      let(:mail) { ReceiptMailer.paid(payment(user)) }
+      let(:mail) { described_class.paid(payment(user)) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -178,7 +178,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'generic payment' do
-      let(:mail) { ReceiptMailer.paid(payment(generic)) }
+      let(:mail) { described_class.paid(payment(generic)) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(

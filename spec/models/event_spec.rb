@@ -18,29 +18,29 @@ RSpec.describe Event, type: :model, slow: true do
       course_type = FactoryBot.create(:event_type, event_category: 'public')
       seminar = FactoryBot.create(:event, event_type: seminar_type)
       FactoryBot.create(:event, event_type: course_type)
-      expect(Event.for_category('seminar').to_a).to eql([seminar])
+      expect(described_class.for_category('seminar').to_a).to eql([seminar])
     end
 
     event_it 'filters by current' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
       FactoryBot.create_list(:event, 2, event_type: event_type)
       FactoryBot.create(:event, event_type: event_type, expires_at: Time.zone.now)
-      expect(Event.current('seminar').to_a).to eql(Event.first(2))
+      expect(described_class.current('seminar').to_a).to eql(described_class.first(2))
     end
 
     event_it 'filters by expired' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
       FactoryBot.create_list(:event, 2, event_type: event_type)
       FactoryBot.create(:event, event_type: event_type, expires_at: Time.zone.now)
-      expect(Event.expired('seminar').to_a).to eql([Event.last])
+      expect(described_class.expired('seminar').to_a).to eql([described_class.last])
     end
 
     event_it 'filters with registrations' do
       FactoryBot.create_list(:event, 2)
       user = FactoryBot.create(:user)
-      event = Event.last
+      event = described_class.last
       FactoryBot.create(:registration, event: event, user: user)
-      expect(Event.with_registrations.to_a).to eql([event])
+      expect(described_class.with_registrations.to_a).to eql([event])
     end
   end
 
@@ -220,7 +220,7 @@ RSpec.describe Event, type: :model, slow: true do
           end
 
           event_it 'clears conference data correctly' do
-            event.conference!(false)
+            event.conference!(state: false)
 
             expect(event.online).to be(false)
             expect(event.conference_id).to be(nil)

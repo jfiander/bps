@@ -11,66 +11,66 @@ RSpec.describe EventsHelper, type: :helper do
       @seminar = FactoryBot.create(:event_type, event_category: 'seminar')
       @meeting = FactoryBot.create(:event_type, event_category: 'meeting')
       @catalog_course = FactoryBot.create(:event, show_in_catalog: true)
-      EventsHelper.preload_events
+      described_class.preload_events
     end
 
     describe 'courses' do
       before do
-        @events = EventsHelper.get_events('course')
+        @events = described_class.get_events('course')
         @course = FactoryBot.create(:event)
       end
 
       it 'returns the event_type' do
         @course = FactoryBot.create(:event, event_type: @ag)
-        expect(EventsHelper.event_type(@course)).to eql(@ag)
+        expect(described_class.event_type(@course)).to eql(@ag)
       end
 
       it 'returns the prereq' do
         @course = FactoryBot.create(:event, prereq: @elective)
-        expect(EventsHelper.event_prereq(@course)).to eql(@elective)
+        expect(described_class.event_prereq(@course)).to eql(@elective)
       end
 
       it 'returns the instructors' do
         @course = FactoryBot.create(:event, :with_instructor)
-        expect(EventsHelper.event_instructors(@course)).to eql(@course.instructors.to_a)
+        expect(described_class.event_instructors(@course)).to eql(@course.instructors.to_a)
       end
 
       it 'returns the topics' do
         @course = FactoryBot.create(:event, :with_topics)
-        expect(EventsHelper.course_topics(@course)).to eql(@course.course_topics.to_a)
+        expect(described_class.course_topics(@course)).to eql(@course.course_topics.to_a)
       end
 
       it 'returns the includes' do
         @course = FactoryBot.create(:event, :with_includes)
-        expect(EventsHelper.course_includes(@course)).to eql(@course.course_includes.to_a)
+        expect(described_class.course_includes(@course)).to eql(@course.course_includes.to_a)
       end
     end
 
     describe 'seminars' do
       before do
-        EventsHelper.get_events(:seminar)
+        described_class.get_events(:seminar)
       end
 
       it 'returns the event_type' do
         @sem = FactoryBot.create(:event, event_type: @seminar)
-        expect(EventsHelper.event_type(@sem)).to eql(@seminar)
+        expect(described_class.event_type(@sem)).to eql(@seminar)
       end
     end
 
     describe 'events' do
       before do
-        EventsHelper.get_events(:event)
+        described_class.get_events(:event)
       end
 
       it 'returns the event_type' do
         @meet = FactoryBot.create(:event, event_type: @meeting)
-        expect(EventsHelper.event_type(@meet)).to eql(@meeting)
+        expect(described_class.event_type(@meet)).to eql(@meeting)
       end
     end
 
     describe 'catalog' do
       it 'returns only the catalog events' do
-        expect(EventsHelper.catalog_list).to eql('public' => [@catalog_course])
+        expect(described_class.catalog_list).to eql('public' => [@catalog_course])
       end
     end
 

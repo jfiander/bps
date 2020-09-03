@@ -16,14 +16,11 @@ class NominationsMailer < ApplicationMailer
 private
 
   def to_list
-    case @target
-    when 'SEO'
-      ['seo@bpsd9.org']
-    when 'Commander'
-      ['commander@bpsd9.org']
-    when 'Executive Committee'
-      ['excom@bpsd9.org']
-    end
+    {
+      'SEO' => ['seo@bpsd9.org'],
+      'Commander' => ['commander@bpsd9.org'],
+      'Executive Committee' => ['excom@bpsd9.org']
+    }[@target]
   end
 
   def slack_notification
