@@ -92,7 +92,6 @@ group :development, :test do
 
   # Rubocop
   gem 'rubocop',                  '~> 0.59'
-  gem 'rubocop-performance',      '~> 1.3.0'
   gem 'rubocop-rspec',            '~> 1.30'
 
   gem 'brakeman',                 '~> 4.3'

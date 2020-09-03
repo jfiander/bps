@@ -3,7 +3,6 @@
 #     - config/rails.yml
 require:
   - rubocop-rspec
-  - rubocop-performance
 AllCops:
   TargetRubyVersion: 2.5
   Exclude:
@@ -62,9 +61,6 @@ Naming/MemoizedInstanceVariableName:
 Naming/UncommunicativeMethodParamName:
   Enabled: false
 
-Rails/InverseOf:
-  Enabled: true
-
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
@@ -87,5 +83,3 @@ Security/JSONLoad:
 Security/YAMLLoad:
   Enabled: true
 
-Performance/Count:
-  SafeMode: false
