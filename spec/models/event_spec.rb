@@ -146,6 +146,26 @@ RSpec.describe Event, type: :model, slow: true do
         end
       end
 
+      describe 'recurrence' do
+        event_it 'sets the correct pattern' do
+          event_type = FactoryBot.create(:event_type, event_category: 'seminar')
+          event = FactoryBot.create(:event, event_type: event_type, sessions: 2, all_day: false)
+          expect(event.send(:recurrence)).to eq(['RRULE:FREQ=WEEKLY;COUNT=2'])
+        end
+
+        event_it 'returns nil for all_day events' do
+          event_type = FactoryBot.create(:event_type, event_category: 'seminar')
+          event = FactoryBot.create(:event, event_type: event_type, sessions: 2, all_day: true)
+          expect(event.send(:recurrence)).to be_nil
+        end
+
+        event_it 'returns nil for individual events' do
+          event_type = FactoryBot.create(:event_type, event_category: 'seminar')
+          event = FactoryBot.create(:event, event_type: event_type, sessions: 1, all_day: false)
+          expect(event.send(:recurrence)).to be_nil
+        end
+      end
+
       describe 'calendar event not found silent error' do
         before do
           allow(event).to(receive(:calendar).and_raise(Google::Apis::ClientError, 'notFound: Not Found'))
