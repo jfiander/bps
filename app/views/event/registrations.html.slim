@@ -1,6 +1,6 @@
 h1 = "Current #{event_type_param.titleize} Registrations"
 
-= render('application/navigation/education', active: {courses: (event_type_param == 'course'), seminars: (event_type_param == 'seminar')} if event_type_param.in? %w[course seminar])
+= render('application/navigation/education', active: {courses: (event_type_param == 'course'), seminars: (event_type_param == 'seminar')}) if event_type_param.in? %w[course seminar]
 
 h2 Current
 - if @current.count.positive?
