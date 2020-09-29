@@ -11,7 +11,7 @@
         )
       - elsif @event.registerable?
         = event_action_link( \
-          @event, register_path(event_type_param, @event.id), method: :put, remote: true, icon: 'calendar-check', \
+          @event, register_path(@event.id), method: :put, remote: true, icon: 'calendar-check', \
           text: 'Register', css: 'no-float', id: "event_#{@event.id}", expired: false, \
           if: @event.allow_member_registrations \
         )
