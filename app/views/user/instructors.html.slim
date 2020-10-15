@@ -8,8 +8,8 @@ h1 Current Instructors
     ' for
     = select_tag :key, options_for_select(@keys, @highlight), required: true
 
-= switch_box(nil, :only, 'lightblue-darkblue', 'all eligible', value: @only)
-  
+  = switch_box(nil, :only, 'lightblue-darkblue', 'all eligible', value: @only)
+
 hr
 
 - yes = FA::Icon.p('check', css: 'birmingham-blue')
