@@ -9,7 +9,7 @@ module ViewHelper
     when :svg
       URI.parse(static_bucket.link("flags/SVG/#{rank}.svg")).open.read.html_safe
     when :png
-      image_tag static_bucket.link("flags/PNG/#{rank}.thumb.png")
+      image_tag(static_bucket.link("flags/PNG/#{rank}.thumb.png"), alt: rank)
     end
   end
 
