@@ -21,6 +21,7 @@ module MarkdownHelper
     generate_markdown_div
     parse_markdown_div
     parse_external_links if ENV['MARK_EXTERNAL_LINKS'] == 'enabled'
+    remove_empty_table_headers
     @markdown_div
   end
 
@@ -112,5 +113,9 @@ private
       '\1' \
       "<sup>#{@ext}</sup></a>"
     )
+  end
+
+  def remove_empty_table_headers
+    @markdown_div = @markdown_div.gsub(%r{<thead>\n<tr>\n(<th></th>\n)+</tr>\n</thead>}, '')
   end
 end
