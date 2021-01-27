@@ -57,6 +57,8 @@ Rails.application.routes.draw do
   get     '/flags/national', to: 'flags#national'
   get     '/tridents',       to: 'flags#tridents'
   get     '/intersections',  to: 'flags#intersections'
+  get     '/complete',       to: 'public#complete'
+  get     '/cancelled',      to: 'public#cancelled'
 
   ### Pre-loaded pages
   get     '/ranks',            to: 'members#ranks'
