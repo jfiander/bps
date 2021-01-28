@@ -46,6 +46,7 @@ Lint/UselessAssignment:
 
 Metrics/MethodLength:
   Enabled: true
+  Max: 15
 Metrics/ClassLength:
   Enabled: true
   Max: 125
