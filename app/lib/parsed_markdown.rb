@@ -3,7 +3,8 @@
 # Custom string class for parsing markdown helpers
 class ParsedMarkdown < String
   PARSERS ||= %i[
-    comments center big reg list email burgee education meeting excom activity image link fal fa
+    comments center big reg list email burgee education meeting excom donate
+    activity image link fal fa
   ].freeze
 
   include ParsedMarkdown::Parsers
@@ -16,6 +17,7 @@ class ParsedMarkdown < String
     @education_menu = options[:education]
     @next_meeting = options[:next_meeting]
     @next_excom = options[:next_excom]
+    @donate = options[:donate]
     @activity = options[:activity]
   end
 

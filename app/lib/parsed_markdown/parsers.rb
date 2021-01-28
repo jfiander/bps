@@ -53,6 +53,10 @@ class ParsedMarkdown
       gsubs!(%r{<p>%excom</p>}, @next_excom)
     end
 
+    def parse_donate
+      gsubs!(%r{<p>%donate</p>}, @donate)
+    end
+
     def parse_activity
       gsubs!(%r{<p>%activity</p>}, '')
       self << @activity if activity_feed?

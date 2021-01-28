@@ -66,6 +66,10 @@ private
     markdown&.match?(/%excom/) ? view_context.render('members/next_excom') : ''
   end
 
+  def donate(markdown)
+    markdown&.match?(/%donate/) ? view_context.render('public/donate') : ''
+  end
+
   def activity_feed(markdown)
     @activity_feed = Event.activity_feed.first(ENV['ACTIVITY_FEED_LENGTH'].to_i)
     markdown&.match?(/%activity/) ? view_context.render('public/activity') : ''
@@ -101,6 +105,7 @@ private
       education: education_menu(@page_markdown),
       next_meeting: next_meeting(@page_markdown),
       next_excom: next_excom_meeting(@page_markdown),
+      donate: donate(@page_markdown),
       activity: activity_feed(@page_markdown)
     ).parse
   end
