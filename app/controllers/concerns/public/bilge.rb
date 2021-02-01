@@ -6,6 +6,13 @@ module Public
       @public_ids = BilgeFile.last_18.map(&:id)
       @issues = BilgeFile.issues
       load_announcements
+
+      respond_to do |format|
+        format.html
+        format.json do
+          render(json: { issues: json_bilges, announcements: json_announcements })
+        end
+      end
     end
 
     def bilge
@@ -52,6 +59,30 @@ module Public
         1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',
         's' => 'Sum', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec'
       }
+    end
+
+    def json_bilges
+      @bilges.each_with_object({}) do |bilge, hash|
+        hash[bilge.year] ||= {}
+        hash[bilge.year][BilgeFile.issues[bilge.month]] = {
+          content_type: bilge.file_content_type,
+          file_size: bilge.file_file_size,
+          updated_at: bilge.file_updated_at,
+          link: bilge.link
+        }
+      end
+    end
+
+    def json_announcements
+      @announcements.each_with_object([]) do |announcement, array|
+        array << {
+          title: announcement.title,
+          content_type: announcement.file_content_type,
+          file_size: announcement.file_file_size,
+          updated_at: announcement.file_updated_at,
+          link: announcement.link
+        }
+      end
     end
   end
 end
