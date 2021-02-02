@@ -100,9 +100,9 @@ private
     signed
   end
 
-  def signed_link(key, time = nil)
-    time ||= Time.now + 1.hour
-    cf_signer.signed_url(cf_link(key), expires: time)
+  def signed_link(key, expires_at = nil)
+    expires_at ||= Time.now + 1.hour
+    cf_signer.signed_url(cf_link(key), expires: expires_at)
   end
 
   def cf_signer

@@ -16,7 +16,7 @@ module Admin
       params.permit(:r, :t)
     end
 
-    def time
+    def expires_at
       @t = clean_params[:t].present? ? clean_params[:t].to_i : 1.week
       Time.now + @t
     end
@@ -31,7 +31,7 @@ module Admin
     end
 
     def seo_link(key)
-      BpsS3.new(:seo).link(key, time: time)
+      BpsS3.new(:seo).link(key, expires_at: expires_at)
     end
   end
 end
