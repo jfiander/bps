@@ -4,7 +4,7 @@
 class BpsS3
   attr_reader :bucket
 
-  def initialize(bucket = nil)
+  def initialize(bucket)
     @environment = ENV['ASSET_ENVIRONMENT'].to_sym
     @bucket = bucket.to_sym
     prepare_bucket
