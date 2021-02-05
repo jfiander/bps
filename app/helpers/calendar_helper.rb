@@ -23,7 +23,7 @@ private
 
   def calendars
     calendars_src.map do |src, color|
-      "src=bpsd9.org_#{src}%40group.calendar.google.com&color=%23#{color}"
+      "src=#{src}%40group.calendar.google.com&color=%23#{color}"
     end.join('&')
   end
 
