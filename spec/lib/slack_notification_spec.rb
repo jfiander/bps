@@ -13,7 +13,7 @@ RSpec.describe SlackNotification, type: :lib do
         { 'title' => 'Three', 'value' => 'three', 'short' => true }
       ],
       'color' => '#99CEFF',
-      'footer' => 'test'
+      'footer' => 'development'
     }
   end
 
