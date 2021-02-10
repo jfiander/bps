@@ -41,7 +41,7 @@ class MembersController < ApplicationController
   end
 
   def vse
-    @users = User.alphabetized.includes(:course_completions).select do |u|
+    @users = User.alphabetized.unlocked.includes(:course_completions).select do |u|
       u.course_completions.any? { |c| c.course_key == 'VSC_01' }
     end
   end
