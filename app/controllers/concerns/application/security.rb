@@ -53,7 +53,7 @@ module Application
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(
-        :account_update, keys: %i[profile_photo rank first_name last_name]
+        :account_update, keys: %i[profile_photo rank first_name last_name jumpstart]
       )
     end
 
