@@ -19,6 +19,10 @@ class OTWTrainingsController < ApplicationController
     @otw_requests = OTWTrainingUser.all
   end
 
+  def available
+    @users = User.alphabetized.unlocked.where.not(jumpstart: nil)
+  end
+
   def new
     @otw_training = OTWTraining.new
   end

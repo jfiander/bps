@@ -40,6 +40,12 @@ class MembersController < ApplicationController
     @users = User.unlocked.include_positions.alphabetized.with_any_name
   end
 
+  def vse
+    @users = User.alphabetized.includes(:course_completions).select do |u|
+      u.course_completions.any? { |c| c.course_key == 'VSC_01' }
+    end
+  end
+
 private
 
   def static_page_params

@@ -39,6 +39,14 @@ h1 Edit Profile
           = resource.unconfirmed_email
         br.clear
 
+    .profile-section#jumpstart
+      .center Please describe what kinds of boat, if any, you would be comfortable showing someone how to use.
+      .center We may contact you about this, but there is no obligation from entering this information.
+
+      .left = f.label :jumpstart
+      .right = f.text_field :jumpstart
+      br.clear
+
     = link_to "Change password", "#", id: "show-change-password"
     .profile-section#change-password
       .center.red Please type your new password in both of boxes, to ensure you've typed it correctly.

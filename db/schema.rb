@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_05_185223) do
+ActiveRecord::Schema.define(version: 2021_02_10_013052) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -582,11 +582,13 @@ ActiveRecord::Schema.define(version: 2020_05_05_185223) do
     t.string "call_sign"
     t.datetime "cpr_aed_expires_at"
     t.boolean "permalinks", default: false
+    t.text "jumpstart"
     t.index ["certificate"], name: "index_users_on_certificate"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
+    t.index ["jumpstart"], name: "index_users_on_jumpstart"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
