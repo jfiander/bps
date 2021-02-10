@@ -35,6 +35,9 @@ h1 = @user.full_name
             ul.roles.red
               - (@user.permitted_roles - @user.granted_roles).each do |p|
                 = content_tag(:li, p)
+  .table-row
+    .table-cell.table-header JumpStart Boat Types
+    .table-cell = @user.jumpstart
 
 - if current_user.id == @user.id
   hr
