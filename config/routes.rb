@@ -191,6 +191,10 @@ Rails.application.routes.draw do
   get     '/jumpstart', to: 'otw_trainings#public'
   post    '/jumpstart', to: 'otw_trainings#public_request'
 
+  # Members Avaialble for On-the-Water Training
+  get     '/jumpstart/available', to: 'otw_trainings#available'
+  get     '/vsc/available',       to: 'members#vse'
+
   # Course Completions
   get     '/completions',     to: 'completions#list'
   get     '/completions/ytd', to: 'completions#ytd'
