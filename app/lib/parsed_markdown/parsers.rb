@@ -94,11 +94,21 @@ class ParsedMarkdown
     end
 
     def parse_fa_with_class
-      match_replace(%r{%fa/([^/:]+):([^/]*)/}) { |match| FA::Icon.p(match[1], css: match[2]) }
+      match_replace(%r{%fa([srltdbk])?/([^/:]+):([^/]*)/}) do |match|
+        FA::Icon.p(match[2], css: match[3], style: fa_style(match[1]))
+      end
     end
 
     def parse_fa_bare
-      match_replace(%r{%fa/([^/]+)/}) { |match| FA::Icon.p(match[1]) }
+      match_replace(%r{%fa([srltdbk])?/([^/]+)/}) do |match|
+        FA::Icon.p(match[2], style: fa_style(match[1]))
+      end
+    end
+
+    def fa_style(match)
+      return :solid unless match
+
+      FA::Base::STYLES.invert[match]
     end
   end
 
