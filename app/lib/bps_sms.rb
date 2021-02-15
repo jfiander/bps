@@ -29,6 +29,12 @@ class BpsSMS
     })
   end
 
+  # Only call this with the user's permission
+  def opt_in!(number)
+    client.opt_in_phone_number({
+      phone_number: number
+    })
+  end
 private
 
   def client
