@@ -9,7 +9,7 @@ class BpsSMS
   # Allow the public API to be called directly on the class
   class << self
     %w[
-      publish broadcast opt_in! create_topic
+      publish broadcast opt_in! create_topic delete_topic
       subscribe confirm_subscription unsubscribe
     ].each do |method|
       define_method(method) { |*args| new.send(method, *args) }
@@ -53,6 +53,12 @@ class BpsSMS
       attributes: {
         'DisplayName' => display_name || name
       }
+    })
+  end
+
+  def delete_topic(topic_arn)
+    client.delete_topic({
+      topic_arn: topic_arn
     })
   end
 
