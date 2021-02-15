@@ -71,8 +71,9 @@ class ParsedMarkdown
       match_replace(%r{%file/(\d+)/([^/]*?)/}) { |match| file_link(match[1], title: match[2]) }
     end
 
-    def parse_fal
-      layer_regexp = %r{%fal/[^/]*/}
+    # Custom key for "FA-Multiple" - layered icons
+    def parse_fam
+      layer_regexp = %r{%fam/[^/]*/}
       return self unless match?(layer_regexp)
 
       while match?(layer_regexp)
@@ -84,7 +85,7 @@ class ParsedMarkdown
 
     def scan_layer_icons(original)
       original.scan(%r{([^/:;]+)(?::([^/:;]+))?}).map do |(icon, css)|
-        { name: icon, options: { css: css } } unless icon == '%fal'
+        { name: icon, options: { css: css } } unless icon == '%fam'
       end.compact
     end
 
