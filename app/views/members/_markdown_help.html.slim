@@ -291,17 +291,85 @@
       span.bold.red
         | /
 
-    h3 Layered Icons
-    p You can also specify layered icons, specified from bottom up, with optional CSS classes as well.
+    h3 Style Shortcuts
+    p You can use the style class as the initial key for invoking an icon.
+    p.i The fixed-width style is not available using this method.
+    .table
+      .table-row.bold.center
+        .table-cell Key
+        .table-cell Style
+        .table-cell Result
+      .table-row.center
+        .table-cell
+          span.bold.red %fas/
+          | users
+          span.bold.red
+            | /
+        .table-cell solid
+        .table-cell = FA::Icon.p('users', style: :solid)
+      .table-row.center
+        .table-cell
+          span.bold.red %far/
+          | users
+          span.bold.red
+            | /
+        .table-cell hollow
+        .table-cell = FA::Icon.p('users', style: :regular)
+      .table-row.center
+        .table-cell
+          span.bold.red %fal/
+          | users
+          span.bold.red
+            | /
+        .table-cell thin
+        .table-cell = FA::Icon.p('users', style: :light)
+      .table-row.center
+        .table-cell
+          span.bold.red %fad/
+          | users
+          span.bold.red
+            | /
+        .table-cell duotone
+        .table-cell = FA::Icon.p('users', style: :duotone)
+
+    h3 Custom Icons
+    p There are also some custom icons available within this system. These may look better when scaled up.
+    .table
+      .table-row.bold.center
+        .table-cell Key
+        .table-cell Result
+      .table-row.center
+        .table-cell
+          span.bold.red %fak/
+          | usps-cdr
+          span.bold.red
+            | :
+          | fa-4x
+          span.bold.red
+            | /
+        .table-cell = FA::Icon.p('usps-cdr', style: :kit_upload, fa: '4x')
+      .table-row.center
+        .table-cell
+          span.bold.red %fak/
+          | seahorse
+          span.bold.red
+            | :
+          | birmingham-blue fa-4x
+          span.bold.red
+            | /
+        .table-cell = FA::Icon.p('seahorse', style: :kit_upload, css: 'birmingham-blue', fa: '4x')
+
+    h3 Multiple Layered Icons
+    p You can also specify layered icons, specified from bottom up, with each also supporting optional CSS classes.
     p
-      span.bold.red %fal/
-      | icon-name
-      span.bold.red
-        | ;
+      span.bold.red %fam/
       | icon-name
       span.bold.red
         | :
       | css
+      span.bold.red
+        | ;
+      | icon-name
       span.bold.red
         | /
 
