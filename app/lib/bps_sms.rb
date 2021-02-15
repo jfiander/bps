@@ -10,6 +10,10 @@ class BpsSMS
     new.publish(number, message, type: type)
   end
 
+  def self.broadcast(topic_arn, message)
+    new.broadcast(topic_arn, message)
+  end
+
   # Send a message
   #
   # One of these destination options is required:
@@ -22,10 +26,15 @@ class BpsSMS
     client.publish({
       phone_number: number,
       message: message,
-      message_attributes: {
-        'AWS.MM.SMS.OriginationNumber' => origination_number,
-        'AWS.SNS.SMS.SMSType' => sms_type(type)
-      }
+      message_attributes: message_attributes(type)
+    })
+  end
+
+  def broadcast(topic_arn, message)
+    client.publish({
+      topic_arn: topic_arn,
+      message: message,
+      message_attributes: message_attributes(:promotional)
     })
   end
 
@@ -35,6 +44,42 @@ class BpsSMS
       phone_number: number
     })
   end
+
+  def create_topic(name, display_name = nil)
+    warn "SMS display name: #{display_name[0..9]}" if display_name&.length > 10
+
+    client.create_topic({
+      name: name,
+      attributes: {
+        'DisplayName' => display_name || name
+      }
+    })
+  end
+
+  def subscribe(topic_arn, number)
+    client.subscribe({
+      topic_arn: topic_arn,
+      protocol: 'sms',
+      endpoint: number,
+      return_subscription_arn: true
+    })
+  end
+
+  # Only required for HTTP/S or Email subscriptions
+  def confirm_subscription(topic_arn, token)
+    client.confirm_subscription({
+      topic_arn: topic_arn,
+      token: token,
+      authenticate_on_unsubscribe: 'true'
+    })
+  end
+
+  def unsubscribe(subscription_arn)
+    client.unsubscribe({
+      subscription_arn: subscription_arn
+    })
+  end
+
 private
 
   def client
@@ -51,6 +96,13 @@ private
     client.check_if_phone_number_is_opted_out({
       phone_number: number
     }).is_opted_out
+  end
+
+  def message_attributes(type)
+    {
+      'AWS.MM.SMS.OriginationNumber' => origination_number,
+      'AWS.SNS.SMS.SMSType' => sms_type(type)
+    }
   end
 
   def origination_number
