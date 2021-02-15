@@ -6,12 +6,14 @@
 class BpsSMS
   ALLOWED_TYPES = %i[promotional transactional].freeze
 
-  def self.publish(number, message, type: :promotional)
-    new.publish(number, message, type: type)
-  end
-
-  def self.broadcast(topic_arn, message)
-    new.broadcast(topic_arn, message)
+  # Allow the public API to be called directly on the class
+  class << self
+    %w[
+      publish broadcast opt_in! create_topic
+      subscribe confirm_subscription unsubscribe
+    ].each do |method|
+      define_method(method) { |*args| new.send(method, *args) }
+    end
   end
 
   # Send a message
