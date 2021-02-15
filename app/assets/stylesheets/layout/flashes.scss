@@ -7,7 +7,6 @@ div#flashes {
   }
 
   div#success {
-    @include fa-prefix("\f058");
     color: $birmingham-blue;
     background-color: lighten($birmingham-blue, 38%);
     border-top: thin solid $birmingham-blue;
@@ -15,7 +14,6 @@ div#flashes {
   }
 
   div#notice {
-    @include fa-prefix("\f05a");
     color: lighten($old-glory-blue, 20%);
     background-color: lighten($old-glory-blue, 70%);
     border-top: thin solid lighten($old-glory-blue, 40%);
@@ -23,7 +21,6 @@ div#flashes {
   }
 
   div#alert {
-    @include fa-prefix("\f06a");
     margin-bottom: 0;
     font-weight: bold;
     color: $old-glory-red;
