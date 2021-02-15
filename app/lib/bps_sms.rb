@@ -19,7 +19,6 @@ class BpsSMS
       phone_number: number,
       message: message,
       message_attributes: {
-        'String' => string(message),
         'AWS.MM.SMS.OriginationNumber' => origination_number,
         'AWS.SNS.SMS.SMSType' => sms_type(type)
       }
@@ -42,13 +41,6 @@ private
     client.check_if_phone_number_is_opted_out({
       phone_number: number
     }).is_opted_out
-  end
-
-  def string(message)
-    {
-      data_type: 'String',
-      string_value: message
-    }
   end
 
   def origination_number
