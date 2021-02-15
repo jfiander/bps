@@ -48,8 +48,6 @@ class BpsSMS
   end
 
   def create_topic(name, display_name = nil)
-    warn "SMS display name: #{display_name[0..9]}" if display_name&.length > 10
-
     client.create_topic({
       name: name,
       attributes: {
