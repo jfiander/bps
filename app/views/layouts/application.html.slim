@@ -24,6 +24,7 @@ html lang='en'
         h3 Admin
         - menu = []
         - admin_menu_groups.each do |heading, menu_id|
+          - next if menu_id == 'sidenav-current' && !admin_current?
           - button_class = { 'Admin'  => 'admin', 'Current Page' => '' }[heading] || 'members'
           - menu << link_to('#', id: "show-#{menu_id}", class: "show-sub-menu #{button_class}") { content_tag(:li, heading) }
           div.sub-menu id=(menu_id)
