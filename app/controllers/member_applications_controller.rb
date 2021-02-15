@@ -6,6 +6,7 @@ class MemberApplicationsController < ApplicationController
   secure!(:excom, only: %i[review approve])
 
   before_action :load_payment, only: :applied
+  before_action :process_application, only: :apply
 
   def new
     @member_application = MemberApplication.new
@@ -17,7 +18,7 @@ class MemberApplicationsController < ApplicationController
   end
 
   def apply
-    if process_application
+    if @member_application.persisted?
       confirm_applied_path = applied_path(
         token: @member_application.payment.token
       )
@@ -93,9 +94,7 @@ private
   def process_application
     MemberApplication.transaction do
       create_application
-      return true
     end
-    false
   rescue ActiveRecord::RecordInvalid => e
     failed_application(e)
   end
@@ -114,7 +113,6 @@ private
   def failed_application(e)
     flash.now[:error] = e.message.gsub('Member applicants base ', '')
                          .gsub('Validation failed: ', '')
-    raise ActiveRecord::Rollback
   end
 
   def applicants
