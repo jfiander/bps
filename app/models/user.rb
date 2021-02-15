@@ -102,6 +102,15 @@ class User < ApplicationRecord
     Registration.find_or_create_by(user: self, event: event)
   end
 
+  def register_with_sms_for(event)
+    register_for(event).tap do |reg|
+      if phone_c.present?
+        arn = BpsSMS.subscribe(event.topic_arn, phone_c).subscription_arn
+        reg.update(subscription_arn: arn) # Allows user to cancel subscription
+      end
+    end
+  end
+
   def excom?
     BridgeOffice.find_by(user_id: id).present? ||
       StandingCommitteeOffice.find_by(committee_name: :executive, user_id: id).present?

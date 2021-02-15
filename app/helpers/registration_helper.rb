@@ -25,6 +25,16 @@ module RegistrationHelper
     ) { FA::Icon.p('minus-square', style: :duotone) }
   end
 
+  def subscribe_reg_link(reg)
+    return unless reg&.user&.phone_c&.present?
+
+    if reg.subscription_arn.present?
+      unsubscribe_link(reg.id)
+    else
+      subscribe_link(reg.id)
+    end
+  end
+
 private
 
   def paid_icon
@@ -35,5 +45,25 @@ private
       ],
       title: 'Paid – Thank you!'
     )
+  end
+
+  def subscribe_link(id)
+    ActionController::Base.helpers.link_to(
+      Rails.application.routes.url_helpers.subscribe_path(id: id),
+      remote: true, method: :post, class: 'gray', id: "subscription_#{id}",
+      title: 'Receive SMS notifications'
+    ) do
+      FA::Icon.p('bell', style: :duotone, fa: 'fw')
+    end
+  end
+
+  def unsubscribe_link(id)
+    ActionController::Base.helpers.link_to(
+      Rails.application.routes.url_helpers.unsubscribe_path(id: id),
+      remote: true, method: :post, class: 'green', id: "subscription_#{id}",
+      title: 'Cancel SMS notifications'
+    ) do
+      FA::Icon.p('bell-on', style: :duotone, fa: 'fw')
+    end
   end
 end

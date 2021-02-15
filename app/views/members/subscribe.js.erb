@@ -1,0 +1,19 @@
+<%= render 'application/update_flashes' %>
+
+<%- unless flash[:alert].present? %>
+  <% if @registration.subscription_arn.present? %>
+    <% unsubscribe_link = unsubscribe_path(id: @registration.id) %>
+    <% unsubscribe_icon = FA::Icon.p('bell-on', style: :duotone, fa: 'fw') %>
+    $("#subscription_<%= @registration.id %>")
+      .attr("href", "<%= unsubscribe_link %>")
+      .removeClass('gray').addClass('green').attr("title", "Cancel SMS notifications")
+      .html("<%= unsubscribe_icon %>");
+  <% else %>
+    <% subscribe_link = subscribe_path(id: @registration.id) %>
+    <% subscribe_icon = FA::Icon.p('bell', style: :duotone, fa: 'fw') %>
+    $("#subscription_<%= @registration.id %>")
+      .attr("href", "<%= subscribe_link %>")
+      .removeClass('green').addClass('gray').attr("title", "Receive SMS notifications")
+      .html("<%= subscribe_icon %>");
+  <% end %>
+<%- end %>

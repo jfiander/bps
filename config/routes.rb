@@ -118,11 +118,15 @@ Rails.application.routes.draw do
   post    '/minutes',              to: 'members#upload_minutes', as: 'upload_minutes'
   get     '/minutes/:year/:month', to: 'members#find_minutes',   as: 'get_minutes'
   get     '/excom/:year/:month',   to: 'members#find_minutes',   as: 'get_minutes_excom', defaults: { excom: 'true' }
+  get     '/minutes(/:year)', to: redirect('/minutes')
 
   # Registration
   put     '/register',        to: 'public#register', as: 'public_register'
   post    '/register',        to: 'public#register', as: 'long_register'
-  get     '/minutes(/:year)', to: redirect('/minutes')
+
+  # Subscriptions
+  post    '/subscribe/:id',   to: 'members#subscribe',   as: 'subscribe'
+  post    '/unsubscribe/:id', to: 'members#unsubscribe', as: 'unsubscribe'
 
   # User invitation
   put     '/invite/:id', to: 'user#invite', as: 'invite'

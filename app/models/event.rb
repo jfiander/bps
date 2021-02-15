@@ -44,9 +44,10 @@ class Event < ApplicationRecord
   )
 
   before_save { self.slug = slug.downcase.tr('/', '_') if slug.present? }
-  before_destroy { unbook! }
+  before_destroy :unbook!
 
-  after_create { book! }
+  after_create :book!
+  after_create :create_sns_topic!
   after_commit :refresh_calendar!, if: :calendar_details_updated?
 
   def self.include_details
@@ -126,6 +127,11 @@ class Event < ApplicationRecord
 
   def repeat_description
     repeat_pattern == 'DAILY' ? 'over consecutive days' : 'every week'
+  end
+
+  def create_sns_topic!
+    arn = BpsSMS.create_topic("event_#{id}", date_title).topic_arn
+    update(topic_arn: arn)
   end
 
 private

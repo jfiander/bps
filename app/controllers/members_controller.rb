@@ -8,6 +8,7 @@ class MembersController < ApplicationController
   include Members::Markdown
   include Members::Dues
   include Members::Nominations
+  include Members::Subscriptions
   include BraintreeHelper
 
   secure!
@@ -27,6 +28,8 @@ class MembersController < ApplicationController
   before_action :block_duplicate_payments, only: :applied, if: :already_paid?
   before_action :redirect_if_no_roster, only: :roster
   before_action :reject_invalid_file, only: :upload_roster
+
+  before_action :require_registered_user, only: %i[subscribe_registration unsubscribe_registration]
 
   title!('Minutes', only: :minutes)
   title!('ExCom Minutes', only: :excom_minutes)

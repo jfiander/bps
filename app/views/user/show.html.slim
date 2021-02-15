@@ -38,6 +38,13 @@ h1 = @user.full_name
   .table-row
     .table-cell.table-header JumpStart Boat Types
     .table-cell = @user.jumpstart
+  .table-row
+    .table-cell.table-header Default to Send SMS Reminders
+    .table-cell
+      - if @user.subscribe_on_register
+        = FA::Icon.p('check-circle', css: 'green') + 'Yes'
+      - else
+        = FA::Icon.p('times-circle', css: 'gray') + 'No'
 
 - if current_user.id == @user.id
   hr
@@ -56,6 +63,7 @@ h1 = @user.full_name
       .table-row
         .table-cell.name = r.event.display_title
         .table-cell = pay_reg_link(r)
+        .table-cell = subscribe_reg_link(r)
         .table-cell = r.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
         .table-cell = cancel_reg_link(r)
 

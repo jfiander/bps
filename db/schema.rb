@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_10_013052) do
+ActiveRecord::Schema.define(version: 2021_02_16_023212) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(version: 2021_02_10_013052) do
     t.integer "length_m"
     t.boolean "activity_feed"
     t.boolean "online", default: false
+    t.string "topic_arn"
     t.index ["event_type_id"], name: "index_events_on_event_type_id"
   end
 
@@ -454,6 +455,7 @@ ActiveRecord::Schema.define(version: 2021_02_10_013052) do
     t.string "override_comment"
     t.integer "user_id"
     t.string "email"
+    t.string "subscription_arn"
     t.index ["event_id"], name: "index_registrations_on_event_id"
   end
 
@@ -583,6 +585,7 @@ ActiveRecord::Schema.define(version: 2021_02_10_013052) do
     t.datetime "cpr_aed_expires_at"
     t.boolean "permalinks", default: false
     t.text "jumpstart"
+    t.boolean "subscribe_on_register", default: false, null: false
     t.index ["certificate"], name: "index_users_on_certificate"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true

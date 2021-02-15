@@ -47,6 +47,14 @@ h1 Edit Profile
       .right = f.text_area :jumpstart, class: 'large'
       br.clear
 
+    .profile-section
+      .center If you would like to automatically receive SMS notifications for events you register for, flip this switch.
+      .center.i You must have a cell phone number on file.
+
+      .left = f.label :subscribe_on_register, 'Default to Send SMS Reminders when Registering'
+      .right = switch_box(f, :subscribe_on_register, 'red-lightblue', 'no yes')
+      br.clear
+
     = link_to "Change password", "#", id: "show-change-password"
     .profile-section#change-password
       .center.red Please type your new password in both of boxes, to ensure you've typed it correctly.
