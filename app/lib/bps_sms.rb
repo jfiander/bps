@@ -6,6 +6,10 @@
 class BpsSMS
   ALLOWED_TYPES = %i[promotional transactional].freeze
 
+  def self.publish(number, message, type: :promotional)
+    new.publish(number, message, type: type)
+  end
+
   # Send a message
   #
   # One of these destination options is required:
