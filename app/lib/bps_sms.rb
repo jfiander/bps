@@ -14,6 +14,15 @@ class BpsSMS
     ].each do |method|
       define_method(method) { |*args| new.send(method, *args) }
     end
+
+    # Ensure US/Canada country code
+    def validate_number(number)
+      pattern = /^(?:\+?1[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/
+
+      raise "Invalid phone number to subscribe: #{number}" unless (match = number&.match(pattern))
+
+      "+1#{match[1]}#{match[2]}#{match[3]}"
+    end
   end
 
   # Send a message
@@ -26,7 +35,7 @@ class BpsSMS
     return if opted_out?(number)
 
     client.publish({
-      phone_number: number,
+      phone_number: BpsSMS.validate_number(number),
       message: message,
       message_attributes: message_attributes(type)
     })
@@ -66,7 +75,7 @@ class BpsSMS
     client.subscribe({
       topic_arn: topic_arn,
       protocol: 'sms',
-      endpoint: number,
+      endpoint: BpsSMS.validate_number(number),
       return_subscription_arn: true
     })
   end

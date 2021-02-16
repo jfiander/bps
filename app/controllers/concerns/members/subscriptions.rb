@@ -33,19 +33,7 @@ module Members
     end
 
     def new_subscription(registration)
-      BpsSMS.subscribe(
-        registration.event.topic_arn,
-        validated_number(registration.user.phone_c)
-      ).subscription_arn
-    end
-
-    # Ensure US/Canada country code
-    def validated_number(number)
-      pattern = /^(?:\+?1[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/
-
-      raise "Invalid phone number to subscribe: #{number}" unless (match = number&.match(pattern))
-
-      "+1#{match[1]}#{match[2]}#{match[3]}"
+      BpsSMS.subscribe(registration.event.topic_arn, registration.user.phone_c).subscription_arn
     end
   end
 end
