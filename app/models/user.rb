@@ -99,14 +99,12 @@ class User < ApplicationRecord
   end
 
   def register_for(event)
-    Registration.find_or_create_by(user: self, event: event)
-  end
-
-  def register_with_sms_for(event)
-    register_for(event).tap do |reg|
-      if phone_c.present?
+    Registration.find_or_create_by(user: self, event: event).tap do |reg|
+      if phone_c.present? && subscribe_on_register
+        # :nocov:
         arn = BpsSMS.subscribe(event.topic_arn, phone_c).subscription_arn
         reg.update(subscription_arn: arn) # Allows user to cancel subscription
+        # :nocov:
       end
     end
   end
