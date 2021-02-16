@@ -44,9 +44,10 @@ module Concerns
 
       def reminder_message(event_type)
         <<~MSG
-          Quick reminder that you are registered for this upcoming #{event_type.display_title}.
+          Quick reminder that you are registered for this upcoming #{event_type.event_category}.
 
-          – ABC Birmingham
+          ABC Birmingham
+          abcBirmingham.org
         MSG
       end
     end
