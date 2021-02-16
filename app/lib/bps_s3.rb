@@ -10,8 +10,8 @@ class BpsS3
     prepare_bucket
   end
 
-  def link(key, signed: false, time: nil)
-    sign?(signed: signed) ? signed_link(key, time) : cf_link(key)
+  def link(key, signed: false, expires_at: nil)
+    sign?(signed: signed) ? signed_link(key, expires_at) : cf_link(key)
   end
 
   def list(prefix = '')
