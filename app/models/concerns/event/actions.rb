@@ -17,6 +17,8 @@ module Concerns
         return if reminded?
 
         registrations.each { |reg| RegistrationMailer.remind(reg).deliver }
+        BpsSMS.broadcast(topic_arn, reminder_message(event_type))
+
         update(reminded_at: Time.now)
       end
 
@@ -36,6 +38,16 @@ module Concerns
         end
 
         epc
+      end
+
+    private
+
+      def reminder_message(event_type)
+        <<~MSG
+          Quick reminder that you are registered for this upcoming #{event_type.display_title}.
+
+          – ABC Birmingham
+        MSG
       end
     end
   end
