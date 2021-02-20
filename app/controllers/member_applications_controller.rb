@@ -5,6 +5,8 @@ class MemberApplicationsController < ApplicationController
 
   secure!(:excom, only: %i[review approve])
 
+  title!('Become a Member!')
+
   before_action :load_payment, only: :applied
   before_action :process_application, only: :apply
 

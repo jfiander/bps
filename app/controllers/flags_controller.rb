@@ -3,6 +3,8 @@
 class FlagsController < ApplicationController
   before_action :bucket, only: %i[flags national]
 
+  title!('Flags')
+
   def flags
     @show_birmingham = true
     render(:flags, layout: 'application')

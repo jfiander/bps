@@ -37,6 +37,7 @@ class UserController < ApplicationController
   title!('Users', except: %i[show instructors])
   title!('User', only: :show)
   title!('Instructors', only: :instructors)
+  title!('Receipts', only: :receipts)
 
   def show
     @registrations = Registration.for_user(@user.id).current.reject { |r| r.event.blank? }

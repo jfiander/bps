@@ -7,6 +7,8 @@ class OTWTrainingsController < ApplicationController
   secure!(except: %i[public public_request])
   secure!(:otw, except: %i[public public_request user user_request])
 
+  title!('On-the-Water Training')
+
   before_action :load_all_trainings, only: %i[list user]
   before_action :boc_levels, only: %i[new create edit update]
   before_action :load_otw_training, only: %i[edit update destroy]
