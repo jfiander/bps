@@ -86,7 +86,7 @@ module BpsPdf
         def ed_award_image(award, x_pos)
           svg(
             ed_award_svg(ed_award_grade(award), (award == :EdPro)),
-            width: 450, at: [x_pos, cursor + 5]
+            width: 1350, at: [x_pos, cursor + 5]
           )
         end
 
