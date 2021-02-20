@@ -5,8 +5,10 @@ class FileController < ApplicationController
 
   secure!(:page)
 
-  title!('Files', only: %i[new create destroy])
-  title!('Headers', only: %i[new_header create_header destroy_header])
+  titles!(
+    { title: 'Files', only: %i[new create destroy] },
+    { title: 'Headers', only: %i[new_header create_header destroy_header] }
+  )
 
   def new
     @file = MarkdownFile.new

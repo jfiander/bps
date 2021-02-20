@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class FloatPlanController < ApplicationController
-  secure!
-  secure!(:float, only: %i[list refresh])
+  secure_all!(
+    MEMBERS: {},
+    float: { only: %i[list refresh] }
+  )
 
   title!('Float Plans')
 

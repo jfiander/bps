@@ -12,14 +12,14 @@ class UserController < ApplicationController
   include User::Instructors
   include User::Receipts
 
-  secure!(except: %i[add_registrants collect_payment])
-  secure!(:education, only: :instructors)
-  secure!(:admin, only: %i[assign_photo])
-  secure!(
-    :admin, strict: true, only: %i[receipts receipt override_cost paid_in_person refunded_payment]
+  secure_all!(
+    MEMBERS: { except: %i[add_registrants collect_payment] },
+    education: { only: :instructors },
+    admin: { only: %i[assign_photo] },
+    users: { except: %i[current show register cancel_registration instructors certificate] }
   )
   secure!(
-    :users, except: %i[current show register cancel_registration instructors certificate]
+    :admin, strict: true, only: %i[receipts receipt override_cost paid_in_person refunded_payment]
   )
 
   before_action :can_view_profile?, only: %i[show certificate]
@@ -34,9 +34,11 @@ class UserController < ApplicationController
     only: %i[permissions_index assign_bridge assign_committee]
   )
 
-  title!('Users', except: %i[show instructors])
-  title!('User', only: :show)
-  title!('Instructors', only: :instructors)
+  titles!(
+    { title: 'Users', except: %i[show instructors] },
+    { title: 'User', only: :show },
+    { title: 'Instructors', only: :instructors }
+  )
 
   def show
     @registrations = Registration.for_user(@user.id).current.reject { |r| r.event.blank? }

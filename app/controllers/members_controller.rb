@@ -11,13 +11,15 @@ class MembersController < ApplicationController
   include Members::Subscriptions
   include BraintreeHelper
 
-  secure!
-  secure!(:admin, only: :admin)
-  secure!(:newsletter, only: %i[upload_bilge upload_announcement remove_announcement])
-  secure!(:minutes, only: :upload_minutes)
-  secure!(:roster, only: %i[update_roster upload_roster])
-  secure!(:page, only: %i[edit_markdown update_markdown])
-  secure!(%i[users newsletter page minutes event education], only: %i[ranks])
+  secure_all!(
+    MEMBERS: {},
+    admin: { only: :admin },
+    newsletter: { only: %i[upload_bilge upload_announcement remove_announcement] },
+    minutes: { only: :upload_minutes },
+    roster: { only: %i[update_roster upload_roster] },
+    page: { only: %i[edit_markdown update_markdown] },
+    %i[users newsletter page minutes event education] => { only: :ranks }
+  )
 
   before_action :redirect_to_root, only: :dues, unless: :braintree_enabled?
   before_action :prepare_dues, only: :dues, if: :current_user_dues_due?
@@ -31,11 +33,13 @@ class MembersController < ApplicationController
 
   before_action :require_registered_user, only: %i[subscribe_registration unsubscribe_registration]
 
-  title!('Minutes', only: :minutes)
-  title!('ExCom Minutes', only: :excom_minutes)
-  title!('Edit Page', only: :edit_markdown)
-  title!('Member Ranks and Grades', only: :ranks)
-  title!('Automatic Permissions', only: :auto_permits)
+  titles!(
+    { title: 'Minutes', only: :minutes },
+    { title: 'ExCom Minutes', only: :excom_minutes },
+    { title: 'Edit Page', only: :edit_markdown },
+    { title: 'Member Ranks and Grades', only: :ranks },
+    { title: 'Automatic Permissions', only: :auto_permits }
+  )
 
   render_markdown_views
 

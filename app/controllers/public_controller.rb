@@ -12,9 +12,11 @@ class PublicController < ApplicationController
   before_action :find_registration,       only: %i[register]
   before_action :block_registration,      only: %i[register], if: :block_registration?
 
-  title!('The Bilge Chatter', only: :newsletter)
-  title!("Ship's Store", only: :store)
-  title!('Calendar', only: :calendar)
+  titles!(
+    { title: 'The Bilge Chatter', only: :newsletter },
+    { title: "Ship's Store", only: :store },
+    { title: 'Calendar', only: :calendar }
+  )
 
   render_markdown_views
 

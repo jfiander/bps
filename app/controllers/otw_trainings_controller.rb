@@ -4,8 +4,10 @@ class OTWTrainingsController < ApplicationController
   include OTWTrainings::Public
   include OTWTrainings::User
 
-  secure!(except: %i[public public_request])
-  secure!(:otw, except: %i[public public_request user user_request])
+  secure_all!(
+    MEMBERS: { except: %i[public public_request] },
+    otw: { except: %i[public public_request user user_request] }
+  )
 
   before_action :load_all_trainings, only: %i[list user]
   before_action :boc_levels, only: %i[new create edit update]
