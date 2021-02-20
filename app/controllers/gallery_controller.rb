@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class GalleryController < ApplicationController
-  secure!(except: %i[index show])
   secure!(:photos, except: %i[index show])
 
   title!('Photos')
