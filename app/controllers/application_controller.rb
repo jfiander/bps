@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   def self.titles!(*configs)
     configs.each do |config|
-      title!(only: config[:only], except: config[:except]) { page_title(config[:title]) }
+      title!(config[:title], only: config[:only], except: config[:except])
     end
   end
 
