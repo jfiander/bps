@@ -3,8 +3,6 @@
 class User
   module Receipts
     def receipts
-      page_title('Receipts')
-
       @payments = [
         Payment.where(parent_type: 'Registration').includes(parent: :user),
         Payment.where(parent_type: 'MemberApplication').includes(parent: :member_applicants),

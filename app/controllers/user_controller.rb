@@ -37,7 +37,8 @@ class UserController < ApplicationController
   titles!(
     { title: 'Users', except: %i[show instructors] },
     { title: 'User', only: :show },
-    { title: 'Instructors', only: :instructors }
+    { title: 'Instructors', only: :instructors },
+    { title: 'Receipts', only: :receipts }
   )
 
   def show

@@ -38,7 +38,8 @@ class MembersController < ApplicationController
     { title: 'ExCom Minutes', only: :excom_minutes },
     { title: 'Edit Page', only: :edit_markdown },
     { title: 'Member Ranks and Grades', only: :ranks },
-    { title: 'Automatic Permissions', only: :auto_permits }
+    { title: 'Automatic Permissions', only: :auto_permits },
+    { title: 'Vessel Examiners', only: :vse }
   )
 
   render_markdown_views
