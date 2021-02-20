@@ -38,6 +38,12 @@ class ApplicationController < ActionController::Base
     before_action(only: only, except: except) { page_title(title) }
   end
 
+  def self.titles!(*configs)
+    configs.each do |config|
+      title!(only: config[:only], except: config[:except]) { page_title(config[:title]) }
+    end
+  end
+
   # Overwritten by Events controllers
   def event_type_param
     nil

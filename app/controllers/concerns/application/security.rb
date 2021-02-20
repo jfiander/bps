@@ -9,6 +9,13 @@ module Application
 
         before_action(only: only, except: except) { require_permission(*roles, strict: strict) }
       end
+
+      def secure_all!(**config)
+        config.each do |roles, options|
+          roles = nil if roles == :MEMBERS
+          secure!(*roles, **options)
+        end
+      end
     end
 
     def self.included(klass)
