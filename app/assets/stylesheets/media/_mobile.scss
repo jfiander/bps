@@ -289,6 +289,55 @@
   div#otw-progress {
     font-size: 80%;
   }
+
+  div.events-unified-table {
+    width: 100%;
+    margin: 0 auto;
+
+    div.event-column-left {
+      width: auto !important;
+      margin: 0 !important;
+
+      div {
+        text-align: center !important;
+      }
+
+      div.event-display-title {
+        width: 100%;
+      }
+
+      div.event-main-details {
+        width: 100%;
+      }
+
+      div.event-location {
+        width: 100%;
+        margin-top: 2em;
+        min-height: auto !important;
+      }
+    }
+
+    div.event-column-right {
+      width: auto !important;
+    }
+
+    div.event-top-block {
+      max-height: 30em !important;
+    }
+
+    div.event-location {
+      margin-bottom: 1em;
+    }
+
+    div.event-costs {
+      text-align: center !important;
+      margin: 1em auto;
+    }
+
+    div.event-actions {
+      text-align: center !important;
+    }
+  }
 }
 
 @media all and (max-width: 400px) {

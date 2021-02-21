@@ -4,6 +4,21 @@
   }
 }
 
+@media all and (mzx-width: 1800px) {
+  div.events-unified-table {
+    width: 100%;
+
+    div.event-column-left {
+      width: auto;
+      min-width: 70%;
+    }
+
+    div.event-column-right {
+      width: auto;
+    }
+  }
+}
+
 @media all and (min-width: 1251px) {
   div#navigation {
     max-width: 11.4em;

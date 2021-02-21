@@ -2,6 +2,10 @@
   - all_events.keys.each do |course_type|
     - next if all_events[course_type].blank?
     .events-section-header = "#{course_type.to_s.titleize}"
-    = render_both_tables(all_events[course_type], long_form: long_form)
+    .events-unified-table
+      - all_events[course_type].each do |event|
+        = render('event/unified', event: event, long_form: long_form)
 - else
-  = render_both_tables(all_events, long_form: long_form)
+  .events-unified-table
+    - all_events.each do |event|
+      = render('event/unified', event: event, long_form: long_form)

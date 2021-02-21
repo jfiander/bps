@@ -32,7 +32,7 @@ p.red.italic Do not add event-specific information to any location.
       .table-cell.picture = image_tag(files_bucket.link(location[:picture].path(:thumb))) if location[:picture].present?
       .table-cell.actions.pending
         = link_to(edit_location_path(id: location[:id])) { FA::Icon.p('edit', style: :duotone) }
-        - if Event.current(:all).where(location_id: location[:id]).count.zero?
+        - if Event.current.where(location_id: location[:id]).count.zero?
           = link_to(remove_location_path(id: location[:id]), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this location?' }) { FA::Icon.p('minus-square', style: :duotone) }
         - else
           span.italic title="You cannot remove locations currently in use." In Use

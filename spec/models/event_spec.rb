@@ -25,14 +25,14 @@ RSpec.describe Event, type: :model, slow: true do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
       FactoryBot.create_list(:event, 2, event_type: event_type)
       FactoryBot.create(:event, event_type: event_type, expires_at: Time.zone.now)
-      expect(described_class.current('seminar').to_a).to eql(described_class.first(2))
+      expect(described_class.current.for_category('seminar').to_a).to eql(described_class.first(2))
     end
 
     event_it 'filters by expired' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
       FactoryBot.create_list(:event, 2, event_type: event_type)
       FactoryBot.create(:event, event_type: event_type, expires_at: Time.zone.now)
-      expect(described_class.expired('seminar').to_a).to eql([described_class.last])
+      expect(described_class.expired.for_category('seminar').to_a).to eql([described_class.last])
     end
 
     event_it 'filters with registrations' do
@@ -349,6 +349,14 @@ RSpec.describe Event, type: :model, slow: true do
       end
     end
 
+    describe 'with_instructor' do
+      event_it 'works with instructors' do
+        event = FactoryBot.create(:event, :with_instructor)
+
+        expect(event).to be_valid
+      end
+    end
+
     describe 'validations' do
       describe 'costs' do
         event_it 'stores only the cost' do
@@ -414,21 +422,7 @@ RSpec.describe Event, type: :model, slow: true do
     end
 
     describe 'formatting' do
-      describe 'costs' do
-        event_it 'returns nil if there are no costs' do
-          expect(event.formatted_cost).to be_nil
-        end
-
-        event_it 'correctly formats a single cost' do
-          event.update(cost: 10)
-          expect(event.formatted_cost).to eql('<b>Cost:</b>&nbsp;$10')
-        end
-
-        event_it 'correctly formats both costs' do
-          event.update(cost: 10, member_cost: 5)
-          expect(event.formatted_cost).to eql('<b>Members:</b>&nbsp;$5, <b>Non-members:</b>&nbsp;$10')
-        end
-
+      describe 'length' do
         event_it 'correctly formats a nil length' do
           event.update(length_h: nil)
           expect(event.formatted_length).to be_nil

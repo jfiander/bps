@@ -21,7 +21,11 @@ class Event < ApplicationRecord
 
   has_many :registrations
 
-  scope :displayable, -> { where(archived_at: nil) }
+  default_scope { order(:start_at) }
+
+  scope :displayable, -> { where(archived_at: nil).where('start_at > ?', Event.auto_archive) }
+  scope :current, -> { where('expires_at > ?', Time.now) }
+  scope :expired, -> { where('expires_at <= ?', Time.now) }
 
   has_attached_file(
     :flyer, paperclip_defaults(:files).merge(path: 'event_flyers/:id/:filename')
@@ -50,26 +54,40 @@ class Event < ApplicationRecord
   after_create :create_sns_topic!
   after_commit :refresh_calendar!, if: :calendar_details_updated?
 
+  def self.auto_archive
+    Date.today.last_year.beginning_of_year
+  end
+
   def self.include_details
-    includes(:event_type, :course_topics, :course_includes, :prereq)
+    includes(
+      :event_type, :course_topics, :course_includes, :prereq, :location,
+      instructors: User.position_associations, registrations: :payment
+    )
   end
 
   def self.for_category(category)
-    category = %w[public advanced_grade elective] if category.to_s == 'course'
+    category = case category.to_s
+               when 'course'
+                 %w[public advanced_grade elective]
+               when 'event'
+                 'meeting'
+               else
+                category
+               end
     includes(:event_type).where(event_types: { event_category: category })
   end
 
-  def self.current(category)
-    include_details.for_category(category).where('expires_at > ?', Time.now)
-  end
+  # def self.current(category)
+  #   include_details.for_category(category).where('expires_at > ?', Time.now)
+  # end
 
-  def self.all_expired(category)
-    include_details.for_category(category).where('expires_at <= ?', Time.now)
-  end
+  # def self.all_expired(category)
+  #   include_details.for_category(category).where('expires_at <= ?', Time.now)
+  # end
 
-  def self.expired(category)
-    all_expired(category).where('start_at >= ?', Date.today.last_year.beginning_of_year)
-  end
+  # def self.expired(category)
+  #   all_expired(category).where('start_at >= ?', Date.today.last_year.beginning_of_year)
+  # end
 
   def self.activity_feed
     include_details.order(:start_at).where('expires_at > ? AND activity_feed = ?', Time.now, true)
@@ -137,6 +155,8 @@ class Event < ApplicationRecord
 private
 
   def validate_dates
+    return unless start_at.present?
+
     self.cutoff_at = start_at if cutoff_at.blank? || out_of_date(:cutoff_at)
     self.expires_at = start_at + 1.week if expires_at.blank? || out_of_date(:expires_at)
   end

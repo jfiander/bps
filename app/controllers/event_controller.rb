@@ -17,7 +17,7 @@ class EventController < ApplicationController
   before_action :find_event, only: %i[show copy edit update expire archive remind book unbook]
   before_action :prepare_form, only: %i[new copy edit]
   before_action :check_for_blank, only: %i[create update]
-  before_action :preload_events, only: %i[schedule catalog registrations show]
+  # before_action :preload_events, only: %i[schedule catalog registrations show]
   before_action :location_names, only: %i[new copy edit]
   before_action :set_create_path, only: %i[new copy]
   before_action :load_registrations, only: %i[schedule], if: :user_signed_in?
@@ -25,7 +25,8 @@ class EventController < ApplicationController
   before_action :block_multiple_reminders, only: %i[remind]
 
   def schedule
-    @events = get_events(event_type_param, :current)
+    @events = current
+    @locations ||= Location.searchable
 
     @current_user_permitted_event_type = current_user&.permitted?(
       event_type_param, session: session
@@ -34,7 +35,7 @@ class EventController < ApplicationController
     return unless @current_user_permitted_event_type
 
     @registered_users = Registration.includes(:user).all.group_by(&:event_id)
-    @expired_events = get_events(event_type_param, :expired)
+    @expired_events = expired
   end
 
   def catalog
@@ -45,8 +46,8 @@ class EventController < ApplicationController
   end
 
   def registrations
-    @current = Event.order(:start_at).current(event_type_param).with_registrations
-    @expired = Event.order(:start_at).expired(event_type_param).with_registrations
+    @current = current.with_registrations
+    @expired = expired.with_registrations
   end
 
   def show
@@ -142,9 +143,9 @@ class EventController < ApplicationController
 private
 
   def load_catalog
-    return catalog_list[event_type_param] unless event_type_param == 'course'
+    return catalog_list unless event_type_param == 'course'
 
-    catalog_list.slice('public', 'advanced_grade', 'elective').symbolize_keys
+    catalog_list.group_by { |e| e.event_type.event_category }.symbolize_keys
   end
 
   def event_not_found?
@@ -160,5 +161,17 @@ private
 
     flash[:alert] = "Reminders already sent for that #{event_type_param}."
     redirect_to send("#{event_type_param}s_path")
+  end
+
+  def current
+    @current ||= Event.include_details.displayable.current.for_category(event_type_param)
+  end
+
+  def expired
+    @expired ||= Event.include_details.displayable.expired.for_category(event_type_param)
+  end
+
+  def catalog_list
+    Event.where(show_in_catalog: true)
   end
 end

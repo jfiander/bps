@@ -1,0 +1,11 @@
+- if event.member_cost.present?
+  span.cost
+    b Members:
+    span $#{event.member_cost}
+- if event.usps_cost.present?
+  span.cost
+    b USPS Members:
+    span $#{event.usps_cost}
+span.cost
+  b = event.member_cost ? 'Non-members:' : 'Cost:'
+  span $#{event.cost}

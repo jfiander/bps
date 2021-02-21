@@ -1,10 +1,9 @@
-.events-full-width
-  hr
+.events-full-width: hr
 .event-mobile-title
-  = event.display_title(event_type(event))
+  = event.display_title(event.event_type)
   - if event.summary.present?
     br
-    small = event_type(event).display_title
+    small = event.event_type.display_title
 - if !defined?(@event_catalog) && @current_user_permitted_event_type && event.show_in_catalog
   .event-mobile-contents.birmingham-blue
     = FA::Icon.p('star', style: :duotone)
@@ -68,30 +67,30 @@
       | Please contact us for your discounted rate.
   - if !defined?(@event_catalog) && event&.location&.price_comment&.present?
     p.red.italic = event.location.price_comment
-- if course_topics(event).present?
+- if event.course_topics.present?
   .event-mobile-contents.spaced
     b Topics include:
     ul
-      - course_topics(event).each do |t|
+      - event.course_topics.each do |t|
         li = t.text
-- if course_includes(event).present?
+- if event.course_includes.present?
   .event-mobile-contents.spaced
     b Materials include:
     ul
-      - course_includes(event).each do |i|
+      - event.course_includes.each do |i|
         li = i.text
 - if event.requirements.present?
   .event-mobile-contents.spaced
     b Student requirements:
     p = simple_format(event.requirements)
-- if event_instructors(event).present? && !defined?(@event_catalog)
+- if event.event_instructors.present? && !defined?(@event_catalog)
   .event-mobile-contents.spaced
-    b = "Instructor".pluralize(event_instructors(event).count) + ":"
-    p = simple_format(event_instructors(event).map(&:full_name).join("\n"))
-- if event_prereq(event).present?
+    b = "Instructor".pluralize(event.event_instructors.count) + ":"
+    p = simple_format(event.event_instructors.map { |i| i.user.full_name }.join("\n"))
+- if event.prereq.present?
   .event-mobile-contents.spaced.red
     b Prerequisite course:
-    p = event_prereq(event).title.titleize
+    p = event.prereq.title.titleize
 - if @current_user_permitted_event_type && !defined?(@event_catalog) && @registered_users[event.id].present?
   .event-mobile-contents.spaced
     b Registered Users:

@@ -8,7 +8,8 @@ module Events
   private
 
     def load_registrations
-      @registered = Registration.for_user(current_user).each_with_object({}) do |reg, hash|
+      @registered = Registration.includes(:payment).for_user(current_user)
+                                .each_with_object({}) do |reg, hash|
         hash[reg.event_id] = { id: reg.id, paid: reg.paid? ? true : reg&.payment&.token }
       end
     end
