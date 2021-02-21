@@ -400,7 +400,10 @@ RSpec.describe User, type: :model do
 
     it 'has a photo after attaching' do
       @user.assign_photo(local_path: @photo.path)
-      expect(@user.photo).to eql(described_class.buckets[:files].link(@user.profile_photo.s3_object(:medium).key))
+
+      expect(@user.photo).to match(
+        %r{https://files\.development\.bpsd9\.org/profile_photos/#{@user.id}/medium/test_image\.jpg\?}
+      )
     end
   end
 
