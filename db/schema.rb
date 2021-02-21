@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_023212) do
+ActiveRecord::Schema.define(version: 2021_02_21_181610) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.integer "cover_id"
+    t.index ["deleted_at"], name: "index_albums_on_deleted_at"
   end
 
   create_table "announcement_files", force: :cascade do |t|
@@ -29,6 +30,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_announcement_files_on_deleted_at"
   end
 
   create_table "award_recipients", force: :cascade do |t|
@@ -44,6 +46,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_award_recipients_on_deleted_at"
   end
 
   create_table "bilge_files", force: :cascade do |t|
@@ -56,6 +59,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_bilge_files_on_deleted_at"
   end
 
   create_table "bridge_offices", force: :cascade do |t|
@@ -64,8 +68,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["office"], name: "index_bridge_offices_on_office"
-    t.index ["user_id"], name: "index_bridge_offices_on_user_id"
+    t.index ["office", "deleted_at"], name: "index_bridge_offices_on_office"
+    t.index ["user_id", "deleted_at"], name: "index_bridge_offices_on_user_id"
   end
 
   create_table "committees", force: :cascade do |t|
@@ -75,9 +79,9 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["department"], name: "index_committees_on_department"
+    t.index ["department", "deleted_at"], name: "index_committees_on_department"
     t.index ["name"], name: "index_committees_on_name"
-    t.index ["user_id"], name: "index_committees_on_user_id"
+    t.index ["user_id", "deleted_at"], name: "index_committees_on_user_id"
   end
 
   create_table "course_completions", force: :cascade do |t|
@@ -87,7 +91,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["user_id"], name: "index_course_completions_on_user_id"
+    t.index ["user_id", "deleted_at"], name: "index_course_completions_on_user_id"
   end
 
   create_table "course_includes", force: :cascade do |t|
@@ -96,7 +100,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["course_id"], name: "index_course_includes_on_course_id"
+    t.index ["course_id", "deleted_at"], name: "index_course_includes_on_course_id"
   end
 
   create_table "course_topics", force: :cascade do |t|
@@ -105,7 +109,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["course_id"], name: "index_course_topics_on_course_id"
+    t.index ["course_id", "deleted_at"], name: "index_course_topics_on_course_id"
   end
 
   create_table "event_instructors", force: :cascade do |t|
@@ -114,8 +118,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["event_id"], name: "index_event_instructors_on_event_id"
-    t.index ["user_id"], name: "index_event_instructors_on_user_id"
+    t.index ["event_id", "deleted_at"], name: "index_event_instructors_on_event_id"
   end
 
   create_table "event_promo_codes", force: :cascade do |t|
@@ -124,8 +127,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_event_promo_codes_on_event_id"
-    t.index ["promo_code_id"], name: "index_event_promo_codes_on_promo_code_id"
+    t.index ["event_id", "deleted_at"], name: "index_event_promo_codes_on_event_id"
+    t.index ["promo_code_id", "deleted_at"], name: "index_event_promo_codes_on_code_id"
   end
 
   create_table "event_types", force: :cascade do |t|
@@ -136,6 +139,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "updated_at", null: false
     t.string "course_key"
     t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_event_types_on_deleted_at"
+    t.index ["event_category", "deleted_at"], name: "index_event_types_on_category"
   end
 
   create_table "events", force: :cascade do |t|
@@ -177,7 +182,9 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.boolean "activity_feed"
     t.boolean "online", default: false
     t.string "topic_arn"
-    t.index ["event_type_id"], name: "index_events_on_event_type_id"
+    t.index ["event_type_id", "deleted_at"], name: "index_events_on_event_type_id"
+    t.index ["slug", "deleted_at"], name: "index_events_on_slug"
+    t.index ["start_at", "expires_at", "archived_at", "deleted_at"], name: "index_events_on_dates"
   end
 
   create_table "float_plan_onboards", force: :cascade do |t|
@@ -189,6 +196,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["float_plan_id", "deleted_at"], name: "index_float_plan_onboards_on_float_plan_id"
   end
 
   create_table "float_plans", force: :cascade do |t|
@@ -257,6 +265,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.string "hin"
     t.string "deck_color"
     t.string "sail_color"
+    t.index ["user_id", "deleted_at"], name: "index_float_plans_on_user_id"
   end
 
   create_table "generic_payments", force: :cascade do |t|
@@ -267,6 +276,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_generic_payments_on_deleted_at"
   end
 
   create_table "header_images", force: :cascade do |t|
@@ -277,6 +287,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_header_images_on_deleted_at"
   end
 
   create_table "import_logs", force: :cascade do |t|
@@ -284,6 +295,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_import_logs_on_deleted_at"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -299,6 +311,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "updated_at", null: false
     t.text "price_comment"
     t.boolean "favorite"
+    t.index ["deleted_at"], name: "index_locations_on_deleted_at"
   end
 
   create_table "markdown_files", force: :cascade do |t|
@@ -309,6 +322,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_markdown_files_on_deleted_at"
   end
 
   create_table "member_applicants", force: :cascade do |t|
@@ -339,6 +353,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["member_application_id", "deleted_at"], name: "index_index_applicants_on_application_id"
   end
 
   create_table "member_applications", force: :cascade do |t|
@@ -347,6 +362,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "updated_at", null: false
     t.datetime "approved_at"
     t.integer "approver_id"
+    t.index ["approved_at", "deleted_at"], name: "index_member_applications_on_approved_at"
   end
 
   create_table "minutes_files", force: :cascade do |t|
@@ -360,6 +376,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["excom", "deleted_at"], name: "index_minutes_files_on_excom"
   end
 
   create_table "otw_training_users", force: :cascade do |t|
@@ -368,6 +385,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["otw_training_id", "deleted_at"], name: "index_otw_tu_on_training_id"
+    t.index ["user_id", "deleted_at"], name: "index_otw_tu_on_user_id"
   end
 
   create_table "otw_trainings", force: :cascade do |t|
@@ -378,6 +397,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "boc_level"
+    t.index ["deleted_at"], name: "index_otw_trainings_on_deleted_at"
   end
 
   create_table "past_commanders", force: :cascade do |t|
@@ -389,6 +409,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_past_commanders_on_deleted_at"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -407,9 +428,9 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.string "cost_type"
     t.boolean "refunded"
     t.integer "promo_code_id"
-    t.index ["parent_type", "parent_id"], name: "index_payments_on_parent_type_and_parent_id"
-    t.index ["token"], name: "index_payments_on_token"
-    t.index ["transaction_id"], name: "index_payments_on_transaction_id"
+    t.index ["parent_type", "parent_id", "deleted_at"], name: "index_payments_on_parent"
+    t.index ["token", "deleted_at"], name: "index_payments_on_token"
+    t.index ["transaction_id", "deleted_at"], name: "index_payments_on_transaction_id"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -421,7 +442,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.integer "photo_file_file_size"
     t.datetime "photo_file_updated_at"
     t.datetime "deleted_at"
-    t.index ["album_id"], name: "index_photos_on_album_id"
+    t.index ["album_id", "deleted_at"], name: "index_photos_on_album_id"
   end
 
   create_table "promo_codes", force: :cascade do |t|
@@ -433,7 +454,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["code"], name: "index_promo_codes_on_code"
+    t.index ["code", "deleted_at"], name: "index_promo_codes_on_code"
   end
 
   create_table "registration_promo_codes", force: :cascade do |t|
@@ -442,6 +463,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["promo_code_id", "deleted_at"], name: "index_registration_promo_codes_on_code_id"
+    t.index ["registration_id", "deleted_at"], name: "index_registration_promo_codes_on_registration_id"
   end
 
   create_table "registrations", force: :cascade do |t|
@@ -456,7 +479,9 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.integer "user_id"
     t.string "email"
     t.string "subscription_arn"
-    t.index ["event_id"], name: "index_registrations_on_event_id"
+    t.index ["email", "deleted_at"], name: "index_registrations_on_email"
+    t.index ["event_id", "deleted_at"], name: "index_registrations_on_event_id"
+    t.index ["user_id", "deleted_at"], name: "index_registrations_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -465,8 +490,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "updated_at", null: false
     t.integer "parent_id"
     t.datetime "deleted_at"
-    t.index ["name"], name: "index_roles_on_name"
-    t.index ["parent_id"], name: "index_roles_on_parent_id"
+    t.index ["name", "deleted_at"], name: "index_roles_on_name"
+    t.index ["parent_id", "deleted_at"], name: "index_roles_on_parent_id"
   end
 
   create_table "roster_archive_files", force: :cascade do |t|
@@ -478,6 +503,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "generated_at"
+    t.index ["deleted_at"], name: "index_roster_archive_files_on_deleted_at"
   end
 
   create_table "standing_committee_offices", force: :cascade do |t|
@@ -490,8 +516,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["committee_name"], name: "index_standing_committee_offices_on_committee_name"
-    t.index ["user_id"], name: "index_standing_committee_offices_on_user_id"
+    t.index ["committee_name", "deleted_at"], name: "index_standing_committee_offices_on_committee_name"
+    t.index ["user_id", "deleted_at"], name: "index_standing_committee_offices_on_user_id"
   end
 
   create_table "static_pages", force: :cascade do |t|
@@ -500,7 +526,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["name"], name: "index_static_pages_on_name"
+    t.index ["name", "deleted_at"], name: "index_static_pages_on_name"
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -509,9 +535,9 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["role_id"], name: "index_user_roles_on_role_id"
-    t.index ["user_id", "role_id"], name: "index_user_roles_on_user_id_and_role_id"
-    t.index ["user_id"], name: "index_user_roles_on_user_id"
+    t.index ["role_id", "deleted_at"], name: "index_user_roles_on_role_id"
+    t.index ["user_id", "deleted_at"], name: "index_user_roles_on_user_id"
+    t.index ["user_id", "role_id", "deleted_at"], name: "index_user_roles_on_user_id_and_role_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -586,13 +612,15 @@ ActiveRecord::Schema.define(version: 2021_02_16_023212) do
     t.boolean "permalinks", default: false
     t.text "jumpstart"
     t.boolean "subscribe_on_register", default: false, null: false
-    t.index ["certificate"], name: "index_users_on_certificate"
+    t.index ["certificate", "locked_at", "deleted_at"], name: "index_users_on_certificate"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
-    t.index ["jumpstart"], name: "index_users_on_jumpstart"
+    t.index ["jumpstart", "locked_at", "deleted_at"], name: "index_users_on_jumpstart"
+    t.index ["locked_at", "deleted_at"], name: "index_users_on_locked_at"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["simple_name", "locked_at", "deleted_at"], name: "index_users_on_simple_name"
   end
 
   create_table "versions", force: :cascade do |t|
