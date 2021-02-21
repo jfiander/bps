@@ -164,8 +164,14 @@
   }
 
   div#profile {
+    width: 100%;
+
     div.profile-left, div.profile-right {
       clear: both;
+    }
+
+    div.profile-photo img {
+      width: 85%;
     }
   }
 

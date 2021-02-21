@@ -3,10 +3,10 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  $('a#show-change-password').click (event) ->
+  $('div#show-change-password a').click (event) ->
     event.preventDefault()
     $('div#change-password').fadeIn(1000, "swing")
-    $('a#show-change-password').toggle()
+    $('div#show-change-password').toggle()
     return
   return
 

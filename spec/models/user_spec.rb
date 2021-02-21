@@ -41,6 +41,12 @@ RSpec.describe User, type: :model do
       user.validate
       expect(user.rank).to be_nil
     end
+
+    it 'rejects invalid phone_c' do
+      user = FactoryBot.build(:user, phone_c: 'not-a-number')
+      user.validate
+      expect(user).not_to be_valid
+    end
   end
 
   context 'with specified user' do

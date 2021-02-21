@@ -54,7 +54,10 @@ module Application
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(
         :account_update,
-        keys: %i[profile_photo rank first_name last_name jumpstart subscribe_on_register]
+        keys: %i[
+          profile_photo rank first_name last_name jumpstart subscribe_on_register
+          phone_h phone_c phone_w
+        ]
       )
     end
 

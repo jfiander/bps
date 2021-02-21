@@ -1,20 +1,10 @@
 // Profile
 div#profile {
-  width: 65%;
+  width: 80%;
   margin: 0 auto;
-
-  div.table-header {
-    text-align: right;
-    padding-right: 1em;
-  }
-
-  div.password-box {
-    border: thin solid $old-glory-red;
-  }
-
-  div.field {
-    margin-bottom: 1.5em;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 
   div.profile-photo {
     text-align: center;
@@ -27,17 +17,18 @@ div#profile {
     }
   }
 
-  img.flag {
-    width: 12em;
-  }
-
   div.insignia {
     text-align: center;
     vertical-align: middle;
+    margin: 0 auto;
 
     img {
       margin: 0.5em 0.25em;
-      max-width: 40vw;
+      max-width: 95%;
+    }
+
+    img.flag {
+      width: 12em;
     }
 
     div.long {
@@ -62,18 +53,47 @@ div#profile {
       }
     }
 
+    div#merit-marks img {
+      width: 0.5em; /* Unspecified width for accuracy. This prevents unintended wrapping. */
+    }
+
     img.pin {
       max-width: 8em;
       max-height: 5em;
     }
   }
+
+  div.table-header {
+    text-align: right;
+    padding-right: 1em;
+    width: 50%;
+  }
 }
 
-ul#profile-actions li {
-  padding: 0.5em 0;
+div.table-cell {
+  padding-top: 1em;
+  word-wrap: break-word;
 }
 
-#profile-registrations {
+ul.roles {
+  margin-top: 0;
+}
+
+div.password-box {
+  border: thin solid $old-glory-red;
+}
+
+div.field {
+  margin-bottom: 1.5em;
+}
+
+ul#profile-actions {
+  li {
+    padding: 0.5em 0;
+  }
+}
+
+div#profile-registrations {
   max-width: 85%;
 
   div.table-cell.name {
@@ -84,6 +104,11 @@ ul#profile-actions li {
   span.icon {
     display: inline-block;
   }
+}
+
+div.photo-editor {
+  margin-top: 1em;
+  padding-top: 0.5em;
 }
 
 // Users List

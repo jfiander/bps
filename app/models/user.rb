@@ -58,7 +58,7 @@ class User < ApplicationRecord
     update_last_mm
   end
 
-  validate :valid_rank, :valid_grade
+  validate :valid_rank, :valid_grade, :valid_phone_c
   validates_attachment_content_type :profile_photo, content_type: %r{\Aimage/}
   validates_attachment_file_name :profile_photo, matches: /(\.png|\.jpe?g)\z/i
   validates :certificate, uniqueness: true, allow_nil: true
@@ -162,5 +162,17 @@ private
 
     self.mm_cache = mm
     self.last_mm_year = Date.today
+  end
+
+  def valid_phone_c
+    return true if phone_c.blank?
+
+    begin
+      BpsSMS.validate_number(phone_c)
+    rescue RuntimeError => e
+      raise e unless e.message =~ /^Invalid phone number to subscribe/
+
+      errors.add(:base, 'Mobile phone must be a valid North American phone number')
+    end
   end
 end

@@ -1,53 +1,73 @@
 h1 = @user.full_name
 
-#profile.table
-  .table-row
-    .table-cell.profile-photo = image_tag(@user.photo)
-    .table-cell.insignia
-      .long
-        p = image_tag(static_bucket.link("flags/PNG/#{@rank_flag}.500.png"), class: 'flag') if @user.auto_rank.present?
-        p = image_tag(static_bucket.link("insignia/PNG/grades/tr/#{@insignia[:grade]}.png"), title: @insignia_title[:grade], class: @insignia[:grade]) if @insignia[:grade].present?
-        p = image_tag(static_bucket.link("insignia/PNG/membership/tr/#{@insignia[:membership]}.png"), title: @insignia_title[:membership]) if @insignia[:membership].present?
-      #merit-marks title=(@insignia_title[:mm])
-        - @user.mm&.times do
-          = image_tag(static_bucket.link('insignia/PNG/mm.png'))
-      p
-        = image_tag(static_bucket.link('insignia/CI/CI.350.png'), class: 'pin', title: 'Certified Instructor') if @user.valid_instructor?
-        = image_tag(static_bucket.link('insignia/VE/VE.350.png'), class: 'pin', title: 'Certified Vessel Examiner') if @user.vessel_examiner?
-  .table-row
-    .table-cell.table-header Certificate
-    .table-cell = @user.certificate || FA::Icon.p('question-circle', css: 'red', style: :duotone)
-  .table-row
-    .table-cell.table-header Email
-    .table-cell = @user.email
-  - if @user.permitted_roles.present?
+#profile
+  .profile-photo = image_tag(@user.photo)
+
+  .insignia
+    .long
+      p = image_tag(static_bucket.link("flags/PNG/#{@rank_flag}.500.png"), class: 'flag') if @user.auto_rank.present?
+      p = image_tag(static_bucket.link("insignia/PNG/grades/tr/#{@insignia[:grade]}.png"), title: @insignia_title[:grade], class: @insignia[:grade]) if @insignia[:grade].present?
+      p = image_tag(static_bucket.link("insignia/PNG/membership/tr/#{@insignia[:membership]}.png"), title: @insignia_title[:membership]) if @insignia[:membership].present?
+    #merit-marks title=(@insignia_title[:mm])
+      - @user.mm&.times do |i|
+        = image_tag(static_bucket.link('insignia/PNG/mm.png'))
+        - if (i + 1) % 20 == 0
+          br
+    p
+      = image_tag(static_bucket.link('insignia/CI/CI.350.png'), class: 'pin', title: 'Certified Instructor') if @user.valid_instructor?
+      = image_tag(static_bucket.link('insignia/VE/VE.350.png'), class: 'pin', title: 'Certified Vessel Examiner') if @user.vessel_examiner?
+
+  .table
     .table-row
-      .table-cell.table-header Permissions
+      .table-cell.table-header Certificate
+      .table-cell = @user.certificate || FA::Icon.p('question-circle', css: 'red', style: :duotone)
+    .table-row
+      .table-cell.table-header Email
+      .table-cell = @user.email
+    - if @user.phone_h.present?
+      .table-row
+        .table-cell.table-header Home phone
+        .table-cell = @user.phone_h
+    - if @user.phone_c.present?
+      .table-row
+        .table-cell.table-header Mobile phone
+        .table-cell = @user.phone_c
+    - if @user.phone_w.present?
+      .table-row
+        .table-cell.table-header Work phone
+        .table-cell = @user.phone_w
+    - if @user.permitted_roles.present?
+      .table-row
+        .table-cell.table-header Permissions
+        .table-cell
+          ul.roles
+            - @user.granted_roles.each do |g|
+              = content_tag(:li, g)
+          - if @user.granted_roles.present? && @user.permitted_roles.present?
+          .red
+            - if @user.permitted?(:admin)
+              | All
+            - else
+              ul.roles.red
+                - (@user.permitted_roles - @user.granted_roles).each do |p|
+                  = content_tag(:li, p)
+    .table-row
+      .table-cell.table-header JumpStart Boat Types
       .table-cell
-        ul.roles
-          - @user.granted_roles.each do |g|
-            = content_tag(:li, g)
-        - if @user.granted_roles.present? && @user.permitted_roles.present?
-        .red
-          - if @user.permitted?(:admin)
-            | All
-          - else
-            ul.roles.red
-              - (@user.permitted_roles - @user.granted_roles).each do |p|
-                = content_tag(:li, p)
-  .table-row
-    .table-cell.table-header JumpStart Boat Types
-    .table-cell = @user.jumpstart
-  .table-row
-    .table-cell.table-header Default to Send SMS Reminders
-    .table-cell
-      - if @user.subscribe_on_register
-        = FA::Icon.p('check-circle', css: 'green') + 'Yes'
-      - else
-        = FA::Icon.p('times-circle', css: 'gray') + 'No'
+        - if @user.jumpstart.present?
+          = @user.jumpstart
+        - else
+          = FA::Icon.p('do-not-enter', css: 'gray')
+          span.italic None specified
+    .table-row
+      .table-cell.table-header Default to Send SMS Reminders
+      .table-cell
+        - if @user.subscribe_on_register
+          = FA::Icon.p('check-circle', css: 'green') + 'Yes'
+        - else
+          = FA::Icon.p('times-circle', css: 'red') + 'No'
 
 - if current_user.id == @user.id
-  hr
   h2 Profile Actions
   ul#profile-actions.simple
     li = link_to(profile_edit_path) { FA::Icon.p('edit', style: :duotone) + 'Update your information' }
@@ -56,7 +76,6 @@ h1 = @user.full_name
     li = link_to(user_certificate_path(@user.id), target: :_blank, class: 'green') { FA::Icon.p('file-certificate', style: :duotone) + 'View Educational Certificate' }
 
 - if @registrations.present?
-  hr
   h2 Current Registrations
   #profile-registrations.table
     - @registrations.each do |r|
@@ -67,5 +86,5 @@ h1 = @user.full_name
         .table-cell = r.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
         .table-cell = cancel_reg_link(r)
 
-hr
-= editor('photo_editor', id: @user.id) if current_user&.permitted?(:admin, session: session) && current_user.id != @user.id
+- if current_user&.permitted?(:admin, session: session) && current_user.id != @user.id
+  .photo-editor = editor('photo_editor', id: @user.id)

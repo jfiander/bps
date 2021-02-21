@@ -1,8 +1,10 @@
 h1 Edit Profile
 
-.center When you're done, please scroll down and click "Update profile" to save your changes.
-
 - devise_error_messages!
+
+.center When you're done, please scroll down and click "Update profile" to save your changes.
+br.clear
+div.italic Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)}are required.
 
 = form_for(resource, as: resource_name, url: profile_edit_path(resource_name).sub(/\.[\w]*\z/, ''), html: { method: :put }, multipart: true) do |f|
   #login
@@ -21,17 +23,36 @@ h1 Edit Profile
       .right = f.text_field :rank
       br.clear
 
-      .left = f.label :first_name
-      .right = f.text_field :first_name
+      .left
+        = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
+        = f.label :first_name
+      .right = f.text_field :first_name, required: true
       br.clear
 
-      .left = f.label :last_name
-      .right = f.text_field :last_name
+      .left
+        = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
+        = f.label :last_name
+      .right = f.text_field :last_name, required: true
       br.clear
 
-      .left = f.label :email
-      .right = f.email_field :email
+      .left
+        = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
+        = f.label :email
+      .right = f.email_field :email, required: true
       br.clear
+
+      div.top-border
+        .left = f.label :phone_h, 'Home phone'
+        .right = f.text_field :phone_h
+        br.clear
+
+        .left = f.label :phone_c, 'Mobile phone'
+        .right = f.text_field :phone_c
+        br.clear
+
+        .left = f.label :phone_w, 'Work phone'
+        .right = f.text_field :phone_w
+        br.clear
 
       - if devise_mapping.confirmable? && resource.pending_reconfirmation?
         .center
@@ -39,23 +60,23 @@ h1 Edit Profile
           = resource.unconfirmed_email
         br.clear
 
-    .profile-section#jumpstart
-      .center Please describe what kinds of boat, if any, you would be comfortable showing someone how to use.
-      .center We may contact you about this, but there is no obligation from entering this information.
+    .profile-section#jumpstart.top-border
+      .center.instructions Please describe what kinds of boat you would be comfortable showing someone how to use.
+      .center.instructions We may contact you about this, but there is no obligation from entering this information.
 
       .left = f.label :jumpstart, 'Boat Types'
       .right = f.text_area :jumpstart, class: 'large'
       br.clear
 
-    .profile-section
-      .center If you would like to automatically receive SMS notifications for events you register for, flip this switch.
-      .center.i You must have a cell phone number on file.
+    .profile-section.top-border
+      .center.instructions Flip this switch to automatically receive SMS notifications for events you register for.
+      .center.instructions.information You must have a mobile phone number on file to receive messages.
 
       .left = f.label :subscribe_on_register, 'Default to Send SMS Reminders when Registering'
       .right = switch_box(f, :subscribe_on_register, 'red-lightblue', 'no yes')
       br.clear
 
-    = link_to "Change password", "#", id: "show-change-password"
+    div#show-change-password.top-border = link_to('Change password', '#')
     .profile-section#change-password
       .center.red Please type your new password in both of boxes, to ensure you've typed it correctly.
       br.clear
@@ -78,7 +99,9 @@ h1 Edit Profile
       small If you don't want to change your password, leave these boxes blank.
 
     .profile-section.confirm-password
-      .left = f.label :current_password, "Enter your current password to confirm changes"
+      .left
+        = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
+        = f.label :current_password, 'Enter your current password to confirm changes'
       .right = f.password_field :current_password, required: true
       br.clear
 
