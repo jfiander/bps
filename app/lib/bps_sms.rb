@@ -61,7 +61,11 @@ class BpsSMS
       name: name,
       attributes: {
         'DisplayName' => display_name || name
-      }
+      },
+      tags: [
+        { key: 'Environment', value: ENV['ASSET_ENVIRONMENT'] },
+        { key: 'CreatedAt', value: Time.now.to_s }
+      ]
     })
   end
 
