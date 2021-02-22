@@ -103,7 +103,7 @@ private
         'Event date' => slack_start_time,
         'Registrant name' => @registration&.user&.full_name,
         'Registrant email' => @registration&.user&.email || @registration&.email
-      }
+      }.reject { |_, v| v.nil? }
     ).notify!
   end
 
