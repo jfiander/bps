@@ -58,7 +58,7 @@ class BpsSMS
 
   def create_topic(name, display_name = nil)
     client.create_topic({
-      name: name,
+      name: "#{ENV['ASSET_ENVIRONMENT']}-#{name}",
       attributes: {
         'DisplayName' => display_name || name
       },
