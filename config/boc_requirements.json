@@ -207,7 +207,7 @@
 
       {
         "type": "Skill",
-        "name": "First AID",
+        "name": "First Aid",
         "options": [
           ["FAID"]
         ]
