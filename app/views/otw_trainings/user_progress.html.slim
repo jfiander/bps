@@ -1,0 +1,34 @@
+h1 BOC Progress
+
+.bold = @user.full_name(html: true)
+
+- met_icon = FA::Icon.p('check-circle', css: 'green')
+- unmet_icon = FA::Icon.p('do-not-enter', css: 'gray')
+
+.table#otw-progress
+  .table-row.bold
+    .table-cell Level
+    .table-cell.center Type
+    .table-cell Requirement
+    .table-cell.center Satisfied
+  - @boc_requirements[:levels].each do |level, requirements|
+    - requirements.each_with_index do |requirement, index|
+      - met = requirement[:options].any? { |set| set.all? { |code| code.in?(@completions.keys) } }
+      .table-row class=(cycle('gray', ''))
+        .table-cell.bold
+          - if index.zero?
+            => level.to_s.titleize
+            | Navigator
+            = met_icon if @levels[level].in?(@completions.keys)
+        .table-cell.center class=('satisfied' if met) = @icons[requirement[:type]]
+        .table-cell class=('satisfied' if met) = requirement[:name]
+        .table-cell.center class=('satisfied' if met)
+          = met ? met_icon : unmet_icon
+  - @boc_requirements[:endorsements].each_with_index do |endorsement, index|
+    - met = endorsement[:code].in?(@completions.keys)
+    .table-row class=(cycle('gray', ''))
+      .table-cell.bold = 'Endorsements' if index.zero?
+      .table-cell
+      .table-cell class=('satisfied' if met) = endorsement[:name]
+      .table-cell.center class=('satisfied' if met)
+        = met ? met_icon : unmet_icon

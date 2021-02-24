@@ -14,3 +14,12 @@ div#jumpstart.table {
     height: 5em;
   }
 }
+
+div#otw-progress div.table-row div.table-cell {
+  padding: 0.5em;
+  vertical-align: middle;
+
+  &.satisfied {
+    color: green !important;
+  }
+}

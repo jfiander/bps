@@ -74,6 +74,7 @@ h1 = @user.full_name
     - if current_user.id == @user.id && current_user.dues_due? && current_user.payable?
       li = link_to(dues_path, class: :red) { FA::Icon.p('credit-card', style: :duotone) + 'Pay your annual dues online' }
     li = link_to(user_certificate_path(@user.id), target: :_blank, class: 'green') { FA::Icon.p('file-certificate', style: :duotone) + 'View Educational Certificate' }
+    li = link_to(otw_progress_path, target: :_blank, class: 'green') { FA::Icon.p('tasks', style: :duotone) + 'View BOC Progress' }
 
 - if @registrations.present?
   h2 Current Registrations

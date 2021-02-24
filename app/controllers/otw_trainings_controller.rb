@@ -5,7 +5,7 @@ class OTWTrainingsController < ApplicationController
   include OTWTrainings::User
 
   secure!(except: %i[public public_request])
-  secure!(:otw, except: %i[public public_request user user_request])
+  secure!(:otw, except: %i[public public_request user user_request user_progress])
 
   title!('On-the-Water Training')
 
@@ -14,6 +14,8 @@ class OTWTrainingsController < ApplicationController
   before_action :load_otw_training, only: %i[edit update destroy]
   before_action :add_formatting, only: %i[new create]
   before_action :edit_formatting, only: %i[edit update]
+  before_action :levels, only: %i[user_progress]
+  before_action :icons, only: %i[user_progress]
 
   def list; end
 

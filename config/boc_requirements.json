@@ -1,0 +1,281 @@
+{
+  "levels": {
+    "inland": [
+      {
+        "type": "Course",
+        "name": "NASBLA Boating Course",
+        "options": [
+          ["BC"]
+        ]
+      },
+      {
+        "type": "Course",
+        "name": "Boat Handling",
+        "options": [
+          ["BH"],
+          ["S"],
+          ["S_101", "S_102"]
+        ]
+      },
+      {
+        "type": "Course",
+        "name": "Engine Maintenance",
+        "options": [
+          ["EM"],
+          ["EM_000C"]
+        ]
+      },
+      {
+        "type": "Course",
+        "name": "Marine Electronic Systems",
+        "options": [
+          ["MES"],
+          ["ME"],
+          ["ME_101"],
+          ["ES_000C"]
+        ]
+      },
+
+      {
+        "type": "Seminar",
+        "name": "How to Use a Chart",
+        "options": [
+          ["CHART1"],
+          ["P"],
+          ["CS"],
+          ["BC"]
+        ]
+      },
+      {
+        "type": "Seminar",
+        "name": "Basic Weather & Forecasting",
+        "options": [
+          ["BWF"],
+          ["OBWF"],
+          ["WE"]
+        ]
+      },
+      {
+        "type": "Seminar",
+        "name": "Using GPS",
+        "options": [
+          ["GPS1"],
+          ["PI"],
+          ["AP"]
+        ]
+      },
+      {
+        "type": "Seminar",
+        "name": "VHF/DSC",
+        "options": [
+          ["VHFDSC"],
+          ["MCS"],
+          ["ME_102"]
+        ]
+      },
+
+      {
+        "type": "Skill",
+        "name": "Basic Powerboat Handling",
+        "options": [
+          ["OTWBPH"]
+        ]
+      },
+      {
+        "type": "Skill",
+        "name": "Fire Extinguisher",
+        "options": [
+          ["FIRE"]
+        ]
+      }
+    ],
+
+    "coastal": [
+      {
+        "type": "Course",
+        "name": "Marine Navigation",
+        "options": [
+          ["P"]
+        ]
+      },
+      {
+        "type": "Course",
+        "name": "Weather",
+        "options": [
+          ["WE"],
+          ["WE_101", "WE_102"]
+        ]
+      },
+      {
+        "type": "Course",
+        "name": "Marine Communication Systems",
+        "options": [
+          ["MCS"],
+          ["ME"],
+          ["ME_102"],
+          ["CS_000C"]
+        ]
+      },
+
+      {
+        "type": "Seminar",
+        "name": "Mastering the Rules of the Road",
+        "options": [
+          ["RULES"]
+        ]
+      },
+      {
+        "type": "Seminar",
+        "name": "Anchoring",
+        "options": [
+          ["ANCHOR"]
+        ]
+      },
+      {
+        "type": "Seminar",
+        "name": "Mariner's Compass",
+        "options": [
+          ["MRNCOMP"]
+        ]
+      },
+      {
+        "type": "Seminar",
+        "name": "Tides and Currents",
+        "options": [
+          ["TIDES1"],
+          ["AP"]
+        ]
+      },
+
+      {
+        "type": "Skill",
+        "name": "On-the-Water Navigation",
+        "options": [
+          ["OTWNAV"]
+        ]
+      },
+      {
+        "type": "Skill",
+        "name": "Pyrotechnic Distress Signals",
+        "options": [
+          ["PYRO"]
+        ]
+      }
+    ],
+
+    "advanced coastal": [
+      {
+        "type": "Course",
+        "name": "Advanced Marine Navigation",
+        "options": [
+          ["AP"]
+        ]
+      },
+      {
+        "type": "Course",
+        "name": "Cruise Planning",
+        "options": [
+          ["CP"]
+        ]
+      },
+      {
+        "type": "Course",
+        "name": "Marine Navigation Systems",
+        "options": [
+          ["MNS"],
+          ["ME"],
+          ["ME_103"]
+        ]
+      },
+
+      {
+        "type": "Seminar",
+        "name": "Marine Radar",
+        "options": [
+          ["RADAR"],
+          ["RA"]
+        ]
+      },
+      {
+        "type": "Seminar",
+        "name": "Emergencies Onboard",
+        "options": [
+          ["EMEROB"],
+          ["EMER_W"]
+        ]
+      },
+
+      {
+        "type": "Skill",
+        "name": "First AID",
+        "options": [
+          ["FAID"]
+        ]
+      },
+      {
+        "type": "Skill",
+        "name": "Advanced Navigation",
+        "options": [
+          ["OWAVNAV"]
+        ]
+      }
+    ],
+
+    "offshore": [
+      {
+        "type": "Course",
+        "name": "Offshore Navigation",
+        "options": [
+          ["JN"],
+          ["EN"]
+        ]
+      },
+
+      {
+        "type": "Seminar",
+        "name": "Computer Weather Forecasting (Web)",
+        "options": [
+          ["CWF"]
+        ]
+      },
+      {
+        "type": "Seminar",
+        "name": "Thunderstorms / Severe Weather (Web)",
+        "options": [
+          ["TWS"]
+        ]
+      },
+
+      {
+        "type": "Skill",
+        "name": "Offshore Navigation",
+        "options": [
+          ["OTWONC"]
+        ]
+      }
+    ]
+  },
+
+  "endorsements": [
+    {
+      "name": "Inland Waterways",
+      "code": "BOC_IW"
+    },
+    {
+      "name": "Paddle Craft",
+      "code": "BOC_PAD"
+    },
+    {
+      "name": "Sailboating",
+      "code": "BOC_SA"
+    },
+    {
+      "name": "Canadian Regulations",
+      "code": "BOC_CAN"
+    },
+    {
+      "name": "Mexican Regulations",
+      "code": "BOC_MEX"
+    }
+  ]
+}

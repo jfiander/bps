@@ -19,10 +19,37 @@ module OTWTrainings
       end
     end
 
+    def user_progress
+      requirements_path = Rails.root.join('config/boc_requirements.json')
+      @boc_requirements = JSON.parse(File.read(requirements_path)).deep_symbolize_keys!
+      @completions = pick_user.completions
+    end
+
   private
 
     def otw_user_params
       params.permit(:id)
+    end
+
+    def pick_user
+      @user = ::User.find_by(id: otw_user_params[:id]) || current_user
+    end
+
+    def levels
+      @levels = {
+        inland: 'BOC_IN',
+        coastal: 'BOC_CN',
+        advanced_coastal: 'BOC_ACN',
+        offshore: 'BOC_ON'
+      }
+    end
+
+    def icons
+      @icons = {
+        'Course' => FA::Icon.p('users-class', title: 'Course'),
+        'Seminar' => FA::Icon.p('presentation', title: 'Seminar'),
+        'Skill' => FA::Icon.p('ship', title: 'Skill')
+      }
     end
   end
 end

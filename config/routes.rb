@@ -185,15 +185,16 @@ Rails.application.routes.draw do
   get     '/roster/gen(/:orientation)', to: 'members#roster_gen',    as: 'roster_gen', defaults: { orientation: 'detailed' }
 
   # OTW Trainings
-  get     '/otw',            to: 'otw_trainings#user'
-  get     '/otw/requests',   to: 'otw_trainings#list_requests'
-  get     '/otw/list',       to: 'otw_trainings#list'
-  get     '/otw/new',        to: 'otw_trainings#new',          as: 'new_otw'
-  post    '/otw/new',        to: 'otw_trainings#create',       as: 'create_otw'
-  put     '/otw/:id',        to: 'otw_trainings#user_request', as: 'otw_request'
-  get     '/otw/:id/edit',   to: 'otw_trainings#edit',         as: 'edit_otw'
-  patch   '/otw/:id/edit',   to: 'otw_trainings#update',       as: 'update_otw'
-  delete  '/otw/:id/remove', to: 'otw_trainings#destroy',      as: 'remove_otw'
+  get     '/otw',                to: 'otw_trainings#user'
+  get     '/otw/progress(/:id)', to: 'otw_trainings#user_progress', as: 'otw_progress'
+  get     '/otw/requests',       to: 'otw_trainings#list_requests'
+  get     '/otw/list',           to: 'otw_trainings#list'
+  get     '/otw/new',            to: 'otw_trainings#new',           as: 'new_otw'
+  post    '/otw/new',            to: 'otw_trainings#create',        as: 'create_otw'
+  put     '/otw/:id',            to: 'otw_trainings#user_request',  as: 'otw_request'
+  get     '/otw/:id/edit',       to: 'otw_trainings#edit',          as: 'edit_otw'
+  patch   '/otw/:id/edit',       to: 'otw_trainings#update',        as: 'update_otw'
+  delete  '/otw/:id/remove',     to: 'otw_trainings#destroy',       as: 'remove_otw'
 
   # On-the-Water Training
   get     '/jumpstart', to: 'otw_trainings#public'

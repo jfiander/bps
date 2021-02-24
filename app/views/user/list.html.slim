@@ -76,6 +76,7 @@ table#users
           - else
             = FA::Icon.p('user', style: :duotone, title: user[:id], fa: 'fw')
           = link_to(user_certificate_path(id: user[:id]), target: :_blank) { FA::Icon.p('file-certificate', style: :duotone, fa: 'fw', title: 'Educational certificate') }
+          = link_to(otw_progress_path(id: user[:id]), target: :_blank) { FA::Icon.p('tasks', style: :duotone, fa: 'fw', title: 'BOC progress') }
           - if user[:invited]
             = link_to(invite_path(id: user[:id]), method: :put) { FA::Icon.p('envelope-open', style: :duotone, css: 'pending', fa: 'fw', title: 'Re-send invitation') }
           - elsif user[:invitable]
