@@ -46,9 +46,9 @@ module OTWTrainings
 
     def icons
       @icons = {
-        'Course' => FA::Icon.p('users-class', title: 'Course'),
-        'Seminar' => FA::Icon.p('presentation', title: 'Seminar'),
-        'Skill' => FA::Icon.p('ship', title: 'Skill')
+        'Course' => FA::Icon.p('users-class', style: :duotone, title: 'Course'),
+        'Seminar' => FA::Icon.p('presentation', style: :duotone, title: 'Seminar'),
+        'Skill' => FA::Icon.p('ship', style: :duotone, title: 'Skill')
       }
     end
   end
