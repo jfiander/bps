@@ -198,11 +198,19 @@ ul#admin-menu {
 
     #nested-navigation ul ul a {
       display: inline-block;
+      line-height: 1.2em;
+      padding: 0.7em 1em;
+      display: block;
+      width: 100%;
       color: darken($birmingham-blue, 20%);
     }
 
+    #nested-navigation ul ul > a {
+      width: inherit;
+    }
+
     #nested-navigation ul ul a:hover {
-      background: lighten($old-glory-blue, 60%);
+      background: lighten($old-glory-blue, 55%);
     }
 
     #nested-navigation ul ul li {
@@ -213,27 +221,37 @@ ul#admin-menu {
     }
 
     #nested-navigation ul ul li:hover {
-      background: lighten($old-glory-blue, 60%);
+      background: lighten($old-glory-blue, 55%);
+    }
+
+    #nested-navigation ul ul li.menu {
+      padding-right: 13%;
+      @include border-radius(0.5em 0 0 0.5em);
     }
 
     #nested-navigation ul ul li.sub-menu ul {
       padding-top: 0;
     }
 
-    #nested-navigation ul ul a {
-      line-height: 1.2em;
-      padding: 0.7em 1em;
-    }
-
     #nested-navigation ul ul ul {
       top: 0;
-      left: 100%;
+      left: 95%;
       padding: 0;
-      @include border-radius(0 0.5em 0.5em 0.5em);
+      background: lighten($old-glory-blue, 60%);
+      @include border-radius(0.5em 0.5em 0.5em 0.5em);
     }
 
     #nested-navigation ul ul ul li {
       min-width: 10em;
+      color: darken($birmingham-blue, 27%);
+    }
+
+    #nested-navigation ul ul ul a:hover {
+      background: lighten($old-glory-blue, 50%);
+    }
+
+    #nested-navigation ul ul ul li:hover {
+      background: lighten($old-glory-blue, 50%);
     }
 
 div#show-sidenav {
