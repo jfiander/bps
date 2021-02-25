@@ -13,7 +13,8 @@ Role.create!([
   {name: "course", parent: education},
   {name: "seminar", parent: education},
   {name: "calendar", parent: event},
-  {name: "vsc", parent: event}
+  {name: "vsc", parent: event},
+  {name: "otw", parent: education}
 ])
 
 %w[seamanship piloting advanced_piloting junior_navigation navigation].each do |ag|
