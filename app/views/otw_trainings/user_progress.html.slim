@@ -2,6 +2,12 @@ h1 BOC Progress
 
 .bold = @user.full_name(html: true)
 
+.information
+  = FA::Icon.p('info-circle', style: :duotone)
+  | If any completions are missing below, please contact us – some of these are not stored in the same way at HQ.
+
+hr
+
 - met_icon = FA::Icon.p('check-circle', css: 'green')
 - unmet_icon = FA::Icon.p('do-not-enter', css: 'gray')
 
