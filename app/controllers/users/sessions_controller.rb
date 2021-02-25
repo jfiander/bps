@@ -31,7 +31,7 @@ module Users
       # after login is complete.
       [
         simple_paths, users_paths, roster_paths, minutes_paths, event_paths,
-        edit_paths
+        otw_paths, edit_paths
       ].flatten
     end
 
@@ -39,7 +39,7 @@ module Users
       %w[
         members minutes profile permit invitation/new header file import
         user_help profile(/edit)? ranks auto_permissions event_types locations
-        float_plans? otw(/list)? receipts nominate birthdays
+        float_plans? receipts nominate birthdays
       ]
     end
 
@@ -57,6 +57,10 @@ module Users
 
     def event_paths
       '(courses|seminars|events)(/(new|(\d+(/(copy|edit))?))?)'
+    end
+
+    def otw_paths
+      'otw(/(list|progress))?'
     end
 
     def edit_paths
