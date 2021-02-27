@@ -23,6 +23,10 @@ filterUsers = ->
     role = tr[i].getElementsByTagName('td')[2]
 
     if name || cert || role
+      if name
+        name = name.getElementsByClassName('name')[0]
+      if cert
+        cert = cert.getElementsByClassName('certificate')[0]
       nameValue = name.textContent or name.innerText
       certValue = cert.textContent or cert.innerText
       roleValue = role.textContent or role.innerText

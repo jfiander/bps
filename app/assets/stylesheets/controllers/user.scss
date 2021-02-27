@@ -108,6 +108,7 @@ div.photo-editor {
 // Users List
 table#users {
   margin: 0 auto;
+  width: 95%;
   
   img {
   	width: 3em;
@@ -124,8 +125,23 @@ table#users {
     color: $old-glory-blue;
   }
 
-  td.left {
+  td.user div.actions {
+    margin-top: 0.75em;
+    border-top: thin solid #CCCCCC;
+    padding-top: 0.75em;
+    text-align: center;
+  }
+
+  tr.gray td.user div.actions {
+    border-top: thin solid #B8B8B8;
+  }
+
+  td.roles {
     text-align: left;
+  }
+
+  td.roles div.roles.bridge {
+    margin-top: 1.5em;
   }
 
   div.role {
@@ -134,7 +150,7 @@ table#users {
 
   td  {
     height: 3em;
-    padding: 0.5em;
+    padding: 1em 0.25em;
   }
 
   hr {

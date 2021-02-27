@@ -35,7 +35,7 @@ class User
 
     def user_hash_personal(u)
       {
-        id: u.id, name: u.full_name, certificate: u.certificate,
+        id: u.id, name: u.full_name, certificate: u.certificate, mm: u.mm.to_i,
         email: u.email, senior: u.senior.present?, life: u.life.present?,
         bridge_office: bridge_office_for(u), granted_roles: granted_roles_for(u),
         permitted_roles: permitted_roles_for(u)

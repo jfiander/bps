@@ -7,6 +7,7 @@ $background-blue: #C5D1E1;
 $background-blue-faded: #CDD7E5;
 $background-blue-extra-faded: #EEF2F6;
 $gold: #D4AF37;
+$insignia-gold: #FFBF3F;
 $pending-green: #66BB66;
 
 $old-glory-blue-light: lighten($old-glory-blue, 20%);
@@ -40,6 +41,10 @@ $old-glory-red-faded: lighten($old-glory-red, 50%);
 
 .gold {
   color: $gold;
+}
+
+.insignia-gold {
+  color: darken($insignia-gold, 15%);
 }
 
 .pending {
