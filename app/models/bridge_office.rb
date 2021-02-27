@@ -27,7 +27,7 @@ class BridgeOffice < ApplicationRecord
   scope :assistants, -> { where('office LIKE ?', 'asst_%') }
 
   def self.preload
-    all.map { |b| { b.user_id => b.office } }.reduce({}, :merge)
+    all.each_with_object({}) { |b, h| h[b.user_id] = b.office }
   end
 
   def self.mail_all(include_asst: false)

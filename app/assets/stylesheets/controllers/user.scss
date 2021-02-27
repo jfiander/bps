@@ -130,6 +130,7 @@ table#users {
 
   div.role {
     margin: 0.5em 0;
+    break-inside: avoid;
   }
 
   td  {
