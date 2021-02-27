@@ -1,20 +1,23 @@
 # frozen_string_literal: true
 
-admin = Role.create!(name: "admin")
-education = Role.create!(name: "education", parent: admin)
-event = Role.create!(name: "event", parent: admin)
+admin = Role.create!(name: 'admin')
+education = Role.create!(name: 'education', parent: admin)
+event = Role.create!(name: 'event', parent: admin)
+users = Role.create!(name: 'users', parent: admin)
 
 Role.create!([
-  {name: "users", parent: admin},
-  {name: "page", parent: admin},
-  {name: "store", parent: admin},
-  {name: "photos", parent: admin},
-  {name: "newsletter", parent: admin},
-  {name: "course", parent: education},
-  {name: "seminar", parent: education},
-  {name: "calendar", parent: event},
-  {name: "vsc", parent: event},
-  {name: "otw", parent: education}
+  { name: 'page', parent: admin },
+  { name: 'store', parent: admin },
+  { name: 'photos', parent: admin },
+  { name: 'newsletter', parent: admin },
+  { name: 'minutes', parent: admin },
+  { name: 'roster', parent: admin },
+  { name: 'float', parent: users },
+  { name: 'course', parent: education },
+  { name: 'seminar', parent: education },
+  { name: 'calendar', parent: event },
+  { name: 'vsc', parent: event },
+  { name: 'otw', parent: education }
 ])
 
 %w[seamanship piloting advanced_piloting junior_navigation navigation].each do |ag|
