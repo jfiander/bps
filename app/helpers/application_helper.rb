@@ -45,7 +45,11 @@ module ApplicationHelper
 
   def admin_header(header_text)
     admin_icon = FA::Icon.p('shield-check', style: :duotone)
-    admin_icon + header_text + admin_icon
+    content_tag(:div, class: 'admin-header') do
+      concat content_tag(:div, admin_icon, class: 'admin-header-icon')
+      concat content_tag(:div, header_text)
+      concat content_tag(:div, admin_icon, class: 'admin-header-icon')
+    end
   end
 
   def main_menu

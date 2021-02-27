@@ -165,3 +165,16 @@ a.unclickable {
   pointer-events: none;
   cursor: default;
 }
+
+div.admin-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+
+  div.admin-header-icon {
+    min-width: 1.5em;
+    text-align: center;
+  }
+}

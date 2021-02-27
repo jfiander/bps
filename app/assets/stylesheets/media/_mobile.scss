@@ -290,3 +290,14 @@
     font-size: 80%;
   }
 }
+
+@media all and (max-width: 400px) {
+  div.admin-header {
+    font-size: 80%;
+  }
+
+  div.admin-header-icon {
+    font-size: 0.85em;
+    max-width: 0.85em;
+  }
+}
