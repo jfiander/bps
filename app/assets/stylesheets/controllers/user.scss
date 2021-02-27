@@ -73,10 +73,6 @@ div.table-cell {
   word-wrap: break-word;
 }
 
-ul.roles {
-  margin-top: 0;
-}
-
 div.password-box {
   border: thin solid $old-glory-red;
 }
@@ -126,6 +122,14 @@ table#users {
   tr.gray {
     background-color: lighten($background-blue, 5%);
     color: $old-glory-blue;
+  }
+
+  td.left {
+    text-align: left;
+  }
+
+  div.role {
+    margin: 0.5em 0;
   }
 
   td  {
@@ -180,6 +184,7 @@ table#permissions {
 }
 
 ul.roles {
+  margin-top: 0;
   list-style: none;
   padding: 0;
 }

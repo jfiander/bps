@@ -21,6 +21,7 @@ class User
     def load_users
       all_users = User.alphabetized.include_positions
       @user_roles = UserRole.preload
+      @role_icons = Role.icons
       @bridge_offices = BridgeOffice.preload
 
       @unlocked = all_users.unlocked.map { |user| user_hash(user) }

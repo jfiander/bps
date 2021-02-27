@@ -13,6 +13,11 @@ class Role < ApplicationRecord
 
   after_create { User::Permissions.reload_implicit_roles_hash }
 
+  def self.icons
+    regular = all.each_with_object({}) { |role, hash| hash[role.name.to_sym] = role.icon }
+    regular.merge(all: 'globe', excom: 'leaf-oak')
+  end
+
   def parents
     parent_role = parent
     parents_array = []
