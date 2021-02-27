@@ -20,7 +20,7 @@ class NotificationsMailer < ApplicationMailer
 private
 
   def user_descriptor(user)
-    user.present? ? "#{user.full_name}\n#{user.certificate}, ##{user.id}" : 'TBD'
+    user.present? ? "#{user.full_name(html: false)}\n#{user.certificate}, ##{user.id}" : 'TBD'
   end
 
   def bridge_slack_notification
