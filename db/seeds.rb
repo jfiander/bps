@@ -12,6 +12,7 @@ Role.create!([
   { name: 'newsletter', parent: admin },
   { name: 'minutes', parent: admin },
   { name: 'roster', parent: admin },
+  { name: 'property', parent: admin },
   { name: 'float', parent: users },
   { name: 'course', parent: education },
   { name: 'seminar', parent: education },
