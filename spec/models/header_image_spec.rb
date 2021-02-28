@@ -37,7 +37,7 @@ RSpec.describe HeaderImage, type: :model do
     it 'rejects if too small' do
       header = FactoryBot.build(:header_image, file: File.new(test_image(500, 150)))
       expect(header.validate).to be(false)
-      expect(header.errors.messages).to eql(file: ['must be at least 1000px wide'])
+      expect(header.errors.messages).to eql(file: ['must be at least 750px wide'])
     end
 
     it 'accepts if correctly sized' do

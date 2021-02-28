@@ -34,21 +34,9 @@ private
   end
 
   def add_errors(dimensions, ratio)
-    errors.add(:file, too_small) if dimensions.width < 750
-    errors.add(:file, too_wide) if ratio > 3.5
-    errors.add(:file, too_narrow) if ratio < 2.75
-  end
-
-  def too_small
-    'must be at least 1000px wide'
-  end
-
-  def too_wide
-    'aspect ratio > 3.5:1 (make it narrower)'
-  end
-
-  def too_narrow
-    'aspect ratio < 2.75:1 (make it wider)'
+    errors.add(:file, 'must be at least 750px wide') if dimensions.width < 750
+    errors.add(:file, 'aspect ratio > 3.5:1 (make it narrower)') if ratio > 3.5
+    errors.add(:file, 'aspect ratio < 2.75:1 (make it wider)') if ratio < 2.75
   end
 
   def no_errors_yet?
