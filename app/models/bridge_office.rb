@@ -3,6 +3,12 @@
 class BridgeOffice < ApplicationRecord
   include Excom
 
+  EMAILS = {
+    commander: 'cdr', executive: 'xo', administrative: 'ao',
+    educational: 'seo', secretary: 'secretary', treasurer: 'treasurer',
+    asst_educational: 'aseo', asst_secretary: 'asec'
+  }.freeze
+
   belongs_to :user, optional: true
 
   def self.departments(assistants: false)
@@ -45,12 +51,7 @@ class BridgeOffice < ApplicationRecord
   end
 
   def email
-    emails = {
-      commander: 'cdr', executive: 'xo', administrative: 'ao',
-      educational: 'seo', secretary: 'secretary', treasurer: 'treasurer',
-      asst_educational: 'aseo', asst_secretary: 'asst_secretary'
-    }
-    "#{emails[office.to_sym]}@bpsd9.org"
+    "#{EMAILS[office.to_sym]}@bpsd9.org"
   end
 
   def self.department(office)
