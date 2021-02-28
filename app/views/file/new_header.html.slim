@@ -5,7 +5,7 @@ p Every time the site is loaded, a random image listed from this page will be di
 - if @headers.present?
     .table#files.headers
       - @headers.each do |header|
-        .table-row
+        .table-row class=(cycle('gray', ''))
           .table-cell.left: a data-fancybox="album_headers" href=(files_bucket.link(header.file.path))
             = image_tag files_bucket.link(header.file.path(:thumb))
           .table-cell = link_to FA::Icon.p('eye', style: :duotone, title: 'View this header on the page'), "?header=#{header.id}"

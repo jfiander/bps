@@ -6,15 +6,20 @@ p Copy the <b>markdown key</b> from the list below into the editor where you wan
 - if @markdown_files.present?
   .table#files.markdown
     .table-row
-      .table-cell.table-header File name
+      .table-cell.table-header File / Image
       .table-cell.table-header Markdown key
       .table-cell
     - @markdown_files.each do |file|
-      .table-row
-        .table-cell = file.file_file_name
-        .table-cell: pre
+      .table-row class=(cycle('gray', ''))
+        .table-cell
           - if file.file_content_type.match(/image/)
-            = "\%image/#{file.id}/"
+            = image_tag(file.link)
           - else
-            = "\%file/#{file.id}/#{file.file_file_name.match(/^(.*?)\.\w{2,4}$/)[1].titleize}/"
+            = link_to(file.file_file_name.truncate(20), file.link)
+        .table-cell
+          - if file.file_content_type.match(/image/)
+            - key = "\%image/#{file.id}/"
+          - else
+            - key = "\%file/#{file.id}/#{file.file_file_name.match(/^(.*?)\.\w{2,4}$/)[1].titleize}/"
+          = text_field_tag("file_#{file.id}", key, readonly: true, onclick: "this.select();")
         .table-cell = link_to(remove_file_path(file.id), method: :delete, class: 'red', data: {confirm: 'Are you sure you want to remove this file? This will break any remaining links to this file.'}) { FA::Icon.p('minus-square', style: :duotone) }

@@ -6,10 +6,19 @@ div#files {
   div.table-header {
     width: 45%;
   }
+
+  div.table-cell {
+    vertical-align: middle;
+    padding: 0.5em 0;
+  }
+
+  img {
+    max-width: 150px;
+  }
 }
 
 div#files.headers {
-  width: 35%;
+  width: 75%;
 
   div.table-row {
     height: 6em;
@@ -19,11 +28,16 @@ div#files.headers {
     }
 
     div.table-cell.left {
+      text-align: center;
       width: 75%;
     }
 
     div.table-cell.right {
       width: 25%;
     }
+  }
+
+  img {
+    max-width: 200px;
   }
 }
