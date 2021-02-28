@@ -68,7 +68,7 @@ div.events-unified-table {
     div.event-top-block {
       display: flex;
       flex-flow: column wrap;
-      max-height: 12em;
+      max-height: 14em;
     }
 
     div.event-display-title {
@@ -91,6 +91,10 @@ div.events-unified-table {
 
     div.event-main-details {
       width: 50%;
+
+      div.event-sessions-and-length {
+        margin-bottom: 2em;
+      }
     }
 
     div.event-location {
