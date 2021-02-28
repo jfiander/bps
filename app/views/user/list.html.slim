@@ -56,10 +56,9 @@ table#users
             - elsif can_lock && user[:permitted_roles].include?(:admin)
               = FA::Layer.p([{ name: 'unlock', options: { css: :gray } }, { name: 'ban', options: { css: :red } }], title: 'Cannot lock admins')
 
-      td.center
+      td.certificate
         .certificate = user[:certificate] || FA::Icon.p('question-circle', css: 'red', style: :duotone, title: 'Invalid certificate')
         - if user[:senior] || user[:life]
-          br
           - if user[:life]
             = image_tag(static_bucket.link('insignia/PNG/membership/tr/life.png'), class: 'membership')
           - elsif user[:senior]
