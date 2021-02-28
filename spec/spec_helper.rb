@@ -17,6 +17,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
 require 'brakeman'
+require 'google_api'
 
 SimpleCov.start('rails') do
   add_group 'Services', 'app/services'
@@ -89,6 +90,16 @@ def assign_bridge_office(office, user)
   end
 
   bridge_office.update(user: user)
+end
+
+GoogleAPI.mock!
+
+class BpsSMS
+  def create_topic
+    MockTopicResponse.new(SecureRandom.hex(16))
+  end
+
+  MockTopicResponse = Struct.new(:topic_arn)
 end
 
 RSpec::Matchers.define :contain_and_match do |*expected|
