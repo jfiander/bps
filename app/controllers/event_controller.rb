@@ -172,6 +172,7 @@ private
   def catalog_list
     @event_catalog = Event.include_details.where(show_in_catalog: true)
                           .for_category(event_type_param)
+                          .order('event_types.title')
   end
 
   def registered_users
