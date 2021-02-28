@@ -2,18 +2,18 @@
 
 require 'rails_helper'
 
-def event_it(description, &block)
-  it(description, &block)
-rescue Google::Apis::RateLimitError
-  print('s')
-  skip 'Exceeded rate limit. Skipping spec.'
-end
+# def event_it(description, &block)
+#   it(description, &block)
+# rescue Google::Apis::RateLimitError
+#   print('s')
+#   skip 'Exceeded rate limit. Skipping spec.'
+# end
 
 RSpec.describe Event, type: :model, slow: true do
   before { generic_seo_and_ao }
 
   describe 'scopes' do
-    event_it 'filters by category' do
+    it 'filters by category' do
       seminar_type = FactoryBot.create(:event_type, event_category: 'seminar')
       course_type = FactoryBot.create(:event_type, event_category: 'public')
       seminar = FactoryBot.create(:event, event_type: seminar_type)
@@ -21,21 +21,21 @@ RSpec.describe Event, type: :model, slow: true do
       expect(described_class.for_category('seminar').to_a).to eql([seminar])
     end
 
-    event_it 'filters by current' do
+    it 'filters by current' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
       FactoryBot.create_list(:event, 2, event_type: event_type)
       FactoryBot.create(:event, event_type: event_type, expires_at: Time.zone.now)
       expect(described_class.current.for_category('seminar').to_a).to eql(described_class.first(2))
     end
 
-    event_it 'filters by expired' do
+    it 'filters by expired' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
       FactoryBot.create_list(:event, 2, event_type: event_type)
       FactoryBot.create(:event, event_type: event_type, expires_at: Time.zone.now)
       expect(described_class.expired.for_category('seminar').to_a).to eql([described_class.last])
     end
 
-    event_it 'filters with registrations' do
+    it 'filters with registrations' do
       FactoryBot.create_list(:event, 2)
       user = FactoryBot.create(:user)
       event = described_class.last
@@ -45,19 +45,19 @@ RSpec.describe Event, type: :model, slow: true do
   end
 
   describe 'types' do
-    event_it 'creates a course' do
+    it 'creates a course' do
       event_type = FactoryBot.create(:event_type, event_category: 'public')
       event = FactoryBot.create(:event, event_type: event_type)
       expect { event }.not_to raise_error
     end
 
-    event_it 'creates a seminar' do
+    it 'creates a seminar' do
       event_type = FactoryBot.create(:event_type, event_category: 'seminar')
       event = FactoryBot.create(:event, event_type: event_type)
       expect { event }.not_to raise_error
     end
 
-    event_it 'creates a meeting' do
+    it 'creates a meeting' do
       event_type = FactoryBot.create(:event_type, event_category: 'meeting')
       event = FactoryBot.create(:event, event_type: event_type)
       expect { event }.not_to raise_error
@@ -68,67 +68,67 @@ RSpec.describe Event, type: :model, slow: true do
     let(:event) { FactoryBot.create(:event) }
 
     describe 'destroy' do
-      event_it 'destroys an event' do
+      it 'destroys an event' do
         expect { event.destroy }.not_to raise_error
       end
     end
 
     describe 'flags' do
       describe 'expiration' do
-        event_it 'returns true when expired' do
+        it 'returns true when expired' do
           event.update(expires_at: Time.zone.now - 1.day)
           expect(event.expired?).to be(true)
         end
 
-        event_it 'returns false when not expired' do
+        it 'returns false when not expired' do
           event.update(expires_at: Time.zone.now + 1.day)
           expect(event.expired?).to be(false)
         end
       end
 
       describe 'archival' do
-        event_it 'returns true when archived' do
+        it 'returns true when archived' do
           event.update(archived_at: Time.zone.now - 1.day)
           expect(event.archived?).to be(true)
         end
 
-        event_it 'returns false when not archived' do
+        it 'returns false when not archived' do
           event.update(archived_at: Time.zone.now + 1.day)
           expect(event.archived?).to be(false)
         end
       end
 
       describe 'cutoff' do
-        event_it 'returns true when not accepting registrations' do
+        it 'returns true when not accepting registrations' do
           event.update(cutoff_at: Time.zone.now - 1.day)
           expect(event.cutoff?).to be(true)
         end
 
-        event_it 'returns false when accepting registrations' do
+        it 'returns false when accepting registrations' do
           event.update(cutoff_at: Time.zone.now + 1.day)
           expect(event.cutoff?).to be(false)
         end
       end
 
       describe 'reminding' do
-        event_it 'sets the reminded flag after sending reminders' do
+        it 'sets the reminded flag after sending reminders' do
           expect { event.remind! }.to change { event.reminded? }.from(false).to(true)
         end
 
-        event_it 'does not allow duplicate reminders' do
+        it 'does not allow duplicate reminders' do
           expect(event.remind!).to be(true)
           expect(event.remind!).to be(nil)
         end
       end
 
       describe 'hiding old events' do
-        event_it 'expires the event' do
+        it 'expires the event' do
           expect(event.expires_at).to be > Time.zone.now
           event.expire!
           expect(event.expires_at).to be < Time.zone.now
         end
 
-        event_it 'archives the event' do
+        it 'archives the event' do
           expect(event.archived_at).to be_nil
           event.archive!
           expect(event.archived_at).to be < Time.zone.now
@@ -136,30 +136,30 @@ RSpec.describe Event, type: :model, slow: true do
       end
 
       describe 'booked' do
-        event_it 'sets the booked flag after booking' do
+        it 'sets the booked flag after booking' do
           event.unbook!
           expect { event.book! }.to change { event.booked? }.from(false).to(true)
         end
 
-        event_it 'unsets the booked flag after unbooking' do
+        it 'unsets the booked flag after unbooking' do
           expect { event.unbook! }.to change { event.booked? }.from(true).to(false)
         end
       end
 
       describe 'recurrence' do
-        event_it 'sets the correct pattern' do
+        it 'sets the correct pattern' do
           event_type = FactoryBot.create(:event_type, event_category: 'seminar')
           event = FactoryBot.create(:event, event_type: event_type, sessions: 2, all_day: false)
           expect(event.send(:recurrence)).to eq(['RRULE:FREQ=WEEKLY;COUNT=2'])
         end
 
-        event_it 'returns nil for all_day events' do
+        it 'returns nil for all_day events' do
           event_type = FactoryBot.create(:event_type, event_category: 'seminar')
           event = FactoryBot.create(:event, event_type: event_type, sessions: 2, all_day: true)
           expect(event.send(:recurrence)).to be_nil
         end
 
-        event_it 'returns nil for individual events' do
+        it 'returns nil for individual events' do
           event_type = FactoryBot.create(:event_type, event_category: 'seminar')
           event = FactoryBot.create(:event, event_type: event_type, sessions: 1, all_day: false)
           expect(event.send(:recurrence)).to be_nil
@@ -171,7 +171,7 @@ RSpec.describe Event, type: :model, slow: true do
           allow(event).to(receive(:calendar).and_raise(Google::Apis::ClientError, 'notFound: Not Found'))
         end
 
-        event_it 'returns false if an event is not found' do
+        it 'returns false if an event is not found' do
           event.update(google_calendar_event_id: 'nonexistent-event-id')
           expect(event.on_calendar?).to be(false)
         end
@@ -180,17 +180,17 @@ RSpec.describe Event, type: :model, slow: true do
       describe 'calendar API silent failures' do
         before { allow(event).to(receive(:calendar).and_raise('An error')) }
 
-        event_it 'does not allow errors to surface from book!' do
+        it 'does not allow errors to surface from book!' do
           event.update(google_calendar_event_id: nil)
           expect { event.book! }.not_to raise_error
         end
 
-        event_it 'does not allow errors to surface from unbook!' do
+        it 'does not allow errors to surface from unbook!' do
           event.book!
           expect { event.unbook! }.not_to raise_error
         end
 
-        event_it 'does not allow errors to surface from refresh_calendar!' do
+        it 'does not allow errors to surface from refresh_calendar!' do
           event.book!
           expect { event.refresh_calendar! }.not_to raise_error
         end
@@ -199,12 +199,12 @@ RSpec.describe Event, type: :model, slow: true do
       describe 'conference data' do
         before { event.book! }
 
-        # event_it 'returns nil when conference data is not available' do
+        # it 'returns nil when conference data is not available' do
         #   skip 'Disabled for mock'
         #   expect(event.conference_id).to be(nil)
         # end
 
-        event_it 'returns nil when calendar event does have conference info' do
+        it 'returns nil when calendar event does have conference info' do
           allow(event.send(:calendar)).to receive(:conference_info).and_raise(
             Google::Apis::ClientError, 'notFound: Not Found'
           )
@@ -215,55 +215,55 @@ RSpec.describe Event, type: :model, slow: true do
         context 'with conference specified' do
           before { event.conference! }
 
-          event_it 'sets conference data correctly' do
+          it 'sets conference data correctly' do
             expect(event.online).to be(true)
             expect(event.conference_id).not_to be(nil)
           end
 
-          event_it 'clears conference data correctly' do
+          it 'clears conference data correctly' do
             event.conference!(state: false)
 
             expect(event.online).to be(false)
             # expect(event.conference_id).to be(nil) # Disabled for mock
           end
 
-          event_it 'sets the conference_id correctly' do
+          it 'sets the conference_id correctly' do
             expect(event.conference_id).to match(/[a-z]{3}-[a-z]{4}-[a-z]{3}/)
           end
 
-          event_it 'returns a valid conference_link' do
+          it 'returns a valid conference_link' do
             expect(event.conference_link).to match(%r(http://meet\.google\.com/[a-z]{3}-[a-z]{4}-[a-z]{3}))
           end
         end
       end
 
       describe 'within a week' do
-        event_it 'returns false if the start date is more than 1 week away' do
+        it 'returns false if the start date is more than 1 week away' do
           event.start_at = Time.zone.now + 2.weeks
           expect(event.within_a_week?).to be(false)
         end
 
-        event_it 'returns true if the start date is less than 1 week away' do
+        it 'returns true if the start date is less than 1 week away' do
           event.start_at = Time.zone.now + 3.days
           expect(event.within_a_week?).to be(true)
         end
       end
 
       describe 'category' do
-        event_it 'returns the category group of the event_type' do
+        it 'returns the category group of the event_type' do
           expect(event.category).to eql('course')
         end
 
-        event_it 'returns true for the correct category' do
+        it 'returns true for the correct category' do
           expect(event.course?).to be(true)
         end
 
-        event_it 'returns false for all other categories' do
+        it 'returns false for all other categories' do
           expect(event.seminar?).to be(false)
           expect(event.meeting?).to be(false)
         end
 
-        event_it 'checks the category from cache' do
+        it 'checks the category from cache' do
           FactoryBot.create(:event_type, event_category: 'public')
           FactoryBot.create(:event_type, event_category: 'seminar')
           FactoryBot.create(:event_type, event_category: 'meeting')
@@ -272,40 +272,40 @@ RSpec.describe Event, type: :model, slow: true do
           expect(event.category(event_types)).to eql('course')
         end
 
-        event_it 'defaults to the associated EventType category' do
+        it 'defaults to the associated EventType category' do
           expect(event.category([])).to eql(event.event_type.event_category)
         end
       end
 
       describe 'scheduling' do
         describe 'length' do
-          event_it 'returns false when blank' do
+          it 'returns false when blank' do
             event.update(length_h: nil)
             expect(event.length?).to be(false)
           end
 
-          event_it 'returns false when zero length' do
+          it 'returns false when zero length' do
             event.update(length_h: 0)
             expect(event.length?).to be(false)
           end
 
-          event_it 'returns true when a valid length is set' do
+          it 'returns true when a valid length is set' do
             event.update(length_h: 2)
             expect(event.length?).to be(true)
           end
         end
 
         describe 'multiple sessions' do
-          event_it 'returns false if sessions is blank' do
+          it 'returns false if sessions is blank' do
             expect(event.multiple_sessions?).to be(false)
           end
 
-          event_it 'returns false if only one session' do
+          it 'returns false if only one session' do
             event.update(sessions: 1)
             expect(event.multiple_sessions?).to be(false)
           end
 
-          event_it 'returns true if more than one session' do
+          it 'returns true if more than one session' do
             event.update(sessions: 2)
             expect(event.multiple_sessions?).to be(true)
           end
@@ -313,26 +313,26 @@ RSpec.describe Event, type: :model, slow: true do
       end
 
       describe 'registerable' do
-        event_it 'returns true if neither cutoff not expiration are set' do
+        it 'returns true if neither cutoff not expiration are set' do
           expect(event.registerable?).to be(true)
         end
 
-        event_it 'returns false if cutoff date is past' do
+        it 'returns false if cutoff date is past' do
           event.update(cutoff_at: Time.zone.now - 1.day)
           expect(event.registerable?).to be(false)
         end
 
-        event_it 'returns true if only expiration date is past' do
+        it 'returns true if only expiration date is past' do
           event.update(expires_at: Time.zone.now - 1.day)
           expect(event.registerable?).to be(true)
         end
 
-        event_it 'returns false if expiration date and start date are past' do
+        it 'returns false if expiration date and start date are past' do
           event.update(expires_at: Time.zone.now - 1.day, start_at: Time.zone.now - 2.days)
           expect(event.registerable?).to be(false)
         end
 
-        event_it 'returns true if both cutoff not expiration are future' do
+        it 'returns true if both cutoff not expiration are future' do
           event.update(cutoff_at: Time.zone.now + 1.day, expires_at: Time.zone.now + 2.days)
           expect(event.registerable?).to be(true)
         end
@@ -340,7 +340,7 @@ RSpec.describe Event, type: :model, slow: true do
     end
 
     describe 'registration' do
-      event_it 'correctlies register a user' do
+      it 'correctlies register a user' do
         user = FactoryBot.create(:user)
         event = FactoryBot.create(:event)
 
@@ -351,7 +351,7 @@ RSpec.describe Event, type: :model, slow: true do
     end
 
     describe 'with_instructor' do
-      event_it 'works with instructors' do
+      it 'works with instructors' do
         event = FactoryBot.create(:event, :with_instructor)
 
         expect(event).to be_valid
@@ -360,61 +360,61 @@ RSpec.describe Event, type: :model, slow: true do
 
     describe 'validations' do
       describe 'costs' do
-        event_it 'stores only the cost' do
+        it 'stores only the cost' do
           event.update(cost: 15)
 
           expect(event).to have_attributes(cost: 15, usps_cost: nil, member_cost: nil)
         end
 
-        event_it 'rejects member_cost when no cost is specified' do
+        it 'rejects member_cost when no cost is specified' do
           event.update(member_cost: 16)
 
           expect(event).to have_attributes(cost: nil, usps_cost: nil, member_cost: nil)
         end
 
-        event_it 'rejects usps_cost when no cost is specified' do
+        it 'rejects usps_cost when no cost is specified' do
           event.update(usps_cost: 11)
 
           expect(event).to have_attributes(cost: nil, usps_cost: nil, member_cost: nil)
         end
 
-        event_it 'stores the member_cost and cost correctly when backwards' do
+        it 'stores the member_cost and cost correctly when backwards' do
           event.update(cost: 17, member_cost: 20)
 
           expect(event).to have_attributes(cost: 20, usps_cost: nil, member_cost: 17)
         end
 
-        event_it 'stores both costs when valid' do
+        it 'stores both costs when valid' do
           event.update(cost: 18, member_cost: 12)
 
           expect(event).to have_attributes(cost: 18, usps_cost: nil, member_cost: 12)
         end
 
-        event_it 'rejects member_cost when equal to cost' do
+        it 'rejects member_cost when equal to cost' do
           event.update(cost: 15, member_cost: 15)
 
           expect(event).to have_attributes(cost: 15, usps_cost: nil, member_cost: nil)
         end
 
-        event_it 'rejects usps_cost when below range' do
+        it 'rejects usps_cost when below range' do
           event.update(cost: 20, usps_cost: 12, member_cost: 15)
 
           expect(event).to have_attributes(cost: 20, usps_cost: nil, member_cost: 15)
         end
 
-        event_it 'rejects usps_cost when equal to range boundary' do
+        it 'rejects usps_cost when equal to range boundary' do
           event.update(cost: 19, usps_cost: 14, member_cost: 14)
 
           expect(event).to have_attributes(cost: 19, usps_cost: nil, member_cost: 14)
         end
 
-        event_it 'rejects usps_cost when above range' do
+        it 'rejects usps_cost when above range' do
           event.update(cost: 21, usps_cost: 24, member_cost: 13)
 
           expect(event).to have_attributes(cost: 21, usps_cost: nil, member_cost: 13)
         end
 
-        event_it 'stores all costs when valid' do
+        it 'stores all costs when valid' do
           event.update(cost: 18, usps_cost: 16, member_cost: 12)
 
           expect(event).to have_attributes(cost: 18, usps_cost: 16, member_cost: 12)
@@ -424,18 +424,18 @@ RSpec.describe Event, type: :model, slow: true do
 
     describe 'formatting' do
       describe 'length' do
-        event_it 'correctly formats a nil length' do
+        it 'correctly formats a nil length' do
           event.update(length_h: nil)
           expect(event.formatted_length).to be_nil
         end
 
-        event_it 'correctly formats a whole-hour length' do
+        it 'correctly formats a whole-hour length' do
           event.update(length_h: 1)
 
           expect(event.formatted_length).to eql('1 hour')
         end
 
-        event_it 'correctly formats a length with minutes' do
+        it 'correctly formats a length with minutes' do
           event.update(length_h: 2, length_m: 15)
 
           expect(event.formatted_length).to eql('2 hours 15 mins')
@@ -444,25 +444,25 @@ RSpec.describe Event, type: :model, slow: true do
     end
 
     describe 'flyers' do
-      event_it 'gets the correct course book cover' do
+      it 'gets the correct course book cover' do
         event_type = FactoryBot.create(:event_type, event_category: 'public')
         event = FactoryBot.create(:event, event_type: event_type)
         expect(event.get_flyer).to eql('https://static.bpsd9.org/book_covers/courses/americas_boating_course.jpg')
       end
 
-      event_it 'gets the correct seminar book cover' do
+      it 'gets the correct seminar book cover' do
         event_type = FactoryBot.create(:event_type, event_category: 'seminar', title: 'vhf_dsc')
         event = FactoryBot.create(:event, event_type: event_type)
         expect(event.get_flyer).to eql('https://static.bpsd9.org/book_covers/seminars/vhf_dsc.jpg')
       end
 
-      event_it 'checks if the event has a flyer' do
+      it 'checks if the event has a flyer' do
         event_type = FactoryBot.create(:event_type, event_category: 'meeting')
         event = FactoryBot.create(:event, event_type: event_type)
         expect(event.get_flyer).to be_nil
       end
 
-      event_it 'generates the correct flyer link' do
+      it 'generates the correct flyer link' do
         event_type = FactoryBot.create(:event_type, event_category: 'meeting')
         flyer = File.open(test_image(250, 500), 'r')
         event = FactoryBot.create(:event, event_type: event_type, flyer: flyer)
@@ -474,26 +474,26 @@ RSpec.describe Event, type: :model, slow: true do
   end
 
   describe 'calendar ids' do
-    event_it 'uses the test calendar when not in production' do
+    it 'uses the test calendar when not in production' do
       event_type = FactoryBot.create(:event_type, event_category: 'public')
       event = FactoryBot.create(:event, event_type: event_type)
       expect(event.send(:calendar_id)).to eql(ENV['GOOGLE_CALENDAR_ID_TEST'])
     end
 
     context 'when in production' do
-      event_it 'uses the education calendar for courses' do
+      it 'uses the education calendar for courses' do
         event_type = FactoryBot.create(:event_type, event_category: 'public')
         event = FactoryBot.create(:event, event_type: event_type)
         expect(event.send(:calendar_id, prod: true)).to eql(ENV['GOOGLE_CALENDAR_ID_EDUC'])
       end
 
-      event_it 'uses the education calendar for seminars' do
+      it 'uses the education calendar for seminars' do
         event_type = FactoryBot.create(:event_type, event_category: 'seminar')
         event = FactoryBot.create(:event, event_type: event_type)
         expect(event.send(:calendar_id, prod: true)).to eql(ENV['GOOGLE_CALENDAR_ID_EDUC'])
       end
 
-      event_it 'uses the education calendar for meetings' do
+      it 'uses the education calendar for meetings' do
         event_type = FactoryBot.create(:event_type, event_category: 'meeting')
         event = FactoryBot.create(:event, event_type: event_type)
         expect(event.send(:calendar_id, prod: true)).to eql(ENV['GOOGLE_CALENDAR_ID_GEN'])
@@ -502,7 +502,7 @@ RSpec.describe Event, type: :model, slow: true do
   end
 
   describe 'all day' do
-    event_it 'creates a valid event with the all_day flag set' do
+    it 'creates a valid event with the all_day flag set' do
       expect { FactoryBot.create(:event, all_day: true) }.not_to raise_error
     end
   end
@@ -510,17 +510,17 @@ RSpec.describe Event, type: :model, slow: true do
   describe 'titles' do
     let(:event_type) { FactoryBot.create(:event_type) }
 
-    event_it 'uses the event_type display_title without a summary' do
+    it 'uses the event_type display_title without a summary' do
       event = FactoryBot.create(:event, event_type: event_type)
       expect(event.display_title).to eql(event_type.display_title)
     end
 
-    event_it 'uses the summary when present' do
+    it 'uses the summary when present' do
       event = FactoryBot.create(:event, event_type: event_type, summary: 'Name')
       expect(event.display_title).to eql('Name')
     end
 
-    event_it 'generates the correct date_title' do
+    it 'generates the correct date_title' do
       event = FactoryBot.create(:event, event_type: event_type, start_at: '2018-04-07')
       expect(event.date_title).to eql("America's Boating Course – 4/7/2018")
     end
@@ -530,17 +530,17 @@ RSpec.describe Event, type: :model, slow: true do
     let(:event_type) { FactoryBot.create(:event_type) }
     let(:event) { FactoryBot.create(:event, event_type: event_type) }
 
-    event_it 'does not have a promo code attached on create' do
+    it 'does not have a promo code attached on create' do
       expect(event.promo_codes).to be_blank
     end
 
-    event_it 'correctlies attach a promo code when a match exists' do
+    it 'correctlies attach a promo code when a match exists' do
       FactoryBot.create(:promo_code, code: 'prior_code')
       event.attach_promo_code('prior_code')
       expect(event.promo_codes.first.code).to eql('prior_code')
     end
 
-    event_it 'correctlies attach a promo code when a match does not exist' do
+    it 'correctlies attach a promo code when a match does not exist' do
       event.attach_promo_code('new_code')
       expect(event.promo_codes.first.code).to eql('new_code')
     end
@@ -550,12 +550,12 @@ RSpec.describe Event, type: :model, slow: true do
     let(:event_type) { FactoryBot.create(:event_type) }
     let(:event) { FactoryBot.create(:event, event_type: event_type, repeat_pattern: 'WEEKLY') }
 
-    event_it 'returns the correct description for a daily event' do
+    it 'returns the correct description for a daily event' do
       event.repeat_pattern = 'DAILY'
       expect(event.repeat_description).to eql('over consecutive days')
     end
 
-    event_it 'returns the correct description for a weekly event' do
+    it 'returns the correct description for a weekly event' do
       expect(event.repeat_description).to eql('every week')
     end
   end
@@ -564,23 +564,23 @@ RSpec.describe Event, type: :model, slow: true do
     let(:event_type) { FactoryBot.create(:event_type) }
     let(:event) { FactoryBot.create(:event, event_type: event_type, repeat_pattern: 'WEEKLY') }
 
-    event_it 'generates a normal link without a slug' do
+    it 'generates a normal link without a slug' do
       expect(event.public_link).to match(%r{courses/\d+\z})
     end
 
-    event_it 'generates a slug link with a slug' do
+    it 'generates a slug link with a slug' do
       slug = SecureRandom.hex(16)
       event.update(slug: slug)
       expect(event.public_link).to match(%r{e/#{slug}\z})
     end
 
-    event_it 'saves a downcased slug' do
+    it 'saves a downcased slug' do
       slug = SecureRandom.hex(16).upcase
       event.update(slug: slug)
       expect(event.public_link).to match(%r{e/#{slug.downcase}\z})
     end
 
-    event_it 'generates the correct local path' do
+    it 'generates the correct local path' do
       expect(event.path).to match(%r{courses/\d+\z})
     end
   end
