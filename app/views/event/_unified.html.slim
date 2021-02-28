@@ -6,70 +6,73 @@
         - if event.summary.present?
           .event-type = event.event_type.display_title
 
-      .event-main-details
-        .event-starts
-          - if event.multiple_sessions?
-            b Starts: 
-          - if event.all_day
-            = event.start_at.strftime(ApplicationController::EVENT_DATE_FORMAT)
-          - else
-            = event.start_at.strftime(ApplicationController::LONG_TIME_FORMAT)
+      - unless defined?(@event_catalog)
+        .event-main-details
+          .event-starts
+            - if event.multiple_sessions?
+              b> Starts:
+            - if event.all_day
+              = event.start_at.strftime(ApplicationController::EVENT_DATE_FORMAT)
+            - else
+              = event.start_at.strftime(ApplicationController::LONG_TIME_FORMAT)
 
-        .event-sessions-and-length
-          - if event.multiple_sessions? || event.length?
-            .table.row: .table-cell
-              - if event.multiple_sessions?
-                - if event.all_day
-                  b = "#{event.sessions} days"
-                - else
-                  b = "#{event.sessions} sessions"
-                  - if event.length?
-                    | , 
-              - if event.length? && !event.all_day
-                = event.formatted_length
+          .event-sessions-and-length
+            - if event.multiple_sessions? || event.length?
+              .table.row: .table-cell
                 - if event.multiple_sessions?
-                  |  each
+                  - if event.all_day
+                    b = "#{event.sessions} days"
+                  - else
+                    b = "#{event.sessions} sessions"
+                    - if event.length?
+                      ' ,
+                - if event.length? && !event.all_day
+                  = event.formatted_length
+                  - if event.multiple_sessions?
+                    |  each
 
-        .event-flags
-          - if @current_user_permitted_event_type && event.show_in_catalog
-            .table.row: .table-cell.catalog #{FA::Icon.p('star', style: :duotone)} In catalog
-          - if @current_user_permitted_event_type && event.activity_feed
-            .table.row: .table-cell.catalog #{FA::Icon.p('stream', style: :duotone)} Available for activity feed
+          .event-flags
+            - if @current_user_permitted_event_type && event.show_in_catalog
+              .table.row: .table-cell.catalog #{FA::Icon.p('star', style: :duotone)} In catalog
+            - if @current_user_permitted_event_type && event.activity_feed
+              .table.row: .table-cell.catalog #{FA::Icon.p('stream', style: :duotone)} Available for activity feed
 
-      .event-location
-        - if @locations[event.location_id].present?
-          .bold Location:
-          .location-link
-            - if @locations[event.location_id][:map_link].present?
-              = link_to(@locations[event.location_id][:map_link], target: :_blank) do
-                | #{FA::Icon.p('map-marker-alt', style: :duotone)} Map
-          .location-address = simple_format(@locations[event.location_id][:address])
-          .location-details
-            - if @locations[event.location_id].present? && @locations[event.location_id][:details].present?
-              = simple_markdown(@locations[event.location_id][:details])
-          .location-picture
-            - if @locations[event.location_id].present? && @locations[event.location_id][:picture].present?
-              = image_tag(files_bucket.link(@locations[event.location_id][:picture].path(:thumb)))
-        - else
-          .bold Location TBD
-        - if event.online && event.conference_link
-          .location-online = link_to(event.conference_link, target: :_blank) { FA::Icon.p('laptop', style: :duotone) + 'Attend Online' }
+        .event-location
+          - if @locations[event.location_id].present?
+            .bold Location:
+            .location-link
+              - if @locations[event.location_id][:map_link].present?
+                = link_to(@locations[event.location_id][:map_link], target: :_blank) do
+                  | #{FA::Icon.p('map-marker-alt', style: :duotone)} Map
+            .location-address = simple_format(@locations[event.location_id][:address])
+            .location-details
+              - if @locations[event.location_id].present? && @locations[event.location_id][:details].present?
+                = simple_markdown(@locations[event.location_id][:details])
+            .location-picture
+              - if @locations[event.location_id].present? && @locations[event.location_id][:picture].present?
+                = image_tag(files_bucket.link(@locations[event.location_id][:picture].path(:thumb)))
+          - else
+            .bold Location TBD
+          - if event.online && event.conference_link
+            .location-online = link_to(event.conference_link, target: :_blank) { FA::Icon.p('laptop', style: :duotone) + 'Attend Online' }
 
-    .event-costs
-      - if event.cost.present?
-        = render('event/costs', event: event)
-        - if event.advance_payment
-          br
-          .blue.bold.italic Advance payment required by #{event.cutoff_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT)}
+    - unless defined?(@event_catalog)
+      .event-costs
+        - if event.cost.present?
+          = render('event/costs', event: event)
+          - if event.advance_payment
+            br
+            .blue.bold.italic Advance payment required by #{event.cutoff_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT)}
 
     .event-description
       = simple_markdown(event.description) if event.description.present?
-      - if event.usps_cost.present?
-        .red.italic
-          .bold USPS members from other squadrons:
-          div Please contact us for your discounted rate.
-      - if event&.location&.price_comment&.present?
-        .red.italic = event.location.price_comment
+      - unless defined?(@event_catalog)
+        - if event.usps_cost.present?
+          .red.italic
+            .bold USPS members from other squadrons:
+            div Please contact us for your discounted rate.
+        - if event&.location&.price_comment&.present?
+          .red.italic = event.location.price_comment
 
     .event-topics.detail
       - if event.course_topics.present?
@@ -90,10 +93,11 @@
         .bold Student requirements:
         = simple_format(event.requirements)
 
-    .event-instructors.detail
-      - if event.event_instructors.present?
-        .bold = "Instructor".pluralize(event.event_instructors.count) + ":"
-        = simple_format(event.event_instructors.map { |i| i.user.full_name }.join("\n"))
+    - unless defined?(@event_catalog)
+      .event-instructors.detail
+        - if event.event_instructors.present?
+          .bold = "Instructor".pluralize(event.event_instructors.count) + ":"
+          = simple_format(event.event_instructors.map { |i| i.user.full_name }.join("\n"))
 
     .event-prereq.detail
       - if event.prereq.present?
@@ -101,7 +105,7 @@
           .bold Prerequisite course:
           p = event.prereq.title.titleize
 
-    - if @current_user_permitted_event_type && @registered_users[event.id].present?
+    - if @current_user_permitted_event_type && @registered_users[event.id].present? && !defined?(@event_catalog)
       .event-registrations.detail
         .bold Registered Users:
         ul.simple
@@ -110,8 +114,11 @@
 
   .event-column-right
     .event-actions
-      = render 'event/actions/schedule', event: event if user_signed_in? && @current_user_permitted_event_type
-      = render 'event/actions/schedule_general', event: event unless long_form || event.expired?
+      - if defined?(@event_catalog)
+        = render 'event/actions/catalog', event: event
+      - else
+        = render 'event/actions/schedule', event: event if user_signed_in? && @current_user_permitted_event_type
+        = render 'event/actions/schedule_general', event: event unless long_form || event.expired?
 
     .event-flyer
       - if event.get_flyer.present?

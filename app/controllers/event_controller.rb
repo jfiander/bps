@@ -14,10 +14,13 @@ class EventController < ApplicationController
   include Events::Update
   include Concerns::Application::RedirectWithStatus
 
+  before_action :prepare_lists, only: %i[schedule catalog]
+  before_action :current, only: %i[schedule]
+  before_action :load_catalog, only: %i[catalog]
+  before_action :registered_users, only: %i[schedule catalog]
   before_action :find_event, only: %i[show copy edit update expire archive remind book unbook]
   before_action :prepare_form, only: %i[new copy edit]
   before_action :check_for_blank, only: %i[create update]
-  # before_action :preload_events, only: %i[schedule catalog registrations show]
   before_action :location_names, only: %i[new copy edit]
   before_action :set_create_path, only: %i[new copy]
   before_action :load_registrations, only: %i[schedule], if: :user_signed_in?
@@ -25,24 +28,11 @@ class EventController < ApplicationController
   before_action :block_multiple_reminders, only: %i[remind]
 
   def schedule
-    @events = current
-    @locations ||= Location.searchable
-
-    @current_user_permitted_event_type = current_user&.permitted?(
-      event_type_param, session: session
-    )
-
-    return unless @current_user_permitted_event_type
-
-    @registered_users = Registration.includes(:user).all.group_by(&:event_id)
-    @expired_events = expired
+    expired if @current_user_permitted_event_type
   end
 
   def catalog
-    @event_catalog = load_catalog
-    @current_user_permitted_event_type = current_user&.permitted?(
-      event_type_param, session: session
-    )
+    # All loading is done in before hooks
   end
 
   def registrations
@@ -142,10 +132,12 @@ class EventController < ApplicationController
 
 private
 
-  def load_catalog
-    return catalog_list unless event_type_param == 'course'
+  def prepare_lists
+    @locations ||= Location.searchable
 
-    catalog_list.group_by { |e| e.event_type.event_category }.symbolize_keys
+    @current_user_permitted_event_type = current_user&.permitted?(
+      event_type_param, session: session
+    )
   end
 
   def event_not_found?
@@ -164,14 +156,27 @@ private
   end
 
   def current
-    @current ||= Event.include_details.displayable.current.for_category(event_type_param)
+    @events ||= Event.include_details.displayable.current.for_category(event_type_param)
   end
 
   def expired
-    @expired ||= Event.include_details.displayable.expired.for_category(event_type_param)
+    @expired_events ||= Event.include_details.displayable.expired.for_category(event_type_param)
+  end
+
+  def load_catalog
+    return catalog_list unless event_type_param == 'course'
+
+    @event_catalog = catalog_list.group_by { |e| e.event_type.event_category }.symbolize_keys
   end
 
   def catalog_list
-    Event.where(show_in_catalog: true)
+    @event_catalog = Event.include_details.where(show_in_catalog: true)
+                          .for_category(event_type_param)
+  end
+
+  def registered_users
+    return unless @current_user_permitted_event_type
+
+    @registered_users = Registration.includes(:user).all.group_by(&:event_id)
   end
 end
