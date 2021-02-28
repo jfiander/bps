@@ -18,22 +18,30 @@ div#files {
 }
 
 div#files.headers {
-  width: 75%;
+  width: 65%;
 
   div.table-row {
     height: 6em;
 
     div.table-cell {
+      text-align: center;
       vertical-align: middle;
     }
 
-    div.table-cell.left {
-      text-align: center;
-      width: 75%;
+    div.table-cell.preview {
+      width: 60%;
     }
 
-    div.table-cell.right {
-      width: 25%;
+    div.table-cell.dimensions {
+      width: 30%;
+    }
+
+    div.table-cell.show {
+      width: 5%;
+    }
+
+    div.table-cell.remove {
+      width: 5%;
     }
   }
 
