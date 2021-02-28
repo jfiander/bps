@@ -4,10 +4,10 @@ class User
   module Receipts
     def receipts
       @payments = [
-        Payment.where(parent_type: 'Registration').includes(parent: :user),
-        Payment.where(parent_type: 'MemberApplication').includes(parent: :member_applicants),
-        Payment.where(parent_type: 'User').includes(:parent),
-        Payment.where(parent_type: 'GenericPayment').includes(:parent)
+        payments.where(parent_type: 'Registration').includes(parent: :user),
+        payments.where(parent_type: 'MemberApplication').includes(parent: :member_applicants),
+        payments.where(parent_type: 'User').includes(:parent),
+        payments.where(parent_type: 'GenericPayment').includes(:parent)
       ].flatten.compact.sort { |a, b| b.created_at <=> a.created_at }.select(&:cost?)
     end
 
@@ -32,6 +32,10 @@ class User
     end
 
   private
+
+    def payments
+      Payment.where('created_at > ?', 1.year.ago)
+    end
 
     def find_payment
       @payment = Payment.find_by(token: receipt_params[:token])

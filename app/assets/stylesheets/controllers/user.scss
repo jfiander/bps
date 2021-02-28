@@ -262,11 +262,22 @@ div#override-cost {
 div#receipts {
   div.table-cell {
     height: 2em;
+    min-width: 2em;
     vertical-align: middle;
   }
 
-  div.receipts-actions a {
-    margin: 0 0.25em;
+  div.receipt-actions {
+    display: flex;
+    justify-content: flex-start;
+
+    div.receipt-actions-block {
+      flex-basis: 5em;
+      margin: 0.5em 0;
+    }
+
+    a {
+      margin: 0 0.25em;
+    }
   }
 }
 
