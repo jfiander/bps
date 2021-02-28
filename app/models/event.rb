@@ -72,7 +72,7 @@ class Event < ApplicationRecord
                when 'event'
                  'meeting'
                else
-                category
+                 category
                end
     includes(:event_type).where(event_types: { event_category: category })
   end
