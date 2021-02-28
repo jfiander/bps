@@ -23,23 +23,23 @@ h1 = admin_header('Payments & Receipts')
           .receipt-actions-block
             - if payment.paid
               - if payment.transaction_id == 'in-person'
-                = FA::Icon.p('money-check-alt', style: :duotone, css: 'admin', title: 'Paid In-Person')
+                = FA::Icon.p('money-check-alt', style: :duotone, fa: :fw, css: 'admin', title: 'Paid In-Person')
               - else
-                = FA::Icon.p('credit-card', style: :duotone, css: 'birmingham-blue', title: 'Paid Online')
-              = link_to(refunded_path(payment.token), method: :patch, class: 'red', data: { confirm: 'Are you sure you want to mark this payment as refunded?' }) { FA::Icon.p('undo', style: :duotone, title: 'Mark as refunded') } if payment.paid && !payment.refunded
+                = FA::Icon.p('credit-card', style: :duotone, fa: :fw, css: 'birmingham-blue', title: 'Paid Online')
+              = link_to(refunded_path(payment.token), method: :patch, class: 'red', data: { confirm: 'Are you sure you want to mark this payment as refunded?' }) { FA::Icon.p('undo', style: :duotone, fa: :fw, title: 'Mark as refunded') } if payment.paid && !payment.refunded
           .receipt-actions-block
             - if payment.paid
               - if payment.receipt.exists?
-                = link_to(receipt_path(payment.token), class: 'blue') { FA::Icon.p('file-pdf', style: :duotone, title: 'Receipt') }
+                = link_to(receipt_path(payment.token), class: 'blue') { FA::Icon.p('file-pdf', style: :duotone, fa: :fw, title: 'Receipt') }
               - else
-                = FA::Icon.p('ellipsis-h', style: :duotone, css: 'gray', title: 'Pending generation')
+                = FA::Icon.p('ellipsis-h', style: :duotone, fa: :fw, css: 'gray', title: 'Pending generation')
             - elsif !payment.refunded && payment.parent.is_a?(Registration)
               - style = payment.parent&.override_cost.present? ? :solid : :duotone
-              = link_to(override_cost_path(payment.token), class: 'green') { FA::Icon.p('file-invoice-dollar', style: style, title: 'Override Cost') }
+              = link_to(override_cost_path(payment.token), class: 'green') { FA::Icon.p('file-invoice-dollar', style: style, fa: :fw, title: 'Override Cost') }
           .receipt-actions-block
             - if !payment.paid && !payment.refunded
-              = link_to(pay_path(payment.token)) { FA::Icon.p('credit-card', style: :duotone, title: 'Pay Now') }
-              = link_to(paid_in_person_path(payment.token), class: 'admin', data: { confirm: 'Are you sure you want to mark this payment as paid in-person?' }) { FA::Icon.p('money-check-alt', style: :duotone, title: 'Paid In-Person') }
+              = link_to(pay_path(payment.token)) { FA::Icon.p('credit-card', style: :duotone, fa: :fw, title: 'Pay Now') }
+              = link_to(paid_in_person_path(payment.token), class: 'admin', data: { confirm: 'Are you sure you want to mark this payment as paid in-person?' }) { FA::Icon.p('money-check-alt', style: :duotone, fa: :fw, title: 'Paid In-Person') }
       - payment_class = 'gray' unless payment.paid?
       - payment_class = 'red' if payment.refunded
       .table-cell class=(payment_class) title=('Refunded' if payment.refunded)
