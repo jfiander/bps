@@ -22,6 +22,14 @@ class HeaderImage < ApplicationRecord
     id.present? ? find_by(id: id) : all.sample
   end
 
+  def dimensions
+    "#{width}x#{height}"
+  end
+
+  def ratio
+    (width.to_f / height).round(2)
+  end
+
 private
 
   def correct_image_dimensions
@@ -29,6 +37,8 @@ private
     return if image.nil?
 
     dim = Paperclip::Geometry.from_file(file.queued_for_write[:original].path)
+    self.width = dim.width
+    self.height = dim.height
     ratio = dim.width / dim.height
     add_errors(dim, ratio)
   end

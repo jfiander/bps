@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_27_205817) do
+ActiveRecord::Schema.define(version: 2021_02_28_231932) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -287,6 +287,8 @@ ActiveRecord::Schema.define(version: 2021_02_27_205817) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "width"
+    t.integer "height"
     t.index ["deleted_at"], name: "index_header_images_on_deleted_at"
   end
 

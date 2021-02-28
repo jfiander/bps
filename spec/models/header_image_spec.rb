@@ -46,4 +46,20 @@ RSpec.describe HeaderImage, type: :model do
       expect(header.errors.messages).to be_blank
     end
   end
+
+  describe 'dimensions' do
+    let(:header) do
+      FactoryBot.create(
+        :header_image, file: File.new(test_image(1500, 500)), width: 1500, height: 500
+      )
+    end
+
+    it 'generates valid dimensions' do
+      expect(header.dimensions).to eq('1500x500')
+    end
+
+    it 'generates a valid ratio' do
+      expect(header.ratio).to eq(3.0)
+    end
+  end
 end
