@@ -27,4 +27,3 @@ script:
   - bundle exec rspec --format progress --color --tty
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT || true
-  - bundle exec rake test_calendar:clear

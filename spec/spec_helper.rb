@@ -194,7 +194,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
     Dir[Rails.root.join('tmp', 'run', '**', '*')].each { |file| File.delete(file) }
 
-    clear_test_calendar if ENV['AUTO_CLEAR_CALENDAR'] == 'true'
+    # clear_test_calendar if ENV['AUTO_CLEAR_CALENDAR'] == 'true'
 
     true
   end
