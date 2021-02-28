@@ -326,6 +326,11 @@
         margin-top: 2em;
         min-height: auto !important;
       }
+
+      div.event-flags > div {
+        text-indent: 0;
+        padding-left: 0;
+      }
     }
 
     div.event-column-right {
