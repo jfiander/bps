@@ -103,6 +103,19 @@
       margin-left: 0;
     }
   }
+
+  div#bridge div.bridge-officer-name,
+  div#bridge div.bridge-department-info {
+    div.flag, div.department {
+      flex-basis: 50%;
+    }
+  }
+
+  div#bridge div.bridge-department-info {
+    div.committees {
+      flex-basis: 80%;
+    }
+  }
 }
 
 @media all and (min-width: 1051px) {
@@ -119,12 +132,6 @@
 
   div.events-table-mobile {
     display: none;
-  }
-
-  div#bridge.table {
-    .table-cell.dept-head-mobile {
-      display: none;
-    }
   }
 
   div#bilge {

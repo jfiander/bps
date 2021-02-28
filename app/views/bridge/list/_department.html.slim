@@ -1,21 +1,17 @@
-.table-row
-  .table-cell.table-header.flag = data[:head][:title]
-  .table-cell.table-header.department = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : mail_to(data[:head][:email], data[:head][:user][:full_name])
-  .table-cell.table-header.dept-head-mobile
-    = data[:head][:title]
-    ' :
-    = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : mail_to(data[:head][:email], data[:head][:user][:full_name])
-.table-row
-  .table-cell.flag = officer_flag(data[:head][:office], mode: :png)
-  .table-cell.department = image_tag(data[:head][:user][:photo], alt: data[:head][:user][:full_name]) if data[:head][:user].present?
-  .table-cell: .table.committees
-    - if data[:assistant].present? && data[:assistant][:user][:full_name] != "TBD"
-      .table-row.assistant
-        .table-cell = data[:assistant][:title]
-        .table-cell = mail_to data[:assistant][:email], data[:assistant][:user][:full_name]
-    .table-row
-      .table-cell.table-header.committee Committees
-      .table-cell.table-header.committee-chair Chair
-    - data[:committees]&.each do |committee|
-      = render('bridge/list/committee', committee: committee)
-.table-row: .table-cell.spacer
+.bridge-department
+  .bridge-officer-name
+    .flag = data[:head][:title]
+    .department = data[:head][:user][:full_name] == "TBD" ? data[:head][:user][:full_name] : mail_to(data[:head][:email], data[:head][:user][:full_name])
+  .bridge-department-info
+    .flag = officer_flag(data[:head][:office], mode: :png)
+    .department = image_tag(data[:head][:user][:photo], alt: data[:head][:user][:full_name]) if data[:head][:user].present?
+    .table.committees
+      - if data[:assistant].present? && data[:assistant][:user][:full_name] != "TBD"
+        .table-row.assistant
+          .table-cell = data[:assistant][:title]
+          .table-cell = mail_to data[:assistant][:email], data[:assistant][:user][:full_name]
+      .table-row
+        .table-cell.table-header.committee Committees
+        .table-cell.table-header.committee-chair Chair
+      - data[:committees]&.each do |committee|
+        = render('bridge/list/committee', committee: committee)

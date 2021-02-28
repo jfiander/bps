@@ -138,9 +138,20 @@
     display: none;
   }
 
-  div#bridge.table {
-    .table-cell.flag, .table-cell.department {
-      display: none;
+  div#bridge {
+    font-size: 90%;
+  }
+
+  div#bridge div.bridge-officer-name,
+  div#bridge div.bridge-department-info {
+    div.flag, div.department {
+      flex-basis: 50%;
+    }
+  }
+
+  div#bridge div.bridge-department-info {
+    div.committees {
+      flex-basis: 75%;
     }
   }
 

@@ -2,7 +2,7 @@ h1 Bridge Officers
 
 = editor('bridge_editor') if @current_user_permitted_users
 
-#bridge.table
+#bridge
   - @bridge_list[:departments].each do |dept, data|
     = render 'bridge/list/department', dept: dept, data: data
 
