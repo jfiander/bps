@@ -1,11 +1,10 @@
 .event-unified
   .event-column-left
+    .event-display-title
+      .title = event.display_title
+      - if event.summary.present?
+        .event-type = event.event_type.display_title
     .event-top-block
-      .event-display-title
-        .title = event.display_title
-        - if event.summary.present?
-          .event-type = event.event_type.display_title
-
       - unless defined?(@event_catalog)
         .event-main-details
           .event-starts

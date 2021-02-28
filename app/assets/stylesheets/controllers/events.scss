@@ -67,13 +67,10 @@ div.events-unified-table {
 
     div.event-top-block {
       display: flex;
-      flex-flow: column wrap;
-      max-height: 14em;
+      flex-wrap: wrap;
     }
 
     div.event-display-title {
-      width: 50%;
-      align-self: flex-start;
       font-size: 150%;
       color: $old-glory-red;
       margin-right: 1em;
@@ -91,10 +88,10 @@ div.events-unified-table {
 
     div.event-main-details {
       width: 50%;
+      margin-right: 5%;
     }
 
     div.event-flags {
-      min-height: 4em;
       color: $birmingham-blue;
 
       & > div {
@@ -104,9 +101,7 @@ div.events-unified-table {
     }
 
     div.event-location {
-      width: 50%;
-
-      min-height: 6em;
+      width: 45%;
     }
 
     div.event-description {
