@@ -61,7 +61,8 @@
       max-width: 100vw;
 
       div#content-main {
-        margin: 0.5em;
+        margin: 0.5em 0;
+        padding: 0 1em;
         flex-flow: row wrap;
 
         div.markdown {
@@ -302,8 +303,8 @@
   }
 
   div.events-unified-table {
-    width: 100%;
-    margin: 0 auto;
+    width: 98%;
+    margin: 0;
 
     div.event-column-left {
       width: auto !important;
@@ -322,14 +323,23 @@
       }
 
       div.event-location {
-        width: 100%;
+        width: 98%; /* Not sure why this overflows the page at 100% */
         margin-top: 2em;
         min-height: auto !important;
+      }
+
+      div.event-costs {
+        width: 100%;
+        margin: 1em 0;
       }
 
       div.event-flags > div {
         text-indent: 0;
         padding-left: 0;
+      }
+
+      div.detail {
+        margin: 0.5em 0;
       }
     }
 
