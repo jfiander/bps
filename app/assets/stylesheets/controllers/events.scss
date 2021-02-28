@@ -91,9 +91,15 @@ div.events-unified-table {
 
     div.event-main-details {
       width: 50%;
+    }
 
-      div.event-sessions-and-length {
-        margin-bottom: 2em;
+    div.event-flags {
+      min-height: 4em;
+      color: $birmingham-blue;
+
+      & > div {
+        text-indent: -2em;
+        padding-left: 2em;
       }
     }
 
