@@ -2,12 +2,14 @@
 
 module Members
   module Dues
-    def dues
-      dues_not_payable unless @payment.present?
-    end
+    extend ActiveSupport::Concern
 
     included do
       before_action :prepare_dues, only: :dues, if: :current_user_dues_due?
+    end
+
+    def dues
+      dues_not_payable unless @payment.present?
     end
 
   private

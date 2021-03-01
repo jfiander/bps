@@ -2,6 +2,8 @@
 
 class User
   module Instructors
+    extend ActiveSupport::Concern
+
     included do
       secure!(:education, only: :instructors)
     end

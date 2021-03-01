@@ -2,8 +2,7 @@
 
 module Events
   module Edit
-    # This module defines no public methods.
-    def _; end
+    extend ActiveSupport::Concern
 
     included do
       before_action :find_event, only: %i[show copy edit update expire archive remind book unbook]

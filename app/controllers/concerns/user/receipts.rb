@@ -2,6 +2,8 @@
 
 class User
   module Receipts
+    extend ActiveSupport::Concern
+
     included do
       secure!(
         :admin, strict: true, only: %i[receipts receipt override_cost paid_in_person refunded_payment]
