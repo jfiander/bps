@@ -6,7 +6,8 @@ class User
 
     included do
       secure!(
-        :admin, strict: true, only: %i[receipts receipt override_cost paid_in_person refunded_payment]
+        :admin,
+        strict: true, only: %i[receipts receipt override_cost paid_in_person refunded_payment]
       )
 
       before_action :find_payment, only: %i[receipt paid_in_person refunded_payment]
