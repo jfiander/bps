@@ -2,6 +2,8 @@
 
 module Members
   module Roster
+    extend ActiveSupport::Concern
+
     ROSTER_UPLOAD_RETRY_EXCEPTIONS ||= [
       Aws::S3::Errors::BadDigest, Aws::S3::Errors::XAmzContentSHA256Mismatch
     ].freeze
