@@ -23,7 +23,7 @@ class FileController < ApplicationController
 
   def new_header
     @header = HeaderImage.new
-    @headers = HeaderImage.all
+    @headers = HeaderImage.all.order(:created_at)
   end
 
   def create_header
