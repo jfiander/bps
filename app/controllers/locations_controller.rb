@@ -2,7 +2,7 @@
 
 class LocationsController < ApplicationController
   include Locations::Refresh
-  include Concerns::Application::RedirectWithStatus
+  include Application::RedirectWithStatus
 
   secure!(:event, :course, :seminar)
 
