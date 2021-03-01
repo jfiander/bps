@@ -2,6 +2,8 @@
 
 class User
   module Edit
+    extend ActiveSupport::Concern
+
     included do
       secure!(:admin, only: %i[assign_photo])
     end

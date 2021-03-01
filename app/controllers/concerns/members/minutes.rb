@@ -2,6 +2,12 @@
 
 module Members
   module Minutes
+    extend ActiveSupport::Concern
+
+    included do
+      before_action :list_minutes, only: %i[minutes find_minutes find_minutes_excom]
+    end
+
     def minutes
       @minutes = MinutesFile.ordered.where(excom: false).group_by(&:year)
       @excom_minutes = MinutesFile.ordered.where(excom: true).group_by(&:year)
@@ -21,10 +27,6 @@ module Members
       verb = update_file(:minutes)
 
       redirect_to(minutes_path, success: "Minutes #{@issue} #{verb} successfully.")
-    end
-
-    included do
-      before_action :list_minutes, only: %i[minutes find_minutes find_minutes_excom]
     end
 
   private

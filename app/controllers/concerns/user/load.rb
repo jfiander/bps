@@ -2,8 +2,7 @@
 
 class User
   module Load
-    # This module defines no public methods.
-    def _; end
+    extend ActiveSupport::Concern
 
     included do
       before_action :find_user, only: %i[show certificate]

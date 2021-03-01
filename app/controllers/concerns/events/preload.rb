@@ -2,8 +2,7 @@
 
 module Events
   module Preload
-    # This module defines no public methods.
-    def _; end
+    extend ActiveSupport::Concern
 
     included do
       before_action :load_registrations, only: %i[schedule], if: :user_signed_in?

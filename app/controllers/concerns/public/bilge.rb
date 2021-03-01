@@ -2,6 +2,12 @@
 
 module Public
   module Bilge
+    extend ActiveSupport::Concern
+
+    included do
+      before_action :list_bilges, only: %i[newsletter bilge]
+    end
+
     def newsletter
       @public_ids = BilgeFile.last_18.map(&:id)
       @issues = BilgeFile.issues
@@ -13,10 +19,6 @@ module Public
       return bilge_not_found unless bilge.present?
 
       send_bilge(bilge)
-    end
-
-    included do
-      before_action :list_bilges,             only: %i[newsletter bilge]
     end
 
   private

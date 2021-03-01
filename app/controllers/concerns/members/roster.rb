@@ -6,6 +6,11 @@ module Members
       Aws::S3::Errors::BadDigest, Aws::S3::Errors::XAmzContentSHA256Mismatch
     ].freeze
 
+    included do
+      before_action :redirect_if_no_roster, only: :roster
+      before_action :reject_invalid_file, only: :upload_roster
+    end
+
     def roster
       respond_to do |format|
         format.html
@@ -32,11 +37,6 @@ module Members
         format.pdf { generate_and_send_roster }
         format.html { redirect_to roster_gen_path(format: :pdf) }
       end
-    end
-
-    included do
-      before_action :redirect_if_no_roster, only: :roster
-      before_action :reject_invalid_file, only: :upload_roster
     end
 
   private
