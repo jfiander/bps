@@ -1,23 +1,28 @@
 # frozen_string_literal: true
 
-class Files::HeaderController < FileController
-  TYPE ||= :header
-  MODEL_CLASS ||= HeaderImage
+module Files
+  class HeaderController < FileController
+    secure!(:page)
 
-  include Concerns::Application::RedirectWithStatus
+    title!('Headers')
 
-  secure!(:page)
+    def new
+      @header = model_class.new
+      @headers = model_class.all
+    end
 
-  title!('Headers')
+  private
 
-  def new
-    @header = MODEL_CLASS.new
-    @headers = MODEL_CLASS.all
-  end
+    def model_class
+      HeaderImage
+    end
 
-private
+    def object_type
+      :header
+    end
 
-  def file_params
-    params.require(:header_image).permit(:file)
+    def file_params
+      params.require(:header_image).permit(:file)
+    end
   end
 end

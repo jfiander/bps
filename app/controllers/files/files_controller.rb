@@ -1,23 +1,28 @@
 # frozen_string_literal: true
 
-class Files::FilesController < FileController
-  TYPE ||= :file
-  MODEL_CLASS ||= MarkdownFile
+module Files
+  class FilesController < FileController
+    secure!(:page)
 
-  include Concerns::Application::RedirectWithStatus
+    title!('Files')
 
-  secure!(:page)
+    def new
+      @file = model_class.new
+      @markdown_files = model_class.all
+    end
 
-  title!('Files')
+  private
 
-  def new
-    @file = MODEL_CLASS.new
-    @markdown_files = MODEL_CLASS.all
-  end
+    def model_class
+      MarkdownFile
+    end
 
-private
+    def object_type
+      :file
+    end
 
-  def file_params
-    params.require(:markdown_file).permit(:file)
+    def file_params
+      params.require(:markdown_file).permit(:file)
+    end
   end
 end
