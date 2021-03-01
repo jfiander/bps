@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FileController < ApplicationController
-  include Concerns::Application::RedirectWithStatus
+  include Application::RedirectWithStatus
 
   secure!(:page)
 
