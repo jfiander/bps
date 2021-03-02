@@ -1,4 +1,4 @@
 div.next-meeting
-  b The next membership meeting is scheduled for:
-  br
+  .bold The next membership meeting is scheduled for:
   = next_membership.strftime(ApplicationController::EVENT_DATE_FORMAT)
+  = render('members/attend_meeting', key: :meeting) if current_user.present?

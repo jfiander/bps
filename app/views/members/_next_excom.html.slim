@@ -1,4 +1,4 @@
 div.next-meeting
-  b The next Executive Committee meeting is scheduled for:
-  br
+  .bold The next Executive Committee meeting is scheduled for:
   = next_excom.strftime(ApplicationController::EVENT_DATE_FORMAT)
+  = render('members/attend_meeting', key: :excom) if current_user.present?

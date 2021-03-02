@@ -247,6 +247,15 @@ div.next-meeting {
   color: $old-glory-blue-light;
   background-color: $background-blue-faded;
   line-height: 1.75em;
+
+  div.attend {
+    font-size: smaller;
+
+    code {
+      font-size: larger;
+      font-style: normal;
+    }
+  }
 }
 
 div.notice {
