@@ -1,4 +1,6 @@
 div.next-meeting
-  .bold The next membership meeting is scheduled for:
-  = next_membership.strftime(ApplicationController::EVENT_DATE_FORMAT)
-  = render('members/attend_meeting', key: :meeting) if current_user.present?
+  .icon = FA::Icon.p('seahorse',  style: :kit_upload, fa: :fw, css: 'birminmgham-blue')
+  .meeting
+    .bold The next membership meeting is scheduled for
+    = next_membership.strftime(ApplicationController::EVENT_DATE_FORMAT)
+    = render('members/attend_meeting', key: :meeting) if current_user.present?

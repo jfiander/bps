@@ -14,7 +14,7 @@ RSpec.describe Role, type: :model do
     FactoryBot.build(:role, name: 'orphan', icon: 'user').save(validate: false)
 
     expect(Role.icons).to eq(
-      { all: 'globe', excom: 'leaf-oak', orphan: 'user' }
+      { all: 'globe', excom: 'chevron-circle-down', orphan: 'user' }
     )
   end
 end

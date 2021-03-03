@@ -241,12 +241,31 @@ iframe#calendar {
 
 div.next-meeting {
   @include border-radius;
-  padding: 0.25em;
+  padding: 0.25em 1em 0.25em 0.25em;
   font-size: larger;
   text-align: center;
   color: $old-glory-blue-light;
   background-color: $background-blue-faded;
   line-height: 1.75em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  div.icon {
+    text-align: center;
+    font-size: 3em;
+    flex-basis: 1;
+    min-width: 1.5em;
+
+    svg {
+      margin: 0;
+    }
+  }
+
+  div.meeting {
+    width: 85%;
+    flex-basis: 4;
+  }
 
   div.attend {
     font-size: smaller;
