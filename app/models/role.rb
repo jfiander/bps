@@ -15,7 +15,7 @@ class Role < ApplicationRecord
 
   def self.icons
     regular = all.each_with_object({}) { |role, hash| hash[role.name.to_sym] = role.icon }
-    regular.merge(all: 'globe', excom: 'leaf-oak')
+    regular.merge(all: 'globe', excom: 'chevron-circle-down')
   end
 
   def parents
