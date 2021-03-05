@@ -58,12 +58,22 @@ private
     end
   end
 
+  # Pattern description
+  #   pattern = /^%#{key}(((?:\r?\n)(.*?))*?)(?:(?:\r?\n){2}|\z)/
+  #
+  #   ^%#{key}              Beginning with primary key
+  #   ((?:\r?\n)(.*?))*?    Optionally followed by any number of immediate newline with more text
+  #   (?:(?:\r?\n){2}|\z)   Ending with either two newlines, or the end of the entire page contents
   def next_scheduled(key, markdown)
-    pattern = /%#{key}((?:\r?\n)(.*?))?(?:\r?\n){2}/
+    # html_safe: Text is sanitized before storage
+    contents = '(?:\r?\n)(.*?)'
+    tail = '(?:(?:\r?\n){2}|\z)'
+    pattern = /^%#{key}((#{contents})*?)#{tail}/
     return '' unless markdown&.match?(pattern)
 
     markdown.match(pattern) do |m|
-      view_context.render("members/next_#{key}", details: m[2])
+      details = redcarpet.render(m[1]).html_safe if m[1].present?
+      view_context.render("members/next_#{key}", details: details)
     end
   end
 

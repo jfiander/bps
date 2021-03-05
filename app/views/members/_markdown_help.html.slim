@@ -392,6 +392,7 @@
 
     h2 Shortcuts
     p Copy the red text into the page.
+    p.italic These are listed here for reference. You will probably not need to use these.
     .table
       .table-row
         .table-cell Birmingham burgee
@@ -400,15 +401,25 @@
         .table-cell Education menu
         .table-cell.bold.red %education
       .table-row
+        .table-cell Activity Feed
+        .table-cell.bold.red %activity
+      .table-row
         .table-cell Next membership meeting
         .table-cell.bold.red %meeting
       .table-row
         .table-cell Next ExCom meeting
         .table-cell.bold.red %excom
-      .table-row
-        .table-cell Activity Feed
-        .table-cell.bold.red %activity
-    p.italic These are listed here for reference. You will probably not need to use these.
+    p
+      ' The
+      span.red> %meeting
+      ' and
+      span.red> %excom
+      | tags are special, in that they can optionally accept multiple following lines of content, to replace the standard attendance information.
+    p
+      ' Reference links defined outside of this block cannot be used within it, though any defined within it
+      span.bold> are
+      | available for re-use elsewhere in the page.
+    p You can also only use each of those tags once in a given page.
     hr
 
     h2 Comments

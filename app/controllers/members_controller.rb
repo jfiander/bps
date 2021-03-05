@@ -52,10 +52,6 @@ class MembersController < ApplicationController
 
 private
 
-  def static_page_params
-    params.require(:static_page).permit(:name, :markdown)
-  end
-
   def clean_params
     params.permit(:page_name, :id, :save, :preview)
   end

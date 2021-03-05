@@ -12,6 +12,12 @@ class ParsedMarkdown
       self
     end
 
+    # Only allows one subsitution per page
+    def subs!(pattern, replacement)
+      sub!(pattern, replacement)
+      self
+    end
+
     def parse_comments
       gsubs!(%r{<p>//}, '<p style="display: none;">')
     end
@@ -45,12 +51,14 @@ class ParsedMarkdown
       gsubs!(%r{<p>%education</p>}, @education_menu)
     end
 
+    # Only allows one subsitution per page
     def parse_meeting
-      gsubs!(%r{<p>%meeting(\r?\n.*?)?</p>}, @next_meeting)
+      subs!(%r{<p>%meeting((\n|.)*?)?</p>}, @next_meeting)
     end
 
+    # Only allows one subsitution per page
     def parse_excom
-      gsubs!(%r{<p>%excom(\r?\n.*?)?</p>}, @next_excom)
+      subs!(%r{<p>%excom((\n|.)*?)?</p>}, @next_excom)
     end
 
     def parse_activity

@@ -7,7 +7,8 @@ module Members
     end
 
     def update_markdown
-      clean_params['markdown'] = sanitize(clean_params['markdown'])
+      static_page_params[:markdown] = sanitize(static_page_params[:markdown])
+
       if clean_params['save']
         save_markdown
       elsif clean_params['preview']
@@ -17,6 +18,10 @@ module Members
     end
 
   private
+
+    def static_page_params
+      params.require(:static_page).permit(:name, :markdown)
+    end
 
     def save_markdown
       page = StaticPage.find_by(name: static_page_params[:name])
