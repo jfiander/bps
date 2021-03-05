@@ -2,6 +2,8 @@
 
 class ParsedMarkdown
   module Parsers
+    PARAGRAPH_CONTENTS = '((\n|.)*?)?'
+
     # This module defines no public methods.
     def _; end
 
@@ -19,7 +21,7 @@ class ParsedMarkdown
     end
 
     def parse_comments
-      gsubs!(%r{<p>//}, '<p style="display: none;">')
+      gsubs!(%r{<p>//#{PARAGRAPH_CONTENTS}</p>}, '')
     end
 
     def parse_center
@@ -53,12 +55,16 @@ class ParsedMarkdown
 
     # Only allows one subsitution per page
     def parse_meeting
-      subs!(%r{<p>%meeting((\n|.)*?)?</p>}, @next_meeting)
+      subs!(%r{<p>%meeting#{PARAGRAPH_CONTENTS}</p>}, @next_meeting)
     end
 
     # Only allows one subsitution per page
     def parse_excom
-      subs!(%r{<p>%excom((\n|.)*?)?</p>}, @next_excom)
+      subs!(%r{<p>%excom#{PARAGRAPH_CONTENTS}</p>}, @next_excom)
+    end
+
+    def parse_classed
+      gsubs!(%r{<p>%%(.*?)\n#{PARAGRAPH_CONTENTS}</p>}, '<p class="\1">\2</p>')
     end
 
     def parse_activity

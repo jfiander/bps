@@ -28,7 +28,7 @@ RSpec.describe MarkdownHelper, type: :helper do
 
     it 'correctly renders a comented section' do
       expect(described_class.render_markdown_raw(markdown: '//Commented')).to eql(
-        "<div class=\"markdown\"><p style=\"display: none;\">Commented</p>\n</div>"
+        "<div class=\"markdown\">\n</div>"
       )
     end
 
