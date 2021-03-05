@@ -16,6 +16,13 @@ form.edit_static_page textarea {
 
 div#markdown-help {
   display: none;
+
+  div.table {
+    div.table-cell {
+      width: 33%;
+      text-align: center;
+    }
+  }
 }
 
 div#markdown-details {

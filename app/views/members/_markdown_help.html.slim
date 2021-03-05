@@ -222,9 +222,27 @@
 
     h2 FontAwesome Pro Icons
     p The #{link_to("FontAwesome Pro", "https://fontawesome.com/icons?d=listing", target: :_blank)} icon library is available, if you want to use a particular icon somewhere in a page.
-    p You can specify arbitrary CSS classes on each icon. (Separate classes with spaces.)
+
+    h3 General Usage
     p
-      b Colors:
+      span.bold.red %fa/
+      | icon-name
+      span.bold.red
+        | /
+    p
+      span.bold.red %fa/
+      | icon-name
+      span.bold.red
+        | :
+      | css
+      span.bold.red
+        | /
+
+    h3 Styling
+    p You can specify arbitrary CSS classes on each icon. (Separate classes with spaces.)
+
+    h4 Colors
+    p
       ul
         li.bold.birmingham-blue birmingham-blue
         li.bold.blue blue
@@ -232,7 +250,7 @@
         li.bold.green green
         li.bold.gray gray
 
-    p.bold Icon styles:
+    h4 Icon styles
     .table
       .table-row.bold.center
         .table-cell Class
@@ -273,19 +291,6 @@
           = FA::Icon.p('file-certificate', fa: :fw)
           = FA::Icon.p('users', fa: :fw)
           = FA::Icon.p('bars', fa: :fw)
-    p
-      span.bold.red %fa/
-      | icon-name
-      span.bold.red
-        | /
-    p
-      span.bold.red %fa/
-      | icon-name
-      span.bold.red
-        | :
-      | css
-      span.bold.red
-        | /
 
     h3 Style Shortcuts
     p You can use the style class as the initial key for invoking an icon.
@@ -387,22 +392,22 @@
 
     h2 Shortcuts
     p Copy the red text into the page.
-    ul
-      li
-        | Birmingham burgee: 
-        span.bold.red %burgee
-      li 
-        | Education menu: 
-        span.bold.red %education
-      li 
-        | Next membership meeting: 
-        span.bold.red %meeting
-      li 
-        | Next ExCom meeting: 
-        span.bold.red %excom
-      li 
-        | Activity Feed: 
-        span.bold.red %activity
+    .table
+      .table-row
+        .table-cell Birmingham burgee
+        .table-cell.bold.red %burgee
+      .table-row
+        .table-cell Education menu
+        .table-cell.bold.red %education
+      .table-row
+        .table-cell Next membership meeting
+        .table-cell.bold.red %meeting
+      .table-row
+        .table-cell Next ExCom meeting
+        .table-cell.bold.red %excom
+      .table-row
+        .table-cell Activity Feed
+        .table-cell.bold.red %activity
     p.italic These are listed here for reference. You will probably not need to use these.
     hr
 
