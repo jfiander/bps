@@ -58,12 +58,13 @@ private
     end
   end
 
-  def next_meeting(markdown)
-    markdown&.match?(/%meeting/) ? view_context.render('members/next_meeting') : ''
-  end
+  def next_scheduled(key, markdown)
+    pattern = /%#{key}((?:\r?\n)(.*?))?(?:\r?\n){2}/
+    return '' unless markdown&.match?(pattern)
 
-  def next_excom_meeting(markdown)
-    markdown&.match?(/%excom/) ? view_context.render('members/next_excom') : ''
+    markdown.match(pattern) do |m|
+      view_context.render("members/next_#{key}", details: m[2])
+    end
   end
 
   def activity_feed(markdown)
@@ -99,8 +100,8 @@ private
       files_bucket: files_bucket,
       burgee: burgee_html(@page_markdown),
       education: education_menu(@page_markdown),
-      next_meeting: next_meeting(@page_markdown),
-      next_excom: next_excom_meeting(@page_markdown),
+      next_meeting: next_scheduled(:meeting, @page_markdown),
+      next_excom: next_scheduled(:excom, @page_markdown),
       activity: activity_feed(@page_markdown)
     ).parse
   end

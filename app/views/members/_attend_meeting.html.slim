@@ -1,7 +1,10 @@
 .attend.information
-  ' To attend, please go to:
-  = link_to("#{key}.bpsd9.org", "http://#{key}.bpsd9.org", class: :bold)
-  br
-  ' On mobile devices, open the Google Meet app, then enter code:
-  br
-  code.bold.red = key == :meeting ? ENV['MEMBERSHIP_MEET_ID'] : ENV['EXCOM_MEET_ID']
+  - if details
+    = details
+  - else
+    ' To attend, please go to:
+    = link_to("#{key}.bpsd9.org", "http://#{key}.bpsd9.org", class: :bold)
+    br
+    ' On mobile devices, open the Google Meet app, then enter code:
+    br
+    code.bold.red = key == :meeting ? ENV['MEMBERSHIP_MEET_ID'] : ENV['EXCOM_MEET_ID']

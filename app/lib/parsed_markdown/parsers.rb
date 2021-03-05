@@ -46,11 +46,11 @@ class ParsedMarkdown
     end
 
     def parse_meeting
-      gsubs!(%r{<p>%meeting</p>}, @next_meeting)
+      gsubs!(%r{<p>%meeting(\r?\n.*?)?</p>}, @next_meeting)
     end
 
     def parse_excom
-      gsubs!(%r{<p>%excom</p>}, @next_excom)
+      gsubs!(%r{<p>%excom(\r?\n.*?)?</p>}, @next_excom)
     end
 
     def parse_activity
