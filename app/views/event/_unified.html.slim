@@ -119,9 +119,9 @@
         = render 'event/actions/schedule', event: event if user_signed_in? && @current_user_permitted_event_type
         = render 'event/actions/schedule_general', event: event unless long_form || event.expired?
 
-    .event-flyer
-      - if event.get_flyer.present?
-        - if event.flyer_content_type == 'application/pdf'
-          iframe src=(event.get_flyer)
-        - else
-          = image_tag(event.get_flyer, onerror: "this.style.display='none'")
+    
+    - if event.get_flyer.present? && event.flyer_content_type != 'application/pdf'
+      .event-flyer = image_tag(event.get_flyer, onerror: "this.style.display='none'")
+
+  - if event.get_flyer.present? && event.flyer_content_type == 'application/pdf'
+    .event-flyer: iframe src=(event.get_flyer)

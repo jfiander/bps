@@ -148,6 +148,15 @@ div.event-costs {
   }
 }
 
+.event-flyer {
+  width: 100%;
+  
+  iframe {
+    width: 100%;
+    min-height: 40vh;
+  }
+}
+
 div#expired-events-section {
   background-color: $old-glory-red-faded;
 }
