@@ -7,5 +7,5 @@
         = render('event/unified', event: event, long_form: long_form)
 - else
   .events-unified-table
-    - all_events.each do |event|
-      = render('event/unified', event: event, long_form: long_form)
+    - all_events.each_with_index do |event, index|
+      = render('event/unified', event: event, long_form: long_form, index: index)
