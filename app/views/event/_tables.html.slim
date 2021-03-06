@@ -3,8 +3,8 @@
     - next if all_events[course_type].blank?
     .events-section-header = "#{course_type.to_s.titleize}"
     .events-unified-table
-      - all_events[course_type].each do |event|
-        = render('event/unified', event: event, long_form: long_form)
+      - all_events[course_type].each_with_index do |event, index|
+        = render('event/unified', event: event, long_form: long_form, index: index)
 - else
   .events-unified-table
     - all_events.each_with_index do |event, index|
