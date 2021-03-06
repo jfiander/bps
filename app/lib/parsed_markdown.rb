@@ -3,7 +3,7 @@
 # Custom string class for parsing markdown helpers
 class ParsedMarkdown < String
   PARSERS ||= %i[
-    comments center big reg list email
+    comments specials reg list email
     burgee education meeting excom classed activity
     image link fam fa
   ].freeze

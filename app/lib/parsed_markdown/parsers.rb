@@ -3,6 +3,11 @@
 class ParsedMarkdown
   module Parsers
     PARAGRAPH_CONTENTS = '((\n|.)*?)?'
+    SPECIAL_KEYS = {
+      '\+' => 'bigger bold',
+      '@' => 'center',
+      '!' => 'red'
+    }.freeze
 
     # This module defines no public methods.
     def _; end
@@ -24,13 +29,26 @@ class ParsedMarkdown
       gsubs!(%r{<p>//#{PARAGRAPH_CONTENTS}</p>}, '')
     end
 
-    def parse_center
-      gsubs!(/<p>(\+?)@/, '<p class="center">\1')
+    def parse_specials
+      # First, check if all are present
+      parse_special(SPECIAL_KEYS.keys.permutation.to_a.map(&:join).join('|'), SPECIAL_KEYS.values)
+
+      # Then, check all subsets
+      size = SPECIAL_KEYS.keys.size - 1
+      while size.positive?
+        SPECIAL_KEYS.keys.permutation(size).each do |permute|
+          parse_special(permute.join, SPECIAL_KEYS.slice(*permute).values)
+        end
+
+        size -= 1
+      end
     end
 
-    def parse_big
-      gsubs!(/<p class="center">\+/, '<p class="center bigger bold">')
-      gsubs!('<p>+', '<p class="bigger bold">')
+    def parse_special(match, class_list)
+      gsubs!(
+        %r{<p>(#{match})#{PARAGRAPH_CONTENTS}</p>},
+        "<p class=\"#{class_list.sort.join(' ')}\">\\2</p>"
+      )
     end
 
     def parse_reg

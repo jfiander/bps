@@ -47,13 +47,13 @@ RSpec.describe MarkdownHelper, type: :helper do
     describe 'correctly renders a centered bigger section' do
       it 'with centered first' do
         expect(described_class.render_markdown_raw(markdown: '@+Big Centered')).to eql(
-          "<div class=\"markdown\"><p class=\"center bigger bold\">Big Centered</p>\n</div>"
+          "<div class=\"markdown\"><p class=\"bigger bold center\">Big Centered</p>\n</div>"
         )
       end
 
       it 'with bigger first' do
         expect(described_class.render_markdown_raw(markdown: '+@Big Centered')).to eql(
-          "<div class=\"markdown\"><p class=\"center bigger bold\">Big Centered</p>\n</div>"
+          "<div class=\"markdown\"><p class=\"bigger bold center\">Big Centered</p>\n</div>"
         )
       end
     end
