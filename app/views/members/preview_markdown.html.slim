@@ -7,7 +7,7 @@ h2 = @page.name.titleize
 
   - if @activity_feed.any? && @new_markdown.present? && @new_markdown =~ /%activity/
     hr
-    b.red Note: The Activity Feed will not be displayed correctly below.
+    b.red Note: The Activity Feed may not be displayed correctly below.
 
 #preview.red-border = @preview_html
 
