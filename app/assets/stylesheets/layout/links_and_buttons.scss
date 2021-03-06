@@ -23,6 +23,15 @@ a.green:hover, a.green:hover > i, a:hover > i.green {
   color: lighten(green, 10%);
 }
 
+/* Allow for cascading container color to links, and reasonable hover colors */
+.color-links a {
+  color: inherit;
+}
+
+.color-links a:hover {
+  filter: brightness(70%);
+}
+
 input.big, button.big, a.big {
   @include big-button;
 }
