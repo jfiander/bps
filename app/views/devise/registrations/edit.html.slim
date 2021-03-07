@@ -60,20 +60,20 @@ div.italic Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'r
           = resource.unconfirmed_email
         br.clear
 
+    .profile-section
+      .center.instructions Flip this switch to automatically receive SMS notifications for events you register for.
+      .center.instructions.information You must have a mobile phone number on file to receive messages.
+
+      .left = f.label :subscribe_on_register, 'Default to Send SMS Reminders when Registering'
+      .right = switch_box(f, :subscribe_on_register, 'red-lightblue', 'no yes')
+      br.clear
+
     .profile-section#jumpstart.top-border
       .center.instructions Please describe what kinds of boat you would be comfortable showing someone how to use.
       .center.instructions We may contact you about this, but there is no obligation from entering this information.
 
       .left = f.label :jumpstart, 'Boat Types'
       .right = f.text_area :jumpstart, class: 'large'
-      br.clear
-
-    .profile-section.top-border
-      .center.instructions Flip this switch to automatically receive SMS notifications for events you register for.
-      .center.instructions.information You must have a mobile phone number on file to receive messages.
-
-      .left = f.label :subscribe_on_register, 'Default to Send SMS Reminders when Registering'
-      .right = switch_box(f, :subscribe_on_register, 'red-lightblue', 'no yes')
       br.clear
 
     div#show-change-password.top-border = link_to('Change password', '#')
