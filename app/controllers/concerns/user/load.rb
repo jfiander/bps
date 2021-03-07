@@ -10,6 +10,7 @@ class User
     def find_user
       id = clean_params[:id] || current_user&.id
       @user = User.find_by(id: id)
+      @role_icons = Role.icons
       return @user if @user.present?
 
       if current_user&.permitted?(:admin, session: session)
