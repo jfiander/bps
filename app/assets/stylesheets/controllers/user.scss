@@ -261,6 +261,14 @@ div#override-cost {
     padding-right: 1em;
     font-size: larger;
   }
+
+  span.cost {
+    display: block;
+
+    b {
+      margin-right: 0.5em;
+    }
+  }
 }
 
 div#receipts {
