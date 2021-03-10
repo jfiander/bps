@@ -27,12 +27,15 @@ h1 = admin_header('Payments & Receipts')
               - else
                 = FA::Icon.p('credit-card', style: :duotone, fa: :fw, css: 'birmingham-blue', title: 'Paid Online')
               = link_to(refunded_path(payment.token), method: :patch, class: 'red', data: { confirm: 'Are you sure you want to mark this payment as refunded?' }) { FA::Icon.p('undo', style: :duotone, fa: :fw, title: 'Mark as refunded') } if payment.paid && !payment.refunded
+            - elsif payment.parent.is_a?(Registration)
+              = link_to(cancel_registration_path(payment.parent.id), class: "red", method: :delete, remote: true, data: { confirm: 'Are you sure you want to cancel this registration?' }) { FA::Icon.p('minus-square', style: :duotone, fa: :fw) }
           .receipt-actions-block
             - if payment.paid
-              - if payment.receipt.exists?
-                = link_to(receipt_path(payment.token), class: 'blue') { FA::Icon.p('file-pdf', style: :duotone, fa: :fw, title: 'Receipt') }
-              - else
-                = FA::Icon.p('ellipsis-h', style: :duotone, fa: :fw, css: 'gray', title: 'Pending generation')
+              = link_to(receipt_path(payment.token), class: 'blue') do
+                - if payment.receipt.exists?
+                  = FA::Icon.p('file-pdf', style: :duotone, fa: :fw, title: 'Receipt')
+                - else
+                  = FA::Icon.p('ellipsis-h', style: :duotone, fa: :fw, css: 'gray', title: 'Pending generation')
             - elsif !payment.refunded && payment.parent.is_a?(Registration)
               - style = payment.parent&.override_cost.present? ? :solid : :duotone
               = link_to(override_cost_path(payment.token), class: 'green') { FA::Icon.p('file-invoice-dollar', style: style, fa: :fw, title: 'Override Cost') }

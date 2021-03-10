@@ -272,17 +272,21 @@ div#receipts {
 
   div.receipt-actions {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
 
     div.receipt-actions-block {
       flex-basis: 5em;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
       margin: 0.5em 0;
 
-      & > svg {
+      svg {
         margin: 0.25em;
       }
 
-      & > a {
+      a {
         display: inline-block;
         margin: 0;
       }
