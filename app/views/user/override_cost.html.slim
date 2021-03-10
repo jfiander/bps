@@ -10,7 +10,7 @@ h1 = admin_header('Override Registration Cost')
       .table-cell = @registration.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
     .table-row
       .table-cell.table-header Posted costs
-      .table-cell = render('event/cost', event: @registration.event)
+      .table-cell = render('event/costs', event: @registration.event)
     .table-row
       .table-cell.table-header Registrant
       .table-cell
