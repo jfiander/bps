@@ -95,12 +95,17 @@ RSpec.describe Registration, type: :model do
   end
 
   it 'sends a confirmation email for public registrations' do
-    expect { FactoryBot.create(:registration, email: 'nobody@example.com', event: @event) }.not_to raise_error
+    expect(RegistrationMailer).to receive(:confirm).and_call_original
+
+    FactoryBot.create(:registration, email: 'nobody@example.com', event: @event)
   end
 
   it 'sends an advance_payment email when applicable' do
     @event.update(advance_payment: true, cost: 5)
-    expect { FactoryBot.create(:registration, email: 'nobody@example.com', event: @event) }.not_to raise_error
+
+    expect(RegistrationMailer).to receive(:advance_payment).and_call_original
+
+    FactoryBot.create(:registration, email: 'nobody@example.com', event: @event)
   end
 
   it 'notifies the chair of registrations' do
