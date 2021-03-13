@@ -7,7 +7,7 @@ View this event on Google Calendar: <%= @registration.event.google_calendar_link
 
 **********
 <%- end %>
-<%- if @registration.event.conference_link.present? -%>
+<%- if @registration.event.conference_link.present? && (@registration.paid? || !@registration.event.advance_payment) -%>
 Attend Online: <%= @registration.event.conference_link %>
 
 **********

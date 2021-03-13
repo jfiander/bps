@@ -45,12 +45,14 @@ class Registration < ApplicationRecord
 
   # If the event does not require advance payment, this will notify on create.
   #
-  # Otherwise, this notification will be sent by BraintreeController once the
-  # registration is paid for.
+  # Otherwise, a different notification will be sent, and the regular one will
+  # be triggered by BraintreeController once the registration is paid for.
   def confirm_to_registrant
-    return true if event.advance_payment && !paid?
-
-    RegistrationMailer.confirm(self).deliver
+    if event.advance_payment && !paid?
+      RegistrationMailer.advance_payment(self).deliver
+    else
+      RegistrationMailer.confirm(self).deliver
+    end
   end
 
 private

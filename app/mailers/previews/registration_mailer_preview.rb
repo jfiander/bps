@@ -21,6 +21,14 @@ class RegistrationMailerPreview < ApplicationMailerPreview
     RegistrationMailer.confirm(reg_member_event)
   end
 
+  def advance_payment
+    RegistrationMailer.advance_payment(reg_public_advance)
+  end
+
+  def advance_payment_member
+    RegistrationMailer.advance_payment(reg_member_advance)
+  end
+
   def remind_public
     RegistrationMailer.remind(reg_public_free)
   end
@@ -71,6 +79,10 @@ private
     new_registration(event: event(category: 'meeting'), user: user)
   end
 
+  def reg_member_advance
+    new_registration(event: event(category: 'meeting', cost: 5, advance: true), user: user)
+  end
+
   def reg_member_paid
     # Registration.includes(:user_registrations).where.not(user_registrations: { user: nil })
     #             .select(&:payable?).last
@@ -95,6 +107,10 @@ private
     new_registration(event: event(cost: 5), email: email)
   end
 
+  def reg_public_advance
+    new_registration(event: event(cost: 5, advance: true), email: email)
+  end
+
   def reg_public_multi_session
     new_registration(event: event(cost: 5, sessions: 2), email: email)
   end
@@ -105,13 +121,14 @@ private
     reg
   end
 
-  def event(category: 'seminar', cost: nil, sessions: 1)
+  def event(category: 'seminar', cost: nil, sessions: 1, advance: false)
     event_type = EventType.new(event_category: category, title: 'Example')
     Event.new(
       event_type: event_type,
       start_at: Time.now + 1.week, cutoff_at: Time.now + 3.days,
       cost: cost,
       sessions: sessions,
+      advance_payment: advance,
       topic_arn: 'skip', google_calendar_event_id: 'skip'
     )
   end

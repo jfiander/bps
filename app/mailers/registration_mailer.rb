@@ -27,6 +27,12 @@ class RegistrationMailer < ApplicationMailer
     mail(to: @to, from: @from, subject: 'Registration confirmation')
   end
 
+  def advance_payment(registration)
+    generic_details(registration)
+
+    mail(to: @to, from: @from, subject: 'Registration pending')
+  end
+
   def remind(registration)
     generic_details(registration)
 
