@@ -98,6 +98,11 @@ RSpec.describe Registration, type: :model do
     expect { FactoryBot.create(:registration, email: 'nobody@example.com', event: @event) }.not_to raise_error
   end
 
+  it 'sends an advance_payment email when applicable' do
+    @event.update(advance_payment: true, cost: 5)
+    expect { FactoryBot.create(:registration, email: 'nobody@example.com', event: @event) }.not_to raise_error
+  end
+
   it 'notifies the chair of registrations' do
     FactoryBot.create(:committee, user: generic_seo_and_ao[:ao].user, name: 'rendezvous')
     event_type = FactoryBot.create(:event_type, event_category: 'meeting', title: 'rendezvous')

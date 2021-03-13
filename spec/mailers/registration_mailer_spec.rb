@@ -90,6 +90,28 @@ RSpec.describe RegistrationMailer, type: :mailer do
       end
     end
 
+    describe 'advance_payment' do
+      let(:mail) { described_class.advance_payment(ed_user_reg) }
+
+      before { ed_user_reg.event.update(advance_payment: true, cost: 5) }
+
+      it 'renders the headers' do
+        expect(mail).to contain_mail_headers(
+          subject: 'Registration pending',
+          to: [ed_user_reg.user.email],
+          from: ['seo@bpsd9.org']
+        )
+      end
+
+      it 'renders the body' do
+        expect(mail.body.encoded).to contain_and_match(
+          'which requires advance payment', 'Registration information',
+          'If you have any questions', 'You can also cancel',
+          'Educational Officer'
+        )
+      end
+    end
+
     describe 'confirm (event)' do
       let(:mail) { described_class.confirm(event_user_reg) }
 
