@@ -148,6 +148,8 @@ class Event < ApplicationRecord
   end
 
   def create_sns_topic!
+    return true if topic_arn.present?
+
     arn = BpsSMS.create_topic("event_#{id}", date_title).topic_arn
     update(topic_arn: arn)
   end
