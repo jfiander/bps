@@ -107,6 +107,12 @@ private
 
   def event(category: 'seminar', cost: nil, sessions: 1)
     event_type = EventType.new(event_category: category, title: 'Example')
-    Event.new(event_type: event_type, start_at: Time.now + 1.week, cost: cost, sessions: sessions)
+    Event.new(
+      event_type: event_type,
+      start_at: Time.now + 1.week, cutoff_at: Time.now + 3.days,
+      cost: cost,
+      sessions: sessions,
+      topic_arn: 'skip', google_calendar_event_id: 'skip'
+    )
   end
 end

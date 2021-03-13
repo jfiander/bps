@@ -22,22 +22,15 @@ class RegistrationMailer < ApplicationMailer
   end
 
   def confirm(registration)
-    @registration = registration
-    @signature = signature_for_confirm
-    to = @registration&.user&.email || @registration.email
-    from = "\"#{@signature[:name]}\" <#{@signature[:email]}>"
-    attach_pdf if attachable?
+    generic_details(registration)
 
-    mail(to: to, from: from, subject: 'Registration confirmation')
+    mail(to: @to, from: @from, subject: 'Registration confirmation')
   end
 
   def remind(registration)
-    @registration = registration
-    @signature = signature_for_confirm
-    to = @registration&.user&.email || @registration.email
-    from = "\"#{@signature[:name]}\" <#{@signature[:email]}>"
+    generic_details(registration)
 
-    mail(to: to, from: from, subject: 'Registration reminder')
+    mail(to: @to, from: @from, subject: 'Registration reminder')
   end
 
   def paid(registration)
@@ -57,6 +50,14 @@ class RegistrationMailer < ApplicationMailer
   end
 
 private
+
+  def generic_details(registration)
+    @registration = registration
+    @signature = signature_for_confirm
+    @to = @registration&.user&.email || @registration.email
+    @from = "\"#{@signature[:name]}\" <#{@signature[:email]}>"
+    attach_pdf if attachable?
+  end
 
   def signature_for_confirm
     if @registration.event.category == 'meeting'
@@ -95,16 +96,22 @@ private
   end
 
   def slack_notification(type, title, fallback)
+    return if @registration.event.id.nil?
+
     SlackNotification.new(
       channel: :notifications, type: type, title: title,
       fallback: fallback,
-      fields: {
-        'Event' => "<#{show_event_url(@registration.event)}|#{@registration.event.display_title}>",
-        'Event date' => slack_start_time,
-        'Registrant name' => @registration&.user&.full_name,
-        'Registrant email' => @registration&.user&.email || @registration&.email
-      }.reject { |_, v| v.nil? }
+      fields: slack_fields
     ).notify!
+  end
+
+  def slack_fields
+    {
+      'Event' => "<#{show_event_url(@registration.event)}|#{@registration.event.display_title}>",
+      'Event date' => slack_start_time,
+      'Registrant name' => @registration&.user&.full_name,
+      'Registrant email' => @registration&.user&.email || @registration&.email
+    }.reject { |_, v| v.nil? }
   end
 
   def slack_start_time
