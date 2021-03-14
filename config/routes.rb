@@ -85,14 +85,21 @@ Rails.application.routes.draw do
 
   # Admin utilities
   namespace :admin do
+    # S3 Link Generator
     get    '/s3',                        to: 'links#s3'
     post   '/s3',                        to: 'links#s3'
+
+    # Versions
     get    '/versions/:model/:id',       to: 'versions#show',   as: 'show_versions'
     get    '/versions/:model/:id/:a/:b', to: 'versions#diff',   as: 'diff_versions'
     post   '/versions/:model/:id/:a/:b', to: 'versions#diff'
     patch  '/versions/:model/:id/:a',    to: 'versions#revert', as: 'revert_version'
     get    '/versions(/:model)',         to: 'versions#index',  as: 'versions'
+
+    # Logo Generator
     get    '/logo',                      to: 'logos#logo'
+
+    # Promo Codes
     get    '/promo_codes',               to: 'promo_codes#list'
     get    '/promo_codes/new',           to: 'promo_codes#new',      as: 'new_promo_code'
     put    '/promo_codes/new',           to: 'promo_codes#create',   as: 'create_promo_code'
