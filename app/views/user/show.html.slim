@@ -19,14 +19,14 @@ h1 = @user.full_name
 
   .table
     .table-row
-      .table-cell.table-header Certificate
+      .table-cell.bold Certificate
       .table-cell = @user.certificate || FA::Icon.p('question-circle', css: 'red', style: :duotone)
     .table-row
-      .table-cell.table-header Email
+      .table-cell.bold Email
       .table-cell = @user.email
     - if @user.phone_h.present? || @user.phone_c.present? || @user.phone_w.present?
       .table-row
-        .table-cell.table-header Phone
+        .table-cell.bold Phone
         .table-cell
           - if @user.phone_h.present?
             .phone_h title="Home"
@@ -46,7 +46,7 @@ h1 = @user.full_name
               = @user.phone_w
     - if @user.permitted_roles.present?
       .table-row
-        .table-cell.table-header Permissions
+        .table-cell.bold Permissions
         .table-cell
           ul.roles
             - @user.granted_roles.each do |g|
@@ -65,7 +65,7 @@ h1 = @user.full_name
                     = FA::Icon.p(@role_icons[p], style: :duotone, fa: :fw)
                     = p
     .table-row
-      .table-cell.table-header JumpStart Boat Types
+      .table-cell.bold JumpStart Boat Types
       .table-cell
         - if @user.jumpstart.present?
           = @user.jumpstart

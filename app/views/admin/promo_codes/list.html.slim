@@ -6,16 +6,16 @@ h1 = admin_header('Promo Codes')
   - %i[pending current expired].each do |scope|
     - next if @promo_codes[scope].blank?
     h2 = scope.to_s.titleize
-    .table
-      .table-row
-        .table-cell.table-header Code
-        .table-cell.table-header Discount
-        .table-cell.table-header Valid at
-        .table-cell.table-header Expires at
-        .table-cell.table-header Events
-        .table-cell.table-header Used
-        .table-cell.table-header
-        .table-cell.table-header
+    .table.striped
+      .table-row.header
+        .table-cell Code
+        .table-cell Discount
+        .table-cell Valid at
+        .table-cell Expires at
+        .table-cell Events
+        .table-cell Used
+        .table-cell
+        .table-cell
       - @promo_codes[scope].each do |promo_code|
         .table-row
           .table-cell

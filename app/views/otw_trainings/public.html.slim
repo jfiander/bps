@@ -25,18 +25,18 @@ p To request Jump Start training, please fill out the form below, and we'll reac
 = form_tag jumpstart_path, method: :post do
   #jumpstart.table
     .table-row
-      .table-cell.table-header.left.half = label_tag :name
+      .table-cell.bold.left.half = label_tag :name
       .table-cell = text_field_tag :name, '', placeholder: 'Your name', required: true
     .table-row
-      .table-cell.table-header.left.half = label_tag :email
+      .table-cell.bold.left.half = label_tag :email
       .table-cell = email_field_tag :email, '', placeholder: 'Your email address', required: true
     .table-row
-      .table-cell.table-header.left.half = label_tag :phone
+      .table-cell.bold.left.half = label_tag :phone
       .table-cell = telephone_field_tag :phone, '', placeholder: 'Your phone number'
     .table-row
-      .table-cell.table-header.left.half = label_tag :details
+      .table-cell.bold.left.half = label_tag :details
       .table-cell = text_area_tag :details, '', placeholder: 'Describe your boat, location, and prior experience/knowledge'
     .table-row
-      .table-cell.table-header.left.half = label_tag :availability
+      .table-cell.bold.left.half = label_tag :availability
       .table-cell = text_area_tag :availability, '', placeholder: 'Describe your availability for training'
   .center = submit_tag 'Submit Request', class: 'big'

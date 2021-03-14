@@ -9,10 +9,10 @@ h1 Review Member Applications
     .application-review id=("application_#{app.id}")
       .table
         .table-row
-          .table-cell.table-header Applied: 
+          .table-cell.bold Applied: 
           .table-cell = app.created_at.strftime(ApplicationController::LONG_TIME_FORMAT)
         .table-row
-          .table-cell.table-header Applicants: 
+          .table-cell.bold Applicants: 
           .table-cell = app.member_applicants.count
         = render 'review_applicant', applicant: app.member_applicants.select(&:primary).first, css: 'blue'
         - app.member_applicants.reject(&:primary).each do |applicant|

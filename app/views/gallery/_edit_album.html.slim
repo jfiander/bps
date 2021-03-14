@@ -1,7 +1,7 @@
-.table.photos
-  .table-row
-    .table-cell.table-header Photo
-    .table-cell.table-header
+.table.striped.photos
+  .table-row.header
+    .table-cell Photo
+    .table-cell
   - @album.photos.each do |photo|
     .table-row
       .table-cell = image_tag photos_bucket.link(photo.photo_file.path(:thumb))

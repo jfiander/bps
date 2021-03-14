@@ -9,7 +9,7 @@
   .table.striped
     .table-row.header
       - headers.each do |header|
-        .table-cell.table-header = header.titleize
+        .table-cell = header.titleize
     - @objects.each do |object|
       .table-row
         - headers.each do |header|

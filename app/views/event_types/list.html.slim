@@ -2,9 +2,9 @@ h1 Event Types
 
 - @event_types.each do |category, event_types|
   h2 #{category.in?(%w[seminar meeting]) ? category.titleize.pluralize : "#{category.titleize} Courses"}
-  .table.locations
-    .table-row
-      .table-cell.table-header Title
+  .table.striped.locations
+    .table-row.header
+      .table-cell Title
       .table-cell
     - event_types.each do |event_type|
       .table-row

@@ -5,9 +5,9 @@ br
 
 .table.striped.center
   .table-row.header
-    .table-cell.table-header Name
-    .table-cell.table-header Email
-    .table-cell.table-header Comfortable With
+    .table-cell Name
+    .table-cell Email
+    .table-cell Comfortable With
   - @users.each do |user|
     .table-row
       .table-cell = user.full_name

@@ -14,8 +14,8 @@ hr
 
 #instructors.table.striped
   .table-row.header
-    .table-cell.table-header Name
-    .table-cell.table-header title="Instructor certification expiration" ID Exp.
+    .table-cell Name
+    .table-cell title="Instructor certification expiration" ID Exp.
     - UserHelper::INSTRUCTOR_COURSES.each do |key, label|
       = instructor_header(key, @highlight, label: label)
   - @instructors.each do |user|

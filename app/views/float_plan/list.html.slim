@@ -1,13 +1,13 @@
 h1 Submitted Float Plans
 
-#float-plans.table
-  .table-row
-    .table-cell.table-header ID
-    .table-cell.table-header Filed by
-    .table-cell.table-header Leave at
-    .table-cell.table-header Alert at
-    .table-cell.table-header
-    .table-cell.table-header
+#float-plans.table.striped
+  .table-row.header
+    .table-cell ID
+    .table-cell Filed by
+    .table-cell Leave at
+    .table-cell Alert at
+    .table-cell
+    .table-cell
   - @float_plans.each do |float_plan|
     .table-row
       .table-cell = float_plan.id

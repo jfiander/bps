@@ -1,7 +1,7 @@
 #bilge.table.striped
   - @bilges.sort_by { |b| [-b.year, b.month] }.group_by(&:year).each do |year, bilges|
     .table-row
-      .table-cell.table-header = year
+      .table-cell.bold = year
       - @issues.keys.each do |month|
         .table-cell
           - if month.in?(bilges.map(&:month))

@@ -9,7 +9,7 @@ h3 Click on a button below to view or download that issue.
     - minutes = @minutes[year]
     - excom_minutes = @excom_minutes[year]
     .table-row
-      .table-cell.table-header = year
+      .table-cell.bold = year
       - @issues.keys.each do |month|
         .table-cell
           - if minutes.present? && month.in?(minutes.map(&:month))
@@ -18,7 +18,7 @@ h3 Click on a button below to view or download that issue.
           - elsif year < Date.today.year || month < membership_date.month
             = FA::Icon.p(:ban, style: :duotone, css: 'gray', title: "No Membership minutes posted for #{MinutesFile.issues[month]} #{year}")
     .table-row
-      .table-cell.table-header
+      .table-cell.bold
       - @issues.keys.each do |month|
         .table-cell
           - if excom_minutes.present? && month.in?(excom_minutes.map(&:month))

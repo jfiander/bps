@@ -25,9 +25,9 @@ h1 Flag Images
     | of United States Power Squadrons.
 
 h2 Ensigns
-.flags.table
+.flags.table.striped
   .table-row
-    .table-cell.table-header United States
+    .table-cell.bold United States
     .table-cell
       = image_tag @bucket.link('flags/PNG/US.thumb.png'), width: 191, height: 100
       br
@@ -36,7 +36,7 @@ h2 Ensigns
       =< link_to 'SVG', @bucket.link('flags/SVG/US.svg'), disposition: 'inline'
     .table-cell
   .table-row
-    .table-cell.table-header USPS
+    .table-cell.bold USPS
     .table-cell
       = image_tag @bucket.link('flags/PNG/ENSIGN.thumb.png'), width: 150, height: 100
       br
@@ -63,182 +63,182 @@ center
   | .
 
 h3 National
-.flags.table
+.flags.table.striped
+  .table-row.header
+    .table-cell.officer Officer
+    .table-cell Current
+    .table-cell Past
+    .table-cell Insignia
   .table-row
-    .table-cell.table-header.officer Officer
-    .table-cell.table-header Current
-    .table-cell.table-header Past
-    .table-cell.table-header Insignia
-  .table-row
-    .table-cell.table-header.officer Chief Commander
+    .table-cell.bold.officer Chief Commander
     .table-cell = officer_flags('CC')
     .table-cell = officer_flags('PCC')
     .table-cell = officer_insignia('CC')
   .table-row
-    .table-cell.table-header.officer Vice Commander
+    .table-cell.bold.officer Vice Commander
     .table-cell = officer_flags('VC')
     .table-cell = officer_flags('PVC')
     .table-cell = officer_insignia('VC')
   .table-row
-    .table-cell.table-header.officer Rear Commander
+    .table-cell.bold.officer Rear Commander
     .table-cell = officer_flags('RC')
     .table-cell = officer_flags('PRC')
     .table-cell = officer_insignia('RC')
   .table-row
-    .table-cell.table-header.officer Staff Commander
+    .table-cell.bold.officer Staff Commander
     .table-cell = officer_flags('STFC')
     .table-cell = officer_flags('PSTFC')
     .table-cell = officer_insignia('STFC')
   .table-row
-    .table-cell.table-header.officer National Flag Lieutenant
+    .table-cell.bold.officer National Flag Lieutenant
     .table-cell = officer_flags('NFLT')
     .table-cell = officer_flags('PNFLT')
     .table-cell = officer_insignia('NFLT')
   .table-row
-    .table-cell.table-header.officer Aide to the Chief Commander
+    .table-cell.bold.officer Aide to the Chief Commander
     .table-cell = officer_flags('NAIDE')
     .table-cell
     .table-cell = officer_insignia('NAIDE')
 
 h3 District
-.flags.table
+.flags.table.striped
+  .table-row.header
+    .table-cell.officer Officer
+    .table-cell Current
+    .table-cell Past
+    .table-cell Insignia
   .table-row
-    .table-cell.table-header.officer Officer
-    .table-cell.table-header Current
-    .table-cell.table-header Past
-    .table-cell.table-header Insignia
-  .table-row
-    .table-cell.table-header.officer District Commander
+    .table-cell.bold.officer District Commander
     .table-cell = officer_flags('DC')
     .table-cell = officer_flags('PDC')
     .table-cell = officer_insignia('DC')
   .table-row
-    .table-cell.table-header.officer District Lieutenant Commander
+    .table-cell.bold.officer District Lieutenant Commander
     .table-cell = officer_flags('DLTC')
     .table-cell = officer_flags('PDLTC')
     .table-cell = officer_insignia('DLTC')
   .table-row
-    .table-cell.table-header.officer District 1st Lieutenant
+    .table-cell.bold.officer District 1st Lieutenant
     .table-cell = officer_flags('D1LT')
     .table-cell
     .table-cell = officer_insignia('D1LT')
   .table-row
-    .table-cell.table-header.officer District Flag Lieutenant
+    .table-cell.bold.officer District Flag Lieutenant
     .table-cell = officer_flags('DFLT')
     .table-cell
     .table-cell = officer_insignia('DFLT')
   .table-row
-    .table-cell.table-header.officer District Lieutenant
+    .table-cell.bold.officer District Lieutenant
     .table-cell = officer_flags('DLT')
     .table-cell
     .table-cell = officer_insignia('DLT')
   .table-row
-    .table-cell.table-header.officer Aide to the District Commander
+    .table-cell.bold.officer Aide to the District Commander
     .table-cell = officer_flags('DAIDE')
     .table-cell
     .table-cell = officer_insignia('DAIDE')
 
 h3 Squadron
-.flags.table
+.flags.table.striped
+  .table-row.header
+    .table-cell.officer Officer
+    .table-cell Current
+    .table-cell Past
+    .table-cell Insignia
   .table-row
-    .table-cell.table-header.officer Officer
-    .table-cell.table-header Current
-    .table-cell.table-header Past
-    .table-cell.table-header Insignia
-  .table-row
-    .table-cell.table-header.officer Commander
+    .table-cell.bold.officer Commander
     .table-cell = officer_flags('CDR')
     .table-cell = officer_flags('PC')
     .table-cell = officer_insignia('CDR')
   .table-row
-    .table-cell.table-header.officer Lieutenant Commander
+    .table-cell.bold.officer Lieutenant Commander
     .table-cell = officer_flags('LTC')
     .table-cell = officer_flags('PLTC')
     .table-cell = officer_insignia('LTC')
   .table-row
-    .table-cell.table-header.officer 1st Lieutenant
+    .table-cell.bold.officer 1st Lieutenant
     .table-cell = officer_flags('1LT')
     .table-cell
     .table-cell = officer_insignia('1LT')
   .table-row
-    .table-cell.table-header.officer Flag Lieutenant
+    .table-cell.bold.officer Flag Lieutenant
     .table-cell = officer_flags('FLT')
     .table-cell
     .table-cell = officer_insignia('FLT')
   .table-row
-    .table-cell.table-header.officer Lieutenant
+    .table-cell.bold.officer Lieutenant
     .table-cell = officer_flags('LT')
     .table-cell
     .table-cell = officer_insignia('LT')
   .table-row
-    .table-cell.table-header.officer Fleet Captain
+    .table-cell.bold.officer Fleet Captain
     .table-cell = officer_flags('FLEETCAP')
     .table-cell
     .table-cell = officer_insignia('FLEETCAP')
 
 h3 Special
-.flags.table
+.flags.table.striped
+  .table-row.header
+    .table-cell.officer Name
+    .table-cell Flag
+    .table-cell
+    .table-cell Insignia
   .table-row
-    .table-cell.table-header.officer Name
-    .table-cell.table-header Flag
-    .table-cell.table-header
-    .table-cell.table-header Insignia
-  .table-row
-    .table-cell.table-header.officer Port Captain
+    .table-cell.bold.officer Port Captain
     .table-cell = officer_flags('PORTCAP')
     .table-cell
     .table-cell = officer_insignia('PORTCAP')
   .table-row
-    .table-cell.table-header.officer Cruise Pennant
+    .table-cell.bold.officer Cruise Pennant
     .table-cell = pennant('CRUISE')
     .table-cell
     .table-cell
   .table-row
-    .table-cell.table-header.officer Officer-in-Charge Pennant
+    .table-cell.bold.officer Officer-in-Charge Pennant
     .table-cell = pennant('OIC')
     .table-cell
     .table-cell
 
 h3 Grades and Membership
-.flags.table
+.flags.table.striped
+  .table-row.header
+    .table-cell.officer Description
+    .table-cell Insignia
+    .table-cell.italic with Educational Proficiency
   .table-row
-    .table-cell.table-header.officer Description
-    .table-cell.table-header Insignia
-    .table-cell.table-header.italic with Educational Proficiency
-  .table-row
-    .table-cell.table-header.officer Seaman (S)
+    .table-cell.bold.officer Seaman (S)
     .table-cell = grade_insignia(:s, 12)
     .table-cell
   .table-row
-    .table-cell.table-header.officer Pilot (P)
+    .table-cell.bold.officer Pilot (P)
     .table-cell = grade_insignia(:p, 12)
     .table-cell
   .table-row
-    .table-cell.table-header.officer Advanced Pilot (AP)
+    .table-cell.bold.officer Advanced Pilot (AP)
     .table-cell = grade_insignia(:ap, 40)
     .table-cell = grade_insignia(:ap, 50, edpro: true)
   .table-row
-    .table-cell.table-header.officer Junior Navigator (JN)
+    .table-cell.bold.officer Junior Navigator (JN)
     .table-cell = grade_insignia(:jn, 40)
     .table-cell = grade_insignia(:jn, 50, edpro: true)
   .table-row
-    .table-cell.table-header.officer Navigator (N)
+    .table-cell.bold.officer Navigator (N)
     .table-cell = grade_insignia(:n, 40)
     .table-cell = grade_insignia(:n, 50, edpro: true)
   .table-row
-    .table-cell.table-header.officer Senior Navigator (SN)
+    .table-cell.bold.officer Senior Navigator (SN)
     .table-cell = grade_insignia(:sn, 60)
     .table-cell
   .table-row
-    .table-cell.table-header.officer Senior Member
+    .table-cell.bold.officer Senior Member
     .table-cell = membership_insignia(:senior)
     .table-cell
   .table-row
-    .table-cell.table-header.officer Life Member
+    .table-cell.bold.officer Life Member
     .table-cell = membership_insignia(:life)
     .table-cell
   .table-row
-    .table-cell.table-header.officer Merit Mark
+    .table-cell.bold.officer Merit Mark
     .table-cell = mm_insignia
     .table-cell
 

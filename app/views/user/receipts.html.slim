@@ -2,10 +2,10 @@ h1 = admin_header('Payments & Receipts')
 
 #receipts.table.striped
   .table-row.header
-    .table-cell.table-header ID
-    .table-cell.table-header Parent
-    .table-cell.table-header Customer
-    .table-cell.table-header Amount
+    .table-cell ID
+    .table-cell Parent
+    .table-cell Customer
+    .table-cell Amount
   - @payments.each do |payment|
     .table-row
       .table-cell = payment.id

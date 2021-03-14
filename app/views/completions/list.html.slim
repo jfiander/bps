@@ -2,11 +2,11 @@ h1 Completions#{' – YTD' if @ytd}
 
 #completions.table.striped
   .table-row.header
-    .table-cell.table-header Member
-    .table-cell.table-header Certificate
-    .table-cell.table-header Subject
-    .table-cell.table-header Code
-    .table-cell.table-header Date
+    .table-cell Member
+    .table-cell Certificate
+    .table-cell Subject
+    .table-cell Code
+    .table-cell Date
   - @completions.each do |user, comp|
     - comp.each_with_index do |c, i|
       .table-row

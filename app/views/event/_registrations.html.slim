@@ -1,5 +1,5 @@
 .table-row
-  .table-cell.table-header
+  .table-cell.bold
     = link_to(event.display_title, send("show_#{event_type_param}_path", event), class: 'red')
     br
     = event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)

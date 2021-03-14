@@ -15,14 +15,14 @@ h1#profile-title Current Permissions
 
 p Note: Bridge officers and committee chairs are automatically granted relevant permissions #{link_to('ex officio', auto_permissions_path)}.
 
-table#permissions
-  tr
-    th User
-    th Permission
-    th
+#permissions.table
+  .table-row.header
+    .table-cell User
+    .table-cell Permission
+    .table-cell
   - UserRole.all.order(:user_id).includes(:user, :role).each do |p|
     - next if p.role.name.in?(%w[admin users]) && !current_user.permitted?(:admin, strict: true)
-    tr
+    .table-row
       td class=(p.role.name == 'admin' ? 'gray' : '') = display_name = p.user.full_name || p.user.email
       td class=(p.role.name == 'admin' ? 'gray' : '') = p.role.name
       td = link_to(remove_permit_path(permit_id: p.id), method: :delete, class: "red", data: { confirm: "Are you sure you want to remove the #{p.role.name} permission from #{display_name}?" }) { FA::Icon.p('minus-square', style: :duotone) } if current_user.permitted?(:users) && p.role.name != "admin"

@@ -7,25 +7,25 @@ hr
 = form_tag(admin_logo_path, method: :get) do
   .table
     .table-row
-      .table-cell.table-header.left = label_tag(:orientation, 'Orientation')
+      .table-cell.bold.left = label_tag(:orientation, 'Orientation')
       .table-cell.right = select_tag(:orientation, options_for_select(%w[Long Short], selected: @logo_params[:orientation]), required: true)
 
     .table-row
-      .table-cell.table-header.left = label_tag(:type, 'Type')
+      .table-cell.bold.left = label_tag(:type, 'Type')
       .table-cell.right = select_tag(:type, options_for_select(%w[PNG SVG], selected: @logo_params[:type]), required: true)
 
     .table-row
-      .table-cell.table-header.left title='Minimum 100px – Maximum defined by orientation' = label_tag(:size, 'Size')
+      .table-cell.bold.left title='Minimum 100px – Maximum defined by orientation' = label_tag(:size, 'Size')
       .table-cell.right
         = number_field_tag(:size, @logo_params[:size] || 1000, min: 100, required: true, class: 'number')
         |  pixels
 
     .table-row
-      .table-cell.table-header.left = label_tag(:background, 'Background')
+      .table-cell.bold.left = label_tag(:background, 'Background')
       .table-cell.right = select_tag(:background, options_for_select(%w[Transparent White], selected: @logo_params[:background]), required: true)
 
     .table-row
-      .table-cell.table-header.left title='"Birmingham" not available for Short' = label_tag(:text, 'Text')
+      .table-cell.bold.left title='"Birmingham" not available for Short' = label_tag(:text, 'Text')
       .table-cell.right = select_tag(:text, options_for_select(%w[Birmingham Burgee Slogan Plain], selected: @logo_params[:text]), required: true)
 
   .center = spinner_button(button_text: 'Get logo', disable_text: 'Getting logo', css: 'big')

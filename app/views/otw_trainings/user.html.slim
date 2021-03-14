@@ -12,11 +12,11 @@ hr
 
 #otw.table.striped
   .table-row.header
-    .table-cell.table-header Name
-    .table-cell.table-header Description
-    .table-cell.table-header Required For
-    .table-cell.table-header.center.padded Completed
-    .table-cell.table-header.center.padded Request
+    .table-cell Name
+    .table-cell Description
+    .table-cell Required For
+    .table-cell.center.padded Completed
+    .table-cell.center.padded Request
   - @otw_trainings.each do |otw|
     .table-row
       .table-cell = otw.name

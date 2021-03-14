@@ -12,7 +12,7 @@
           .table-cell = data[:assistant][:user][:full_name] == "TBD" ? data[:assistant][:user][:full_name] : mail_to(data[:assistant][:email], data[:assistant][:user][:full_name])
         .table-row.header
       .table-row.header
-        .table-cell.table-header.committee Committees
-        .table-cell.table-header.committee-chair Chair
+        .table-cell.committee Committees
+        .table-cell.committee-chair Chair
       - data[:committees]&.each do |committee|
         = render('bridge/list/committee', committee: committee)

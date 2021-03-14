@@ -5,13 +5,13 @@ h1 = admin_header("Versions of #{@model} ##{@id}")
 .instructions Revert#{FA::Icon.p('undo', style: :duotone, css: :red, fa: :fw)} returns the object to that version.
 hr
 
-.table.versions
-  .table-row
-    .table-cell.table-header Event
-    .table-cell.table-header title=('The user listed here caused that version to be changed.') Who
-    .table-cell.table-header Previous Version
-    .table-cell.table-header Date
-    .table-cell.table-header Actions
+.table.striped.versions
+  .table-row.header
+    .table-cell Event
+    .table-cell title=('The user listed here caused that version to be changed.') Who
+    .table-cell Previous Version
+    .table-cell Date
+    .table-cell Actions
   = render('admin/versions/current_version', version: @current_version, no_versions: @versions&.count == 0 || @versions.blank?)
   - @versions&.each_with_index do |version, index|
     = render('admin/versions/version', version: version, index: index)
