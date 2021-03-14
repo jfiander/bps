@@ -161,6 +161,10 @@ div.event-costs {
 
 div#expired-events-section {
   background-color: $old-glory-red-faded;
+
+  div.event-unified.even {
+    background-color: darken($old-glory-red-faded, 3%);
+  }
 }
 
 a.control {
