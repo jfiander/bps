@@ -1,0 +1,16 @@
+h1 = admin_header('Generic Payments')
+
+.information These are payments not associated with a specific object, like a course registration or membership renewal.
+
+.table.striped
+  .table-row.header
+    .table-cell Description
+    .table-cell Customer
+    .table-cell Amount
+    .table-cell
+  - @generic_payments.each do |gp|
+    .table-row
+      .table-cell = gp.description
+      .table-cell = receipt_customer(gp.payment)
+      .table-cell = gp.payment.transaction_amount
+      .table-cell = receipt_actions(gp.payment)

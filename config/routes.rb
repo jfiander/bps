@@ -109,6 +109,9 @@ Rails.application.routes.draw do
     # Send Message
     get    '/message',                   to: 'sms#new', as: 'message'
     post   '/message',                   to: 'sms#send_message'
+
+    # Generic Payments
+    get    '/generic_payments',          to: 'generic_payments#index'
   end
 
   # Newsletter
