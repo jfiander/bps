@@ -67,14 +67,14 @@ div#profile {
     width: 50%;
   }
 
+  div.table-cell {
+    padding-top: 1em;
+    word-wrap: break-word;
+  }
+
   ul {
     margin: 0;
   }
-}
-
-div.table-cell {
-  padding-top: 1em;
-  word-wrap: break-word;
 }
 
 div.password-box {
