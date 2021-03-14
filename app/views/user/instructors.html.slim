@@ -12,29 +12,12 @@ h1 Current Instructors
 
 hr
 
-- yes = FA::Icon.p('check', css: 'birmingham-blue')
-- no = FA::Icon.p('times', css: 'gray')
-
 #instructors.table.striped
   .table-row.header
     .table-cell.table-header Name
     .table-cell.table-header title="Instructor certification expiration" ID Exp.
-    .table-cell.table-header.center class=('highlight' if @highlight == 'SN') SN?
-    .table-cell.table-header.center class=('highlight' if @highlight == 'CPR/AED') CPR
-    .table-cell.table-header.center class=('highlight' if @highlight == 'S') S
-    .table-cell.table-header.center class=('highlight' if @highlight == 'P') P
-    .table-cell.table-header.center class=('highlight' if @highlight == 'AP') AP
-    .table-cell.table-header.center class=('highlight' if @highlight == 'JN') JN
-    .table-cell.table-header.center class=('highlight' if @highlight == 'N') N
-    .table-cell.table-header.center class=('highlight' if @highlight == 'CP') CP
-    .table-cell.table-header.center class=('highlight' if @highlight == 'EM') EM
-    .table-cell.table-header.center class=('highlight' if @highlight == 'ID') ID
-    .table-cell.table-header.center class=('highlight' if @highlight.in?(%w[MCS ME])) MCS
-    .table-cell.table-header.center class=('highlight' if @highlight.in?(%w[MES ME])) MES
-    .table-cell.table-header.center class=('highlight' if @highlight.in?(%w[EN ME])) EN
-    .table-cell.table-header.center class=('highlight' if @highlight == 'RA') RA
-    .table-cell.table-header.center class=('highlight' if @highlight == 'SA') SA
-    .table-cell.table-header.center class=('highlight' if @highlight == 'WE') WE
+    - UserHelper::INSTRUCTOR_COURSES.each do |key, label|
+      = instructor_header(key, @highlight, label: label)
   - @instructors.each do |user|
     - completions = user.completions.keys
     .table-row
@@ -44,22 +27,8 @@ hr
         .table-cell = id_expr
       - else
         .table-cell.red = id_expr || 'Not Certified'
-      .table-cell.center class=('highlight' if @highlight == 'SN') class=(user.grade == 'SN' ? 'birmingham-blue' : '') = user.grade == 'SN' ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'CPR/AED') class=(user.cpr_aed? ? 'birmingham-blue' : '') = user.cpr_aed? ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'S') class=(completions.include?('S') ? 'birmingham-blue' : '') = completions.include?('S') ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'P') class=(completions.include?('P') ? 'birmingham-blue' : '') = completions.include?('P') ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'AP') class=(completions.include?('AP') ? 'birmingham-blue' : '') = completions.include?('AP') ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'JN') class=(completions.include?('JN') ? 'birmingham-blue' : '') = completions.include?('JN') ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'N') class=(completions.include?('N') ? 'birmingham-blue' : '') = completions.include?('N') ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'CP') class=(completions.include?('CP') ? 'birmingham-blue' : '') = completions.include?('CP') ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'EM') class=(completions.include?('EM') ? 'birmingham-blue' : '') = completions.include?('EM') ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'ID') class=(completions.include?('ID') ? 'birmingham-blue' : '') = completions.include?('ID') ? yes : no
-      .table-cell.center class=('highlight' if @highlight.in?(%w[MCS ME])) class=((completions.include?('ME') || completions.include?('MCS')) ? 'birmingham-blue' : '') = completions.include?('ME') || completions.include?('MCS') ? yes : no
-      .table-cell.center class=('highlight' if @highlight.in?(%w[MES ME])) class=((completions.include?('ME') || completions.include?('MES')) ? 'birmingham-blue' : '') = completions.include?('ME') || completions.include?('MES') ? yes : no
-      .table-cell.center class=('highlight' if @highlight.in?(%w[EN ME])) class=((completions.include?('ME') || completions.include?('EN')) ? 'birmingham-blue' : '') = completions.include?('ME') || completions.include?('EN') ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'RA') class=(completions.include?('RA') ? 'birmingham-blue' : '') = completions.include?('RA') ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'SA') class=(completions.include?('SA') ? 'birmingham-blue' : '') = completions.include?('SA') ? yes : no
-      .table-cell.center class=('highlight' if @highlight == 'WE') class=(completions.include?('WE') ? 'birmingham-blue' : '') = completions.include?('WE') ? yes : no
+      - UserHelper::INSTRUCTOR_COURSES.each do |key, _|
+        = instructor_row(key, @highlight, completions, grade: user.grade, cpr: user.cpr_aed?)
 
 h3 Email Visible Instructors (#{@instructors.count})
 textarea.large = @instructors.map(&:email).compact.uniq.join(', ')
