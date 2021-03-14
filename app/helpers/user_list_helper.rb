@@ -40,17 +40,17 @@ private
   end
 
   def profile_link(user_id)
-    user_list_link(user_path(user_id), nil, :get, 'user', 'Profile')
+    user_list_link(user_path(user_id), nil, nil, 'user', 'Profile')
   end
 
   def certificate_link(user_id)
     user_list_link(
-      user_certificate_path(user_id), nil, :get, 'file-certificate', 'Educational certificate'
+      user_certificate_path(user_id), nil, nil, 'file-certificate', 'Educational certificate'
     )
   end
 
   def boc_progress_link(user_id)
-    user_list_link(otw_progress_path(user_id), nil, :get, 'tasks', 'BOC progress')
+    user_list_link(otw_progress_path(user_id), nil, nil, 'tasks', 'BOC progress')
   end
 
   def reinvite_link(user_id)
