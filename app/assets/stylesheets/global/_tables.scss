@@ -35,3 +35,13 @@ div.table-cell {
   height: 1.5em;
   vertical-align: middle;
 }
+
+div.table.striped {
+  div.table-row:nth-child(even) div.table-cell {
+    background-color: $background-blue;
+  }
+
+  div.table-row:nth-child(odd) div.table-cell {
+    background-color: lighten($background-blue, 6%);
+  }
+}
