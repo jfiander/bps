@@ -85,6 +85,11 @@ h6 {
   display: none;
 }
 
+div.information {
+  font-style: italic;
+  margin: 1em 0;
+}
+
 .scrollable {
   overflow: scroll;
   border: thin dotted darken($background-blue, 10%);
