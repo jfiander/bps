@@ -2,6 +2,8 @@
 
 # Helper for accessing environmented S3 buckets and CloudFront links
 class BpsS3
+  VALID_BUCKETS = %i[files photos bilge static seo floatplans].freeze
+
   attr_reader :bucket
 
   def initialize(bucket)
@@ -50,10 +52,6 @@ class BpsS3
 
 private
 
-  def valid_buckets
-    %i[files photos bilge static seo floatplans]
-  end
-
   def s3
     @s3 ||= Aws::S3::Resource.new(
       region: 'us-east-2',
@@ -65,7 +63,7 @@ private
   end
 
   def prepare_bucket
-    raise 'Invalid bucket.' unless @bucket.in?(valid_buckets)
+    raise 'Invalid bucket.' unless @bucket.in?(VALID_BUCKETS)
 
     @endpoint = @bucket
     @environment = nil if @bucket == :seo
