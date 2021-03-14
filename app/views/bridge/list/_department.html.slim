@@ -5,7 +5,7 @@
   .bridge-department-info
     .flag = officer_flag(data[:head][:office], mode: :png)
     .department = image_tag(data[:head][:user][:photo], alt: data[:head][:user][:full_name]) if data[:head][:user].present?
-    .table.committees
+    .table.striped.committees
       - if data[:assistant].present? && data[:assistant][:user][:full_name] != "TBD"
         .table-row.assistant
           .table-cell = data[:assistant][:title]
