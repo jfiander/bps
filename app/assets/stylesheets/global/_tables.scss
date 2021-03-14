@@ -17,6 +17,10 @@ div.table-row {
   width: 100%;
 }
 
+div.table-row.header {
+  font-weight: bold;
+}
+
 div.table-cell {
   display: table-cell;
 }
@@ -37,11 +41,15 @@ div.table-cell {
 }
 
 div.table.striped {
-  div.table-row:nth-child(even) div.table-cell {
+  div.table-row:nth-child(even) {
     background-color: $background-blue;
   }
 
-  div.table-row:nth-child(odd) div.table-cell {
+  div.table-row:nth-child(odd) {
     background-color: lighten($background-blue, 6%);
+  }
+
+  div.table-row.header {
+    background-color: inherit;
   }
 }
