@@ -2,8 +2,8 @@
   - if r.paid?
     = FA::Icon.p('minus-square', style: :duotone, class: :gray, title: 'Paid registrations cannot be cancelled online.')
   - else
-    = link_to(cancel_registration_path(r.id), class: "red", method: :delete, remote: true, data: {confirm: 'Are you sure you want to cancel this registration?'}) { FA::Icon.p('minus-square', style: :duotone) }
-  - if current_user&.permitted?(:admin) && r.event&.cost&.positive?
+    = cancel_reg_link(r)
+  - if current_user&.permitted?(:admin) && event&.cost&.positive?
     = reg_override_icon(r)
   - if r.user&.full_name&.present?
     = link_to("mailto:#{r.user.email}") { r.user.full_name }

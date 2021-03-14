@@ -12,15 +12,17 @@ module RegistrationHelper
     end
   end
 
-  def cancel_reg_link(reg)
+  def cancel_reg_link(reg, event: nil)
     return if reg.paid?
 
-    confirm = "Are you sure you want to cancel your registration for #{reg.event.display_title}" \
-    " on #{reg.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}?"
+    event ||= reg.event
+
+    confirm = "Are you sure you want to cancel your registration for #{event.display_title}" \
+    " on #{event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}?"
 
     ActionController::Base.helpers.link_to(
       Rails.application.routes.url_helpers.cancel_registration_path(id: reg.id),
-      method: :delete, remote: true, class: 'red', id: "event_#{reg.event_id}",
+      method: :delete, remote: true, class: 'red', id: "event_#{event.id}",
       data: { confirm: confirm }
     ) { FA::Icon.p('minus-square', style: :duotone) }
   end

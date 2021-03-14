@@ -5,11 +5,11 @@ module Concerns
     module Flyer
       extend ActiveSupport::Concern
 
-      def get_flyer(event_types = nil)
-        if use_course_book_cover?(event_types)
-          get_book_cover(:courses, event_types)
-        elsif use_seminar_book_cover?(event_types)
-          get_book_cover(:seminars, event_types)
+      def pick_flyer
+        if use_course_book_cover?
+          book_cover(:courses)
+        elsif use_seminar_book_cover?
+          book_cover(:seminars)
         elsif flyer.present?
           BpsS3.new(:files).link(flyer&.s3_object&.key)
         end
@@ -17,23 +17,20 @@ module Concerns
 
     private
 
-      def get_book_cover(type, event_types = nil)
-        filename = cover_file_name(event_types)
-        path = "book_covers/#{type}/#{filename}.jpg"
-        BpsS3.new(:static).link(path)
+      def book_cover(type)
+        BpsS3.new(:static).link("book_covers/#{type}/#{cover_file_name}.jpg")
       end
 
-      def cover_file_name(event_types = nil)
-        event_types ||= EventType.all
-        event_types.select { |e| e.id == event_type_id }.first.title.delete("',")
+      def cover_file_name
+        event_type.title.delete("',")
       end
 
-      def use_course_book_cover?(event_types = nil)
-        course?(event_types) && flyer.blank?
+      def use_course_book_cover?
+        course? && flyer.blank?
       end
 
-      def use_seminar_book_cover?(event_types = nil)
-        seminar?(event_types) && flyer.blank?
+      def use_seminar_book_cover?
+        seminar? && flyer.blank?
       end
     end
   end

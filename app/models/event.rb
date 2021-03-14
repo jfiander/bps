@@ -61,33 +61,25 @@ class Event < ApplicationRecord
   def self.include_details
     includes(
       :event_type, :course_topics, :course_includes, :prereq, :location,
-      instructors: User.position_associations, registrations: :payment
+      event_instructors: { user: User.position_associations },
+      registrations: %i[user payment]
     )
   end
 
   def self.for_category(category)
-    category = case category.to_s
-               when 'course'
-                 %w[public advanced_grade elective]
-               when 'event'
-                 'meeting'
-               else
-                 category
-               end
-    includes(:event_type).where(event_types: { event_category: category })
+    includes(:event_type).where(event_types: { event_category: query_category(category) })
   end
 
-  # def self.current(category)
-  #   include_details.for_category(category).where('expires_at > ?', Time.now)
-  # end
-
-  # def self.all_expired(category)
-  #   include_details.for_category(category).where('expires_at <= ?', Time.now)
-  # end
-
-  # def self.expired(category)
-  #   all_expired(category).where('start_at >= ?', Date.today.last_year.beginning_of_year)
-  # end
+  def self.query_category(category)
+    case category.to_s
+    when 'course'
+      %w[public advanced_grade elective]
+    when 'event'
+      'meeting'
+    else
+      category
+    end
+  end
 
   def self.activity_feed
     include_details.order(:start_at).where('expires_at > ? AND activity_feed = ?', Time.now, true)
@@ -171,7 +163,7 @@ private
     if slug.present?
       ['event_slug_url', slug]
     elsif id.present?
-      route = category == 'meeting' ? 'event' : category
+      route = meeting? ? 'event' : category
       ["show_#{route}_url", id]
     end
   end

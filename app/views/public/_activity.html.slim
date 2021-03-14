@@ -7,7 +7,7 @@ div#activity-feed
         .date = event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
         .location = event.location&.name || 'Location TBD'
         - if event.flyer.present?
-          .flyer = link_to('Flyer', event.get_flyer)
+          .flyer = link_to('Flyer', event.pick_flyer)
 
 - unless @new_markdown.present?
   script type='text/javascript' $("div#content-main").addClass("activity");

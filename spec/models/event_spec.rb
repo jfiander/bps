@@ -262,19 +262,6 @@ RSpec.describe Event, type: :model, slow: true do
           expect(event.seminar?).to be(false)
           expect(event.meeting?).to be(false)
         end
-
-        it 'checks the category from cache' do
-          FactoryBot.create(:event_type, event_category: 'public')
-          FactoryBot.create(:event_type, event_category: 'seminar')
-          FactoryBot.create(:event_type, event_category: 'meeting')
-          event_types = EventType.all
-
-          expect(event.category(event_types)).to eql('course')
-        end
-
-        it 'defaults to the associated EventType category' do
-          expect(event.category([])).to eql(event.event_type.event_category)
-        end
       end
 
       describe 'scheduling' do
@@ -447,26 +434,26 @@ RSpec.describe Event, type: :model, slow: true do
       it 'gets the correct course book cover' do
         event_type = FactoryBot.create(:event_type, event_category: 'public')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.get_flyer).to eql('https://static.bpsd9.org/book_covers/courses/americas_boating_course.jpg')
+        expect(event.pick_flyer).to eql('https://static.bpsd9.org/book_covers/courses/americas_boating_course.jpg')
       end
 
       it 'gets the correct seminar book cover' do
         event_type = FactoryBot.create(:event_type, event_category: 'seminar', title: 'vhf_dsc')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.get_flyer).to eql('https://static.bpsd9.org/book_covers/seminars/vhf_dsc.jpg')
+        expect(event.pick_flyer).to eql('https://static.bpsd9.org/book_covers/seminars/vhf_dsc.jpg')
       end
 
       it 'checks if the event has a flyer' do
         event_type = FactoryBot.create(:event_type, event_category: 'meeting')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.get_flyer).to be_nil
+        expect(event.pick_flyer).to be_nil
       end
 
       it 'generates the correct flyer link' do
         event_type = FactoryBot.create(:event_type, event_category: 'meeting')
         flyer = File.open(test_image(250, 500), 'r')
         event = FactoryBot.create(:event, event_type: event_type, flyer: flyer)
-        expect(event.get_flyer).to match(
+        expect(event.pick_flyer).to match(
           %r{https://files.development.bpsd9.org/event_flyers/#{event.id}/test_image.jpg\?[^ ]*?}
         )
       end
