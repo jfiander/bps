@@ -1,6 +1,6 @@
-.table#bilge
+#bilge.table.striped
   - @bilges.sort_by { |b| [-b.year, b.month] }.group_by(&:year).each do |year, bilges|
-    .table-row class=(cycle('', 'gray'))
+    .table-row
       .table-cell.table-header = year
       - @issues.keys.each do |month|
         .table-cell

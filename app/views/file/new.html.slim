@@ -4,13 +4,13 @@ p Copy the <b>markdown key</b> from the list below into the editor where you wan
 = editor('file_editor')
 
 - if @markdown_files.present?
-  .table#files.markdown
-    .table-row
+  #files.table.striped.markdown
+    .table-row.header
       .table-cell.table-header File / Image
       .table-cell.table-header Markdown key
       .table-cell
     - @markdown_files.each do |file|
-      .table-row class=(cycle('gray', ''))
+      .table-row
         .table-cell
           - if file.file_content_type.match(/image/)
             = image_tag(file.link)

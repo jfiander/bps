@@ -3,13 +3,13 @@ h1 Available JumpStart Coaches
 .information These members have stated that they would be comfortable coaching for the described kinds of boats.
 br
 
-.table.center
-  .table-row
+.table.striped.center
+  .table-row.header
     .table-cell.table-header Name
     .table-cell.table-header Email
     .table-cell.table-header Comfortable With
   - @users.each do |user|
-    .table-row class=(cycle('', 'gray'))
+    .table-row
       .table-cell = user.full_name
       .table-cell = mail_to(user.email)
       .table-cell = user.jumpstart

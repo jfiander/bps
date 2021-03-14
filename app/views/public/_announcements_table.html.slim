@@ -1,11 +1,11 @@
-.table#announcements
-  .table-row
+#announcements.table.striped
+  .table-row.header
     .table-cell.table-header Title
     .table-cell.table-header Uploaded
     .table-cell
     .table-cell
   - @announcements.each do |announcement|
-    .table-row class=(cycle('', 'gray'))
+    .table-row
       .table-cell = announcement.title
       .table-cell = announcement.created_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
       .table-cell.center = link_to('Download', announcement.link(permalinks: current_user&.permalinks), target: :_blank, class: 'download')

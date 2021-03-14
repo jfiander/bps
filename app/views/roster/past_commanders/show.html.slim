@@ -2,14 +2,14 @@ h1 Past Commanders
 
 = link_to 'Add Past Commander', new_roster_past_commanders_path, class: 'big'
 
-.table
-  .table-row
+.table.striped
+  .table-row.header
     .table-cell.table-header Year
     .table-cell.table-header Name
     .table-cell.table-header Deceased?
     .table-cell
   - @collection.each do |commander|
-    .table-row class=(cycle('gray', ''))
+    .table-row
         .table-cell = commander.year.strftime('%Y')
         .table-cell = commander.user&.simple_name || commander.name
         .table-cell = FA::Icon.p('dot-circle', style: :duotone, css: 'red') if commander.deceased

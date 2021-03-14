@@ -1,14 +1,14 @@
 h1 Current OTW Trainings
 
-.table
-  .table-row
+.table.striped
+  .table-row.header
     .table-cell.table-header Name
     .table-cell.table-header Description
     .table-cell.table-header BOC
     .table-cell.table-header Key
     .table-cell
   - @otw_trainings.each do |otw|
-    .table-row class=(cycle('', 'gray'))
+    .table-row
       .table-cell = otw.name
       .table-cell = simple_format(otw.description)
       .table-cell = otw.boc_level

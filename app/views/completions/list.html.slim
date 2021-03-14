@@ -1,7 +1,7 @@
 h1 Completions#{' – YTD' if @ytd}
 
-.table#completions
-  .table-row
+#completions.table.striped
+  .table-row.header
     .table-cell.table-header Member
     .table-cell.table-header Certificate
     .table-cell.table-header Subject
@@ -9,7 +9,7 @@ h1 Completions#{' – YTD' if @ytd}
     .table-cell.table-header Date
   - @completions.each do |user, comp|
     - comp.each_with_index do |c, i|
-      .table-row class=(cycle('gray', ''))
+      .table-row
         .table-cell = user.full_name unless user.full_name == @previous_name
         .table-cell = user.certificate unless user.full_name == @previous_name
         .table-cell
@@ -30,6 +30,6 @@ h1 Completions#{' – YTD' if @ytd}
         .table-cell = c.course_key
         .table-cell = c.date.strftime(ApplicationController::SIMPLE_DATE_FORMAT)
       - @previous_name = user.full_name
-    .table-row
+    .table-row.header
       .table-cell style="height: 1em;"
       - reset_cycle

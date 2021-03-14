@@ -4,12 +4,11 @@ h1 Squadron Meeting Minutes
 
 h3 Click on a button below to view or download that issue.
 
-.table#bilge
+#bilge.table.double-striped
   - @years.reverse.each do |year|
     - minutes = @minutes[year]
     - excom_minutes = @excom_minutes[year]
-    - gray = cycle('', 'gray')
-    .table-row class=(gray)
+    .table-row
       .table-cell.table-header = year
       - @issues.keys.each do |month|
         .table-cell
@@ -18,7 +17,7 @@ h3 Click on a button below to view or download that issue.
             = link_to(minute.issue, minute.link(permalinks: current_user.permalinks), target: :_blank, title: "Membership minutes for #{MinutesFile.issues[month]} #{year}")
           - elsif year < Date.today.year || month < membership_date.month
             = FA::Icon.p(:ban, style: :duotone, css: 'gray', title: "No Membership minutes posted for #{MinutesFile.issues[month]} #{year}")
-    .table-row class=(gray)
+    .table-row
       .table-cell.table-header
       - @issues.keys.each do |month|
         .table-cell

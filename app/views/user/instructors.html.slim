@@ -15,10 +15,10 @@ hr
 - yes = FA::Icon.p('check', css: 'birmingham-blue')
 - no = FA::Icon.p('times', css: 'gray')
 
-.table#instructors
-  .table-row
+#instructors.table.striped
+  .table-row.header
     .table-cell.table-header Name
-    .table-cell.table-header ID Expiration
+    .table-cell.table-header title="Instructor certification expiration" ID Exp.
     .table-cell.table-header.center class=('highlight' if @highlight == 'SN') SN?
     .table-cell.table-header.center class=('highlight' if @highlight == 'CPR/AED') CPR
     .table-cell.table-header.center class=('highlight' if @highlight == 'S') S
@@ -37,7 +37,7 @@ hr
     .table-cell.table-header.center class=('highlight' if @highlight == 'WE') WE
   - @instructors.each do |user|
     - completions = user.completions.keys
-    .table-row class=(cycle('', 'gray'))
+    .table-row
       .table-cell = mail_to user.email, user.simple_name
       - id_expr = user.id_expr&.strftime(ApplicationController::SIMPLE_DATE_FORMAT)
       - if user.id_expr.present? && user.id_expr > Time.now

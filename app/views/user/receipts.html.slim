@@ -1,13 +1,13 @@
 h1 = admin_header('Payments & Receipts')
 
-#receipts.table
-  .table-row
+#receipts.table.striped
+  .table-row.header
     .table-cell.table-header ID
     .table-cell.table-header Parent
     .table-cell.table-header Customer
     .table-cell.table-header Amount
   - @payments.each do |payment|
-    .table-row class=(cycle('', 'gray'))
+    .table-row
       .table-cell = payment.id
       .table-cell = "#{payment.parent&.class&.name}##{payment.parent&.id}" if payment.parent.present?
       .table-cell

@@ -11,8 +11,8 @@ hr
 - met_icon = FA::Icon.p('check-circle', style: :duotone, css: 'green')
 - unmet_icon = FA::Icon.p('do-not-enter', style: :duotone, fa: 'swap-opacity', css: 'gray')
 
-.table#otw-progress
-  .table-row.bold
+#otw-progress.table.striped
+  .table-row.header
     .table-cell Level
     .table-cell.center Type
     .table-cell Requirement
@@ -20,7 +20,7 @@ hr
   - @boc_requirements[:levels].each do |level, requirements|
     - requirements.each_with_index do |requirement, index|
       - met = requirement[:options].any? { |set| set.all? { |code| code.in?(@completions.keys) } }
-      .table-row class=(cycle('gray', ''))
+      .table-row
         .table-cell.bold
           - if index.zero?
             => level.to_s.titleize
@@ -32,7 +32,7 @@ hr
           = met ? met_icon : unmet_icon
   - @boc_requirements[:endorsements].each_with_index do |endorsement, index|
     - met = endorsement[:code].in?(@completions.keys)
-    .table-row class=(cycle('gray', ''))
+    .table-row
       .table-cell.bold = 'Endorsements' if index.zero?
       .table-cell
       .table-cell class=('satisfied' if met) = endorsement[:name]

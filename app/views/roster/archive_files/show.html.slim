@@ -6,14 +6,14 @@ h1 Archived Rosters
 - if @collection.empty?
   h2.red There are no archived rosters available.
 - else
-  .table
-    .table-row
+  .table.striped
+    .table-row.header
       .table-cell.table-header Generated at
       .table-cell.table-header Archived at
       .table-cell.table-header Link
       .table-cell
     - @collection.each do |archive|
-      .table-row class=(cycle('gray', ''))
+      .table-row
         .table-cell = archive.generated_at&.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
         .table-cell = archive.created_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
         .table-cell = link_to 'View', archive.link, target: :_blank

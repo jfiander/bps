@@ -6,12 +6,12 @@
 - elsif @objects.present?
   h1 = admin_header('Versioned Objects')
   - headers = @objects.first.attributes.keys.reject { |e| e.in?(%w[created_at updated_at encrypted_password reset_password_token invitation_token]) }
-  .table
-    .table-row
+  .table.striped
+    .table-row.header
       - headers.each do |header|
         .table-cell.table-header = header.titleize
     - @objects.each do |object|
-      .table-row class=(cycle('gray', ''))
+      .table-row
         - headers.each do |header|
           .table-cell
             - if header == 'id'

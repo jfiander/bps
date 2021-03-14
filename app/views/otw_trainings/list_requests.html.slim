@@ -1,10 +1,10 @@
 h1 OTW Training Requests
 
-.table
-  .table-row
+.table.striped
+  .table-row.header
     .table-cell.table-header Training
     .table-cell.table-header Requested By
   - @otw_requests.each do |otw|
-    .table-row class=(cycle('gray', ''))
+    .table-row
       .table-cell = otw.otw_training.name
       .table-cell = mail_to otw.user.email, otw.user.full_name

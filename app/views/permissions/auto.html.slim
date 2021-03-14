@@ -4,9 +4,9 @@ h1 Ex Officio Permissions
 
 - @auto.each do |group, permissions|
   h2 = group.to_s.titleize
-  .table.auto-permissions
+  .auto-permissions.table.striped
     - permissions.each do |permission, roles|
-      .table-row class=(cycle('gray', ''))
+      .table-row
         .table-cell.left = group == 'bridge_office' ? permission.titleize : permission
         .table-cell.right: ul.simple
           - roles.each do |r|

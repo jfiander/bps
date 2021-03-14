@@ -3,14 +3,14 @@ p Every time the site is loaded, a random image listed from this page will be di
 = editor('header_editor')
 
 - if @headers.present?
-    .table#files.headers
-      .table-row.bold
+    #files.table.striped.headers
+      .table-row.header
         .table-cell Preview
         .table-cell Dimensions
         .table-cell
         .table-cell
       - @headers.each do |header|
-        .table-row class=(cycle('gray', ''))
+        .table-row
           .table-cell.preview: a data-fancybox="album_headers" href=(files_bucket.link(header.file.path))
             = image_tag files_bucket.link(header.file.path(:thumb))
           .table-cell.dimensions #{header.dimensions} (#{header.ratio}:1)

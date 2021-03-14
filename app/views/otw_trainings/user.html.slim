@@ -10,15 +10,15 @@ hr
 - request = FA::Icon.p('square', style: :regular, css: 'birmingham-blue')
 - spinner = FA::Icon.p('spinner', style: :duotone, fa: 'pulse')
 
-.table#otw
-  .table-row
+#otw.table.striped
+  .table-row.header
     .table-cell.table-header Name
     .table-cell.table-header Description
     .table-cell.table-header Required For
     .table-cell.table-header.center.padded Completed
     .table-cell.table-header.center.padded Request
   - @otw_trainings.each do |otw|
-    .table-row class=(cycle('', 'gray'))
+    .table-row
       .table-cell = otw.name
       .table-cell = simple_format(otw.description)
       .table-cell = otw.boc_level

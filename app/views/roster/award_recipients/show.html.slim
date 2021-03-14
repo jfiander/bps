@@ -4,14 +4,14 @@ h1 Award Recipients
 
 - @collection.group_by { |ar| ar.award_name }.each do |award, recipients|
   h2 = award
-  .table
-    .table-row
+  .table.striped
+    .table-row.header
       .table-cell.table-header Year
       .table-cell.table-header Name
       .table-cell.table-header Additional Name
       .table-cell
     - recipients.each do |recipient|
-      .table-row class=(cycle('gray', ''))
+      .table-row
           .table-cell = recipient.year.strftime('%Y')
           .table-cell = recipient.user&.simple_name || recipient.name
           .table-cell = recipient.additional_user&.simple_name

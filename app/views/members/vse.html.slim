@@ -3,11 +3,11 @@ h1 Available VSC Examiners
 .information These members are certified Vessel Safety Examiners. Be sure to confirm that their certification is current before scheduling anything.
 br
 
-.table.center
-  .table-row
+.table.striped.center
+  .table-row.header
     .table-cell.table-header Name
     .table-cell.table-header Email
   - @users.each do |user|
-    .table-row class=(cycle('', 'gray'))
+    .table-row
       .table-cell = user.full_name
       .table-cell = mail_to(user.email)
