@@ -100,7 +100,7 @@ class Event < ApplicationRecord
   def length
     hour = length_h.to_s.rjust(2, '0')
     min = length_m.present? ? length_m.to_s.rjust(2, '0') : '00'
-    Time.strptime("#{hour}#{min}", '%H%M')
+    Time.strptime("#{hour}#{min} UTC", '%H%M %Z')
   end
 
   def formatted_length
