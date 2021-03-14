@@ -23,6 +23,7 @@ div.table-row.header {
 
 div.table-cell {
   display: table-cell;
+  padding: 0.25em;
 }
 
 .table-cell.spacer {
@@ -41,12 +42,28 @@ div.table-cell {
 }
 
 div.table.striped {
+  div.table-row:nth-child(odd) {
+    background-color: lighten($background-blue, 6%);
+  }
+
   div.table-row:nth-child(even) {
     background-color: $background-blue;
   }
 
-  div.table-row:nth-child(odd) {
+  div.table-row.header {
+    background-color: inherit;
+  }
+}
+
+div.table.double-striped {
+  div.table-row:nth-child(n),
+  div.table-row:nth-child(2n) {
     background-color: lighten($background-blue, 6%);
+  }
+
+  div.table-row:nth-child(3n),
+  div.table-row:nth-child(4n) {
+    background-color: $background-blue;
   }
 
   div.table-row.header {
