@@ -15,18 +15,16 @@ div#float-plan {
       div.table-cell {
         height: 2em;
         width: 20em;
+      }
 
+      div.table-cell.header {
+        font-weight: bold;
+        text-align: right;
+        padding-right: 0.5em;
       }
 
       div.table-cell.field {
         width: 60%;
-
-      }
-
-      div.table-header {
-        text-align: right;
-        padding-right: 0.5em;
-
       }
     }
   }

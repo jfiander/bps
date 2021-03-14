@@ -1,5 +1,5 @@
 .table-row.standing-committee
-  .table-cell.bold = "#{committee.titleize} Committee"
+  .table-cell.committee-name = "#{committee.titleize} Committee"
   .table-cell
     - members&.each_with_index do |member, index|
       = render('bridge/list/standing_com_member', committee: committee, member: member, index: index)

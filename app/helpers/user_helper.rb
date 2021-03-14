@@ -40,7 +40,7 @@ private
 
   def class_list(key, highlight, header: false)
     list = %w[table-cell center]
-    list << 'table-header' if header
+    list << 'bold' if header
     list.tap do |l|
       case key
       when Array

@@ -61,7 +61,8 @@ div#profile {
     }
   }
 
-  div.table-header {
+  div.header {
+    font-weight: bold;
     text-align: right;
     padding-right: 1em;
     width: 50%;
@@ -256,7 +257,8 @@ div#override-cost {
     line-height: 2em;
   }
 
-  div.table-header {
+  div.header {
+    font-weight: bold;
     width: 50%;
     text-align: right;
     padding-right: 1em;

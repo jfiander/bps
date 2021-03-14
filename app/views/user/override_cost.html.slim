@@ -3,34 +3,34 @@ h1 = admin_header('Override Registration Cost')
 = form_for(@registration, url: set_override_cost_path, method: :patch) do |f|
   #override-cost.table
     .table-row
-      .table-cell.bold Event
+      .table-cell.header Event
       .table-cell.bold.red = @registration.event.display_title
     .table-row
-      .table-cell.bold Start at
+      .table-cell.header Start at
       .table-cell = @registration.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
     .table-row
-      .table-cell.bold Posted costs
+      .table-cell.header Posted costs
       .table-cell = render('event/costs', event: @registration.event)
     .table-row
-      .table-cell.bold Registrant
+      .table-cell.header Registrant
       .table-cell
         - if @registration.user.present?
           = mail_to(@registration.user&.email, @registration.user&.full_name)
         - else
           = mail_to(@registration.email)
     .table-row
-      .table-cell.bold Current cost
+      .table-cell.header Current cost
       .table-cell.bold.birmingham-blue
         = FA::Icon.p('dollar-sign', style: :duotone)
         = @registration.payment_amount
     .table-row
-      .table-cell.bold = f.label :override_cost
+      .table-cell.header = f.label :override_cost
       .table-cell.bold
         = FA::Icon.p('dollar-sign', style: :duotone)
         = f.number_field :override_cost, class: 'number', min: 0, placeholder: '0.00'
         = link_to(pay_path(@registration.payment.token), target: :_blank) { FA::Icon.p('share-square', style: :duotone, css: 'green') }
     .table-row
-      .table-cell.bold = f.label :override_comment, 'Reason for override (optional)'
+      .table-cell.header = f.label :override_comment, 'Reason for override (optional)'
       .table-cell
         = f.text_field :override_comment
         br
