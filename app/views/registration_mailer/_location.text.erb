@@ -17,7 +17,7 @@ Instructions:
 
 <%- if @registration.event.location.picture.present? %>
 Help finding location:
-  <%= ApplicationRecord.buckets[:files].link(@registration.event.location.picture.path(:large)) %>
+  <%= BpsS3.new(:files).link(@registration.event.location.picture.path(:large)) %>
 <%- end %>
 
 **********

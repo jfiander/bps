@@ -11,7 +11,7 @@ module Concerns
         elsif use_seminar_book_cover?(event_types)
           get_book_cover(:seminars, event_types)
         elsif flyer.present?
-          ::Event.buckets[:files].link(flyer&.s3_object&.key)
+          BpsS3.new(:files).link(flyer&.s3_object&.key)
         end
       end
 
@@ -20,7 +20,7 @@ module Concerns
       def get_book_cover(type, event_types = nil)
         filename = cover_file_name(event_types)
         path = "book_covers/#{type}/#{filename}.jpg"
-        ::Event.buckets[:static].link(path)
+        BpsS3.new(:static).link(path)
       end
 
       def cover_file_name(event_types = nil)

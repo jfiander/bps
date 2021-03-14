@@ -9,11 +9,9 @@ class ApplicationController < ActionController::Base
   include Application::LayoutAndFormatting
   include Application::Security
   include MarkdownHelper
-  include BucketHelper
   include ApplicationHelper
   include AdminMenuHelper
   include TimeHelper
-  helper_method :static_bucket, :files_bucket, :bilge_bucket, :photos_bucket
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :load_layout_images

@@ -35,7 +35,7 @@ class User < ApplicationRecord
   has_many :events, through: :event_instructors
 
   def self.no_photo
-    ActionController::Base.helpers.image_path(User.buckets[:static].link('no_profile.png'))
+    ActionController::Base.helpers.image_path(BpsS3.new(:static).link('no_profile.png'))
   end
 
   def self.position_associations

@@ -28,4 +28,4 @@ h3 Click on a button below to view or download that issue.
             = FA::Icon.p(:ban, style: :duotone, css: 'gray', title: "No ExCom minutes posted for #{MinutesFile.issues[month]} #{year}")
 
 hr
-= link_to('https://get.adobe.com/reader/', target: :_blank) { image_tag(static_bucket.link('acrobat_reader.png')) }
+= link_to('https://get.adobe.com/reader/', target: :_blank) { image_tag(BpsS3.new(:static).link('acrobat_reader.png')) }

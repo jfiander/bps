@@ -12,7 +12,6 @@ require 'factory_bot'
 
 include ApplicationHelper
 include BridgeHelper
-include BucketHelper
 include CalendarHelper
 include DateHelper
 include EventsHelper

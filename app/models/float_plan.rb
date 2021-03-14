@@ -25,7 +25,7 @@ class FloatPlan < ApplicationRecord
   end
 
   def link
-    FloatPlan.buckets[:floatplans].link("#{id}.pdf")
+    BpsS3.new(:floatplans).link("#{id}.pdf")
   end
 
   def invalidate!

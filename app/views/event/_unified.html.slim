@@ -49,7 +49,7 @@
                 = simple_markdown(@locations[event.location_id][:details])
             .location-picture
               - if @locations[event.location_id].present? && @locations[event.location_id][:picture].present?
-                = image_tag(files_bucket.link(@locations[event.location_id][:picture].path(:thumb)))
+                = image_tag(BpsS3.new(:files).link(@locations[event.location_id][:picture].path(:thumb)))
           - else
             .bold Location TBD
           - if event.online && event.conference_link

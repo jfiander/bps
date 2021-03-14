@@ -7,9 +7,9 @@ module ViewHelper
 
     case mode
     when :svg
-      URI.parse(static_bucket.link("flags/SVG/#{rank}.svg")).open.read.html_safe
+      URI.parse(BpsS3.new(:static).link("flags/SVG/#{rank}.svg")).open.read.html_safe
     when :png
-      image_tag(static_bucket.link("flags/PNG/#{rank}.thumb.png"), alt: rank)
+      image_tag(BpsS3.new(:static).link("flags/PNG/#{rank}.thumb.png"), alt: rank)
     end
   end
 

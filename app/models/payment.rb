@@ -75,7 +75,7 @@ class Payment < ApplicationRecord
   end
 
   def receipt_link
-    receipt.present? ? Payment.buckets[:files].link(receipt.s3_object.key) : '#'
+    receipt.present? ? BpsS3.new(:files).link(receipt.s3_object.key) : '#'
   end
 
   def receipt!

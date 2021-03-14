@@ -4,7 +4,7 @@
     .table-cell
   - @album.photos.each do |photo|
     .table-row
-      .table-cell = image_tag photos_bucket.link(photo.photo_file.path(:thumb))
+      .table-cell = image_tag BpsS3.new(:photos).link(photo.photo_file.path(:thumb))
       .table-cell
         = link_to(remove_photo_path(id: photo.id), method: :delete, data: {confirm: 'Are you sure you want to remove this photo from the album?'}) { FA::Icon.p('minus-square', style: :duotone, css: 'red') }
         | Uploaded on #{photo.created_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)}

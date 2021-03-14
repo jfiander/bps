@@ -56,7 +56,7 @@ module Members
     def send_minute(minute, excom: false)
       e = excom ? 'ExCom ' : ''
       send_data(
-        URI.parse(files_bucket.link(minute.file.s3_object.key)).open.read,
+        URI.parse(BpsS3.new(:files).link(minute.file.s3_object.key)).open.read,
         filename: "BPS #{e}Minutes - #{minute.full_issue}.pdf",
         type: 'application/pdf',
         disposition: 'inline'

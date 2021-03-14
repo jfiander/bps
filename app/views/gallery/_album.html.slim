@@ -1,3 +1,3 @@
 - @album.photos.each do |photo|
-  a data-fancybox="album_#{@album.id}" href=(photos_bucket.link(photo.photo_file.path))
-    = image_tag photos_bucket.link(photo.photo_file.path(:thumb))
+  a data-fancybox="album_#{@album.id}" href=(BpsS3.new(:photos).link(photo.photo_file.path))
+    = image_tag BpsS3.new(:photos).link(photo.photo_file.path(:thumb))

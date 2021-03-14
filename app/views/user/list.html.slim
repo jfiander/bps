@@ -35,9 +35,9 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
         .certificate = user[:certificate] || FA::Icon.p('question-circle', css: 'red', style: :duotone, title: 'Invalid certificate')
         - if user[:senior] || user[:life]
           - if user[:life]
-            = image_tag(static_bucket.link('insignia/PNG/membership/tr/life.png'), class: 'membership')
+            = image_tag(BpsS3.new(:static).link('insignia/PNG/membership/tr/life.png'), class: 'membership')
           - elsif user[:senior]
-            = image_tag(static_bucket.link('insignia/PNG/membership/tr/senior.png'), class: 'membership')
+            = image_tag(BpsS3.new(:static).link('insignia/PNG/membership/tr/senior.png'), class: 'membership')
         - if user[:mm].positive?
           .mm.insignia-gold #{user[:mm]} MM
       .table-cell.roles

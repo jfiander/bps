@@ -24,12 +24,12 @@ p.red.italic Do not add event-specific information to any location.
         = simple_markdown(location[:details])
         - if location[:picture].present?
           br.mobile
-          = link_to(files_bucket.link(location[:picture].path(:medium)), class: 'mobile') do
-            = image_tag(files_bucket.link(location[:picture].path(:thumb)), class: 'mobile')
+          = link_to(BpsS3.new(:files).link(location[:picture].path(:medium)), class: 'mobile') do
+            = image_tag(BpsS3.new(:files).link(location[:picture].path(:thumb)), class: 'mobile')
         - if location[:price_comment].present?
           hr
           .red = location[:price_comment]
-      .table-cell.picture = image_tag(files_bucket.link(location[:picture].path(:thumb))) if location[:picture].present?
+      .table-cell.picture = image_tag(BpsS3.new(:files).link(location[:picture].path(:thumb))) if location[:picture].present?
       .table-cell.actions.pending
         = link_to(edit_location_path(id: location[:id])) { FA::Icon.p('edit', style: :duotone) }
         - if Event.current.where(location_id: location[:id]).count.zero?

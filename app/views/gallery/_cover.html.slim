@@ -1,5 +1,5 @@
 - if album.photos.present?
   = link_to(show_album_path(album)) do
-    = image_tag photos_bucket.link(album.cover.photo_file.path(:medium))
+    = image_tag BpsS3.new(:photos).link(album.cover.photo_file.path(:medium))
 - else
   h3.red This album has no photos.

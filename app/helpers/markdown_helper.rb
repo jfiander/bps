@@ -107,7 +107,7 @@ private
     @markdown_div = ParsedMarkdown.new(
       @markdown_div,
       view_context: (view_context unless Rails.env.test?),
-      files_bucket: files_bucket,
+      files_bucket: BpsS3.new(:files),
       burgee: burgee_html(@page_markdown),
       education: education_menu(@page_markdown),
       next_meeting: next_scheduled(:meeting, @page_markdown),
