@@ -115,9 +115,15 @@ private
   end
 
   def receipt_pay_link(payment)
+    return not_payable_icon unless payment.payable?
+
     link_to(pay_path(payment.token)) do
       FA::Icon.p('credit-card', style: :duotone, fa: :fw, title: 'Pay Now')
     end
+  end
+
+  def not_payable_icon
+    FA::Icon.p('ban', style: :duotone, fa: :fw, css: 'gray', title: 'Not payable')
   end
 
   def receipt_paid_in_person_link(payment)
