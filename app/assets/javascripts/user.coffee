@@ -7,39 +7,48 @@ $ ->
     event.preventDefault()
     $('div#change-password').fadeIn(1000, "swing")
     $('div#show-change-password').toggle()
-    return
-  return
+
+anyFindFilter = (name, cert, roles, filter) ->
+  return findFilter(name, filter) || findFilter(cert, filter) || findFilter(roles, filter)
+
+findFilter = (div, filter) ->
+  return div.textContent.toUpperCase().indexOf(filter) > -1
+
+rowName = (row) ->
+  return row.getElementsByClassName('table-cell user')[0].getElementsByClassName('name')[0]
+
+rowCert = (row) ->
+  return row.getElementsByClassName('table-cell certificate')[0].getElementsByClassName('certificate')[0]
+
+rowRoles = (row) ->
+  return row.getElementsByClassName('table-cell roles')[0]
 
 filterUsers = ->
   input = document.getElementById('user-filter')
   filter = input.value.toUpperCase()
+
   table = document.getElementById('users')
-  tr = table.getElementsByTagName('tr')
+  rows = Array.prototype.slice.call(table.getElementsByClassName('table-row'))
+  rows.splice(0, 1) # Ignore the header row
 
-  i = 0
-  while i < tr.length
-    name = tr[i].getElementsByTagName('td')[0]
-    cert = tr[i].getElementsByTagName('td')[1]
-    role = tr[i].getElementsByTagName('td')[2]
+  shown = []
 
-    if name || cert || role
-      if name
-        name = name.getElementsByClassName('name')[0]
-      if cert
-        cert = cert.getElementsByClassName('certificate')[0]
-      nameValue = name.textContent or name.innerText
-      certValue = cert.textContent or cert.innerText
-      roleValue = role.textContent or role.innerText
+  for row in rows
+    if anyFindFilter(rowName(row), rowCert(row), rowRoles(row), filter)
+      $(row).fadeIn(150, "swing")
+      shown.push(row)
+    else
+      $(row).fadeOut(150, "swing")
+      row.classList.remove('odd', 'even')
 
-      if nameValue.toUpperCase().indexOf(filter) > -1 || certValue.toUpperCase().indexOf(filter) > -1 || roleValue.toUpperCase().indexOf(filter) > -1
-        tr[i].style.display = ''
-      else
-        tr[i].style.display = 'none'
-    i++
-  return
+  for show, i in shown
+    if i % 2 == 0
+      show.classList.remove('odd')
+      show.classList.add('even')
+    else
+      show.classList.remove('even')
+      show.classList.add('odd')
 
 $(document).ready ->
   $('#user-filter').keyup ->
     filterUsers()
-    return
-  return

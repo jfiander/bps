@@ -9,19 +9,18 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
 = editor('photo_editor') if current_user&.permitted?(:admin, session: session)
 
 - admin = current_user&.permitted?(:admin, session: session)
-- can_lock = current_user&.permitted?(:users, session: session)
 
 = text_field_tag 'user-filter', nil, placeholder: 'Filter users...'
 
-table#users
-  tr
-    th User
-    th.center Certificate
-    th.center Roles
-    / th Current Login
+#users.table.striped
+  .table-row.header.center
+    .table-cell User
+    .table-cell Certificate
+    .table-cell Roles
+    / .table-cell Current Login
   - @users.each do |user|
-    tr class=(user[:locked] ? 'locked' : cycle('gray' , '') )
-      td.user
+    .table-row class=('locked' if user[:locked])
+      .table-cell.user
         .name
           - if user[:name].blank?
             = user[:email]
@@ -30,33 +29,9 @@ table#users
           - else
             = mail_to(user[:email], user[:name])
 
-        .actions
-          - if user[:locked]
-            - if can_lock
-              = link_to(unlock_user_path(user[:id]), class: 'unlock', method: :patch) { FA::Icon.p('lock', style: :duotone, fa: 'fw', title: 'Unlock') }
-            - else
-              = FA::Icon.p('lock', style: :duotone, fa: 'fw', title: 'Lock')
-          - else
-            - if admin
-              = link_to(user_path(user[:id])) { FA::Icon.p('user', style: :duotone, title: "Profile for user #{user[:id]}", fa: 'fw') }
-            - else
-              = FA::Icon.p('user', style: :duotone, title: user[:id], fa: 'fw')
-            = link_to(user_certificate_path(id: user[:id]), target: :_blank) { FA::Icon.p('file-certificate', style: :duotone, fa: 'fw', title: 'Educational certificate') }
-            = link_to(otw_progress_path(id: user[:id]), target: :_blank) { FA::Icon.p('tasks', style: :duotone, fa: 'fw', title: 'BOC progress') }
-            - if user[:invited]
-              = link_to(invite_path(id: user[:id]), method: :put) { FA::Icon.p('envelope-open', style: :duotone, css: 'pending', fa: 'fw', title: 'Re-send invitation') }
-            - elsif user[:invitable]
-              = link_to(invite_path(id: user[:id]), method: :put) { FA::Icon.p('envelope', style: :duotone, fa: 'fw', title: 'Send invitation') }
-            - elsif user[:placeholder_email]
-              = FA::Layer.p([{ name: 'envelope', options: { css: :gray } }, { name: 'exclamation', options: { css: :red } }], title: 'Invalid email address')
-            - else
-              = FA::Layer.p([{ name: 'envelope', options: { css: :gray } }, { name: 'check', options: { css: :green } }], title: 'Logged in successfully')
-            - if can_lock && !user[:permitted_roles].include?(:admin)
-              = link_to(lock_user_path(user[:id]), class: 'lock', method: :patch) { FA::Icon.p('unlock', style: :duotone, fa: 'fw', title: 'Lock') }
-            - elsif can_lock && user[:permitted_roles].include?(:admin)
-              = FA::Layer.p([{ name: 'unlock', options: { css: :gray } }, { name: 'ban', options: { css: :red } }], title: 'Cannot lock admins')
+        = user_actions(user)
 
-      td.certificate
+      .table-cell.certificate
         .certificate = user[:certificate] || FA::Icon.p('question-circle', css: 'red', style: :duotone, title: 'Invalid certificate')
         - if user[:senior] || user[:life]
           - if user[:life]
@@ -65,8 +40,8 @@ table#users
             = image_tag(static_bucket.link('insignia/PNG/membership/tr/senior.png'), class: 'membership')
         - if user[:mm].positive?
           .mm.insignia-gold #{user[:mm]} MM
-      td.roles
-        div.center
+      .table-cell.roles
+        .center
           - if user[:bridge_office].present?
             = officer_flag(user[:bridge_office], mode: :png)
         - if user[:granted_roles].present? || user[:permitted_roles].present?
@@ -83,7 +58,7 @@ table#users
               ul.roles.red
                 - (user[:permitted_roles] - user[:granted_roles]).sort.each do |role|
                   .role = content_tag(:li) { FA::Icon.p(@role_icons[role], style: :duotone, fa: :fw) + role }
-      / td.center.small-text
+      / .table-cell.center.small-text
       /   - if user[:current_login_at].present?
       /     = user[:current_login_at].strftime(ApplicationController::LONG_TIME_FORMAT)
       /     br

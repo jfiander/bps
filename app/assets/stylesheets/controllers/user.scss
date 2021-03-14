@@ -110,13 +110,13 @@ div.photo-editor {
 }
 
 // Users List
-table#users {
+div#users {
   margin: 0 auto;
   width: 95%;
-  
+
   img {
-  	width: 3em;
-  	height: 2em;
+    width: 3em;
+    height: 2em;
   }
 
   img.membership {
@@ -124,28 +124,29 @@ table#users {
     height: auto;
   }
 
-  tr.gray {
-    background-color: lighten($background-blue, 5%);
-    color: $old-glory-blue;
-  }
-
-  td  {
+  div.table-cell  {
     height: 3em;
     padding: 1em 0.25em;
   }
 
-  td.user div.actions {
-    margin-top: 0.75em;
-    border-top: thin solid #CCCCCC;
-    padding-top: 0.75em;
-    text-align: center;
+  div.table-cell.user {
+    div.name {
+      text-align: center;
+    }
+
+    div.actions {
+      margin-top: 0.75em;
+      border-top: thin solid #CCCCCC;
+      padding-top: 0.75em;
+      text-align: center;
+    }
   }
 
-  tr.gray td.user div.actions {
+  div.table-row:nth-child(even) div.table-cell.user div.actions {
     border-top: thin solid #B8B8B8;
   }
 
-  td.certificate {
+  div.table-cell.certificate {
     text-align: center;
 
     div.certificate {
@@ -157,11 +158,11 @@ table#users {
     }
   }
 
-  td.roles {
+  div.table-cell.roles {
     text-align: left;
   }
 
-  td.roles div.roles.bridge {
+  div.table-cell.roles div.roles.bridge {
     margin-top: 1.5em;
   }
 
@@ -181,7 +182,7 @@ table#users {
     font-size: 90%;
   }
 
-  tr.locked td {
+  div.table-row.locked div.table-cell {
     background-color: lighten($old-glory-red, 50%);
     color: gray;
 

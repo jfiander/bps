@@ -42,6 +42,14 @@ div.table.striped {
     background-color: $background-blue;
   }
 
+  div.table-row.odd {
+    background-color: lighten($background-blue, 6%);
+  }
+
+  div.table-row.even {
+    background-color: $background-blue;
+  }
+
   div.table-row.header {
     background-color: inherit;
   }
