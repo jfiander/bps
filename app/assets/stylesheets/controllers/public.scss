@@ -156,6 +156,14 @@ div#standing-committees {
     font-size: 1em;
     padding-right: 0.5em;
   }
+
+  div.odd {
+    background-color: lighten($background-blue, 6%);
+  }
+
+  div.even {
+    background-color: $background-blue;
+  }
 }
 
 div.assign-bridge input, div.assign-bridge select {

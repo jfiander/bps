@@ -1,5 +1,5 @@
 .table-row.standing-committee
   .table-cell.bold = "#{committee.titleize} Committee"
   .table-cell
-    - members&.each do |member|
-      = render('bridge/list/standing_com_member', committee: committee, member: member)
+    - members&.each_with_index do |member, index|
+      = render('bridge/list/standing_com_member', committee: committee, member: member, index: index)
