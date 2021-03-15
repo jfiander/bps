@@ -1,0 +1,33 @@
+h1 = admin_header('Add Generic Payment')
+
+.bold Please fill out the following form to accept a new payment.
+
+.information
+  | Fields marked with
+  span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
+  | are required.
+
+.information Additionally, you must either choose a user or enter an email address.
+
+= form_for([:admin, @generic_payment]) do |f|
+  #generic-payment.table
+    .table-row
+      .table-cell.left-header
+        span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
+        = f.label :description
+      .table-cell.field.buffer = f.text_field(:description, required: true)
+    .table-row
+      .table-cell.left-header
+        span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
+        = f.label :amount
+      .table-cell.field
+        = FA::Icon.p('dollar-sign', style: :duotone)
+        = f.number_field(:amount, required: true, min: 1)
+    .table-row
+      .table-cell.left-header = f.label :user, 'Member'
+      .table-cell.field.buffer = f.select(:user_id, options_for_select(@users), include_blank: true, prompt: 'Please select a user')
+    .table-row
+      .table-cell.left-header = f.label :email
+      .table-cell.field.buffer = f.text_field(:email)
+
+  = spinner_button(f, css: 'big')

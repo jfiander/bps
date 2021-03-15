@@ -1,0 +1,11 @@
+div#generic-payment {
+  div.field_with_errors {
+    display: inline-block;
+  }
+
+  div.buffer {
+    input, select {
+      margin-left: 1.25em;
+    }
+  }
+}

@@ -112,6 +112,8 @@ Rails.application.routes.draw do
 
     # Generic Payments
     get    '/generic_payments',          to: 'generic_payments#index'
+    get    '/generic_payments/new',      to: 'generic_payments#new'
+    post   '/generic_payments',          to: 'generic_payments#create'
   end
 
   # Newsletter

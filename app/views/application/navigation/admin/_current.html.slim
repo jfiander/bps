@@ -7,3 +7,4 @@
 = link 'Add Event Type',                   path: new_event_type_path,                            fa: { name: 'plus-hexagon',    options: { style: :duotone, fa: :fw } } if show_link?(:admin, strict: true, controller: 'event_types')
 = link 'Add Training',                     path: new_otw_path,                                   fa: { name: 'plus-hexagon',    options: { style: :duotone, fa: :fw } } if show_link?(:education, controller: 'otw_trainings')
 = link 'Add Promo Code',                   path: admin_new_promo_code_path,                      fa: { name: 'hands-usd',       options: { style: :duotone, fa: :fw } } if show_link?(:admin, strict: true, controller: 'promo_codes')
+= link 'Add Payment',                      path: admin_generic_payments_new_path,                fa: { name: 'cart-plus',       options: { style: :duotone, fa: :fw } } if show_link?(:admin, strict: true, controller: 'generic_payments')
