@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 module AdminMenuHelper
+  CURRENT_MENU_PERMISSIONS = {
+    page: { action: StaticPage.names },
+    event_type_param: { controller: %i[courses seminars events] }, # Only the selected controller
+    otw: { controller: %i[otw_trainings] },
+    %i[event seminar course] => { controller: %i[event_types locations] },
+    :admin => { strict: true, controller: %i[promo_codes generic_payments] },
+  }.freeze
+
   def admin_menu
     @admin_menu ||= admin_menus.map do |menu, permit|
       next if permit == false
@@ -25,9 +33,31 @@ module AdminMenuHelper
     render("application/navigation/admin/sidenav/#{menu}", admin_links: admin_menu)
   end
 
+  # def admin_current_checks
+  #   {
+  #     markdown: admin_markdown?,
+  #     events: admin_events?,
+  #     otw: admin_otw?,
+  #     event_attachments: admin_event_attachments?,
+  #     promos: admin_promos?,
+  #     generic_payments: admin_generic_payments?
+  #   }
+  # end
+
   def admin_current?
-    admin_markdown? || admin_events? || admin_otw? ||
-      admin_event_attachments? || admin_promos? || admin_generic_payments?
+    CURRENT_MENU_PERMISSIONS.any? do |role, options|
+      if role.is_a?(Array)
+        role.any? { |r| show_link?(r, **options) }
+      elsif role == :event_type_param
+        res = show_link?(event_type_param, options)
+
+        puts [event_type_param, options, link_requirements(options), res].inspect
+
+        res
+      else
+        show_link?(role, **options)
+      end
+    end
   end
 
   def show_link?(*roles, strict: false, **options)
@@ -103,27 +133,27 @@ private
     controller.action_name.in?(not_action)
   end
 
-  def admin_markdown?
-    show_link?(:page, action: StaticPage.names)
-  end
+  # def admin_markdown?
+  #   show_link?(:page, action: StaticPage.names)
+  # end
 
-  def admin_events?
-    show_link?(event_type_param, controller: %w[courses seminars events])
-  end
+  # def admin_events?
+  #   show_link?(event_type_param, controller: %w[courses seminars events])
+  # end
 
-  def admin_otw?
-    show_link?(:otw, controller: %w[otw_trainings])
-  end
+  # def admin_otw?
+  #   show_link?(:otw, controller: %w[otw_trainings])
+  # end
 
-  def admin_event_attachments?
-    show_link?(%i[event seminar course], controller: %w[event_types locations])
-  end
+  # def admin_event_attachments?
+  #   show_link?(%i[event seminar course], controller: %w[event_types locations])
+  # end
 
-  def admin_promos?
-    show_link?(:admin, strict: true, controller: 'promo_codes')
-  end
+  # def admin_promos?
+  #   show_link?(:admin, strict: true, controller: 'promo_codes')
+  # end
 
-  def admin_generic_payments?
-    show_link?(:admin, strict: true, controller: 'generic_payments')
-  end
+  # def admin_generic_payments?
+  #   show_link?(:admin, strict: true, controller: 'generic_payments')
+  # end
 end
