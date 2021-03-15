@@ -71,7 +71,7 @@ private
       FA::Icon.p('money-check-alt', style: :duotone, fa: :fw, css: 'admin', title: 'Paid In-Person')
     else
       FA::Icon.p(
-        'credit-card', style: :duotone, fa: :fw, css: 'birmingham-blue', title: 'Paid Online'
+        'credit-card', style: :duotone, fa: :fw, css: 'green', title: 'Paid Online'
       )
     end
   end
