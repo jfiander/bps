@@ -156,23 +156,17 @@ private
   end
 
   def current
-    @events ||= Event.include_details.displayable.current.for_category(event_type_param)
+    @events ||= Event.fetch(event_type_param)
   end
 
   def expired
-    @expired_events ||= Event.include_details.displayable.expired.for_category(event_type_param)
+    @expired_events ||= Event.fetch(event_type_param, expired: true)
   end
 
   def load_catalog
-    return catalog_list unless event_type_param == 'course'
-
-    @event_catalog = catalog_list.group_by { |e| e.event_type.event_category }.symbolize_keys
-  end
-
-  def catalog_list
     @event_catalog = Event.include_details.where(show_in_catalog: true)
-                          .for_category(event_type_param)
                           .order('event_types.title')
+                          .for_category(event_type_param)
   end
 
   def registered_users

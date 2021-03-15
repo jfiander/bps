@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+  COURSE_CATEGORIES = %w[public advanced_grade elective].freeze
+
   include Concerns::Event::Calendar
   include Concerns::Event::Category
   include Concerns::Event::Flyer
@@ -58,6 +60,11 @@ class Event < ApplicationRecord
     Date.today.last_year.beginning_of_year
   end
 
+  def self.fetch(category, expired: false)
+    scope = expired ? :expired : :current
+    include_details.displayable.send(scope).for_category(category)
+  end
+
   def self.include_details
     includes(
       :event_type, :course_topics, :course_includes, :prereq, :location,
@@ -67,13 +74,19 @@ class Event < ApplicationRecord
   end
 
   def self.for_category(category)
-    includes(:event_type).where(event_types: { event_category: query_category(category) })
+    events = includes(:event_type).where(event_types: { event_category: query_category(category) })
+    return events unless category == 'course'
+
+    # Group by course category
+    grouped = events.group_by { |e| e.event_type.event_category }.symbolize_keys
+    COURSE_CATEGORIES.each { |c| grouped[c.to_sym] ||= [] } # Ensure all categories exist
+    grouped
   end
 
   def self.query_category(category)
     case category.to_s
     when 'course'
-      %w[public advanced_grade elective]
+      COURSE_CATEGORIES
     when 'event'
       'meeting'
     else
