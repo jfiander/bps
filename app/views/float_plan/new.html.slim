@@ -22,12 +22,12 @@ p
     h2 Primary Contact
     .table
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :name
         .table-cell.field = f.text_field :name, required: true
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :phone
         .table-cell.field = f.text_field :phone, required: true
@@ -35,72 +35,72 @@ p
     h2 Boat Information
     .table
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :boat_type
         .table-cell
           = f.select :boat_type, options_for_select(%w[Power Sail Paddle Other], @float_plan.boat_type), include_blank: true, required: true
           = f.text_field :subtype, class: 'shorter'
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :length
         .table-cell.field
           = f.number_field :length, required: true
           |  feet
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :hull_color
         .table-cell.field = f.text_field :hull_color, required: true
       .table-row
-        .table-cell.header = f.label :trim_color
+        .table-cell.left-header = f.label :trim_color
         .table-cell.field = f.text_field :trim_color
       .table-row
-        .table-cell.header = f.label :deck_color
+        .table-cell.left-header = f.label :deck_color
         .table-cell.field = f.text_field :deck_color
       .table-row
-        .table-cell.header = f.label :sail_color
+        .table-cell.left-header = f.label :sail_color
         .table-cell.field = f.text_field :sail_color
       .table-row
-        .table-cell.header = f.label :registration_number, 'Documentation or reg. number'
+        .table-cell.left-header = f.label :registration_number, 'Documentation or reg. number'
         .table-cell.field = f.text_field :registration_number
       .table-row
-        .table-cell.header = f.label :hin, 'HIN'
+        .table-cell.left-header = f.label :hin, 'HIN'
         .table-cell.field = f.text_field :hin
       .table-row
-        .table-cell.header = f.label :boat_name, 'Name'
+        .table-cell.left-header = f.label :boat_name, 'Name'
         .table-cell.field = f.text_field :boat_name
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :make
         .table-cell.field = f.text_field :make, required: true
       .table-row
-        .table-cell.header = f.label :model
+        .table-cell.left-header = f.label :model
         .table-cell.field = f.text_field :model
       .table-row
-        .table-cell.header = f.label :year
+        .table-cell.left-header = f.label :year
         .table-cell.field = f.text_field :year
       .table-row
-        .table-cell.header = f.label :engine_type_1, 'Engine type(s)'
+        .table-cell.left-header = f.label :engine_type_1, 'Engine type(s)'
         .table-cell.field
           = f.text_field :engine_type_1, class: 'short left'
           = f.text_field :engine_type_2, class: 'short right'
       .table-row
-        .table-cell.header = f.label :horse_power, 'Horsepower'
+        .table-cell.left-header = f.label :horse_power, 'Horsepower'
         .table-cell.field = f.number_field :horse_power
       .table-row
-        .table-cell.header = f.label :number_of_engines
+        .table-cell.left-header = f.label :number_of_engines
         .table-cell.field = f.number_field :number_of_engines
       .table-row
-        .table-cell.header = f.label :fuel_capacity
+        .table-cell.left-header = f.label :fuel_capacity
         .table-cell.field #{f.number_field(:fuel_capacity)} gallons
 
     h2 Safety Equipment
     .table
       .table-row
-        .table-cell.header Select all onboard
+        .table-cell.left-header Select all onboard
         .table-cell.field
           .table
             .table-row
@@ -147,7 +147,7 @@ p
     h2 Radio
     .table
       .table-row
-        .table-cell.header EPIRB Frequencies
+        .table-cell.left-header EPIRB Frequencies
         .table-cell.field
           .table
             .table-row
@@ -158,7 +158,7 @@ p
                 = f.check_box :epirb_406
                 = f.label :epirb_406, '406 MHz'
       .table-row
-        .table-cell.header Radio equipment
+        .table-cell.left-header Radio equipment
         .table-cell.field
           .table
             .table-row
@@ -175,34 +175,34 @@ p
                 = f.check_box :radio_cell_phone
                 = f.label :radio_cell_phone, 'Cell phone'
       .table-row
-        .table-cell.header = f.label :channels_monitored, 'Channels / frequencies monitored'
+        .table-cell.left-header = f.label :channels_monitored, 'Channels / frequencies monitored'
         .table-cell.field = f.text_field :channels_monitored
       .table-row
-        .table-cell.header = f.label :call_sign, 'Call sign / MMSI'
+        .table-cell.left-header = f.label :call_sign, 'Call sign / MMSI'
         .table-cell.field = f.text_field :call_sign
       .table-row
-        .table-cell.header = f.label :radio, 'Radio comments'
+        .table-cell.left-header = f.label :radio, 'Radio comments'
         .table-cell.field = f.text_field :radio
 
     h2 Route Plan
     .table
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :leave_from
         .table-cell.field = f.text_field :leave_from, required: true
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :going_to
         .table-cell.field = f.text_field :going_to, required: true
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :leave_at
         .table-cell.field = f.datetime_field :leave_at, required: true
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :return_at
         .table-cell.field = f.datetime_field :return_at, required: true
@@ -211,47 +211,47 @@ p
     p.red.italic If not returned or contacted by this time, report missing.
     .table
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :alert_at, 'Alert time'
         .table-cell.field = f.datetime_field :alert_at, required: true
       .table-row
-        .table-cell.header
+        .table-cell.left-header
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
           = f.label :alert_name, 'Who to alert'
         .table-cell.field = f.text_field :alert_name, value: 'US Coast Guard', required: true
       .table-row
-        .table-cell.header = f.label :alert_phone, 'Phone'
+        .table-cell.left-header = f.label :alert_phone, 'Phone'
         .table-cell.field = f.text_field :alert_phone
 
     h2 Transportation Ashore
     .table
       .table-row
-        .table-cell.header = f.label :car_make, 'Make'
+        .table-cell.left-header = f.label :car_make, 'Make'
         .table-cell.field = f.text_field :car_make
       .table-row
-        .table-cell.header = f.label :car_model, 'Model'
+        .table-cell.left-header = f.label :car_model, 'Model'
         .table-cell.field = f.text_field :car_model
       .table-row
-        .table-cell.header = f.label :car_year, 'Year'
+        .table-cell.left-header = f.label :car_year, 'Year'
         .table-cell.field = f.text_field :car_year
       .table-row
-        .table-cell.header = f.label :car_color, 'Color'
+        .table-cell.left-header = f.label :car_color, 'Color'
         .table-cell.field = f.text_field :car_color
       .table-row
-        .table-cell.header = f.label :car_license_plate, 'License plate'
+        .table-cell.left-header = f.label :car_license_plate, 'License plate'
         .table-cell.field = f.text_field :car_license_plate
       .table-row
-        .table-cell.header = f.label :trailer_license_plate
+        .table-cell.left-header = f.label :trailer_license_plate
         .table-cell.field = f.text_field :trailer_license_plate
       .table-row
-        .table-cell.header = f.label :car_parked_at, 'Parked at'
+        .table-cell.left-header = f.label :car_parked_at, 'Parked at'
         .table-cell.field = f.text_field :car_parked_at
 
     h2 Misc
     .table
       .table-row
-        .table-cell.header = f.label :comments
+        .table-cell.left-header = f.label :comments
         .table-cell.field = f.text_area :comments
 
     h2 Persons Onboard

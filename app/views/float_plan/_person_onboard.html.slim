@@ -1,19 +1,19 @@
 .table
   .table-row
-    .table-cell.bold
+    .table-cell.left-header
       span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
       = ff.label :name
     .table-cell.field = ff.text_field :name, required: true
   .table-row
-    .table-cell.bold
+    .table-cell.left-header
       span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
       = ff.label :age
     .table-cell.field = ff.number_field :age, required: true
   .table-row
-    .table-cell.bold = ff.label :address
+    .table-cell.left-header = ff.label :address
     .table-cell.field = ff.text_field :address
   .table-row
-    .table-cell.bold = ff.label :phone
+    .table-cell.left-header = ff.label :phone
     .table-cell.field = ff.text_field :phone
 
 br
