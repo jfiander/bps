@@ -65,6 +65,12 @@ class Event < ApplicationRecord
     include_details.displayable.send(scope).for_category(category)
   end
 
+  def self.catalog(category)
+    include_details.where(show_in_catalog: true)
+                   .order('event_types.title')
+                   .for_category(category)
+  end
+
   def self.include_details
     includes(
       :event_type, :course_topics, :course_includes, :prereq, :location,

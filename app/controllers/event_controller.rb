@@ -164,9 +164,7 @@ private
   end
 
   def load_catalog
-    @event_catalog = Event.include_details.where(show_in_catalog: true)
-                          .order('event_types.title')
-                          .for_category(event_type_param)
+    @event_catalog = Event.catalog(event_type_param)
   end
 
   def registered_users
