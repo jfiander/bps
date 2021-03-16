@@ -52,11 +52,11 @@ class User
     end
 
     def granted_roles
-      roles.map(&:name).map(&:to_sym).uniq
+      @granted_roles ||= roles.map(&:name).map(&:to_sym).uniq
     end
 
     def permitted_roles
-      SIMPLIFY.call([explicit_roles, implicit_roles])
+      @permitted_roles ||= SIMPLIFY.call([explicit_roles, implicit_roles])
     end
 
     def authorized_for_activity_feed?
@@ -80,7 +80,7 @@ class User
     end
 
     def office_roles
-      SIMPLIFY.call(
+      @office_roles ||= SIMPLIFY.call(
         [permitted_roles_from_bridge_office, permitted_roles_from_committee, (:excom if excom?)]
       )
     end
