@@ -80,12 +80,13 @@ private
   end
 
   def event_types_hash
-    @event_types = EventType.ordered.includes(:events).map do |et|
+    @event_types = EventType.joins(:events).ordered.select(:id, :title, :event_category)
+                            .select('COUNT(events.id) AS count').group(:id).map do |et|
       {
         id: et.id,
         category: et.event_category,
         title: et.display_title,
-        event_count: et.events.count
+        event_count: et.count
       }
     end
   end
