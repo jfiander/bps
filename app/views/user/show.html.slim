@@ -93,5 +93,5 @@ h1 = @user.full_name
         .table-cell = r.event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
         .table-cell = cancel_reg_link(r)
 
-- if current_user&.permitted?(:admin, session: session) && current_user.id != @user.id
+- if current_user&.permitted?(:admin) && current_user.id != @user.id
   .photo-editor = editor('photo_editor', id: @user.id)

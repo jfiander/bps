@@ -2,8 +2,8 @@
 = event_action_link event, event.google_calendar_link,                          icon: 'calendar-alt',   text: 'Calendar Event',       css: 'green',           expired: false, if: event.google_calendar_link.present?
 = event_action_link event, nil,                                                 icon: 'bell-slash',     text: 'Reminded',             css: 'gray',            expired: false, if: event.reminded?
 = event_action_link event, "remind_#{event_type_param}_path",  method: :put,    icon: 'bell',           text: 'Remind',               css: 'birmingham-blue', expired: false, if: !event.reminded?
-= event_action_link event, "unbook_#{event_type_param}_path",  method: :delete, icon: 'calendar-times', text: 'Remove from Calendar', css: 'red',                             if: event.booked? && current_user&.permitted?(event_type_param, session: session)
-= event_action_link event, "book_#{event_type_param}_path",    method: :put,    icon: 'calendar-check', text: 'Post to Calendar',     css: 'birmingham-blue', expired: false, if: !event.booked? && current_user&.permitted?(event_type_param, session: session)
+= event_action_link event, "unbook_#{event_type_param}_path",  method: :delete, icon: 'calendar-times', text: 'Remove from Calendar', css: 'red',                             if: event.booked? && current_user&.permitted?(event_type_param)
+= event_action_link event, "book_#{event_type_param}_path",    method: :put,    icon: 'calendar-check', text: 'Post to Calendar',     css: 'birmingham-blue', expired: false, if: !event.booked? && current_user&.permitted?(event_type_param)
 = event_action_link event, "copy_#{event_type_param}_path",                     icon: 'clone',          text: 'Clone',                css: 'blue'
 = event_action_link event, "edit_#{event_type_param}_path",                     icon: 'edit',           text: 'Edit',                 css: 'blue'
 = event_action_link event, "expire_#{event_type_param}_path",  method: :delete, icon: 'eye-slash',      text: 'Hide',                 css: 'red',             expired: false, confirm: "Are you sure you want to hide this #{event_type_param}?"

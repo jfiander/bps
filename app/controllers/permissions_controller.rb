@@ -53,9 +53,9 @@ private
   def restrict_roles
     @roles.delete('admin')
 
-    @roles.delete('users') unless current_user&.permitted?(:admin, strict: true, session: session)
+    @roles.delete('users') unless current_user&.permitted?(:admin, strict: true)
 
-    return if current_user&.permitted?(:education, session: session)
+    return if current_user&.permitted?(:education)
 
     @roles.delete('education')
     @roles.delete('course')
@@ -120,11 +120,11 @@ private
 
   def restricted_education(role)
     role.in?(%w[education course seminar]) &&
-      !current_user&.permitted?(:education, session: session)
+      !current_user&.permitted?(:education)
   end
 
   def restricted_admin(role)
-    role.in?(%w[users]) && !current_user&.permitted?(:admin, strict: true, session: session)
+    role.in?(%w[users]) && !current_user&.permitted?(:admin, strict: true)
   end
 
   def permission_notification(user_role, mode, by)

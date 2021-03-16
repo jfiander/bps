@@ -32,7 +32,7 @@ module AdminMenuHelper
 
   def show_link?(*roles, strict: false, **options)
     req_cont, req_act, not_cont, not_act = link_requirements(options)
-    return false unless current_user&.permitted?(roles, strict: strict, session: session)
+    return false unless current_user&.permitted?(roles, strict: strict)
     return false if invalid?(req_cont, req_act, not_cont, not_act)
 
     true

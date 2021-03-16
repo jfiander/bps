@@ -84,9 +84,7 @@ private
   end
 
   def permitted_users
-    @current_user_permitted_users = current_user&.permitted?(
-      :users, session: session
-    )
+    @current_user_permitted_users = current_user&.permitted?(:users)
   end
 
   def find_bridge_office

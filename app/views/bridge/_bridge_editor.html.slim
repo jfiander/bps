@@ -48,6 +48,6 @@ h2 Assign to Standing Committee
     br
     = spinner_button(button_text: "Assign to standing committee", disable_text: "Assigning to standing committee", css: 'big')
 hr
-- if current_user&.permitted?(:admin, session: session)
+- if current_user&.permitted?(:admin)
   = render 'user/assign_photo', redirect_to: 'show', id: nil
   hr

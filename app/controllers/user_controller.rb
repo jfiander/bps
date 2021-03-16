@@ -77,14 +77,14 @@ private
 
   def can_view_profile?
     unless clean_params[:id].to_i == current_user.id ||
-           current_user&.permitted?(:admin, session: session)
+           current_user&.permitted?(:admin)
       redirect_to user_path(current_user.id)
     end
   end
 
   def can_view_certificate?
     unless clean_params[:id].to_i == current_user.id ||
-           current_user&.permitted?(:admin, session: session)
+           current_user&.permitted?(:admin)
       redirect_to user_certificate_path(current_user.id)
     end
   end

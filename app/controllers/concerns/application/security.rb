@@ -29,7 +29,7 @@ module Application
     end
 
     def require_permission(*roles, strict: false)
-      return if current_user&.permitted?(*roles, strict: strict, session: session)
+      return if current_user&.permitted?(*roles, strict: strict)
 
       redirect_to root_path
     end

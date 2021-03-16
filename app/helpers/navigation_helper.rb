@@ -95,7 +95,7 @@ private
   end
 
   def user_not_permitted?(permit)
-    permit.present? && !current_user&.permitted?(permit, session: session)
+    permit.present? && !current_user&.permitted?(permit)
   end
 
   def logout_link

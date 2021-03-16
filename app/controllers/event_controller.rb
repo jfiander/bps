@@ -135,9 +135,7 @@ private
   def prepare_lists
     @locations ||= Location.searchable
 
-    @current_user_permitted_event_type = current_user&.permitted?(
-      event_type_param, session: session
-    )
+    @current_user_permitted_event_type = current_user&.permitted?(event_type_param)
   end
 
   def event_not_found?

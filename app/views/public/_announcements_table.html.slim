@@ -10,5 +10,5 @@
       .table-cell = announcement.created_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
       .table-cell.center = link_to('Download', announcement.link(permalinks: current_user&.permalinks), target: :_blank, class: 'download')
       .table-cell.center
-        - if current_user&.permitted?(:newsletter, session: session)
+        - if current_user&.permitted?(:newsletter)
           = link_to(remove_announcement_path(announcement), method: :delete, class: 'red', data: { confirm: "Are you sure you want to remove this announcement?\n\n#{announcement.title}" }) { FA::Icon.p('minus-square', style: :duotone, fa: :fw) }

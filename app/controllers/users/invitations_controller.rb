@@ -12,7 +12,7 @@ module Users
   private
 
     def redirect_if_no_invitations
-      return if current_user&.permitted?(:users, session: session)
+      return if current_user&.permitted?(:users)
 
       redirect_to(
         root_path, alert: 'You do not have any invitations remaining.'

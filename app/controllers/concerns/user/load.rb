@@ -13,9 +13,7 @@ class User
       @role_icons = Role.icons
       return @user if @user.present?
 
-      if current_user&.permitted?(:admin, session: session)
-        flash[:notice] = "Couldn't find that user."
-      end
+      flash[:notice] = "Couldn't find that user." if current_user&.permitted?(:admin)
       redirect_to root_path
     end
 

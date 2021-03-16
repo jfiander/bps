@@ -1,9 +1,9 @@
 h1 = @album.name.titleize
 
-= editor('album_editor') if current_user&.permitted?(:photos, session: session)
+= editor('album_editor') if current_user&.permitted?(:photos)
 
 - if @album.photos.present?
-  - if current_user&.permitted?(:photos, session: session)
+  - if current_user&.permitted?(:photos)
     = render 'edit_album'
   - else
     = render 'album'

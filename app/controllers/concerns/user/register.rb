@@ -124,7 +124,7 @@ class User
 
     def allowed_to_cancel?
       (@reg&.user == current_user) ||
-        current_user&.permitted?(:course, :seminar, :event, session: session)
+        current_user&.permitted?(:course, :seminar, :event)
     end
 
     def successfully_cancelled
