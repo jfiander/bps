@@ -112,8 +112,8 @@ class User < ApplicationRecord
   end
 
   def excom?
-    BridgeOffice.find_by(user_id: id).present? ||
-      StandingCommitteeOffice.find_by(committee_name: :executive, user_id: id).present?
+    @excom ||= BridgeOffice.where(user_id: id).exists? ||
+      StandingCommitteeOffice.where(committee_name: :executive, user_id: id).exists?
   end
 
   def completions
