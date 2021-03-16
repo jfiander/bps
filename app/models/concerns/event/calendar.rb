@@ -48,8 +48,13 @@ module Concerns
       end
 
       def conference_id
+        return conference_id_cache if conference_id_cache.present?
+
         info = calendar.conference_info(google_calendar_event_id)
-        info[:id] unless info.nil?
+        return if info.nil?
+
+        update(conference_id_cache: info[:id])
+        info[:id]
       rescue Google::Apis::ClientError
         nil
       end
@@ -61,7 +66,8 @@ module Concerns
       end
 
       def conference!(state: true)
-        update(online: state)
+        attributes = state ? { online: true } : { online: false, conference_id_cache: nil }
+        update(attributes)
         refresh_calendar!
       end
 

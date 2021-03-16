@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_28_231932) do
+ActiveRecord::Schema.define(version: 2021_03_16_055719) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 2021_02_28_231932) do
     t.boolean "activity_feed"
     t.boolean "online", default: false
     t.string "topic_arn"
+    t.string "conference_id_cache"
     t.index ["event_type_id", "deleted_at"], name: "index_events_on_event_type_id"
     t.index ["slug", "deleted_at"], name: "index_events_on_slug"
     t.index ["start_at", "expires_at", "archived_at", "deleted_at"], name: "index_events_on_dates"
