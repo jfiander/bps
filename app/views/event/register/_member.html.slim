@@ -2,7 +2,7 @@
   - if r.paid?
     = FA::Icon.p('minus-square', style: :duotone, class: :gray, title: 'Paid registrations cannot be cancelled online.')
   - else
-    = cancel_reg_link(r)
+    = cancel_reg_link(r, event: event)
   - if current_user&.permitted?(:admin) && event&.cost&.positive?
     = reg_override_icon(r)
   - if r.user&.full_name&.present?

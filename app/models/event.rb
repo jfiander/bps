@@ -75,7 +75,7 @@ class Event < ApplicationRecord
     includes(
       :event_type, :course_topics, :course_includes, :prereq, :location,
       event_instructors: { user: User.position_associations },
-      registrations: %i[user payment]
+      registrations: { user: User.position_associations }
     )
   end
 
