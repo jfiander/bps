@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class StandingCommitteeOffice < ApplicationRecord
+  COMMITTEES = %w[executive auditing nominating rules].freeze
+
   include Excom
 
   belongs_to :user
@@ -10,19 +12,24 @@ class StandingCommitteeOffice < ApplicationRecord
   before_create { self.committee_name = committee_name.downcase }
   after_save { update_excom_group if committee_name == 'executive' }
 
-  validate :valid_committee_name, :only_one_chair
+  validate :only_one_current_chair
+  validates :committee_name, presence: COMMITTEES
   validates :user_id, uniqueness: { scope: :committee_name }
 
   default_scope { ordered }
   scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.now) }
   scope :chair_first, -> { order(chair: :asc) }
 
-  def self.committees
-    %w[executive auditing nominating rules]
+  class << self
+    COMMITTEES.each do |committee|
+      define_method("#{committee}?") do |user_id|
+        where(committee_name: committee, user_id: user_id).exists?
+      end
+    end
   end
 
   def self.committee_titles
-    committees.map(&:titleize)
+    COMMITTEES.map(&:titleize)
   end
 
   def self.mail_all(committee_name)
@@ -43,16 +50,17 @@ class StandingCommitteeOffice < ApplicationRecord
 
 private
 
-  def valid_committee_name
-    committee_name.downcase.in? %w[executive auditing nominations rules]
+  def only_one_current_chair
+    return true unless chair
+    return true if StandingCommitteeOffice.current.where(committee_name: committee_name)
+                                          .where(chair: true).count.zero?
+
+    errors.add(:chair, 'can only have one current chair per committee')
   end
 
-  def only_one_chair
-    StandingCommitteeOffice.current.where(committee_name: committee_name)
-                           .where(chair: true).count <= 1
-  end
-
-  def executive?
-    committee_name.casecmp('executive').zero?
+  COMMITTEES.each do |committee|
+    define_method("#{committee}?") do
+      committee_name.casecmp(committee).zero?
+    end
   end
 end
