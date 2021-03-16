@@ -23,8 +23,7 @@ class Event < ApplicationRecord
 
   has_many :registrations
 
-  default_scope { order(:start_at) }
-
+  scope :by_date, -> { order(:start_at) }
   scope :displayable, -> { where(archived_at: nil).where('start_at > ?', Event.auto_archive) }
   scope :current, -> { where('expires_at > ?', Time.now) }
   scope :expired, -> { where('expires_at <= ?', Time.now) }
@@ -62,13 +61,11 @@ class Event < ApplicationRecord
 
   def self.fetch(category, expired: false)
     scope = expired ? :expired : :current
-    include_details.displayable.send(scope).for_category(category)
+    include_details.displayable.send(scope).by_date.for_category(category)
   end
 
   def self.catalog(category)
-    include_details.where(show_in_catalog: true)
-                   .order('event_types.title')
-                   .for_category(category)
+    include_details.where(show_in_catalog: true).order(EventType.order_sql).for_category(category)
   end
 
   def self.include_details
