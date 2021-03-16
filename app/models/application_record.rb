@@ -19,11 +19,16 @@ class ApplicationRecord < ActiveRecord::Base
     }
   end
 
-  def self.ordered
-    path = "#{Rails.root}/app/models/concerns/#{name.underscore}/order.sql"
-    return unless File.exist?(path)
+  def self.order_sql_path
+    "#{Rails.root}/app/models/concerns/#{name.underscore}/order.sql"
+  end
 
-    order(Arel.sql(File.read(path)))
+  def self.order_sql
+    File.read(order_sql_path) if File.exist?(order_sql_path)
+  end
+
+  def self.ordered
+    order(Arel.sql(order_sql)) if File.exist?(order_sql_path)
   end
 
   def versions_path
