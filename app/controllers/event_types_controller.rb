@@ -7,14 +7,11 @@ class EventTypesController < ApplicationController
   secure!(:admin, strict: true)
 
   before_action :load_event_types, only: %i[new edit]
+  before_action :event_types_hash, only: :list
 
   title!('Event Types')
 
   def list
-    @event_types = EventType.ordered.map do |et|
-      { id: et.id, category: et.event_category, title: et.display_title }
-    end
-
     remove_events_unless_permitted
     remove_education_unless_permitted
 
@@ -80,6 +77,17 @@ private
 
   def load_event_types
     @event_types = EventType.all
+  end
+
+  def event_types_hash
+    @event_types = EventType.ordered.includes(:events).map do |et|
+      {
+        id: et.id,
+        category: et.event_category,
+        title: et.display_title,
+        event_count: et.events.count
+      }
+    end
   end
 
   def remove_events_unless_permitted
