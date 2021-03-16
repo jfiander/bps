@@ -80,10 +80,9 @@ class Event < ApplicationRecord
     events = includes(:event_type).where(event_types: { event_category: query_category(category) })
     return events unless category == 'course'
 
-    # Group by course category
-    grouped = events.group_by { |e| e.event_type.event_category }.symbolize_keys
-    COURSE_CATEGORIES.each { |c| grouped[c.to_sym] ||= [] } # Ensure all categories exist
-    grouped
+    # Group by course category, and ensure all categories exist, in the correct order.
+    grouped = events.group_by { |e| e.event_type.event_category }
+    COURSE_CATEGORIES.each_with_object({}) { |k, h| h[k.to_sym] = grouped[k] || [] }
   end
 
   def self.query_category(category)
