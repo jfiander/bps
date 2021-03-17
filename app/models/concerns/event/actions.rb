@@ -33,11 +33,7 @@ module Concerns
       def attach_promo_code(code, **args)
         promo_code = PromoCode.find_or_create_by(code: code, **args)
 
-        unless (epc = EventPromoCode.find_by(event: self, promo_code: promo_code))
-          epc = EventPromoCode.create(event: self, promo_code: promo_code)
-        end
-
-        epc
+        EventPromoCode.find_or_create_by(event: self, promo_code: promo_code)
       end
 
     private
