@@ -1,4 +1,5 @@
 - if @purchase_info[:codes_available]
+  = hidden_field_tag :token, @token
   = text_field_tag :code, @purchase_info[:promo_code], class: 'center', placeholder: 'Promo Code'
   button#promo-code.medium Update
   br
