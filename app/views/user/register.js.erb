@@ -9,13 +9,7 @@
       .removeAttr("data-method").removeAttr("data-remote")
       .addClass('green').attr("title", "Pay for registration")
       .html("Registered <%= pay_icon %> Pay now?");
-    $("#event_<%= @event.id %>_mobile")
-      .attr("href", "<%= pay_link %>")
-      .removeAttr("data-method").removeAttr("data-remote")
-      .addClass('green').attr("title", "Pay for registration")
-      .html("Registered <%= pay_icon %> Pay now?");
   <% else %>
     $("#event_<%= @event.id %>").html("Registered").addClass("red").attr("href", "#");
-    $("#event_<%= @event.id %>_mobile").html("Registered").addClass("red").attr("href", "#");
   <% end %>
 <%- end %>

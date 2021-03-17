@@ -7,11 +7,7 @@
     $("form#public-register-<%= @event.id %>").replaceWith(function(){
       return $("<a />", {href: "<%= pay_link %>", class: "green", title: "Pay for rgistration", html: "Registered <%= pay_icon %> Pay now?"});
     });
-    $("form#public-register-<%= @event.id %>_mobile").replaceWith(function(){
-      return $("<a />", {href: "<%= pay_link %>", class: "green", title: "Pay for rgistration", html: "Registered <%= pay_icon %> Pay now?"});
-    });
   <% else %>
     $("form#public-register-<%= @event.id %>").html("Registered").addClass("red").attr("href", "#");
-    $("form#public-register-<%= @event.id %>_mobile").html("Registered").addClass("red").attr("href", "#");
   <% end %>
 <%- end %>
