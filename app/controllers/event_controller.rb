@@ -36,8 +36,8 @@ class EventController < ApplicationController
   end
 
   def registrations
-    @current = current.with_registrations
-    @expired = expired.with_registrations
+    @current = Event.fetch(event_type_param, flat: true).with_registrations
+    @expired = Event.fetch(event_type_param, expired: true, flat: true).with_registrations
   end
 
   def show

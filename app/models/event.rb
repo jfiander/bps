@@ -59,9 +59,9 @@ class Event < ApplicationRecord
     Date.today.last_year.beginning_of_year
   end
 
-  def self.fetch(category, expired: false)
+  def self.fetch(category, expired: false, flat: false)
     scope = expired ? :expired : :current
-    include_details.displayable.send(scope).by_date.for_category(category)
+    include_details.displayable.send(scope).by_date.for_category(category, flat: flat)
   end
 
   def self.catalog(category)
@@ -76,9 +76,9 @@ class Event < ApplicationRecord
     )
   end
 
-  def self.for_category(category)
+  def self.for_category(category, flat: false)
     events = includes(:event_type).where(event_types: { event_category: query_category(category) })
-    return events unless category == 'course'
+    return events if category != 'course' || flat
 
     # Group by course category, and ensure all categories exist, in the correct order.
     grouped = events.group_by { |e| e.event_type.event_category }

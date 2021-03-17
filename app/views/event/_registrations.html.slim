@@ -7,4 +7,4 @@
     input value=(event.registrations.map { |r| r.user&.email || r.email }.join(', '))
   .table-cell
     - event.registrations.each do |reg|
-      = render('event/register/member', r: reg)
+      = render('event/register/member', r: reg, event: event)
