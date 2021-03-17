@@ -29,7 +29,7 @@ module ReceiptHelper
       concat payment.transaction_amount
       if payment.promo_code.present?
         concat tag(:br)
-        concat content_tag(:small, payment.promo_code.code, class: 'green')
+        concat receipt_promo_code(payment)
       end
     end
   end
@@ -139,6 +139,13 @@ private
       'gray'
     elsif payment.refunded
       'red'
+    end
+  end
+
+  def receipt_promo_code(payment)
+    content_tag(:small, class: 'green') do
+      concat FA::Icon.p('tags', style: :duotone)
+      concat payment.promo_code.code
     end
   end
 end
