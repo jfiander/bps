@@ -4,7 +4,7 @@
     br
     = event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
     br
-    input value=(event.registrations.map { |r| r.user&.email || r.email }.join(', '))
+    input value=(event.registrations.map { |r| r.user&.email || r.email }.join(', ')) onclick="this.select();"
   .table-cell
     - event.registrations.each do |reg|
       = render('event/register/member', r: reg, event: event)
