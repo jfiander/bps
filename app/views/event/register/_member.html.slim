@@ -8,4 +8,4 @@
   - if r.user&.full_name&.present?
     = link_to("mailto:#{r.user.email}") { r.user.full_name }
   - else
-    = mail_to(r.email || r.user&.email)
+    = truncate_mail_to(r.email || r.user&.email)
