@@ -10,6 +10,7 @@ class Payment < ApplicationRecord
   belongs_to :parent, polymorphic: true
   has_secure_token
   belongs_to :promo_code, optional: true
+  has_many :refunds
 
   has_attached_file(:receipt, paperclip_defaults(:files).merge(path: 'receipts/:id.pdf'))
 
@@ -19,6 +20,8 @@ class Payment < ApplicationRecord
   scope :for_user, ->(user) { where(parent_type: 'User', parent_id: user.id) }
   scope :paid, -> { where(paid: true) }
   scope :unpaid, -> { !paid }
+  scope :braintree, -> { where.not(transaction_id: nil).where.not(transaction_id: 'in-person') }
+  scope :refunded, -> { where(refunded: true) }
 
   def self.discount(amount)
     # Fee is rounded down to the nearest cent

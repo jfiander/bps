@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_055719) do
+ActiveRecord::Schema.define(version: 2021_03_19_044144) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -458,6 +458,14 @@ ActiveRecord::Schema.define(version: 2021_03_16_055719) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code", "deleted_at"], name: "index_promo_codes_on_code"
+  end
+
+  create_table "refunds", force: :cascade do |t|
+    t.integer "payment_id"
+    t.string "amount"
+    t.datetime "deleted_at"
+    t.string "transaction_id"
+    t.index ["payment_id"], name: "index_refunds_on_payment_id"
   end
 
   create_table "registration_promo_codes", force: :cascade do |t|

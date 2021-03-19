@@ -102,6 +102,31 @@ module Concerns
         )
       end
 
+      def refund!(refund_amount = nil)
+        raise 'Not yet paid' unless transaction_id.present?
+        return if refunded == true
+
+        result = self.class.gateway.transaction.refund(transaction_id, to_refund(refund_amount))
+        result.success? ? refund_success(result.transaction) : refund_failure(result)
+        result
+      end
+
+      def refunded
+        return true if read_attribute(:refunded)
+        return false unless refunds.exists?
+
+        refunds.pluck(:amount).map(&:to_d).sum.to_s
+      end
+
+      def remaining_paid
+        ref = refunded
+        return 0 if ref == true
+        return nil unless paid?
+        return amount unless ref
+
+        (amount - ref.to_d).to_s
+      end
+
       def transaction_options(nonce, email: nil, user_id: nil, postal_code: nil)
         options = {
           amount: amount,
@@ -133,6 +158,44 @@ module Concerns
           store_in_vault_on_success: true,
           paypal: { description: purchase_subject }
         }
+      end
+
+      def to_refund(amount)
+        amount = nil if amount > remaining_paid.to_d
+        amount = "#{amount}.00" if amount.is_a?(Integer)
+        amount
+      end
+
+      def refund_success(transaction)
+        refunds.create!(amount: transaction.amount, transaction_id: transaction.id)
+
+        update_attribute(:refunded, true) if refunded == true || refunded.to_d >= amount
+      end
+
+      def refund_failure(result)
+        if result.transaction.processor_settlement_response_code == '4004'
+          already_refunded(result.transaction)
+        elsif result.transaction.status == 'settlement_declined'
+          puts "\n*** Refund settlement was declined.\n\n", result.message, "\n"
+        elsif result.errors.any?
+          parse_validation_errors(result)
+        else
+          puts result.message
+        end
+      end
+
+      def already_refunded(transaction)
+        update_attribute(:refunded, true)
+
+        puts "\n*** #{transaction.processor_settlement_response_text}\n"
+      end
+
+      def parse_validation_errors(result)
+        result.errors.each do |e|
+          update_attribute(:refunded, true) if e.code == '91512'
+
+          puts "#{e.code}: #{e.message}"
+        end
       end
     end
   end

@@ -23,14 +23,18 @@ module ReceiptHelper
   end
 
   def receipt_amount(payment)
-    title = 'Refunded' if payment.refunded
+    refunded = payment.refunded
+    if refunded
+      title = 'Refunded'
+      title += ": #{number_to_currency(refunded)}" unless refunded == true
+    end
 
-    content_tag(:div, class: "table-cell #{receipt_amount_color(payment)}", title: title) do
+    content_tag(:div, class: "table-cell amount #{receipt_amount_color(payment)}", title: title) do
       concat payment.transaction_amount
-      if payment.promo_code.present?
-        concat tag(:br)
-        concat receipt_promo_code(payment)
-      end
+
+      concat receipt_refunded(payment) if refunded && refunded != true
+
+      concat receipt_promo_code(payment) if payment.promo_code.present?
     end
   end
 
@@ -137,13 +141,19 @@ private
   def receipt_amount_color(payment)
     if !payment.paid?
       'gray'
-    elsif payment.refunded
+    elsif payment.refunded == true
       'red'
     end
   end
 
+  def receipt_refunded(payment)
+    content_tag(:div, class: 'smaller red') do
+      concat number_to_currency(payment.refunded)
+    end
+  end
+
   def receipt_promo_code(payment)
-    content_tag(:small, class: 'green') do
+    content_tag(:div, class: 'smaller green') do
       concat FA::Icon.p('tags', style: :duotone)
       concat payment.promo_code.code
     end
