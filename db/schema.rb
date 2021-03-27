@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_055719) do
+ActiveRecord::Schema.define(version: 2021_03_25_010241) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -526,7 +526,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_055719) do
 
   create_table "static_pages", force: :cascade do |t|
     t.string "name"
-    t.string "markdown"
+    t.text "markdown"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"

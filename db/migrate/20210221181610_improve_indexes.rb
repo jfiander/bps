@@ -110,7 +110,7 @@ class ImproveIndexes < ActiveRecord::Migration[5.2]
     remove_index :users, :certificate
     remove_index :users, :jumpstart
     add_index :users, %i[certificate locked_at deleted_at], name: :index_users_on_certificate
-    add_index :users, %i[jumpstart locked_at deleted_at], name: :index_users_on_jumpstart
+    add_index :users, %i[jumpstart locked_at deleted_at], name: :index_users_on_jumpstart, length: { jumpstart: 1 }
     add_index :users, %i[locked_at deleted_at], name: :index_users_on_locked_at
     add_index :users, %i[simple_name locked_at deleted_at], name: :index_users_on_simple_name
   end

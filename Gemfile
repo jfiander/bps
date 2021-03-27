@@ -76,7 +76,7 @@ gem 'rubyzip',             '>= 1.3.0'
 gem 'sinatra',             '~> 2.0.3'
 
 group :production do
-  gem 'pg',                '~> 0.18.4'
+  gem 'mysql2',            '~> 0.5.3'
   gem 'rails_12factor',    '~> 0.0.3'
 end
 
