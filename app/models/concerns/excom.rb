@@ -2,6 +2,8 @@
 
 module Excom
   def update_excom_group
+    return unless ENV['ASSET_ENVIRONMENT'] == 'production'
+
     r = excom_group_members - excom_emails
     a = excom_emails - excom_group_members
 
@@ -27,8 +29,8 @@ private
   end
 
   def update_group_emails(add, remove)
-    add.each { |email| excom_group.add(email) } if ENV['ASSET_ENVIRONMENT'] == 'production'
-    remove.each { |email| excom_group.remove(email) } if ENV['ASSET_ENVIRONMENT'] == 'production'
+    add.each { |email| excom_group.add(email) }
+    remove.each { |email| excom_group.remove(email) }
   end
 
   def display_summary(add, remove)
