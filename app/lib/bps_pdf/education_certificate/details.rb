@@ -44,29 +44,11 @@ module BpsPdf
       end
 
       def decrypt_signature
-        buffer = +''
-        File.open('tmp/run/signature.png', 'wb') do |outfile|
-          File.open(signature_enc, 'rb') do |inf|
-            outfile << dec_cipher.update(buffer) while inf.read(4096, buffer)
-            outfile << dec_cipher.final
-          end
-        end
-      end
-
-      def signature_enc
-        File.join(
-          Rails.root, 'app', 'assets', 'images', 'signatures', 'education.png.enc'
+        EncryptedKeystore.decrypt(
+          file: File.join(Rails.root, 'app', 'assets', 'images', 'signatures', 'education.png.enc'),
+          out: Rails.root.join('tmp', 'run', 'signature.png'),
+          key: ENV['SIGNATURE_KEY'], iv: ENV['SIGNATURE_IV']
         )
-      end
-
-      def dec_cipher
-        return @cipher if @cipher.present?
-
-        @cipher = OpenSSL::Cipher.new('aes-256-cbc')
-        @cipher.decrypt
-        @cipher.key = Base64.decode64(ENV['SIGNATURE_KEY'])
-        @cipher.iv = Base64.decode64(ENV['SIGNATURE_IV'])
-        @cipher
       end
     end
   end
