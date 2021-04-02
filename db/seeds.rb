@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-admin = Role.create!(name: 'admin')
-education = Role.create!(name: 'education', parent: admin)
-event = Role.create!(name: 'event', parent: admin)
-users = Role.create!(name: 'users', parent: admin)
+admin = Role.create!(name: 'admin', icon: 'shield-alt')
+education = Role.create!(name: 'education', parent: admin, icon: 'graduation-cap')
+event = Role.create!(name: 'event', parent: admin, icon: 'calendar-day')
+users = Role.create!(name: 'users', parent: admin, icon: 'users')
 
 Role.create!([
-  { name: 'page', parent: admin },
-  { name: 'store', parent: admin },
-  { name: 'photos', parent: admin },
-  { name: 'newsletter', parent: admin },
-  { name: 'minutes', parent: admin },
-  { name: 'roster', parent: admin },
-  { name: 'property', parent: admin },
-  { name: 'float', parent: users },
-  { name: 'course', parent: education },
-  { name: 'seminar', parent: education },
-  { name: 'calendar', parent: event },
-  { name: 'vsc', parent: event },
-  { name: 'otw', parent: education }
+  { name: 'page', parent: admin, icon: 'file-alt' },
+  { name: 'store', parent: admin, icon: 'shopping-cart' },
+  { name: 'photos', parent: admin, icon: 'images' },
+  { name: 'newsletter', parent: admin, icon: 'newspaper' },
+  { name: 'minutes', parent: admin, icon: 'cabinet-filing' },
+  { name: 'roster', parent: admin, icon: 'clipboard-list' },
+  { name: 'property', parent: admin, icon: 'boxes' },
+  { name: 'float', parent: users, icon: 'file-check' },
+  { name: 'course', parent: education, icon: 'users-class' },
+  { name: 'seminar', parent: education, icon: 'presentation' },
+  { name: 'calendar', parent: event, icon: 'calendar-alt' },
+  { name: 'vsc', parent: event, icon: 'life-ring' },
+  { name: 'otw', parent: education, icon: 'ship' }
 ])
 
 %w[seamanship piloting advanced_piloting junior_navigation navigation].each do |ag|
@@ -47,6 +47,10 @@ end
   EventType.create!(title: e, event_category: 'meeting')
 end
 
-%w[home about join vsc education civic history links members].each do |page|
+%w[home about join vsc education civic history links members welcome requirements user_help].each do |page|
   StaticPage.create!(name: page)
+end
+
+%w[commander executive educational administrative secretary treasurer].each do |office|
+  BridgeOffice.create!(office: office)
 end
