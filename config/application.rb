@@ -37,4 +37,6 @@ module Bps
   end
 end
 
+Dotenv.load unless Rails.env.production? # development and test
+
 require 'redcarpet/render_strip'

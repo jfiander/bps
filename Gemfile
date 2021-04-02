@@ -82,6 +82,8 @@ end
 group :development, :test do
   gem 'sqlite3',                  '~> 1.3.11'
 
+  gem 'dotenv',                   '~> 2.7.6'
+
   # Specs
   gem 'database_cleaner',         '~> 1.6.2'
   gem 'factory_bot_rails',        '~> 4.8.2'

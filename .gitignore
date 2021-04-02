@@ -17,9 +17,10 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore any live key files
+# Ignore any live key files or environment config
 /config/keys/*
 !/config/keys/cf.pem.enc
+/.env
 
 # Ignore generated converage
 coverage/*
