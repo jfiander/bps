@@ -77,10 +77,6 @@ gem 'mimemagic',           '>= 0.3.6'
 gem 'rubyzip',             '>= 1.3.0'
 gem 'sinatra',             '~> 2.0.3'
 
-group :production do
-  gem 'rails_12factor',    '~> 0.0.3'
-end
-
 group :development, :test do
   gem 'dotenv',                   '~> 2.7.6'
 
