@@ -63,14 +63,13 @@ div.table.striped {
 }
 
 div.table.double-striped {
-  div.table-row:nth-child(n),
-  div.table-row:nth-child(2n) {
-    background-color: $background-lighten-6;
-  }
-
-  div.table-row:nth-child(3n),
-  div.table-row:nth-child(4n) {
+  div.table-row:nth-of-type(4n+3),
+  div.table-row:nth-of-type(4n+3) + * {
     background-color: $background-blue;
+  }
+  div.table-row:nth-of-type(4n+1),
+  div.table-row:nth-of-type(4n+1) + * {
+    background-color: $background-lighten-6;
   }
 
   div.table-row.header {
