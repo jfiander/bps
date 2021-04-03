@@ -2,7 +2,7 @@
   @include border-radius($corner);
   @include shadow-box(1);
   background-color: $button-color;
-  color: white;
+  color: $white;
   padding: 0.2em 0.4em;
 
   &:hover {

@@ -5,7 +5,7 @@ div.red-border {
 }
 
 form.edit_static_page textarea {
-  background-color: lighten($background-blue, 12%);
+  background-color: $background-lighten-12;
   border: 0;
   margin: 1em auto;
   padding: 0.5em;

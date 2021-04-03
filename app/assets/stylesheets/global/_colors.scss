@@ -1,73 +1,88 @@
-// Variables
+// Base colors
 $birmingham-blue: #1086FF;
-$birmingham-blue-light: #99CEFF;
-$old-glory-blue: #041E42;
-$old-glory-red: #BF0D3E;
+$old-glory-blue:  #041E42;
+$old-glory-red:   #BF0D3E;
 $background-blue: #C5D1E1;
-$background-blue-faded: #CDD7E5;
-$background-blue-extra-faded: #EEF2F6;
-$gold: #D4AF37;
-$insignia-gold: #FFBF3F;
-$pending-green: #66BB66;
 
-$old-glory-blue-light: lighten($old-glory-blue, 20%);
+$red:             red;
+$issue-red:       #DD6666;
+$orange:          orange;
+$insignia-gold:   #FFBF3F;
+$gold:            #D4AF37;
+$pending-green:   #66BB66;
+$green:           green;
+$purple:          purple;
+
+$black:           black;
+$dark-gray:       #323232;
+$gray:            gray;
+$light-gray:      lightgray;
+$white:           white;
+
+// Individual modifications
+$light-green:      lighten($green, 10%);
+$highlight-green:  lighten($green, 60%);
+$dark-purple:      darken($purple, 20%);
+$dark-gold:        darken($insignia-gold, 15%);
+
+// Transparent colors
+$logo-background:      rgba($white, 0.6);
+$modal-background:     rgba($dark-gray, 0.4);
 $old-glory-blue-faded: rgba($old-glory-blue, 0.3);
-$old-glory-red-faded: lighten($old-glory-red, 50%);
+
+// Birmingham Blue
+$birmingham-blue-light:  lighten($birmingham-blue, 38%);
+$birmingham-blue-dark:   darken($birmingham-blue, 20%);
+$birmingham-blue-darker: darken($birmingham-blue, 27%);
+
+// Old Glory Blue
+$old-glory-blue-lighten-10: lighten($old-glory-blue, 10%);
+$old-glory-blue-lighten-20: lighten($old-glory-blue, 20%);
+$old-glory-blue-lighten-35: lighten($old-glory-blue, 35%);
+$old-glory-blue-lighten-40: lighten($old-glory-blue, 40%);
+$old-glory-blue-lighten-50: lighten($old-glory-blue, 50%);
+$old-glory-blue-lighten-55: lighten($old-glory-blue, 55%);
+$old-glory-blue-lighten-60: lighten($old-glory-blue, 60%);
+$old-glory-blue-lighten-65: lighten($old-glory-blue, 65%);
+$old-glory-blue-lighten-68: lighten($old-glory-blue, 68%);
+$old-glory-blue-lighten-70: lighten($old-glory-blue, 70%);
+
+// Old Glory Red
+$old-glory-red-lighten-10: lighten($old-glory-red, 10%);
+$old-glory-red-lighten-30: lighten($old-glory-red, 30%);
+$old-glory-red-lighten-45: lighten($old-glory-red, 45%);
+$old-glory-red-lighten-50: lighten($old-glory-red, 50%);
+$old-glory-red-darken-10:  darken($old-glory-red, 10%);
+$old-glory-red-darken-20:  darken($old-glory-red, 20%);
+
+// Background Blue
+$background-blue-faded:       lighten(desaturate(adjust-hue($background-blue, 1), 0.24), 2.35);
+$background-blue-extra-faded: lighten(desaturate(adjust-hue($background-blue, -4), 1.05), 12.16);
+$background-lighten-3:        lighten($background-blue, 3%);
+$background-lighten-5:        lighten($background-blue, 5%);
+$background-lighten-6:        lighten($background-blue, 6%);
+$content-background:          lighten($background-blue, 8%);
+$background-lighten-12:       lighten($background-blue, 12%);
+$background-darken-8:         darken($background-blue, 8%);
+$background-darken-10:        darken($background-blue, 10%);
 
 // Content Colors
-.birmingham-blue {
-  color: $birmingham-blue;
-}
-
-.blue {
-  color: $old-glory-blue-light;
-}
-
-.red {
-  color: $old-glory-red;
-}
-
-.green {
-  color: green;
-}
-
-.orange {
-  color: orange;
-}
-
-.gray {
-  color: gray;
-}
-
-.gold {
-  color: $gold;
-}
-
-.insignia-gold {
-  color: darken($insignia-gold, 15%);
-}
-
-.pending {
-  color: $pending-green;
-}
-
-.admin {
-  color: purple;
-}
+.red             { color: $old-glory-red; }
+.issue           { color: $issue-red; }
+.orange          { color: $orange; }
+.gold            { color: $gold; }
+.insignia-gold   { color: $dark-gold; }
+.pending         { color: $pending-green; }
+.green           { color: $green; }
+.birmingham-blue { color: $birmingham-blue; }
+.blue            { color: $old-glory-blue-lighten-20; }
+.admin           { color: $purple; }
+.gray            { color: $gray; }
 
 // Background Colors
-.gray-background {
-  background-color: lightgray; 
-}
+.gray-background { background-color: $light-gray; }
+.highlight       { background-color: $highlight-green !important; }
+.lowlight        { background-color: $background-blue !important; }
 
-.highlight {
-  background-color: lighten(green, 60%) !important;
-}
-
-.lowlight {
-  background-color: $background-blue !important;
-}
-
-.background {
-  color: lighten($background-blue, 8%);
-}
+// Set color to match background
+.background      { color: $content-background; }

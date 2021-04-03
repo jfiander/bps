@@ -1,6 +1,6 @@
 div#modal {
   display: none;
-  background-color: rgba(50, 50, 50, 0.4);
+  background-color: $modal-background;
   position: fixed;
   top: 0;
   left: 0;
@@ -21,7 +21,7 @@ div#modal {
     min-height: 40%;
     max-height: 90%;
     background-color: $background-blue;
-    border: thin solid darken($background-blue, 10%);
+    border: thin solid $background-darken-10;
 
     div#modal-header {
       @include border-radius(0.5em 0.5em 0 0);
@@ -29,8 +29,8 @@ div#modal {
       padding: 0.5em 0.1em;
       font-size: 1.75em;
       font-weight: bold;
-      background-color: darken($background-blue, 8%);
-      border-bottom: thin solid darken($background-blue, 10%);
+      background-color: $background-darken-8;
+      border-bottom: thin solid $background-darken-10;
     }
 
     div#modal-content {
@@ -46,8 +46,8 @@ div#modal {
       padding: 1em 0;
       color: $old-glory-red;
       font-style: italic;
-      background-color: darken($background-blue, 8%);
-      border-top: thin solid darken($background-blue, 10%);
+      background-color: $background-darken-8;
+      border-top: thin solid $background-darken-10;
     }
   }
 }

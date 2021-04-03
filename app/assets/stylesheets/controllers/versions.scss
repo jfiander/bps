@@ -14,11 +14,11 @@ div.table.versions {
 }
 
 ins.differ {
-  color: green;
+  color: $green;
 }
 
 del.differ {
-  color: red;
+  color: $red;
 }
 
 pre.version-diff {

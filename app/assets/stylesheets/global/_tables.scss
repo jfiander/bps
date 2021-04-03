@@ -42,7 +42,7 @@ div.table-cell {
 
 div.table.striped {
   div.table-row:nth-child(odd) {
-    background-color: lighten($background-blue, 6%);
+    background-color: $background-lighten-6;
   }
 
   div.table-row:nth-child(even) {
@@ -50,7 +50,7 @@ div.table.striped {
   }
 
   div.table-row.odd {
-    background-color: lighten($background-blue, 6%);
+    background-color: $background-lighten-6;
   }
 
   div.table-row.even {
@@ -65,7 +65,7 @@ div.table.striped {
 div.table.double-striped {
   div.table-row:nth-child(n),
   div.table-row:nth-child(2n) {
-    background-color: lighten($background-blue, 6%);
+    background-color: $background-lighten-6;
   }
 
   div.table-row:nth-child(3n),

@@ -31,7 +31,7 @@ div.events-unified-table {
     padding: 1em;
 
     &.even {
-      background-color: lighten($background-blue, 5%);
+      background-color: $background-lighten-5;
       @include border-radius(0.5em);
     }
 
@@ -132,7 +132,7 @@ div.event-costs {
   width: 80%;
   margin: 1em 0;
   font-size: 80%;
-  color: lighten($old-glory-blue, 10%);
+  color: $old-glory-blue-lighten-10;
 
   span.cost {
     margin-right: 0.5em;
@@ -160,10 +160,10 @@ div.event-costs {
 }
 
 div#expired-events-section {
-  background-color: $old-glory-red-faded;
+  background-color: $old-glory-red-lighten-50;
 
   div.event-unified.even {
-    background-color: darken($old-glory-red-faded, 3%);
+    background-color: $old-glory-red-lighten-45;
   }
 }
 

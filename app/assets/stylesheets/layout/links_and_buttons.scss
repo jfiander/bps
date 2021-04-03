@@ -4,23 +4,23 @@ a {
 }
 
 a:hover, a:hover > i  {
-  color: darken($birmingham-blue, 20%);
+  color: $birmingham-blue-dark;
 }
 
 a.red:hover, a.red:hover > i, a:hover > i.red {
-  color: lighten($old-glory-red, 10%);
+  color: $old-glory-red-lighten-10;
 }
 
 a.blue:hover, a.blue:hover > i, a:hover > i.blue {
-  color: lighten($old-glory-blue, 40%);
+  color: $old-glory-blue-lighten-40;
 }
 
 a.admin:hover, a.admin:hover > i, a:hover > i.admin {
-  color: darken(purple, 20%);
+  color: $dark-purple;
 }
 
 a.green:hover, a.green:hover > i, a:hover > i.green {
-  color: lighten(green, 10%);
+  color: $light-green;
 }
 
 /* Allow for cascading container color to links, and reasonable hover colors */
@@ -52,12 +52,12 @@ input.cancel, button.cancel, a.cancel {
 
 button.otw {
   border: none;
-  background-color: lighten($background-blue, 8%);
+  background-color: $content-background;
   font-size: 1.5em;
 }
 
 div.table-row.gray {
   button.otw {
-    background-color: lighten($background-blue, 3%);
+    background-color: $background-lighten-3;
   }
 }

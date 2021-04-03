@@ -38,7 +38,7 @@ div#main {
         position: absolute; 
         top: 0;
         left: 0;
-        background-color: rgba(255, 255, 255, 0.6);
+        background-color: $logo-background;
         @include border-radius(1em 1em 0 0);
 
         img {
@@ -53,7 +53,7 @@ div#main {
         bottom: 0.6em;
         left: 0;
         text-align: center;
-        color: white;
+        color: $white;
         text-shadow: 3px 3px $old-glory-blue-faded;
         font-size: 120%;
         font-style: italic;
@@ -78,7 +78,7 @@ div#main {
   }
 
   div#content {
-    background-color: lighten($background-blue, 8%);
+    background-color: $content-background;
     padding-bottom: 0.5em;
 
     div#content-main {

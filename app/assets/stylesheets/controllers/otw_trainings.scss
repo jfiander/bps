@@ -1,6 +1,6 @@
 div#otw {
   form:hover .fa-square {
-    color: darken($birmingham-blue, 20%);
+    color: $birmingham-blue-dark;
   }
 }
 
@@ -20,6 +20,6 @@ div#otw-progress div.table-row div.table-cell {
   vertical-align: middle;
 
   &.satisfied {
-    color: green !important;
+    color: $green !important;
   }
 }

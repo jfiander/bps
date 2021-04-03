@@ -18,11 +18,11 @@ div#bilge {
   }
 
   a.members {
-    background-color: lighten($old-glory-blue, 20%);
+    background-color: $old-glory-blue-lighten-20;
   }
 
   div.table-cell.excom a {
-    background-color: lighten($old-glory-blue, 10%);
+    background-color: $old-glory-blue-lighten-10;
   }
 }
 
@@ -159,7 +159,7 @@ div#standing-committees {
   }
 
   div.odd {
-    background-color: lighten($background-blue, 6%);
+    background-color: $background-lighten-6;
   }
 
   div.even {
@@ -253,7 +253,7 @@ div.next-meeting {
   padding: 0.25em 1em 0.25em 0.25em;
   font-size: larger;
   text-align: center;
-  color: $old-glory-blue-light;
+  color: $old-glory-blue-lighten-20;
   background-color: $background-blue-faded;
   line-height: 1.75em;
   display: flex;
@@ -291,7 +291,7 @@ div.notice {
   padding: 0.25em;
   font-size: larger;
   text-align: center;
-  color: $old-glory-blue-light;
+  color: $old-glory-blue-lighten-20;
   background-color: $background-blue-faded;
   line-height: 1.75em;
   width: 99%;

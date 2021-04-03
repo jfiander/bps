@@ -92,7 +92,7 @@ div.information {
 
 .scrollable {
   overflow: scroll;
-  border: thin dotted darken($background-blue, 10%);
+  border: thin dotted $background-darken-10;
 }
 
 .no-scroll {
@@ -145,7 +145,7 @@ textarea.large {
 
 div.red-background {
   @include border-radius;
-  background-color: $old-glory-red-faded;
+  background-color: $old-glory-red-lighten-50;
   padding: 0.25em 0;
 }
 
@@ -161,7 +161,7 @@ div.table-row.gray {
   }
 
   div.table-cell.gray {
-    color: gray;
+    color: $gray;
     background-color: $background-blue-faded;
   }
 }

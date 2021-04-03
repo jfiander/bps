@@ -38,7 +38,7 @@ div#login {
   }
 
   div#change-password {
-    background-color: lighten($old-glory-red, 50%);
+    background-color: $old-glory-red-lighten-50;
     border-top: thin solid $old-glory-red;
     border-bottom: thin solid $old-glory-red;
     display: none;

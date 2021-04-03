@@ -8,25 +8,25 @@ div#flashes {
 
   div#success {
     color: $birmingham-blue;
-    background-color: lighten($birmingham-blue, 38%);
+    background-color: $birmingham-blue-light;
     border-top: thin solid $birmingham-blue;
     border-bottom: thin solid $birmingham-blue;
   }
 
   div#notice {
-    color: lighten($old-glory-blue, 20%);
-    background-color: lighten($old-glory-blue, 70%);
-    border-top: thin solid lighten($old-glory-blue, 40%);
-    border-bottom: thin solid lighten($old-glory-blue, 40%);
+    color: $old-glory-blue-lighten-20;
+    background-color: $old-glory-blue-lighten-70;
+    border-top: thin solid $old-glory-blue-lighten-40;
+    border-bottom: thin solid $old-glory-blue-lighten-40;
   }
 
   div#alert {
     margin-bottom: 0;
     font-weight: bold;
     color: $old-glory-red;
-    background-color: lighten($old-glory-red, 45%);
-    border-top: thin solid lighten($old-glory-red, 10%);
-    border-bottom: thin solid lighten($old-glory-red, 10%);
+    background-color: $old-glory-red-lighten-45;
+    border-top: thin solid $old-glory-red-lighten-10;
+    border-bottom: thin solid $old-glory-red-lighten-10;
   }
 
   div#error {
@@ -34,8 +34,8 @@ div#flashes {
     padding: 0.2em 0;
     font-style: italic;
     color: $old-glory-red;
-    background-color: lighten($old-glory-red, 50%);
-    border-bottom: thin solid lighten($old-glory-red, 30%);
+    background-color: $old-glory-red-lighten-50;
+    border-bottom: thin solid $old-glory-red-lighten-30;
 
     ul {
       margin: 0;
