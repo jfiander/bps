@@ -22,6 +22,7 @@ before_install:
   - gem install bundler -v '< 2'
 before_script:
   - export TZ=America/Detroit
+  - cp config/database.travis.yml config/database.yml
   - mysql -e 'create database bpsd9_test;'
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter || (print "Will not report" && true)
   - chmod +x ./cc-test-reporter || true

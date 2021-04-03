@@ -1,0 +1,10 @@
+default: &default
+  adapter: mysql2
+  pool: 5
+  timeout: 5000
+
+test:
+  <<: *default
+  database: bpsd9_test
+  username: travis
+  encoding: utf8
