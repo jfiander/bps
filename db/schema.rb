@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_03_25_010241) do
 
-  create_table "albums", force: :cascade do |t|
+  create_table "albums", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_albums_on_deleted_at"
   end
 
-  create_table "announcement_files", force: :cascade do |t|
+  create_table "announcement_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.string "file_file_name"
     t.string "file_content_type"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_announcement_files_on_deleted_at"
   end
 
-  create_table "award_recipients", force: :cascade do |t|
+  create_table "award_recipients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "award_name"
     t.date "year"
     t.integer "user_id"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_award_recipients_on_deleted_at"
   end
 
-  create_table "bilge_files", force: :cascade do |t|
+  create_table "bilge_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "year"
     t.integer "month"
     t.string "file_file_name"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_bilge_files_on_deleted_at"
   end
 
-  create_table "bridge_offices", force: :cascade do |t|
+  create_table "bridge_offices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "office"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["user_id", "deleted_at"], name: "index_bridge_offices_on_user_id"
   end
 
-  create_table "committees", force: :cascade do |t|
+  create_table "committees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "department"
     t.string "name"
     t.integer "user_id"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["user_id", "deleted_at"], name: "index_committees_on_user_id"
   end
 
-  create_table "course_completions", force: :cascade do |t|
+  create_table "course_completions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.string "course_key"
     t.datetime "date"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["user_id", "deleted_at"], name: "index_course_completions_on_user_id"
   end
 
-  create_table "course_includes", force: :cascade do |t|
+  create_table "course_includes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "course_id"
     t.string "text"
     t.datetime "created_at", null: false
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["course_id", "deleted_at"], name: "index_course_includes_on_course_id"
   end
 
-  create_table "course_topics", force: :cascade do |t|
+  create_table "course_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "course_id"
     t.string "text"
     t.datetime "created_at", null: false
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["course_id", "deleted_at"], name: "index_course_topics_on_course_id"
   end
 
-  create_table "event_instructors", force: :cascade do |t|
+  create_table "event_instructors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "event_id"
     t.datetime "created_at", null: false
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["event_id", "deleted_at"], name: "index_event_instructors_on_event_id"
   end
 
-  create_table "event_promo_codes", force: :cascade do |t|
+  create_table "event_promo_codes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "event_id"
     t.integer "promo_code_id"
     t.datetime "deleted_at"
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["promo_code_id", "deleted_at"], name: "index_event_promo_codes_on_code_id"
   end
 
-  create_table "event_types", force: :cascade do |t|
+  create_table "event_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "event_category"
     t.string "title"
     t.string "image_link"
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["event_category", "deleted_at"], name: "index_event_types_on_category"
   end
 
-  create_table "events", force: :cascade do |t|
+  create_table "events", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "event_type_id"
     t.integer "cost"
     t.text "description"
@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["start_at", "expires_at", "archived_at", "deleted_at"], name: "index_events_on_dates"
   end
 
-  create_table "float_plan_onboards", force: :cascade do |t|
+  create_table "float_plan_onboards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "float_plan_id"
     t.string "name"
     t.integer "age"
@@ -200,7 +200,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["float_plan_id", "deleted_at"], name: "index_float_plan_onboards_on_float_plan_id"
   end
 
-  create_table "float_plans", force: :cascade do |t|
+  create_table "float_plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "phone"
     t.string "boat_type"
@@ -269,7 +269,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["user_id", "deleted_at"], name: "index_float_plans_on_user_id"
   end
 
-  create_table "generic_payments", force: :cascade do |t|
+  create_table "generic_payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "description"
     t.integer "amount"
     t.integer "user_id"
@@ -280,7 +280,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_generic_payments_on_deleted_at"
   end
 
-  create_table "header_images", force: :cascade do |t|
+  create_table "header_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "file_file_name"
     t.string "file_content_type"
     t.integer "file_file_size"
@@ -293,7 +293,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_header_images_on_deleted_at"
   end
 
-  create_table "import_logs", force: :cascade do |t|
+  create_table "import_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "json"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
@@ -301,7 +301,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_import_logs_on_deleted_at"
   end
 
-  create_table "locations", force: :cascade do |t|
+  create_table "locations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "address"
     t.text "map_link"
     t.text "details"
@@ -317,7 +317,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_locations_on_deleted_at"
   end
 
-  create_table "markdown_files", force: :cascade do |t|
+  create_table "markdown_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "file_file_name"
     t.string "file_content_type"
     t.integer "file_file_size"
@@ -328,7 +328,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_markdown_files_on_deleted_at"
   end
 
-  create_table "member_applicants", force: :cascade do |t|
+  create_table "member_applicants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "member_application_id"
     t.boolean "primary"
     t.string "member_type"
@@ -359,7 +359,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["member_application_id", "deleted_at"], name: "index_index_applicants_on_application_id"
   end
 
-  create_table "member_applications", force: :cascade do |t|
+  create_table "member_applications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -368,7 +368,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["approved_at", "deleted_at"], name: "index_member_applications_on_approved_at"
   end
 
-  create_table "minutes_files", force: :cascade do |t|
+  create_table "minutes_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "year"
     t.integer "month"
     t.boolean "excom"
@@ -382,7 +382,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["excom", "deleted_at"], name: "index_minutes_files_on_excom"
   end
 
-  create_table "otw_training_users", force: :cascade do |t|
+  create_table "otw_training_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "otw_training_id"
     t.integer "user_id"
     t.datetime "deleted_at"
@@ -392,7 +392,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["user_id", "deleted_at"], name: "index_otw_tu_on_user_id"
   end
 
-  create_table "otw_trainings", force: :cascade do |t|
+  create_table "otw_trainings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.string "course_key"
@@ -403,7 +403,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_otw_trainings_on_deleted_at"
   end
 
-  create_table "past_commanders", force: :cascade do |t|
+  create_table "past_commanders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "year"
     t.integer "user_id"
     t.string "name"
@@ -415,7 +415,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_past_commanders_on_deleted_at"
   end
 
-  create_table "payments", force: :cascade do |t|
+  create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "parent_type"
     t.integer "parent_id"
     t.string "transaction_id"
@@ -436,7 +436,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["transaction_id", "deleted_at"], name: "index_payments_on_transaction_id"
   end
 
-  create_table "photos", force: :cascade do |t|
+  create_table "photos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "album_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -448,7 +448,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["album_id", "deleted_at"], name: "index_photos_on_album_id"
   end
 
-  create_table "promo_codes", force: :cascade do |t|
+  create_table "promo_codes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "code"
     t.datetime "valid_at"
     t.datetime "expires_at"
@@ -460,7 +460,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["code", "deleted_at"], name: "index_promo_codes_on_code"
   end
 
-  create_table "registration_promo_codes", force: :cascade do |t|
+  create_table "registration_promo_codes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "registration_id"
     t.integer "promo_code_id"
     t.datetime "deleted_at"
@@ -470,7 +470,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["registration_id", "deleted_at"], name: "index_registration_promo_codes_on_registration_id"
   end
 
-  create_table "registrations", force: :cascade do |t|
+  create_table "registrations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -487,7 +487,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["user_id", "deleted_at"], name: "index_registrations_on_user_id"
   end
 
-  create_table "roles", force: :cascade do |t|
+  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -498,7 +498,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["parent_id", "deleted_at"], name: "index_roles_on_parent_id"
   end
 
-  create_table "roster_archive_files", force: :cascade do |t|
+  create_table "roster_archive_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "file_file_name"
     t.string "file_content_type"
     t.integer "file_file_size"
@@ -510,7 +510,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["deleted_at"], name: "index_roster_archive_files_on_deleted_at"
   end
 
-  create_table "standing_committee_offices", force: :cascade do |t|
+  create_table "standing_committee_offices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "committee_name"
     t.integer "user_id"
     t.datetime "term_start_at"
@@ -524,7 +524,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["user_id", "deleted_at"], name: "index_standing_committee_offices_on_user_id"
   end
 
-  create_table "static_pages", force: :cascade do |t|
+  create_table "static_pages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "markdown"
     t.datetime "created_at", null: false
@@ -533,7 +533,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["name", "deleted_at"], name: "index_static_pages_on_name"
   end
 
-  create_table "user_roles", force: :cascade do |t|
+  create_table "user_roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
     t.datetime "created_at", null: false
@@ -544,7 +544,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["user_id", "role_id", "deleted_at"], name: "index_user_roles_on_user_id_and_role_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "certificate"
     t.string "first_name"
     t.string "last_name"
@@ -621,18 +621,18 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
-    t.index ["jumpstart", "locked_at", "deleted_at"], name: "index_users_on_jumpstart"
+    t.index ["jumpstart", "locked_at", "deleted_at"], name: "index_users_on_jumpstart", length: { jumpstart: 1 }
     t.index ["locked_at", "deleted_at"], name: "index_users_on_locked_at"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["simple_name", "locked_at", "deleted_at"], name: "index_users_on_simple_name"
   end
 
-  create_table "versions", force: :cascade do |t|
+  create_table "versions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
-    t.text "object", limit: 1073741823
+    t.text "object", limit: 4294967295
     t.datetime "created_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
