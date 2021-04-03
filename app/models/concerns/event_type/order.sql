@@ -1,5 +1,5 @@
 CASE
-  WHEN event_types.event_category = 'public'     THEN '1' || event_types.title
+  WHEN event_types.event_category = 'public'     THEN CONCAT('1', event_types.title)
   WHEN event_types.event_category = 'advanced_grade' THEN CASE
     WHEN event_types.title = 'seamanship'                 THEN '2a'
     WHEN event_types.title = 'boat_handling'              THEN '2b'
@@ -12,7 +12,7 @@ CASE
     WHEN event_types.title = 'navigation'                 THEN '6a'
     WHEN event_types.title = 'celestial_navigation'       THEN '6b'
   END
-  WHEN event_types.event_category = 'elective'   THEN '7' || event_types.title
-  WHEN event_types.event_category = 'seminar'    THEN '8' || event_types.title
-  WHEN event_types.event_category = 'meeting'    THEN '9' || event_types.title
+  WHEN event_types.event_category = 'elective'   THEN CONCAT('7', event_types.title)
+  WHEN event_types.event_category = 'seminar'    THEN CONCAT('8', event_types.title)
+  WHEN event_types.event_category = 'meeting'    THEN CONCAT('9', event_types.title)
 END

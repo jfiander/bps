@@ -3,16 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe BridgeHelper, type: :helper do
-  before do
-    cdr = FactoryBot.create(:user, first_name: 'John', last_name: 'Doe')
-    com = FactoryBot.create(:user, first_name: 'Jane', last_name: 'Dore')
-    stand = FactoryBot.create(:user, first_name: 'Jack', last_name: 'Dodd')
-    @bridge_office = FactoryBot.create(:bridge_office, user: cdr)
-    @committee = FactoryBot.create(:committee, user: com)
-    @standing_committee_office = FactoryBot.create(:standing_committee_office, user: stand)
-    described_class.preload_user_data
-  end
-
+  let!(:cdr) { FactoryBot.create(:user, first_name: 'John', last_name: 'Doe') }
+  let!(:com) { FactoryBot.create(:user, first_name: 'Jane', last_name: 'Dore') }
+  let!(:stand) { FactoryBot.create(:user, first_name: 'Jack', last_name: 'Dodd') }
+  let!(:standing_committee_office) { FactoryBot.create(:standing_committee_office, user: stand) }
+  let!(:bridge_office) { FactoryBot.create(:bridge_office, user: cdr) }
+  let!(:committee) { FactoryBot.create(:committee, user: com) }
   let(:departments) do
     {
       commander: {
@@ -40,7 +36,7 @@ RSpec.describe BridgeHelper, type: :helper do
               simple_name: 'Jane&nbsp;Dore',
               photo: 'https://static.bpsd9.org/no_profile.png'
             },
-            id: 1
+            id: committee.id
           }
         ]
       },
@@ -48,12 +44,11 @@ RSpec.describe BridgeHelper, type: :helper do
       treasurer: { head: nil, assistant: nil, committees: nil }
     }
   end
-
   let(:standing_committees) do
     {
       'executive' => [
         {
-          id: 1,
+          id: standing_committee_office.id,
           simple_name: 'Jack&nbsp;Dodd',
           full_name: 'Lt&nbsp;Jack&nbsp;Dodd,&nbsp;AP',
           chair: false,
@@ -62,6 +57,8 @@ RSpec.describe BridgeHelper, type: :helper do
       ]
     }
   end
+
+  before { described_class.preload_user_data }
 
   it 'generates the correct values for the bridge selectors' do
     expect(described_class.bridge_selectors).to eql(
@@ -86,9 +83,9 @@ RSpec.describe BridgeHelper, type: :helper do
       standing_committees: %w[Executive Auditing Nominating Rules],
       users: [
         ['TBD', nil],
-        ['Lt Jack Dodd, AP', 3],
-        ['Cdr John Doe, AP', 1],
-        ['Lt Jane Dore, AP', 2]
+        ['Lt Jack Dodd, AP', stand.id],
+        ['Cdr John Doe, AP', cdr.id],
+        ['Lt Jane Dore, AP', com.id]
       ]
     )
   end

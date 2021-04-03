@@ -18,6 +18,8 @@ RSpec/ExampleLength:
   Enabled: false
 RSpec/ExpectChange:
   Enabled: false
+RSpec/LetSetup:
+  Enabled: false
 RSpec/MessageSpies:
   EnforcedStyle: receive
 RSpec/InstanceVariable:

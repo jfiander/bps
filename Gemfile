@@ -12,6 +12,8 @@ gem 'rails',               '~> 5.2.4.5'
 
 gem 'puma',                '~> 3.12'
 
+gem 'mysql2',              '~> 0.5.3'
+
 # Rails Plugins
 gem 'coffee-rails',        '~> 4.2'
 gem 'jbuilder',            '~> 2.5'
@@ -76,13 +78,10 @@ gem 'rubyzip',             '>= 1.3.0'
 gem 'sinatra',             '~> 2.0.3'
 
 group :production do
-  gem 'mysql2',            '~> 0.5.3'
   gem 'rails_12factor',    '~> 0.0.3'
 end
 
 group :development, :test do
-  gem 'sqlite3',                  '~> 1.3.11'
-
   gem 'dotenv',                   '~> 2.7.6'
 
   # Specs

@@ -40,6 +40,6 @@ RSpec.describe StaticPage, type: :model do
   it 'has the correct versions path' do
     page = FactoryBot.create(:static_page)
 
-    expect(page.versions_path).to eql('/admin/versions/StaticPage/1')
+    expect(page.versions_path).to eql("/admin/versions/StaticPage/#{page.id}")
   end
 end
