@@ -23,6 +23,8 @@ gem 'rack-cors',           '~> 1.0'
 gem 'sass-rails',          '~> 5.0'
 gem 'uglifier',            '~> 4.1'
 
+gem 'figaro',              '~> 1.2.0'
+
 # Model Behavior
 gem 'paperclip',           '~> 5.3.0'
 gem 'paper_trail',         '~> 9.2.0'
@@ -65,17 +67,26 @@ gem 'usps_flags-grades',   '~> 0.1.5'
 
 # Logging
 gem 'bugsnag',             '~> 6.1.0'
-gem 'newrelic_rpm',        '~> 5.0.0.342'
 
 # Inspection
 gem 'awesome_print',       '~> 1.8.0'
 gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
+gem 'fileutils',           '~> 1.4.1'
 gem 'loofah',              '~> 2.3.1'
 gem 'mimemagic',           '>= 0.3.6'
 gem 'rubyzip',             '>= 1.3.0'
 gem 'sinatra',             '~> 2.0.3'
+
+group :development do
+  gem 'capistrano',            '~> 3.16.0'
+  gem 'capistrano-bundler',    '~> 2.0.1'
+  gem 'capistrano-figaro-yml', '~> 1.0.5'
+  gem 'capistrano-passenger',  '~> 0.2.0'
+  gem 'capistrano-rails',      '~> 1.6.1'
+  gem 'capistrano-rvm',        '~> 0.1.2'
+end
 
 group :development, :test do
   gem 'dotenv',                   '~> 2.7.6'

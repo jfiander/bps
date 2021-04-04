@@ -18,7 +18,7 @@ module Application
   private
 
     def ssl_configured?
-      Rails.env.production?
+      Rails.env.production? || Rails.env.staging?
     end
 
     def handle_unverified_request

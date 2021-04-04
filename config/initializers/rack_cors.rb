@@ -3,12 +3,10 @@
 if defined? Rack::Cors
   Rails.configuration.middleware.insert_before 0, Rack::Cors do
     allow do
-      domain = ENV['DOMAIN']
-      assets = 'assets.bpsd9.org'
       origins [
         %r{\Ahttps?://(.*?)\.bpsd9.org(:\d+)?\z},
-        %r{\Ahttps?://#{domain}\z},
-        %r{\Ahttps?://#{assets}\z}
+        %r{\Ahttps?://#{ENV['DOMAIN']}\z},
+        %r{\Ahttps?://assets.#{ENV['DOMAIN']}\z}
       ]
       resource '/assets/*'
       resource '/webfonts/*'

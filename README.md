@@ -65,7 +65,6 @@ ASSET_ENVIRONMENT # staging
 BUGSNAG_RELEASE_STAGE # staging
 RACK_ENV # production - all deployed servers use production
 RAILS_ENV # production - all deployed servers use production
-NEW_RELIC_APP_NAME # BPSD9 (Staging)
 
 # Keys, IDs, and Versions
 BRAINTREE_MERCHANT_ID
@@ -96,7 +95,6 @@ GOOGLE_GEOCODER_API_KEY
 GOOGLE_REFRESH_TOKEN
 MEMBERSHIP_MEET_ID
 MEMBERSHIP_MEET_SIGNATURE
-NEW_RELIC_LICENSE_KEY
 S3_ACCESS_KEY
 S3_SECRET
 SECRET_KEY_BASE

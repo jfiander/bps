@@ -33,3 +33,6 @@ coverage/*
 
 # Ignore gitallowed config
 .gitallowed
+
+# Ignore application configuration
+/config/application.yml
