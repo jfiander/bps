@@ -53,13 +53,7 @@ class BpsS3
 private
 
   def s3
-    @s3 ||= Aws::S3::Resource.new(
-      region: 'us-east-2',
-      credentials: Aws::Credentials.new(
-        ENV['S3_ACCESS_KEY'],
-        ENV['S3_SECRET']
-      )
-    ).bucket(full_bucket)
+    @s3 ||= Aws::S3::Resource.new(region: 'us-east-2').bucket(full_bucket)
   end
 
   def prepare_bucket

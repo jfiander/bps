@@ -11,11 +11,7 @@ class ApplicationRecord < ActiveRecord::Base
   def self.paperclip_defaults(bucket)
     {
       storage: :s3, s3_region: 'us-east-2', s3_permissions: :private,
-      s3_credentials: {
-        bucket: BpsS3.new(bucket).full_bucket,
-        access_key_id: ENV['S3_ACCESS_KEY'],
-        secret_access_key: ENV['S3_SECRET']
-      }
+      s3_credentials: { bucket: BpsS3.new(bucket).full_bucket }
     }
   end
 

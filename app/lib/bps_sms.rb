@@ -102,13 +102,7 @@ class BpsSMS
 private
 
   def client
-    @client ||= Aws::SNS::Client.new(
-      region: 'us-east-1',
-      credentials: Aws::Credentials.new(
-        ENV['S3_ACCESS_KEY'],
-        ENV['S3_SECRET']
-      )
-    )
+    @client ||= Aws::SNS::Client.new(region: 'us-east-1')
   end
 
   def opted_out?(number)

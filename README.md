@@ -95,8 +95,6 @@ GOOGLE_GEOCODER_API_KEY
 GOOGLE_REFRESH_TOKEN
 MEMBERSHIP_MEET_ID
 MEMBERSHIP_MEET_SIGNATURE
-S3_ACCESS_KEY
-S3_SECRET
 SECRET_KEY_BASE
 SIGNATURE_IV # enc keys for educational certificate signature
 SIGNATURE_KEY # enc keys for educational certificate signature

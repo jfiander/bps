@@ -44,13 +44,7 @@ class Invalidation
 private
 
   def cloud_front
-    Aws::CloudFront::Client.new(
-      region: 'us-east-2',
-      credentials: Aws::Credentials.new(
-        ENV['S3_ACCESS_KEY'],
-        ENV['S3_SECRET']
-      )
-    )
+    Aws::CloudFront::Client.new(region: 'us-east-2')
   end
 
   def find_distro_id
