@@ -1,8 +1,8 @@
-staging_instance = 'ssh.www.bpsd9.org'
+production_instance = 'ssh.www.bpsd9.org'
 
-role :app, "deploy@#{staging_instance}"
-role :web, "deploy@#{staging_instance}"
-role :db,  "deploy@#{staging_instance}"
+role :app, "deploy@#{production_instance}"
+role :web, "deploy@#{production_instance}"
+role :db,  "deploy@#{production_instance}"
 
 set :branch, ENV.fetch('BRANCH', 'master')
 

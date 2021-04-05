@@ -111,6 +111,18 @@ SMTP_PASSWORD
 SMTP_USERNAME
 ```
 
+## Deploy
+
+Deploys are handled through Capistrano.
+
+Environment variables must be set in: config/application.yml
+
+| Description                  | Command                                                     |
+|------------------------------|-------------------------------------------------------------|
+| Update environment variables | `bundle exec cap <ENVIRONMENT> setup`                       |
+| Deploy                       | `bundle exec cap <ENVIRONMENT> deploy [BRANCH=branch_name]` |
+| Restart                      | `bundle exec cap <ENVIRONMENT> passenger:restart`           |
+
 ## Testing
 
 ### Rspec

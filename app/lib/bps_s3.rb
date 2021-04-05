@@ -56,8 +56,8 @@ private
     @s3 ||= Aws::S3::Resource.new(
       region: 'us-east-2',
       credentials: Aws::Credentials.new(
-        Rails.application.secrets[:s3_access_key],
-        Rails.application.secrets[:s3_secret]
+        ENV['S3_ACCESS_KEY'],
+        ENV['S3_SECRET']
       )
     ).bucket(full_bucket)
   end
@@ -105,8 +105,8 @@ private
 
   def cf_signer
     @cf_signer ||= Aws::CloudFront::UrlSigner.new(
-      key_pair_id: Rails.application.secrets[:cf_keypair_id],
-      private_key_path: Rails.application.secrets[:cf_private_key_path]
+      key_pair_id: ENV['CF_KEYPAIR_ID'],
+      private_key_path: "#{Rails.root}/config/keys/cf.pem"
     )
   end
 end

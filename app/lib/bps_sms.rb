@@ -105,8 +105,8 @@ private
     @client ||= Aws::SNS::Client.new(
       region: 'us-east-1',
       credentials: Aws::Credentials.new(
-        Rails.application.secrets[:s3_access_key],
-        Rails.application.secrets[:s3_secret]
+        ENV['S3_ACCESS_KEY'],
+        ENV['S3_SECRET']
       )
     )
   end

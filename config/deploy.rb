@@ -20,10 +20,15 @@ set :repo_url, 'https://github.com/jfiander/bps.git'
 # Default value for :pty is false
 # set :pty, true
 
+set :linked_files, %w[config/application.yml]
+
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml"
 
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
+set :linked_dirs, fetch(:linked_dirs, []).push(
+  'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets',
+  'vendor/bundle', 'public/system', 'public/uploads'
+)
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"

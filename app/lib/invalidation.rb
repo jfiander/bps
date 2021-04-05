@@ -47,8 +47,8 @@ private
     Aws::CloudFront::Client.new(
       region: 'us-east-2',
       credentials: Aws::Credentials.new(
-        Rails.application.secrets[:s3_access_key],
-        Rails.application.secrets[:s3_secret]
+        ENV['S3_ACCESS_KEY'],
+        ENV['S3_SECRET']
       )
     )
   end
