@@ -96,10 +96,10 @@ Rails.application.configure do
   config.action_mailer.logger = nil
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-    user_name: 'apikey',
-    password: ENV['SENDGRID_API_KEY'],
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
     domain: ENV['DOMAIN'],
-    address: 'smtp.sendgrid.net',
+    address: 'email-smtp.us-east-2.amazonaws.com',
     port: 587,
     authentication: :plain,
     enable_starttls_auto: true
