@@ -46,7 +46,7 @@ module Concerns
         end
 
         def allow_live_transactions?
-          ENV['ASSET_ENVIRONMENT'] == 'production' &&
+          Rails.env.production? &&
             ENV['ENABLE_BRAINTREE'].present? &&
             ENV['ENABLE_BRAINTREE'] != 'disabled'
         end

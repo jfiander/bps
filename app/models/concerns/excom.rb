@@ -2,7 +2,7 @@
 
 module Excom
   def update_excom_group
-    return unless ENV['ASSET_ENVIRONMENT'] == 'production'
+    return unless Rails.env.production?
 
     r = excom_group_members - excom_emails
     a = excom_emails - excom_group_members

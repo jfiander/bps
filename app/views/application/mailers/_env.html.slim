@@ -1,2 +1,2 @@
-- unless ENV['ASSET_ENVIRONMENT'] == 'production'
+- unless Rails.env.production?
   .red &lt;#{ENV['ASSET_ENVIRONMENT'].titleize}&gt;

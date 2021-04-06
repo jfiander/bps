@@ -78,9 +78,7 @@ module Concerns
       end
 
       def calendar_id(prod: false)
-        unless prod || ENV['ASSET_ENVIRONMENT'] == 'production'
-          return ENV['GOOGLE_CALENDAR_ID_TEST']
-        end
+        return ENV['GOOGLE_CALENDAR_ID_TEST'] unless prod || Rails.env.production?
 
         if category.in?(%w[course seminar])
           ENV['GOOGLE_CALENDAR_ID_EDUC']

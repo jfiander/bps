@@ -1,1 +1,1 @@
-<% unless ENV['ASSET_ENVIRONMENT'] == 'production' %><<%= ENV['ASSET_ENVIRONMENT'].titleize %>><% end %>
+<% unless Rails.env.production? %><<%= ENV['ASSET_ENVIRONMENT'].titleize %>><% end %>

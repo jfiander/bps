@@ -37,6 +37,8 @@ module Bps
   end
 end
 
-Dotenv.load if Rails.env.development? || Rails.env.test?
+Rails.env.define_singleton_method(:deployed?) { self.in?(%w[production staging]) }
+
+Dotenv.load unless Rails.env.deployed?
 
 require 'redcarpet/render_strip'

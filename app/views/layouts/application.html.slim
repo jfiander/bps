@@ -10,9 +10,9 @@ html lang='en'
     meta name='viewport' content='width=device-width, initial-scale=1.0'
     = favicon_link_tag BpsS3.new(:static).link('favicon.ico')
     = FA::Link.kit(ENV['FONTAWESOME_KIT'])
-    - if ENV['ASSET_ENVIRONMENT'].in?(%w[production staging])
+    - if Rails.env.deployed?
       = render 'application/trackers/analytics', keys: ENV.select { |k, _| k.match?(/\AGA_TRACKING_ID/) }.values
-    - if ENV['ASSET_ENVIRONMENT'].in?(%w[production])
+    - if Rails.env.production?
       = render 'application/trackers/facebook_pixel', key: ENV['FACEBOOK_PIXEL_ID']
     = yield :head
   body

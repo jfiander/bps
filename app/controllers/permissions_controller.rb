@@ -140,7 +140,7 @@ private
   end
 
   def calendar_id
-    return ENV['GOOGLE_CALENDAR_ID_GEN'] if ENV['ASSET_ENVIRONMENT'] == 'production'
+    return ENV['GOOGLE_CALENDAR_ID_GEN'] if Rails.env.production?
 
     ENV['GOOGLE_CALENDAR_ID_TEST']
   end
