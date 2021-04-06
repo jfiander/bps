@@ -29,7 +29,7 @@ private
   end
 
   def users_for_month
-    User.where("#{month_query} = '?' OR #{month_query} = '0?'", @month, @month).map do |u|
+    User.where("MONTH(birthday) = '?' OR MONTH(birthday) = '0?'", @month, @month).map do |u|
       { name: u.full_name, birthday: u.birthday }
     end
   end
@@ -38,12 +38,5 @@ private
     users_for_month.sort do |a, b|
       a[:birthday].strftime('%d').to_i <=> b[:birthday].strftime('%d').to_i
     end
-  end
-
-  def month_query
-    sqlite = 'strftime("%m", birthday)'
-    pg = 'EXTRACT(MONTH FROM birthday)'
-    # mysql = 'MONTH(birthday)'
-    ENV['ASSET_ENVIRONMENT'] == 'development' ? sqlite : pg
   end
 end
