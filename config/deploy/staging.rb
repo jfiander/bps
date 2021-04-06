@@ -7,7 +7,7 @@ role :db,  "deploy@#{staging_instance}"
 set :branch, ENV.fetch('BRANCH', 'staging')
 
 set :ssh_options, {
-  keys: %w(~/.ssh/bpsd9-jfiander.pem),
+  keys: %w(~/.ssh/bpsd9-jfiander.pem ~/.ssh/bpsd9.pem),
   forward_agent: false,
   auth_methods: %w(publickey)
 }
