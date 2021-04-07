@@ -31,7 +31,7 @@ class BpsSMS
   # topic_arn: 'topicARN',
   # target_arn: 'String',
   # phone_number: 'number'
-  def publish(number, message, type: :promotional)
+  def publish(number, message, type: :transactional)
     return if opted_out?(number)
 
     client.publish({
@@ -45,7 +45,7 @@ class BpsSMS
     client.publish({
       topic_arn: topic_arn,
       message: message,
-      message_attributes: message_attributes(:promotional)
+      message_attributes: message_attributes(:transactional)
     })
   end
 
@@ -121,7 +121,7 @@ private
   def origination_number
     {
       data_type: 'String',
-      string_value: ENV['SMS_ORIGINATION_NUMBER']
+      string_value: BpsSMS.validate_number(ENV['SMS_ORIGINATION_NUMBER'])
     }
   end
 
