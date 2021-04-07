@@ -1,4 +1,4 @@
-production_instance = 'ssh.www.bpsd9.org'
+production_instance = 'production.internal.bpsd9.org'
 
 role :app, "deploy@#{production_instance}"
 role :web, "deploy@#{production_instance}"

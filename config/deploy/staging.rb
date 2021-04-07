@@ -1,4 +1,4 @@
-staging_instance = 'ssh.staging.bpsd9.org'
+staging_instance = 'staging.internal.bpsd9.org'
 
 role :app, "deploy@#{staging_instance}"
 role :web, "deploy@#{staging_instance}"
