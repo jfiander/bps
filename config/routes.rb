@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   root 'public#home'
 
+  Healthcheck.routes(self)
+
   devise_for(
     :users,
     path: '',

@@ -25,6 +25,8 @@ gem 'uglifier',            '~> 4.1'
 
 gem 'figaro',              '~> 1.2.0'
 
+gem 'rails-healthcheck'
+
 # Model Behavior
 gem 'paperclip',           '~> 5.3.0'
 gem 'paper_trail',         '~> 9.2.0'
