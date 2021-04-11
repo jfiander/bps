@@ -5,9 +5,14 @@
     <% pay_link = ask_to_pay_path(token: @registration.payment.token) %>
     <% pay_icon = FA::Icon.p('credit-card', style: :duotone, title: 'Pay for registration') %>
     $("form#public-register-<%= @event.id %>").replaceWith(function(){
-      return $("<a />", {href: "<%= pay_link %>", class: "green", title: "Pay for rgistration", html: "Registered <%= pay_icon %> Pay now?"});
+      return $("<a />", {
+        href: "<%= pay_link %>",
+        class: "control green",
+        title: "Pay for registration",
+        html: "Registered! <%= pay_icon %> Pay now?"
+      });
     });
   <% else %>
-    $("form#public-register-<%= @event.id %>").html("Registered").addClass("red").attr("href", "#");
+    $("form#public-register-<%= @event.id %>").html("Registered!").addClass("control green").attr("href", "#");
   <% end %>
 <%- end %>

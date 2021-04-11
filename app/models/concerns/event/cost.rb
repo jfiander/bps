@@ -16,6 +16,10 @@ module Concerns
         { general: cost, usps: usps_cost, member: member_cost }
       end
 
+      def needs_advance_payment?
+        cost? && advance_payment
+      end
+
     private
 
       def validate_costs

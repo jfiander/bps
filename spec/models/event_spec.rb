@@ -406,6 +406,26 @@ RSpec.describe Event, type: :model, slow: true do
 
           expect(event).to have_attributes(cost: 18, usps_cost: 16, member_cost: 12)
         end
+
+        describe '#needs_advance_payment?' do
+          before { event.update(cost: 5, advance_payment: true) }
+
+          it 'returns true when advance payment is needed' do
+            expect(event.needs_advance_payment?).to be(true)
+          end
+
+          it 'returns false without a cost' do
+            event.update(cost: 0)
+
+            expect(event.needs_advance_payment?).to be(false)
+          end
+
+          it 'returns false when advance payment is disabled' do
+            event.update(advance_payment: false)
+
+            expect(event.needs_advance_payment?).to be(false)
+          end
+        end
       end
     end
 

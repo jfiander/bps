@@ -1,15 +1,15 @@
 - if user_signed_in? && @registered&.has_key?(event.id) && @registered[event.id].is_a?(Hash) && @registered[event.id][:paid] == true
   = event_action_link(event, nil, text: 'Paid – Thank you!', css: 'control unclickable', icon: 'check')
-- elsif user_signed_in? && @registered&.has_key?(event.id) && event.advance_payment
+- elsif user_signed_in? && @registered&.has_key?(event.id) && event.needs_advance_payment? && @registered[event.id][:paid] != true
   = event_action_link( \
     event, pay_path(token: @registered[event.id][:paid]), icon: 'credit-card', \
-    text: 'Please Pay', css: 'control', expired: false, id: "event_#{event.id}", \
+    text: 'Please Pay', css: 'control', expired: false, id: "register_event_#{event.id}", \
     if: event.allow_member_registrations \
   )
 - elsif user_signed_in? && @registered&.has_key?(event.id)
   = event_action_link( \
     event, cancel_registration_path(id: @registered[event.id][:id]), method: :delete, remote: true, icon: 'calendar-times', \
-    text: 'Cancel Registration', css: 'control red', expired: false, id: "event_#{event.id}", \
+    text: 'Cancel Registration', css: 'control red', expired: false, id: "register_event_#{event.id}", \
     data: { confirm: 'Are you sure you want to cancel your registration?' }, \
     if: event.allow_member_registrations \
   )
@@ -18,7 +18,7 @@
 - elsif user_signed_in?
   = event_action_link( \
     event, register_path(event.id), method: :put, remote: true, icon: 'calendar-check', \
-    text: 'Register', css: 'control', id: "event_#{event.id}", expired: false, \
+    text: 'Register', css: 'control', id: "register_event_#{event.id}", expired: false, \
     if: user_signed_in? && event.allow_member_registrations && event.registerable? \
   )
 - elsif event.registerable? && !event.allow_public_registrations

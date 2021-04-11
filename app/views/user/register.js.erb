@@ -1,15 +1,19 @@
 <%= render 'application/update_flashes' %>
 
 <%- unless flash[:alert].present? %>
+  <% check_icon = FA::Icon.p('check', style: :duotone, fa: :fw) %>
   <% if @registration.payable? %>
     <% pay_link = ask_to_pay_path(token: @registration.payment.token) %>
     <% pay_icon = FA::Icon.p('credit-card', style: :duotone, title: 'Pay for registration') %>
-    $("#event_<%= @event.id %>")
-      .attr("href", "<%= pay_link %>")
-      .removeAttr("data-method").removeAttr("data-remote")
-      .addClass('green').attr("title", "Pay for registration")
-      .html("Registered <%= pay_icon %> Pay now?");
+    $("#register_event_<%= @event.id %>").replaceWith(function(){
+      return $("<a />", {
+        href: "<%= pay_link %>",
+        class: "control green",
+        title: "Pay for registration",
+        html: "<%= check_icon %> Registered! <%= pay_icon %> Pay now?"
+      });
+    });
   <% else %>
-    $("#event_<%= @event.id %>").html("Registered").addClass("red").attr("href", "#");
+    $("#register_event_<%= @event.id %>").html("<%= check_icon + 'Registered!' %>").addClass("control green").attr("href", "#");
   <% end %>
 <%- end %>

@@ -2,7 +2,7 @@
 
 <%- if flash[:alert].blank? %>
   <%- if @cancel_link %>
-    $("#event_<%= @reg.event.id %>").replaceWith("<%=j render('event/actions/schedule_general', event: @event) %>");
+    $("#register_event_<%= @reg.event.id %>").replaceWith("<%=j render('event/actions/schedule_general', event: @event) %>");
   <% end %>
 
   $("#registration_<%= @reg.id %>").fadeOut();
