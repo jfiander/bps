@@ -5,21 +5,22 @@ p.red.italic Do not add event-specific information to any location.
 .table.striped.locations
   .table-row.header
     .table-cell Address
-    .table-cell Map link
     .table-cell Details
     .table-cell.picture Picture
     .table-cell
   - @locations.each do |location|
     .table-row
       .table-cell
+        - if location[:favorite]
+          .birmingham-blue
+            = FA::Icon.p('star', style: :duotone) + 'Favorite'
+        - if location[:virtual?]
+          .green
+            = FA::Icon.p('laptop', style: :duotone) + 'Virtual'
         = simple_format(location[:address])
-        .birmingham-blue
-          - if location[:favorite]
-            | #{FA::Icon.p('star', style: :duotone)} Favorite
-      .table-cell
         - if location[:map_link].present?
           = link_to(location[:map_link]) do
-            = FA::Icon.p('map-marker-alt', style: :duotone)
+            = FA::Icon.p('map-marker-alt', style: :duotone) + 'Map'
       .table-cell
         = simple_markdown(location[:details])
         - if location[:picture].present?
@@ -35,4 +36,4 @@ p.red.italic Do not add event-specific information to any location.
         - if Event.current.where(location_id: location[:id]).count.zero?
           = link_to(remove_location_path(id: location[:id]), method: :delete, class: 'red', data: { confirm: 'Are you sure you want to remove this location?' }) { FA::Icon.p('minus-square', style: :duotone) }
         - else
-          span.italic title="You cannot remove locations currently in use." In Use
+          span.italic title="You cannot remove locations currently in use." = FA::Icon.p('shield-check', style: :duotone)
