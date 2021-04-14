@@ -11,6 +11,14 @@ $slider-move: $switch-width - ($slider-size + 0.5em);
   height: $switch-height;
   margin: 0.25em $slider-margin;
 
+  span {
+    overflow: hidden;
+  }
+
+  input {
+    display:none;
+  }
+
   div.description {
     width: 85%;
     height: 50%;
@@ -20,10 +28,6 @@ $slider-move: $switch-width - ($slider-size + 0.5em);
     text-align: right;
     margin: 0.75em 0.5em;
   }
-}
-
-.switch input {
-  display:none;
 }
 
 .slider {
