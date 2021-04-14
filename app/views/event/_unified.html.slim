@@ -70,7 +70,7 @@
           .red.italic
             .bold USPS members from other squadrons:
             div Please contact us for your discounted rate.
-        - if event&.location&.price_comment&.present?
+        - if event.cost? && event&.location&.price_comment&.present?
           .red.italic = event.location.price_comment
 
     .event-topics.detail
