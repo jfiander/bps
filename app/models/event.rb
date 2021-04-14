@@ -146,7 +146,7 @@ class Event < ApplicationRecord
   end
 
   def date_title(event_type_cache = nil)
-    start_at_formatted = start_at.strftime(TimeHelper::SIMPLE_DATE_FORMAT)
+    start_at_formatted = start_at.strftime(TimeHelper::FULL_DATE)
     "#{display_title(event_type_cache)} – #{start_at_formatted}"
   end
 

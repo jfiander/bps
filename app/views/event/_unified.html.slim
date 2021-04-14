@@ -11,11 +11,11 @@
             - if event.all_day
               .event-detail-row
                 = FA::Icon.p('calendar-day', style: :duotone, fa: :fw)
-                = event.start_at.strftime(TimeHelper::EVENT_DATE_FORMAT)
+                = event.start_at.strftime(TimeHelper::VERBOSE_DATE)
             - else
               .event-detail-row
                 = FA::Icon.p('calendar-day', style: :duotone, fa: :fw)
-                = event.start_at.strftime(TimeHelper::EVENT_DATE_FORMAT)
+                = event.start_at.strftime(TimeHelper::VERBOSE_DATE)
               .event-detail-row
                 = FA::Icon.p('clock', style: :duotone, fa: :fw)
                 = event.start_at.strftime(TimeHelper::TIME_WITH_ZONE)

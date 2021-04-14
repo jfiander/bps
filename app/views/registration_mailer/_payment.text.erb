@@ -2,7 +2,7 @@ Payment:
 
   If you would like to pay for this registration now, you can do so at <%= pay_url(token: @registration.payment.token) %>.
 <%- if @registration.event.advance_payment -%>
-  Please note that advance payment is required by <%= @registration.event.cutoff_at.strftime(TimeHelper::EVENT_DATE_FORMAT) %>.
+  Please note that advance payment is required by <%= @registration.event.cutoff_at.strftime(TimeHelper::VERBOSE_DATE) %>.
 <%- else -%>
   This link will remain valid until the registration is paid.
 <%- end %>

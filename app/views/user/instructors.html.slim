@@ -22,7 +22,7 @@ hr
     - completions = user.completions.keys
     .table-row
       .table-cell = mail_to user.email, user.simple_name
-      - id_expr = user.id_expr&.strftime(TimeHelper::SIMPLE_DATE_FORMAT)
+      - id_expr = user.id_expr&.strftime(TimeHelper::FULL_DATE)
       - if user.id_expr.present? && user.id_expr > Time.now
         .table-cell = id_expr
       - else

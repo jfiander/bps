@@ -28,7 +28,7 @@ h1 Completions#{' – YTD' if @ytd}
                 |  – Sight Folder
           = subject
         .table-cell = c.course_key
-        .table-cell = c.date.strftime(TimeHelper::SIMPLE_DATE_FORMAT)
+        .table-cell = c.date.strftime(TimeHelper::FULL_DATE)
       - @previous_name = user.full_name
     .table-row.header
       .table-cell style="height: 1em;"
