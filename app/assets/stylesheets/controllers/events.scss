@@ -70,6 +70,11 @@ div.events-unified-table {
     div.event-top-block {
       display: flex;
       flex-wrap: wrap;
+
+      
+      div.event-detail-row, div.catalog {
+        margin: 0.5em 0;
+      }
     }
 
     div.event-display-title {

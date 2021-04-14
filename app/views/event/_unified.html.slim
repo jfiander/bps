@@ -7,34 +7,38 @@
     .event-top-block
       - unless defined?(@event_catalog)
         .event-main-details
-          .event-starts
-            - if event.multiple_sessions?
-              b> Starts:
+          .event-date-time
             - if event.all_day
-              = event.start_at.strftime(ApplicationController::EVENT_DATE_FORMAT)
+              .event-detail-row
+                = FA::Icon.p('calendar-day', style: :duotone, fa: :fw)
+                = event.start_at.strftime(ApplicationController::EVENT_DATE_FORMAT)
             - else
-              = event.start_at.strftime(ApplicationController::LONG_TIME_FORMAT)
+              .event-detail-row
+                = FA::Icon.p('calendar-day', style: :duotone, fa: :fw)
+                = event.start_at.strftime(ApplicationController::EVENT_DATE_FORMAT)
+              .event-detail-row
+                = FA::Icon.p('clock', style: :duotone, fa: :fw)
+                = event.start_at.strftime(ApplicationController::TIME_WITH_ZONE)
 
           .event-sessions-and-length
             - if event.multiple_sessions? || event.length?
-              .table.row: .table-cell
-                - if event.multiple_sessions?
-                  - if event.all_day
-                    b = "#{event.sessions} days"
-                  - else
-                    b = "#{event.sessions} sessions"
-                    - if event.length?
-                      ' ,
-                - if event.length? && !event.all_day
+              - if event.multiple_sessions?
+                .event-detail-row
+                  = FA::Icon.p('repeat', style: :duotone, fa: :fw)
+                  = event.sessions
+                  =< event.all_day ? 'days' : 'sessions'
+              - if event.length? && !event.all_day
+                .event-detail-row
+                  = FA::Icon.p('hourglass-half', style: :duotone, fa: :fw)
                   = event.formatted_length
                   - if event.multiple_sessions?
                     |  each
 
           .event-flags
             - if @current_user_permitted_event_type && event.show_in_catalog
-              .table.row: .table-cell.catalog #{FA::Icon.p('star', style: :duotone)} In catalog
+              .catalog #{FA::Icon.p('star', style: :duotone)} In catalog
             - if @current_user_permitted_event_type && event.activity_feed
-              .table.row: .table-cell.catalog #{FA::Icon.p('stream', style: :duotone)} Available for activity feed
+              .catalog #{FA::Icon.p('stream', style: :duotone)} Available for activity feed
 
         .event-location
           - if @locations[event.location_id].present?
