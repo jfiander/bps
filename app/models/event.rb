@@ -27,6 +27,7 @@ class Event < ApplicationRecord
   scope :displayable, -> { where(archived_at: nil).where('start_at > ?', Event.auto_archive) }
   scope :current, -> { where('expires_at > ?', Time.now) }
   scope :expired, -> { where('expires_at <= ?', Time.now) }
+  scope :activity_feed, -> { where('start_at > ? AND expires_at > ? AND activity_feed = ?', Time.now, Time.now, true) }
 
   has_attached_file(
     :flyer, paperclip_defaults(:files).merge(path: 'event_flyers/:id/:filename')
@@ -96,8 +97,8 @@ class Event < ApplicationRecord
     end
   end
 
-  def self.activity_feed
-    include_details.order(:start_at).where('expires_at > ? AND activity_feed = ?', Time.now, true)
+  def self.fetch_activity_feed
+    include_details.activity_feed.order(:start_at).first(ENV['ACTIVITY_FEED_LENGTH'].to_i)
   end
 
   def self.with_registrations

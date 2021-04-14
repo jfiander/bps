@@ -128,6 +128,6 @@ class ParsedMarkdown
   end
 
   def activity_feed?
-    Event.activity_feed.any?
+    Event.fetch_activity_feed.any?
   end
 end
