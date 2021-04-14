@@ -38,8 +38,8 @@
 
         .event-location
           - if @locations[event.location_id].present?
-            .bold Location:
-            .location-link
+            span.bold Location:
+            span.location-link
               - if @locations[event.location_id][:map_link].present?
                 = link_to(@locations[event.location_id][:map_link], target: :_blank) do
                   | #{FA::Icon.p('map-marker-alt', style: :duotone)} Map
