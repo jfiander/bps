@@ -4,7 +4,13 @@ div#activity-feed
     - @activity_feed.each do |event|
       li
         .name = link_to(event.event_type.display_title, event.path)
-        .date = event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+        .date-time
+          .date
+            = FA::Icon.p('calendar-day', style: :duotone, fa: :fw)
+            = event.start_at.strftime(TimeHelper::FULL_DATE)
+          .time
+            = FA::Icon.p('clock', style: :duotone, fa: :fw)
+            = event.start_at.strftime(TimeHelper::TIME_WITH_ZONE)
         .location = event.location&.name || 'Location TBD'
         - if event.flyer.present?
           .flyer = link_to('Flyer', event.pick_flyer)

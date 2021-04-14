@@ -327,6 +327,17 @@ div#activity-feed {
       margin-bottom: 0.5em;
     }
   }
+
+  div.date-time {
+    display: inline-block;
+    text-align: left;
+    margin: 0 auto;
+  }
+
+  div.location {
+    margin-top: 0.5em;
+    font-style: italic;
+  }
 }
 
 div#main div#content div#content-main.activity {
