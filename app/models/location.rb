@@ -54,7 +54,7 @@ class Location < ApplicationRecord
   end
 
   def details_hash
-    %i[name address map_link details favorite price_comment picture].map do |method|
+    %i[name address map_link details favorite virtual? price_comment picture].map do |method|
       { method => send(method) }
     end.reduce({}, :merge)
   end

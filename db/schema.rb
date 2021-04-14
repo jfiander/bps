@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_25_010241) do
+ActiveRecord::Schema.define(version: 2021_04_14_013856) do
 
   create_table "albums", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -314,6 +314,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_010241) do
     t.datetime "updated_at", null: false
     t.text "price_comment"
     t.boolean "favorite"
+    t.boolean "virtual"
     t.index ["deleted_at"], name: "index_locations_on_deleted_at"
   end
 

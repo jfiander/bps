@@ -22,6 +22,10 @@ h1 = "#{@edit_action} Location"
     .right = switch_box(f, :favorite, 'darkblue-lightblue', 'no yes')
     br.clear
 
+    .left = f.label :virtual
+    .right = switch_box(f, :virtual, 'darkblue-lightblue', 'no yes')
+    br.clear
+
     .left
       = f.label :price_comment
       ul: li If all events located at this location are subject to any special pricing rules or discounts, describe them here.
