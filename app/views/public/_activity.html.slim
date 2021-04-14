@@ -11,7 +11,12 @@ div#activity-feed
           .time
             = FA::Icon.p('clock', style: :duotone, fa: :fw)
             = event.start_at.strftime(TimeHelper::TIME_WITH_ZONE)
-        .location = event.location&.name || 'Location TBD'
+        .location.bold
+          - if event.location&.name
+            = FA::Icon.p('laptop', style: :duotone, fa: :fw) if event.location.virtual?
+            = event.location.name
+          - else
+            = 'Location TBD'
         - if event.flyer.present?
           .flyer = link_to('Flyer', event.pick_flyer)
 
