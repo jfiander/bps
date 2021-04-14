@@ -3,11 +3,16 @@ div.table.locations {
 
   div.table-cell {
     width: 22%;
-    padding: 1em 0;
+    padding: 1em 0.5em;
     vertical-align: middle;
   }
 
   div.table-cell.actions {
     width: 10%;
+  }
+
+  div.price-comment {
+    margin: 1.5em 0;
+    color: $old-glory-red;
   }
 }
