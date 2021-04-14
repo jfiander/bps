@@ -50,8 +50,8 @@ private
     {
       name: @payable.event.display_title,
       type: type,
-      date: @payable.event.start_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT),
-      time: @payable.event.start_at.strftime(ApplicationController::PUBLIC_TIME_FORMAT)
+      date: @payable.event.start_at.strftime(TimeHelper::PUBLIC_DATE_FORMAT),
+      time: @payable.event.start_at.strftime(TimeHelper::PUBLIC_TIME_FORMAT)
     }
   end
 

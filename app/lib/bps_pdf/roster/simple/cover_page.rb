@@ -50,7 +50,7 @@ module BpsPdf
           bounding_box(
             [0, cover_config[:timestamp][:y]], width: cover_config[:timestamp][:width], height: 35
           ) do
-            timestamp = Time.now.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+            timestamp = Time.now.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
             text "Generated: #{timestamp}", size: 12, style: :bold, align: :center
           end
         end

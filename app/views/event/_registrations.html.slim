@@ -2,7 +2,7 @@
   .table-cell.bold
     = link_to(event.display_title, send("show_#{event_type_param}_path", event), class: 'red')
     br
-    = event.start_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+    = event.start_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
     br
     input value=(event.registrations.map { |r| r.user&.email || r.email }.join(', ')) onclick="this.select();"
   .table-cell

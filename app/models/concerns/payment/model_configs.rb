@@ -50,13 +50,13 @@ module Concerns
 
       def registration_subject
         "#{parent.event.display_title} on " \
-        "#{parent.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}"
+        "#{parent.event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT)}"
       end
 
       def registration_times
         {
-          date: parent.event.start_at.strftime(ApplicationController::PUBLIC_DATE_FORMAT),
-          time: parent.event.start_at.strftime(ApplicationController::PUBLIC_TIME_FORMAT)
+          date: parent.event.start_at.strftime(TimeHelper::PUBLIC_DATE_FORMAT),
+          time: parent.event.start_at.strftime(TimeHelper::PUBLIC_TIME_FORMAT)
         }
       end
 

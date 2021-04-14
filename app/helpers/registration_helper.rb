@@ -18,7 +18,7 @@ module RegistrationHelper
     event ||= reg.event
 
     confirm = "Are you sure you want to cancel your registration for #{event.display_title}" \
-    " on #{event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)}?"
+    " on #{event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT)}?"
 
     ActionController::Base.helpers.link_to(
       Rails.application.routes.url_helpers.cancel_registration_path(id: reg.id),

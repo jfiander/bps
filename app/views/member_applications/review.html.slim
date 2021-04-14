@@ -10,7 +10,7 @@ h1 Review Member Applications
       .table
         .table-row
           .table-cell.bold Applied: 
-          .table-cell = app.created_at.strftime(ApplicationController::LONG_TIME_FORMAT)
+          .table-cell = app.created_at.strftime(TimeHelper::LONG_TIME_FORMAT)
         .table-row
           .table-cell.bold Applicants: 
           .table-cell = app.member_applicants.count

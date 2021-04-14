@@ -27,7 +27,7 @@ module BpsPdf
         end
 
         def timestamp
-          ts = Time.now.in_time_zone.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+          ts = Time.now.in_time_zone.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
           bounding_box([0, 470], width: 325, height: 35) do
             text(
               "Generated: #{ts}", size: BpsPdf::Roster::Detailed::SECTION_TITLE_SIZE, align: :center

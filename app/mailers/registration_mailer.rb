@@ -121,6 +121,6 @@ private
   end
 
   def slack_start_time
-    @registration.event.start_at.strftime(ApplicationController::SHORT_TIME_FORMAT)
+    @registration.event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT)
   end
 end

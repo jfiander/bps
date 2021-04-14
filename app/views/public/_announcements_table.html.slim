@@ -7,7 +7,7 @@
   - @announcements.each do |announcement|
     .table-row
       .table-cell = announcement.title
-      .table-cell = announcement.created_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+      .table-cell = announcement.created_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
       .table-cell.center = link_to('Download', announcement.link(permalinks: current_user&.permalinks), target: :_blank, class: 'download')
       .table-cell.center
         - if current_user&.permitted?(:newsletter)

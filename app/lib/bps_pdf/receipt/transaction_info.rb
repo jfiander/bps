@@ -19,7 +19,7 @@ module BpsPdf
           move_down(10)
           text "<b>Transaction ID:</b> #{payment.transaction_id}", size: 14, inline_format: true
           move_down(5)
-          date = payment.updated_at.strftime(ApplicationController::MEDIUM_TIME_FORMAT)
+          date = payment.updated_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
           text "<b>Date:</b> #{date}", size: 14, inline_format: true
         end
       end

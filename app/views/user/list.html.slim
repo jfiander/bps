@@ -60,13 +60,13 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
                   .role = content_tag(:li) { FA::Icon.p(@role_icons[role], style: :duotone, fa: :fw) + role }
       / .table-cell.center.small-text
       /   - if user[:current_login_at].present?
-      /     = user[:current_login_at].strftime(ApplicationController::LONG_TIME_FORMAT)
+      /     = user[:current_login_at].strftime(TimeHelper::LONG_TIME_FORMAT)
       /     br
       /     | from: 
       /     = user[:current_login_from]
       /   - elsif user[:invited_at].present?
       /     | Invited:
       /     br
-      /     = user[:invited_at].strftime(ApplicationController::LONG_TIME_FORMAT)
+      /     = user[:invited_at].strftime(TimeHelper::LONG_TIME_FORMAT)
       /   - else
       /     | Never logged in

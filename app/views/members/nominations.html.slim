@@ -9,7 +9,7 @@ p Your nominations will be automatically submitted to the appropriate officer(s)
 
 .next-meeting
   .bold Nominations for #{@due_date.strftime('%Y')} Awards must be submitted by:
-  = @due_date.strftime(ApplicationController::FULL_TIME_FORMAT)
+  = @due_date.strftime(TimeHelper::FULL_TIME_FORMAT)
 hr
 
 = form_tag(nominate_path, method: :put, id: 'nominations') do

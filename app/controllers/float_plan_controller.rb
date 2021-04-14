@@ -92,7 +92,7 @@ private
   end
 
   def format_fp_time(method)
-    @float_plan.send(method)&.strftime(ApplicationController::LONG_TIME_FORMAT)
+    @float_plan.send(method)&.strftime(TimeHelper::LONG_TIME_FORMAT)
   end
 
   def no_onboards

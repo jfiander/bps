@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   include MarkdownHelper
   include ApplicationHelper
   include AdminMenuHelper
-  include TimeHelper
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :load_layout_images
