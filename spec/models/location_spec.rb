@@ -60,6 +60,7 @@ RSpec.describe Location, type: :model do
         name: @location.name,
         address: @location.address,
         favorite: @location.favorite,
+        virtual?: @location.virtual?,
         price_comment: @location.price_comment,
         map_link: @location.map_link,
         details: @location.details,
