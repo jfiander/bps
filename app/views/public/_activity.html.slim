@@ -2,23 +2,24 @@ div#activity-feed
   h4 Upcoming Events
   ul.simple
     - @activity_feed.each do |event|
-      li
-        .name = link_to(event.event_type.display_title, event.path)
-        .date-time
-          .date
-            = FA::Icon.p('calendar-day', style: :duotone, fa: :fw)
-            = event.start_at.strftime(TimeHelper::FULL_DATE)
-          .time
-            = FA::Icon.p('clock', style: :duotone, fa: :fw)
-            = event.start_at.strftime(TimeHelper::TIME_WITH_ZONE)
-        .location.bold
-          - if event.location&.name
-            = FA::Icon.p('laptop', style: :duotone, fa: :fw) if event.location.virtual?
-            = event.location.name
-          - else
-            = 'Location TBD'
-        - if event.flyer.present?
-          .flyer = link_to('Flyer', event.pick_flyer)
+      = link_to(event.path) do
+        li.blue
+          .name.birmingham-blue = event.event_type.display_title
+          .date-time
+            .date
+              = FA::Icon.p('calendar-day', style: :duotone, fa: :fw)
+              = event.start_at.strftime(TimeHelper::FULL_DATE)
+            .time
+              = FA::Icon.p('clock', style: :duotone, fa: :fw)
+              = event.start_at.strftime(TimeHelper::TIME_WITH_ZONE)
+          .location
+            - if event.location&.name
+              = FA::Icon.p('laptop', style: :duotone, fa: :fw) if event.location.virtual?
+              = event.location.name
+            - else
+              = 'Location TBD'
+          - if event.flyer.present?
+            .flyer = link_to('Flyer', event.pick_flyer)
 
 - unless @new_markdown.present?
   script type='text/javascript' $("div#content-main").addClass("activity");

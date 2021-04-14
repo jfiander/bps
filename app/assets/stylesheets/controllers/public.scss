@@ -317,6 +317,10 @@ div#activity-feed {
 
   ul li {
     margin: 1em 0;
+    padding: 0.5em;
+    background-color: $background-lighten-4;
+    border: thin solid $background-blue-extra-faded;
+    @include border-radius;
 
     div {
       line-height: 1.25em;
@@ -328,15 +332,18 @@ div#activity-feed {
     }
   }
 
+  a:hover li {
+    background-color: $background-blue;
+  }
+
   div.date-time {
     display: inline-block;
     text-align: left;
-    margin: 0 auto;
+    margin: 0.5em auto;
   }
 
   div.location {
     margin-top: 0.5em;
-    font-style: italic;
   }
 }
 

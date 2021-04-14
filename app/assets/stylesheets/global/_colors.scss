@@ -59,6 +59,7 @@ $old-glory-red-darken-20:  darken($old-glory-red, 20%);
 $background-blue-faded:       lighten(desaturate(adjust-hue($background-blue, 1), 0.24), 2.35);
 $background-blue-extra-faded: lighten(desaturate(adjust-hue($background-blue, -4), 1.05), 12.16);
 $background-lighten-3:        lighten($background-blue, 3%);
+$background-lighten-4:        lighten($background-blue, 4%);
 $background-lighten-5:        lighten($background-blue, 5%);
 $background-lighten-6:        lighten($background-blue, 6%);
 $content-background:          lighten($background-blue, 8%);
