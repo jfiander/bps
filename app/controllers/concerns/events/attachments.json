@@ -1,6 +1,27 @@
 [
-  { "key": "includes",      "model": "CourseInclude",      "association": "course",     "column": "text" },
-  { "key": "topics",        "model": "CourseTopic",        "association": "course",     "column": "text" },
-  { "key": "instructors",   "model": "EventInstructor",    "association": "event",      "column": "user_id", "map": "user_from_instructor" },
-  { "key": "notifications", "model": "EventTypeCommittee", "association": "event_type", "column": "committee" }
+  {
+    "key": "includes",
+    "model": "CourseInclude",
+    "parent": "course",
+    "association": "text"
+  },
+  {
+    "key": "topics",
+    "model": "CourseTopic",
+    "parent": "course",
+    "association": "text"
+  },
+  {
+    "key": "instructors",
+    "model": "EventInstructor",
+    "parent": "event",
+    "association": "user",
+    "map": "user_from_instructor"
+  },
+  {
+    "key": "notifications",
+    "model": "EventTypeCommittee",
+    "parent": "event_type",
+    "association": "committee"
+  }
 ]

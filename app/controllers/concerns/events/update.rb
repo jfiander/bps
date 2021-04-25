@@ -48,8 +48,8 @@ module Events
       return if value.nil?
 
       attachment[:model].constantize.create(
-        attachment[:association] => attachment_target(attachment[:association]),
-        attachment[:column] => (attachment[:map] ? send(attachment[:map], value) : value)
+        attachment[:parent] => attachment_target(attachment[:parent]),
+        attachment[:association] => (attachment[:map] ? send(attachment[:map], value) : value)
       )
     end
 
@@ -75,7 +75,7 @@ module Events
     def remove_old_attachments(clear_before_time)
       ATTACHMENTS.each do |attachment|
         attachment[:model].constantize.where(
-          attachment[:association] => attachment_target(attachment[:association])
+          attachment[:parent] => attachment_target(attachment[:parent])
         ).where('updated_at < ?', clear_before_time).destroy_all
       end
     end
