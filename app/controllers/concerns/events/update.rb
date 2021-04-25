@@ -13,14 +13,14 @@ module Events
 
     def education_attachments
       update_or_remove do
-        update_includes
-        update_topics
-        update_instructors
+        magic_update(:includes)
+        magic_update(:topics)
+        magic_update(:instructors)
       end
     end
 
     def event_attachments
-      update_or_remove { update_notifications }
+      update_or_remove { magic_update(:notifications) }
     end
 
     # Update various attachments, then remove any that were not updated
@@ -32,59 +32,49 @@ module Events
       end
     end
 
-    def update_notifications
-      clean_params[:notifications].split("\n").map(&:squish).uniq.each do |c|
-        EventTypeCommittee.create(event_type_id: @event.event_type_id, committee: c)
-      end
+    def magic_update(field)
+      method = "create_#{field.to_s.sub(/s$/, '')}"
+      clean_params[field].split("\n").map(&:squish).uniq.each { |item| send(method, item) }
     end
 
-    def update_includes
-      clean_params[:includes].split("\n").map(&:squish).uniq.each do |i|
-        CourseInclude.create(course: @event, text: i)
-      end
+    def create_include(inc)
+      CourseInclude.create(course: @event, text: inc)
     end
 
-    def update_topics
-      clean_params[:topics].split("\n").map(&:squish).uniq.each do |t|
-        CourseTopic.create(course: @event, text: t)
-      end
+    def create_topic(topic)
+      CourseTopic.create(course: @event, text: topic)
     end
 
-    def update_instructors
-      clean_params[:instructors].split("\n").map(&:squish).uniq.each do |user|
-        user = find_user_for_instructor(user)
-        EventInstructor.create(event: @event, user: user) if user.present?
-      end
+    def create_instructor(instructor)
+      user = find_user_for_instructor(instructor)
+      EventInstructor.create(event: @event, user: user) if user.present?
     end
 
-    def find_user_for_instructor(user)
-      if user.match?(%r{/})
-        User.find_by(certificate: user.split('/').last.squish.upcase)
+    def find_user_for_instructor(instructor)
+      if instructor.match?(%r{/})
+        User.find_by(certificate: instructor.split('/').last.squish.upcase)
       else
-        User.with_name(user).first
+        User.with_name(instructor).first
       end
+    end
+
+    def create_notification(committee)
+      EventTypeCommittee.create(event_type_id: @event.event_type_id, committee: committee)
+    end
+
+    def attachments
+      [
+        EventTypeCommittee.where(event_type_id: @event.event_type_id),
+        CourseInclude.where(course: @event),
+        CourseTopic.where(course: @event),
+        EventInstructor.where(event: @event)
+      ]
     end
 
     def remove_old_attachments(clear_before_time)
-      EventTypeCommittee.where(event_type_id: @event.event_type_id).where(
-        'updated_at < ?', clear_before_time
-      ).destroy_all
-
-      remove_old_education_attachments(clear_before_time)
-    end
-
-    def remove_old_education_attachments(clear_before_time)
-      CourseInclude.where(course: @event).where(
-        'updated_at < ?', clear_before_time
-      ).destroy_all
-
-      CourseTopic.where(course: @event).where(
-        'updated_at < ?', clear_before_time
-      ).destroy_all
-
-      EventInstructor.where(event: @event).where(
-        'updated_at < ?', clear_before_time
-      ).destroy_all
+      attachments.each do |relation|
+        relation.where('updated_at < ?', clear_before_time).destroy_all
+      end
     end
   end
 end
