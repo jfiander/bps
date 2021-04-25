@@ -34,17 +34,7 @@
                   - if event.multiple_sessions?
                     |  each
 
-          .event-flags
-            / Education Flags
-            - if @current_user_permitted_event_type && event.show_in_catalog
-              .catalog #{FA::Icon.p('star', style: :duotone, fa: :fw)} In catalog
-            - if @current_user_permitted_event_type && event.activity_feed
-              .catalog #{FA::Icon.p('stream', style: :duotone, fa: :fw)} Available for activity feed
-
-            / Non-Education Flags
-            - if @current_user_permitted_event_type && event.event_type.event_type_committees.any?
-              - committees = safe_join((event.event_type.event_type_committees.map { |etc| content_tag(:small, etc.committee) }), tag(:br))
-              .catalog title="Will notify relevant bridge officers and the listed committees" #{FA::Icon.p('envelope', style: :duotone, fa: :fw)}#{committees}
+          = event_flags(event)
 
         .event-location
           - if @locations[event.location_id].present?

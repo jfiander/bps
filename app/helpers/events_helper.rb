@@ -25,4 +25,50 @@ module EventsHelper
       { title: "#{reg_override_verb(reg)} override cost", css: 'green' }
     end
   end
+
+  ## DEV: Some are not showing up correctly
+  def event_flags(event)
+    content_tag(:div, class: 'event-flags') do
+      # Education Flags
+      concat event_catalog_flag(event)
+
+      # General Flags
+      concat event_activity_flag(event)
+
+      # Non-Education Flags
+      concat event_committees_flag(event)
+    end
+  end
+
+  def event_catalog_flag(event)
+    return unless @current_user_permitted_event_type && event.show_in_catalog
+
+    content_tag(:div, class: 'catalog') do
+      concat FA::Icon.p('star', style: :duotone, fa: :fw)
+      concat content_tag(:small, 'In catalog')
+    end
+  end
+
+  def event_activity_flag(event)
+    return unless @current_user_permitted_event_type && event.activity_feed
+
+    content_tag(:div, class: 'catalog') do
+      concat FA::Icon.p('stream', style: :duotone, fa: :fw)
+      concat content_tag(:small, 'Available for activity feed')
+    end
+  end
+
+  def event_committees_flag(event)
+    return unless @current_user_permitted_event_type && event.event_type.event_type_committees.any?
+
+    committees = event.event_type.event_type_committees.map do |etc|
+      content_tag(:small, etc.committee)
+    end
+    title = 'Will notify relevant bridge officers and the listed committees'
+
+    content_tag(:div, class: 'catalog', title: title) do
+      concat FA::Icon.p('envelope', style: :duotone, fa: :fw)
+      concat safe_join(committees, tag(:br))
+    end
+  end
 end
