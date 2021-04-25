@@ -6,12 +6,12 @@ module Concerns
       extend ActiveSupport::Concern
 
       def pick_flyer
-        if use_course_book_cover?
-          book_cover(:courses)
-        elsif use_seminar_book_cover?
-          book_cover(:seminars)
-        elsif flyer.present?
+        if flyer.present?
           BpsS3.new(:files).link(flyer&.s3_object&.key)
+        elsif course?
+          book_cover(:courses)
+        elsif seminar?
+          book_cover(:seminars)
         end
       end
 
@@ -23,14 +23,6 @@ module Concerns
 
       def cover_file_name
         event_type.title.delete("',")
-      end
-
-      def use_course_book_cover?
-        course? && flyer.blank?
-      end
-
-      def use_seminar_book_cover?
-        seminar? && flyer.blank?
       end
     end
   end
