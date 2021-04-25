@@ -51,6 +51,31 @@ RSpec.describe RegistrationMailer, type: :mailer do
       end
     end
 
+    describe 'registered (event with committee set)' do
+      let(:mail) { described_class.registered(event_user_reg.reload) }
+      let(:user) { FactoryBot.create(:user, email: 'something@example.com') }
+      let(:bridge) { FactoryBot.create(:bridge_office, office: 'executive') }
+      let(:committee) { FactoryBot.create(:committee, department: 'executive', user: user) }
+
+      before { event_user_reg.event.event_type.assign(committee.name) }
+
+      it 'renders the headers' do
+        expect(mail).to contain_mail_headers(
+          subject: 'New registration',
+          to: ['ao@bpsd9.org', bridge.email, committee.user.email],
+          from: ['support@bpsd9.org']
+        )
+      end
+
+      it 'renders the body' do
+        expect(mail.body.encoded).to contain_and_match(
+          'This is an automated message that was sent to',
+          'New Registration', 'Registration information', 'Registrant information',
+          'please reach out to this registrant'
+        )
+      end
+    end
+
     describe 'cancelled' do
       let(:mail) { described_class.cancelled(ed_user_reg) }
 
