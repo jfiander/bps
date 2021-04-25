@@ -15,8 +15,14 @@ private
   end
 
   def event_emails
+    event_type = @registration.event.event_type
     list = ['ao@bpsd9.org']
-    list << meeting_or_rendezvous_email
+    if event_type.committees.any?
+      list.tap { |l| event_type.dept_heads.each { |c| l << c.email } }
+      list.tap { |l| event_type.committees.each { |c| l << c.user.email } }
+    else
+      list << meeting_or_rendezvous_email
+    end
   end
 
   def meeting_or_rendezvous_email

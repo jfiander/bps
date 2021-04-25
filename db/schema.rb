@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_013856) do
+ActiveRecord::Schema.define(version: 2021_04_25_162626) do
 
   create_table "albums", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -129,6 +129,14 @@ ActiveRecord::Schema.define(version: 2021_04_14_013856) do
     t.datetime "updated_at", null: false
     t.index ["event_id", "deleted_at"], name: "index_event_promo_codes_on_event_id"
     t.index ["promo_code_id", "deleted_at"], name: "index_event_promo_codes_on_code_id"
+  end
+
+  create_table "event_type_committees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "event_type_id"
+    t.string "committee"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "event_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

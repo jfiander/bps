@@ -2,6 +2,19 @@
 
 class EventType < ApplicationRecord
   has_many :events
+  has_many :event_type_committees
+
+  def committees
+    event_type_committees.map(&:committees).flatten.uniq
+  end
+
+  def dept_heads
+    event_type_committees.map(&:dept_heads).flatten.uniq
+  end
+
+  def assign(committee)
+    EventTypeCommittee.create(event_type: self, committee: committee)
+  end
 
   scope :advanced_grades, -> { where(event_category: :advanced_grade) }
   scope :electives,       -> { where(event_category: :elective) }
