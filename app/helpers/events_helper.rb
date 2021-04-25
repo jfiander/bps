@@ -26,7 +26,6 @@ module EventsHelper
     end
   end
 
-  ## DEV: Some are not showing up correctly
   def event_flags(event)
     content_tag(:div, class: 'event-flags') do
       # Education Flags
