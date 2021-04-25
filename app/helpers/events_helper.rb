@@ -62,7 +62,7 @@ module EventsHelper
 
     committees = event.event_type.event_type_committees.map do |etc|
       content_tag(:small, etc.committee)
-    end
+    end.uniq
     title = 'Will notify relevant bridge officers and the listed committees'
 
     content_tag(:div, class: 'catalog', title: title) do

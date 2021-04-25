@@ -13,6 +13,7 @@ class EventType < ApplicationRecord
   end
 
   def assign(committee)
+    committee = committee.name if committee.is_a?(Committee)
     EventTypeCommittee.create(event_type: self, committee: committee)
   end
 
