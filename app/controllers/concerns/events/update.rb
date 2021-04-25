@@ -2,8 +2,9 @@
 
 module Events
   module Update
-    # This module defines no public methods.
-    def _; end
+    ATTACHMENTS = JSON.parse(
+      File.read(Rails.root.join('app', 'controllers', 'concerns', 'events', 'attachments.json'))
+    ).map(&:symbolize_keys).freeze
 
   private
 
@@ -32,25 +33,27 @@ module Events
       end
     end
 
+    # Magically update multi-value field associations from textarea input
+    #
+    # To add a new field, add its entry to attachments.json, and ensure that
+    #   attachment_target supports its base association type
     def magic_update(field)
-      method = "create_#{field.to_s.sub(/s$/, '')}"
-      clean_params[field].split("\n").map(&:squish).uniq.each { |item| send(method, item) }
+      attachment = ATTACHMENTS.find { |a| a[:key] == field.to_s }
+      clean_params[field].split("\n").map(&:squish).uniq.each do |item|
+        create_attachment(attachment, item)
+      end
     end
 
-    def create_include(inc)
-      CourseInclude.create(course: @event, text: inc)
+    def create_attachment(attachment, value)
+      return if value.nil?
+
+      attachment[:model].constantize.create(
+        attachment[:association] => attachment_target(attachment[:association]),
+        attachment[:column] => (attachment[:map] ? send(attachment[:map], value) : value)
+      )
     end
 
-    def create_topic(topic)
-      CourseTopic.create(course: @event, text: topic)
-    end
-
-    def create_instructor(instructor)
-      user = find_user_for_instructor(instructor)
-      EventInstructor.create(event: @event, user: user) if user.present?
-    end
-
-    def find_user_for_instructor(instructor)
+    def user_from_instructor(instructor)
       if instructor.match?(%r{/})
         User.find_by(certificate: instructor.split('/').last.squish.upcase)
       else
@@ -58,22 +61,22 @@ module Events
       end
     end
 
-    def create_notification(committee)
-      EventTypeCommittee.create(event_type_id: @event.event_type_id, committee: committee)
-    end
-
-    def attachments
-      [
-        EventTypeCommittee.where(event_type_id: @event.event_type_id),
-        CourseInclude.where(course: @event),
-        CourseTopic.where(course: @event),
-        EventInstructor.where(event: @event)
-      ]
+    def attachment_target(association)
+      case association
+      when 'event', 'course'
+        @event
+      when 'event_type'
+        @event.event_type
+      else
+        raise "Unknown association target: #{association}"
+      end
     end
 
     def remove_old_attachments(clear_before_time)
-      attachments.each do |relation|
-        relation.where('updated_at < ?', clear_before_time).destroy_all
+      ATTACHMENTS.each do |attachment|
+        attachment[:model].constantize.where(
+          attachment[:association] => attachment_target(attachment[:association])
+        ).where('updated_at < ?', clear_before_time).destroy_all
       end
     end
   end

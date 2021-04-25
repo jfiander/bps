@@ -1,0 +1,6 @@
+[
+  { "key": "includes",      "model": "CourseInclude",      "association": "course",     "column": "text" },
+  { "key": "topics",        "model": "CourseTopic",        "association": "course",     "column": "text" },
+  { "key": "instructors",   "model": "EventInstructor",    "association": "event",      "column": "user_id", "map": "user_from_instructor" },
+  { "key": "notifications", "model": "EventTypeCommittee", "association": "event_type", "column": "committee" }
+]
