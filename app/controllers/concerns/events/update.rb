@@ -33,25 +33,25 @@ module Events
     end
 
     def update_notifications
-      clean_params[:notifications].split("\n").map(&:squish).each do |c|
+      clean_params[:notifications].split("\n").map(&:squish).uniq.each do |c|
         EventTypeCommittee.create(event_type_id: @event.event_type_id, committee: c)
       end
     end
 
     def update_includes
-      clean_params[:includes].split("\n").map(&:squish).each do |i|
+      clean_params[:includes].split("\n").map(&:squish).uniq.each do |i|
         CourseInclude.create(course: @event, text: i)
       end
     end
 
     def update_topics
-      clean_params[:topics].split("\n").map(&:squish).each do |t|
+      clean_params[:topics].split("\n").map(&:squish).uniq.each do |t|
         CourseTopic.create(course: @event, text: t)
       end
     end
 
     def update_instructors
-      clean_params[:instructors].split("\n").map(&:squish).each do |user|
+      clean_params[:instructors].split("\n").map(&:squish).uniq.each do |user|
         user = find_user_for_instructor(user)
         EventInstructor.create(event: @event, user: user) if user.present?
       end
