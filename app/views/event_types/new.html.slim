@@ -10,4 +10,13 @@ h1 = "#{@edit_action} Event Type"
     .right = f.text_field :title, required: true
     br.clear
 
+    - if @event_type.event_type_committees.any?
+      .left
+        label Committee Notifications
+        small These committees and the relevant bridge officers will receive registration notifications.
+      .right: ul.simple.no-margin
+        - @event_type.event_type_committees.each do |notification|
+          li = notification.committee
+      br.clear
+
     .center = f.submit "#{@edit_action} Event Type", class: 'big'
