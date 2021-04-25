@@ -14,6 +14,13 @@ module Events
       end
     end
 
+    def load_notifications(map_to_text: false)
+      @notifications = EventTypeCommittee.where(event_type_id: @event.event_type_id)
+      return unless map_to_text
+
+      @notifications = @notifications.flat_map(&:committees).flat_map(&:name).join("\n")
+    end
+
     def load_includes(map_to_text: false)
       @course_includes = CourseInclude.where(course_id: @event.id)
       return unless map_to_text

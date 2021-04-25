@@ -27,7 +27,7 @@ module Events
     end
 
     def clean_params
-      params.permit(:id, :includes, :topics, :instructors, :locations, :slug)
+      params.permit(:id, :notifications, :includes, :topics, :instructors, :locations, :slug)
     end
 
     def event_type_title_from(formatted)
@@ -55,10 +55,12 @@ module Events
       id = clean_params[:id] || event_params[:id]
       @event = Event.includes(:event_instructors, :instructors).find_by(id: id)
       @event_types = EventType.all
+      map_to_text = action_name != 'show'
+
+      load_notifications(map_to_text: map_to_text) if @event&.meeting?
 
       return unless @event&.course? || @event&.seminar?
 
-      map_to_text = action_name != 'show'
       load_includes(map_to_text: map_to_text)
       load_topics(map_to_text: map_to_text)
       load_instructors(map_to_text: map_to_text)

@@ -8,16 +8,33 @@ module Events
   private
 
     def update_attachments
-      return nil unless event_type_param.in? %w[course seminar]
+      event_type_param.in?(%w[course seminar]) ? education_attachments : event_attachments
+    end
 
-      Event.transaction do
-        clear_before_time = Time.now
-
+    def education_attachments
+      update_or_remove do
         update_includes
         update_topics
         update_instructors
+      end
+    end
 
+    def event_attachments
+      update_or_remove { update_notifications }
+    end
+
+    # Update various attachments, then remove any that were not updated
+    def update_or_remove
+      Event.transaction do
+        clear_before_time = Time.now - 1.second
+        yield
         remove_old_attachments(clear_before_time)
+      end
+    end
+
+    def update_notifications
+      clean_params[:notifications].split("\n").map(&:squish).each do |c|
+        EventTypeCommittee.create(event_type_id: @event.event_type_id, committee: c)
       end
     end
 
@@ -49,6 +66,14 @@ module Events
     end
 
     def remove_old_attachments(clear_before_time)
+      EventTypeCommittee.where(event_type_id: @event.event_type_id).where(
+        'updated_at < ?', clear_before_time
+      ).destroy_all
+
+      remove_old_education_attachments(clear_before_time)
+    end
+
+    def remove_old_education_attachments(clear_before_time)
       CourseInclude.where(course: @event).where(
         'updated_at < ?', clear_before_time
       ).destroy_all
