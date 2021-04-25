@@ -62,7 +62,7 @@ RSpec.describe EventsHelper, type: :helper do
 
       expect(event_catalog_flag(event)).to eq(
         "<div class=\"catalog\"><i class='fad fa-fw fa-star fa-1x' style='' data-fa-transform='' title=''></i>" \
-        "<small>In catalog</small></div>"
+        '<small>In catalog</small></div>'
       )
     end
 
@@ -71,7 +71,7 @@ RSpec.describe EventsHelper, type: :helper do
 
       expect(event_activity_flag(event)).to eq(
         "<div class=\"catalog\"><i class='fad fa-fw fa-stream fa-1x' style='' data-fa-transform='' title=''></i>" \
-        "<small>Available for activity feed</small></div>"
+        '<small>Available for activity feed</small></div>'
       )
     end
 
@@ -79,7 +79,7 @@ RSpec.describe EventsHelper, type: :helper do
       event.event_type.assign(committee_1)
 
       expect(event_committees_flag(event)).to eq(
-        "<div class=\"catalog\" title=\"Will notify relevant bridge officers and the listed committees\">" \
+        '<div class="catalog" title="Will notify relevant bridge officers and the listed committees">' \
         "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
         "<small>#{committee_1.name}</small></div>"
       )
@@ -90,7 +90,7 @@ RSpec.describe EventsHelper, type: :helper do
       event.event_type.assign(committee_2) # Pass in actual Committee object
 
       expect(event_committees_flag(event)).to eq(
-        "<div class=\"catalog\" title=\"Will notify relevant bridge officers and the listed committees\">" \
+        '<div class="catalog" title="Will notify relevant bridge officers and the listed committees">' \
         "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
         "<small>#{committee_1.name}</small><br />" \
         "<small>#{committee_2.name}</small></div>"
@@ -104,7 +104,7 @@ RSpec.describe EventsHelper, type: :helper do
       event.event_type.assign(committee_2)
 
       expect(event_committees_flag(event)).to eq(
-        "<div class=\"catalog\" title=\"Will notify relevant bridge officers and the listed committees\">" \
+        '<div class="catalog" title="Will notify relevant bridge officers and the listed committees">' \
         "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
         "<small>#{committee_1.name}</small></div>"
       )
