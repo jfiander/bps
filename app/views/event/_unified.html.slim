@@ -119,7 +119,9 @@
         = render 'event/actions/schedule', event: event if user_signed_in? && @current_user_permitted_event_type
         = render 'event/actions/schedule_general', event: event unless long_form || event.expired?
 
-    - if event.pick_flyer.present? && event.flyer_content_type != 'application/pdf'
+    - if event.pick_flyer.nil?
+      .event-flyer = FA::Icon.p('calendar-day', style: :duotone, size: 8)
+    - elsif event.pick_flyer.present? && event.flyer_content_type != 'application/pdf'
       .event-flyer = image_tag(event.pick_flyer, onerror: "this.style.display='none'")
 
   - if event.pick_flyer.present? && event.flyer_content_type == 'application/pdf'
