@@ -1,0 +1,110 @@
+### Flags ###
+
+AUTO_CLEAR_CALENDAR: false
+ENABLE_BRAINTREE: enabled
+FB_TRACK_REGISTRATIONS: enabled
+FB_TRACK_PAYMENTS: enabled
+MARK_EXTERNAL_LINKS: enabled
+NEW_HEADER: enabled
+
+
+### General and Default Configs ###
+
+ACTIVITY_FEED_LENGTH: 7
+CF_BASE_HOST: bpsd9.org
+BUCKET_PREFIX: bps
+GOOGLE_CALENDAR_ICON_URI: https://lh5.googleusercontent.com/proxy/bWvYBOb7O03a7HK5iKNEAPoUNPEXH1CHZjuOkiqxHx8OtyVn9sZ6Ktl8hfqBNQUUbCDg6T2unnsHx7RSkCyhrKgHcdoosAW8POQJm_ZEvZU9ZfAE7mZIBGr_tDlF8Z_rSzXcjTffVXg3M46v
+INTERNAL_DOMAIN: internal_base_domain
+LANG: en_US.UTF-8
+RDS_DB_NAME: db_name
+RDS_PORT: db_port
+SMS_ORIGINATION_NUMBER: +18555555555
+USE_NEW_AG_TITLES: seamanship,piloting
+TZ: America/New_York
+
+
+### Public IDs ###
+
+# Google Calendar Display Configuration
+CALENDARS: calendar_id_1:2952A3/calendar_id_2:B1440E/calendar_id_3:4285F4
+
+# FontAwesome Kit
+FONTAWESOME_KIT: kit_id
+
+# Google Calendar
+GOOGLE_CALENDAR_ID_EDUC: educ_calendar_id
+GOOGLE_CALENDAR_ID_GEN: gen_calendar_id
+GOOGLE_CALENDAR_ID_TEST: test_calendar_id
+
+
+### API Keys ###
+
+# Braintree Sandbox
+BRAINTREE_MERCHANT_ID: sandbox_merchant_id
+BRAINTREE_PUBLIC_KEY: sandbox_public_key
+BRAINTREE_PRIVATE_KEY: sandbox_private_key
+
+# CloudFront Keypair Encryption and Metadata
+CF_ENC_IV: cf_enc_iv
+CF_ENC_KEY: cf_enc_key
+CF_KEYPAIR_ID: cf_keypair_id
+
+# Bugsnag
+BUGSNAG_KEY: bugsnag_key
+
+# Geocoder
+GOOGLE_GEOCODER_API_KEY: geocoder_id
+
+# Google Meet
+EXCOM_MEET_ID: excom_meet_id
+EXCOM_MEET_SIGNATURE: excom_meet_signature
+MEMBERSHIP_MEET_ID: member_meet_id
+MEMBERSHIP_MEET_SIGNATURE: member_meet_signature
+
+# Google Calendar
+GOOGLE_CLIENT_ID: google_client_id
+GOOGLE_CLIENT_SECRET: google_client_secret
+GOOGLE_ACCESS_TOKEN: google_access_token
+GOOGLE_REFRESH_TOKEN: google_refresh_token
+GOOGLE_AUTH_EXP: 1500000000000
+
+# Slack Webhooks
+SLACK_URL_EDUCATION: https://hooks.slack.com/services/<webhook_path>
+SLACK_URL_EXCOM: https://hooks.slack.com/services/<webhook_path>
+SLACK_URL_FLOATPLANS: https://hooks.slack.com/services/<webhook_path>
+SLACK_URL_GENERAL: https://hooks.slack.com/services/<webhook_path>
+SLACK_URL_NOTIFICATIONS: https://hooks.slack.com/services/<webhook_path>
+SLACK_URL_TEST: https://hooks.slack.com/services/<webhook_path>
+SLACK_URL_WEBSITE: https://hooks.slack.com/services/<webhook_path>
+
+# Educational Certificate Signature Encryption
+SIGNATURE_IV: cert_signature_iv
+SIGNATURE_KEY: cert_signature_key
+
+# SMTP for Production and Staging
+SMTP_DOMAIN: smtp.bpsd9.org
+SMTP_USERNAME: smtp_username
+SMTP_PASSWORD: smtp_password
+
+
+staging:
+  ASSET_ENVIRONMENT: staging
+  DOMAIN: staging.bpsd9.org
+  RDS_USERNAME: staging_db_username
+  RDS_PASSWORD: staging_db_password
+  RDS_HOSTNAME: staging_db_internal_host
+  SECRET_KEY_BASE: staging_secret_key_base
+
+
+production:
+  ASSET_ENVIRONMENT: production
+  BRAINTREE_MERCHANT_ID: production_merchant_id
+  BRAINTREE_PUBLIC_KEY: production_public_key
+  BRAINTREE_PRIVATE_KEY: production_private_key
+  DOMAIN: www.bpsd9.org
+  FACEBOOK_PIXEL_ID: 000000000000000
+  GA_TRACKING_ID: UA-000000000-1
+  RDS_USERNAME: production_db_username
+  RDS_PASSWORD: production_db_password
+  RDS_HOSTNAME: production_db_internal_host
+  SECRET_KEY_BASE: production_secret_key_base
