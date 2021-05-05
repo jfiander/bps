@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 2021_05_05_161905) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "award_recipients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "award_name"
     t.date "year"
     t.integer "user_id"
