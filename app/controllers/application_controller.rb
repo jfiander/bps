@@ -41,10 +41,6 @@ class ApplicationController < ActionController::Base
   end
   helper_method :event_type_param
 
-  def user_api_token
-    @user_api_token ||= ApiToken.current.find_or_create_by(user: current_user)
-  end
-
 private
 
   def bugsnag_format_user(report)

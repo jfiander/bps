@@ -26,7 +26,6 @@ class EventController < ApplicationController
   before_action :load_registrations, only: %i[schedule], if: :user_signed_in?
   before_action :event_not_found?, only: %i[show]
   before_action :block_multiple_reminders, only: %i[remind]
-  before_action :user_api_token, only: %i[new edit]
 
   def schedule
     expired if @current_user_permitted_event_type

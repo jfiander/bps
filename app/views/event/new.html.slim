@@ -241,7 +241,7 @@ em Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'red', shr
             li You can also put a slash followed by their certificate number.
             li.red Invalid instructors will not be saved.
         .right
-          #api-auth-token.hide = @user_api_token.token
+          #api-auth-token.hide = current_user.api_token
           = text_area_tag :instructors, @instructors, class: 'bulletted'
           #instructors-validation
         br.clear

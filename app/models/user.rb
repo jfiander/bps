@@ -149,6 +149,10 @@ class User < ApplicationRecord
     cpr_aed_expires_at.present? && cpr_aed_expires_at > Time.now
   end
 
+  def api_token
+    ApiToken.current.find_or_create_by(user: self).token
+  end
+
 private
 
   def cached_committees

@@ -531,4 +531,18 @@ RSpec.describe User, type: :model do
       %i[bridge_office standing_committee_offices committees user_roles roles]
     )
   end
+
+  describe '#api_token' do
+    let(:user) { FactoryBot.create(:user) }
+    let!(:api_token) { FactoryBot.create(:api_token, user: user) }
+
+    it 'returns the current token if valid' do
+      expect(user.api_token).to eq(api_token.token)
+    end
+
+    it 'generates a new token if expired' do
+      api_token.update_attributes(expires_at: Time.now - 1.second)
+      expect(user.api_token).not_to eq(api_token.token)
+    end
+  end
 end
