@@ -296,6 +296,13 @@ Rails.application.routes.draw do
   get     '/nominate', to: 'members#nominations'
   put     '/nominate', to: 'members#nominate'
 
+  ### API
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      post '/verify_user', to: 'user_verify#verify'
+    end
+  end
+
   ### Miscellaneous
   get     '/sitemap.xml',    to: 'sitemap#index',  as: 'sitemap', format: 'xml'
   get     '/robots.:format', to: 'sitemap#robots', as: 'robots'

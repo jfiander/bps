@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :standing_committee_offices
   has_many :committees
   has_many :float_plans
+  has_many :api_tokens
 
   belongs_to :parent, class_name: 'User', optional: true
   has_many(:children, class_name: 'User', inverse_of: :parent, foreign_key: :parent_id)

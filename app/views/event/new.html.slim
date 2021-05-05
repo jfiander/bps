@@ -240,7 +240,10 @@ em Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'red', shr
             li Enter the full name of each instructor without rank or grade.
             li You can also put a slash followed by their certificate number.
             li.red Invalid instructors will not be saved.
-        .right = text_area_tag :instructors, @instructors, class: 'bulletted'
+        .right
+          #api-auth-token.hide = @user_api_token.token
+          = text_area_tag :instructors, @instructors, class: 'bulletted'
+          #instructors-validation
         br.clear
 
     .center = spinner_button(f, button_text: "#{@edit_mode} #{@event_title}", disable_text: "#{@edit_mode.sub(/e$/, '')}ing #{@event_title}", css: 'big')
