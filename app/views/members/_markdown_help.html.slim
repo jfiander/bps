@@ -277,11 +277,18 @@
           = FA::Icon.p('bars', style: :regular)
       .table-row.center
         .table-cell fal
-        .table-cell thin
+        .table-cell light
         .table-cell
           = FA::Icon.p('file-certificate', style: :light)
           = FA::Icon.p('users', style: :light)
           = FA::Icon.p('bars', style: :light)
+      .table-row.center
+        .table-cell fat
+        .table-cell thin
+        .table-cell
+          = FA::Icon.p('file-certificate', style: :thin)
+          = FA::Icon.p('users', style: :thin)
+          = FA::Icon.p('bars', style: :thin)
       .table-row.center
         .table-cell fad
         .table-cell duotone
@@ -327,8 +334,16 @@
           | users
           span.bold.red
             | /
-        .table-cell thin
+        .table-cell light
         .table-cell = FA::Icon.p('users', style: :light)
+      .table-row.center
+        .table-cell
+          span.bold.red %fat/
+          | users
+          span.bold.red
+            | /
+        .table-cell thin
+        .table-cell = FA::Icon.p('users', style: :thin)
       .table-row.center
         .table-cell
           span.bold.red %fad/
