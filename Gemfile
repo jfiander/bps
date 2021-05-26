@@ -56,7 +56,7 @@ gem 'sanitize_email',      '~> 1.2'
 # gem 'sidekiq',           '~> 5.0'
 
 # View Management
-gem 'fa_rails',            '~> 0.1.26'
+gem 'fa_rails',            '~> 0.1.27'
 gem 'inline_svg',          '~> 1.3.0'
 gem 'nested_form_fields',  '~> 0.8.2'
 gem 'redcarpet',           '~> 3.5.1'
