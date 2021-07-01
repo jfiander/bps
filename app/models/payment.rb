@@ -5,6 +5,7 @@ class Payment < ApplicationRecord
   include Concerns::Payment::ModelConfigs
   include Concerns::Payment::BraintreeMethods
   include Concerns::Payment::PromoCodes
+  include Concerns::Payment::DiscountRates
   include ActionView::Helpers::NumberHelper
 
   belongs_to :parent, polymorphic: true
@@ -20,12 +21,6 @@ class Payment < ApplicationRecord
   scope :paid, -> { where(paid: true) }
   scope :unpaid, -> { !paid }
 
-  def self.discount(amount)
-    # Fee is rounded down to the nearest cent
-    fee = amount.to_d * 0.022 + 0.30
-    fee.floor(2)
-  end
-
   def payable?
     parent&.payable?
   end
@@ -40,10 +35,6 @@ class Payment < ApplicationRecord
 
   def transaction_amount
     number_to_currency(amount)
-  end
-
-  def discounted_amount
-    amount.to_d - Payment.discount(amount)
   end
 
   def paid?
