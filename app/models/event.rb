@@ -174,7 +174,7 @@ private
   end
 
   def out_of_date(field)
-    start_at_changed? && !send("#{field}_changed?") && send(field) < start_at
+    start_at_changed? && !send("#{field}_changed?")
   end
 
   def public_link_path
