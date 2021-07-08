@@ -165,7 +165,7 @@ h1 = "#{@edit_mode} #{@event_title}"
         = f.label :cutoff_at, 'Do not allow registrations after', class: 'red'
         ul
           li Defaults to start time.
-          li.red Updates automatically if start time changes to after this.
+          li.red Updates automatically if start time changes, unless this is also changed.
       .right = f.datetime_field :cutoff_at
       br.clear
 
@@ -173,7 +173,7 @@ h1 = "#{@edit_mode} #{@event_title}"
         = f.label :expires_at, "Do not display this #{event_type_param} after", class: 'red'
         ul
           li Defaults to one week after start time.
-          li.red Updates automatically if start time changes to after this.
+          li.red Updates automatically if start time changes, unless this is also changed.
       .right = f.datetime_field :expires_at
       br.clear
 
