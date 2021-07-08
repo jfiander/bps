@@ -1,6 +1,6 @@
 h1 = "#{@edit_mode} #{@event_title}"
 
-em Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)} are required.
+= render('application/required_fields')
 
 = form_for(@event, url: @submit_path, multipart: true) do |f|
   = f.hidden_field(:id) if @submit_path.match(%r{/update})

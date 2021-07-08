@@ -1,9 +1,6 @@
 h1 = admin_header('Create Promo Code')
 
-em
-  | Fields marked with
-  = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
-  | are required.
+= render('application/required_fields')
 
 = form_for(@promo_code, url: admin_create_promo_code_path, method: :put) do |f|
   #new.divided

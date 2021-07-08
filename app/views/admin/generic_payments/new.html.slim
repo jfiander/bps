@@ -2,10 +2,7 @@ h1 = admin_header('Add Generic Payment')
 
 .bold Please fill out the following form to accept a new payment.
 
-.information
-  | Fields marked with
-  span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
-  | are required.
+= render('application/required_fields')
 
 .information Additionally, you must either choose a user or enter an email address.
 

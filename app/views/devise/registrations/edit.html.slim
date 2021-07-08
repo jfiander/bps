@@ -4,7 +4,7 @@ h1 Edit Profile
 
 .center When you're done, please scroll down and click "Update profile" to save your changes.
 br.clear
-div.italic Fields marked with#{FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)}are required.
+= render('application/required_fields')
 
 = form_for(resource, as: resource_name, url: profile_edit_path(resource_name).sub(/\.[\w]*\z/, ''), html: { method: :put }, multipart: true) do |f|
   #login

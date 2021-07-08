@@ -2,10 +2,7 @@ h1 File a Float Plan
 
 p Please fill out the following form to generate a float plan for your trip.
 
-p
-  | Fields marked with
-  span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
-  | are required.
+= render('application/required_fields')
 
 - if @last.present?
   .notice
