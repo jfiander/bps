@@ -39,6 +39,9 @@ class User
 
   private
 
+    # Return the rank_override, if set.
+    # If set to `none`, skip using the imported rank.
+    # Otherwise, return the (formatted) imported rank.
     def override_rank(html: true)
       return '' if rank_override == 'none'
       return rank_override if rank_override.present?
