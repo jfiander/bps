@@ -13,7 +13,7 @@ class RankChart
   end
 
   def print
-    puts "Lists all candidate ranks for the specified users."
+    puts 'Lists all candidate ranks for the specified users.'
     puts "  If no users are specified, shows users with a rank_override.\n\n"
     puts "*Auto* chooses the highest priority rank shown to its right.\n\n"
     puts headers, ranks
@@ -54,12 +54,8 @@ private
       [
         u.simple_name.ljust(30, ' '),
         [
-          u.rank,
-          u.rank_override,
-          u.auto_rank(html: false),
-          u.send(:override_rank, html: false),
-          u.send(:bridge_rank, html: false),
-          u.send(:committee_rank)
+          u.rank, u.rank_override, u.auto_rank(html: false), u.send(:override_rank, html: false),
+          u.send(:bridge_rank, html: false), u.send(:committee_rank)
         ].map { |r| r.to_s.ljust(10, ' ') }
       ].flatten.join("\t")
     end
