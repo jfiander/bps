@@ -56,7 +56,7 @@ class Payment < ApplicationRecord
     receipt!
 
     # Post-payment hooks
-    parent.dues_paid! if parent_type == 'User'
+    parent.dues_paid! if dues_renewal?
   end
 
   def in_person!

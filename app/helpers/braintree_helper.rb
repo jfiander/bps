@@ -55,7 +55,7 @@ private
   end
 
   def user?
-    @payment&.parent_type == 'Registration' && @payable&.user?
+    @payment&.registration? && @payable&.user?
   end
 
   def redirect_to_root

@@ -32,6 +32,22 @@ module Concerns
         end
       end
 
+      def registration?
+        parent_type == 'Registration'
+      end
+
+      def member_application?
+        parent_type == 'MemberApplication'
+      end
+
+      def dues_renewal?
+        parent_type == 'User'
+      end
+
+      def generic?
+        parent_type == 'GenericPayment'
+      end
+
     private
 
       def displayable_registration_types

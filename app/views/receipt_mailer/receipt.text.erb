@@ -1,11 +1,11 @@
 Transaction Receipt
 
 <%- if @payment.parent.present? %>
-<%- if @payment.parent_type == 'Registration' %>
+<%- if @payment.registration? %>
   <%= @purchase_info[:type].titleize %>: <%= @purchase_info[:name] %>
   Date: <%= @purchase_info[:date] %>
   Time: <%= @purchase_info[:time] %>
-<%- elsif @payment.parent_type == 'MemberApplication' %>
+<%- elsif @payment.member_application? %>
   Membership application
   Individuals: <%= @purchase_info[:people] %>
 <%- end %>

@@ -35,7 +35,7 @@ module BpsPdf
       end
 
       def model_specific_details(payment)
-        people_details(payment) unless payment.parent.class.name == 'Registration'
+        people_details(payment) unless payment.registration?
       end
 
       def people(payment)

@@ -1,7 +1,7 @@
 h1.birmingham Transaction Receipt
 
 - if @payment.parent.present?
-  - if @payment.parent_type == 'Registration'
+  - if @payment.registration?
     p
       h2 #{@purchase_model.titleize} information:
       = @purchase_info[:type].titleize
@@ -13,7 +13,7 @@ h1.birmingham Transaction Receipt
       br
       | Time:
       b< = @purchase_info[:time]
-  - elsif @payment.parent_type == 'MemberApplication'
+  - elsif @payment.member_application?
     p
       h2 Membership application
       b Individuals:
