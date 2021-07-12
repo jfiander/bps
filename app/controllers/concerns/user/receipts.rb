@@ -34,7 +34,8 @@ class User
   private
 
     def payments
-      Payment.where('created_at > ?', 1.year.ago)
+      @all = receipt_params[:all].present?
+      @all ? Payment.all : Payment.where('created_at > ?', 1.year.ago)
     end
 
     def find_payment
@@ -47,7 +48,7 @@ class User
     end
 
     def receipt_params
-      params.permit(:token)
+      params.permit(:token, :all)
     end
   end
 end
