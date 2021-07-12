@@ -3,45 +3,26 @@
 require 'rails_helper'
 
 RSpec.describe ReceiptMailer, type: :mailer do
-  let(:user) { FactoryBot.create(:user) }
+  let!(:user) { FactoryBot.create(:user) }
   let(:event) { FactoryBot.create(:event, cost: 10) }
   let(:reg) { FactoryBot.create(:registration, user: user, event: event) }
   let(:app) { FactoryBot.create(:family_application) }
   let(:generic) { FactoryBot.create(:generic_payment, email: 'nobody@example.com') }
 
-  # Collisions can occur between multiple simultaneous test suites. Restart any failed suites.
-  let(:braintree_api_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/transactions 201} }
-
-  def payment(parent)
-    FactoryBot.create(:payment, parent: parent)
-  end
-
-  def transaction_for(parent, user)
-    payment(parent).sale!('fake-valid-nonce', email: user.email, user_id: user.id).transaction
-  end
-
-  def ensure_transaction(parent)
-    $receipt_email ||= user.email
-    $tr ||= transaction_for(parent, user)
-  end
+  let(:transaction) { HashWithIndifferentAccess.new }
 
   before { generic_seo_and_ao }
 
   describe 'receipt' do
     describe 'registration' do
-      it 'submits the transaction successfully' do
-        $receipt_email = user.email
-        expect { $tr = transaction_for(reg, user) }.to output(braintree_api_regex).to_stdout_from_any_process
-        expect($tr.status).to be_in(%w[submitted_for_settlement gateway_rejected])
-      end
-
       describe 'mail' do
-        let(:mail) { described_class.receipt(payment(reg), ensure_transaction(reg)) }
+        let(:payment) { FactoryBot.create(:payment, parent: reg) }
+        let(:mail) { described_class.receipt(payment, transaction) }
 
         it 'renders the headers' do
           expect(mail).to contain_mail_headers(
             subject: 'Your receipt from Birmingham Power Squadron',
-            to: [$receipt_email],
+            to: [user.email],
             from: ['receipts@bpsd9.org']
           )
         end
@@ -56,24 +37,17 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'member application' do
-      it 'submits the transaction successfully' do
-        $receipt_email = user.email
-        expect { $tr = transaction_for(app, user) }.to output(braintree_api_regex).to_stdout_from_any_process
-        expect($tr.status).to be_in(%w[submitted_for_settlement gateway_rejected])
-      end
+      let(:payment) { FactoryBot.create(:payment, parent: app) }
 
       describe 'mail' do
-        let(:mail) { described_class.receipt(payment(app), ensure_transaction(app)) }
+        let(:mail) { described_class.receipt(payment, transaction) }
 
         it 'renders the headers' do
           expect(mail).to contain_mail_headers(
             subject: 'Your receipt from Birmingham Power Squadron',
-            to: [$receipt_email],
+            to: [user.email],
             from: ['receipts@bpsd9.org']
           )
-          expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
-          expect(mail.to).to eql([$receipt_email])
-          expect(mail.from).to eql(['receipts@bpsd9.org'])
         end
 
         it 'renders the body' do
@@ -86,24 +60,17 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'dues' do
-      it 'submits the transaction successfully' do
-        $receipt_email = user.email
-        expect { $tr = transaction_for(user, user) }.to output(braintree_api_regex).to_stdout_from_any_process
-        expect($tr.status).to be_in(%w[submitted_for_settlement gateway_rejected])
-      end
+      let(:payment) { FactoryBot.create(:payment, parent: user) }
 
       describe 'mail' do
-        let(:mail) { described_class.receipt(payment(user), ensure_transaction(user)) }
+        let(:mail) { described_class.receipt(payment, transaction) }
 
         it 'renders the headers' do
           expect(mail).to contain_mail_headers(
             subject: 'Your receipt from Birmingham Power Squadron',
-            to: [$receipt_email],
+            to: [user.email],
             from: ['receipts@bpsd9.org']
           )
-          expect(mail.subject).to eql('Your receipt from Birmingham Power Squadron')
-          expect(mail.to).to eql([$receipt_email])
-          expect(mail.from).to eql(['receipts@bpsd9.org'])
         end
 
         it 'renders the body' do
@@ -118,7 +85,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
   describe 'paid' do
     describe 'registration' do
-      let(:mail) { described_class.paid(payment(reg)) }
+      let(:payment) { FactoryBot.create(:payment, parent: reg) }
+      let(:mail) { described_class.paid(payment) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -126,9 +94,6 @@ RSpec.describe ReceiptMailer, type: :mailer do
           to: ['seo@bpsd9.org', 'aseo@bpsd9.org', 'treasurer@bpsd9.org'],
           from: ['support@bpsd9.org']
         )
-        expect(mail.subject).to eql('Registration paid')
-        expect(mail.to).to eql(['seo@bpsd9.org', 'aseo@bpsd9.org', 'treasurer@bpsd9.org'])
-        expect(mail.from).to eql(['support@bpsd9.org'])
       end
 
       it 'renders the body' do
@@ -140,7 +105,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'member application' do
-      let(:mail) { described_class.paid(payment(app)) }
+      let(:payment) { FactoryBot.create(:payment, parent: app) }
+      let(:mail) { described_class.paid(payment) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -159,7 +125,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'dues' do
-      let(:mail) { described_class.paid(payment(user)) }
+      let(:payment) { FactoryBot.create(:payment, parent: user) }
+      let(:mail) { described_class.paid(payment) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
@@ -178,7 +145,8 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'generic payment' do
-      let(:mail) { described_class.paid(payment(generic)) }
+      let(:payment) { FactoryBot.create(:payment, parent: generic) }
+      let(:mail) { described_class.paid(payment) }
 
       it 'renders the headers' do
         expect(mail).to contain_mail_headers(
