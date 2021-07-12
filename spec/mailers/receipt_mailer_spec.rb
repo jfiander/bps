@@ -9,7 +9,15 @@ RSpec.describe ReceiptMailer, type: :mailer do
   let(:app) { FactoryBot.create(:family_application) }
   let(:generic) { FactoryBot.create(:generic_payment, email: 'nobody@example.com') }
 
-  let(:transaction) { HashWithIndifferentAccess.new }
+  let(:transaction) do
+    TransactionStub.new(
+      SecureRandom.hex(8), Time.now, 10, CustomerDetails.new(user.email), '', CreditCardDetails.new('AMEX', '', '1234')
+    )
+  end
+
+  TransactionStub = Struct.new(:id, :created_at, :amount, :customer_details, :promo_code, :credit_card_details)
+  CustomerDetails = Struct.new(:email)
+  CreditCardDetails = Struct.new(:card_type, :image_url, :last_4)
 
   before { generic_seo_and_ao }
 
