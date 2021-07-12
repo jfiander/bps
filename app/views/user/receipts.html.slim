@@ -11,9 +11,9 @@ h1 = admin_header('Payments & Receipts')
         .bold = payment.id
         = "#{payment.parent&.class&.name} ##{payment.parent&.id}" if payment.parent.present?
         - if payment.registration?
-          .receipt-details #{payment.parent.event.date_title} ##{link_to(payment.parent.event_id, payment.parent.event.public_link)}
+          small.receipt-details #{payment.parent.event.date_title} ##{link_to(payment.parent.event_id, payment.parent.event.public_link)}
         - elsif payment.generic?
-          .receipt-details = payment.parent.description
+          small.receipt-details = payment.parent.description
       .table-cell.details
         .customer = receipt_customer(payment)
         = receipt_actions(payment)
