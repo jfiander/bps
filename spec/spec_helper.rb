@@ -27,6 +27,7 @@ SimpleCov.start('rails') do
   add_filter '/spec'
   add_filter '/config'
   add_filter '/app/mailers/previews'
+  add_filter '/lib/rank_chart'
 
   # Exclude controller code
   add_filter '/app/controllers'
