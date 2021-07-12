@@ -19,5 +19,7 @@ h1 = admin_header('Payments & Receipts')
         = receipt_actions(payment)
       = receipt_amount(payment)
 
-- unless @all
+- if @all
+  .information Showing all payments. (#{link_to('Show only the last year')})
+- else
   .information Payments older than one year are not shown. (#{link_to('Show all', all: 'true')})
