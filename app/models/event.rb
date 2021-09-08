@@ -159,6 +159,7 @@ class Event < ApplicationRecord
 
   def create_sns_topic!
     return true if topic_arn.present?
+    return false if Rails.env.development?
 
     arn = BpsSMS.create_topic("event_#{id}", date_title).topic_arn
     update(topic_arn: arn)
