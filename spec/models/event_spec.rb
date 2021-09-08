@@ -146,6 +146,43 @@ RSpec.describe Event, type: :model, slow: true do
         end
       end
 
+      describe 'refresh_calendar!' do
+        let(:calendar) { event.send(:calendar) }
+
+        before { allow(calendar).to receive(:update) }
+
+        it 'skips if expired', :aggregate_failures do
+          event.expires_at = Time.now - 1.day
+
+          expect(calendar).not_to receive(:update)
+          expect(event.refresh_calendar!).to eq(true)
+        end
+
+        it 'skips if archived', :aggregate_failures do
+          event.archived_at = Time.now - 1.day
+
+          expect(calendar).not_to receive(:update)
+          expect(event.refresh_calendar!).to eq(true)
+        end
+
+        it 'attempts to book the event if not already' do
+          allow(event).to receive(:booked?).and_return(false)
+          allow(event).to receive(:book!)
+
+          expect(event).to receive(:book!)
+
+          event.refresh_calendar!
+        end
+
+        it 'updates the calendar' do
+          allow(event).to receive(:conference!)
+
+          expect(calendar).to receive(:update)
+
+          event.refresh_calendar!
+        end
+      end
+
       describe 'recurrence' do
         it 'sets the correct pattern' do
           event_type = FactoryBot.create(:event_type, event_category: 'seminar')
@@ -205,6 +242,7 @@ RSpec.describe Event, type: :model, slow: true do
         # end
 
         it 'returns nil when calendar event does have conference info' do
+          allow(event).to receive(:conference_id_cache).and_return(nil)
           allow(event.send(:calendar)).to receive(:conference_info).and_raise(
             Google::Apis::ClientError, 'notFound: Not Found'
           )

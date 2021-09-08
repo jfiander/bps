@@ -49,6 +49,7 @@ module Concerns
 
       def conference_id
         return conference_id_cache if conference_id_cache.present?
+        return nil if google_calendar_event_id.blank?
 
         info = calendar.conference_info(google_calendar_event_id)
         return if info.nil?
@@ -66,9 +67,8 @@ module Concerns
       end
 
       def conference!(state: true)
-        attributes = state ? { online: true } : { online: false, conference_id_cache: nil }
-        update(attributes)
-        refresh_calendar!
+        store_conference_details(state: state)
+        calendar.update(google_calendar_event_id, calendar_hash)
       end
 
     private
@@ -93,7 +93,7 @@ module Concerns
           summary: calendar_summary, description: calendar_description,
           location: location&.one_line
         }
-        hash[:conference] = { id: :new } if online && conference_id.nil?
+        hash[:conference] = { id: :new } if booked? && online && conference_id.nil?
 
         hash
       end
@@ -150,11 +150,17 @@ module Concerns
         update(google_calendar_event_id: response&.id, google_calendar_link: response&.html_link)
       end
 
+      def store_conference_details(state: true)
+        attributes = state ? { online: true } : { online: false, conference_id_cache: nil }
+        update(attributes)
+      end
+
       def calendar_update(call_if: true, set_to: nil)
         Rails.logger.silence do
           response = yield if call_if
           set = { response: response, nil: nil }[set_to]
           store_calendar_details(set) if set_to.present?
+          conference!(state: online)
         end
       end
     end
