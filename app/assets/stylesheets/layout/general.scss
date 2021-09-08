@@ -147,7 +147,7 @@ textarea.large {
   height: 10em;
 }
 
-div.red-background {
+.red-background {
   @include border-radius;
   background-color: $old-glory-red-lighten-50;
   padding: 0.25em 0;
