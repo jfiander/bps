@@ -113,6 +113,10 @@ div.events-unified-table {
       span.location-link {
         margin-left: 0.5em;
       }
+
+      & > div {
+        margin: 1em 0;
+      }
     }
 
     div.event-description {
