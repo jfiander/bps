@@ -27,7 +27,9 @@ $(document).ready ->
 $(document).ready ->
   $('#event_online').change ->
     $('#online_details').toggle()
-    $('#online_details #conference_id_cache').prop 'disabled', !$(this).is(':checked')
+    console.log($(this), $(this).is(':checked'))
+    $('#online_details #event_conference_id_cache').prop 'disabled', !$(this).is(':checked')
+    $('#online_details #event_link_override').prop 'disabled', !$(this).is(':checked')
     return
   return
 
