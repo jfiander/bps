@@ -14,15 +14,16 @@ module Events
           summary location_id map_link start_at length_h length_m sessions flyer
           cutoff_at expires_at prereq_id allow_member_registrations repeat_pattern
           allow_public_registrations show_in_catalog delete_attachment online
-          registration_limit advance_payment slug all_day activity_feed
+          registration_limit advance_payment slug all_day activity_feed conference_id_cache
         ]
       )
 
-      filter_activity_feed(ep)
+      filter_params(ep)
     end
 
-    def filter_activity_feed(ep)
+    def filter_params(ep)
       ep[:event].delete(:activity_feed) unless current_user.authorized_for_activity_feed?
+      ep[:event].delete(:conference_id_cache) unless current_user.permitted?(:admin)
       ep
     end
 

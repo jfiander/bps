@@ -9,7 +9,7 @@ $(document).ready ->
   return
 
 $(document).ready ->
-  $('#all_day_check').change ->
+  $('#event_all_day').change ->
     $('#regular_start_time').toggle()
     $('#regular_start_time #event_start_at').prop  'disabled', $(this).is(':checked')
     $('#regular_start_time #event_length_4i').prop 'disabled', $(this).is(':checked')
@@ -21,6 +21,13 @@ $(document).ready ->
     $('#all_day_start_time #event_length_4i').prop 'disabled', !$(this).is(':checked')
     $('#all_day_start_time #event_length_5i').prop 'disabled', !$(this).is(':checked')
     $('#all_day_start_time #event_sessions').prop  'disabled', !$(this).is(':checked')
+    return
+  return
+
+$(document).ready ->
+  $('#event_online').change ->
+    $('#online_details').toggle()
+    $('#online_details #conference_id_cache').prop 'disabled', !$(this).is(':checked')
     return
   return
 

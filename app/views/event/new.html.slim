@@ -60,12 +60,21 @@ h1 = "#{@edit_mode} #{@event_title}"
     #event-schedule
       h2 Schedule
 
-      .left = f.label :all_day
-      .right = switch_box(f, :all_day, 'darkblue-lightblue', 'regular all-day', id: 'all_day_check')
+      .left = f.label :online, 'Available Online'
+      .right = switch_box(f, :online, 'red-lightblue', 'yes no')
       br.clear
 
-      .left = f.label :online, "Available Online"
-      .right = switch_box(f, :online, 'red-lightblue', 'yes no')
+      #online_details class=(@event.online ? '' : 'hide')
+        - if current_user.permitted?(:admin)
+          .left
+            = f.label :conference_id_cache, 'Google Meet ID', class: 'admin'
+            ul
+              li.red Only edit this if you need to change the stored link.
+          .right = f.text_field :conference_id_cache, disabled: !@event.online, class: 'admin'
+          br.clear
+
+      .left = f.label :all_day
+      .right = switch_box(f, :all_day, 'darkblue-lightblue', 'regular all-day')
       br.clear
 
       #regular_start_time class=(@event.all_day ? 'hide' : '')
