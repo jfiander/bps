@@ -5,6 +5,11 @@ module Concerns
     module Calendar
       extend ActiveSupport::Concern
 
+      CALENDAR_COLUMNS = %i[
+        event_type_id start_at length_h length_m sessions all_day description location_id
+        online conference_id_cache link_override
+      ].freeze
+
       def book!
         return if booked? || id.blank?
 
@@ -144,9 +149,7 @@ module Concerns
       end
 
       def calendar_details_updated?
-        %i[
-          event_type_id start_at length_h length_m sessions all_day description location_id online
-        ].any? { |field| send("will_save_change_to_#{field}?") }
+        CALENDAR_COLUMNS.any? { |field| send("saved_change_to_#{field}?") }
       end
 
       def store_calendar_details(response)
