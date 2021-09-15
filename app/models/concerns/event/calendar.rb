@@ -77,6 +77,8 @@ module Concerns
 
         store_conference_details(state: state)
         calendar.update(google_calendar_event_id, calendar_hash)
+      rescue Google::Apis::ClientError
+        nil
       end
 
     private
