@@ -15,6 +15,7 @@ module Events
           cutoff_at expires_at prereq_id allow_member_registrations repeat_pattern
           allow_public_registrations show_in_catalog delete_attachment online
           registration_limit advance_payment slug all_day activity_feed conference_id_cache
+          link_override
         ]
       )
 

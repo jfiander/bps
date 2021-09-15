@@ -61,12 +61,15 @@ module Concerns
       end
 
       def conference_link
+        return link_override if link_override.present?
         return unless (id = conference_id)
 
         "http://meet.google.com/#{id}"
       end
 
       def conference!(state: true)
+        return if state && link_override.present?
+
         store_conference_details(state: state)
         calendar.update(google_calendar_event_id, calendar_hash)
       end
@@ -151,7 +154,8 @@ module Concerns
       end
 
       def store_conference_details(state: true)
-        attributes = state ? { online: true } : { online: false, conference_id_cache: nil }
+        clear_attributes = { online: false, conference_id_cache: nil, link_override: nil }
+        attributes = state ? { online: true } : clear_attributes
         update(attributes)
       end
 

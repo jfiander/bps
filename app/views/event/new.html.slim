@@ -73,6 +73,18 @@ h1 = "#{@edit_mode} #{@event_title}"
           .right = f.text_field :conference_id_cache, disabled: !@event.online, class: 'admin'
           br.clear
 
+        .left
+          = f.label :link_override
+          ul
+            li.red Only use this field if you need to change the stored link.
+            li This takes highest priority for the link to be displayed.
+            li
+              ' Include the
+              code> http[s]://
+              | in this URL.
+        .right = f.text_field :link_override, disabled: !@event.online
+        br.clear
+
       .left = f.label :all_day
       .right = switch_box(f, :all_day, 'darkblue-lightblue', 'regular all-day')
       br.clear
