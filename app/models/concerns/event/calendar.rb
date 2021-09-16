@@ -67,15 +67,6 @@ module Concerns
         "http://meet.google.com/#{id}"
       end
 
-      def conference!(state: true)
-        return if state && link_override.present?
-        return if state && online && conference_id_cache.present?
-
-        state ? enable_conference : remove_conference
-      rescue Google::Apis::ClientError
-        nil
-      end
-
     private
 
       def calendar
@@ -188,22 +179,6 @@ module Concerns
         @calendar_attributes ||= {}
         calendar_attributes[:conference_signature] = info.conference_data.signature
         calendar_attributes[:conference_id_cache] = info.conference_data.conference_id
-      end
-
-      def enable_conference
-        return unless conference_id_cache.blank?
-
-        event = calendar.add_conference(google_calendar_event_id)
-        update_attributes(
-          online: true,
-          conference_signature: event.conference_data&.signature,
-          conference_id_cache: event.conference_data&.conference_id
-        )
-      end
-
-      def remove_conference
-        calendar.patch(google_calendar_event_id, conference_data: nil)
-        clear_conference_details
       end
 
       def clear_conference_details
