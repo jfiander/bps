@@ -33,7 +33,7 @@ gem 'paranoia',            '~> 2.4.1'
 # APIs and External Services
 gem 'aws-sdk',             '~> 2.11'
 gem 'aws-sdk-rails',       '~> 1.0.1'
-gem 'bps-google-api',      '~> 0.4.10'
+gem 'bps-google-api',      '~> 0.4.11'
 gem 'braintree',           '~> 3.3'
 gem 'geocoder',            '~> 1.6.1'
 gem 'sendgrid-ruby',       '~> 5.2'

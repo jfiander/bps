@@ -34,7 +34,7 @@ module Concerns
         return true if expired? || archived? # Skip, but allow update to continue
         return book! unless booked? && on_calendar?
 
-        calendar_update(call_if: true) do
+        calendar_update(call_if: true, set_to: :response) do
           calendar.update(google_calendar_event_id, calendar_hash)
         end
       rescue StandardError => e
@@ -59,8 +59,9 @@ module Concerns
         info = calendar.conference_info(google_calendar_event_id)
         return if info.nil?
 
-        update(conference_id_cache: info[:id])
-        info[:id]
+        calendar_attributes ||= {}
+        calendar_attributes[:conference_signature] = info[:signature]
+        calendar_attributes[:conference_id_cache] = info[:id]
       rescue Google::Apis::ClientError
         nil
       end
@@ -74,9 +75,16 @@ module Concerns
 
       def conference!(state: true)
         return if state && link_override.present?
+        return if state && online && conference_id_cache.present?
 
-        store_conference_details(state: state)
-        calendar.update(google_calendar_event_id, calendar_hash)
+        event = calendar.add_conference(google_calendar_event_id) if state && conference_id_cache.blank?
+
+        @calendar_attributes = {
+          online: state,
+          conference_signature: event.conference_data&.signature,
+          conference_id_cache: event.conference_data&.conference_id
+        }
+        commit_calendar_attributes
       rescue Google::Apis::ClientError
         nil
       end
@@ -103,7 +111,13 @@ module Concerns
           summary: calendar_summary, description: calendar_description,
           location: location&.one_line
         }
-        hash[:conference] = { id: :new } if booked? && online && conference_id.nil?
+        if online
+          if conference_signature.present?
+            hash[:conference] = { id: conference_id, signature: conference_signature }
+          elsif link_override.blank? && conference_id_cache.blank?
+            hash[:conference] = { id: :new }
+          end
+        end
 
         hash
       end
@@ -154,23 +168,48 @@ module Concerns
         CALENDAR_COLUMNS.any? { |field| send("saved_change_to_#{field}?") }
       end
 
-      def store_calendar_details(response)
-        update(google_calendar_event_id: response&.id, google_calendar_link: response&.html_link)
-      end
-
-      def store_conference_details(state: true)
-        clear_attributes = { online: false, conference_id_cache: nil, link_override: nil }
-        attributes = state ? { online: true } : clear_attributes
-        update(attributes)
-      end
-
       def calendar_update(call_if: true, set_to: nil)
         Rails.logger.silence do
+          @calendar_attributes = {}
           response = yield if call_if
           set = { response: response, nil: nil }[set_to]
           store_calendar_details(set) if set_to.present?
-          conference!(state: online)
+          update_conference!(set)
+          commit_calendar_attributes
+          return response
         end
+      end
+
+      def store_calendar_details(response)
+        return if response&.id == google_calendar_event_id && response&.html_link == google_calendar_link
+
+        calendar_attributes[:google_calendar_event_id] = response&.id
+        calendar_attributes[:google_calendar_link] = response&.html_link
+      end
+
+      def update_conference!(info = nil)
+        if online
+          add_conference!(info) unless link_override.present? || conference_id_cache.present?
+        else
+          clear_conference_details
+        end
+      end
+
+      def add_conference!(info = nil)
+        @calendar_attributes ||= {}
+        calendar_attributes[:conference_signature] = info.conference_data.signature
+        calendar_attributes[:conference_id_cache] = info.conference_data.conference_id
+      end
+
+      def clear_conference_details
+        @calendar_attributes ||= {}
+        calendar_attributes[:conference_id_cache] = nil
+        calendar_attributes[:conference_signature] = nil
+        calendar_attributes[:link_override] = nil
+      end
+
+      def commit_calendar_attributes
+        update_columns(calendar_attributes) if calendar_attributes.any?
       end
     end
   end

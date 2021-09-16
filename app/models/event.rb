@@ -35,7 +35,7 @@ class Event < ApplicationRecord
     :flyer, paperclip_defaults(:files).merge(path: 'event_flyers/:id/:filename')
   )
 
-  attr_accessor :delete_attachment
+  attr_accessor :delete_attachment, :calendar_attributes
 
   before_validation do
     validate_costs
