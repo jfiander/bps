@@ -16,8 +16,6 @@ module Concerns
         calendar_update(call_if: true, set_to: :response) do
           calendar.create(calendar_hash)
         end
-      rescue StandardError => e
-        Bugsnag.notify(e)
       end
 
       def unbook!
@@ -26,8 +24,6 @@ module Concerns
         calendar_update(call_if: on_calendar?, set_to: :nil) do
           calendar.delete(google_calendar_event_id)
         end
-      rescue StandardError => e
-        Bugsnag.notify(e)
       end
 
       def refresh_calendar!
@@ -37,8 +33,6 @@ module Concerns
         calendar_update(call_if: true, set_to: :response) do
           calendar.update(google_calendar_event_id, calendar_hash)
         end
-      rescue StandardError => e
-        Bugsnag.notify(e)
       end
 
       def booked?
