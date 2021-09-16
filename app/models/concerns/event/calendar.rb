@@ -168,7 +168,9 @@ module Concerns
       end
 
       def store_calendar_details(response)
-        return if response&.id == google_calendar_event_id && response&.html_link == google_calendar_link
+        if response&.id == google_calendar_event_id && response&.html_link == google_calendar_link
+          return
+        end
 
         calendar_attributes[:google_calendar_event_id] = response&.id
         calendar_attributes[:google_calendar_link] = response&.html_link

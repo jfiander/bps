@@ -46,18 +46,19 @@ Lint/UselessAssignment:
 
 Metrics/MethodLength:
   Enabled: true
+  Max: 15
 Metrics/ClassLength:
   Enabled: true
-  Max: 150
+  Max: 200
 Metrics/ModuleLength:
-  Max: 150
+  Max: 200
 Metrics/ParameterLists:
   Enabled: true
 Metrics/CyclomaticComplexity:
   Enabled: true
-  Max: 10
+  Max: 15
 Metrics/PerceivedComplexity:
-  Max: 10
+  Max: 15
 Metrics/AbcSize:
   Enabled: true
   Max: 20
