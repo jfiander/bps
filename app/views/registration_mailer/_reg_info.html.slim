@@ -7,7 +7,8 @@
 
 - if @registration.event.conference_link.present? && (@registration.paid? || !@registration.event.advance_payment)
   h3 Attend Online:
-  p = link_to 'Attend via Google Meet', @registration.event.conference_link
+  - link_text = @registration.event.link_override.present? ? 'Click to Join' : 'Attend via Google Meet'
+  p = link_to(link_text, @registration.event.conference_link)
 
 - if @registration.payable?
   = render 'payment'
