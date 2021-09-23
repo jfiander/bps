@@ -39,6 +39,7 @@ module Api
         authenticate_with_http_token do |token, _options|
           user_from_token(token).present? ? true : invalid_token!(token)
         end
+        invalid_token!(nil) if @token.nil?
       end
 
       def user_from_token(token)
