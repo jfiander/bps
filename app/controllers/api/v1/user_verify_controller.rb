@@ -2,6 +2,17 @@
 
 module Api
   module V1
+    ### Example access
+    #
+    # curl -X POST https://DOMAIN/api/v1/verify_user \
+    #   -H "Authorization: Bearer user_api_token" \
+    #   -d 'usersString=Member Name%0AOther Name/Certificate'
+    #
+    # curl -X POST https://DOMAIN/api/v1/verify_user \
+    #   -H "Authorization: Bearer user_api_token" \
+    #   -H "Content-Type: application/json" \
+    #   -d '{ "usersString": "Member Name\nOther Name/Certificate" }'
+    #
     class UserVerifyController < ActionController::API
       include ActionController::HttpAuthentication::Token::ControllerMethods
 
