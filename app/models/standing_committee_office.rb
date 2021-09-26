@@ -18,7 +18,7 @@ class StandingCommitteeOffice < ApplicationRecord
 
   default_scope { ordered }
   scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.now) }
-  scope :chair_first, -> { order(chair: :asc) }
+  scope :chair_first, -> { order(chair: :desc) }
 
   class << self
     COMMITTEES.each do |committee|
