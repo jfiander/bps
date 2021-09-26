@@ -45,7 +45,7 @@ class StandingCommitteeOffice < ApplicationRecord
   end
 
   def term_fraction
-    executive? ? '' : "[#{term_year}/#{term_length}]"
+    executive? ? '' : "year #{term_year} of #{term_length}"
   end
 
 private

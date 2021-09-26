@@ -45,7 +45,7 @@ RSpec.describe StandingCommitteeOffice, type: :model do
       end
 
       it 'returns the correct term fraction' do
-        expect(auditing.term_fraction).to eql('[2/3]')
+        expect(auditing.term_fraction).to eql('year 2 of 3')
       end
     end
   end
