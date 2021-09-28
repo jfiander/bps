@@ -43,7 +43,7 @@ module EventsHelper
     return unless @current_user_permitted_event_type && event.show_in_catalog
 
     content_tag(:div, class: 'catalog') do
-      concat FA::Icon.p('star', style: :duotone, fa: :fw)
+      concat FA::Icon.p('stars', style: :duotone, fa: :fw)
       concat content_tag(:small, 'In catalog')
     end
   end

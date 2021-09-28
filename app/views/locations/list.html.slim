@@ -13,7 +13,7 @@ p.red.italic Do not add event-specific information to any location.
       .table-cell
         - if location[:favorite]
           .birmingham-blue
-            = FA::Icon.p('star', style: :duotone) + 'Favorite'
+            = FA::Icon.p('stars', style: :duotone) + 'Favorite'
         - if location[:virtual?]
           .green
             = FA::Icon.p('laptop', style: :duotone) + 'Virtual'

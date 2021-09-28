@@ -61,7 +61,7 @@ RSpec.describe EventsHelper, type: :helper do
       event.show_in_catalog = true
 
       expect(event_catalog_flag(event)).to eq(
-        "<div class=\"catalog\"><i class='fad fa-fw fa-star fa-1x' style='' data-fa-transform='' title=''></i>" \
+        "<div class=\"catalog\"><i class='fad fa-fw fa-stars fa-1x' style='' data-fa-transform='' title=''></i>" \
         '<small>In catalog</small></div>'
       )
     end
