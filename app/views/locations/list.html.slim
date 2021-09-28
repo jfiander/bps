@@ -12,10 +12,10 @@ p.red.italic Do not add event-specific information to any location.
     .table-row
       .table-cell
         - if location[:favorite]
-          .birmingham-blue
+          .location-tag.birmingham-blue
             = FA::Icon.p('stars', style: :duotone) + 'Favorite'
         - if location[:virtual?]
-          .green
+          .location-tag.green
             = FA::Icon.p('laptop', style: :duotone) + 'Virtual'
         = simple_format(location[:address])
         - if location[:map_link].present?
