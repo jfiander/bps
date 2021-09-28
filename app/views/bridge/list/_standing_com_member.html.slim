@@ -6,6 +6,6 @@ div id=("#{committee}_post_#{member[:id]}") class=(index % 2 == 0 ? 'even' : 'od
   - if member[:chair] || member[:term_fraction].present?
     br
     small
-      = FA::Icon.p('circle-chevron-up', style: :duotone, title: 'Chair') if member[:chair]
-      '
       span.gray = member[:term_fraction]
+      '
+      = FA::Icon.p('circle-chevron-up', style: :duotone, title: 'Chair') if member[:chair]

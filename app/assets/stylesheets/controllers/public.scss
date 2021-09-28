@@ -147,7 +147,10 @@ div#standing-committees {
     font-size: 90%;
     padding-bottom: 1em;
     line-height: 1.5em;
-    padding-left: 0.5em;
+
+    & > div {
+      padding: 0.25em 0.5em;
+    }
   }
 
   div.committee-name {
