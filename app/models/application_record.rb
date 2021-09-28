@@ -9,10 +9,19 @@ class ApplicationRecord < ActiveRecord::Base
 
   # Used by Paperclip
   def self.paperclip_defaults(bucket)
-    {
+    defaults = {
       storage: :s3, s3_region: 'us-east-2', s3_permissions: :private,
       s3_credentials: { bucket: BpsS3.new(bucket).full_bucket }
     }
+
+    unless Rails.env.deployed?
+      defaults[:s3_credentials].merge!(
+        access_key_id: ENV['S3_ACCESS_KEY'],
+        secret_access_key: ENV['S3_SECRET']
+      )
+    end
+
+    defaults
   end
 
   def self.order_sql_path

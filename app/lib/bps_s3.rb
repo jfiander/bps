@@ -53,7 +53,22 @@ class BpsS3
 private
 
   def s3
-    @s3 ||= Aws::S3::Resource.new(region: 'us-east-2').bucket(full_bucket)
+    @s3 ||= Aws::S3::Resource.new(s3_attributes).bucket(full_bucket)
+  end
+
+  def s3_attributes
+    attributes = { region: 'us-east-2' }
+
+    unless Rails.env.deployed?
+      attributes.merge!(
+        credentials: Aws::Credentials.new(
+          ENV['S3_ACCESS_KEY'],
+          ENV['S3_SECRET']
+        )
+      )
+    end
+
+    attributes
   end
 
   def prepare_bucket
