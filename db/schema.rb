@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2021_09_26_144100) do
     t.index ["deleted_at"], name: "index_announcement_files_on_deleted_at"
   end
 
-  create_table "api_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "api_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "token"
     t.integer "user_id"
     t.datetime "deleted_at"
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 2021_09_26_144100) do
     t.index ["promo_code_id", "deleted_at"], name: "index_event_promo_codes_on_code_id"
   end
 
-  create_table "event_type_committees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "event_type_committees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "event_type_id"
     t.string "committee"
     t.datetime "deleted_at"

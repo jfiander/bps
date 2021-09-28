@@ -2,10 +2,11 @@ default: &default
   adapter: mysql2
   pool: 5
   timeout: 5000
-  encoding: utf8
 
 rds: &rds
   <<: *default
+  encoding: utf8mb4
+  collation: utf8mb4_0900_ai_ci
   database: <%= ENV['RDS_DB_NAME'] %>
   username: <%= ENV['RDS_USERNAME'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
@@ -14,6 +15,8 @@ rds: &rds
 
 development: &development
   <<: *default
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
   database: <%= ENV['DB_NAME'] %>
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>
