@@ -20,6 +20,26 @@ RSpec.describe StandingCommitteeOffice, type: :model do
     )
   end
 
+  describe '#current?' do
+    it 'returns true if current' do
+      auditing.term_expires_at = Time.now + 1.week
+
+      expect(auditing.current?).to be(true)
+    end
+
+    it 'returns false if expired' do
+      auditing.term_expires_at = 1.week.ago
+
+      expect(auditing.current?).to be(false)
+    end
+
+    it 'treats nil expiration date as expired' do
+      auditing.term_expires_at = nil
+
+      expect(auditing.current?).to be(false)
+    end
+  end
+
   describe 'display details' do
     context 'with the executive committee' do
       it 'alwayses return 1 year remaining' do

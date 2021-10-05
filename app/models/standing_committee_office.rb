@@ -14,7 +14,7 @@ class StandingCommitteeOffice < ApplicationRecord
 
   validate :only_one_current_chair
   validates :committee_name, presence: COMMITTEES
-  validates :user_id, uniqueness: { scope: :committee_name }
+  validates :user_id, uniqueness: { scope: :committee_name }, if: :current?
 
   default_scope { ordered }
   scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.now) }
@@ -46,6 +46,10 @@ class StandingCommitteeOffice < ApplicationRecord
 
   def term_fraction
     executive? ? '' : "year #{term_year} of #{term_length}"
+  end
+
+  def current?
+    term_expires_at.present? && term_expires_at > Time.now
   end
 
 private
