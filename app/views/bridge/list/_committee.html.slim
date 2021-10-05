@@ -1,4 +1,4 @@
-.table-row id=("committee_row_#{committee[:id]}")
+.table-row id=("committee_row_#{committee[:id]}") class=(css)
   .table-cell.committee class=("additional" if @last_committee_name == committee[:name])
     = committee[:name] unless committee[:name] == @last_committee_name
   .table-cell.committee-chair class=("additional" if @last_committee_name == committee[:name]) id=("committee_cell_#{committee[:id]}")
