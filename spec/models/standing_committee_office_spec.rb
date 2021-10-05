@@ -84,4 +84,10 @@ RSpec.describe StandingCommitteeOffice, type: :model do
 
     expect(second_chair).to be_invalid
   end
+
+  it 'rejects multiple current users' do
+    second_assignment = FactoryBot.build(:standing_committee_office, committee_name: 'auditing', user: auditing.user)
+
+    expect(second_assignment).to be_invalid
+  end
 end

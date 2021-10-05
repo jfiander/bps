@@ -12,9 +12,8 @@ class StandingCommitteeOffice < ApplicationRecord
   before_create { self.committee_name = committee_name.downcase }
   after_save { update_excom_group if committee_name == 'executive' }
 
-  validate :only_one_current_chair
+  validate :only_one_current_chair, :no_duplicate_assignments
   validates :committee_name, presence: COMMITTEES
-  validates :user_id, uniqueness: { scope: :committee_name }, if: :current?
 
   default_scope { ordered }
   scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.now) }
@@ -55,11 +54,19 @@ class StandingCommitteeOffice < ApplicationRecord
 private
 
   def only_one_current_chair
-    return true unless chair
-    return true if StandingCommitteeOffice.current.where(committee_name: committee_name)
-                                          .where(chair: true).count.zero?
+    return true if !chair || siblings(chair: true).none?
 
     errors.add(:chair, 'can only have one current chair per committee')
+  end
+
+  def no_duplicate_assignments
+    return true if siblings(user: user).none?
+
+    errors.add(:chair, 'can only have one current assignment per committee')
+  end
+
+  def siblings(**where_opts)
+    StandingCommitteeOffice.current.where(committee_name: committee_name).where(where_opts) - [self]
   end
 
   COMMITTEES.each do |committee|
