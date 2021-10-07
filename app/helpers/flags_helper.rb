@@ -3,7 +3,7 @@
 module FlagsHelper
   def officer_flags(rank, height = 100)
     content_tag(:div, class: 'officer-flags') do
-      concat flag_image("flags/PNG/#{rank}.thumb.png", width: 150, height: height)
+      concat flag_image("flags/SVG/#{rank}.svg", width: 150, height: height)
       concat tag(:br)
       concat dl_link('PNG', "flags/PNG/#{rank}.png")
       concat content_tag(:span, ' | ')
@@ -28,7 +28,7 @@ module FlagsHelper
   def grade_insignia(grade, height, edpro: false)
     edpro_tag = edpro ? '_edpro' : ''
     content_tag(:div, class: 'grade-insignia') do
-      concat flag_image("insignia/PNG/grades/tr/#{grade}#{edpro_tag}.png", height: height)
+      concat flag_image("insignia/SVG/grades/#{grade}#{edpro_tag}.svg", height: height)
       concat tag(:br)
       link_list('insignia/PNG/grades', "#{grade}#{edpro_tag}")
     end
@@ -36,7 +36,7 @@ module FlagsHelper
 
   def membership_insignia(membership)
     content_tag(:div, class: 'membership-insignia') do
-      concat flag_image("insignia/PNG/membership/tr/#{membership}.png", width: 250)
+      concat flag_image("insignia/SVG/membership/#{membership}.svg", width: 250)
       concat tag(:br)
       link_list('insignia/PNG/membership', membership)
     end
