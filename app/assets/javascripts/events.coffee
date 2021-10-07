@@ -47,15 +47,11 @@ markInstructors = (userResults) ->
 
   validations.innerHTML += '</ul>'
 
-missingInstructors = (errorThrown) ->
+missingInstructors = (_errorThrown, responseText) ->
   validations = document.getElementById('instructors-validation')
 
-  if errorThrown == 'Forbidden'
-    validations.innerHTML = '<div class="red">You are not authorized to access that.</div><ul>'
-  else if errorThrown == 'Unauthorized'
-    validations.innerHTML = '<div class="red">Your authorization has expired. Please refresh the page.</div><ul>'
-  else if errorThrown == 'Not Found'
-    validations.innerHTML = '<div class="red">Could not find specified instructors.</div><ul>'
+  message = JSON.parse(responseText).error
+  validations.innerHTML = '<div class="red">' + message + '</div>'
 
 verifyInstructors = ->
   authToken = document.getElementById('api-auth-token').innerHTML
@@ -74,7 +70,7 @@ verifyInstructors = ->
   request = $.ajax(req);
 
   request.success (data) -> markInstructors(data)
-  request.error (jqXHR, textStatus, errorThrown) -> missingInstructors(errorThrown)
+  request.error (jqXHR, textStatus, errorThrown) -> missingInstructors(errorThrown, jqXHR.responseText)
 
 $(document).ready ->
   timeout = null
