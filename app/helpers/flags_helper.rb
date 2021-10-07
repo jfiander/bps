@@ -30,7 +30,7 @@ module FlagsHelper
     content_tag(:div, class: 'grade-insignia') do
       concat flag_image("insignia/PNG/grades/tr/#{grade}#{edpro_tag}.png", height: height)
       concat tag(:br)
-      link_list('insignia/PNG/grades') { "#{grade}#{edpro_tag}" }
+      link_list('insignia/PNG/grades', "#{grade}#{edpro_tag}")
     end
   end
 
@@ -38,7 +38,7 @@ module FlagsHelper
     content_tag(:div, class: 'membership-insignia') do
       concat flag_image("insignia/PNG/membership/tr/#{membership}.png", width: 250)
       concat tag(:br)
-      link_list('insignia/PNG/membership') { membership }
+      link_list('insignia/PNG/membership', membership)
     end
   end
 
@@ -72,8 +72,7 @@ private
     }[text]
   end
 
-  def link_list(base_path)
-    filename = yield
+  def link_list(base_path, filename)
     concat content_tag(:span, 'PNG: ')
     concat dl_link('T', "#{base_path}/tr/#{filename}.png")
     concat content_tag(:span, ' ')
