@@ -75,6 +75,17 @@ RSpec.describe EventsHelper, type: :helper do
       )
     end
 
+    it 'generates the correct invisible flag' do
+      event.visible = false
+
+      expect(event_not_visible_flag(event)).to eq(
+        '<div class="invisible-flag">' \
+        "<i class='fad fa-fw fa-eye-slash fa-1x' style='' data-fa-transform='' title=''></i>" \
+        '<small title="This event is not visible to members or the public. Only editors can see it.">' \
+        'Not visible</small></div>'
+      )
+    end
+
     it 'generates the correct committees flag with one committee' do
       event.event_type.assign(committee_1)
 

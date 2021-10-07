@@ -35,6 +35,10 @@ div.events-unified-table {
       @include border-radius(0.5em);
     }
 
+    &.invisible {
+      opacity: 0.5;
+    }
+
     div {
       text-align: center;
     }
@@ -74,6 +78,11 @@ div.events-unified-table {
       
       div.event-detail-row, div.catalog {
         margin: 0.5em 0;
+      }
+
+      div.invisible-flag {
+        color: $old-glory-red;
+        font-weight: bold;
       }
     }
 

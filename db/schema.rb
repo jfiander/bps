@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_26_144100) do
+ActiveRecord::Schema.define(version: 2021_10_07_024442) do
 
   create_table "albums", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -204,6 +204,7 @@ ActiveRecord::Schema.define(version: 2021_09_26_144100) do
     t.string "conference_id_cache"
     t.text "link_override"
     t.string "conference_signature"
+    t.boolean "visible", default: true, null: false
     t.index ["event_type_id", "deleted_at"], name: "index_events_on_event_type_id"
     t.index ["slug", "deleted_at"], name: "index_events_on_slug"
     t.index ["start_at", "expires_at", "archived_at", "deleted_at"], name: "index_events_on_dates"

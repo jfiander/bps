@@ -33,6 +33,7 @@ module EventsHelper
 
       # General Flags
       concat event_activity_flag(event)
+      concat event_not_visible_flag(event)
 
       # Non-Education Flags
       concat event_committees_flag(event)
@@ -54,6 +55,18 @@ module EventsHelper
     content_tag(:div, class: 'catalog') do
       concat FA::Icon.p('stream', style: :duotone, fa: :fw)
       concat content_tag(:small, 'Available for activity feed')
+    end
+  end
+
+  def event_not_visible_flag(event)
+    return unless @current_user_permitted_event_type && !event.visible
+
+    content_tag(:div, class: 'invisible-flag') do
+      concat FA::Icon.p('eye-slash', style: :duotone, fa: :fw)
+      concat content_tag(
+        :small, 'Not visible',
+        title: 'This event is not visible to members or the public. Only editors can see it.'
+      )
     end
   end
 

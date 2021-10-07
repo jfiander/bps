@@ -27,6 +27,7 @@ class Event < ApplicationRecord
   scope :displayable, -> { where(archived_at: nil).where('start_at > ?', Event.auto_archive) }
   scope :current, -> { where('expires_at > ?', Time.now) }
   scope :expired, -> { where('expires_at <= ?', Time.now) }
+  scope :visible, -> { where(visible: true) }
   scope(:activity_feed, lambda do
     where('start_at > ? AND expires_at > ? AND activity_feed = ?', Time.now, Time.now, true)
   end)
@@ -54,17 +55,20 @@ class Event < ApplicationRecord
   before_save { self.slug = slug.downcase.tr('/', '_') if slug.present? }
   before_destroy :unbook!
 
-  after_create :book!
+  after_create :book!, if: :visible?
   after_create :create_sns_topic!
   after_commit :refresh_calendar!, if: :calendar_details_updated?
+  after_commit :unbook!, if: proc { booked? && !visible }
 
   def self.auto_archive
     Date.today.last_year.beginning_of_year
   end
 
-  def self.fetch(category, expired: false, flat: false)
+  def self.fetch(category, expired: false, flat: false, include_invisible: false)
     scope = expired ? :expired : :current
-    include_details.displayable.send(scope).by_date.for_category(category, flat: flat)
+    e = include_details.displayable.send(scope)
+    e = e.visible unless include_invisible
+    e.by_date.for_category(category, flat: flat)
   end
 
   def self.catalog(category)
@@ -100,7 +104,7 @@ class Event < ApplicationRecord
   end
 
   def self.fetch_activity_feed
-    include_details.activity_feed.order(:start_at).first(ENV['ACTIVITY_FEED_LENGTH'].to_i)
+    include_details.visible.activity_feed.order(:start_at).first(ENV['ACTIVITY_FEED_LENGTH'].to_i)
   end
 
   def self.with_registrations

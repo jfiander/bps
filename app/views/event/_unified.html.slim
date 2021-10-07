@@ -1,4 +1,7 @@
-.event-unified class=(index % 2 == 0 ? 'even' : 'odd')
+- class_list = []
+- class_list << (index % 2 == 0 ? 'even' : 'odd')
+- class_list << 'invisible' unless event.visible
+.event-unified class=(class_list.join(' '))
   .event-column-left
     .event-display-title
       .title = event.display_title

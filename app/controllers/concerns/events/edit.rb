@@ -14,7 +14,7 @@ module Events
           map_link start_at length_h length_m sessions flyer cutoff_at expires_at prereq_id
           allow_member_registrations repeat_pattern allow_public_registrations show_in_catalog
           delete_attachment online registration_limit advance_payment slug all_day activity_feed
-          conference_id_cache link_override
+          conference_id_cache link_override visible
         ]
       )
 
@@ -54,7 +54,7 @@ module Events
 
     def find_event
       id = clean_params[:id] || event_params[:id]
-      @event = Event.includes(:event_instructors, :instructors).find_by(id: id)
+      find_event_for(id)
       @event_types = EventType.all
       map_to_text = action_name != 'show'
 
@@ -65,6 +65,12 @@ module Events
       load_includes(map_to_text: map_to_text)
       load_topics(map_to_text: map_to_text)
       load_instructors(map_to_text: map_to_text)
+    end
+
+    def find_event_for(id)
+      events = Event.includes(:event_instructors, :instructors)
+      events = events.visible unless current_user&.permitted?(event_type_param)
+      @event = events.find_by(id: id)
     end
 
     def prepare_form

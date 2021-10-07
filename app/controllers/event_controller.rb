@@ -154,7 +154,7 @@ private
   end
 
   def current
-    @events ||= Event.fetch(event_type_param)
+    @events ||= Event.fetch(event_type_param, include_invisible: @current_user_permitted_event_type)
   end
 
   def expired

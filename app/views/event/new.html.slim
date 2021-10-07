@@ -57,6 +57,10 @@ h1 = "#{@edit_mode} #{@event_title}"
         .right = switch_box(f, :activity_feed, 'darkblue-lightblue', 'ignore show')
         br.clear
 
+      .left = f.label :visible
+      .right = switch_box(f, :visible, 'red-lightblue', 'yes no')
+      br.clear
+
     #event-schedule
       h2 Schedule
 
