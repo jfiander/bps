@@ -42,26 +42,39 @@ markInstructors = (userResults) ->
 
   validations.innerHTML = '<div class="bold">Found instructors:</div><ul>'
 
-  for user in userResults['users']
+  for user in JSON.parse(userResults).users
     validations.innerHTML += '<li>' + user.name + ' / ' + user.certificate + '</li>'
 
   validations.innerHTML += '</ul>'
 
-missingInstructors = ->
+missingInstructors = (errorThrown) ->
   validations = document.getElementById('instructors-validation')
-  validations.innerHTML = '<div class="red">Cound not find specified instructors.</div><ul>'
+
+  if errorThrown == 'Forbidden'
+    validations.innerHTML = '<div class="red">You are not authorized to access that.</div><ul>'
+  else if errorThrown == 'Unauthorized'
+    validations.innerHTML = '<div class="red">Your authorization has expired. Please refresh the page.</div><ul>'
+  else if errorThrown == 'Not Found'
+    validations.innerHTML = '<div class="red">Could not find specified instructors.</div><ul>'
 
 verifyInstructors = ->
   authToken = document.getElementById('api-auth-token').innerHTML
   bearerToken = 'Bearer ' + authToken
-  input = document.getElementById('instructors')
+  usersString = document.getElementById('instructors').value
 
-  request = $.post '/api/v1/verify_user',
-    headers: { Authorization: bearerToken }
-    usersString: input.value
+  req = {
+    type: 'POST',
+    contentType: 'text/plain',
+    dataType: 'text',
+    data: usersString,
+    headers: { Authorization: bearerToken },
+    url: '/api/v1/verify_user'
+  }
+
+  request = $.ajax(req);
 
   request.success (data) -> markInstructors(data)
-  request.error (jqXHR, textStatus, errorThrown) -> missingInstructors()
+  request.error (jqXHR, textStatus, errorThrown) -> missingInstructors(errorThrown)
 
 $(document).ready ->
   timeout = null
