@@ -6,6 +6,6 @@
 = event_action_link event, "book_#{event_type_param}_path",    method: :put,    icon: 'calendar-check', text: 'Post to Calendar',     css: 'birmingham-blue', expired: false, if: !event.booked? && current_user&.permitted?(event_type_param)
 = event_action_link event, "copy_#{event_type_param}_path",                     icon: 'clone',          text: 'Clone',                css: 'blue'
 = event_action_link event, "edit_#{event_type_param}_path",                     icon: 'edit',           text: 'Edit',                 css: 'blue'
-= event_action_link event, "expire_#{event_type_param}_path",  method: :delete, icon: 'eye-slash',      text: 'Hide',                 css: 'red',             expired: false, confirm: "Are you sure you want to hide this #{event_type_param}?"
+= event_action_link event, "expire_#{event_type_param}_path",  method: :delete, icon: 'eye-slash',      text: 'Expire',               css: 'red',             expired: false, confirm: "Are you sure you want to expire this #{event_type_param}?"
 = event_action_link event, "archive_#{event_type_param}_path", method: :delete, icon: 'archive',        text: 'Archive',              css: 'red',             expired: true,  confirm: "Are you sure you want to archive this #{event_type_param}?"
 hr
