@@ -13,7 +13,7 @@ module FlagsHelper
 
   def officer_insignia(rank)
     content_tag(:div, class: 'officer-insignia') do
-      concat flag_image("flags/PNG/insignia/#{rank}.thumb.png", height: 75)
+      concat flag_image("flags/SVG/insignia/#{rank}.svg", height: 100)
       concat tag(:br)
       concat dl_link('PNG', "flags/PNG/insignia/#{rank}.png")
       concat content_tag(:span, ' | ')
