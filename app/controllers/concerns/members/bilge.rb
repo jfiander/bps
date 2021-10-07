@@ -41,9 +41,5 @@ module Members
         file: bilge_params[:file]
       )
     end
-
-    def invalidate_bilge(file)
-      Invalidation.submit(:bilge, "/#{file.id}/Bilge_Chatter.pdf")
-    end
   end
 end

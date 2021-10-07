@@ -70,7 +70,7 @@ private
 
   def replace_file(model, file)
     file.update(file: send("#{model}_params")[:file])
-    # send("invalidate_#{model}", file)
+    file.invalidate!
     'replaced'
   end
 end

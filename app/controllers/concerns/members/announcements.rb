@@ -28,10 +28,6 @@ module Members
       params.permit(:id, :title, :file)
     end
 
-    def invalidate_announcement(file)
-      Invalidation.submit(:files, "/#{file.id}.pdf")
-    end
-
     def create_announcement
       AnnouncementFile.create(
         title: announcement_params[:title],
