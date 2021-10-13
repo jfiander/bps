@@ -36,8 +36,11 @@ class EventController < ApplicationController
   end
 
   def registrations
-    @current = Event.fetch(event_type_param, flat: true).with_registrations
-    @expired = Event.fetch(event_type_param, expired: true, flat: true).with_registrations
+    args = [
+      event_type_param, { flat: true, include_invisible: @current_user_permitted_event_type }
+    ]
+    @current = Event.fetch(args).with_registrations
+    @expired = Event.fetch(args.merge(expired: true)).with_registrations
   end
 
   def show
@@ -158,7 +161,9 @@ private
   end
 
   def expired
-    @expired_events ||= Event.fetch(event_type_param, expired: true)
+    @expired_events ||= Event.fetch(
+      event_type_param, expired: true, include_invisible: @current_user_permitted_event_type
+    )
   end
 
   def load_catalog
