@@ -22,6 +22,11 @@ RSpec.describe BpsPdf::EducationCertificate, type: :lib do
       expect { described_class.for(@user) }.not_to raise_error
     end
 
+    it 'works with BH' do
+      FactoryBot.create(:course_completion, user: @user, course_key: 'BH')
+      expect { described_class.for(@user) }.not_to raise_error
+    end
+
     it 'works with old ME modules' do
       FactoryBot.create(:course_completion, user: @user, course_key: 'ME101')
       FactoryBot.create(:course_completion, user: @user, course_key: 'ME102')

@@ -27,7 +27,7 @@ module BpsPdf
       def ag_row(user, course_completions)
         color = 'CCFFFF'
         completion_row(2) do
-          completion_box(1, 'Seamanship', course_completions['S'], color: color)
+          s_or_bh_completion_box(course_completions, color)
           completion_box(2, 'Piloting', course_completions['P'], color: color)
           completion_box(3, 'Advanced Piloting', course_completions['AP'], color: color)
           completion_box(4, 'Junior Navigation', course_completions['JN'], color: color)
@@ -46,6 +46,14 @@ module BpsPdf
           completion_box(4, "Marine Electronics #{me_name_sized(me_name)}", me_date, color: color)
           completion_box(5, 'Sail', course_completions['SA'], color: color)
           completion_box(6, 'Weather', course_completions['WE'], color: color)
+        end
+      end
+
+      def s_or_bh_completion_box(course_completions, color)
+        if course_completions['BH']
+          completion_box(1, 'Boat Handling', course_completions['BH'], color: color)
+        else
+          completion_box(1, 'Seamanship', course_completions['S'], color: color)
         end
       end
 
