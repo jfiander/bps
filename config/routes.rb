@@ -299,6 +299,7 @@ Rails.application.routes.draw do
   ### API
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      post '/login',       to: 'auth#login'
       post '/verify_user', to: 'user_verify#verify'
     end
   end
