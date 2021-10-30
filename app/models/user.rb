@@ -150,7 +150,11 @@ class User < ApplicationRecord
   end
 
   def api_token
-    ApiToken.current.find_or_create_by(user: self).token
+    current_token.token
+  end
+
+  def current_token
+    ApiToken.current.find_or_create_by(user: self)
   end
 
 private

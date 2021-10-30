@@ -22,7 +22,7 @@ module Api
       end
 
       def token_hash
-        { token: user.api_token }
+        { token: user.current_token.token, expires_at: user.current_token.expires_at }
       end
 
       def unauthorized!
