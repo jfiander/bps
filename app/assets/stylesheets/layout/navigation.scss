@@ -59,6 +59,12 @@ ul#education {
     margin: 1em;
   }
 
+  a.catalog-button {
+    display: inline-block;
+    width: 16em;
+    height: 2.5em;
+  }
+
   li.catalog-button {
     @include blue-button(0.5em, $old-glory-blue-lighten-20);
     width: 15em;
