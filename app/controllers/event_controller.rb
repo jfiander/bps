@@ -14,7 +14,7 @@ class EventController < ApplicationController
   include Events::Update
   include Concerns::Application::RedirectWithStatus
 
-  before_action :prepare_lists, only: %i[schedule catalog]
+  before_action :prepare_lists, only: %i[schedule catalog registrations]
   before_action :current, only: %i[schedule]
   before_action :load_catalog, only: %i[catalog]
   before_action :registered_users, only: %i[schedule catalog]
@@ -39,8 +39,9 @@ class EventController < ApplicationController
     args = [
       event_type_param, { flat: true, include_invisible: @current_user_permitted_event_type }
     ]
-    @current = Event.fetch(args).with_registrations
-    @expired = Event.fetch(args.merge(expired: true)).with_registrations
+    @current = Event.fetch(*args).with_registrations
+    args[1].merge!(expired: true)
+    @expired = Event.fetch(*args).with_registrations
   end
 
   def show
