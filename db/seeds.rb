@@ -47,6 +47,10 @@ end
   EventType.create!(title: e, event_category: 'meeting')
 end
 
+%w[americas_boating_course pleasure_craft_operator_card cpr_aed].each do |e|
+  EventType.create!(title: e, event_category: 'public')
+end
+
 %w[home about join vsc education civic history links members welcome requirements user_help].each do |page|
   StaticPage.create!(name: page)
 end
