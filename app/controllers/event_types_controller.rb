@@ -80,7 +80,8 @@ private
   end
 
   def event_types_hash
-    @event_types = EventType.joins(:events).ordered.select(:id, :title, :event_category)
+    join = 'LEFT OUTER JOIN events ON events.event_type_id = event_types.id'
+    @event_types = EventType.joins(join).ordered.select(:id, :title, :event_category)
                             .select('COUNT(events.id) AS count').group(:id).map do |et|
       {
         id: et.id,
