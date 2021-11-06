@@ -112,3 +112,9 @@ form#nominations {
     height: 4em;
   }
 }
+
+form#birthday-month {
+  display: inline;
+
+  select { font-size: 1em; }
+}

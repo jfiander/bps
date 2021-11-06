@@ -1,6 +1,10 @@
 @media print {
+  .print {
+    display: unset;
+  }
+
   .no-print {
-    display: none;
+    display: none !important;
   }
 
   body, body div#main, body div#main div#content {

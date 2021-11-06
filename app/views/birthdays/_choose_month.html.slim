@@ -1,3 +1,4 @@
-= form_tag(birthdays_path, class: 'no-print') do
-  = select_tag(:month, options_for_select(Date::MONTHNAMES.compact.map.with_index { |m, i| [m, i + 1] }, @month), required: true)
-  = submit_tag('Load Month')
+span.print = Date::MONTHNAMES[@month]
+
+= form_tag(birthdays_path, id: 'birthday-month', class: 'no-print') do
+  = select_tag(:month, options_for_select(Date::MONTHNAMES.compact.map.with_index { |m, i| [m, i + 1] }, @month), required: true, onchange: 'this.form.submit();')
