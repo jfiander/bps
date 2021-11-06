@@ -48,6 +48,21 @@ Aws.config[:cloudfront] = {
         ],
         marker: '12345', max_items: 2, is_truncated: false, quantity: 2
       }
+    },
+    list_invalidations: {
+      invalidation_list: {
+        marker: 'marker',
+        max_items: 100,
+        is_truncated: false,
+        quantity: 1,
+        items: [
+          {
+            id: 'I3TUSXES93FBM3',
+            create_time: Time.now - 1.minute,
+            status: 'InProgress'
+          }
+        ]
+      }
     }
   }
 }

@@ -12,6 +12,18 @@ class Invalidation
     { invalidation: invalidation, result: invalidation.submit }
   end
 
+  def self.list(alias_name, verbose: true)
+    invalidation = new(alias_name)
+
+    { invalidation: invalidation, result: invalidation.list(verbose: verbose) }
+  end
+
+  def self.pending(alias_name)
+    invalidation = new(alias_name)
+
+    { invalidation: invalidation, result: invalidation.pending }
+  end
+
   def initialize(alias_name, *new_keys, caller_reference: nil)
     @alias_name = alias_name.to_sym
     add_keys(*new_keys)
@@ -41,10 +53,43 @@ class Invalidation
     @keys += new_keys.flatten.map { |k| validate_key!(k) }
   end
 
+  def list(verbose: true)
+    result = cloud_front.list_invalidations(
+      distribution_id: find_distro_id
+    )
+
+    puts(result.invalidation_list.items.map { |l| "#{l.id} -> #{l.status}" }, '') if verbose
+
+    result
+  end
+
+  def pending
+    list(verbose: false).invalidation_list.items.reject { |l| l.status == 'Completed' }
+  end
+
+  def pending?
+    pending.any?
+  end
+
 private
 
   def cloud_front
-    Aws::CloudFront::Client.new(region: 'us-east-2')
+    Aws::CloudFront::Client.new(cloud_front_attributes)
+  end
+
+  def cloud_front_attributes
+    attributes = { region: 'us-east-2' }
+
+    unless Rails.env.deployed?
+      attributes.merge!(
+        credentials: Aws::Credentials.new(
+          ENV['S3_ACCESS_KEY'],
+          ENV['S3_SECRET']
+        )
+      )
+    end
+
+    attributes
   end
 
   def find_distro_id

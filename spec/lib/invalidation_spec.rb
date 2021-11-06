@@ -42,6 +42,20 @@ RSpec.describe Invalidation, type: :lib do
       expect(inv_hash[:result].invalidation.status).to eql('InProgress')
     end
 
+    it 'detects a pending invalidation' do
+      expect(described_class.new(:files).pending?).to be(true)
+    end
+
+    it 'lists invalidations' do
+      list = described_class.list(:files, verbose: false)[:result]
+      expect(list.invalidation_list.items[0].id).to eq('I3TUSXES93FBM3')
+    end
+
+    it 'gets the pending invalidation' do
+      pending = described_class.pending(:files)[:result]
+      expect(pending[0].status).to eq('InProgress')
+    end
+
     it 'does not add keys' do
       inv_hash[:invalidation].add_keys('dev/something_else', '/dev/test_dir/')
 
