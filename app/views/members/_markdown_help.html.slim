@@ -89,7 +89,7 @@
 
     h2 Links
     p Bare URLs (e.g. <b>https://bpsd9.org</b>) will be automatically linked.
-    p
+    pre
       span.bold.red
         | [
       | Page Name
@@ -97,7 +97,7 @@
         | ](
       | http://example.com/some/path
       span.bold.red )
-    p
+    pre
       span.bold.red
         | [
       | Local Page
@@ -108,7 +108,7 @@
 
     h3 Email Links
     p You can specify an email address in a link.
-    p
+    pre
       span.bold.red
         | [
       | Email Name
@@ -119,7 +119,7 @@
 
     h3 Reference Links
     p You can specify reusable links, or simply define the URL for a link somewhere else in the page by using the following syntax:
-    p
+    pre
       span.bold.red
         | [
       | Link Name
@@ -127,7 +127,7 @@
         | ]: 
       | http://example.com/some/path
     p To use one of these links in the page, reference it like this:
-    p
+    pre
       span.bold.red
         | [
       | Link Text to Display
@@ -139,7 +139,7 @@
     hr
 
     h2 Image
-    p
+    pre
       span.bold.red ![
       | Image description
       span.bold.red ](
@@ -148,7 +148,7 @@
     hr
 
     h2 Horizontal line
-    p: span.bold.red ---
+    pre: span.bold.red ---
     hr
 
     h2 Bulleted list
@@ -158,7 +158,7 @@
       | You can indent items one level by preceeding the 
       span.bold.red> -
       | with two spaces
-    p
+    pre
       span.bold.red> -
       | Item 1
       br
@@ -215,7 +215,7 @@
       br
       | into where you want it to display on the page.
     p The format of these keys follows this pattern:
-    p
+    pre
       span.bold.red %file/
       | 7
       span.bold.red
@@ -229,12 +229,12 @@
     p The #{link_to("FontAwesome Pro", "https://fontawesome.com/icons?d=listing", target: :_blank)} icon library is available, if you want to use a particular icon somewhere in a page.
 
     h3 General Usage
-    p
+    pre
       span.bold.red %fa/
       | icon-name
       span.bold.red
         | /
-    p
+    pre
       span.bold.red %fa/
       | icon-name
       span.bold.red
@@ -262,42 +262,42 @@
         .table-cell Description
         .table-cell Examples
       .table-row.center
-        .table-cell fas
+        .table-cell: pre fas
         .table-cell solid
         .table-cell
           = FA::Icon.p('file-certificate', style: :solid)
           = FA::Icon.p('users', style: :solid)
           = FA::Icon.p('bars', style: :solid)
       .table-row.center
-        .table-cell far
+        .table-cell: pre far
         .table-cell hollow
         .table-cell
           = FA::Icon.p('file-certificate', style: :regular)
           = FA::Icon.p('users', style: :regular)
           = FA::Icon.p('bars', style: :regular)
       .table-row.center
-        .table-cell fal
+        .table-cell: pre fal
         .table-cell light
         .table-cell
           = FA::Icon.p('file-certificate', style: :light)
           = FA::Icon.p('users', style: :light)
           = FA::Icon.p('bars', style: :light)
       .table-row.center
-        .table-cell fat
+        .table-cell: pre fat
         .table-cell thin
         .table-cell
           = FA::Icon.p('file-certificate', style: :thin)
           = FA::Icon.p('users', style: :thin)
           = FA::Icon.p('bars', style: :thin)
       .table-row.center
-        .table-cell fad
+        .table-cell: pre fad
         .table-cell duotone
         .table-cell
           = FA::Icon.p('file-certificate', style: :duotone)
           = FA::Icon.p('users', style: :duotone)
           = FA::Icon.p('bars', style: :duotone)
       .table-row.center
-        .table-cell fa-fw
+        .table-cell: pre fa-fw
         .table-cell fixed-width
         .table-cell
           = FA::Icon.p('file-certificate', fa: :fw)
@@ -313,7 +313,7 @@
         .table-cell Style
         .table-cell Result
       .table-row.center
-        .table-cell
+        .table-cell: pre
           span.bold.red %fas/
           | users
           span.bold.red
@@ -321,7 +321,7 @@
         .table-cell solid
         .table-cell = FA::Icon.p('users', style: :solid)
       .table-row.center
-        .table-cell
+        .table-cell: pre
           span.bold.red %far/
           | users
           span.bold.red
@@ -329,7 +329,7 @@
         .table-cell hollow
         .table-cell = FA::Icon.p('users', style: :regular)
       .table-row.center
-        .table-cell
+        .table-cell: pre
           span.bold.red %fal/
           | users
           span.bold.red
@@ -337,7 +337,7 @@
         .table-cell light
         .table-cell = FA::Icon.p('users', style: :light)
       .table-row.center
-        .table-cell
+        .table-cell: pre
           span.bold.red %fat/
           | users
           span.bold.red
@@ -345,7 +345,7 @@
         .table-cell thin
         .table-cell = FA::Icon.p('users', style: :thin)
       .table-row.center
-        .table-cell
+        .table-cell: pre
           span.bold.red %fad/
           | users
           span.bold.red
@@ -360,7 +360,7 @@
         .table-cell Key
         .table-cell Result
       .table-row.center
-        .table-cell
+        .table-cell: pre
           span.bold.red %fak/
           | usps-cdr
           span.bold.red
@@ -370,7 +370,7 @@
             | /
         .table-cell = FA::Icon.p('usps-cdr', style: :kit_upload, fa: '4x')
       .table-row.center
-        .table-cell
+        .table-cell: pre
           span.bold.red %fak/
           | seahorse
           span.bold.red
@@ -382,7 +382,7 @@
 
     h3 Multiple Layered Icons
     p You can also specify layered icons, specified from bottom up, with each also supporting optional CSS classes.
-    p
+    pre
       span.bold.red %fam/
       | icon-name
       span.bold.red
@@ -396,7 +396,7 @@
 
     h3 Icons in Links
     p These icons can also be used in links.
-    p
+    pre
       span.bold.red
         | [%fa/
       | users
@@ -416,19 +416,19 @@
     .table
       .table-row
         .table-cell Birmingham burgee
-        .table-cell.bold.red %burgee
+        .table-cell.bold.red: pre %burgee
       .table-row
         .table-cell Education menu
-        .table-cell.bold.red %education
+        .table-cell.bold.red: pre %education
       .table-row
         .table-cell Activity Feed
-        .table-cell.bold.red %activity
+        .table-cell.bold.red: pre %activity
       .table-row
         .table-cell Next membership meeting
-        .table-cell.bold.red %meeting
+        .table-cell.bold.red: pre %meeting
       .table-row
         .table-cell Next ExCom meeting
-        .table-cell.bold.red %excom
+        .table-cell.bold.red: pre %excom
     p
       ' The
       span.red> %meeting
@@ -445,8 +445,7 @@
     h2 Comments
     p You can mark an entire paragraph as a comment. Comments will be removed before rendering the page.
     p These can be helpful if you want to temporarily change a page, but want to remember what it had before.
-    ul
-      li
-        span.bold.red
-          ' //
-        span.gray This is a comment.
+    pre
+      span.bold.red
+        ' //
+      span.gray This is a comment.
