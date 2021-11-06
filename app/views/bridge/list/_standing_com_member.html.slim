@@ -1,4 +1,4 @@
-div id=("#{committee}_post_#{member[:id]}") class=(index % 2 == 0 ? 'even' : 'odd')
+div id=("#{committee}_post_#{member[:id]}")
   - if @current_user_permitted_users
     = link_to(remove_standing_committee_path(member[:id]), method: :delete, remote: true, class: "red editor #{auto_show('bridge_editor')}",
     data: {confirm: "Are you sure you want to remove #{member[:simple_name].gsub('&nbsp;', ' ')} from the #{committee.titleize} Committee?"}) { FA::Icon.p('minus-square', style: :duotone) }

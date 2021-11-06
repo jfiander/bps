@@ -1,0 +1,329 @@
+@import "colors/_dark";
+
+@media (prefers-color-scheme: dark) {
+  .red             { color: darken($old-glory-red-desaturated, 20%); }
+  .issue           { color: $issue-red; }
+  .orange          { color: $orange; }
+  .gold            { color: $gold; }
+  .insignia-gold   { color: $dark-gold; }
+  .pending         { color: $pending-green; }
+  .green           { color: $green; }
+  .birmingham-blue { color: $birmingham-blue-desaturated; }
+  .blue            { color: $old-glory-blue; }
+  .admin           { color: $purple-desaturated; }
+  .gray            { color: #AAAAAA; }
+
+  .gray-background { background-color: $gray; }
+  .highlight       { background-color: $darker-green !important; }
+  .lowlight        { background-color: $dark-main-background-blue !important; }
+
+  .background     { color: $dark-content-background; }
+  .red-background {
+    background-color: $old-glory-red-desaturated;
+
+    .red { color: $dark-text; }
+  }
+
+  body {
+    color: $dark-text;
+    background-color: $dark-background-blue;
+  }
+
+  a { color: $birmingham-blue-desaturated; }
+
+  hr { border-color: #999999; }
+
+  div#main {
+    background-color: $dark-main-background-blue;
+
+    header div#desktop-header {
+      .logo {
+        background-color: $dark-logo-background;
+
+        // Desaturate logo
+        img {
+          filter: none;
+          -webkit-filter: grayscale(25%);
+          -moz-filter:    grayscale(25%);
+          -ms-filter:     grayscale(25%);
+          -o-filter:      grayscale(25%);
+        }
+      }
+      .slogan { color: $dark-text; }
+
+      div.header img.header { opacity: 50%; }
+    }
+
+    div#content {
+      background-color: $dark-content-background;
+
+      div#content-main {
+        div#activity-feed {
+          background-color: $dark-content-background-65;
+
+          a li.blue {
+            color: $dark-text;
+            background-color: $dark-content-background;
+            border-color: $old-glory-blue-desaturated;
+          }
+
+          a:hover li.blue { background-color: $dark-content-background-65; }
+        }
+      }
+    }
+  }
+
+  div#show-sidenav { background-color: $dark-content-background-65; }
+
+  div#sidenav, div.sub-menu { background-color: $dark-content-background; }
+
+  #navigation, #sidenav {
+    ul a li,
+    ul a.red li,
+    ul a.members li,
+    ul a.admin li { color: $dark-text; }
+
+    ul a li         { background-color: $birmingham-blue-desaturated; }
+    ul a.red li     { background-color: $old-glory-red-desaturated; }
+    ul a.members li { background-color: $old-glory-blue-desaturated; }
+    ul a.admin li   { background-color: $purple-desaturated; }
+  }
+
+  #nested-navigation {
+    background-color: $dark-background-blue-faded-30;
+    border-color: $old-glory-blue-desaturated;
+
+    ul {
+      a       { color: $birmingham-blue-darker; }
+      a.admin { color: $purple; }
+
+      li:hover { background-color: $dark-background-blue-faded-35; }
+
+      ul {
+        background-color: $dark-background-blue-faded-35;
+
+        a        { color: $birmingham-blue-darker; }
+        a:hover  { background-color: $dark-background-blue-faded-40; }
+        li:hover { background-color: $dark-background-blue-faded-40; }
+
+        ul {
+          background-color: $dark-background-blue-faded-35;
+
+          li { color: $birmingham-blue-darker; }
+          a:hover  { background-color: $dark-background-blue-faded-40; }
+          li:hover { background-color: $dark-background-blue-faded-40; }
+        }
+      }
+    }
+  }
+
+  ul#education {
+    li {
+      color: $dark-text;
+      background-color: $birmingham-blue-desaturated;
+    }
+
+    li.catalog-button {
+      color: $dark-text;
+      background-color: $old-glory-blue-desaturated;
+    }
+
+    li.active { background-color: $old-glory-red-desaturated; }
+  }
+
+  div#flashes {
+    div#success {
+      color: $old-glory-blue;
+      background-color: $birmingham-blue-desaturated-faded;
+    }
+
+    div#notice {
+      color: $old-glory-blue-lighten-20;
+      background-color: $birmingham-blue-desaturated;
+    }
+
+    div#alert {
+      color: $old-glory-red-desaturated;
+      background-color: $dark-old-glory-red-faded-25;
+      border-top: $old-glory-red-desaturated;
+      border-bottom: $old-glory-red-desaturated;
+    }
+
+    div#error {
+      color: $old-glory-red-desaturated;
+      background-color: $dark-old-glory-red-faded-35;
+    }
+  }
+
+  div.next-meeting {
+    color: $dark-text;
+    background-color: $dark-main-background-blue;
+
+    svg { color: $birmingham-blue-desaturated; }
+    .red { color: $old-glory-red-desaturated; }
+  }
+
+  a.big, a.medium, button.big, button.medium {
+    color: $dark-text;
+    background-color: $birmingham-blue-desaturated;
+  }
+
+  a.green { color: $dark-green; }
+
+  input:not([type='file']), select, textarea { background-color: $dark-text; }
+
+  div#new textarea.bulletted { background-color: $dark-background-blue-faded-10; }
+
+  div#editor { background-color: $dark-editor-background; }
+
+  div#login div#change-password { background-color: $old-glory-red-desaturated; }
+
+  div.events-unified-table div.event-unified {
+    div.title { color: $old-glory-red-desaturated; }
+
+    &.even {
+      background-color: $dark-background-blue-faded-40;
+
+      div.title { color: $dark-red; }
+
+      a             { color: $birmingham-blue-darker; }
+      a:hover       { color: $birmingham-blue-dark; }
+      a.blue        { color: $old-glory-blue-desaturated-faded; }
+      a.blue:hover  { color: $old-glory-blue; }
+      a.red         { color: $dark-red; }
+      a.red:hover   { color: $old-glory-red; }
+      a.admin       { color: $purple-desaturated; }
+      a.admin:hover { color: $purple; }
+      a.green       { color: $green-desaturated; }
+      a.green:hover { color: $green; }
+    }
+  }
+
+  div#expired-events-section {
+    background-color: $old-glory-red-desaturated;
+
+    div.event-unified.even { background-color: $dark-old-glory-red-faded-25; }
+
+    div.title { color: $old-glory-blue; }
+  }
+
+  div#bilge a               { background-color: $birmingham-blue-desaturated; }
+  div#bilge a.members       { background-color: $old-glory-blue-desaturated; }
+  div#bilge a.members:hover { background-color: $old-glory-blue-desaturated-faded; }
+
+  div#announcements a.download { background-color: $birmingham-blue-desaturated; }
+
+  ul#profile-actions li a.green { color: $green; }
+
+  div#otw-progress div.table-row div.table-cell.satisfied {
+    color: $darker-green;
+
+    svg.green { color: $darker-green; }
+  }
+
+  div#markdown-help .red { color: $old-glory-red-desaturated; }
+
+  div#instructors .birmingham-blue { color: $old-glory-blue-desaturated; }
+
+  div#payment-box {
+    background-color: $dark-editor-background;
+
+    div#payment-description { color: $dark-red; }
+
+    button#pay-button {
+      color: $dark-text;
+      background-color: $birmingham-blue-desaturated;
+    }
+
+    button#pay-button:hover { background-color: $dark-birmingham-blue; }
+
+    a { color: $old-glory-blue-desaturated; }
+  }
+
+  div.table-row.gray {
+    div.table-cell {
+      color: $old-glory-blue;
+      background-color: $dark-background-blue-faded-30;
+    }
+
+    div.table-cell.red {
+      color: $old-glory-red;
+      background-color: $dark-background-blue-faded-30;
+    }
+
+    div.table-cell.gray {
+      color: $gray;
+      background-color: $dark-background-blue-faded-30;
+    }
+  }
+
+  div.table.striped {
+    div.table-row:nth-child(odd)  { background-color: $dark-background-blue-faded-30; }
+    div.table-row:nth-child(even) { background-color: $dark-background-blue-faded-40; }
+    div.table-row.odd             { background-color: $dark-background-blue-faded-30; }
+    div.table-row.even            { background-color: $dark-background-blue-faded-40; }
+    div.table-row.header          { background-color: inherit; }
+
+    a             { color: $birmingham-blue-darker; }
+    a:hover       { color: $birmingham-blue-dark; }
+    a.blue        { color: $old-glory-blue-desaturated; }
+    a.blue:hover  { color: $old-glory-blue; }
+    a.red         { color: $dark-red; }
+    a.red:hover   { color: $old-glory-red; }
+    a.admin       { color: $purple-desaturated; }
+    a.admin:hover { color: $purple; }
+    a.green       { color: $green-desaturated; }
+    a.green:hover { color: $green; }
+  }
+
+  div.table.double-striped {
+    color: $dark-text;
+
+    div.table-row:nth-of-type(4n+3),
+    div.table-row:nth-of-type(4n+3) + * {
+      background-color: $dark-background-blue-faded-30;
+    }
+    div.table-row:nth-of-type(4n+1),
+    div.table-row:nth-of-type(4n+1) + * {
+      background-color: $dark-background-blue-faded-40;
+    }
+
+    div.table-row.header { background-color: inherit; }
+  }
+
+  input.big, button.big, a.big {
+    background-color: $birmingham-blue-desaturated;
+  }
+
+  input.medium, button.medium, a.medium {
+    background-color: $birmingham-blue-desaturated;
+  }
+
+  input.medium.light, button.medium.light, a.medium.light {
+    // No changes
+  }
+
+  input.cancel, button.cancel, a.cancel {
+    background-color: $old-glory-red-desaturated;
+  }
+
+  // Unchecked Colors
+  .slider {
+    &.darkblue-red       { background-color: $old-glory-blue-desaturated; }
+    &.darkblue-lightblue { background-color: $old-glory-blue-desaturated; }
+    &.lightblue-red      { background-color: $birmingham-blue-desaturated; }
+    &.lightblue-darkblue { background-color: $birmingham-blue-desaturated; }
+    &.red-lightblue      { background-color: $old-glory-red-desaturated; }
+    &.red-darkblue       { background-color: $old-glory-red-desaturated; }
+  }
+
+  // Checked Colors
+  input:checked + .slider {
+    &.darkblue-red       { background-color: $old-glory-red-desaturated; }
+    &.darkblue-lightblue { background-color: $birmingham-blue-desaturated; }
+    &.lightblue-red      { background-color: $old-glory-red-desaturated; }
+    &.lightblue-darkblue { background-color: $old-glory-blue-desaturated; }
+    &.red-lightblue      { background-color: $birmingham-blue-desaturated; }
+    &.red-darkblue       { background-color: $old-glory-blue-desaturated; }
+  }
+}

@@ -1,5 +1,6 @@
 .table-row.standing-committee
   .table-cell.committee-name = "#{committee.titleize} Committee"
   .table-cell
-    - members&.each_with_index do |member, index|
-      = render('bridge/list/standing_com_member', committee: committee, member: member, index: index)
+    .table.striped
+      - members&.each do |member|
+        .table-row: .table-cell = render('bridge/list/standing_com_member', committee: committee, member: member)

@@ -1,0 +1,32 @@
+// Desaturated Colors
+
+$birmingham-blue-desaturated:  #4C87C3; // 50%
+$old-glory-blue-desaturated:   #071E3F; // 10%
+$old-glory-red-desaturated:    #9B314E; // 40%
+$background-blue-desaturated:  #CCD2DA; // 50%
+$purple-desaturated:           #602060; // 50%
+$green-desaturated:            #206020; // 50%
+
+// Specific Colors
+
+$dark-text: #DDDDDD;
+
+$dark-red: darken($old-glory-red, 15%);
+$dark-birmingham-blue: darken($birmingham-blue, 10%);
+$dark-green: darken($green, 5%);
+$darker-green: darken($green, 10%);
+
+$dark-background-blue: darken($background-blue, 70%);
+$dark-main-background-blue: lighten($dark-background-blue, 5%);
+$dark-content-background: darken($content-background, 60%);
+$dark-content-background-65: darken($content-background, 65%);
+$dark-editor-background: darken($background-lighten-3, 40%);
+$dark-logo-background: rgba($gray, 0.6);
+$dark-background-blue-faded-10: darken($background-blue-faded, 10%);
+$dark-background-blue-faded-30: darken($background-blue-faded, 30%);
+$dark-background-blue-faded-35: darken($background-blue-faded, 35%);
+$dark-background-blue-faded-40: darken($background-blue-faded, 40%);
+$old-glory-blue-desaturated-faded: lighten($old-glory-blue-desaturated, 10%);
+$dark-old-glory-red-faded-25: lighten($old-glory-red-desaturated, 25%);
+$dark-old-glory-red-faded-35: lighten($old-glory-red-desaturated, 35%);
+$birmingham-blue-desaturated-faded: lighten($birmingham-blue-desaturated, 5%);
