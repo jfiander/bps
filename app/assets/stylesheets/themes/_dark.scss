@@ -36,22 +36,24 @@
   div#main {
     background-color: $dark-main-background-blue;
 
-    header div#desktop-header {
-      .logo {
-        background-color: $dark-logo-background;
+    header {
+      div#desktop-header {
+        .logo { background-color: $dark-logo-background; }
+        .slogan { color: $dark-text; }
 
-        // Desaturate logo
-        img {
-          filter: none;
-          -webkit-filter: grayscale(25%);
-          -moz-filter:    grayscale(25%);
-          -ms-filter:     grayscale(25%);
-          -o-filter:      grayscale(25%);
-        }
+        div.header img.header { opacity: 50%; }
       }
-      .slogan { color: $dark-text; }
 
-      div.header img.header { opacity: 50%; }
+      div#print-header { background-color: $dark-content-background-65; }
+
+      // Desaturate logo
+      div#desktop-header .logo img, div#print-header img {
+        filter: none;
+        -webkit-filter: grayscale(25%);
+        -moz-filter:    grayscale(25%);
+        -ms-filter:     grayscale(25%);
+        -o-filter:      grayscale(25%);
+      }
     }
 
     div#content {
