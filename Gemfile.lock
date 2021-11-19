@@ -224,6 +224,8 @@ GEM
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
+    nokogiri (1.12.5-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
@@ -432,6 +434,7 @@ GEM
 
 PLATFORMS
   -darwin-21
+  arm64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
@@ -502,7 +505,7 @@ DEPENDENCIES
   usps_flags-grades (~> 0.1.5)
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.7.4p191
 
 BUNDLED WITH
-   2.2.30
+   2.2.31

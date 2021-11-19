@@ -47,5 +47,5 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
 
 set :use_sudo, true
 
-set :rvm_ruby_version, '2.5.1'
+set :rvm_ruby_version, '2.7.4'
 set :passenger_restart_with_touch, true
