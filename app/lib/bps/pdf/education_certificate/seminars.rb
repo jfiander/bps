@@ -26,7 +26,7 @@ module BPS
         end
 
         def seminar_list
-          @seminar_list ||= CodeList.new.seminars
+          @seminar_list ||= BPS::CodeList.new.seminars
         end
 
         def seminar_box(seminar, column)

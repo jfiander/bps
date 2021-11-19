@@ -29,6 +29,6 @@ class FloatPlan < ApplicationRecord
   end
 
   def invalidate!
-    Invalidation.submit(:files, "/float_plans/#{id}.pdf")
+    BPS::Invalidation.submit(:files, "/float_plans/#{id}.pdf")
   end
 end

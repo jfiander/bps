@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Invalidation, type: :lib do
+RSpec.describe BPS::Invalidation, type: :lib do
   let(:invalidation) { described_class.new(:files, 'dev/test_file') }
 
   context 'with a pending request' do

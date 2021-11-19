@@ -54,9 +54,9 @@ SimpleCov.start('rails') do
   add_filter '/app/lib/bps/sms.rb'
   add_filter '/app/lib/bps/push.rb'
   ## used for configuring regular meetings
-  add_filter '/app/lib/regular_meetings.rb'
+  add_filter '/app/lib/bps/regular_meetings.rb'
   ## used for fetching git information
-  add_filter '/app/lib/git_info.rb'
+  add_filter '/app/lib/bps/git_info.rb'
   ## used to improve markdown formatting
   add_filter '/app/lib/target_blank_renderer.rb'
   add_filter '/app/lib/parsed_markdown.rb'

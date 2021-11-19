@@ -24,7 +24,7 @@ private
   end
 
   def seminar_list
-    @seminar_list = CodeList.new.seminars.map do |h|
+    @seminar_list = BPS::CodeList.new.seminars.map do |h|
       h = h.except('green', 'yellow')
 
       case h['code']
@@ -45,19 +45,19 @@ private
   end
 
   def course_list
-    @course_list = CodeList.new.courses.map do |h|
+    @course_list = BPS::CodeList.new.courses.map do |h|
       { h['code'] => h['name'] }
     end.compact.reduce({}, :merge)
   end
 
   def exam_list
-    @exam_list = CodeList.new.courses.map do |h|
+    @exam_list = BPS::CodeList.new.courses.map do |h|
       { h['exam_prefix'] => "#{h['name']} Exam" }
     end.compact.reduce({}, :merge)
   end
 
   def boc_skills_list
-    @boc_skills_list = CodeList.new.boc_skills.map do |h|
+    @boc_skills_list = BPS::CodeList.new.boc_skills.map do |h|
       { h['code'] => h['name'] }
     end.compact.reduce({}, :merge)
   end

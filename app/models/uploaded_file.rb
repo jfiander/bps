@@ -25,6 +25,6 @@ class UploadedFile < ApplicationRecord
   end
 
   def invalidate!
-    Invalidation.submit(self.class.bucket, file.s3_object.key)
+    BPS::Invalidation.submit(self.class.bucket, file.s3_object.key)
   end
 end

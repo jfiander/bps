@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CodeList, type: :lib do
+RSpec.describe BPS::CodeList, type: :lib do
   it 'includes a valid seminar' do
     expect(described_class.new.seminars).to include('name' => 'Sail Trim', 'code' => 'SAILTR')
   end
