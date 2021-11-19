@@ -10,14 +10,21 @@ RSpec.describe ReceiptMailer, type: :mailer do
   let(:generic) { FactoryBot.create(:generic_payment, email: 'nobody@example.com') }
 
   let(:transaction) do
-    TransactionStub.new(
-      SecureRandom.hex(8), Time.now, 10, CustomerDetails.new(user.email), '', CreditCardDetails.new('AMEX', '', '1234')
+    instance_double(
+      'Braintree::Transaction',
+      id: SecureRandom.hex(8), created_at: Time.now, amount: 10,
+      customer_details: customer_details,
+      credit_card_details: credit_card
     )
   end
-
-  TransactionStub = Struct.new(:id, :created_at, :amount, :customer_details, :promo_code, :credit_card_details)
-  CustomerDetails = Struct.new(:email)
-  CreditCardDetails = Struct.new(:card_type, :image_url, :last_4)
+  let(:customer_details) do
+    instance_double('Braintree::Transaction::CustomerDetails', email: user.email)
+  end
+  let(:credit_card) do
+    instance_double(
+      'Braintree::Transaction::CreditCardDetails', card_type: 'AMEX', image_url: '', last_4: '1234'
+    )
+  end
 
   before { generic_seo_and_ao }
 
