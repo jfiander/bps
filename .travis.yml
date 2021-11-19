@@ -19,7 +19,7 @@ notifications:
 services:
   - mysql
 before_install:
-  - gem install bundler -v '< 2'
+  - gem install bundler:2.2.31
 before_script:
   - export TZ=America/Detroit
   - cp config/database.travis.yml config/database.yml
