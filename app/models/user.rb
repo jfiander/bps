@@ -10,6 +10,7 @@ class User < ApplicationRecord
   include User::BOC
   include User::Dues
   include User::RosterFormat
+  include User::Push
 
   devise(
     :invitable, :database_authenticatable, :recoverable, :trackable, :lockable,
