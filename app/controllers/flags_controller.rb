@@ -43,7 +43,7 @@ private
   end
 
   def bucket
-    @bucket = BpsS3.new(:static)
+    @bucket = BPS::S3.new(:static)
   end
 
   def fly

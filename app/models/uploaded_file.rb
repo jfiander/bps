@@ -21,7 +21,7 @@ class UploadedFile < ApplicationRecord
   def link(permalinks: false)
     return permalink if permalinks
 
-    BpsS3.new(self.class.bucket).link(file.s3_object.key)
+    BPS::S3.new(self.class.bucket).link(file.s3_object.key)
   end
 
   def invalidate!

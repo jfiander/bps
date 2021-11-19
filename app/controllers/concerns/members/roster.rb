@@ -10,7 +10,7 @@ module Members
       respond_to do |format|
         format.html
         format.pdf do
-          roster_file = BpsS3.new(:files).download("roster/#{roster_filename}")
+          roster_file = BPS::S3.new(:files).download("roster/#{roster_filename}")
           send_data(roster_file, filename: roster_filename.dup.tr('_', ' '), disposition: :inline)
         end
       end
@@ -19,7 +19,7 @@ module Members
     def update_roster; end
 
     def upload_roster
-      BpsS3.new(:files).upload(file: roster_params[:roster], key: "roster/#{roster_filename}")
+      BPS::S3.new(:files).upload(file: roster_params[:roster], key: "roster/#{roster_filename}")
       Invalidation.submit(:files, "roster/#{roster_filename}")
 
       flash[:success] = 'Roster file succesfully updated!'
@@ -45,7 +45,7 @@ module Members
     end
 
     def redirect_if_no_roster
-      redirect_to root_path unless BpsS3.new(:files).has?("roster/#{roster_filename}")
+      redirect_to root_path unless BPS::S3.new(:files).has?("roster/#{roster_filename}")
     end
 
     def roster_filename
@@ -65,7 +65,7 @@ module Members
     end
 
     def generate_and_send_roster
-      pdf = BpsPdf::Roster.send(
+      pdf = BPS::PDF::Roster.send(
         roster_orientation, include_blank: roster_params[:include_blank].present?
       )
 
@@ -82,7 +82,7 @@ module Members
       pdf_file.rewind
 
       pdf_file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'r+')
-      BpsS3.new(:files).upload(file: pdf_file, key: "roster/#{roster_filename}")
+      BPS::S3.new(:files).upload(file: pdf_file, key: "roster/#{roster_filename}")
       Invalidation.submit(:files, "roster/#{roster_filename}")
     end
   end

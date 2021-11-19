@@ -1,4 +1,4 @@
-iframe#roster src=(BpsS3.new(:files).link("roster/Birmingham_Power_Squadron_-_#{Date.today.strftime('%Y')}_Roster.pdf"))
+iframe#roster src=(BPS::S3.new(:files).link("roster/Birmingham_Power_Squadron_-_#{Date.today.strftime('%Y')}_Roster.pdf"))
 
 hr
 = link_to 'Download Roster PDF', roster_path(format: :pdf)

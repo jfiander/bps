@@ -10,7 +10,7 @@ module Members
     end
 
     def unsubscribe
-      BpsSMS.unsubscribe(registration.subscription_arn)
+      BPS::SMS.unsubscribe(registration.subscription_arn)
       registration.update(subscription_arn: nil)
 
       render :subscribe
@@ -33,7 +33,7 @@ module Members
     end
 
     def new_subscription(registration)
-      BpsSMS.subscribe(registration.event.topic_arn, registration.user.phone_c).subscription_arn
+      BPS::SMS.subscribe(registration.event.topic_arn, registration.user.phone_c).subscription_arn
     end
   end
 end

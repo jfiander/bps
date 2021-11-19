@@ -41,7 +41,7 @@ h1 = "#{@edit_action} Location"
       = f.file_field :picture, id: 'location_picture_file'
       - if @location.picture.present?
         br
-        = image_tag(BpsS3.new(:files).link(@location.picture.s3_object(:thumb).key))
+        = image_tag(BPS::S3.new(:files).link(@location.picture.s3_object(:thumb).key))
         p Remove picture: #{f.check_box(:delete_attachment, id: 'location_picture_remove')}
     br.clear
 

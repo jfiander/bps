@@ -31,7 +31,7 @@ module Admin
     end
 
     def seo_link(key)
-      BpsS3.new(:seo).link(key, expires_at: expires_at)
+      BPS::S3.new(:seo).link(key, expires_at: expires_at)
     end
   end
 end

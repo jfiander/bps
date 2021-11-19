@@ -5,7 +5,7 @@ module Members
     include DateHelper
 
     def nominations
-      @awards = BpsPdf::Roster::Detailed::CONFIG_TEXT[:awards].dup
+      @awards = BPS::PDF::Roster::Detailed::CONFIG_TEXT[:awards].dup
       @description = @awards.delete(:top)
       due_date
     end

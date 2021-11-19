@@ -21,11 +21,11 @@ class FloatPlan < ApplicationRecord
   alias onboard :float_plan_onboards
 
   def generate_pdf
-    update!(pdf: BpsPdf::FloatPlan.for(self))
+    update!(pdf: BPS::PDF::FloatPlan.for(self))
   end
 
   def link
-    BpsS3.new(:floatplans).link("#{id}.pdf")
+    BPS::S3.new(:floatplans).link("#{id}.pdf")
   end
 
   def invalidate!

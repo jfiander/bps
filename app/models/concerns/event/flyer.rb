@@ -7,7 +7,7 @@ module Concerns
 
       def pick_flyer
         if flyer.present?
-          BpsS3.new(:files).link(flyer&.s3_object&.key)
+          BPS::S3.new(:files).link(flyer&.s3_object&.key)
         elsif course?
           book_cover(:courses)
         elsif seminar?
@@ -18,7 +18,7 @@ module Concerns
     private
 
       def book_cover(type)
-        BpsS3.new(:static).link("book_covers/#{type}/#{cover_file_name}.jpg")
+        BPS::S3.new(:static).link("book_covers/#{type}/#{cover_file_name}.jpg")
       end
 
       def cover_file_name

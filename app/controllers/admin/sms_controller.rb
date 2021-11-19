@@ -8,7 +8,7 @@ module Admin
 
     def send_message
       if (user = User.find_by(id: sms_params[:user_id]))
-        BpsSMS.publish(user.phone_c, sms_params[:message])
+        BPS::SMS.publish(user.phone_c, sms_params[:message])
         redirect_to(admin_message_path, success: 'Successfully sent message.')
       else
         redirect_to(admin_message_path, alert: 'Unable to find that user.')

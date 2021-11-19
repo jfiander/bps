@@ -95,7 +95,7 @@ private
 
   def send_certificate
     send_file(
-      BpsPdf::EducationCertificate.for(
+      BPS::PDF::EducationCertificate.for(
         @user, membership_date: membership_date, last_mm: @last_mm
       ), disposition: :inline
     )

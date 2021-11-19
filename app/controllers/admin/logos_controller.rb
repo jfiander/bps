@@ -84,7 +84,7 @@ module Admin
 
     def find_logo
       return invalid_logo unless validate_logo
-      return @logo = BpsS3.new(:static).link(logo_key) if BpsS3.new(:static).has?(logo_key)
+      return @logo = BPS::S3.new(:static).link(logo_key) if BPS::S3.new(:static).has?(logo_key)
 
       attempt_to_generate
     end
@@ -94,12 +94,12 @@ module Admin
       return invalid_logo unless logo_params[:size].to_i.positive?
 
       upload_logo(generate_logo)
-      @logo = BpsS3.new(:static).link(logo_key)
+      @logo = BPS::S3.new(:static).link(logo_key)
     end
 
     def generate_logo
       time = Time.now.to_i
-      svg = BpsS3.new(:static).download("logos/ABC/#{svg_key}")
+      svg = BPS::S3.new(:static).download("logos/ABC/#{svg_key}")
       generate_png(svg, time, background)
 
       USPSFlags::Helpers.resize_png(
@@ -119,7 +119,7 @@ module Admin
     end
 
     def upload_logo(file)
-      BpsS3.new(:static).upload(file: file, key: logo_key)
+      BPS::S3.new(:static).upload(file: file, key: logo_key)
     end
   end
 end

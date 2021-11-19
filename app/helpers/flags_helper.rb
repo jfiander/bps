@@ -55,11 +55,14 @@ module FlagsHelper
 private
 
   def flag_image(path, **options)
-    image_tag(BpsS3.new(:static).link(path), **options)
+    image_tag(BPS::S3.new(:static).link(path), **options)
   end
 
   def dl_link(text, path)
-    link_to(text, BpsS3.new(:static).link(path), disposition: 'inline', title: dl_link_title(text))
+    link_to(
+      text, BPS::S3.new(:static).link(path),
+      disposition: 'inline', title: dl_link_title(text)
+    )
   end
 
   def dl_link_title(text)

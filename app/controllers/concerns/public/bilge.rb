@@ -36,7 +36,7 @@ module Public
 
     def send_bilge(bilge)
       send_data(
-        URI.parse(BpsS3.new(:bilge).link(bilge.file.s3_object.key)).open.read,
+        URI.parse(BPS::S3.new(:bilge).link(bilge.file.s3_object.key)).open.read,
         filename: "Bilge Chatter - #{bilge.full_issue}.pdf",
         type: 'application/pdf',
         disposition: 'inline'

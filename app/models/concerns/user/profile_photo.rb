@@ -6,7 +6,7 @@ class User
 
     def photo(style: :medium)
       if photo?
-        BpsS3.new(:files).link(profile_photo.s3_object(style).key)
+        BPS::S3.new(:files).link(profile_photo.s3_object(style).key)
       else
         User.no_photo
       end
@@ -21,7 +21,7 @@ class User
 
     def photo?
       profile_photo.present? &&
-        BpsS3.new(:files).object(profile_photo.s3_object.key).exists?
+        BPS::S3.new(:files).object(profile_photo.s3_object.key).exists?
     end
 
     def attach_photo(file)

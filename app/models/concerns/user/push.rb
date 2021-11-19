@@ -5,7 +5,7 @@ class User
     extend ActiveSupport::Concern
 
     def push(message, title: nil, priority: :normal)
-      BpsPush.notify(self, message, title: title, priority: priority)
+      BPS::Push.notify(self, message, title: title, priority: priority)
     end
   end
 end

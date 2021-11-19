@@ -14,7 +14,7 @@ module Roster
     end
 
     def self.download_current_roster
-      file = BpsS3.new(:files).download("roster/#{roster_file_name}")
+      file = BPS::S3.new(:files).download("roster/#{roster_file_name}")
       File.open("#{Rails.root}/tmp/run/roster.pdf", 'wb') { |f| f.write(file) }
     end
 
@@ -29,11 +29,11 @@ module Roster
     end
 
     def self.roster_generated_at
-      BpsS3.new(:files).object("roster/#{roster_file_name}").last_modified
+      BPS::S3.new(:files).object("roster/#{roster_file_name}").last_modified
     end
 
     def link
-      BpsS3.new(:files).link(file.s3_object.key)
+      BPS::S3.new(:files).link(file.s3_object.key)
     end
   end
 end

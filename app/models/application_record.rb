@@ -11,7 +11,7 @@ class ApplicationRecord < ActiveRecord::Base
   def self.paperclip_defaults(bucket)
     defaults = {
       storage: :s3, s3_region: 'us-east-2', s3_permissions: :private,
-      s3_credentials: { bucket: BpsS3.new(bucket).full_bucket }
+      s3_credentials: { bucket: BPS::S3.new(bucket).full_bucket }
     }
 
     unless Rails.env.deployed?

@@ -17,7 +17,7 @@ module Concerns
         return if reminded?
 
         registrations.each { |reg| RegistrationMailer.remind(reg).deliver }
-        BpsSMS.broadcast(topic_arn, reminder_message(event_type))
+        BPS::SMS.broadcast(topic_arn, reminder_message(event_type))
 
         update(reminded_at: Time.now)
       end

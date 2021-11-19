@@ -49,8 +49,10 @@ SimpleCov.start('rails') do
   ## used for configuring API access
   add_filter '/app/models/concerns/payment/braintree_methods.rb'
   add_filter '/app/models/concerns/payment/model_configs.rb'
+  add_filter '/app/models/concerns/user/push.rb'
   add_filter '/app/models/concerns/excom.rb'
-  add_filter '/app/lib/bps_sms.rb'
+  add_filter '/app/lib/bps/sms.rb'
+  add_filter '/app/lib/bps/push.rb'
   ## used for configuring regular meetings
   add_filter '/app/lib/regular_meetings.rb'
   ## used for fetching git information
@@ -98,12 +100,14 @@ end
 
 GoogleAPI.mock!
 
-class BpsSMS
-  def create_topic
-    MockTopicResponse.new(SecureRandom.hex(16))
-  end
+module BPS
+  class SMS
+    def create_topic
+      MockTopicResponse.new(SecureRandom.hex(16))
+    end
 
-  MockTopicResponse = Struct.new(:topic_arn)
+    MockTopicResponse = Struct.new(:topic_arn)
+  end
 end
 
 RSpec::Matchers.define :contain_and_match do |*expected|

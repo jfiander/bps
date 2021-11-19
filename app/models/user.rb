@@ -37,7 +37,7 @@ class User < ApplicationRecord
   has_many :events, through: :event_instructors
 
   def self.no_photo
-    ActionController::Base.helpers.image_path(BpsS3.new(:static).link('no_profile.png'))
+    ActionController::Base.helpers.image_path(BPS::S3.new(:static).link('no_profile.png'))
   end
 
   def self.position_associations
@@ -108,7 +108,7 @@ class User < ApplicationRecord
 
   def add_subscription(reg)
     # :nocov:
-    arn = BpsSMS.subscribe(reg.event.topic_arn, phone_c).subscription_arn
+    arn = BPS::SMS.subscribe(reg.event.topic_arn, phone_c).subscription_arn
     reg.update_attribute(:subscription_arn, arn)
     # :nocov:
   end
@@ -183,7 +183,7 @@ private
     return true if phone_c.blank?
 
     begin
-      BpsSMS.validate_number(phone_c)
+      BPS::SMS.validate_number(phone_c)
     rescue RuntimeError => e
       raise e unless e.message =~ /^Invalid phone number to subscribe/
 

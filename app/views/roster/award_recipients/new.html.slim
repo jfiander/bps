@@ -32,7 +32,7 @@
       = f.file_field :photo
       - if @record.photo.present?
         br
-        = image_tag BpsS3.new(:files).link(@record.photo&.s3_object(:thumb)&.key)
+        = image_tag BPS::S3.new(:files).link(@record.photo&.s3_object(:thumb)&.key)
     br.clear
 
     .center = f.submit 'Submit Award Recipient', class: 'big'

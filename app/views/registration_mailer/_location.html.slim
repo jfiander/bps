@@ -16,5 +16,5 @@ p
       br
   - if @registration.event.location.picture.present?
     br
-    = link_to(BpsS3.new(:files).link(@registration.event.location.picture.path(:large))) do
-      = image_tag BpsS3.new(:files).link(@registration.event.location.picture.path(:thumb)), title: 'Location'
+    = link_to(BPS::S3.new(:files).link(@registration.event.location.picture.path(:large))) do
+      = image_tag BPS::S3.new(:files).link(@registration.event.location.picture.path(:thumb)), title: 'Location'

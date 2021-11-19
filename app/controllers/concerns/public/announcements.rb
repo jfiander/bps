@@ -25,7 +25,7 @@ module Public
 
     def send_announcement(file)
       send_data(
-        URI.parse(BpsS3.new(:files).link(file.file.s3_object.key)).open.read,
+        URI.parse(BPS::S3.new(:files).link(file.file.s3_object.key)).open.read,
         filename: "BPS Announcement - #{file.title}.pdf",
         type: 'application/pdf',
         disposition: 'inline'

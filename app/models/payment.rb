@@ -75,11 +75,11 @@ class Payment < ApplicationRecord
   end
 
   def receipt_link
-    receipt.present? ? BpsS3.new(:files).link(receipt.s3_object.key) : '#'
+    receipt.present? ? BPS::S3.new(:files).link(receipt.s3_object.key) : '#'
   end
 
   def receipt!
-    update!(receipt: BpsPdf::Receipt.create_pdf(self))
+    update!(receipt: BPS::PDF::Receipt.create_pdf(self))
     receipt_link
   end
 

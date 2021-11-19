@@ -5,17 +5,17 @@ h1 = @user.full_name
 
   .insignia
     .long
-      p = image_tag(BpsS3.new(:static).link("flags/PNG/#{@rank_flag}.500.png"), class: 'flag') if @user.auto_rank.present?
-      p = image_tag(BpsS3.new(:static).link("insignia/PNG/grades/tr/#{@insignia[:grade]}.png"), title: @insignia_title[:grade], class: @insignia[:grade]) if @insignia[:grade].present?
-      p = image_tag(BpsS3.new(:static).link("insignia/PNG/membership/tr/#{@insignia[:membership]}.png"), title: @insignia_title[:membership]) if @insignia[:membership].present?
+      p = image_tag(BPS::S3.new(:static).link("flags/PNG/#{@rank_flag}.500.png"), class: 'flag') if @user.auto_rank.present?
+      p = image_tag(BPS::S3.new(:static).link("insignia/PNG/grades/tr/#{@insignia[:grade]}.png"), title: @insignia_title[:grade], class: @insignia[:grade]) if @insignia[:grade].present?
+      p = image_tag(BPS::S3.new(:static).link("insignia/PNG/membership/tr/#{@insignia[:membership]}.png"), title: @insignia_title[:membership]) if @insignia[:membership].present?
     #merit-marks title=(@insignia_title[:mm])
       - @user.mm&.times do |i|
-        = image_tag(BpsS3.new(:static).link('insignia/PNG/mm.png'))
+        = image_tag(BPS::S3.new(:static).link('insignia/PNG/mm.png'))
         - if (i + 1) % 20 == 0
           br
     p
-      = image_tag(BpsS3.new(:static).link('insignia/CI/CI.350.png'), class: 'pin', title: 'Certified Instructor') if @user.valid_instructor?
-      = image_tag(BpsS3.new(:static).link('insignia/VE/VE.350.png'), class: 'pin', title: 'Certified Vessel Examiner') if @user.vessel_examiner?
+      = image_tag(BPS::S3.new(:static).link('insignia/CI/CI.350.png'), class: 'pin', title: 'Certified Instructor') if @user.valid_instructor?
+      = image_tag(BPS::S3.new(:static).link('insignia/VE/VE.350.png'), class: 'pin', title: 'Certified Vessel Examiner') if @user.vessel_examiner?
 
   .table
     .table-row
