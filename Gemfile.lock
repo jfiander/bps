@@ -224,6 +224,8 @@ GEM
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
     os (1.1.4)
     paper_trail (9.2.0)
@@ -430,6 +432,7 @@ GEM
 
 PLATFORMS
   -darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   awesome_print (~> 1.8.0)
