@@ -4,8 +4,8 @@ class CompletionsController < ApplicationController
   secure!(:education)
 
   before_action(only: :ytd) { @ytd = true }
-  before_action(only: :list) { @ytd = false }
-  before_action :completions
+  before_action(only: %i[list year]) { @ytd = false }
+  before_action :completions, except: :year
   before_action :seminar_list
   before_action :course_list
   before_action :exam_list
@@ -17,10 +17,24 @@ class CompletionsController < ApplicationController
     render :list
   end
 
+  def year
+    @year = clean_params[:year]
+    completions
+    render :list
+  end
+
 private
 
+  def clean_params
+    params.permit(:year)
+  end
+
   def completions
-    @completions = CourseCompletion.with_users.send(@ytd ? :ytd : :all).by_user
+    @completions = if @year.present?
+                     CourseCompletion.with_users.for_year(@year).by_user
+                   else
+                     CourseCompletion.with_users.send(@ytd ? :ytd : :all).by_user
+                   end
   end
 
   def seminar_list

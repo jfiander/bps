@@ -18,4 +18,21 @@ RSpec.describe CourseCompletion, type: :model do
 
     expect(user.completions).to eql('SE' => '2018-07-01', 'PI' => '2018-08-01', 'AP' => '2018-09-01')
   end
+
+  describe 'for_year' do
+    subject(:completions) { CourseCompletion.for_year(2021) }
+
+    let(:user) { FactoryBot.create(:user) }
+
+    before do
+      FactoryBot.create(:course_completion, user: user, date: '20201231', course_key: 'SE')
+      FactoryBot.create(:course_completion, user: user, date: '20210315', course_key: 'PI')
+      FactoryBot.create(:course_completion, user: user, date: '20220101', course_key: 'AP')
+    end
+
+    it 'filters by year', :aggregate_failures do
+      expect(completions.count).to eq(1)
+      expect(completions.first.course_key).to eq('PI')
+    end
+  end
 end

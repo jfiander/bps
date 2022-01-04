@@ -217,8 +217,9 @@ Rails.application.routes.draw do
   get     '/vsc/available',       to: 'members#vse'
 
   # Course Completions
-  get     '/completions',     to: 'completions#list'
-  get     '/completions/ytd', to: 'completions#ytd'
+  get     '/completions',      to: 'completions#list'
+  get     '/completions/ytd',  to: 'completions#ytd'
+  get     '/completions/:year', to: 'completions#year'
 
   # Birthdays
   get    '/birthdays(/:month)',        to: 'birthdays#birthdays',  as: 'birthdays'
