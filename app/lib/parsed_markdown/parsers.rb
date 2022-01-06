@@ -85,6 +85,12 @@ class ParsedMarkdown
       match_replace(%r{%file/(\d+)/([^/]*?)/}) { |match| file_link(match[1], title: match[2]) }
     end
 
+    def parse_button
+      match_replace(%r{%filebutton/(\d+)/([^/]*?)/}) do |match|
+        file_button(match[1], title: match[2])
+      end
+    end
+
     # Custom key for "FA-Multiple" - layered icons
     def parse_fam
       layer_regexp = %r{%fam/[^/]*/}

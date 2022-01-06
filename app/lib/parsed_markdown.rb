@@ -5,7 +5,7 @@ class ParsedMarkdown < String
   PARSERS ||= %i[
     comments center big reg list email
     burgee education meeting excom classed activity
-    image link fam fa
+    image link button fam fa
   ].freeze
 
   include ParsedMarkdown::Parsers
@@ -33,18 +33,24 @@ private
   end
 
   def static_link(id, title: nil)
-    markdown_link(prefix: 'general', id: id, title: title)
+    markdown_link_or_button(prefix: 'general', id: id, title: title, mode: :link)
   end
 
   def file_link(id, title: nil)
-    markdown_link(prefix: 'uploaded/markdown_files', id: id, title: title)
+    markdown_link_or_button(prefix: 'uploaded/markdown_files', id: id, title: title, mode: :link)
   end
 
-  def markdown_link(prefix:, id:, title: nil)
+  def file_button(id, title: nil)
+    markdown_link_or_button(prefix: 'uploaded/markdown_files', id: id, title: title, mode: :button)
+  end
+
+  def markdown_link_or_button(prefix:, id:, title: nil, mode: :link)
+    raise "Invalid mode: #{mode}" unless mode.in?(%i[link button])
+
     key = get_uploaded_file_name(id)
     link_title = title || key
     link_path = @files_bucket.link("#{prefix}/#{key}")
-    @view_context.link_to(link_path, target: :_blank) do
+    @view_context.public_send("#{mode}_to", link_path, target: :_blank) do
       FA::Icon.p('download', style: :duotone) + link_title
     end
   end

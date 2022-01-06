@@ -235,6 +235,11 @@ div.markdown {
       margin-left: -1.5em;
     }
   }
+
+  form.button_to button {
+    @include blue-button(0.25em);
+    padding: 0.25em 0.75em;
+  }
 }
 
 iframe#calendar {
