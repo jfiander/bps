@@ -5,6 +5,7 @@ module Voting
     STYLES = %w[single preference].freeze
     RESTRICTIONS = HashWithIndifferentAccess[{ executive: :excom }].freeze
 
+    has_many :candidates # With no Candidates available, the election should be a simple Yes/No vote
     has_many :ballots
     has_many :users, through: :ballots
 

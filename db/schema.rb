@@ -91,6 +91,15 @@ ActiveRecord::Schema.define(version: 2022_01_09_012324) do
     t.index ["user_id", "deleted_at"], name: "index_bridge_offices_on_user_id"
   end
 
+  create_table "candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "election_id"
+    t.string "description"
+    t.integer "user_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "committees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "department"
     t.string "name"
