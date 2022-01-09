@@ -37,6 +37,19 @@ module Voting
       users == excom.map(&:user).compact.uniq
     end
 
+    def passed?
+      raise 'Can only use passed? for single votes' unless style == 'single'
+
+      results = ballots.map(&:yes_no?).group_by(&:itself).transform_values(&:count)
+      results[true] > results[false]
+    end
+
+    def consensus?
+      raise 'Can only use consensus? for single votes' unless style == 'single'
+
+      ballots.all?(&:yes_no?)
+    end
+
     def immediate!
       update!(open_at: Time.now, closed_at: Time.now + 1.hour)
       self

@@ -29,5 +29,9 @@ h1 Elections & Votes
         .compliant class=(election.compliant? ? 'green' : 'gold')
           - if election.compliant?
             = FA::Icon.p('check') + 'Compliant'
+            - if election.consensus?
+              .green = FA::Icon.p('check-double') + 'Consensus'
+            - else
+              .red = FA::Icon.p('times') + 'Not Consensus'
           - elsif election.restricted?
             = FA::Icon.p('clock') + 'Incomplete'
