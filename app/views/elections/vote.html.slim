@@ -1,0 +1,32 @@
+h1 Vote
+
+h2 = @election.description
+
+- if @election.restriction.present?
+  .information Voting is restricted to #{election_restriction_display(@election)} members.
+
+= form_tag(vote_path)
+  = hidden_field_tag(:election_id, @election.id)
+
+  - if @election.candidates.none?
+    - if @existing_ballot.present?
+      b> You voted:
+      - if @existing_ballot.yes_no?
+        b.green Yes
+      - else
+        b.red No
+    - else
+      #vote.table
+        .table-row
+          .table-cell Yes
+          .table-cell No
+        .table-row
+          .table-cell = radio_button_tag(:selection, 'Yes')
+          .table-cell = radio_button_tag(:selection, 'No')
+  - else
+    - @election.candidates.each do |candidate|
+      .field
+        .left = label_tag(:selection, candidate.description)
+        .right = radio_button_tag(:selection, candidate.description)
+
+  = submit_tag('Vote', class: 'big') unless @existing_ballot.present?

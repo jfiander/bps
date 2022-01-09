@@ -27,7 +27,8 @@ module AdminMenuHelper
 
   def admin_current?
     admin_markdown? || admin_events? || admin_otw? ||
-      admin_event_attachments? || admin_promos? || admin_generic_payments?
+      admin_event_attachments? || admin_promos? || admin_generic_payments? ||
+      admin_elections?
   end
 
   def show_link?(*roles, strict: false, **options)
@@ -125,5 +126,9 @@ private
 
   def admin_generic_payments?
     show_link?(:admin, strict: true, controller: 'generic_payments')
+  end
+
+  def admin_elections?
+    show_link?(:admin, controller: 'elections')
   end
 end

@@ -26,4 +26,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'VHF DSC'
   inflect.acronym 'CPR AED'
   inflect.acronym 'OTW'
+  inflect.acronym 'ExCom'
 end

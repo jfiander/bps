@@ -29,6 +29,6 @@ before_script:
   - ./cc-test-reporter before-build || true
 script:
   - bundle exec rubocop --color
-  - bundle exec rspec --format progress --color --tty
+  - bundle exec rspec --order rand --format progress --color --tty
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT || true

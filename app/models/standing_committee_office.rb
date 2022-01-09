@@ -21,6 +21,8 @@ class StandingCommitteeOffice < ApplicationRecord
 
   class << self
     COMMITTEES.each do |committee|
+      define_method(committee) { where(committee_name: committee) }
+
       define_method("#{committee}?") do |user_id|
         where(committee_name: committee, user_id: user_id).exists?
       end

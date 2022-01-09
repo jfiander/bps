@@ -1,0 +1,22 @@
+h1 Create an Election/Vote
+
+= form_for(@election) do |f|
+  = f.text_field(:description, placeholder: 'Enter a description, or question to vote on', class: 'description')
+
+  .field
+    .left = f.label(:style)
+    .right = f.select(:style, Election::STYLES.map { |s| [s.titleize, s] }, {}, disabled: true)
+  .field
+    .left = f.label(:restriction)
+    .right = f.select(:restriction, Election::RESTRICTIONS.keys.map { |r| [r.to_s.titleize, r] } + [['All Members', '']])
+
+  .field
+    .left = f.label(:open_at)
+    .right = f.datetime_field(:open_at)
+  .field
+    .left = f.label(:closed_at)
+    .right = f.datetime_field(:closed_at)
+
+  .information If no candidates are specified, this will be treated as an Aye/No vote.
+
+  = f.submit('Create', class: 'big')

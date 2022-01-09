@@ -242,6 +242,14 @@ Rails.application.routes.draw do
     delete  "/#{event_type}s/:id/unbook",    to: "events/#{event_type}s#unbook",        as: "unbook_#{event_type}"
   end
 
+  # Elections & Votes
+  get  '/elections',     to: 'elections#index'
+  get  '/elections/new', to: 'elections#new'
+  post '/elections',     to: 'elections#create'
+  get  '/vote/:id',      to: 'elections#vote', as: 'vote'
+  post '/vote/:id',      to: 'elections#submit_vote'
+  get  '/vote/confirm',  to: 'elections#confirm_vote'
+
   ### User management
 
   # Profiles

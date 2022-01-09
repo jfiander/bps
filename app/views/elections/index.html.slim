@@ -1,0 +1,33 @@
+h1 Elections & Votes
+
+#elections.table.striped
+  .table-row.header
+    .table-cell
+    .table-cell Description
+    .table-cell Style
+    .table-cell Restriction
+    .table-cell Open at
+    .table-cell Closed at
+    .table-cell Results
+  - @elections.each do |election|
+    .table-row
+      .table-cell = link_to(vote_path(election.id), target: '_blank') { FA::Icon.p('share') }
+      .table-cell = election.description
+      .table-cell = election.style
+      .table-cell = election_restriction_display(election) || 'N/A'
+      .table-cell class=(election_state_color(election)) = election.open_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+      .table-cell class=(election_state_color(election)) = election.closed_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+      .table-cell
+        .table
+          .table-row.header
+            .table-cell Selection
+            .table-cell Count
+          - election.results.each do |selection, count|
+            .table-row
+              .table-cell = selection
+              .table-cell = count
+        .compliant class=(election.compliant? ? 'green' : 'gold')
+          - if election.compliant?
+            = FA::Icon.p('check') + 'Compliant'
+          - elsif election.restricted?
+            = FA::Icon.p('clock') + 'Incomplete'
