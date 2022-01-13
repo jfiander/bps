@@ -50,8 +50,14 @@ private
     key = get_uploaded_file_name(id)
     link_title = title || key
     link_path = @files_bucket.link("#{prefix}/#{key}")
-    @view_context.public_send("#{mode}_to", link_path, target: :_blank) do
-      FA::Icon.p('download', style: :duotone) + link_title
+    @view_context.link_to(link_path, target: :_blank) do
+      if mode == :button
+        @view_context.content_tag(:button, class: 'blue-button') do
+          FA::Icon.p('download', style: :duotone) + link_title
+        end
+      else
+        FA::Icon.p('download', style: :duotone) + link_title
+      end
     end
   end
 

@@ -120,9 +120,10 @@ private
     @ext ||= FA::Icon.p('external-link')
 
     @markdown_div = @markdown_div.gsub(
-      %r{(<a.*?href=['"]https?://.*?['"].*?>.*?)</a>},
+      %r{(<a.*?href=['"]https?://.*?['"].*?>.*?)(</button>)?</a>},
       '\1' \
-      "<sup>#{@ext}</sup></a>"
+      "<sup>#{@ext}</sup>" \
+      '\2</a>'
     )
   end
 

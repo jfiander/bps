@@ -31,6 +31,8 @@
 
   a { color: $birmingham-blue-desaturated; }
 
+  button > a { color: $dark-text; }
+
   hr { border-color: #999999; }
 
   div#main {
@@ -165,7 +167,7 @@
     .red { color: $old-glory-red-desaturated; }
   }
 
-  a.big, a.medium, button.big, button.medium, div.markdown form.button_to button {
+  a.big, a.medium, button.big, button.medium, div.markdown button.blue-button {
     color: $dark-text;
     background-color: $birmingham-blue-desaturated;
   }

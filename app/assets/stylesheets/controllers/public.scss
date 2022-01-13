@@ -236,7 +236,7 @@ div.markdown {
     }
   }
 
-  form.button_to button {
+  button.blue-button {
     @include blue-button(0.25em);
     padding: 0.25em 0.75em;
   }
