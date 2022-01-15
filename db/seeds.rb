@@ -17,7 +17,7 @@ Role.create!([
   { name: 'course', parent: education, icon: 'users-class' },
   { name: 'seminar', parent: education, icon: 'presentation' },
   { name: 'calendar', parent: event, icon: 'calendar-alt' },
-  { name: 'vsc', parent: event, icon: 'life-ring' },
+  { name: 'vsc', parent: admin, icon: 'life-ring' },
   { name: 'otw', parent: education, icon: 'ship' }
 ])
 
