@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_19_024131) do
+ActiveRecord::Schema.define(version: 2022_01_15_063257) do
 
   create_table "albums", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -640,6 +640,7 @@ ActiveRecord::Schema.define(version: 2021_11_19_024131) do
     t.text "jumpstart"
     t.boolean "subscribe_on_register", default: false, null: false
     t.string "pushover_token"
+    t.boolean "in_latest_import"
     t.index ["certificate", "locked_at", "deleted_at"], name: "index_users_on_certificate"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true

@@ -27,7 +27,8 @@ module ImportUsers
       User.transaction do
         @parsed_csv.each { |row| process_row(row) }
         @families = ImportUsers::SetParents.new(@parsed_csv).call
-        @removed = @lock ? ImportUsers::LockUsers.new(@certificates).call : []
+        lock_users = ImportUsers::LockUsers.new(@certificates)
+        @removed = @lock ? lock_users.call : lock_users.mark_not_imported
       end
     end
 

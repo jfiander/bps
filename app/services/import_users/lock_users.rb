@@ -4,18 +4,26 @@ module ImportUsers
   # User auto-locker for user importing
   class LockUsers
     def initialize(certificates)
-      @removed_users = User.where.not(certificate: certificates).to_a
+      @certificates = certificates
+
+      @removed_users = User
+                       .where(locked_at: nil)                # Do not report already-locked users.
+                       .where.not(certificate: certificates) # Find all users not in the import.
     end
 
     def call
-      # Do not auto-lock any current Bridge Officers.
-      @removed_users.reject! { |u| u.in? BridgeOffice.all.map(&:user) }
+      mark_not_imported
 
-      # Do not report previously-locked users.
-      @removed_users.reject!(&:locked?)
+      # Do not auto-lock any current Bridge Officers.
+      @removed_users = @removed_users.to_a.reject { |u| u.id.in?(BridgeOffice.pluck(:user_id)) }
 
       @removed_users.map(&:lock)
       @removed_users
+    end
+
+    def mark_not_imported
+      User.where(certificate: @certificates).update_all(in_latest_import: true)
+      @removed_users.update_all(in_latest_import: false)
     end
   end
 end

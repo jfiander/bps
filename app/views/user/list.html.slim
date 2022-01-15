@@ -32,7 +32,9 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
         = user_actions(user)
 
       .table-cell.certificate
-        .certificate = user[:certificate] || FA::Icon.p('question-circle', css: 'red', style: :duotone, title: 'Invalid certificate')
+        .certificate
+          = user[:certificate] || FA::Icon.p('question-circle', css: 'red', style: :duotone, title: 'Invalid certificate')
+          = FA::Icon.p('diamond-exclamation', style: :duotone, css: 'red', title: 'Not included latest import') unless user[:in_latest_import]
         - if user[:senior] || user[:life]
           - if user[:life]
             = image_tag(BPS::S3.new(:static).link('insignia/PNG/membership/tr/life.png'), class: 'membership')
@@ -62,7 +64,7 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
       /   - if user[:current_login_at].present?
       /     = user[:current_login_at].strftime(TimeHelper::LONG_TIME_FORMAT)
       /     br
-      /     | from: 
+      /     | from:
       /     = user[:current_login_from]
       /   - elsif user[:invited_at].present?
       /     | Invited:

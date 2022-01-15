@@ -46,7 +46,8 @@ class User
         invited_at: u.invitation_sent_at, current_login_at: u.current_sign_in_at,
         current_login_from: u.current_sign_in_ip,
         invitable: u.invitable?, invited: u.invited?, locked: u.locked?,
-        new_layout: u.new_layout?, placeholder_email: u.placeholder_email?
+        new_layout: u.new_layout?, placeholder_email: u.placeholder_email?,
+        in_latest_import: u.in_latest_import
       }
     end
 
