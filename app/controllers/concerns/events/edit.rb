@@ -22,8 +22,8 @@ module Events
     end
 
     def filter_params(ep)
-      ep[:event].delete(:activity_feed) unless current_user.authorized_for_activity_feed?
-      ep[:event].delete(:conference_id_cache) unless current_user.permitted?(:admin)
+      ep.delete(:activity_feed) unless current_user.authorized_for_activity_feed?
+      ep.delete(:conference_id_cache) unless current_user.permitted?(:admin)
       ep
     end
 
