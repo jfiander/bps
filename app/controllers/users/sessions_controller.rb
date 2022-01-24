@@ -60,7 +60,7 @@ module Users
     end
 
     def otw_paths
-      'otw(/(list|progress))?'
+      '(otw(/(list|progress))?)|(jumpstart/available)'
     end
 
     def edit_paths
