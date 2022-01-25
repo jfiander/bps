@@ -33,7 +33,7 @@ h1 = "#{@edit_mode} #{@event_title}"
       .right = f.text_field :slug, placeholder: 'optional'
       br.clear
 
-      .left 
+      .left
         = f.label :location
         ul
           li.red If you need to add a new location, do that before continuing.
@@ -113,7 +113,7 @@ h1 = "#{@edit_mode} #{@event_title}"
         .left = f.label :repeat_pattern, 'Repeat'
         .right = f.select :repeat_pattern, options_for_select([['Every week', 'WEEKLY'], ['Consecutive days', 'DAILY']], @event.repeat_pattern), disabled: @event.all_day
         br.clear
-      
+
       #all_day_start_time class=(@event.all_day ? '' : 'hide')
         .left
           span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
@@ -266,7 +266,8 @@ h1 = "#{@edit_mode} #{@event_title}"
             li You can also put a slash followed by their certificate number.
             li.red Invalid instructors will not be saved.
         .right
-          #api-auth-token.hide = current_user.api_token
+          #api-auth-id.hide = current_user.ensure_api_key
+          #api-auth-token.hide = current_user.create_token.new_token
           = text_area_tag :instructors, @instructors, class: 'bulletted'
           #instructors-validation
         br.clear

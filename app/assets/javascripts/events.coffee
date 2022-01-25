@@ -54,6 +54,7 @@ missingInstructors = (_errorThrown, responseText) ->
   validations.innerHTML = '<div class="red">' + message + '</div>'
 
 verifyInstructors = ->
+  authKeyId = document.getElementById('api-auth-id').innerHTML
   authToken = document.getElementById('api-auth-token').innerHTML
   bearerToken = 'Bearer ' + authToken
   usersString = document.getElementById('instructors').value
@@ -63,7 +64,10 @@ verifyInstructors = ->
     contentType: 'text/plain',
     dataType: 'text',
     data: usersString,
-    headers: { Authorization: bearerToken },
+    headers: {
+      Authorization: bearerToken,
+      'X-Key-ID': authKeyId
+    },
     url: '/api/v1/verify_user'
   }
 
