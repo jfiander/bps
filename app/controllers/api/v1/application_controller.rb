@@ -8,8 +8,17 @@ module Api
 
       include ActionController::HttpAuthentication::Token::ControllerMethods
 
+      attr_reader :current_user
+
       def self.authenticate_user!
         before_action :validate_user!
+      end
+
+      def self.secure!(*roles, strict: false, only: nil, except: nil)
+        before_action(:validate_user!, only: only, except: except)
+        return if roles.blank?
+
+        before_action(only: only, except: except) { require_permission(*roles, strict: strict) }
       end
 
     private
@@ -21,15 +30,25 @@ module Api
       end
 
       def user_from_token(token)
-        @user = ApiToken.current.find_by(token: token)&.user if token.present?
+        @current_user = ApiToken.current.find_by(token: token)&.user if token.present?
       end
 
       def invalid_token!(token = nil)
         if ApiToken.expired.find_by(token: token)
           render(json: { error: AUTHORIZATION_EXPIRED }, status: :unauthorized)
         else
-          render(json: { error: NOT_AUTHORIZED }, status: :forbidden)
+          not_authorized!
         end
+      end
+
+      def require_permission(*roles, strict: false)
+        return if current_user&.permitted?(*roles, strict: strict)
+
+        not_authorized!
+      end
+
+      def not_authorized!
+        render(json: { error: NOT_AUTHORIZED }, status: :forbidden)
       end
     end
   end

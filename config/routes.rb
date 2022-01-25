@@ -303,6 +303,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/login',       to: 'auth#login'
       post '/verify_user', to: 'user_verify#verify'
+      post '/update',      to: 'update#automatic_update'
     end
   end
 
