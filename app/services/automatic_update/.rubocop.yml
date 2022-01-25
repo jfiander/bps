@@ -1,0 +1,10 @@
+AllCops:
+  NewCops: enable
+
+Layout/AccessModifierIndentation:
+  EnforcedStyle: outdent
+Layout/HashAlignment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false

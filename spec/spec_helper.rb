@@ -53,6 +53,8 @@ SimpleCov.start('rails') do
   add_filter '/app/models/concerns/excom.rb'
   add_filter '/app/lib/bps/sms.rb'
   add_filter '/app/lib/bps/push.rb'
+  ## used for API access to National
+  add_filter '/app/services/automatic_update*'
   ## used for configuring regular meetings
   add_filter '/app/lib/bps/regular_meetings.rb'
   ## used for fetching git information
