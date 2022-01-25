@@ -5,33 +5,35 @@ module Api
     class UpdateController < ApplicationController
       secure!(:users)
 
-      def automatic_update(render: true)
+      def automatic_update(silent: false)
         @import_results = AutomaticUpdate::Run.new.update
-        import_success(render: render)
+        import_success(silent: silent)
       rescue StandardError => e
-        import_failure(e, render: render)
+        import_failure(e, silent: silent)
       end
 
       def queue_update
-        Thread.new { automatic_update(render: false) }
+        Thread.new { automatic_update(silent: true) }
         render(json: { status: 'Queued automatic update.' }, status: :accepted)
       end
 
     private
 
       # Adapted from User::Import controller concern
-      def import_success(render: true)
+      def import_success(silent: false)
         import_notification(:success)
         log_import
-        render(json: @import_results, status: :ok) if render
+        render(json: @import_results, status: :ok) unless silent
       end
 
-      def import_failure(error, render: true)
+      def import_failure(error, silent: false)
         import_notification(:failure)
+        return if silent
+
         render(
           json: { error: 'Automatic update failed.', message: error.message },
           status: :unprocessable_entity
-        ) if render
+        )
       end
 
       def import_notification(type)
