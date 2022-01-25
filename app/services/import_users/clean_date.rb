@@ -3,8 +3,9 @@
 module ImportUsers
   # Date cleaner for user importing
   class CleanDate
-    def initialize(string)
+    def initialize(string, key: nil)
       @string = string
+      @key = key
     end
 
     def call
@@ -35,7 +36,7 @@ module ImportUsers
     def handle_invalid_date(error)
       raise error unless error.message == 'invalid date'
 
-      puts 'Invalid date' unless Rails.env.test?
+      puts "Invalid date in #{@key}:\t\"#{@string}\"" unless Rails.env.test?
     end
   end
 end

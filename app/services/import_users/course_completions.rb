@@ -18,7 +18,7 @@ module ImportUsers
   private
 
     def process_completions(key, date)
-      return unless (date = ImportUsers::CleanDate.new(date).call)
+      return unless (date = ImportUsers::CleanDate.new(date, key: key).call)
       return if exists?(key, date)
 
       @completions << create_completion(key, date)
