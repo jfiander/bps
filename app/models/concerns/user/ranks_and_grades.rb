@@ -81,7 +81,7 @@ class User
       return true if rank.nil?
       return true if rank.in? valid_ranks
 
-      errors.add(:rank, 'must be nil or in valid_ranks')
+      errors.add(:rank, "must be nil or in valid_ranks: #{certificate} \"#{rank}\"")
     end
 
     def valid_grade
@@ -90,7 +90,7 @@ class User
       self.grade = grade.to_s.upcase
       return true if grade.in? valid_grades
 
-      errors.add(:grade, 'must be nil or in valid_grades')
+      errors.add(:grade, "must be nil or in valid_grades: #{certificate} \"#{grade}\"")
     end
 
     def highest_rank(*ranks)
