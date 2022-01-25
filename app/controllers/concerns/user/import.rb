@@ -22,6 +22,13 @@ class User
       end
     end
 
+    def automatic_update
+      @import_results = AutomaticUpdate::Run.new.update
+      import_success
+    rescue StandardError => e
+      import_failure(e)
+    end
+
   private
 
     def only_csv
