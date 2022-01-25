@@ -532,17 +532,55 @@ RSpec.describe User, type: :model do
     )
   end
 
-  describe '#api_token' do
+  describe 'api access' do
     let(:user) { FactoryBot.create(:user) }
-    let!(:api_token) { FactoryBot.create(:api_token, user: user) }
+    let(:token) { user.create_token }
 
-    it 'returns the current token if valid' do
-      expect(user.api_token).to eq(api_token.token)
+    describe '#token_exists?' do
+      it 'exists when valid' do
+        expect(user).to be_token_exists(token.new_token)
+      end
+
+      it 'does not exist when invalid' do
+        expect(user).not_to be_token_exists('invalid')
+      end
     end
 
-    it 'generates a new token if expired' do
-      api_token.update_attributes(expires_at: Time.now - 1.second)
-      expect(user.api_token).not_to eq(api_token.token)
+    describe '#token_expired?' do
+      it 'is expired' do
+        t = token.new_token
+        token.update(expires_at: Time.now - 5.minutes)
+        expect(user).to be_token_expired(t)
+      end
+
+      it 'is not expired when current' do
+        expect(user).not_to be_token_expired(token.new_token)
+      end
+    end
+
+    describe '#create_token' do
+      it 'creates a new token' do
+        expect { token }.to change { ApiToken.count }.by(1)
+      end
+
+      it 'has the new token accessible' do
+        expect(token.new_token).not_to be_nil
+      end
+
+      it 'does not expose stored tokens' do
+        expect(ApiToken.find(token.id).new_token).to be_nil
+      end
+    end
+
+    describe '#ensure_api_key' do
+      it 'generates a new api key' do
+        expect(user.ensure_api_key).not_to be_nil
+      end
+
+      it 'does not overwrite an api key' do
+        key = user.ensure_api_key
+        expect(user.ensure_api_key).to eq(key)
+      end
     end
   end
 end

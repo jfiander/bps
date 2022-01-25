@@ -19,4 +19,15 @@ RSpec.describe ApiToken, type: :model do
       expect(token.current?).to be(false)
     end
   end
+
+  describe '#match?' do
+    it 'matches with the correct token' do
+      t = token.new_token
+      expect(ApiToken.find(token.id)).to be_match(t)
+    end
+
+    it 'does not match with an invalid token' do
+      expect(ApiToken.find(token.id)).not_to be_match('invalid')
+    end
+  end
 end

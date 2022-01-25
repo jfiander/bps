@@ -24,17 +24,18 @@ module Api
     private
 
       def validate_user!
+        api_key = request.headers['X-Key-ID']
         authenticate_with_http_token do |token, _options|
-          user_from_token(token).present? ? true : invalid_token!(token)
+          user_from_api_key(api_key).token_exists?(token) || invalid_token!(token)
         end || invalid_token!
       end
 
-      def user_from_token(token)
-        @current_user = ApiToken.current.find_by(token: token)&.user if token.present?
+      def user_from_api_key(api_key)
+        @current_user = User.find_by(api_key: api_key)
       end
 
       def invalid_token!(token = nil)
-        if ApiToken.expired.find_by(token: token)
+        if @current_user.token_expired?(token)
           render(json: { error: AUTHORIZATION_EXPIRED }, status: :unauthorized)
         else
           not_authorized!

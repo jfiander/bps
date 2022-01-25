@@ -151,12 +151,21 @@ class User < ApplicationRecord
     cpr_aed_expires_at.present? && cpr_aed_expires_at > Time.now
   end
 
-  def api_token
-    current_token.token
+  def token_exists?(token)
+    api_tokens.current.find { |t| t.match?(token) }
   end
 
-  def current_token
-    ApiToken.current.find_or_create_by(user: self)
+  def token_expired?(token)
+    api_tokens.expired.find { |t| t.match?(token) }
+  end
+
+  def create_token
+    ApiToken.create(user: self)
+  end
+
+  def ensure_api_key
+    regenerate_api_key if api_key.nil?
+    api_key
   end
 
 private

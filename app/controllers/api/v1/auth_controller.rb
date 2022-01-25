@@ -22,7 +22,8 @@ module Api
       end
 
       def token_hash
-        { token: user.current_token.token, expires_at: user.current_token.expires_at }
+        token = user.create_token
+        { api_key: user.ensure_api_key, token: token.new_token, expires_at: token.expires_at }
       end
 
       def unauthorized!
