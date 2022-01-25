@@ -52,11 +52,29 @@ module AutomaticUpdate
       result = client(uri).request(req)
       return result if result.code == '200'
 
-      raise DataRequestError
-    rescue DataRequestError => e
-      Bugsnag.notify(e)
+      Bugsnag.notify(
+        DataRequestError.new(
+          'Response error received',
+          code: result.code, body: result.response.body, uri: uri, request: req
+        )
+      )
     end
 
-    class DataRequestError < StandardError; end
+    class DataRequestError < StandardError
+      attr_reader :metadata
+
+      def initialize(message, **metadata)
+        super(message)
+        @metadata = metadata
+      end
+
+      def bugsnag_meta_data
+        {
+          code: metadata[:code],
+          request: metadata[:request],
+          response: metadata[:response]
+        }
+      end
+    end
   end
 end
