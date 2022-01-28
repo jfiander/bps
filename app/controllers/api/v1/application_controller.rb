@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ipaddr'
+
 module Api
   module V1
     class ApplicationController < ActionController::API
@@ -21,6 +23,10 @@ module Api
         before_action(only: only, except: except) { require_permission(*roles, strict: strict) }
       end
 
+      def self.internal!(only: nil, except: nil)
+        before_action(:validate_in_vpc!, only: only, except: except)
+      end
+
     private
 
       def validate_user!
@@ -28,6 +34,10 @@ module Api
         authenticate_with_http_token do |token, _options|
           user_from_api_key(api_key).token_exists?(token) || invalid_token!(token)
         end || invalid_token!
+      end
+
+      def validate_in_vpc!
+        not_authorized! unless vpc?
       end
 
       def user_from_api_key(api_key)
@@ -50,6 +60,12 @@ module Api
 
       def not_authorized!
         render(json: { error: NOT_AUTHORIZED }, status: :forbidden)
+      end
+
+      def vpc?
+        ENV['VPC_CIDRS'].split(' ').any? do |cidr|
+          IPAddr.new(cidr).include?(request.remote_ip)
+        end
       end
     end
   end
