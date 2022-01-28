@@ -10,7 +10,7 @@ module Api
     private
 
       def clean_params
-        params.permit(:email, :password)
+        params.permit(:email, :password, :persistent)
       end
 
       def user
@@ -22,7 +22,7 @@ module Api
       end
 
       def token_hash
-        token = user.create_token
+        token = user.create_token(persistent: clean_params[:persistent].present?)
         { api_key: user.ensure_api_key, token: token.new_token, expires_at: token.expires_at }
       end
 

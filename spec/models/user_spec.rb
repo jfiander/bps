@@ -544,6 +544,12 @@ RSpec.describe User, type: :model do
       it 'does not exist when invalid' do
         expect(user).not_to be_token_exists('invalid')
       end
+
+      it 'also finds persistent tokens' do
+        token
+        persistent = user.create_token(persistent: true)
+        expect(user).to be_token_exists(persistent.new_token)
+      end
     end
 
     describe '#token_expired?' do
@@ -570,6 +576,10 @@ RSpec.describe User, type: :model do
       it 'does not expose stored tokens' do
         expect(ApiToken.find(token.id).new_token).to be_nil
       end
+
+      it 'creates persistent tokens' do
+        expect(user.create_token(persistent: true).expires_at).to be_nil
+      end
     end
 
     describe '#ensure_api_key' do
@@ -580,6 +590,19 @@ RSpec.describe User, type: :model do
       it 'does not overwrite an api key' do
         key = user.ensure_api_key
         expect(user.ensure_api_key).to eq(key)
+      end
+    end
+
+    describe 'token associations' do
+      let!(:at) { ApiToken.create(user: user) }
+      let!(:pat) { PersistentApiToken.create(user: user) }
+
+      it 'includes only expiring tokens' do
+        expect(user.api_tokens.current).to contain_exactly(at)
+      end
+
+      it 'includes only persistent tokens' do
+        expect(user.persistent_api_tokens.current).to contain_exactly(pat)
       end
     end
   end

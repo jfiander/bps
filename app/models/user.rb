@@ -25,6 +25,7 @@ class User < ApplicationRecord
   has_many :committees
   has_many :float_plans
   has_many :api_tokens
+  has_many :persistent_api_tokens
   has_secure_token :api_key
 
   belongs_to :parent, class_name: 'User', optional: true
@@ -152,15 +153,17 @@ class User < ApplicationRecord
   end
 
   def token_exists?(token)
-    api_tokens.current.find { |t| t.match?(token) }
+    tokens = api_tokens.current.to_a + persistent_api_tokens.current.to_a
+    tokens.find { |t| t.match?(token) }
   end
 
   def token_expired?(token)
     api_tokens.expired.find { |t| t.match?(token) }
   end
 
-  def create_token
-    ApiToken.create(user: self)
+  def create_token(persistent: false)
+    klass = persistent ? PersistentApiToken : ApiToken
+    klass.create(user: self)
   end
 
   def ensure_api_key
