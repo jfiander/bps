@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class UserVerifyController < ApplicationController
+    class UserVerifyController < Api::V1::ApplicationController
       authenticate_user!
 
       def verify

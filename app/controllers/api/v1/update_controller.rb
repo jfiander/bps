@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class UpdateController < ApplicationController
+    class UpdateController < Api::V1::ApplicationController
       secure!(:users)
 
       def automatic_update(silent: false)
