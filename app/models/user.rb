@@ -160,9 +160,9 @@ class User < ApplicationRecord
     api_tokens.expired.find { |t| t.match?(token) }
   end
 
-  def create_token(persistent: false)
+  def create_token(persistent: false, description: nil)
     klass = persistent ? PersistentApiToken : ApiToken
-    klass.create(user: self)
+    klass.create(user: self, description: description)
   end
 
   def any_current_tokens?

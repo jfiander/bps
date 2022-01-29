@@ -10,7 +10,7 @@ module Api
     private
 
       def clean_params
-        params.permit(:email, :password, :persistent)
+        params.permit(:email, :password, :persistent, :description)
       end
 
       def user
@@ -22,8 +22,14 @@ module Api
       end
 
       def token_hash
-        token = user.create_token(persistent: clean_params[:persistent].present?)
-        { api_key: token.key, token: token.new_token, expires_at: token.expires_at }
+        token = user.create_token(
+          persistent: clean_params[:persistent].present?,
+          description: clean_params[:description]
+        )
+
+        h = { api_key: token.key, token: token.new_token, expires_at: token.expires_at }
+        h[:description] = clean_params[:description] if clean_params[:description].present?
+        h
       end
 
       def unauthorized!
