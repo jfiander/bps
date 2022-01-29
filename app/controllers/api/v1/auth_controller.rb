@@ -23,7 +23,7 @@ module Api
 
       def token_hash
         token = user.create_token(persistent: clean_params[:persistent].present?)
-        { api_key: user.ensure_api_key, token: token.new_token, expires_at: token.expires_at }
+        { api_key: token.key, token: token.new_token, expires_at: token.expires_at }
       end
 
       def unauthorized!

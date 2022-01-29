@@ -26,7 +26,6 @@ class User < ApplicationRecord
   has_many :float_plans
   has_many :api_tokens
   has_many :persistent_api_tokens
-  has_secure_token :api_key
 
   belongs_to :parent, class_name: 'User', optional: true
   has_many(:children, class_name: 'User', inverse_of: :parent, foreign_key: :parent_id)
@@ -168,11 +167,6 @@ class User < ApplicationRecord
 
   def any_current_tokens?
     api_tokens.current.any? || persistent_api_tokens.current.any?
-  end
-
-  def ensure_api_key
-    regenerate_api_key if api_key.nil?
-    api_key
   end
 
 private

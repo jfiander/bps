@@ -32,24 +32,25 @@ module Api
     private
 
       def validate_user!
-        api_key = request.headers['X-Key-ID']
-        authenticate_with_http_token do |token, _options|
-          user_from_api_key(api_key).token_exists?(token) || invalid_token!(token)
-        end || invalid_token!
+        key = request.headers['X-Key-ID']
+        authenticate_with_http_token { |token, _options| user_from_credentials(key, token) }
       end
 
       def validate_in_vpc!
         deny_access! unless vpc?
       end
 
-      def user_from_api_key(api_key)
-        @current_user = User.find_by(api_key: api_key)
+      def user_from_credentials(key, token)
+        api_token = find_api_token(key)
+        return not_authorized! unless api_token
+        return authorization_expired! unless api_token.current?
+        return not_authorized! unless api_token.match?(token)
+
+        @current_user = api_token.user
       end
 
-      def invalid_token!(token = nil)
-        return authorization_expired! if @current_user.token_expired?(token)
-
-        token.nil? ? forbidden! : not_authorized!
+      def find_api_token(key)
+        ApiToken.find_by(key: key)
       end
 
       def require_permission(*roles, strict: false)

@@ -594,17 +594,6 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe '#ensure_api_key' do
-      it 'generates a new api key' do
-        expect(user.ensure_api_key).not_to be_nil
-      end
-
-      it 'does not overwrite an api key' do
-        key = user.ensure_api_key
-        expect(user.ensure_api_key).to eq(key)
-      end
-    end
-
     describe 'token associations' do
       let!(:at) { ApiToken.create(user: user) }
       let!(:pat) { PersistentApiToken.create(user: user) }

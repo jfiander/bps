@@ -266,8 +266,9 @@ h1 = "#{@edit_mode} #{@event_title}"
             li You can also put a slash followed by their certificate number.
             li.red Invalid instructors will not be saved.
         .right
-          #api-auth-id.hide = current_user.ensure_api_key
-          #api-auth-token.hide = current_user.create_token.new_token
+          - token = current_user.create_token
+          #api-auth-id.hide = token.key
+          #api-auth-token.hide = token.new_token
           = text_area_tag :instructors, @instructors, class: 'bulletted'
           #instructors-validation
         br.clear

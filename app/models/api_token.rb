@@ -7,6 +7,7 @@ class ApiToken < ApplicationRecord
 
   belongs_to :user
   has_secure_token
+  has_secure_token :key
 
   attr_reader :new_token
 

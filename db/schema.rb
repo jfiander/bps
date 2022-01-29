@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_25_203425) do
+ActiveRecord::Schema.define(version: 2022_01_29_004744) do
 
   create_table "albums", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(version: 2022_01_25_203425) do
     t.datetime "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "key"
+    t.index ["key"], name: "index_api_tokens_on_key", unique: true
     t.index ["token"], name: "index_api_tokens_on_token", unique: true
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
@@ -641,7 +643,6 @@ ActiveRecord::Schema.define(version: 2022_01_25_203425) do
     t.boolean "subscribe_on_register", default: false, null: false
     t.string "pushover_token"
     t.boolean "in_latest_import"
-    t.string "api_key"
     t.index ["certificate", "locked_at", "deleted_at"], name: "index_users_on_certificate"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
