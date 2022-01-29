@@ -27,8 +27,7 @@ module Api
       end
 
       def unauthorized!
-        denied = { error: 'Invalid login.' }
-        render(json: denied, status: :unauthorized)
+        render(json: { error: 'Invalid login.' }, status: :unauthorized)
       end
     end
   end

@@ -5,8 +5,10 @@ require 'ipaddr'
 module Api
   module V1
     class ApplicationController < ActionController::API
-      AUTHORIZATION_EXPIRED = 'Authorization expired. Please refresh.'
+      BAD_REQUEST = 'We could not process your request.'
+      NOT_AUTHENTICATED = 'Authentication is required.'
       NOT_AUTHORIZED = 'You are not authorized to access that.'
+      AUTHORIZATION_EXPIRED = 'Your authorization is expired. Please refresh.'
 
       include ActionController::HttpAuthentication::Token::ControllerMethods
 
@@ -37,7 +39,7 @@ module Api
       end
 
       def validate_in_vpc!
-        not_authorized! unless vpc?
+        deny_access! unless vpc?
       end
 
       def user_from_api_key(api_key)
@@ -45,11 +47,9 @@ module Api
       end
 
       def invalid_token!(token = nil)
-        if @current_user.token_expired?(token)
-          render(json: { error: AUTHORIZATION_EXPIRED }, status: :unauthorized)
-        else
-          not_authorized!
-        end
+        return authorization_expired! if @current_user.token_expired?(token)
+
+        token.nil? ? forbidden! : not_authorized!
       end
 
       def require_permission(*roles, strict: false)
@@ -58,14 +58,26 @@ module Api
         not_authorized!
       end
 
-      def not_authorized!
-        render(json: { error: NOT_AUTHORIZED }, status: :forbidden)
-      end
-
       def vpc?
         ENV['VPC_CIDRS'].split(' ').any? do |cidr|
           IPAddr.new(cidr).include?(request.remote_ip)
         end
+      end
+
+      def forbidden!
+        deny_access!(NOT_AUTHENTICATED, :forbidden)
+      end
+
+      def not_authorized!
+        deny_access!(NOT_AUTHORIZED, :unauthorized)
+      end
+
+      def authorization_expired!
+        deny_access!(AUTHORIZATION_EXPIRED, :unauthorized)
+      end
+
+      def deny_access!(message = BAD_REQUEST, status = :bad_request)
+        render(json: { error: message }, status: status)
       end
     end
   end
