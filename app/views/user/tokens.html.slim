@@ -1,0 +1,34 @@
+h2 Active API Tokens
+
+h3 Temporary
+
+.information Regular API tokens expire 15 minutes after creation.
+
+- if @api_tokens.any?
+  .table.striped
+    .table-row.header
+      .table-cell Created at
+      .table-cell Expires at
+      .table-cell Revoke
+    - @api_tokens.each do |token|
+      .table-row
+        .table-cell = token.created_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+        .table-cell = token.expires_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+        .table-cell = link_to(revoke_token_path(token.id), method: :delete, class: 'red') { FA::Icon.p('minus-square', style: :duotone) + 'Revoke' }
+- else
+  h4.red You have no active temporary API tokens
+
+h3 Persistent
+- if @persistent_api_tokens.any?
+  .table.striped
+    .table-row.header
+      .table-cell Created at
+      .table-cell Expires at
+      .table-cell Revoke
+    - @persistent_api_tokens.each do |token|
+      .table-row
+        .table-cell = token.created_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+        .table-cell = FA::Icon.p('ban', style: :duotone, title: 'Does not expire')
+        .table-cell = link_to(revoke_token_path(token.id), method: :delete, class: 'red') { FA::Icon.p('minus-square', style: :duotone) + 'Revoke' }
+- else
+  h4.red You have no active persistent API tokens

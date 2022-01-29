@@ -166,6 +166,10 @@ class User < ApplicationRecord
     klass.create(user: self)
   end
 
+  def any_current_tokens?
+    api_tokens.current.any? || persistent_api_tokens.current.any?
+  end
+
   def ensure_api_key
     regenerate_api_key if api_key.nil?
     api_key

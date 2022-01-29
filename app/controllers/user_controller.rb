@@ -11,6 +11,7 @@ class UserController < ApplicationController
   include User::Insignia
   include User::Instructors
   include User::Receipts
+  include User::Tokens
 
   secure!(except: %i[add_registrants collect_payment])
   secure!(:education, only: :instructors)

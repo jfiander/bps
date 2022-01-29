@@ -27,10 +27,13 @@ Rails.application.routes.draw do
 
   ### Profile management
   as :user do
-    get   '/profile',      to: 'user#show'
-    get   '/profile/edit', to: 'users/registrations#edit'
-    put   '/profile/edit', to: 'users/registrations#update'
-    get   '/reset',        to: 'devise/passwords#new'
+    get    '/profile',            to: 'user#show'
+    get    '/profile/edit',       to: 'users/registrations#edit'
+    put    '/profile/edit',       to: 'users/registrations#update'
+    get    '/reset',              to: 'devise/passwords#new'
+
+    get    '/profile/tokens',     to: 'user#tokens'
+    delete '/profile/tokens/:id', to: 'user#revoke_token', as: 'revoke_token'
   end
 
   ### Markdown pages

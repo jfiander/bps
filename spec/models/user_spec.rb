@@ -582,6 +582,18 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '#any_current_tokens?' do
+      it 'detects temporary tokens' do
+        token
+        expect(user).to be_any_current_tokens
+      end
+
+      it 'detects persistent tokens' do
+        user.create_token(persistent: true)
+        expect(user).to be_any_current_tokens
+      end
+    end
+
     describe '#ensure_api_key' do
       it 'generates a new api key' do
         expect(user.ensure_api_key).not_to be_nil

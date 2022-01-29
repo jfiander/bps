@@ -82,6 +82,9 @@ h1 = @user.full_name
     li = link_to(user_certificate_path(@user.id), target: :_blank, class: 'green') { FA::Icon.p('file-certificate', style: :duotone) + 'View Educational Certificate' }
     li = link_to(otw_progress_path, target: :_blank, class: 'green') { FA::Icon.p('tasks', style: :duotone) + 'View BOC Progress' }
 
+    - if current_user.any_current_tokens?
+      li = link_to(profile_tokens_path) { FA::Icon.p('brackets-curly', style: :duotone) + 'Review API tokens' }
+
 - if @registrations.present?
   h2 Current Registrations
   #profile-registrations.table
