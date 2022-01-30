@@ -110,7 +110,7 @@ module AutomaticUpdate
     end
 
     def skip(row)
-      row['Member Type'] == 'H' # Honorary Member
+      row['Member Type'] == 'HR' # Honorary Member
     end
   end
 end
