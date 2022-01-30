@@ -3,11 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe Role, type: :model do
-  it 'descends from admin' do
+  it 'descends from admin', :aggregate_failures do
     orphan = FactoryBot.build(:role, name: 'orphan')
 
     expect(orphan.valid?).to be(false)
     expect(orphan.errors.messages).to eql(parent: ['must descend from :admin'])
+  end
+
+  it 'cannot set a parent_id for admin', :aggregate_failures do
+    admin = FactoryBot.build(:role, name: 'admin', parent_id: 1)
+
+    expect(admin.valid?).to be(false)
+    expect(admin.errors.messages).to eql(parent: ['must not be set for :admin'])
   end
 
   it 'returns the appropriate icons hash' do
@@ -16,5 +23,23 @@ RSpec.describe Role, type: :model do
     expect(Role.icons).to eq(
       { all: 'globe', excom: 'chevron-circle-down', orphan: 'user' }
     )
+  end
+
+  describe 'recursive lookups' do
+    let!(:admin) { FactoryBot.create(:role, name: 'admin') }
+    let!(:education) { FactoryBot.create(:role, name: 'education') }
+    let!(:course) { FactoryBot.create(:role, name: 'course', parent: education) }
+
+    describe '#recursive_parents' do
+      subject { education.recursive_parents }
+
+      it { is_expected.to eq(%w[education admin]) }
+    end
+
+    describe '#recursive_children' do
+      subject { education.recursive_children }
+
+      it { is_expected.to eq(%w[education course]) }
+    end
   end
 end

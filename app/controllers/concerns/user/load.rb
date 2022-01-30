@@ -36,8 +36,8 @@ class User
       {
         id: u.id, name: u.full_name, certificate: u.certificate, mm: u.mm.to_i,
         email: u.email, senior: u.senior.present?, life: u.life.present?,
-        bridge_office: bridge_office_for(u), granted_roles: granted_roles_for(u),
-        permitted_roles: permitted_roles_for(u)
+        bridge_office: bridge_office_for(u), granted_roles: u.granted_roles,
+        permitted_roles: u.permitted_roles
       }
     end
 
@@ -49,14 +49,6 @@ class User
         new_layout: u.new_layout?, placeholder_email: u.placeholder_email?,
         in_latest_import: u.in_latest_import
       }
-    end
-
-    def granted_roles_for(user)
-      user_has_explicit_roles?(user) ? @user_roles[user.id] : []
-    end
-
-    def permitted_roles_for(user)
-      user_has_implicit_roles?(user) ? user.permitted_roles : []
     end
 
     def bridge_office_for(user)

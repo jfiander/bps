@@ -175,12 +175,16 @@ private
     @cached_committees ||= committees
   end
 
+  def committee_names
+    @committee_names ||= Committee.where(user_id: id).pluck(:name)
+  end
+
   def cached_standing_committees
     @cached_standing_committees ||= standing_committee_offices
   end
 
-  def cached_bridge_office
-    @cached_bridge_office ||= bridge_office
+  def bridge_office_name
+    BridgeOffice.where(user_id: id).pluck(:office).first
   end
 
   def update_last_mm

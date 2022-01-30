@@ -50,49 +50,43 @@ RSpec.describe User, type: :model do
   end
 
   context 'with specified user' do
-    before do
-      @user = FactoryBot.create(:user, first_name: 'John', last_name: 'Doe', rank: 'Lt/C', grade: 'AP')
-    end
+    let(:user) { FactoryBot.create(:user, first_name: 'John', last_name: 'Doe', rank: 'Lt/C', grade: 'AP') }
 
     describe 'auto_rank' do
       it 'correctlies detect Cdr' do
-        assign_bridge_office('commander', @user)
-        expect(@user.auto_rank).to eql('Cdr')
+        assign_bridge_office('commander', user)
+        expect(user.auto_rank).to eql('Cdr')
       end
 
       it 'correctlies detect Lt/C' do
-        assign_bridge_office('executive', @user)
-        expect(@user.auto_rank).to eql('Lt/C')
+        assign_bridge_office('executive', user)
+        expect(user.auto_rank).to eql('Lt/C')
       end
 
       it 'correctlies detect 1st/Lt' do
-        @user.rank = nil
-        assign_bridge_office('asst_secretary', @user)
-        expect(@user.auto_rank(html: false)).to eql('1st/Lt')
+        user.rank = nil
+        assign_bridge_office('asst_secretary', user)
+        expect(user.auto_rank(html: false)).to eql('1st/Lt')
       end
 
       it 'returns the correct string for a formatted rank' do
-        @user.rank = nil
-        assign_bridge_office('asst_educational', @user)
-        expect(@user.auto_rank).to eql('1<sup>st</sup>/Lt')
+        user.rank = nil
+        assign_bridge_office('asst_educational', user)
+        expect(user.auto_rank).to eql('1<sup>st</sup>/Lt')
       end
 
       it 'returns the correct string for a simple rank' do
-        expect(@user.auto_rank).to eql('Lt/C')
+        expect(user.auto_rank).to eql('Lt/C')
       end
     end
 
     describe 'formatting' do
-      before do
-        @user = FactoryBot.create(:user, first_name: 'John', last_name: 'Doe', rank: 'Lt/C', grade: 'AP')
-      end
-
       it 'has the correct simple_name' do
-        expect(@user.simple_name).to eql('John Doe')
+        expect(user.simple_name).to eql('John Doe')
       end
 
       it 'has the correct full_name' do
-        expect(@user.full_name).to eql('Lt/C John Doe, AP')
+        expect(user.full_name).to eql('Lt/C John Doe, AP')
       end
 
       describe 'BOC' do
@@ -101,33 +95,31 @@ RSpec.describe User, type: :model do
         end
 
         describe 'with BOC level' do
-          before do
-            @user = FactoryBot.create(:user)
-            FactoryBot.create(:course_completion, user: @user, course_key: 'BOC_IN')
-          end
+          let(:user) { FactoryBot.create(:user) }
+          let!(:completion) { FactoryBot.create(:course_completion, user: user, course_key: 'BOC_IN') }
 
           it 'returns the correct BOC level' do
-            expect(@user.boc).to eql('IN')
+            expect(user.boc).to eql('IN')
           end
 
           describe 'with endorsements' do
             before do
-              FactoryBot.create(:course_completion, user: @user, course_key: 'BOC_CAN')
+              FactoryBot.create(:course_completion, user: user, course_key: 'BOC_CAN')
             end
 
             it 'returns the correct BOC level with endorsements' do
-              expect(@user.boc).to eql('IN (CAN)')
+              expect(user.boc).to eql('IN (CAN)')
             end
 
             it 'generates the correct grade suffix' do
-              expect(@user.boc_display).to eql('-IN')
+              expect(user.boc_display).to eql('-IN')
             end
           end
         end
       end
 
       it 'returns the correct bridge_hash' do
-        expect(@user.bridge_hash).to eql(
+        expect(user.bridge_hash).to eql(
           full_name: 'Lt/C&nbsp;John&nbsp;Doe,&nbsp;AP',
           simple_name: 'John&nbsp;Doe',
           photo: blank_photo
@@ -203,141 +195,152 @@ RSpec.describe User, type: :model do
   end
 
   describe 'permissions' do
-    before do
-      @admin = FactoryBot.build(:role, name: 'admin').save(validate: false)
-      @child = FactoryBot.create(:role, name: 'child', parent: Role.find_by(name: 'admin'))
-      @user = FactoryBot.create(:user)
-    end
+    let!(:admin) { FactoryBot.create(:role, name: 'admin') }
+    let!(:child) { FactoryBot.create(:role, name: 'child', parent: admin) }
+    let(:user) { FactoryBot.create(:user) }
 
     it 'adds permissions correctly' do
-      user_role = @user.permit! :child
-      expect(user_role.user).to eql(@user)
-      expect(user_role.role.name).to eql('child')
+      user_role = user.permit! :child
+      expect(user_role.user).to eq(user)
+      expect(user_role.role).to eq(child)
     end
 
     describe 'removal' do
       before do
-        @user.permit! :admin
-        @user.permit! :child
+        user.permit! :admin
+        user.permit! :child
       end
 
       it 'removes permissions correctly' do
-        @user.unpermit! :child
-        expect(@user.permitted_roles).to include(:admin)
+        user.unpermit! :child
+        expect(user.permitted_roles).to include(:admin)
       end
 
       it 'removes all permissions correctly' do
-        @user.unpermit! :all
-        expect(@user.permitted_roles).to be_blank
+        user.unpermit! :all
+        expect(user.permitted_roles).to be_blank
       end
     end
 
     it 'returns true when user has the required permission' do
-      @user.permit! :child
-      @user.reload
-      expect(@user.permitted?(:child)).to be(true)
+      user.permit! :child
+      expect(user.reload).to be_permitted(:child)
     end
 
     it 'returns true when user has a parent of the required permission' do
-      @user.permit! :admin
-      @user.reload
-      expect(@user.permitted?(:child)).to be(true)
+      user.permit! :admin
+      expect(user.reload).to be_permitted(:child)
     end
 
     it 'returns false when user does not have the required permission' do
-      @user.reload
-      expect(@user.permitted?(:child)).to be(false)
+      expect(user.reload).not_to be_permitted(:child)
     end
 
     it "returns false when a role doesn't exist" do
-      expect(@user.permitted?(:not_a_permission)).to be(false)
+      expect(user).not_to be_permitted(:not_a_permission)
     end
 
-    it 'returns true when user has the required cached permission' do
-      session = { permitted: [:child], granted: [:child] }
-      expect(@user.permitted?(:child, session: session)).to be(true)
-    end
-
-    it 'returns false for invalid/empty permissions' do
-      expect(@user.permitted?(nil)).to be(false)
-      expect(@user.permitted?([])).to be(false)
-      expect(@user.permitted?({})).to be(false)
-      expect(@user.permitted?('')).to be(false)
-      expect(@user.permitted?(' ')).to be(false)
-      expect(@user.permitted?(nil, [], {}, '', ' ')).to be(false)
+    it 'returns false for invalid/empty permissions', :aggregate_failures do
+      expect(user).not_to be_permitted(nil)
+      expect(user).not_to be_permitted([])
+      expect(user).not_to be_permitted({})
+      expect(user).not_to be_permitted('')
+      expect(user).not_to be_permitted(' ')
+      expect(user).not_to be_permitted(nil, [], {}, '', ' ')
     end
 
     it 'returns the correct lists of permissions' do
-      @user.permit! :admin
-      expect(@user.granted_roles).to eql([:admin])
-      expect(@user.permitted_roles).to eql(%i[admin child])
+      user.permit! :admin
+      expect(user.granted_roles).to eq([:admin])
+      expect(user.permitted_roles).to eq(%i[admin child])
     end
 
     describe 'show_admin_menu?' do
-      before do
-        @page = FactoryBot.create(:role, name: 'page')
-      end
+      let!(:page) { FactoryBot.create(:role, name: 'page') }
 
       it 'shows the admin menu for correct users' do
-        @user.permit! :page
-        expect(@user.show_admin_menu?).to be(true)
+        user.permit! :page
+        expect(user).to be_show_admin_menu
       end
 
       it 'does not show the admin menu for other users' do
-        expect(@user.show_admin_menu?).to be(false)
+        expect(user).not_to be_show_admin_menu
       end
     end
 
     describe 'authorized_for_activity_feed?' do
+      let!(:education) { FactoryBot.create(:role, name: 'education') }
+      let!(:event) { FactoryBot.create(:role, name: 'event') }
+
       it 'does not allow a regular user to edit' do
-        expect(@user.authorized_for_activity_feed?).to be(false)
+        expect(user).not_to be_authorized_for_activity_feed
       end
 
       it 'allows an admin to edit' do
-        @user.permit! :admin
-        @user.reload
-        expect(@user.authorized_for_activity_feed?).to be(true)
+        user.permit! :admin
+        expect(user).to be_authorized_for_activity_feed
       end
 
       context 'with education permissions' do
-        before do
-          FactoryBot.create(:role, name: 'education', parent: Role.find_by(name: 'admin'))
-        end
-
         it 'allows granted education permissions to edit' do
-          @user.permit! :education
-          @user.reload
-          expect(@user.authorized_for_activity_feed?).to be(true)
+          user.permit! :education
+          expect(user).to be_authorized_for_activity_feed
         end
 
         it 'allows implied education permissions to edit' do
-          FactoryBot.create(:bridge_office, office: 'asst_educational', user: @user)
-          @user.reload
-          expect(@user.authorized_for_activity_feed?).to be(true)
+          FactoryBot.create(:bridge_office, office: 'asst_educational', user: user)
+          expect(user).to be_authorized_for_activity_feed
+        end
+      end
+    end
+
+    describe 'role checkers' do
+      let!(:education) { FactoryBot.create(:role, name: 'education') }
+
+      describe '#role?' do
+        it 'is true when directly granted' do
+          user.permit! :education
+          expect(user).to be_role(:education)
+        end
+
+        it 'is true when implied' do
+          user.permit! :admin
+          expect(user).to be_role(:education)
+        end
+
+        it 'is false when not permitted' do
+          expect(user).not_to be_role(:education)
+        end
+      end
+
+      describe '#exact_role?' do
+        it 'is true when directly granted' do
+          user.permit! :education
+          expect(user).to be_exact_role(:education)
+        end
+
+        it 'is false when implied' do
+          user.permit! :admin
+          expect(user).not_to be_exact_role(:education)
         end
       end
     end
   end
 
   describe 'locking' do
-    before do
-      @user = FactoryBot.create(:user)
-    end
+    let(:user) { FactoryBot.create(:user) }
 
     it 'does not create locked users' do
-      expect(@user.locked?).to be(false)
+      expect(user.locked?).to be(false)
     end
 
-    it 'correctlies lock users' do
-      @user.lock
-      expect(@user.locked?).to be(true)
+    it 'correctly lock users' do
+      expect { user.lock }.to change { user.locked? }.to(true)
     end
 
-    it 'correctlies unlock users' do
-      @user.lock
-      expect(@user.locked?).to be(true)
-      @user.unlock
-      expect(@user.locked?).to be(false)
+    it 'correctly unlock users' do
+      user.lock
+      expect { user.unlock }.to change { user.locked? }.to(false)
     end
   end
 

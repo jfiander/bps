@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
   before_action :load_layout_images
   before_action :meta_tags
   before_action :set_paper_trail_whodunnit
-  before_action :cache_user_permissions
   before_bugsnag_notify :bugsnag_format_user
 
   skip_before_action :verify_authenticity_token, only: %i[auto_show auto_hide]

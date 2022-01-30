@@ -60,12 +60,5 @@ module Application
         ]
       )
     end
-
-    def cache_user_permissions
-      return unless current_user.present?
-
-      session[:granted] = current_user.granted_roles
-      session[:permitted] = current_user.permitted_roles
-    end
   end
 end

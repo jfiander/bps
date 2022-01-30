@@ -48,7 +48,7 @@ class User
 
     def bridge_rank(html: true)
       # html_safe: No user content
-      case cached_bridge_office&.office
+      case bridge_office_name
       when 'commander'
         'Cdr'
       when *ltc_offices
