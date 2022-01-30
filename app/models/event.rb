@@ -57,7 +57,7 @@ class Event < ApplicationRecord
 
   after_create :book!, if: :visible?
   after_create :create_sns_topic!
-  after_commit :refresh_calendar!, if: :calendar_details_updated?
+  after_commit :refresh_calendar!, if: proc { calendar_details_updated? && visible }
   after_commit :unbook!, if: proc { booked? && !visible }
 
   def self.auto_archive
