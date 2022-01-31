@@ -193,13 +193,22 @@
       a             { color: $birmingham-blue-darker; }
       a:hover       { color: $birmingham-blue-dark; }
       a.blue        { color: $old-glory-blue-desaturated-faded; }
-      a.blue:hover  { color: $old-glory-blue; }
+      a.blue:hover  { color: $birmingham-blue-dark; }
       a.red         { color: $dark-red; }
       a.red:hover   { color: $old-glory-red; }
       a.admin       { color: $purple-desaturated; }
       a.admin:hover { color: $purple; }
       a.green       { color: $green-desaturated; }
       a.green:hover { color: $green; }
+    }
+
+    div.event-column-right div.event-actions div.event-actions-menu div.event-actions-list {
+      background-color: $dark-background-blue-faded-30;
+
+      a.birmingham-blue { color: $birmingham-blue-darker; }
+      a:hover           { color: $old-glory-blue-desaturated-faded; }
+      a.blue:hover      { color: $birmingham-blue-dark; }
+      a.green:hover     { color: $birmingham-blue-dark; }
     }
   }
 

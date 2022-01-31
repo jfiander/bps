@@ -225,11 +225,11 @@
       width: 60%
     }
   }
-  
+
   div#permissions {
     width: 95%;
   }
-  
+
   #files.table.markdown {
     width: 100%;
     display: flex;
@@ -381,6 +381,17 @@
 
     div.event-actions {
       text-align: center !important;
+
+      div.event-actions-menu {
+        a.show-event-actions-list { display: none; }
+
+        div.event-actions-list {
+          display: block;
+          text-align: center !important;
+          border-top: thin solid $old-glory-blue;
+          border-bottom: thin solid $old-glory-blue;
+        }
+      }
     }
   }
 }

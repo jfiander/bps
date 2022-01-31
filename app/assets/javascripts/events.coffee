@@ -85,3 +85,7 @@ $(document).ready ->
     if timeout
       clearTimeout(timeout)
     timeout = setTimeout(delayed, 250)
+
+$(document).ready ->
+  $('.show-event-actions-list').click (event) ->
+    event.preventDefault()

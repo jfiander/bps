@@ -4,7 +4,7 @@
   }
 }
 
-@media all and (mzx-width: 1800px) {
+@media all and (max-width: 1800px) {
   div.events-unified-table {
     width: 100%;
 
@@ -75,7 +75,7 @@
       width: 24%;
     }
   }
-  
+
   footer {
     font-size: 85%;
   }
@@ -143,6 +143,19 @@
 
   div.events-table-mobile {
     display: none;
+  }
+
+  div.events-unified-table {
+    div.event-actions div.event-actions-menu div.event-actions-list {
+      display: none;
+    }
+
+    div.event-actions div.event-actions-menu:hover div.event-actions-list {
+      display: block;
+      background-color: $background-blue;
+      position: absolute;
+      border-radius: 0.5em;
+    }
   }
 
   div#bilge {
