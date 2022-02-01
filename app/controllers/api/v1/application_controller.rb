@@ -33,7 +33,9 @@ module Api
 
       def validate_user!
         auth_header = request.headers['Authorization']
-        if auth_header =~ /^JWT /
+        if auth_header.nil?
+          not_authorized!
+        elsif auth_header =~ /^JWT /
           token = auth_header.split(' ').last
           decode_jwt(token)
         else
