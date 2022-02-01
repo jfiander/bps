@@ -10,7 +10,7 @@ module Api
       NOT_AUTHORIZED = 'You are not authorized to access that.'
       AUTHORIZATION_EXPIRED = 'Your authorization is expired. Please refresh.'
 
-      include ActionController::HttpAuthentication::Token::ControllerMethods
+      include Api::V1::JWT::Decode
 
       attr_reader :current_user
 
@@ -32,8 +32,15 @@ module Api
     private
 
       def validate_user!
-        key = request.headers['X-Key-ID']
-        authenticate_with_http_token { |token, _options| user_from_credentials(key, token) }
+        auth_header = request.headers['Authorization']
+        if auth_header =~ /^JWT /
+          token = auth_header.split(' ').last
+          decode_jwt(token)
+        else
+          key = request.headers['X-Key-ID']
+          token = auth_header.split(' ').last
+          user_from_credentials(key, token)
+        end
       end
 
       def validate_in_vpc!
