@@ -23,8 +23,9 @@ module Api
 
       # Adapted from User::Import controller concern
       def import_success(silent: false)
-        import_notification(:success)
-        log_import
+        by = current_user ? current_user.full_name : 'API'
+        import_notification(:success, by: by)
+        log_import(by: by)
         render(json: @import_results, status: :ok) unless silent
       end
 
@@ -38,23 +39,23 @@ module Api
         )
       end
 
-      def import_notification(type)
+      def import_notification(type, by: by)
         title = type == :success ? 'Complete' : 'Failed'
         fallback = type == :success ? 'successfully imported' : 'failed to import'
         SlackNotification.new(
           channel: :notifications, type: type, title: "User Data Import #{title}",
           fallback: "User information has #{fallback}.",
           fields: [
-            { title: 'By', value: current_user.full_name, short: true },
+            { title: 'By', value: by, short: true },
             { title: 'Results', value: @import_results.to_s, short: false }
           ]
         ).notify!
       end
 
-      def log_import
+      def log_import(by: by)
         log = File.open("#{Rails.root}/log/user_import.log", 'a')
 
-        log.write("[#{Time.now}] User import by: #{current_user.full_name}\n")
+        log.write("[#{Time.now}] User import by: #{by}\n")
         log.write(@import_results)
         log.write("\n\n")
         log.close

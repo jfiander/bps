@@ -29,7 +29,6 @@ module Api
         end
 
         def verify_access!(jwt)
-          puts "\n*** Required: #{['bps', version, controller_name, action_name].inspect}"
           unless format_access(jwt[0]['data']['access']).find { |access| access_match(access) }
             raise Api::V1::JWT::AccessRestrictionError
           end
