@@ -42,8 +42,8 @@ module Api
 
           return unless b == 'bps'
           return unless v == version
-          return unless c == controller_name || c == '*'
-          return unless a == action_name || a == '*'
+          return unless c.in?([controller_name, '*'])
+          return unless a.in?([action_name, '*'])
 
           access
         end
