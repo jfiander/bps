@@ -3,6 +3,8 @@
 module Api
   module V1
     class AuthController < ActionController::API
+      ACCESS_RESTRICTIONS_NOT_ALLOWED = 'You are not allowed to set those access restrictions.'
+
       include Api::V1::JWT::Encode
 
       def login
@@ -26,6 +28,7 @@ module Api
       def token_hash
         token =
           if clean_params[:type] == 'JWT'
+            validate_access_permissions!(clean_params[:access])
             create_jwt(access: clean_params[:access])
           else
             create_api_token
@@ -41,6 +44,37 @@ module Api
           persistent: clean_params[:persistent].present?,
           description: clean_params[:description]
         )
+      end
+
+      def validate_access_permissions!(access)
+        access = format_access(access)
+        raise Api::V1::JWT::AccessRestrictionError if access.blank?
+
+        access.each do |a|
+          controller = a.split(':')[2]
+          controller == '*' ? verify_all_controllers : verify_controller(controller)
+        end
+      rescue Api::V1::JWT::AccessRestrictionError
+        render(json: { error: ACCESS_RESTRICTIONS_NOT_ALLOWED }, status: :unauthorized)
+      end
+
+      def require_permission(*roles, strict: false)
+        return if user&.permitted?(*roles, strict: strict)
+
+        raise Api::V1::JWT::AccessRestrictionError
+      end
+
+      def verify_controller(controller)
+        klass = "Api::V1::#{controller.classify}Controller".constantize
+        require_permission(klass::REQUIRED_ROLES) if defined? klass::REQUIRED_ROLES
+      end
+
+      def verify_all_controllers
+        controllers = Dir[Rails.root.join('app/controllers/api/v1/*_controller.rb')].map do |path|
+          path.match(/(\w+)_controller.rb/)[1]
+        end.compact - %w[auth application]
+
+        controllers.each { |controller| verify_controller(controller) }
       end
 
       def unauthorized!

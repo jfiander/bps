@@ -14,7 +14,13 @@ module Api
         def version
           @version ||= self.class.name.split('::')[1].downcase
         end
+
+        def format_access(access)
+          access.is_a?(String) ? JSON.parse(access) : access
+        end
       end
+
+      class AccessRestrictionError < StandardError; end
     end
   end
 end

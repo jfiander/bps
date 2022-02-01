@@ -24,20 +24,17 @@ module Api
           raise e unless e.message == 'No verification key available'
 
           deny_access!(INVALID_ISSUER, :unauthorized)
-        rescue AccessRestrictionError
+        rescue Api::V1::JWT::AccessRestrictionError
           deny_access!(INVALID_ACCESS_RESTRICTION, :unauthorized)
         end
 
         def verify_access!(jwt)
+          puts "\n*** Required: #{['bps', version, controller_name, action_name].inspect}"
           unless format_access(jwt[0]['data']['access']).find { |access| access_match(access) }
-            raise AccessRestrictionError
+            raise Api::V1::JWT::AccessRestrictionError
           end
 
           jwt
-        end
-
-        def format_access(access)
-          access.is_a?(String) ? JSON.parse(access) : access
         end
 
         def access_match(access)
@@ -45,14 +42,11 @@ module Api
 
           return unless b == 'bps'
           return unless v == version
-          return access if c == 'general'
-          return unless c == controller_name
-          return unless a == action_name || a.nil?
+          return unless c == controller_name || c == '*'
+          return unless a == action_name || a == '*'
 
           access
         end
-
-        class AccessRestrictionError < StandardError; end
       end
     end
   end

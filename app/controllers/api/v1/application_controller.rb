@@ -18,13 +18,6 @@ module Api
         before_action :validate_user!
       end
 
-      def self.secure!(*roles, strict: false, only: nil, except: nil)
-        before_action(:validate_user!, only: only, except: except)
-        return if roles.blank?
-
-        before_action(only: only, except: except) { require_permission(*roles, strict: strict) }
-      end
-
       def self.internal!(only: nil, except: nil)
         before_action(:validate_in_vpc!, only: only, except: except)
       end
@@ -60,12 +53,6 @@ module Api
 
       def find_api_token(key)
         ApiToken.find_by(key: key)
-      end
-
-      def require_permission(*roles, strict: false)
-        return if current_user&.permitted?(*roles, strict: strict)
-
-        not_authorized!
       end
 
       def vpc?

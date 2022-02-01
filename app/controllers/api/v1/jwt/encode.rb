@@ -34,7 +34,7 @@ module Api
         end
 
         def default_access
-          ["bps:#{version}:general"]
+          ["bps:#{version}:*:*"]
         end
 
         NewJWT = Struct.new(:key, :new_token, :expires_at)

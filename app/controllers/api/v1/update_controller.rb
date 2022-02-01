@@ -3,7 +3,9 @@
 module Api
   module V1
     class UpdateController < Api::V1::ApplicationController
-      secure!(:users)
+      REQUIRED_ROLES = %i[users].freeze
+
+      authenticate_user!
 
       def automatic_update(silent: false)
         @import_results = AutomaticUpdate::Run.new.update
