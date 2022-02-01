@@ -54,9 +54,8 @@ missingInstructors = (_errorThrown, responseText) ->
   validations.innerHTML = '<div class="red">' + message + '</div>'
 
 verifyInstructors = ->
-  authKeyId = document.getElementById('api-auth-id').innerHTML
   authToken = document.getElementById('api-auth-token').innerHTML
-  bearerToken = 'Bearer ' + authToken
+  jwt = 'JWT ' + authToken
   usersString = document.getElementById('instructors').value
 
   req = {
@@ -65,8 +64,7 @@ verifyInstructors = ->
     dataType: 'text',
     data: usersString,
     headers: {
-      Authorization: bearerToken,
-      'X-Key-ID': authKeyId
+      Authorization: jwt,
     },
     url: '/api/v1/verify_user'
   }

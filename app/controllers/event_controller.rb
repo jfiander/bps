@@ -13,6 +13,7 @@ class EventController < ApplicationController
   include Events::Edit
   include Events::Update
   include Concerns::Application::RedirectWithStatus
+  include Api::V1::JWT::Encode
 
   before_action :prepare_lists, only: %i[schedule catalog registrations]
   before_action :current, only: %i[schedule]
@@ -23,6 +24,7 @@ class EventController < ApplicationController
   before_action :check_for_blank, only: %i[create update]
   before_action :location_names, only: %i[new copy edit]
   before_action :set_create_path, only: %i[new copy]
+  before_action :create_new_jwt, only: %i[new copy edit]
   before_action :load_registrations, only: %i[schedule], if: :user_signed_in?
   before_action :event_not_found?, only: %i[show]
   before_action :block_multiple_reminders, only: %i[remind]
@@ -175,5 +177,9 @@ private
     return unless @current_user_permitted_event_type
 
     @registered_users = Registration.includes(:user, :payment).all.group_by(&:event_id)
+  end
+
+  def create_new_jwt
+    @jwt = create_jwt(access: ['bps:v1:user_verify']).new_token
   end
 end

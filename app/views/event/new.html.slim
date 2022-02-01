@@ -267,8 +267,7 @@ h1 = "#{@edit_mode} #{@event_title}"
             li.red Invalid instructors will not be saved.
         .right
           - token = current_user.create_token
-          #api-auth-id.hide = token.key
-          #api-auth-token.hide = token.new_token
+          #api-auth-token.hide = @jwt
           = text_area_tag :instructors, @instructors, class: 'bulletted'
           #instructors-validation
         br.clear
