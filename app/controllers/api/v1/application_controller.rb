@@ -29,13 +29,22 @@ module Api
         if auth_header.nil?
           not_authorized!
         elsif auth_header =~ /^JWT /
-          token = auth_header.split(' ').last
-          decode_jwt(token)
+          user_from_jwt(auth_header)
         else
-          key = request.headers['X-Key-ID']
-          token = auth_header.split(' ').last
-          user_from_credentials(key, token)
+          user_from_bearer(auth_header)
         end
+      end
+
+      def user_from_jwt(auth_header)
+        token = auth_header.split(' ').last
+        jwt = decode_jwt(token)
+        @current_user = User.find_by(certificate: jwt[0]['data']['certificate'])
+      end
+
+      def user_from_bearer(auth_header)
+        key = request.headers['X-Key-ID']
+        token = auth_header.split(' ').last
+        user_from_credentials(key, token)
       end
 
       def validate_in_vpc!

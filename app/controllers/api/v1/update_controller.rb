@@ -39,7 +39,7 @@ module Api
         )
       end
 
-      def import_notification(type, by: by)
+      def import_notification(type, by: nil)
         title = type == :success ? 'Complete' : 'Failed'
         fallback = type == :success ? 'successfully imported' : 'failed to import'
         SlackNotification.new(
@@ -52,7 +52,7 @@ module Api
         ).notify!
       end
 
-      def log_import(by: by)
+      def log_import(by: nil)
         log = File.open("#{Rails.root}/log/user_import.log", 'a')
 
         log.write("[#{Time.now}] User import by: #{by}\n")

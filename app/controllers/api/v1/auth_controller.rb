@@ -26,17 +26,20 @@ module Api
       end
 
       def token_hash
-        token =
-          if clean_params[:type] == 'JWT'
-            validate_access_permissions!(clean_params[:access])
-            create_jwt(access: clean_params[:access])
-          else
-            create_api_token
-          end
+        token = generate_token
 
         h = { api_key: token.key, token: token.new_token, expires_at: token.expires_at }
         h[:description] = clean_params[:description] if clean_params[:description].present?
         h
+      end
+
+      def generate_token
+        if clean_params[:type] == 'JWT'
+          validate_access_permissions!(clean_params[:access])
+          create_jwt(access: clean_params[:access], certificate: user.certificate)
+        else
+          create_api_token
+        end
       end
 
       def create_api_token
