@@ -99,7 +99,7 @@ module BPS
 
           def load_award_images
             ::Roster::AwardRecipient.current.each do |award|
-              next unless BPS::S3.new(:files)&.has?(award&.photo&.path)
+              next unless award&.photo&.path && BPS::S3.new(:files)&.has?(award&.photo&.path)
 
               photo = BPS::S3.new(:files)&.download(award&.photo&.path)
               File.open("tmp/run/#{award.award_name}.png", 'w+') do |f|

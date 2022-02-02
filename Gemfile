@@ -26,13 +26,16 @@ gem 'uglifier',            '~> 4.1'
 gem 'figaro',              '~> 1.2.0'
 
 # Model Behavior
-gem 'paperclip',           '~> 5.3.0'
+gem 'paperclip',           '~> 6.1.0'
 gem 'paper_trail',         '~> 9.2.0'
 gem 'paranoia',            '~> 2.4.1'
 
 # APIs and External Services
-gem 'aws-sdk',             '~> 2.11'
-gem 'aws-sdk-rails',       '~> 1.0.1'
+gem 'aws-sdk-cloudfront', '~> 1.61'
+gem 'aws-sdk-rails',       '~> 3.6'
+gem 'aws-sdk-s3',          '~> 1.111'
+gem 'aws-sdk-ses',         '~> 1.45'
+gem 'aws-sdk-sns',         '~> 1.50'
 gem 'bps-google-api',      '~> 0.4.11'
 gem 'braintree',           '~> 3.3'
 gem 'geocoder',            '~> 1.6.1'
