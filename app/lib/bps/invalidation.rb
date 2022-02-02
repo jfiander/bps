@@ -84,8 +84,8 @@ module BPS
       unless Rails.env.deployed?
         attributes.merge!(
           credentials: Aws::Credentials.new(
-            ENV['S3_ACCESS_KEY'],
-            ENV['S3_SECRET']
+            ENV['AWS_ACCESS_KEY'],
+            ENV['AWS_SECRET']
           )
         )
       end
