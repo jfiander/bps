@@ -1,0 +1,132 @@
+name: 'BPSD9'
+on:
+  push:
+    paths:
+      - 'app/**'
+      - 'config/**'
+      - 'db/**'
+      - 'spec/**'
+      - '**.rb'
+      - '**.yml'
+      - '**.json'
+    branches:
+      - 'master'
+      - '**'
+    tags-ignore:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-20.04
+    environment: bpsd9-build
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.97.0
+        with:
+          bundler-cache: true
+      - name: Run Rubocop
+        run: bundle exec rubocop
+  rspec:
+    runs-on: ubuntu-20.04
+    environment: bpsd9-build
+    env:
+      ACTIVITY_FEED_LENGTH: ${{ secrets.ACTIVITY_FEED_LENGTH }}
+      ASSET_ENVIRONMENT: ${{ secrets.ASSET_ENVIRONMENT }}
+      AUTO_CLEAR_CALENDAR: ${{ secrets.AUTO_CLEAR_CALENDAR }}
+      BRAINTREE_MERCHANT_ID: ${{ secrets.BRAINTREE_MERCHANT_ID }}
+      BRAINTREE_PRIVATE_KEY: ${{ secrets.BRAINTREE_PRIVATE_KEY }}
+      BRAINTREE_PUBLIC_KEY: ${{ secrets.BRAINTREE_PUBLIC_KEY }}
+      BUGSNAG_KEY: ${{ secrets.BUGSNAG_KEY }}
+      CALENDARS: ${{ secrets.CALENDARS }}
+      CF_ENC_IV: ${{ secrets.CF_ENC_IV }}
+      CF_ENC_KEY: ${{ secrets.CF_ENC_KEY }}
+      CF_KEYPAIR_ID: ${{ secrets.CF_KEYPAIR_ID }}
+      DOMAIN: ${{ secrets.DOMAIN }}
+      ENABLE_BRAINTREE: ${{ secrets.ENABLE_BRAINTREE }}
+      EXCOM_MEET_ID: ${{ secrets.EXCOM_MEET_ID }}
+      EXCOM_MEET_SIGNATURE: ${{ secrets.EXCOM_MEET_SIGNATURE }}
+      FB_TRACK_REGISTRATIONS: ${{ secrets.FB_TRACK_REGISTRATIONS }}
+      FB_TRACK_PAYMENTS: ${{ secrets.FB_TRACK_PAYMENTS }}
+      CF_BASE_HOST: ${{ secrets.CF_BASE_HOST }}
+      BUCKET_PREFIX: ${{ secrets.BUCKET_PREFIX }}
+      FONTAWESOME_KIT: ${{ secrets.FONTAWESOME_KIT }}
+      GOOGLE_GEOCODER_API_KEY: ${{ secrets.GOOGLE_GEOCODER_API_KEY }}
+      GOOGLE_CALENDAR_ICON_URI: ${{ secrets.GOOGLE_CALENDAR_ICON_URI }}
+      GOOGLE_CALENDAR_ID_EDUC: ${{ secrets.GOOGLE_CALENDAR_ID_EDUC }}
+      GOOGLE_CALENDAR_ID_GEN: ${{ secrets.GOOGLE_CALENDAR_ID_GEN }}
+      GOOGLE_CALENDAR_ID_TEST: ${{ secrets.GOOGLE_CALENDAR_ID_TEST }}
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      GOOGLE_ACCESS_TOKEN: ${{ secrets.GOOGLE_ACCESS_TOKEN }}
+      GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+      GOOGLE_AUTH_EXP: ${{ secrets.GOOGLE_AUTH_EXP }}
+      INTERNAL_DOMAIN: ${{ secrets.INTERNAL_DOMAIN }}
+      JWT_HMAC_KEY_1: ${{ secrets.JWT_HMAC_KEY_1 }}
+      MARK_EXTERNAL_LINKS: ${{ secrets.MARK_EXTERNAL_LINKS }}
+      MEMBERSHIP_MEET_ID: ${{ secrets.MEMBERSHIP_MEET_ID }}
+      MEMBERSHIP_MEET_SIGNATURE: ${{ secrets.MEMBERSHIP_MEET_SIGNATURE }}
+      NEW_HEADER: ${{ secrets.NEW_HEADER }}
+      NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
+      PAYPAL_ACCESS_TOKEN: ${{ secrets.PAYPAL_ACCESS_TOKEN }}
+      PUSHOVER_APP_TOKEN: ${{ secrets.PUSHOVER_APP_TOKEN }}
+      COGNITO_POOL_ID: ${{ secrets.COGNITO_POOL_ID }}
+      COGNITO_APP_CLIENT_ID: ${{ secrets.COGNITO_APP_CLIENT_ID }}
+      COGNITO_EMAIL_SOURCE_ARN: ${{ secrets.COGNITO_EMAIL_SOURCE_ARN }}
+      COGNITO_PASSWORD_LENGTH: ${{ secrets.COGNITO_PASSWORD_LENGTH }}
+      COGNITO_PASSWORD_EXPIRATION: ${{ secrets.COGNITO_PASSWORD_EXPIRATION }}
+      COGNITO_SECRET: ${{ secrets.COGNITO_SECRET }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET: ${{ secrets.AWS_SECRET }}
+      SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+      SIGNATURE_IV: ${{ secrets.SIGNATURE_IV }}
+      SIGNATURE_KEY: ${{ secrets.SIGNATURE_KEY }}
+      SLACK_URL_EDUCATION: ${{ secrets.SLACK_URL_EDUCATION }}
+      SLACK_URL_EXCOM: ${{ secrets.SLACK_URL_EXCOM }}
+      SLACK_URL_FLOATPLANS: ${{ secrets.SLACK_URL_FLOATPLANS }}
+      SLACK_URL_GENERAL: ${{ secrets.SLACK_URL_GENERAL }}
+      SLACK_URL_NOTIFICATIONS: ${{ secrets.SLACK_URL_NOTIFICATIONS }}
+      SLACK_URL_TEST: ${{ secrets.SLACK_URL_TEST }}
+      SLACK_URL_WEBSITE: ${{ secrets.SLACK_URL_WEBSITE }}
+      SMS_ORIGINATION_NUMBER: ${{ secrets.SMS_ORIGINATION_NUMBER }}
+      AUTOMATIC_UPDATE_CERTIFICATE: ${{ secrets.AUTOMATIC_UPDATE_CERTIFICATE }}
+      AUTOMATIC_UPDATE_PASSWORD: ${{ secrets.AUTOMATIC_UPDATE_PASSWORD }}
+      USE_NEW_AG_TITLES: ${{ secrets.USE_NEW_AG_TITLES }}
+      TZ: ${{ secrets.TZ }}
+      VPC_CIDRS: ${{ secrets.VPC_CIDRS }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.97.0
+        with:
+          bundler-cache: true
+      - name: Setup MySQL
+        uses: shogo82148/actions-setup-mysql@v1
+        with:
+          mysql-version: '8.0'
+      - name: Prepare MySQL Database User
+        run: |
+          mysql -uroot -h127.0.0.1 -e 'SELECT version()'
+          mysql -uroot -h127.0.0.1 -e 'CREATE USER "${{ secrets.DB_USERNAME }}"@"${{ secrets.DB_HOSTNAME }}" IDENTIFIED BY "${{ secrets.DB_PASSWORD }}";'
+          mysql -uroot -h127.0.0.1 -e 'GRANT ALL PRIVILEGES ON * . * TO "${{ secrets.DB_USERNAME }}"@"${{ secrets.DB_HOSTNAME }}";'
+      - name: Setup CodeClimate
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter || (print "Will not report" && true)
+          chmod +x ./cc-test-reporter || true
+          ./cc-test-reporter before-build || true
+      - name: Setup Test Database Schema
+        run: 'bundle exec rails db:setup'
+        env:
+          RAILS_ENV: test
+      - name: Run Rspec
+        run: bundle exec rspec --format progress --order rand --color --tty
+      - name: Report to CodeClimate
+        run: ./cc-test-reporter after-build --exit-code $? || true
