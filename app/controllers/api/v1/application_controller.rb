@@ -61,7 +61,8 @@ module Api
       end
 
       def find_api_token(key)
-        ApiToken.find_by(key: key)
+        at = ApiToken.find_by(key: key)
+        at.expires_at.nil? ? at.becomes(PersistentApiToken) : at
       end
 
       def vpc?
