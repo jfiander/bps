@@ -8,6 +8,20 @@ body {
   color: $old-glory-blue;
 }
 
+div.signature {
+  margin-top: 2em;
+  font-size: 1.1em;
+}
+
+.select {
+  -webkit-user-select: all;
+  user-select: all;
+}
+
+div.section {
+  margin: 2em 0;
+}
+
 .birmingham {
   color: $birmingham-blue;
 }
@@ -22,4 +36,8 @@ body {
 
 .gray {
   color: $gray;
+}
+
+.bold {
+  font-weight: bold;
 }

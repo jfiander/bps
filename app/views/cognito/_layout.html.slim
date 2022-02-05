@@ -1,0 +1,19 @@
+html
+  head
+    meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+    style = render_scss 'application/mailers/styles.scss'
+  body
+    = image_tag(BPS::S3.new(:static).link('logos/ABC/png/long/white/birmingham/600.png'), alt: "America's Boating Club – Birmingham Squadron")
+
+    | ##YIELD##
+
+    .section
+      p If you have any questions or problems, just reply to this email.
+
+    .signature
+      p Thank you!
+
+      p.bold
+        span.red> America's
+        span.blue> Boating Club
+        | – Birmingham Squadron

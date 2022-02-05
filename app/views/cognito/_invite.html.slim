@@ -1,0 +1,13 @@
+h2 Welcome Aboard!
+
+.section
+  p
+    ' You can now #{link_to('login to our website', BPS::Cognito::URL.login, class: 'birmingham')}. Your username is
+    b.birmingham.select> = '{username}'
+    ' and your temporary password is:
+    b.birmingham.select = '{####}'
+
+  p Once you login, you will be required to choose a new password.
+
+.section
+  p If you don't want to be able to login and access the members areas of the new website, feel free to disregard this email.

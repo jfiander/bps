@@ -27,4 +27,9 @@ namespace :cognito do
       puts ' - Locked'
     end
   end
+
+  desc 'Update pool config with re-rendered email templates'
+  task config: :environment do
+    BPS::Cognito::Config.new.update
+  end
 end

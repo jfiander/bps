@@ -34,9 +34,19 @@ module BPS
           user_pool_id: ENV['COGNITO_POOL_ID'],
           username: username,
           user_attributes: attributes.map { |k, v| { name: k, value: v } },
-          message_action: 'SUPPRESS', # RESEND - available if user already exists
+          message_action: 'SUPPRESS',
           desired_delivery_mediums: ['EMAIL'] # EMAIL, SMS
         )
+      end
+
+      def reinvite(username)
+        client.admin_create_user(
+          user_pool_id: ENV['COGNITO_POOL_ID'],
+          username: username,
+          message_action: 'RESEND'
+        )
+      rescue Aws::CognitoIdentityProvider::Errors::UnsupportedUserStateException
+        # User is not in FORCE_CHANGE_PASSWORD
       end
 
       def reset_password(username, password, permanent: false)
