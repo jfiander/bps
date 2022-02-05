@@ -107,7 +107,7 @@ private
 
   def login_link
     @options[:title] = 'Member Login'
-    @options[:path] = new_user_session_path
+    @options[:path] = new_user_session_path # BPS::Cognito::URL.login
     @link_options = { class: 'members' }
     @fa = { name: 'sign-in', options: { style: :duotone } }
   end

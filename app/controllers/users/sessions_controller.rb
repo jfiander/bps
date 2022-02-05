@@ -9,6 +9,22 @@ module Users
       members_path
     end
 
+    # Process login from Cognito
+    def cognito
+      result = JSON.parse(BPS::Cognito::TokenRequest.new.call(params[:code]).body)
+      id_token = BPS::Cognito::Admin.new.decode(result['id_token'])[0]
+      raise ExpiredLoginToken if Time.at(id_token['exp']) < Time.now
+
+      sign_in :user, User.find_by(certificate: id_token['cognito:username'])
+
+      redirect_to members_path
+    end
+
+    # Redirect request to Cognito for login
+    def cognito_login
+      redirect_to(BPS::Cognito::URL.login)
+    end
+
   private
 
     def valid_referrer?
@@ -66,5 +82,7 @@ module Users
     def edit_paths
       "edit/(#{MarkdownHelper::VIEWS.map { |_, v| v }.join('|')})"
     end
+
+    class ExpiredLoginToken < StandardError; end
   end
 end

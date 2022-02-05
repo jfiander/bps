@@ -3,8 +3,8 @@ h1 Member Login
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
   = f.hidden_field :referrer, value: flash[:referrer]
   #login
-    .left = f.label :email
-    .right = f.email_field :email, autofocus: true
+    .left = f.label :email, 'Username or Email'
+    .right = f.text_field :email, autofocus: true
     br.clear
 
     .left = f.label :password
