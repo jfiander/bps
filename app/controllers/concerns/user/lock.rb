@@ -14,11 +14,16 @@ class User
       end
 
       user.lock
+      BPS::Cognito::Admin.new.disable(user.certificate) if Rails.env.production?
+
       redirect_to users_path, success: 'Successfully locked user.'
     end
 
     def unlock
-      User.find(clean_params[:id]).unlock
+      user = User.find(clean_params[:id])
+
+      user.unlock
+      BPS::Cognito::Admin.new.enable(user.certificate) if Rails.env.production?
 
       redirect_to users_path, success: 'Successfully unlocked user.'
     end
