@@ -37,6 +37,8 @@ class User < ApplicationRecord
   has_many :event_instructors
   has_many :events, through: :event_instructors
 
+  attr_accessor :mfa_code
+
   def self.no_photo
     ActionController::Base.helpers.image_path(BPS::S3.new(:static).link('no_profile.png'))
   end

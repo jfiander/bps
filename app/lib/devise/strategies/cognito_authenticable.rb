@@ -9,6 +9,7 @@ module Devise
 
       def authenticate!
         auth = migrate.authenticate(username, password)
+        cognito.challenged?(auth) # Redirect to MFA request view (or do a JS modal?)
         certificate = cognito.certificate(auth)
         user = User.find_by(certificate: certificate)
         return success!(user) if user

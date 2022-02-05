@@ -35,6 +35,8 @@ Rails.application.routes.draw do
     get    '/profile',            to: 'user#show'
     get    '/profile/edit',       to: 'users/registrations#edit'
     put    '/profile/edit',       to: 'users/registrations#update'
+    get    '/profile/mfa',        to: 'user#edit_mfa'
+    put    '/profile/mfa',        to: 'user#update_mfa'
     get    '/reset',              to: 'devise/passwords#new'
 
     get    '/profile/tokens',     to: 'user#tokens'

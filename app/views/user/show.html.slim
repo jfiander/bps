@@ -72,6 +72,9 @@ h1 = @user.full_name
         - else
           = FA::Icon.p('do-not-enter', css: 'gray')
           span.italic None specified
+    .table-row
+      .table-cell.left-header Multi-Factor Authentication
+      .table-cell = link_to(profile_mfa_path) { @user.mfa_enabled ? FA::Icon.p('shield-check', style: :duotone, fa: :fw) + 'Enabled' : FA::Icon.p('shield-blank', style: :duotone, fa: :fw) + 'Setup' }
 
 - if current_user.id == @user.id
   h2 Profile Actions

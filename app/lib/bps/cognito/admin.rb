@@ -16,6 +16,27 @@ module BPS
         )
       end
 
+      def challenged?(auth)
+        auth.challenge_name.present?
+      end
+
+      # Respond to auth challenge
+      #
+      # Aws::CognitoIdentityProvider::Errors::NotAuthorizedException (Invalid session for the user, session is expired.)
+      def respond(auth, secret)
+        session = auth.session
+        challenge_name = auth.challenge_name
+        username = auth.challenge_parameters['USER_ID_FOR_SRP']
+
+        client.admin_respond_to_auth_challenge(
+          user_pool_id: ENV['COGNITO_POOL_ID'],
+          client_id: ENV['COGNITO_APP_CLIENT_ID'],
+          challenge_name: challenge_name,
+          session: session,
+          challenge_responses: auth_challenge_response(username, challenge_name, secret)
+        )
+      end
+
       def refresh(username, refresh_token)
         client.admin_initiate_auth(
           user_pool_id: ENV['COGNITO_POOL_ID'],
@@ -128,6 +149,19 @@ module BPS
       def refresh_auth_parameters(username, refresh_token)
         {
           REFRESH_TOKEN: refresh_token,
+          SECRET_HASH: secret_hash(username)
+        }
+      end
+
+      def auth_challenge_response(username, challenge_name, secret)
+        key = {
+          'SOFTWARE_TOKEN_MFA' => :SOFTWARE_TOKEN_MFA_CODE,
+          'NEW_PASSWORD_REQUIRED' => :NEW_PASSWORD
+        }[challenge_name]
+
+        {
+          key => secret,
+          USERNAME: username,
           SECRET_HASH: secret_hash(username)
         }
       end

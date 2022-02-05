@@ -1,0 +1,46 @@
+h2 Multi-Factor Authentication
+
+#login
+  = form_for(current_user, url: profile_mfa_path, html: { method: :put }) do |f|
+    - unless @authenticating
+      .profile-section.mfa
+        .left State
+        .right
+          - if @enabled
+            = FA::Icon.p('shield-check', style: :duotone, fa: :fw) + 'Enabled'
+          - else
+            = FA::Icon.p('times-circle', style: :duotone, fa: :fw) + 'Disabled'
+
+    - if @authenticating
+      .center
+        - if @enable
+          = hidden_field_tag(:mfa_action, :enable)
+          | Please enter your password to begin enabling MFA.
+        - elsif @disable
+          = hidden_field_tag(:mfa_action, :disable)
+          | Please enter your password to disable MFA.
+      .profile-section.confirm-password
+        .left
+          = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
+          = f.label :current_password, 'Enter your current password to proceed'
+        .right = f.password_field :current_password, required: true
+      .center = spinner_button(f, button_text: 'Authenticate', disable_text: 'Authenticating', css: 'big')
+
+    - if @svg
+      .profile-section.mfa
+        = @svg
+        .mfa-secret = @secret
+        .show-mfa-secret
+
+      .profile-section.mfa
+        .left Code
+        .right = f.text_field(:mfa_code)
+
+      .center = spinner_button(f, button_text: 'Enable MFA', disable_text: 'Enabling MFA', css: 'big')
+    - elsif !@authenticating
+      .profile-section.mfa
+        .center
+          - if @enabled
+            = link_to('Disable MFA', '?disable=true', class: 'big')
+          - else
+            = link_to('Enable MFA', '?enable=true', class: 'big')
