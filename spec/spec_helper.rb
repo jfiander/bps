@@ -30,6 +30,7 @@ SimpleCov.start('rails') do
 
   # Exclude controller code
   add_filter '/app/controllers'
+  add_filter '/app/lib/devise/strategies'
 
   # Exclude static view-oriented helper code
   add_filter '/app/helpers/application_helper.rb'
@@ -53,6 +54,7 @@ SimpleCov.start('rails') do
   add_filter '/app/models/concerns/excom.rb'
   add_filter '/app/lib/bps/sms.rb'
   add_filter '/app/lib/bps/push.rb'
+  add_filter '/app/lib/bps/cognito'
   ## used for API access to National
   add_filter '/app/services/automatic_update*'
   ## used for configuring regular meetings
