@@ -81,7 +81,7 @@ Rubocop formatting validation is available:
 
 ### Automatic Builds
 
-Builds are generated automatically by [Travis CI](https://travis-ci.org/jfiander/bps).
+Builds are generated automatically by [GitHub Actions](https://github.com/jfiander/bps/actions).
 
 Build success requires both `rspec` and `rubocop` to pass.
 
