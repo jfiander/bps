@@ -130,3 +130,33 @@ jobs:
         run: bundle exec rspec --format progress --order rand --color --tty
       - name: Report to CodeClimate
         run: ./cc-test-reporter after-build --exit-code $? || true
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+  deploy:
+    needs: [rubocop, rspec]
+    runs-on: ubuntu-20.04
+    environment: bpsd9-build
+    steps:
+      - name: Get Current Branch
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Check if Deployable
+        run: |
+          if [[ "${{ steps.extract_branch.outputs.branch }}" == "master" ]]; then
+            echo "Deploying master to Production"
+            echo "##[set-output name=deploy_env;]$(echo 'production')"
+          elif [[ "${{ steps.extract_branch.outputs.branch }}" == "staging" ]]; then
+            echo "Deploying staging to Staging"
+            echo "##[set-output name=deploy_env;]$(echo 'staging')"
+          else
+            echo "Not an auto-deployable branch"
+          fi
+        id: deploy_environment
+      - name: Deploy
+        uses: garygrossgarten/github-action-ssh@v0.6.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          privateKey: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          passphrase: ${{ secrets.DEPLOY_PASSPHRASE }}
+          command: conditional_deploy ${{ steps.deploy_environment.outputs.deploy_env }} ${{ steps.extract_branch.outputs.branch }}
