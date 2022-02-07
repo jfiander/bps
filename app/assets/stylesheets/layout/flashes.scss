@@ -8,45 +8,34 @@ div#flashes {
   div {
     margin: 0;
     padding: 0.5em 0;
+    border-top: thin solid $black;
+    border-bottom: thin solid $black;
 
     a.close-flash {
       float: right;
       margin-right: 0.5em;
       font-size: larger;
-      color: $black;
     }
   }
 
   div#success {
-    color: $birmingham-blue;
-    background-color: $birmingham-blue-light;
-    border-top: thin solid $birmingham-blue;
-    border-bottom: thin solid $birmingham-blue;
+    //
   }
 
   div#notice {
-    color: $old-glory-blue-lighten-20;
-    background-color: $old-glory-blue-lighten-70;
-    border-top: thin solid $old-glory-blue-lighten-40;
-    border-bottom: thin solid $old-glory-blue-lighten-40;
+    //
   }
 
   div#alert {
     margin-bottom: 0;
     font-weight: bold;
-    color: $old-glory-red;
-    background-color: $old-glory-red-lighten-45;
-    border-top: thin solid $old-glory-red-lighten-10;
-    border-bottom: thin solid $old-glory-red-lighten-10;
   }
 
   div#error {
     margin-top: 0;
     padding: 0.3em 0;
     font-style: italic;
-    color: $old-glory-red;
-    background-color: $old-glory-red-lighten-50;
-    border-bottom: thin solid $old-glory-red-lighten-30;
+    border-top: none;
 
     ul {
       margin: 0;

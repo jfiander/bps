@@ -1,0 +1,358 @@
+@import "colors/_light";
+
+// A few default colors are also set in the buttons and mixins stylesheets.
+
+@media (prefers-color-scheme: light) {
+  // General Color Classes
+
+  .red             { color: $old-glory-red; }
+  .issue           { color: $issue-red; }
+  .orange          { color: $orange; }
+  .gold            { color: $gold; }
+  .insignia-gold   { color: $dark-gold; }
+  .pending         { color: $pending-green; }
+  .green           { color: $green; }
+  .birmingham-blue { color: $birmingham-blue; }
+  .blue            { color: $old-glory-blue-lighten-20; }
+  .admin           { color: $purple; }
+  .gray            { color: $gray; }
+
+  // Background Colors
+
+  .gray-background { background-color: $light-gray; }
+  .highlight       { background-color: $highlight-green !important; }
+  .lowlight        { background-color: $background-blue !important; }
+
+  // Set color to match background
+  .background      { color: $content-background; }
+
+  .red-background { background-color: $old-glory-red-lighten-50; }
+
+  body {
+    color: $old-glory-blue;
+    background-color: $background-blue;
+  }
+
+  a { color: $birmingham-blue; }
+  a:hover, a:hover > i  { color: $birmingham-blue-dark; }
+  a.red:hover, a.red:hover > i, a:hover > i.red { color: $old-glory-red-lighten-10; }
+  a.blue:hover, a.blue:hover > i, a:hover > i.blue { color: $old-glory-blue-lighten-40; }
+  a.admin:hover, a.admin:hover > i, a:hover > i.admin { color: $dark-purple; }
+  a.green:hover, a.green:hover > i, a:hover > i.green { color: $light-green; }
+
+  /* Allow for cascading container color to links, and reasonable hover colors */
+  .color-links {
+    a { color: inherit; }
+    a:hover { filter: brightness(70%); }
+  }
+
+  .scrollable { border-color: $background-darken-10; }
+
+  input.medium.light, button.medium.light, a.medium.light { color: $old-glory-blue; }
+
+  button.otw { background-color: inherit; }
+
+  div.table-row.gray {
+    div.table-cell {
+      color: $old-glory-blue;
+      background-color: $background-blue-faded;
+    }
+
+    div.table-cell.red {
+      color: $old-glory-red;
+      background-color: $background-blue-faded;
+    }
+
+    div.table-cell.gray {
+      color: $gray;
+      background-color: $background-blue-faded;
+    }
+
+    button.otw { background-color: $background-lighten-3; }
+  }
+
+  div#main { border-color: $old-glory-blue-faded; }
+
+  div#flashes {
+    div#success {
+      color: $birmingham-blue;
+      background-color: $birmingham-blue-light;
+      border-color: $birmingham-blue;
+    }
+
+    div#notice {
+      color: $old-glory-blue-lighten-20;
+      background-color: $old-glory-blue-lighten-70;
+      border-color: $old-glory-blue-lighten-40;
+    }
+
+    div#alert {
+      color: $old-glory-red;
+      background-color: $old-glory-red-lighten-45;
+      border-color: $old-glory-red-lighten-10;
+    }
+
+    div#error {
+      color: $old-glory-red;
+      background-color: $old-glory-red-lighten-50;
+      border-color: $old-glory-red-lighten-30;
+    }
+  }
+
+  div#new textarea.bulletted { background-color: $background-lighten-12 }
+
+  div#editor { background-color: $background-lighten-3; }
+
+  div#main {
+    background-color: $background-blue;
+    border-color: $old-glory-blue-faded;
+
+    header {
+      border-color: $old-glory-blue-faded;
+
+      div#desktop-header {
+        .logo { background-color: $logo-background; }
+        .slogan {
+          color: $white;
+          text-shadow: 3px 3px $old-glory-blue-faded;
+        }
+      }
+
+      // div#print-header { background-color: $dark-content-background-65; }
+    }
+
+    div#content { background-color: $content-background; }
+
+    footer { border-color: $old-glory-blue-faded; }
+  }
+
+  #navigation a { color: $white; }
+
+  ul#education {
+    li.active { background-color: $old-glory-red; }
+    li.active:hover { background-color: $old-glory-red-darken-10; }
+    li.active:active { background-color: $old-glory-red-darken-20; }
+  }
+
+  ul#admin-menu {
+    background-color: $old-glory-blue-lighten-68;
+    border-color: $old-glory-blue-lighten-35;
+
+    li:hover { background-color: $old-glory-blue-lighten-65; }
+    a { color: $old-glory-blue-lighten-20; }
+    a:hover { color: $old-glory-blue-lighten-40; }
+    a.red { color: $old-glory-red-lighten-10; }
+    a.red:hover { color: $old-glory-red; }
+  }
+
+  #nested-navigation {
+    background-color: $old-glory-blue-lighten-68;
+    border-color: $old-glory-blue-lighten-35;
+
+    ul {
+      a { color: $birmingham-blue-dark; }
+      a.admin { color: $purple; }
+
+      li.menu.red a { color: $old-glory-red; }
+      li:hover { background: $old-glory-blue-lighten-65; }
+
+      ul {
+        color: $birmingham-blue-dark;
+        background: $old-glory-blue-lighten-65;
+
+        a { color: $birmingham-blue-dark; }
+        a:hover { background: $old-glory-blue-lighten-55; }
+        li:hover { background: $old-glory-blue-lighten-55; }
+        ul {
+          background: $old-glory-blue-lighten-60;
+
+          li { color: $birmingham-blue-darker; }
+          a:hover { background: $old-glory-blue-lighten-50; }
+          li:hover { background: $old-glory-blue-lighten-50; }
+        }
+      }
+    }
+  }
+
+  div#show-sidenav { border-color: $old-glory-blue-faded; }
+
+  div#sidenav, div.sub-menu {
+    background-color: $background-blue;
+    border-color: $old-glory-blue-faded;
+
+    a.red li { @include blue-button(0.5em, $old-glory-red); }
+    a.members li { @include blue-button(0.5em, $old-glory-blue-lighten-20); }
+    a.admin li { @include blue-button(0.5em, purple); }
+  }
+
+  div#modal {
+    background-color: $modal-background;
+
+    div#modal-box {
+      background-color: $background-blue;
+      border-color: $background-darken-10;
+      div#modal-header {
+        background-color: $background-darken-8;
+        border-color: $background-darken-10;
+      }
+
+      div#modal-footer {
+        background-color: $background-darken-8;
+        border-color: $background-darken-10;
+      }
+    }
+  }
+
+  div#login {
+    div#show-change-password a { color: $old-glory-red; }
+    div#change-password {
+      background-color: $old-glory-red-lighten-50;
+      border-color: $old-glory-red;
+    }
+  }
+
+  div.password-box { border-color: $old-glory-red; }
+
+  div.application-review hr { border-color: $old-glory-blue-faded; }
+
+  div#error_explanation { color: $old-glory-red; }
+
+  div.field_with_errors input { box-shadow: 0 0 5px $old-glory-red; }
+
+  div#payment-box {
+    background-color: $background-lighten-5;
+    border-color: $old-glory-blue;
+  }
+
+  div#payment-description { color: $old-glory-red; }
+
+
+  div#users {
+    div.table-cell.user div.actions { border-color: $light-gray; }
+
+    div.table-row:nth-child(even) div.table-cell.user div.actions {
+      border-top: thin solid darken($light-gray, 10%);
+    }
+
+    div.table-row.locked div.table-cell {
+      background-color: $old-glory-red-lighten-50;
+      color: $gray;
+
+      a { color: $old-glory-red; }
+    }
+
+    div.table-row.locked:nth-child(odd) div.table-cell {
+      background-color: $old-glory-red-lighten-50;
+    }
+
+    div.table-row.locked:nth-child(even) div.table-cell {
+      background-color: $old-glory-red-lighten-45;
+    }
+  }
+
+  div.red-border { border-color: $old-glory-red; }
+
+  div#bilge {
+    a.members { background-color: $old-glory-blue-lighten-20; }
+    div.table-cell.excom a { background-color: $old-glory-blue-lighten-10; }
+  }
+
+  div.next-meeting {
+    color: $old-glory-blue-lighten-20;
+    background-color: $background-blue-faded;
+  }
+
+  div.notice {
+    color: $old-glory-blue-lighten-20;
+    background-color: $background-blue-faded;
+  }
+
+
+  div#activity-feed {
+    background-color: $background-blue-faded;
+    border-color: $old-glory-blue-faded;
+
+    a li {
+      background-color: $background-lighten-4;
+      border-color: $background-blue-extra-faded;
+    }
+
+    a:hover li { background-color: $background-blue; }
+  }
+
+  form.edit_static_page textarea { background-color: $background-lighten-12; }
+
+  div.events-unified-table div.event-unified {
+    &.even { background-color: $background-lighten-5; }
+
+    div.event-top-block div.invisible-flag { color: $old-glory-red; }
+    div.event-display-title { color: $old-glory-red; }
+    div.event-flags { color: $birmingham-blue; }
+
+    div.event-column-right div.event-actions div.event-actions-menu div.event-actions-list {
+      background-color: $background-blue-faded;
+
+      a.birmingham-blue { color: $birmingham-blue; }
+      a:hover           { color: $old-glory-blue; }
+      a.blue:hover      { color: $birmingham-blue; }
+      a.green:hover     { color: $birmingham-blue-dark; }
+    }
+  }
+
+  div.event-costs { color: $old-glory-blue-lighten-10; }
+
+  div#expired-events-section {
+    background-color: $old-glory-red-lighten-50;
+
+    div.event-unified.even { background-color: $old-glory-red-lighten-45; }
+  }
+
+
+  div.table.locations div.price-comment { color: $old-glory-red; }
+
+
+  div#otw form:hover .fa-square { color: $birmingham-blue-dark; }
+
+  div#otw-progress div.table-row div.table-cell.satisfied { color: $green; }
+
+
+  // Sliders
+
+  .switch div.description { color: $white; }
+  .slider { background-color: $birmingham-blue; }
+  .slider:before { background-color: $white; }
+  input:checked + .slider { background-color: $old-glory-red; }
+
+  // Unchecked Colors
+  .slider.darkblue-red { background-color: $old-glory-blue-lighten-10; }
+  .slider.darkblue-lightblue { background-color: $old-glory-blue-lighten-10; }
+  .slider.lightblue-red { background-color: $birmingham-blue; }
+  .slider.lightblue-darkblue { background-color: $birmingham-blue; }
+  .slider.red-lightblue { background-color: $old-glory-red; }
+  .slider.red-darkblue { background-color: $old-glory-red; }
+
+  // Checked Colors
+  input:checked + .slider.darkblue-red { background-color: $old-glory-red; }
+  input:checked + .slider.darkblue-lightblue { background-color: $birmingham-blue; }
+  input:checked + .slider.lightblue-red { background-color: $old-glory-red; }
+  input:checked + .slider.lightblue-darkblue { background-color: $old-glory-blue-lighten-10; }
+  input:checked + .slider.red-lightblue { background-color: $birmingham-blue; }
+  input:checked + .slider.red-darkblue { background-color: $old-glory-blue-lighten-10; }
+
+
+  // Tables
+
+  div.table.striped {
+    div.table-row:nth-child(odd) { background-color: $background-lighten-6;}
+    div.table-row:nth-child(even) { background-color: $background-blue;}
+    div.table-row.odd { background-color: $background-lighten-6;}
+    div.table-row.even { background-color: $background-blue;}
+    div.table-row.header { background-color: inherit;}
+  }
+
+  div.table.double-striped {
+    div.table-row:nth-of-type(4n+3), div.table-row:nth-of-type(4n+3) + * { background-color: $background-blue;}
+    div.table-row:nth-of-type(4n+1), div.table-row:nth-of-type(4n+1) + * { background-color: $background-lighten-6;}
+    div.table-row.header { background-color: inherit;}
+  }
+}

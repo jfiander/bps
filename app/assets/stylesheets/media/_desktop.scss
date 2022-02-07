@@ -146,13 +146,16 @@
   }
 
   div.events-unified-table {
+    div.event-unified {
+      div.event-column-left { flex: 2; }
+      div.event-column-lright { flex: 1; }
+    }
     div.event-actions div.event-actions-menu div.event-actions-list {
       display: none;
     }
 
     div.event-actions div.event-actions-menu:hover div.event-actions-list {
       display: block;
-      background-color: $background-blue;
       position: absolute;
       border-radius: 0.5em;
     }

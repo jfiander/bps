@@ -22,7 +22,6 @@ $slider-move: $switch-width - ($slider-size + 0.5em);
   div.description {
     width: 85%;
     height: 50%;
-    color: $white;
     font-size: 75%;
     font-weight: bold;
     text-align: right;
@@ -37,7 +36,6 @@ $slider-move: $switch-width - ($slider-size + 0.5em);
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $birmingham-blue;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -49,7 +47,6 @@ $slider-move: $switch-width - ($slider-size + 0.5em);
   width: $slider-size;
   left: $slider-margin;
   bottom: $slider-margin;
-  background-color: $white;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -76,58 +73,6 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
-}
-
-// Unchecked Colors
-
-.slider.darkblue-red {
-  background-color: $old-glory-blue-lighten-10;
-}
-
-.slider.darkblue-lightblue {
-  background-color: $old-glory-blue-lighten-10;
-}
-
-.slider.lightblue-red {
-  background-color: $birmingham-blue;
-}
-
-.slider.lightblue-darkblue {
-  background-color: $birmingham-blue;
-}
-
-.slider.red-lightblue {
-  background-color: $old-glory-red;
-}
-
-.slider.red-darkblue {
-  background-color: $old-glory-red;
-}
-
-// Checked Colors
-
-input:checked + .slider.darkblue-red {
-  background-color: $old-glory-red;
-}
-
-input:checked + .slider.darkblue-lightblue {
-  background-color: $birmingham-blue;
-}
-
-input:checked + .slider.lightblue-red {
-  background-color: $old-glory-red;
-}
-
-input:checked + .slider.lightblue-darkblue {
-  background-color: $old-glory-blue-lighten-10;
-}
-
-input:checked + .slider.red-lightblue {
-  background-color: $birmingham-blue;
-}
-
-input:checked + .slider.red-darkblue {
-  background-color: $old-glory-blue-lighten-10;
 }
 
 // Unchecked slider text

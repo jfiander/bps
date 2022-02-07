@@ -1,0 +1,25 @@
+// Theme Colors
+
+$birmingham-blue: #1086FF; // Primary interactive color
+$old-glory-blue:  #041E42; // Primary base color
+$old-glory-red:   #BF0D3E; // Primary accent color
+$background-blue: lighten(desaturate($old-glory-blue, 56%), 69%);
+
+// General Colors
+
+$red:             red;
+$issue-red:       #DD6666;
+$orange:          orange;
+$insignia-gold:   #FFBF3F;
+$gold:            #D4AF37;
+$pending-green:   #66BB66;
+$green:           green;
+$purple:          purple;
+
+// Grayscale
+
+$black:           black;
+$dark-gray:       #323232;
+$gray:            gray;
+$light-gray:      lightgray;
+$white:           white;

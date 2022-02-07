@@ -31,7 +31,6 @@ div.events-unified-table {
     padding: 1em;
 
     &.even {
-      background-color: $background-lighten-5;
       @include border-radius(0.5em);
     }
 
@@ -53,7 +52,6 @@ div.events-unified-table {
     }
 
     div.event-column-left {
-      width: 60%;
       margin-right: 5%;
       align-self: flex-start;
       display: flex;
@@ -65,7 +63,6 @@ div.events-unified-table {
     }
 
     div.event-column-right {
-      width: 35%;
       align-self: flex-start;
       display: flex;
       flex-flow: column wrap;
@@ -81,14 +78,12 @@ div.events-unified-table {
       }
 
       div.invisible-flag {
-        color: $old-glory-red;
         font-weight: bold;
       }
     }
 
     div.event-display-title {
       font-size: 150%;
-      color: $old-glory-red;
       margin-right: 1em;
       padding-bottom: 0.5em;
 
@@ -107,13 +102,9 @@ div.events-unified-table {
       margin-right: 5%;
     }
 
-    div.event-flags {
-      color: $birmingham-blue;
-
-      & > div {
-        text-indent: -2em;
-        padding-left: 2em;
-      }
+    div.event-flags > div {
+      text-indent: -2em;
+      padding-left: 2em;
     }
 
     div.event-location {
@@ -160,7 +151,6 @@ div.event-costs {
   width: 80%;
   margin: 1em 0;
   font-size: 80%;
-  color: $old-glory-blue-lighten-10;
 
   span.cost {
     margin-right: 0.5em;
@@ -184,14 +174,6 @@ div.event-costs {
   iframe {
     width: 100%;
     min-height: 40vh;
-  }
-}
-
-div#expired-events-section {
-  background-color: $old-glory-red-lighten-50;
-
-  div.event-unified.even {
-    background-color: $old-glory-red-lighten-45;
   }
 }
 

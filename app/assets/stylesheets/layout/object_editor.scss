@@ -24,10 +24,6 @@ div#new {
     &.location {
       width: 16em;
     }
-
-    &.bulletted {
-      background-color: $background-lighten-12
-    }
   }
 
   img, iframe {
@@ -35,7 +31,7 @@ div#new {
   }
 
   &.divided > div {
-    border-bottom: thin solid gray;
+    border-bottom: thin solid $gray;
   }
 
   div.left {

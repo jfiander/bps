@@ -1,15 +1,17 @@
+@import "_base";
+
 // Desaturated Colors
 
-$birmingham-blue-desaturated:  #4C87C3; // 50%
-$old-glory-blue-desaturated:   #071E3F; // 10%
-$old-glory-red-desaturated:    #9B314E; // 40%
-$background-blue-desaturated:  #CCD2DA; // 50%
-$purple-desaturated:           #602060; // 50%
-$green-desaturated:            #206020; // 50%
+$birmingham-blue-desaturated:  desaturate($birmingham-blue, 50%);
+$old-glory-blue-desaturated:   desaturate($old-glory-blue, 10%);
+$old-glory-red-desaturated:    desaturate($old-glory-red, 40%);
+$background-blue-desaturated:  desaturate($background-blue, 50%);
+$purple-desaturated:           desaturate($purple, 50%);
+$green-desaturated:            desaturate($green, 50%);
 
 // Specific Colors
 
-$dark-text: #DDDDDD;
+$dark-text: darken($white, 10%);
 
 $dark-red: darken($old-glory-red, 15%);
 $dark-birmingham-blue: darken($birmingham-blue, 10%);

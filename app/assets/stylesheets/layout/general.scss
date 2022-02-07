@@ -1,9 +1,7 @@
 body {
   font-family: Arial;
-  color: $old-glory-blue;
   margin: 0 20%;
   padding: 0;
-  background-color: $background-blue;
 }
 
 body.no-scroll {
@@ -92,7 +90,7 @@ div.information {
 
 .scrollable {
   overflow: scroll;
-  border: thin dotted $background-darken-10;
+  border: thin dotted $black;
 }
 
 .no-scroll {
@@ -149,25 +147,7 @@ textarea.large {
 
 .red-background {
   @include border-radius;
-  background-color: $old-glory-red-lighten-50;
   padding: 0.25em 0;
-}
-
-div.table-row.gray {
-  div.table-cell {
-    color: $old-glory-blue;
-    background-color: $background-blue-faded;
-  }
-
-  div.table-cell.red {
-    color: $old-glory-red;
-    background-color: $background-blue-faded;
-  }
-
-  div.table-cell.gray {
-    color: $gray;
-    background-color: $background-blue-faded;
-  }
 }
 
 a.unclickable {

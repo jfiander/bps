@@ -5,7 +5,6 @@ div.red-border {
 }
 
 form.edit_static_page textarea {
-  background-color: $background-lighten-12;
   border: 0;
   margin: 1em auto;
   padding: 0.5em;
@@ -36,6 +35,8 @@ div#markdown-details {
 
 div#preview {
   display: flex;
+
+  div#activity-feed { height: inherit; }
 }
 
 div#user-ranks {

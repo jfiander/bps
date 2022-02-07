@@ -16,14 +16,6 @@ div#bilge {
     @include blue-button(0.25em);
     font-size: 0.9em;
   }
-
-  a.members {
-    background-color: $old-glory-blue-lighten-20;
-  }
-
-  div.table-cell.excom a {
-    background-color: $old-glory-blue-lighten-10;
-  }
 }
 
 input#new-announcement-title {
@@ -254,8 +246,6 @@ div.next-meeting {
   margin: 0.5em 0;
   font-size: larger;
   text-align: center;
-  color: $old-glory-blue-lighten-20;
-  background-color: $background-blue-faded;
   line-height: 1.75em;
   display: flex;
   align-items: center;
@@ -292,8 +282,6 @@ div.notice {
   padding: 0.25em;
   font-size: larger;
   text-align: center;
-  color: $old-glory-blue-lighten-20;
-  background-color: $background-blue-faded;
   line-height: 1.75em;
   width: 99%;
   margin: 0;
@@ -308,8 +296,7 @@ div.notice {
 }
 
 div#activity-feed {
-  background-color: $background-blue-faded;
-  border-left: thin solid $old-glory-blue-faded;
+  border-left: thin solid $black;
   text-align: center;
   width: 25%;
   height: 100%;
@@ -319,8 +306,7 @@ div#activity-feed {
   ul li {
     margin: 1em 0;
     padding: 0.5em;
-    background-color: $background-lighten-4;
-    border: thin solid $background-blue-extra-faded;
+    border: thin solid $black;
     @include border-radius;
 
     div {
@@ -331,10 +317,6 @@ div#activity-feed {
       font-weight: bold;
       margin-bottom: 0.5em;
     }
-  }
-
-  a:hover li {
-    background-color: $background-blue;
   }
 
   div.date-time {

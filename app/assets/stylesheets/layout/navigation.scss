@@ -1,9 +1,6 @@
 // Main Menu
 #navigation {
-  a {
-    color: $white;
-    width: 11.4em;
-  }
+  a { width: 11.4em; }
 
   ul {
     list-style: none;
@@ -76,24 +73,11 @@ ul#education {
       vertical-align: middle;
     }
   }
-
-  li.active {
-    background-color: $old-glory-red;
-  }
-  
-  li.active:hover {
-    background-color: $old-glory-red-darken-10;
-  }
-  
-  li.active:active {
-    background-color: $old-glory-red-darken-20;
-  }
 }
 
 ul#admin-menu {
   width: 100%;
-  background-color: $old-glory-blue-lighten-68;
-  border-bottom: thin solid $old-glory-blue-lighten-35;
+  border-bottom: thin solid $black;
   padding: 0;
   list-style: none;
   margin: 0;
@@ -107,32 +91,11 @@ ul#admin-menu {
   a li.submenu {
     display: none;
   }
-
-  li:hover {
-    background-color: $old-glory-blue-lighten-65;
-  }
-
-  a {
-    color: $old-glory-blue-lighten-20;
-  }
-
-  a:hover {
-    color: $old-glory-blue-lighten-40;
-  }
-
-  a.red {
-    color: $old-glory-red-lighten-10;
-  }
-
-  a.red:hover {
-    color: $old-glory-red;
-  }
 }
 
 #nested-navigation {
   text-align: center;
-  background-color: $old-glory-blue-lighten-68;
-  border-bottom: thin solid $old-glory-blue-lighten-35;
+  border-bottom: thin solid $black;
 }
 
 #nested-navigation a div.arrow {
@@ -154,12 +117,7 @@ ul#admin-menu {
     text-decoration: none;
     line-height: 1.5em;
     padding: 0 1em;
-    color: $birmingham-blue-dark;
     @include border-radius(0.5em);
-  }
-
-  #nested-navigation ul a.admin {
-    color: $purple;
   }
 
   #nested-navigation ul li {
@@ -173,14 +131,6 @@ ul#admin-menu {
 
     #nested-navigation ul li.menu a:hover {
       text-decoration: none;
-    }
-
-    #nested-navigation ul li.menu.red a {
-      color: $old-glory-red;
-    }
-
-    #nested-navigation ul li:hover {
-      background: $old-glory-blue-lighten-65;
     }
 
     #nested-navigation ul li:hover > ul {
@@ -197,8 +147,6 @@ ul#admin-menu {
     background: none;
     padding: 0;
     padding-top: 5%;
-    color: $birmingham-blue-dark;
-    background: $old-glory-blue-lighten-65;
     @include border-radius(0 0 0.5em 0.5em);
   }
 
@@ -208,26 +156,15 @@ ul#admin-menu {
       padding: 0.7em 1em;
       display: block;
       width: 100%;
-      color: $birmingham-blue-dark;
     }
 
-    #nested-navigation ul ul > a {
-      width: inherit;
-    }
-
-    #nested-navigation ul ul a:hover {
-      background: $old-glory-blue-lighten-55;
-    }
+    #nested-navigation ul ul > a { width: inherit; }
 
     #nested-navigation ul ul li {
       float: none;
       min-width: 10em;
       margin: 0;
       @include border-radius(0.5em);
-    }
-
-    #nested-navigation ul ul li:hover {
-      background: $old-glory-blue-lighten-55;
     }
 
     #nested-navigation ul ul li.menu {
@@ -243,22 +180,10 @@ ul#admin-menu {
       top: 0;
       left: 95%;
       padding: 0;
-      background: $old-glory-blue-lighten-60;
       @include border-radius(0.5em 0.5em 0.5em 0.5em);
     }
 
-    #nested-navigation ul ul ul li {
-      min-width: 10em;
-      color: $birmingham-blue-darker;
-    }
-
-    #nested-navigation ul ul ul a:hover {
-      background: $old-glory-blue-lighten-50;
-    }
-
-    #nested-navigation ul ul ul li:hover {
-      background: $old-glory-blue-lighten-50;
-    }
+    #nested-navigation ul ul ul li { min-width: 10em; }
 
 div#show-sidenav {
   height: 2em;
@@ -267,7 +192,7 @@ div#show-sidenav {
   font-size: larger;
   font-weight: bold;
   vertical-align: middle;
-  border-bottom: thin solid $old-glory-blue-faded;
+  border-bottom: thin solid $black;
 
   i {
     vertical-align: middle;
@@ -286,12 +211,11 @@ div#sidenav, div.sub-menu {
   z-index: 9998;
   top: 0;
   left: 0;
-  background-color: $background-blue;
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   transition: 0.5s;
-  border-right: thin solid $old-glory-blue-faded;
+  border-right: thin solid $black;
   text-align: center;
   padding-top: 2em;
 
@@ -320,18 +244,6 @@ div#sidenav, div.sub-menu {
     width: 90%;
     height: 1.5em;
     line-height: 1.5em;
-  }
-
-  a.red li {
-    @include blue-button(0.5em, $old-glory-red);
-  }
-
-  a.members li {
-    @include blue-button(0.5em, $old-glory-blue-lighten-20);
-  }
-
-  a.admin li {
-    @include blue-button(0.5em, purple);
   }
 
   a li {

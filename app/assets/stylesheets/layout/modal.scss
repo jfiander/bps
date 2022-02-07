@@ -1,6 +1,5 @@
 div#modal {
   display: none;
-  background-color: $modal-background;
   position: fixed;
   top: 0;
   left: 0;
@@ -20,7 +19,6 @@ div#modal {
     max-width: 90%;
     min-height: 40%;
     max-height: 90%;
-    background-color: $background-blue;
     border: thin solid $background-darken-10;
 
     div#modal-header {
@@ -29,7 +27,6 @@ div#modal {
       padding: 0.5em 0.1em;
       font-size: 1.75em;
       font-weight: bold;
-      background-color: $background-darken-8;
       border-bottom: thin solid $background-darken-10;
     }
 
@@ -46,7 +43,6 @@ div#modal {
       padding: 1em 0;
       color: $old-glory-red;
       font-style: italic;
-      background-color: $background-darken-8;
       border-top: thin solid $background-darken-10;
     }
   }

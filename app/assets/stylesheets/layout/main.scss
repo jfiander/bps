@@ -12,11 +12,10 @@
 }
 
 div#main {
-  background-color: $background-blue;
   @include shadow-box(4);
   @include border-radius(1em);
   margin: 0.5em 0 1em 0;
-  border: thin solid $old-glory-blue-faded;
+  border: thin solid $black;
 
   header {
     width: 100%;
@@ -35,10 +34,9 @@ div#main {
 
       .logo {
         width: 100%;
-        position: absolute; 
+        position: absolute;
         top: 0;
         left: 0;
-        background-color: $logo-background;
         @include border-radius(1em 1em 0 0);
 
         img {
@@ -49,12 +47,10 @@ div#main {
 
       .slogan {
         width: 100%;
-        position: absolute; 
+        position: absolute;
         bottom: 0.6em;
         left: 0;
         text-align: center;
-        color: $white;
-        text-shadow: 3px 3px $old-glory-blue-faded;
         font-size: 120%;
         font-style: italic;
       }
@@ -78,7 +74,6 @@ div#main {
   }
 
   div#content {
-    background-color: $content-background;
     padding-bottom: 0.5em;
 
     div#content-main {
@@ -88,7 +83,7 @@ div#main {
 
   footer {
     padding: 1em 0;
-    border-top: thin solid $old-glory-blue-faded;
+    border-top: thin solid $black;
     text-align: center;
 
     img {

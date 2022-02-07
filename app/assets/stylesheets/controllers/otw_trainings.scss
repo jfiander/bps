@@ -1,9 +1,3 @@
-div#otw {
-  form:hover .fa-square {
-    color: $birmingham-blue-dark;
-  }
-}
-
 div#jumpstart.table {
   input {
     width: 20em;
@@ -18,6 +12,4 @@ div#jumpstart.table {
 div#otw-progress div.table-row div.table-cell {
   padding: 0.5em;
   vertical-align: middle;
-
-  &.satisfied { color: $green; }
 }

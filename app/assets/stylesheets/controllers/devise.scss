@@ -33,14 +33,9 @@ div#login {
     }
   }
 
-  div#show-change-password a {
-    color: $old-glory-red;
-  }
-
   div#change-password {
-    background-color: $old-glory-red-lighten-50;
-    border-top: thin solid $old-glory-red;
-    border-bottom: thin solid $old-glory-red;
+    border-top: thin solid $black;
+    border-bottom: thin solid $black;
     display: none;
   }
 
@@ -90,7 +85,6 @@ div#login {
 }
 
 div#error_explanation {
-  color: $old-glory-red;
 
   h2 {
     font-size: 90%;
@@ -101,8 +95,4 @@ div#error_explanation {
     list-style: none;
     padding: 0;
   }
-}
-
-div.field_with_errors input {
-  box-shadow: 0 0 5px $old-glory-red;
 }

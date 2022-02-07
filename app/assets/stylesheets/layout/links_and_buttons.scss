@@ -1,36 +1,4 @@
-a {
-  text-decoration: none;
-  color: $birmingham-blue;
-}
-
-a:hover, a:hover > i  {
-  color: $birmingham-blue-dark;
-}
-
-a.red:hover, a.red:hover > i, a:hover > i.red {
-  color: $old-glory-red-lighten-10;
-}
-
-a.blue:hover, a.blue:hover > i, a:hover > i.blue {
-  color: $old-glory-blue-lighten-40;
-}
-
-a.admin:hover, a.admin:hover > i, a:hover > i.admin {
-  color: $dark-purple;
-}
-
-a.green:hover, a.green:hover > i, a:hover > i.green {
-  color: $light-green;
-}
-
-/* Allow for cascading container color to links, and reasonable hover colors */
-.color-links a {
-  color: inherit;
-}
-
-.color-links a:hover {
-  filter: brightness(70%);
-}
+a { text-decoration: none; }
 
 input.big, button.big, a.big {
   @include big-button;
@@ -42,7 +10,6 @@ input.medium, button.medium, a.medium {
 
 input.medium.light, button.medium.light, a.medium.light {
   @include medium-button($birmingham-blue-light);
-  color: $old-glory-blue;
 }
 
 input.cancel, button.cancel, a.cancel {
@@ -52,12 +19,5 @@ input.cancel, button.cancel, a.cancel {
 
 button.otw {
   border: none;
-  background-color: inherit;
   font-size: 1.5em;
-}
-
-div.table-row.gray {
-  button.otw {
-    background-color: $background-lighten-3;
-  }
 }

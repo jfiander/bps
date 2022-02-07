@@ -1,23 +1,4 @@
-// Base colors
-$birmingham-blue: #1086FF;
-$old-glory-blue:  #041E42;
-$old-glory-red:   #BF0D3E;
-$background-blue: #C5D1E1;
-
-$red:             red;
-$issue-red:       #DD6666;
-$orange:          orange;
-$insignia-gold:   #FFBF3F;
-$gold:            #D4AF37;
-$pending-green:   #66BB66;
-$green:           green;
-$purple:          purple;
-
-$black:           black;
-$dark-gray:       #323232;
-$gray:            gray;
-$light-gray:      lightgray;
-$white:           white;
+@import "_base";
 
 // Individual modifications
 $light-green:      lighten($green, 10%);
@@ -66,24 +47,3 @@ $content-background:          lighten($background-blue, 8%);
 $background-lighten-12:       lighten($background-blue, 12%);
 $background-darken-8:         darken($background-blue, 8%);
 $background-darken-10:        darken($background-blue, 10%);
-
-// Content Colors
-.red             { color: $old-glory-red; }
-.issue           { color: $issue-red; }
-.orange          { color: $orange; }
-.gold            { color: $gold; }
-.insignia-gold   { color: $dark-gold; }
-.pending         { color: $pending-green; }
-.green           { color: $green; }
-.birmingham-blue { color: $birmingham-blue; }
-.blue            { color: $old-glory-blue-lighten-20; }
-.admin           { color: $purple; }
-.gray            { color: $gray; }
-
-// Background Colors
-.gray-background { background-color: $light-gray; }
-.highlight       { background-color: $highlight-green !important; }
-.lowlight        { background-color: $background-blue !important; }
-
-// Set color to match background
-.background      { color: $content-background; }

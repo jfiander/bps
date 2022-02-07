@@ -1,12 +1,11 @@
 div#payment-box {
   @include border-radius;
   @include shadow_box(2, 0);
-  background-color: $background-lighten-5;
   width: 90%;
   max-width: 35em;
   margin: 1em auto;
   padding: 1.5em;
-  border: thin solid $old-glory-blue;
+  border: thin solid $black;
 }
 
 div#dropin-container {
@@ -33,7 +32,6 @@ input#receipt-email {
 }
 
 div#payment-description {
-  color: $old-glory-red;
   font-size: 1.25em;
 
   div.amount, div.subject, div.date {

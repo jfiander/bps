@@ -1,6 +1,8 @@
 @import "colors/_dark";
 
 @media (prefers-color-scheme: dark) {
+  // General Color Classes
+
   .red             { color: darken($old-glory-red-desaturated, 20%); }
   .issue           { color: $issue-red; }
   .orange          { color: $orange; }
@@ -11,32 +13,39 @@
   .birmingham-blue { color: $birmingham-blue-desaturated; }
   .blue            { color: $old-glory-blue; }
   .admin           { color: $purple-desaturated; }
-  .gray            { color: #AAAAAA; }
+  .gray            { color: $gray; }
+
+  // Background Colors
 
   .gray-background { background-color: $gray; }
   .highlight       { background-color: $darker-green !important; }
   .lowlight        { background-color: $dark-main-background-blue !important; }
 
-  .background     { color: $dark-content-background; }
+  // Set color to match background
+  .background      { color: $dark-content-background; }
+
   .red-background {
     background-color: $old-glory-red-desaturated;
 
     .red { color: $dark-text; }
   }
 
+  .scrollable { border-color: $background-darken-10; }
+
   body {
     color: $dark-text;
-    background-color: $dark-background-blue;
+    background-color: $dark-main-background-blue;
   }
 
   a { color: $birmingham-blue-desaturated; }
 
   button > a { color: $dark-text; }
 
-  hr { border-color: #999999; }
+  hr { border-color: $gray; }
 
   div#main {
-    background-color: $dark-main-background-blue;
+    background-color: $dark-background-blue;
+    border-color: $old-glory-blue-faded;
 
     header {
       div#desktop-header {
@@ -64,22 +73,28 @@
       div#content-main {
         div#activity-feed {
           background-color: $dark-content-background-65;
+          border-color: $old-glory-blue-faded;
 
-          a li.blue {
+          a li {
             color: $dark-text;
             background-color: $dark-content-background;
             border-color: $old-glory-blue-desaturated;
           }
 
-          a:hover li.blue { background-color: $dark-content-background-65; }
+          a:hover li { background-color: $dark-content-background-65; }
         }
       }
     }
+
+    footer { border-color: $old-glory-blue-faded; }
   }
 
   div#show-sidenav { background-color: $dark-content-background-65; }
 
-  div#sidenav, div.sub-menu { background-color: $dark-content-background; }
+  div#sidenav, div.sub-menu {
+    background-color: $dark-content-background;
+    border-color: $old-glory-blue-desaturated;
+  }
 
   #navigation, #sidenav {
     ul a li,
@@ -121,6 +136,8 @@
     }
   }
 
+  div.red-border { border-color: $old-glory-red-desaturated; }
+
   ul#education {
     li {
       color: $dark-text;
@@ -139,24 +156,28 @@
     div#success {
       color: $old-glory-blue;
       background-color: $birmingham-blue-desaturated-faded;
+      border-color: $birmingham-blue;
     }
 
     div#notice {
       color: $old-glory-blue-lighten-20;
       background-color: $birmingham-blue-desaturated;
+      border-color: $old-glory-blue-lighten-40;
     }
 
     div#alert {
       color: $old-glory-red-desaturated;
       background-color: $dark-old-glory-red-faded-25;
-      border-top: $old-glory-red-desaturated;
-      border-bottom: $old-glory-red-desaturated;
+      border-color: $old-glory-red-desaturated;
     }
 
     div#error {
       color: $old-glory-red-desaturated;
       background-color: $dark-old-glory-red-faded-35;
+      border-color: $old-glory-red-lighten-30;
     }
+
+    div a.close-flash { color: $black; }
   }
 
   div.next-meeting {
@@ -180,7 +201,31 @@
 
   div#editor { background-color: $dark-editor-background; }
 
-  div#login div#change-password { background-color: $old-glory-red-desaturated; }
+  div#login {
+    div#show-change-password a { color: $dark-red; }
+    div#change-password { background-color: $old-glory-red-desaturated; }
+  }
+
+  div.password-box { border-color: $old-glory-red-desaturated; }
+
+  div#users {
+    div.table-cell.user div.actions { border-color: $light-gray; }
+
+    div.table-row.locked div.table-cell {
+      background-color: $old-glory-red-desaturated;
+      color: $light-gray;
+
+      a { color: $dark-red; }
+    }
+
+    div.table-row.locked:nth-child(odd) div.table-cell {
+      background-color: $dark-old-glory-red-faded-25;
+    }
+
+    div.table-row.locked:nth-child(even) div.table-cell {
+      background-color: $old-glory-red-desaturated;
+    }
+  }
 
   div.events-unified-table div.event-unified {
     div.title { color: $old-glory-red-desaturated; }
@@ -202,6 +247,8 @@
       a.green:hover { color: $green; }
     }
 
+    div.event-flags { color: $birmingham-blue-desaturated; }
+
     div.event-column-right div.event-actions div.event-actions-menu div.event-actions-list {
       background-color: $dark-background-blue-faded-30;
 
@@ -219,6 +266,13 @@
 
     div.title { color: $old-glory-blue; }
   }
+
+  div.table.locations div.price-comment { color: $old-glory-red-desaturated; }
+
+  div#otw form:hover .fa-square { color: $birmingham-blue-desaturated; }
+  div#otw-progress div.table-row div.table-cell.satisfied { color: $green-desaturated; }
+
+  div.application-review hr { border-color: $old-glory-blue-desaturated; }
 
   div#bilge a               { background-color: $birmingham-blue-desaturated; }
   div#bilge a.members       { background-color: $old-glory-blue-desaturated; }
@@ -240,6 +294,7 @@
 
   div#payment-box {
     background-color: $dark-editor-background;
+    border-color: $old-glory-blue;
 
     div#payment-description { color: $dark-red; }
 
@@ -319,6 +374,13 @@
   input.cancel, button.cancel, a.cancel {
     background-color: $old-glory-red-desaturated;
   }
+
+  // Sliders
+
+  .switch div.description { color: $dark-text; }
+  .slider { background-color: $birmingham-blue-desaturated; }
+  .slider:before { background-color: $dark-text; }
+  input:checked + .slider { background-color: $old-glory-red-desaturated; }
 
   // Unchecked Colors
   .slider {
