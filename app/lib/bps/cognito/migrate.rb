@@ -13,16 +13,18 @@ module BPS
       rescue Aws::CognitoIdentityProvider::Errors::NotAuthorizedException => e
         raise e unless (user = local_authenticate(username, password))
 
-        migrate_user(user, password: password)
+        # If user may not exist in Cognito
+        # migrate_user(user, password: password)
+
+        # If user already exists in Cognito
+        admin.reset_password(user.certificate, password, permanent: true)
+
         admin.authenticate(user.certificate, password)
 
         raise e
       end
 
-      # Check if a username exists in Cognito.
-      # Run legacy authentication.
-      # If authenticated, create user in Cognito.
-      # Otherwise, just give up unauthenticated.
+      # Attempt to create user in Cognito.
       def migrate_user(user, password: nil)
         return if lookup_certificate(user.certificate)
       rescue Aws::CognitoIdentityProvider::Errors::UserNotFoundException
