@@ -33,15 +33,15 @@ module Users
     end
 
     def invite_resource
-      if (user = User.find_by(email: invite_params[:email]))
-        user.invite!
-        flash[:success] = "Invitation sent to #{user.email}!"
-        flash[:notice] = 'You can also invite imported users from the users list.'
-        user
-      else
-        flash[:success] = "Invitation sent to #{invite_params[:email]}!"
-        super
-      end
+      # if (user = User.find_by(email: invite_params[:email]))
+      #   user.invite!
+      #   flash[:success] = "Invitation sent to #{user.email}!"
+      #   flash[:notice] = 'You can also invite imported users from the users list.'
+      #   user
+      # else
+      #   flash[:success] = "Invitation sent to #{invite_params[:email]}!"
+      #   super
+      # end
     end
   end
 end
