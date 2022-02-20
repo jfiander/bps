@@ -1,0 +1,4 @@
+- unless icon.nil?
+  = FA::Icon.p(icon, style: :duotone)
+  = link_to('#', class: 'close-flash') { FA::Icon.p('times', style: :duotone) }
+= contents

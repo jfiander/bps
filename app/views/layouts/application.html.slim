@@ -50,16 +50,10 @@ html lang='en'
           - if current_user&.show_admin_menu? && admin_menu.values.any?
             #nested-navigation = render 'application/navigation/admin/nested', admin_links: admin_menu
           #flashes
-            #success class=(success ? '' : 'hide')
-              = FA::Icon.p('check-circle', style: :duotone)
-              = success
-            #notice class=(notice ? '' : 'hide')
-              = FA::Icon.p('info-circle', style: :duotone)
-              = notice
-            #alert class=(alert ? '' : 'hide')
-              = FA::Icon.p('exclamation-circle', style: :duotone)
-              = alert
-            #error class=(error ? '' : 'hide') = formatted_error_flash(error)
+            #success class=(success ? '' : 'hide') = render 'application/flash', icon: 'check-circle', contents: success
+            #notice class=(notice ? '' : 'hide') = render 'application/flash', icon: 'info-circle', contents: notice
+            #alert class=(alert ? '' : 'hide') = render 'application/flash', icon: 'exclamation-circle', contents: alert
+            #error class=(error ? '' : 'hide') = render 'application/flash', icon: nil, contents: formatted_error_flash(error)
         #content-main = yield
       footer
         - if current_user&.permitted?(:admin, strict: true) && ::GIT_INFORMATION.local_ref.present?
