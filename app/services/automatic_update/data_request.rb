@@ -55,7 +55,7 @@ module AutomaticUpdate
       Bugsnag.notify(
         DataRequestError.new(
           'Response error received',
-          code: result.code, body: result.response.body, uri: uri, request: req
+          code: result.code, request: req, uri: uri, body: result.response.body
         )
       )
     end
@@ -70,9 +70,12 @@ module AutomaticUpdate
 
       def bugsnag_meta_data
         {
-          code: metadata[:code],
-          request: metadata[:request],
-          response: metadata[:response]
+          data_request: {
+            code: metadata[:code],
+            request: metadata[:request],
+            uri: metadata[:uri],
+            body: metadata[:body]
+          }
         }
       end
     end
