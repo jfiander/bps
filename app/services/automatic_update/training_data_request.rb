@@ -3,7 +3,7 @@
 module AutomaticUpdate
   class TrainingDataRequest < DataRequest
     REQUEST_URL = 'https://www.usps.org/cgi-bin-nat/grades/doquery.cgi?%7C%7C%7Ctools'
-    DOWNLOAD_URL = 'https://www.usps.org/info/temp/0525_training.csv'
+    DOWNLOAD_URL = 'https://www.usps.org/info/temp/0525_trmods.csv'
     REQUEST_DATA = {
       'mods' => 'trmods',
       'qtype' => 'spread', 'cora' => 'C', 'grade' => 'X',

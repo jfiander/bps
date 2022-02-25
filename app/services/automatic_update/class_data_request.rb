@@ -3,7 +3,7 @@
 module AutomaticUpdate
   class ClassDataRequest < DataRequest
     REQUEST_URL = 'https://www.usps.org/cgi-bin-nat/grades/doquery.cgi?%7C%7C%7Ctools'
-    DOWNLOAD_URL = 'https://www.usps.org/info/temp/0525_grades.csv'
+    DOWNLOAD_URL = 'https://www.usps.org/info/temp/0525_clmods.csv'
     REQUEST_DATA = {
       'mods' => 'clmods',
       'qtype' => 'spread',

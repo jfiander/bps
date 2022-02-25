@@ -3,7 +3,7 @@
 module AutomaticUpdate
   class BOCDataRequest < DataRequest
     REQUEST_URL = 'https://www.usps.org/cgi-bin-nat/grades/doquery.cgi?%7C%7C%7Ctools'
-    DOWNLOAD_URL = 'https://www.usps.org/info/temp/0525_boc.csv'
+    DOWNLOAD_URL = 'https://www.usps.org/info/temp/0525_bocmods.csv'
     REQUEST_DATA = {
       'mods' => 'bocmods',
       'qtype' => 'spread', 'cora' => 'C', 'grade' => 'X',
