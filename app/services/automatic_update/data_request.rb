@@ -50,9 +50,9 @@ module AutomaticUpdate
     end
 
     def submit(uri, req)
-      puts "URI:    #{uri}" if @verbose
+      print " [     ]  #{uri}\r\033[3C" if @verbose
       result = client(uri).request(req)
-      puts "Result: #{result.code}\n\n" if @verbose
+      print "#{result.code}\n" if @verbose
 
       return result if result.code == '200'
 
