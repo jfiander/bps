@@ -54,6 +54,7 @@ class User
     def import_failure(error)
       flash.now[:alert] = 'Unable to import user data.'
       flash.now[:error] = error.message
+      Bugsnag.notify(error)
       render :import
       import_notification(:failure)
     end
