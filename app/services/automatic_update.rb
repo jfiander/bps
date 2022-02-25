@@ -35,7 +35,7 @@ module AutomaticUpdate
 
       REQUESTS.each do |name|
         puts "Downloading #{name}..."
-        req = AutomaticUpdate.const_get(name).new(@cookie_key)
+        req = AutomaticUpdate.const_get(name).new(@cookie_key, verbose: true)
         req.call
         req.download
       end

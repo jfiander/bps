@@ -2,9 +2,10 @@
 
 module AutomaticUpdate
   class SeminarDataRequest < DataRequest
-    REQUEST_URL = 'https://www.usps.org/cgi-bin-nat/grades/dosquery.cgi?%7C%7C'
+    REQUEST_URL = 'https://www.usps.org/cgi-bin-nat/grades/doquery.cgi?%7C%7C%7Ctools'
     DOWNLOAD_URL = 'https://www.usps.org/info/temp/0525_seminars.csv'
     REQUEST_DATA = {
+      'mods' => 'smmods',
       'qtype' => 'spread', 'cora' => 'C', 'grade' => 'X',
       'fld1' => 'N', 'fld2' => 'N', 'fld3' => 'N', 'fld4' => 'N', 'fld5' => 'N', 'fld6' => 'N',
 

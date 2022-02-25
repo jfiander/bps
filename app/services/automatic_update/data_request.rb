@@ -9,8 +9,9 @@ module AutomaticUpdate
   class DataRequest
     FORM_CONTENT_TYPE = 'application/x-www-form-urlencoded; charset=utf-8'
 
-    def initialize(cookie_key = nil)
+    def initialize(cookie_key = nil, verbose: false)
       @cookie_key = cookie_key
+      @verbose = verbose
       FileUtils.mkdir_p(Rails.root.join('tmp/automatic_update'))
     end
 
@@ -49,7 +50,10 @@ module AutomaticUpdate
     end
 
     def submit(uri, req)
+      puts "URI:    #{uri}" if @verbose
       result = client(uri).request(req)
+      puts "Result: #{result.code}\n\n" if @verbose
+
       return result if result.code == '200'
 
       Bugsnag.notify(
