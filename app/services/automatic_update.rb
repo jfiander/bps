@@ -18,6 +18,7 @@ module AutomaticUpdate
 
     def initialize
       @new_headers = []
+      @file_headers = []
     end
 
     def update(download: true, import: true, lock: false)
@@ -37,7 +38,7 @@ module AutomaticUpdate
       login
 
       REQUESTS.each do |name|
-        puts "Downloading #{name}..."
+        puts "\nDownloading #{name}..."
         req = AutomaticUpdate.const_get(name).new(@cookie_key, verbose: true)
         req.call
         req.download
@@ -69,6 +70,7 @@ module AutomaticUpdate
         headers = csv.headers
         headers.shift # Ignore cert# header
         @new_headers += headers
+        @file_headers.push(headers) # Track the groups of headers to ensure consistency
 
         csv.each_with_object({}) do |row, hash|
           certificate = row.delete('cert#').last
@@ -79,8 +81,11 @@ module AutomaticUpdate
 
     def combine_csv_data
       main_csv.each do |row|
-        new_data.each do |file|
-          next unless file.key?(row['Certificate'])
+        new_data.each_with_index do |file, index|
+          unless file.key?(row['Certificate'])
+            @file_headers[index].each { |k| row[k] = nil }
+            next
+          end
 
           file[row['Certificate']].each { |k, v| row[k] = v }
         end
