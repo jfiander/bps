@@ -24,8 +24,11 @@ module AutomaticUpdate
       download_all if download
       combine_csv_data
       write_output_file
+      return unless import
+
+      result = ImportUsers::Import.new(OUTPUT_PATH, lock: lock).call
       cleanup_files
-      ImportUsers::Import.new(OUTPUT_PATH, lock: lock).call if import
+      result
     end
 
   private
