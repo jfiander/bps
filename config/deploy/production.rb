@@ -1,5 +1,7 @@
 production_instance = 'production.internal.bpsd9.org'
 
+set :rvm_ruby_version, '2.7.4'
+
 role :app, "deploy@#{production_instance}"
 role :web, "deploy@#{production_instance}"
 role :db,  "deploy@#{production_instance}"

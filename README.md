@@ -44,6 +44,14 @@ Run the server:
 rails s
 ```
 
+## Upgrading Ruby
+
+To upgrade the deployed Ruby version, make sure to update the following locations:
+
+- Gemfile
+- config/deploy/*
+- nginx site configuration file
+
 ## Deploy
 
 Deploys are handled through Capistrano.
