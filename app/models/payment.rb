@@ -35,7 +35,7 @@ class Payment < ApplicationRecord
   end
 
   def cost?
-    !parent&.payment_amount&.is_a?(Hash) && parent&.payment_amount&.positive?
+    !parent&.payment_amount.is_a?(Hash) && parent&.payment_amount&.positive?
   end
 
   def transaction_amount
@@ -86,7 +86,7 @@ class Payment < ApplicationRecord
 private
 
   def set_cost_type
-    return unless parent.class.name == 'Registration'
+    return unless parent.is_a?(Registration)
 
     parent.event.costs.select { |_t, c| c == amount }.keys.first.to_s.titleize
   end

@@ -31,6 +31,8 @@ RSpec/EmptyExampleGroup:
   Enabled: true
   Exclude:
     - models/event_spec.rb
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
 
 Style/GlobalVars:
   Enabled: false

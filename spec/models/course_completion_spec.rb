@@ -20,7 +20,7 @@ RSpec.describe CourseCompletion, type: :model do
   end
 
   describe 'for_year' do
-    subject(:completions) { CourseCompletion.for_year(2021) }
+    subject(:completions) { described_class.for_year(2021) }
 
     let(:user) { FactoryBot.create(:user) }
 

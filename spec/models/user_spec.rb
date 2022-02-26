@@ -396,7 +396,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'requires a file path' do
-      expect { @user.assign_photo }.to raise_error(ArgumentError, 'missing keyword: local_path')
+      expect { @user.assign_photo }.to raise_error(ArgumentError, 'missing keyword: :local_path')
 
       expect { @user.assign_photo(local_path: @photo.path) }.not_to raise_error
     end

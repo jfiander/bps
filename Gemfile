@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '2.7.4'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -81,6 +81,7 @@ gem 'differ',              '~> 0.1.2'
 gem 'fileutils',           '~> 1.4.1'
 gem 'loofah',              '~> 2.3.1'
 gem 'mimemagic',           '>= 0.3.6'
+gem 'nokogiri',            '>= 1.13.2'
 gem 'rubyzip',             '>= 1.3.0'
 gem 'sinatra',             '~> 2.0.3'
 

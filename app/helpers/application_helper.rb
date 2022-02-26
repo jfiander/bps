@@ -3,7 +3,7 @@
 module ApplicationHelper
   def formatted_error_flash(error)
     # html_safe: No user content
-    if error.present? && error&.is_a?(String)
+    if error.present? && error.is_a?(String)
       error
     elsif error.present? && error&.count == 1
       error.first

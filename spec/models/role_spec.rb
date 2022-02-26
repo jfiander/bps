@@ -20,7 +20,7 @@ RSpec.describe Role, type: :model do
   it 'returns the appropriate icons hash' do
     FactoryBot.build(:role, name: 'orphan', icon: 'user').save(validate: false)
 
-    expect(Role.icons).to eq(
+    expect(described_class.icons).to eq(
       { all: 'globe', excom: 'chevron-circle-down', orphan: 'user' }
     )
   end
