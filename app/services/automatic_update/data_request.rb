@@ -7,6 +7,8 @@ require 'fileutils'
 
 module AutomaticUpdate
   class DataRequest
+    require 'automatic_update/update_error'
+
     FORM_CONTENT_TYPE = 'application/x-www-form-urlencoded; charset=utf-8'
 
     def initialize(cookie_key = nil, verbose: false)
@@ -56,22 +58,14 @@ module AutomaticUpdate
 
       return result if result.code == '200'
 
-      Bugsnag.notify(
-        DataRequestError.new(
-          'Response error received',
-          code: result.code, request: req, uri: uri, body: result.response.body
-        )
+      BugsnagError.call(
+        DataRequestError,
+        'Response error received',
+        code: result.code, request: req, uri: uri, body: result.response.body
       )
     end
 
-    class DataRequestError < StandardError
-      attr_reader :metadata
-
-      def initialize(message, **metadata)
-        super(message)
-        @metadata = metadata
-      end
-
+    class DataRequestError < AutomaticUpdate::UpdateError
       def bugsnag_meta_data
         {
           data_request: {

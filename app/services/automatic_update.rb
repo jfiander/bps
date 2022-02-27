@@ -7,6 +7,7 @@ module AutomaticUpdate
   require 'automatic_update/seminar_data_request'
   require 'automatic_update/training_data_request'
   require 'automatic_update/boc_data_request'
+  require 'automatic_update/update_error'
 
   REQUESTS = %i[
     MemberDataRequest ClassDataRequest SeminarDataRequest
@@ -17,13 +18,13 @@ module AutomaticUpdate
     OUTPUT_PATH = Rails.root.join('tmp/automatic_update/ReadyForImport.csv')
 
     def initialize
-      @new_headers = []
       @file_headers = []
     end
 
     def update(download: true, import: true, lock: false)
       download_all if download
       combine_csv_data
+      validate_combined_csv
       write_output_file
       return unless import
 
@@ -69,7 +70,6 @@ module AutomaticUpdate
         csv = CSV.read(path, headers: true)
         headers = csv.headers
         headers.shift # Ignore cert# header
-        @new_headers += headers
         @file_headers.push(headers) # Track the groups of headers to ensure consistency
 
         csv.each_with_object({}) do |row, hash|
@@ -92,11 +92,44 @@ module AutomaticUpdate
       end
     end
 
+    def validate_combined_csv
+      return if main_csv.headers.uniq == main_csv.headers
+
+      raise BugsnagError.call(
+        InvalidCSVHeadersError,
+        'Invalid CSV headers',
+        actual: main_csv.headers
+      )
+    end
+
     def write_output_file
+      headers = main_csv.headers.to_a
+      headers_count = headers.size
       CSV.open(OUTPUT_PATH, 'w+') do |f|
-        f << (main_csv.headers.to_a + @new_headers)
-        main_csv.each { |row| f << normalize_row(row) unless skip(row) }
+        f << headers
+        main_csv.each do |row|
+          next if skip(row)
+
+          new_row = normalize_row(row)
+
+          raise bugsnag_error(row, headers_count, headers) unless row.length == headers_count
+
+          f << new_row
+        end
       end
+    end
+
+    def bugsnag_error(row, headers_count, headers)
+      BugsnagError.call(
+        InvalidCSVHeadersError,
+        'Unexpected column count',
+        certificate: row['Certificate'],
+        expected_count: headers_count,
+        actual_count: row.length,
+        expected: headers,
+        actual: row.headers,
+        row: row
+      )
     end
 
     def cleanup_files
@@ -119,6 +152,23 @@ module AutomaticUpdate
 
     def skip(row)
       row['Member Type'] == 'HR' # Honorary Member
+    end
+
+    class InvalidCSVHeadersError < AutomaticUpdate::UpdateError
+      def bugsnag_meta_data
+        {
+          summary: {
+            certificate: metadata[:certificate],
+            expected_count: metadata[:expected_count],
+            actual_count: metadata[:actual_count]
+          },
+          headers: {
+            expected: metadata[:expected],
+            actual: metadata[:actual]
+          },
+          row: metadata[:row]&.to_h
+        }
+      end
     end
   end
 end
