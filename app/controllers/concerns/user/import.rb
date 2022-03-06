@@ -29,6 +29,15 @@ class User
       import_failure(e)
     end
 
+    def automatic_update_dryrun
+      @dryrun = true
+
+      User.transaction do
+        automatic_update
+        raise ActiveRecord::Rollback
+      end
+    end
+
   private
 
     def only_csv
@@ -45,7 +54,7 @@ class User
     end
 
     def import_success
-      flash.now[:success] = 'Successfully imported user data.'
+      flash.now[:success] = "Successfully #{@dryrun ? 'tested importing' : 'imported'} user data."
       render :import
       import_notification(:success)
       log_import
@@ -60,16 +69,26 @@ class User
     end
 
     def import_notification(type)
-      title = type == :success ? 'Complete' : 'Failed'
-      fallback = type == :success ? 'successfully imported' : 'failed to import'
       SlackNotification.new(
-        channel: :notifications, type: type, title: "User Data Import #{title}",
-        fallback: "User information has #{fallback}.",
+        channel: :notifications, type: type, title: "User Data Import #{notification_title(type)}",
+        fallback: "User information has #{notification_fallback(type)}.",
         fields: [
           { title: 'By', value: current_user.full_name, short: true },
           { title: 'Results', value: @import_results.to_s, short: false }
         ]
       ).notify!
+    end
+
+    def notification_title(type)
+      return "#{'Test ' if @dryrun}Complete" if type == :success
+
+      "#{'Test ' if @dryrun}Failed"
+    end
+
+    def notification_fallback(type)
+      return "successfully #{@dryrun ? 'tested importing' : 'imported'}" if type == :success
+
+      "failed to #{@dryrun ? 'test importing' : 'import'}"
     end
 
     def log_import

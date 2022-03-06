@@ -283,9 +283,10 @@ Rails.application.routes.draw do
   put     '/request/:id', to: 'user#request_schedule', as: 'request_schedule'
 
   # Import
-  get     '/import',           to: 'user#import', as: 'import_users'
-  post    '/import',           to: 'user#do_import'
-  post    '/import/automatic', to: 'user#automatic_update', as: 'automatic_update'
+  get     '/import',                  to: 'user#import',                  as: 'import_users'
+  post    '/import',                  to: 'user#do_import'
+  post    '/import/automatic',        to: 'user#automatic_update',        as: 'automatic_update'
+  post    '/import/automatic/dryrun', to: 'user#automatic_update_dryrun', as: 'automatic_update_dryrun'
 
   # Payments
   get     '/pay/:token',            to: 'braintree#index',      as: 'pay'
