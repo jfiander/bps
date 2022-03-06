@@ -188,12 +188,21 @@
     .red { color: $old-glory-red-desaturated; }
   }
 
+  a.green { color: $dark-green; }
+
   a.big, a.medium, button.big, button.medium, div.markdown button.blue-button {
     color: $dark-text;
     background-color: $birmingham-blue-desaturated;
   }
 
-  a.green { color: $dark-green; }
+  a.big.green {
+    color: $dark-text;
+    background-color: $green-desaturated;
+  }
+
+  a.big.green:hover {
+    background-color: $green;
+  }
 
   input:not([type='file']), select, textarea { background-color: $dark-text; }
 

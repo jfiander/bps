@@ -40,6 +40,20 @@
   a.admin:hover, a.admin:hover > i, a:hover > i.admin { color: $dark-purple; }
   a.green:hover, a.green:hover > i, a:hover > i.green { color: $light-green; }
 
+  a.big, a.medium, button.big, button.medium, div.markdown button.blue-button {
+    color: $white;
+    background-color: $birmingham-blue;
+  }
+
+  a.big.green {
+    color: $white;
+    background-color: $green;
+  }
+
+  a.big.green:hover {
+    background-color: darken($green, 5%);
+  }
+
   /* Allow for cascading container color to links, and reasonable hover colors */
   .color-links {
     a { color: inherit; }
