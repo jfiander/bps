@@ -444,7 +444,7 @@ GEM
     unf_ext (0.0.8)
     unicode-display_width (1.8.0)
     uniform_notifier (1.11.0)
-    usps_flags (0.6.2)
+    usps_flags (0.6.3)
       file_utils (~> 1.1, >= 1.1.2)
       mini_magick (~> 4.9, >= 4.9.4)
       rubyzip (~> 1.3, >= 1.3.0)
@@ -529,7 +529,7 @@ DEPENDENCIES
   slack-notifier (~> 2.3)
   slim (~> 3.0.6)
   uglifier (~> 4.1)
-  usps_flags (~> 0.6.1)
+  usps_flags (~> 0.6.3)
   usps_flags-burgees (~> 0.1.3)
   usps_flags-grades (~> 0.1.5)
 

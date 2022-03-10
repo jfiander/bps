@@ -27,8 +27,10 @@ class FlagsController < ApplicationController
   end
 
   def intersections
+    fly = clean_params[:fly].present? ? Rational(clean_params[:fly]) : 2048
+
     svg = USPSFlags::Generate.intersection_spec(
-      scale: scale, scaled_border: params[:border].present?
+      fly: fly, scale: scale, scaled_border: params[:border].present?
     )
 
     respond_to do |format|
