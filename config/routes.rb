@@ -305,10 +305,11 @@ Rails.application.routes.draw do
   ### API
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      post '/login',        to: 'auth#login'
-      post '/verify_user',  to: 'user_verify#verify'
-      post '/update',       to: 'update#automatic_update'
-      post '/update/queue', to: 'update#queue_update'
+      post '/login',               to: 'auth#login'
+      post '/verify_user',         to: 'user_verify#verify'
+      post '/update',              to: 'update#automatic_update'
+      post '/update/queue',        to: 'update#queue_update'
+      post '/update/queue/dryrun', to: 'update#queue_dryrun'
     end
   end
 
