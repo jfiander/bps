@@ -1,4 +1,6 @@
 --require spec_helper
+--order rand
+--color
+--tty
 --format progress
 --format documentation --out tmp/run/rspec.txt
---format ParallelTests::RSpec::RuntimeLogger --out tmp/parallel_runtime_rspec.log
