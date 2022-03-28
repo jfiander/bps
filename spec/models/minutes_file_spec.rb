@@ -24,7 +24,7 @@ RSpec.describe MinutesFile, type: :model do
   describe 'links' do
     it 'returns a valid link' do
       expect(@minutes.link).to match(
-        %r{\Ahttps://files.development.bpsd9.org/uploaded/minutes_files/\d+/test_image.jpg\?}
+        %r{\Ahttps://files.development.bpsd9.org/uploaded/minutes_files/\d+/test_image_\w{16}.jpg\?}
       )
     end
 

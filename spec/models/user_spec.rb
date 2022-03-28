@@ -561,7 +561,7 @@ RSpec.describe User, type: :model do
   describe 'scopes' do
     before do
       @user_inv = FactoryBot.create(:user)
-      @user_pe = FactoryBot.create(:user, email: 'nobody-asdfhjkl@bpsd9.org')
+      @user_pe = FactoryBot.create(:user, :placeholder_email)
       @user_inst = FactoryBot.create(:user, sign_in_count: 1, id_expr: Time.zone.now + 1.year)
       @user_vse = FactoryBot.create(:user, sign_in_count: 23)
       @user_vse.course_completions << FactoryBot.create(
@@ -583,7 +583,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'address' do
-    user = FactoryBot.create(:user, address_1: '100 N Capitol Ave', city: 'Lansing', state: 'MI', zip: '48933')
+    let(:user) { FactoryBot.create(:user, address_1: '100 N Capitol Ave', city: 'Lansing', state: 'MI', zip: '48933') }
 
     it 'returns a correct address array' do
       expect(user.mailing_address).to eql([user.full_name, user.address_1, "#{user.city} #{user.state} #{user.zip}"])
@@ -619,7 +619,7 @@ RSpec.describe User, type: :model do
       @user.assign_photo(local_path: @photo.path)
 
       expect(@user.photo).to match(
-        %r{https://files\.development\.bpsd9\.org/profile_photos/#{@user.id}/medium/test_image\.jpg\?}
+        %r{https://files\.development\.bpsd9\.org/profile_photos/#{@user.id}/medium/test_image_\w{16}\.jpg\?}
       )
     end
   end

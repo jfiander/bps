@@ -81,6 +81,21 @@ Not included in coverage stats:
 
 The spec suite will fail if under 100% coverage.
 
+#### Parallel Specs
+
+```sh
+# Reset databases
+rake parallel:drop
+rake parallel:setup
+
+# Migrate databases
+rake parallel:migrate[8]
+
+# Run tests
+rake parallel:spec
+rake parallel:spec[8] # Force 8 CPUs
+```
+
 #### Updating Saved Spec Times
 
 To update the saved spec times, run the following:

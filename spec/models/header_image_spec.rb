@@ -22,27 +22,27 @@ RSpec.describe HeaderImage, type: :model do
   end
 
   describe 'valid image dimensions' do
-    it 'rejects if too wide' do
+    it 'rejects if too wide', :aggregate_failures do
       header = FactoryBot.build(:header_image, file: File.new(test_image(1500, 300)))
-      expect(header.validate).to be(false)
+      expect(header).not_to be_valid
       expect(header.errors.messages).to eql(file: ['aspect ratio > 3.5:1 (make it narrower)'])
     end
 
-    it 'rejects if too narrow' do
+    it 'rejects if too narrow', :aggregate_failures do
       header = FactoryBot.build(:header_image, file: File.new(test_image(1000, 500)))
-      expect(header.validate).to be(false)
+      expect(header).not_to be_valid
       expect(header.errors.messages).to eql(file: ['aspect ratio < 2.75:1 (make it wider)'])
     end
 
-    it 'rejects if too small' do
+    it 'rejects if too small', :aggregate_failures do
       header = FactoryBot.build(:header_image, file: File.new(test_image(500, 150)))
-      expect(header.validate).to be(false)
+      expect(header).not_to be_valid
       expect(header.errors.messages).to eql(file: ['must be at least 750px wide'])
     end
 
-    it 'accepts if correctly sized' do
+    it 'accepts if correctly sized', :aggregate_failures do
       header = FactoryBot.build(:header_image, file: File.new(test_image(1500, 500)))
-      expect(header.validate).to be(true)
+      expect(header).to be_valid
       expect(header.errors.messages).to be_blank
     end
   end

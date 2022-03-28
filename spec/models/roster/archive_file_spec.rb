@@ -17,7 +17,7 @@ RSpec.describe Roster::ArchiveFile, type: :model do
 
   it 'returns a valid link' do
     expect(@archive.link).to match(
-      %r{\Ahttps://files.development.bpsd9.org/uploaded/roster/archive_files/\d+/test_image.jpg\?}
+      %r{\Ahttps://files.development.bpsd9.org/uploaded/roster/archive_files/\d+/test_image_\w{16}.jpg\?}
     )
   end
 end

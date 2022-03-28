@@ -68,13 +68,15 @@ end
 SimpleCov.minimum_coverage(100)
 
 def test_image(width, height)
+  path = "tmp/run/test_image_#{SecureRandom.hex(8)}.jpg"
+
   MiniMagick::Tool::Convert.new do |i|
     i.size "#{width}x#{height}"
     i.xc 'white'
-    i << 'tmp/run/test_image.jpg'
+    i << path
   end
 
-  'tmp/run/test_image.jpg'
+  path
 end
 
 # Put the officers in scope before the expect call with:
@@ -200,12 +202,17 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    run_brakeman if ENV['RUN_BRAKEMAN'] == 'true'
+    at_exit do
+      if ParallelTests.first_process?
+        ParallelTests.wait_for_other_processes_to_finish
 
-    DatabaseCleaner.clean_with(:truncation)
-    Dir[Rails.root.join('tmp', 'run', '**', '*')].each { |file| File.delete(file) }
+        run_brakeman if ENV['RUN_BRAKEMAN'] == 'true'
+        DatabaseCleaner.clean_with(:truncation)
+        Dir[Rails.root.join('tmp', 'run', '**', '*')].each { |file| File.delete(file) }
 
-    # clear_test_calendar if ENV['AUTO_CLEAR_CALENDAR'] == 'true'
+        # clear_test_calendar if ENV['AUTO_CLEAR_CALENDAR'] == 'true'
+      end
+    end
 
     true
   end

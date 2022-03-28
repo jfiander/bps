@@ -562,7 +562,7 @@ RSpec.describe Event, type: :model, slow: true do
         flyer = File.open(test_image(250, 500), 'r')
         event = FactoryBot.create(:event, event_type: event_type, flyer: flyer)
         expect(event.pick_flyer).to match(
-          %r{https://files.development.bpsd9.org/event_flyers/#{event.id}/test_image.jpg\?[^ ]*?}
+          %r{https://files.development.bpsd9.org/event_flyers/#{event.id}/test_image_\w{16}.jpg\?[^ ]*?}
         )
       end
     end

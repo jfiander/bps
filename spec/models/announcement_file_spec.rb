@@ -11,7 +11,7 @@ RSpec.describe AnnouncementFile, type: :model do
 
   it 'returns a valid link' do
     expect(announcement.link).to match(
-      %r{\Ahttps://files.development.bpsd9.org/uploaded/announcement_files/\d+/test_image.jpg\?}
+      %r{\Ahttps://files.development.bpsd9.org/uploaded/announcement_files/\d+/test_image_\w{16}.jpg\?}
     )
   end
 
