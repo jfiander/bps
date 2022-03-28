@@ -102,6 +102,7 @@ group :development, :test do
   gem 'database_cleaner',         '~> 1.6.2'
   gem 'factory_bot_rails',        '~> 4.8.2'
   gem 'fuubar',                   '~> 2.3.2'
+  gem 'parallel_tests',           '~> 3.8.1'
   gem 'rails-controller-testing', '~> 1.0.4'
   gem 'rspec-rails',              '~> 3.7.1'
   gem 'simplecov',                '~> 0.15.1'

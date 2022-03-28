@@ -81,6 +81,12 @@ Not included in coverage stats:
 
 The spec suite will fail if under 100% coverage.
 
+#### Updating Saved Spec Times
+
+To update the saved spec times, run the following:
+
+`bundle exec rspec --format ParallelTests::RSpec::RuntimeLogger --out tmp/parallel_runtime_rspec.log`
+
 ### Rubocop
 
 Rubocop formatting validation is available:
