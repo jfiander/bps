@@ -124,12 +124,10 @@ jobs:
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter || (print "Will not report" && true)
           chmod +x ./cc-test-reporter || true
           ./cc-test-reporter before-build || true
-      - name: Setup Test Database Schema
-        run: 'bundle exec rails db:setup'
-        env:
-          RAILS_ENV: test
+      - name: Setup Test Databases
+        run: 'bundle exec rake parallel:setup[8]'
       - name: Run Rspec
-        run: bundle exec rspec --format progress --order rand --color --tty
+        run: 'bundle exec rake parallel:spec[8]'
       - name: Report to CodeClimate
         run: ./cc-test-reporter after-build --exit-code $? || true
         env:
