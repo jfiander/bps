@@ -6,7 +6,7 @@ class User
     NATIONAL = /^P?(([CVR]|Stf)C|N(FLt|Aide))$/i.freeze
     DISTRICT = /^P?D((Lt)?C|(F(irst)?)?Lt|Aide)$/i.freeze
     SQUADRON = /^(P?((Lt)?C|(F(irst)?)?Lt)|Cdr)$/i.freeze
-    TWO = /^(P?([CVR]C|(D?((First)?Lt|(Lt)?C)))|Cdr)$/i.freeze
+    TWO = /^(P?([CVR]C|(D?(FirstLt|(Lt)?C)))|Cdr)$/i.freeze
     THREE = /^(P?([CV]|D?(Lt)?)?C|Cdr)$/i.freeze
     FOUR = /^(P?[CD]?C|Cdr)$/i.freeze
   end
