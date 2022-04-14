@@ -1,0 +1,5 @@
+#corner-stripes class=('narrow' if stripe_rank =~ User::Stripes::NARROW)
+  = content_tag(:div, '', class: first_stripe_class)
+
+  - %i[TWO THREE FOUR].map { |l| User::Stripes.const_get(l) }.each do |pattern|
+    = content_tag(:div) if stripe_rank =~ pattern

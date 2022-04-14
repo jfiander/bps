@@ -291,3 +291,30 @@ input#user-filter {
   font-size: 1.5em;
   margin: 1em;
 }
+
+div#corner-stripes {
+  transform: rotate(30deg);
+  transform-origin: top right;
+
+  position: fixed;
+  top: 10em;
+  right: -10em;
+  z-index: -1000;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+
+  width: 75em;
+
+  &.narrow { gap: 1em; }
+
+  & > div {
+    background: $old-glory-blue;
+    opacity: 0.1;
+    height: 2em;
+
+    &.national { height: 8em; }
+    &.district { height: 4em; }
+  }
+}

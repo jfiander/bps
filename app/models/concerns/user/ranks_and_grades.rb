@@ -18,6 +18,25 @@ class User
       highest_rank(*ranks(html: html))
     end
 
+    def stripe_rank
+      r = ranks(html: false)
+      r << 'Stf/C' if mm.to_i >= 50
+      highest_rank(*r)&.gsub('/', '')&.gsub(/1(st)?Lt/, 'FirstLt')&.downcase
+    end
+
+    def first_stripe_class
+      case stripe_rank
+      when User::Stripes::NATIONAL
+        :national
+      when User::Stripes::DISTRICT
+        :district
+      when User::Stripes::SQUADRON
+        :squadron
+      else
+        :hide
+      end
+    end
+
     def ranks(html: true)
       [bridge_rank(html: html), override_rank(html: html), committee_rank].reject(&:blank?)
     end

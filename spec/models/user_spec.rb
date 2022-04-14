@@ -80,6 +80,218 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '#stripe_rank' do
+      it 'returns the correct rank, properly formatted' do
+        allow(user).to receive(:ranks).and_return(['R/C', 'Lt/C', 'D/Lt'])
+
+        expect(user.stripe_rank).to eq('rc')
+      end
+
+      it 'includes GB Emeritus' do
+        allow(user).to receive(:ranks).and_return(['Lt/C', 'D/Lt'])
+        allow(user).to receive(:mm).and_return(50)
+
+        expect(user.stripe_rank).to eq('stfc')
+      end
+
+      describe 'regexes' do
+        let(:narrow) { User::Stripes::NARROW }
+        let(:two)    { User::Stripes::TWO }
+        let(:three)  { User::Stripes::THREE }
+        let(:four)   { User::Stripes::FOUR }
+        let(:levels) { %i[NATIONAL DISTRICT SQUADRON].map { |l| User::Stripes.const_get(l) } }
+
+        shared_examples 'has four stripes with' do |level|
+          it('has the correct main stripe') { expect(rank).to match(level) }
+          it('has a second stripe')         { expect(rank).to match(two) }
+          it('has a third stripe')          { expect(rank).to match(three) }
+          it('has a fourth stripe')         { expect(rank).to match(four) }
+
+          it 'does not have the incorrect stripes', :aggregate_failures do
+            (levels - [level]).each { |l| expect(rank).not_to match(l) }
+          end
+        end
+
+        shared_examples 'has three stripes with' do |level|
+          it('has the correct main stripe')   { expect(rank).to match(level) }
+          it('has a second stripe')           { expect(rank).to match(two) }
+          it('has a third stripe')            { expect(rank).to match(three) }
+          it('does not have a fourth stripe') { expect(rank).not_to match(four) }
+
+          it 'does not have the incorrect stripes', :aggregate_failures do
+            (levels - [level]).each { |l| expect(rank).not_to match(l) }
+          end
+        end
+
+        shared_examples 'has two stripes with' do |level|
+          it('has the correct main stripe')   { expect(rank).to match(level) }
+          it('has a second stripe')           { expect(rank).to match(two) }
+          it('does not have a third stripe')  { expect(rank).not_to match(three) }
+          it('does not have a fourth stripe') { expect(rank).not_to match(four) }
+
+          it 'does not have the incorrect stripes', :aggregate_failures do
+            (levels - [level]).each { |l| expect(rank).not_to match(l) }
+          end
+        end
+
+        shared_examples 'has one stripe with' do |level|
+          it('has the correct main stripe')   { expect(rank).to match(level) }
+          it('does not have a second stripe') { expect(rank).not_to match(two) }
+          it('does not have a third stripe')  { expect(rank).not_to match(three) }
+          it('does not have a fourth stripe') { expect(rank).not_to match(four) }
+
+          it 'does not have the incorrect stripes', :aggregate_failures do
+            (levels - [level]).each { |l| expect(rank).not_to match(l) }
+          end
+        end
+
+        describe 'no rank' do
+          let(:rank) { nil }
+
+          it('does not have a second stripe') { expect(rank).not_to match(two) }
+          it('does not have a third stripe')  { expect(rank).not_to match(three) }
+          it('does not have a fourth stripe') { expect(rank).not_to match(four) }
+
+          it 'does not have a main stripe', :aggregate_failures do
+            levels.each { |l| expect(rank).not_to match(l) }
+          end
+        end
+
+        describe 'national' do
+          context 'with cc' do
+            %w[cc pcc].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has four stripes with', User::Stripes::NATIONAL
+              it('is narrow-spaced') { expect(rank).to match(narrow) }
+            end
+          end
+
+          context 'with vs' do
+            %w[vc pvc].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has three stripes with', User::Stripes::NATIONAL
+            end
+          end
+
+          context 'with rc' do
+            %w[rc prc].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has two stripes with', User::Stripes::NATIONAL
+            end
+          end
+
+          context 'with other national' do
+            %w[stfc pstfc nflt pnflt naide].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has one stripe with', User::Stripes::NATIONAL
+            end
+          end
+        end
+
+        describe 'district' do
+          context 'with dc' do
+            %w[dc pdc].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has four stripes with', User::Stripes::DISTRICT
+              it('is narrow-spaced') { expect(rank).to match(narrow) }
+            end
+          end
+
+          context 'with dltc' do
+            %w[dltc pdltc].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has three stripes with', User::Stripes::DISTRICT
+            end
+          end
+
+          context 'with d1lt' do
+            %w[dfirstlt].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has two stripes with', User::Stripes::DISTRICT
+            end
+          end
+
+          context 'with other district' do
+            %w[dlt dflt daide].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has one stripe with', User::Stripes::DISTRICT
+            end
+          end
+        end
+
+        describe 'squadron' do
+          context 'with cdr' do
+            %w[cdr pc].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has four stripes with', User::Stripes::SQUADRON
+              it('is not narrow-spaced') { expect(rank).not_to match(narrow) }
+            end
+          end
+
+          context 'with ltc' do
+            %w[ltc pltc].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has three stripes with', User::Stripes::SQUADRON
+            end
+          end
+
+          context 'with 1lt' do
+            %w[firstlt].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has two stripes with', User::Stripes::SQUADRON
+            end
+          end
+
+          context 'with other squadron' do
+            %w[lt flt].each do |r|
+              let(:rank) { r }
+
+              include_examples 'has one stripe with', User::Stripes::SQUADRON
+            end
+          end
+        end
+      end
+    end
+
+    describe '#first_stripe_class' do
+      subject(:first_stripe_class) { user.first_stripe_class }
+
+      it 'matches national' do
+        allow(user).to receive(:stripe_rank).and_return('rc')
+
+        expect(first_stripe_class).to eq(:national)
+      end
+
+      it 'matches district' do
+        allow(user).to receive(:stripe_rank).and_return('dltc')
+
+        expect(first_stripe_class).to eq(:district)
+      end
+
+      it 'matches squadron' do
+        allow(user).to receive(:stripe_rank).and_return('flt')
+
+        expect(first_stripe_class).to eq(:squadron)
+      end
+
+      it 'detects nothing' do
+        allow(user).to receive(:stripe_rank).and_return(nil)
+
+        expect(first_stripe_class).to eq(:hide)
+      end
+    end
+
     describe 'formatting' do
       it 'has the correct simple_name' do
         expect(user.simple_name).to eql('John Doe')
