@@ -9,6 +9,17 @@ RSpec.describe Registration, type: :model do
     generic_seo_and_ao
   end
 
+  describe '.not_refunded' do
+    let!(:normal) { FactoryBot.create(:registration, :with_email) }
+    let!(:refunded) do
+      FactoryBot.create(:registration, :with_email).tap { |r| r.payment.update(refunded: true) }
+    end
+
+    it 'includes only non-refunded registrations' do
+      expect(described_class.not_refunded).to eq([normal])
+    end
+  end
+
   describe 'payable' do
     describe 'class.payable?' do
       it 'returns true for a payable class' do

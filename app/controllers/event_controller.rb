@@ -176,7 +176,7 @@ private
   def registered_users
     return unless @current_user_permitted_event_type
 
-    @registered_users = Registration.includes(:user, :payment).all.group_by(&:event_id)
+    @registered_users = Registration.includes(:user, :payment).not_refunded.group_by(&:event_id)
   end
 
   def create_new_jwt

@@ -12,6 +12,9 @@ class Registration < ApplicationRecord
   scope :current,  -> { all.find_all { |r| !r.event&.expired? } }
   scope :expired,  -> { all.find_all { |r| r.event&.expired? } }
   scope :for_user, ->(user_id) { where(user_id: user_id) }
+  scope :not_refunded, (lambda do
+    joins(:payment).where('payments.refunded IS NULL OR payments.refunded = ?', false)
+  end)
 
   after_create :notify_on_create
   after_create :confirm_to_registrant
