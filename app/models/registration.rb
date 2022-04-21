@@ -61,7 +61,11 @@ class Registration < ApplicationRecord
 private
 
   def no_duplicate_registrations
-    return if Registration.where(user: user, email: email, event: event).where.not(id: id).blank?
+    matches =
+      Registration.not_refunded
+                  .where.not(id: id)
+                  .where(user: user, email: email, event: event)
+    return if matches.blank?
 
     errors.add(:base, 'Duplicate')
   end

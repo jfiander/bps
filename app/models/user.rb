@@ -102,7 +102,7 @@ class User < ApplicationRecord
   end
 
   def register_for(event)
-    reg = Registration.find_or_create_by(user: self, event: event)
+    reg = Registration.not_refunded.find_or_create_by(user: self, event: event)
     add_subscription(reg) if phone_c.present? && subscribe_on_register
     reg
   end

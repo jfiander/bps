@@ -381,27 +381,28 @@ RSpec.describe User, type: :model do
   end
 
   describe 'registration' do
-    it 'creates a valid registration' do
-      @user = FactoryBot.create(
-        :user,
-        first_name: 'John',
-        last_name: 'Doe',
-        rank: 'Lt/C',
-        grade: 'AP',
-        email: "registrant-#{SecureRandom.hex(8)}@example.com"
-      )
-      @event = FactoryBot.create(:event)
-      seo = FactoryBot.create(
-        :user,
-        first_name: 'Ed',
-        last_name: 'Ucation',
-        rank: 'Lt/C',
-        grade: 'SN',
-        email: "seo-#{SecureRandom.hex(8)}@example.com"
-      )
-      assign_bridge_office('educational', seo)
+    let(:event) { FactoryBot.create(:event) }
+    let(:user) { FactoryBot.create(:user) }
 
-      reg = @user.register_for(@event)
+    before { assign_bridge_office('educational', user) }
+
+    it 'creates a valid registration' do
+      reg = user.register_for(event)
+      expect(reg).to be_valid
+    end
+
+    it 'finds an existing registration' do
+      existing = user.register_for(event)
+
+      reg = user.register_for(event)
+      expect(reg).to eq(existing)
+    end
+
+    it 'creates a valid registration with an existing refunded registration' do
+      original = user.register_for(event)
+      original.payment.update(refunded: true)
+
+      reg = user.register_for(event)
       expect(reg).to be_valid
     end
   end
