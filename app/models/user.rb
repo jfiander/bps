@@ -109,6 +109,8 @@ class User < ApplicationRecord
 
   def add_subscription(reg)
     # :nocov:
+    return unless reg.event.topic_arn.present?
+
     arn = BPS::SMS.subscribe(reg.event.topic_arn, phone_c).subscription_arn
     reg.update_attribute(:subscription_arn, arn)
     # :nocov:
