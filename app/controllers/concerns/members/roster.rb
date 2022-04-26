@@ -44,12 +44,16 @@ module Members
       redirect_to update_roster_path
     end
 
-    def redirect_if_no_roster
-      redirect_to root_path unless BPS::S3.new(:files).has?("roster/#{roster_filename}")
-    end
-
     def roster_filename
-      "Birmingham_Power_Squadron_-_#{Date.today.strftime('%Y')}_Roster.pdf"
+      @year ||= Date.today.strftime('%Y').to_i
+
+      filename = "Birmingham_Power_Squadron_-_#{@year}_Roster.pdf"
+      return filename if BPS::S3.new(:files).has?("roster/#{filename}")
+
+      @year -= 1
+      redirect_to root_path if @year < Date.today.strftime('%Y').to_i - 3
+
+      roster_filename
     end
 
     def roster_params
