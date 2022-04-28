@@ -18,7 +18,7 @@ module Application
   private
 
     def ssl_configured?
-      Rails.env.deployed? && request.host !~ /.#{ENV['INTERNAL_DOMAIN']}$/
+      BPS::Application.deployed? && request.host !~ /.#{ENV['INTERNAL_DOMAIN']}$/
     end
 
     def handle_unverified_request

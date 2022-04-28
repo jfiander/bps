@@ -33,7 +33,7 @@ private
   end
 
   def generate_event_action_link(event, path, icon, options)
-    options[:protocol] = 'https' if Rails.env.deployed?
+    options[:protocol] = 'https' if BPS::Application.deployed?
     return link_to(send(path, event), **options) { icon } if path.present? && path.match?(/_path/)
     return link_to(path, **options) { icon } if path.present?
 

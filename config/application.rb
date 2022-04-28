@@ -34,11 +34,13 @@ module BPS
 
     # Ensure working temp dir exists
     FileUtils.mkdir_p("#{Rails.root}/tmp/run")
+
+    def deployed?
+      Rails.env.production? || Rails.env.staging?
+    end
   end
 end
 
-Rails.env.define_singleton_method(:deployed?) { self.in?(%w[production staging]) }
-
-Dotenv.load unless Rails.env.deployed?
+Dotenv.load unless BPS::Application.deployed?
 
 require 'redcarpet/render_strip'

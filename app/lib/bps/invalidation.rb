@@ -81,7 +81,7 @@ module BPS
     def cloud_front_attributes
       attributes = { region: 'us-east-2' }
 
-      unless Rails.env.deployed?
+      unless BPS::Application.deployed?
         attributes.merge!(
           credentials: Aws::Credentials.new(
             ENV['AWS_ACCESS_KEY'],

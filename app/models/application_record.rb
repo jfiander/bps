@@ -14,7 +14,7 @@ class ApplicationRecord < ActiveRecord::Base
       s3_credentials: { bucket: BPS::S3.new(bucket).full_bucket }
     }
 
-    unless Rails.env.deployed?
+    unless BPS::Application.deployed?
       defaults[:s3_credentials].merge!(
         access_key_id: ENV['AWS_ACCESS_KEY'],
         secret_access_key: ENV['AWS_SECRET']
