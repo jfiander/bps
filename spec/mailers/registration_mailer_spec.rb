@@ -155,6 +155,29 @@ RSpec.describe RegistrationMailer, type: :mailer do
           'Administrative Officer'
         )
       end
+
+      context 'with a commander and no AO' do
+        before do
+          ao = BridgeOffice.find_by(office: 'administrative')
+          ao.update(office: 'commander', user: FactoryBot.create(:user))
+        end
+
+        it 'renders the headers' do
+          expect(mail).to contain_mail_headers(
+            subject: 'Registration confirmation',
+            to: [event_user_reg.user.email],
+            from: ['cdr@bpsd9.org']
+          )
+        end
+
+        it 'renders the body' do
+          expect(mail.body.encoded).to contain_and_match(
+            'This is your confirmation', 'Registration information',
+            'If you have any questions', 'You can also cancel',
+            'Commander'
+          )
+        end
+      end
     end
 
     describe 'paid' do
