@@ -8,7 +8,7 @@ module Members
 
     def roster
       respond_to do |format|
-        format.html
+        format.html { roster_filename }
         format.pdf do
           roster_file = BPS::S3.new(:files).download("roster/#{roster_filename}")
           send_data(roster_file, filename: roster_filename.dup.tr('_', ' '), disposition: :inline)
@@ -49,6 +49,8 @@ module Members
     end
 
     def roster_filename
+      return @roster_filename if @roster_filename
+
       @year ||= Date.today.strftime('%Y').to_i
 
       filename = "Birmingham_Power_Squadron_-_#{@year}_Roster.pdf"
@@ -57,7 +59,7 @@ module Members
       @year -= 1
       redirect_to root_path if @year < Date.today.strftime('%Y').to_i - 3
 
-      roster_filename
+      @roster_filename = roster_filename
     end
 
     def roster_params
