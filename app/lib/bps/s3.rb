@@ -33,10 +33,10 @@ module BPS
       object(key).get.body.read
     end
 
-    def upload(file:, key:)
+    def upload(file:, key:, content_type: nil)
       file = File.open(file, 'rb') if file.is_a?(String)
 
-      object(key).upload_file(file.path)
+      object(key).upload_file(file.path, content_type: content_type)
     end
 
     def move(key, new_key)

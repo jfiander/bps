@@ -19,7 +19,11 @@ module Members
     def update_roster; end
 
     def upload_roster
-      BPS::S3.new(:files).upload(file: roster_params[:roster], key: "roster/#{roster_filename}")
+      BPS::S3.new(:files).upload(
+        file: roster_params[:roster],
+        key: "roster/#{roster_filename}",
+        content_type: 'application/pdf'
+      )
       BPS::Invalidation.submit(:files, "roster/#{roster_filename}")
 
       flash[:success] = 'Roster file succesfully updated!'
