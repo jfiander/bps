@@ -12,8 +12,6 @@ html lang='en'
     = FA::Link.kit(ENV['FONTAWESOME_KIT'])
     - if BPS::Application.deployed?
       = render 'application/trackers/analytics', keys: ENV.select { |k, _| k.match?(/\AGA_TRACKING_ID/) }.values
-    - if Rails.env.production?
-      = render 'application/trackers/facebook_pixel', key: ENV['FACEBOOK_PIXEL_ID']
     = yield :head
   body
     #sidenav
