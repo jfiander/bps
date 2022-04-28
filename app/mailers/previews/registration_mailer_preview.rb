@@ -57,6 +57,12 @@ class RegistrationMailerPreview < ApplicationMailerPreview
     RegistrationMailer.confirm(reg_public_paid)
   end
 
+  def confirm_public_paid_with_important_notes
+    reg = reg_public_paid
+    reg.event.important_notes = 'This is something important.'
+    RegistrationMailer.confirm(reg)
+  end
+
   def confirm_multi_session
     RegistrationMailer.confirm(reg_public_multi_session)
   end

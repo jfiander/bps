@@ -1,6 +1,10 @@
 = render 'registration'
 = render 'location' if @registration.event.location.present?
 
+- if @registration.event.important_notes.present?
+  h3.red Please Note:
+  p.red = @registration.event.important_notes
+
 - if @registration.event.google_calendar_link.present?
   h3 Google Calendar:
   p = link_to 'View this event on Google Calendar', @registration.event.google_calendar_link

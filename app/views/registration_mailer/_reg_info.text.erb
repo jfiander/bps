@@ -1,7 +1,14 @@
 **********
 
 <%= render 'registration' %>
-<%= render 'location' %>
+<%= render 'location' -%>
+<%- if @registration.event.important_notes.present? -%>
+Please Note:
+
+<%= @registration.event.important_notes %>
+
+**********
+<%- end %>
 <%- if @registration.event.google_calendar_link.present? -%>
 View this event on Google Calendar: <%= @registration.event.google_calendar_link %>
 

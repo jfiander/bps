@@ -209,6 +209,14 @@ h1 = "#{@edit_mode} #{@event_title}"
       .right = f.text_area :description
       br.clear
 
+      .left
+        = f.label :important_notes
+        ul
+          li These will be displayed immediately below the event description.
+          li These will also be included in registration emails, under the heading <span class="bold">"Please Note"</span>.
+      .right = f.text_area :important_notes
+      br.clear
+
       - if event_type_param.in? %w[course seminar]
         .left
           = f.label :requirements, 'Student requirements'
