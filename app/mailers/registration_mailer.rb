@@ -123,4 +123,25 @@ private
   def slack_start_time
     @registration.event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT)
   end
+
+  # Copied from MarkdownHelper
+  #:nocov:
+  def simple_markdown(markdown)
+    view_context.sanitize(redcarpet.render(markdown.to_s))
+  end
+  helper_method :simple_markdown
+
+  def redcarpet
+    Redcarpet::Markdown.new(
+      TargetBlankRenderer,
+      autolink: true,
+      images: true,
+      tables: true,
+      no_intra_emphasis: true,
+      strikethrough: true,
+      superscript: true,
+      underline: true
+    )
+  end
+  #:nocov:
 end

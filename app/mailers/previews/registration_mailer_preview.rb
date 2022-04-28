@@ -59,7 +59,7 @@ class RegistrationMailerPreview < ApplicationMailerPreview
 
   def confirm_public_paid_with_important_notes
     reg = reg_public_paid
-    reg.event.important_notes = 'This is something important.'
+    reg.event.important_notes = 'This is something **important**.'
     RegistrationMailer.confirm(reg)
   end
 
