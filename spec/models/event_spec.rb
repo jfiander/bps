@@ -494,6 +494,26 @@ RSpec.describe Event, type: :model, slow: true do
             expect(event.needs_advance_payment?).to be(false)
           end
         end
+
+        describe '#show_price_comment?' do
+          subject(:event) { FactoryBot.create(:event, cost: 0, location: location) }
+
+          let(:location) { FactoryBot.create(:location, price_comment: nil) }
+
+          it { is_expected.not_to be_show_price_comment }
+
+          context 'with a cost' do
+            before { event.update(cost: 1) }
+
+            it { is_expected.not_to be_show_price_comment }
+
+            context 'with a location with a price comment' do
+              before { location.update(price_comment: 'Price details') }
+
+              it { is_expected.to be_show_price_comment }
+            end
+          end
+        end
       end
     end
 

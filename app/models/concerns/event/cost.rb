@@ -20,6 +20,10 @@ module Concerns
         cost? && advance_payment
       end
 
+      def show_price_comment?
+        cost? && location&.price_comment&.present?
+      end
+
     private
 
       def validate_costs

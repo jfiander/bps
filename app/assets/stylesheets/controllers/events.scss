@@ -122,6 +122,22 @@ div.events-unified-table {
     div.event-description {
       width: 100%;
       margin-bottom: 1em;
+      display: flex;
+      flex-direction: column;
+
+      & > div {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+
+        &:not(:first-child) {
+          margin-top: 1em;
+          border-top: thin solid gray;
+          padding-top: 1em;
+        }
+
+        & > p { margin: 0; }
+      }
     }
 
     div.detail {
@@ -166,6 +182,12 @@ div.event-costs {
       display: inline-block;
     }
   }
+}
+
+div.cost-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
 .event-flyer {

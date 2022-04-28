@@ -67,14 +67,18 @@
             .blue.bold.italic Advance payment required by #{event.cutoff_at.strftime(TimeHelper::PUBLIC_DATE_FORMAT)}
 
     .event-description
-      = simple_markdown(event.description) if event.description.present?
+      .main-description = simple_markdown(event.description) if event.description.present?
       - unless defined?(@event_catalog)
-        - if event.usps_cost.present?
-          .red.italic
-            .bold USPS members from other squadrons:
-            div Please contact us for your discounted rate.
-        - if event.cost? && event&.location&.price_comment&.present?
-          .red.italic = event.location.price_comment
+        - if event.important_notes.present?
+          div = simple_markdown(event.important_notes)
+        - if event.usps_cost.present? || (event.cost? && event.show_price_comment?)
+          .cost-details.red.italic
+            - if event.usps_cost.present?
+              .usps
+                .bold USPS members from other squadrons:
+                div Please contact us for your discounted rate.
+            - if event.show_price_comment?
+              .misc = event.location.price_comment
 
     .event-topics.detail
       - if event.course_topics.present?
