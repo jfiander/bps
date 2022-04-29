@@ -310,8 +310,6 @@ div#corner-stripes {
   &.narrow { gap: 1em; }
 
   & > div {
-    background: $old-glory-blue;
-    opacity: 0.1;
     height: 2em;
 
     &.national { height: 8em; }

@@ -236,6 +236,8 @@
     }
   }
 
+  div#corner-stripes > div { background: rgba($white, 0.1); }
+
   div.events-unified-table div.event-unified {
     div.title { color: $old-glory-red-desaturated; }
 

@@ -264,6 +264,8 @@
     }
   }
 
+  div#corner-stripes > div { background: rgba($old-glory-blue, 0.1); }
+
   div.red-border { border-color: $old-glory-red; }
 
   div#bilge {
