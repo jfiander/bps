@@ -37,7 +37,7 @@ class User
         id: u.id, name: u.full_name, certificate: u.certificate, mm: u.mm.to_i,
         email: u.email, senior: u.senior.present?, life: u.life.present?,
         bridge_office: bridge_office_for(u), granted_roles: u.granted_roles,
-        permitted_roles: u.permitted_roles
+        permitted_roles: u.permitted_roles, rank_override: u.rank_override
       }
     end
 
