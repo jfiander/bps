@@ -1,5 +1,4 @@
 - who = User.find_by(id: version.whodunnit)
-.table-row: .table-cell
 .table-row
   .table-cell = version.event
   .table-cell = mail_to(who.email, who.full_name) if who.present?
