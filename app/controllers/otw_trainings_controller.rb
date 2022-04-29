@@ -24,7 +24,7 @@ class OTWTrainingsController < ApplicationController
   end
 
   def available
-    @users = User.alphabetized.unlocked.where.not(jumpstart: nil)
+    @users = User.alphabetized.unlocked.where('jumpstart IS NOT NULL AND jumpstart != ""')
   end
 
   def new
