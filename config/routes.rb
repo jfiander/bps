@@ -18,6 +18,11 @@ Rails.application.routes.draw do
     }
   )
 
+  devise_scope :user do
+    get    '/users/:id/edit',     to: 'users/registrations#admin_edit',   as: 'admin_edit'
+    put    '/users/:id',          to: 'users/registrations#admin_update', as: 'admin_update'
+  end
+
   ### Short URLs
   get     '/e/:slug',         to: 'events/events#slug',         as: 'event_slug'
   get     '/a/:id',           to: 'public#announcement_direct', as: 'short_announcement'

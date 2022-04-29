@@ -6,7 +6,7 @@ h1 Edit Profile
 br.clear
 = render('application/required_fields')
 
-= form_for(resource, as: resource_name, url: profile_edit_path(resource_name).sub(/\.[\w]*\z/, ''), html: { method: :put }, multipart: true) do |f|
+= form_for(resource, as: resource_name, url: (current_user == resource ? profile_edit_path : user_path(resource)), html: { method: :put }, multipart: true) do |f|
   #login
     .profile-section.profile-photo
       = image_tag resource.photo, width: 125
@@ -16,12 +16,17 @@ br.clear
 
     .profile-section.profile-details
       .left = f.label :certificate
-      .right = f.text_field :certificate, disabled: true, title: 'If there is a problem with your certificate number, please contact the AO at ao@bpsd9.org.'
+      .right title='If there is a problem with your certificate number, please contact the AO at ao@bpsd9.org.' = resource.certificate
       br.clear
 
       .left = f.label :rank, "Preferred Rank"
       .right = f.text_field :rank
       br.clear
+
+      - if current_user.permitted?(:admin, strict: true)
+        .left = f.label :rank_override, 'Rank Override'
+        .right = f.text_field :rank_override
+        br.clear
 
       .left
         = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
@@ -76,35 +81,37 @@ br.clear
       .right = f.text_area :jumpstart, class: 'large'
       br.clear
 
-    div#show-change-password.top-border = link_to('Change password', '#')
-    .profile-section#change-password
-      .center.red Please type your new password in both of boxes, to ensure you've typed it correctly.
-      br.clear
+    - if current_user == @user
+      div#show-change-password.top-border = link_to('Change password', '#')
+      .profile-section#change-password
+        .center.red Please type your new password in both of boxes, to ensure you've typed it correctly.
+        br.clear
 
-      .left = f.label :password, "New Password"
-      .right
-        = f.password_field :password, autocomplete: "off"
-        - if @minimum_password_length
-          br
-          small
-            em
-              = @minimum_password_length
-              |  characters minimum
-      br.clear
+        .left = f.label :password, "New Password"
+        .right
+          = f.password_field :password, autocomplete: "off"
+          - if @minimum_password_length
+            br
+            small
+              em
+                = @minimum_password_length
+                |  characters minimum
+        br.clear
 
-      .left = f.label :password_confirmation, "Confirm New Password"
-      .right = f.password_field :password_confirmation, autocomplete: "off"
-      br.clear
+        .left = f.label :password_confirmation, "Confirm New Password"
+        .right = f.password_field :password_confirmation, autocomplete: "off"
+        br.clear
 
-      small If you don't want to change your password, leave these boxes blank.
+        small If you don't want to change your password, leave these boxes blank.
 
-    .profile-section.confirm-password
-      .left
-        = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
-        = f.label :current_password, 'Enter your current password to confirm changes'
-      .right = f.password_field :current_password, required: true
-      br.clear
+      .profile-section.confirm-password
+        .left
+          = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
+          = f.label :current_password, 'Enter your current password to confirm changes'
+        .right = f.password_field :current_password, required: true
+        br.clear
 
-      .center
-        = spinner_button(f, button_text: "Update profile", disable_text: "Updating profile", css: 'big')
-      br.clear
+    .center
+      - description = current_user == resource ? 'profile' : 'user'
+      = spinner_button(f, button_text: "Update #{description}", disable_text: "Updating #{description}", css: 'big')
+    br.clear

@@ -73,6 +73,11 @@ h1 = @user.full_name
           = FA::Icon.p('do-not-enter', css: 'gray')
           span.italic None specified
 
+- if current_user.id != @user.id && current_user.permitted?(:admin, strict: true)
+  h2 Actions
+  ul#profile-actions.simple
+    li = link_to(admin_edit_path(@user)) { FA::Icon.p('edit', style: :duotone) + 'Update user information' }
+
 - if current_user.id == @user.id
   h2 Profile Actions
   ul#profile-actions.simple
