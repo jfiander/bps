@@ -52,7 +52,7 @@ class EventController < ApplicationController
     @registration = Registration.new(event_id: clean_params[:id])
     return unless user_signed_in?
 
-    reg = Registration.find_by(event_id: clean_params[:id], user: current_user)
+    reg = Registration.not_refunded.find_by(event_id: clean_params[:id], user: current_user)
     @registered = { reg.event_id => reg.id } if reg.present?
   end
 
