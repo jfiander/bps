@@ -83,7 +83,7 @@ gem 'loofah',              '~> 2.3.1'
 gem 'mimemagic',           '>= 0.3.6'
 gem 'nokogiri',            '>= 1.13.2'
 gem 'rubyzip',             '>= 1.3.0'
-gem 'sinatra',             '~> 2.0.3'
+gem 'sinatra',             '~> 2.2.0'
 
 group :development do
   gem 'capistrano',            '~> 3.16.0'
