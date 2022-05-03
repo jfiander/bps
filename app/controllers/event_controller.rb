@@ -180,6 +180,9 @@ private
   end
 
   def create_new_jwt
-    @jwt = create_jwt(access: ['bps:v1:user_verify']).new_token
+    @jwt = create_jwt(
+      access: ['bps:v1:user_verify:*'],
+      certificate: current_user.certificate
+    ).new_token
   end
 end
