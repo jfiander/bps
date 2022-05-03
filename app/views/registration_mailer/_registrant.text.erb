@@ -6,5 +6,11 @@ Registrant information:
   <%- end %>
   Email: <%= @registration.user.email %>
 <%- else %>
+  <%- if @registration.name.present? -%>
+  Name:  <%= @registration.name %>
+  <%- end -%>
+  <%- if @registration.phone.present? -%>
+  Phone: <%= @registration.phone %>
+  <%- end -%>
   Email: <%= @registration.email %>
 <%- end %>

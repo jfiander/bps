@@ -9,5 +9,13 @@ p
     b> Email:
     = @registration.user.email
   - else
+    - if @registration.name.present?
+      b>Name:
+      = @registration.name
+      br
+    - if @registration.phone.present?
+      b>Phone:
+      = @registration.phone
+      br
     b>Email:
     = @registration.email

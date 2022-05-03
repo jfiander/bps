@@ -9,6 +9,10 @@ class RegistrationMailerPreview < ApplicationMailerPreview
     RegistrationMailer.registered(reg_member_paid)
   end
 
+  def registered_paid_public
+    RegistrationMailer.registered(reg_public_advance)
+  end
+
   def cancelled
     RegistrationMailer.cancelled(reg_member_free)
   end
@@ -19,6 +23,10 @@ class RegistrationMailerPreview < ApplicationMailerPreview
 
   def confirm_event
     RegistrationMailer.confirm(reg_member_event)
+  end
+
+  def confirm_event_public
+    RegistrationMailer.confirm(reg_public_advance)
   end
 
   def advance_payment
@@ -114,17 +122,22 @@ private
   end
 
   def reg_public_advance
-    new_registration(event: event(cost: 5, advance: true), email: email)
+    new_registration(
+      event: event(cost: 5, advance: true),
+      email: email, name: 'Somebody Doe', phone: '123 456-7890'
+    )
   end
 
   def reg_public_multi_session
     new_registration(event: event(cost: 5, sessions: 2), email: email)
   end
 
-  def new_registration(event:, user: nil, email: nil, paid: false)
-    reg = Registration.new(event: event, user: user, email: email)
-    reg.payment = Payment.new(token: SecureRandom.base58(24), paid: paid)
-    reg
+  def new_registration(event:, **options)
+    options = { user: nil, email: nil, name: nil, phone: nil, paid: false }.merge(options)
+    paid = options.delete(:paid)
+    Registration.new(event: event, **options).tap do |reg|
+      reg.payment = Payment.new(token: SecureRandom.base58(24), paid: paid)
+    end
   end
 
   def event(category: 'seminar', cost: nil, sessions: 1, advance: false)
