@@ -29,9 +29,9 @@ module Api
         if auth_header.nil?
           not_authorized!
         elsif auth_header =~ /^JWT /
-          user_from_jwt(auth_header)
+          user_from_jwt(auth_header) || not_authorized!
         else
-          user_from_bearer(auth_header)
+          user_from_bearer(auth_header) || not_authorized!
         end
       end
 
