@@ -170,11 +170,12 @@ div.admin-header {
 
 .print { display: none; }
 
-div.flags {
+div.chiclets {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5em;
   cursor: help;
+  padding: 0.25em;
 
   & > div {
     display: flex;

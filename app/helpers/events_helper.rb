@@ -27,7 +27,7 @@ module EventsHelper
   end
 
   def event_flags(event)
-    content_tag(:div, class: 'flags') do
+    content_tag(:div, class: 'chiclets') do
       # Education Flags
       concat event_catalog_flag(event)
 

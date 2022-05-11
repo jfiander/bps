@@ -53,7 +53,7 @@ private
   def generate_role_flags(granted, implied, admin: false)
     @role_icons ||= Role.icons
 
-    content_tag(:div, class: 'flags') do
+    content_tag(:div, class: 'chiclets') do
       # Granted Roles
       granted.each { |role| concat role_flag(role, :blue, :granted) }
 
