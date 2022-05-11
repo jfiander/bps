@@ -52,6 +52,22 @@ module UserHelper
     end
   end
 
+  def role_flags_from_hash(user_hash)
+    @role_icons ||= Role.icons
+
+    content_tag(:div, class: 'flags') do
+      # Granted Roles
+      user_hash[:granted_roles].each { |role| concat role_flag(role, :blue, :granted) }
+
+      # Permitted Roles
+      if user_hash[:permitted_roles].include?(:admin)
+        concat role_flag(:all, :red, :permitted)
+      else
+        user_hash[:implied_roles].each { |role| concat role_flag(role, :red, :permitted) }
+      end
+    end
+  end
+
 private
 
   def role_flag(role, color, type)

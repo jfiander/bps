@@ -124,6 +124,8 @@ div#users {
   }
 
   div.table-cell.user {
+    width: 60%;
+
     div.name {
       text-align: center;
     }
@@ -150,7 +152,9 @@ div#users {
   }
 
   div.table-cell.roles {
-    text-align: left;
+    text-align: center;
+
+    div.flags { justify-content: center; }
   }
 
   div.table-cell.roles div.roles.bridge {
