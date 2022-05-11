@@ -4,7 +4,7 @@ h1 Flag Images
   .information Click the links below each thumbnail to download the full-size PNG or SVG image.
 
   .information
-    | Download all images as a zip archive here: 
+    ' Download all images as a zip archive here:
     = link_to 'PNG', @bucket.link('flags/ZIP/USPS_Flags.png.zip')
     small<> () (#{number_to_human_size(@bucket.object('flags/ZIP/USPS_Flags.png.zip').content_length)})
     | |
@@ -18,7 +18,7 @@ h1 Flag Images
     | and as a
     =< link_to('Ruby gem', 'https://rubygems.org/gems/usps_flags')
     | .
-  
+
   .information
     | Actual images generated (other than the US Ensign) are
     =<> link_to('registered trademarks', 'http://www.usps.org/national/itcom/trademark.html')
@@ -36,6 +36,15 @@ h2 Ensigns
       =< link_to 'SVG', @bucket.link('flags/SVG/US.svg'), disposition: 'inline'
     .table-cell
   .table-row
+    .table-cell.bold Canada
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/CA.thumb.png'), width: 200, height: 100
+      br
+      => link_to 'PNG', @bucket.link('flags/PNG/CA.png'), disposition: 'inline'
+      | |
+      =< link_to 'SVG', @bucket.link('flags/SVG/CA.svg'), disposition: 'inline'
+    .table-cell
+  .table-row
     .table-cell.bold USPS
     .table-cell
       = image_tag @bucket.link('flags/PNG/ENSIGN.thumb.png'), width: 150, height: 100
@@ -49,6 +58,15 @@ h2 Ensigns
       => link_to 'PNG', @bucket.link('flags/PNG/WHEEL.png'), disposition: 'inline'
       | |
       =< link_to 'SVG', @bucket.link('flags/SVG/WHEEL.svg'), disposition: 'inline'
+  .table-row
+    .table-cell.bold CPS-ECP
+    .table-cell
+      = image_tag @bucket.link('flags/PNG/CPS-ECP.thumb.png'), width: 155, height: 100
+      br
+      => link_to 'PNG', @bucket.link('flags/PNG/CPS-ECP.png'), disposition: 'inline'
+      | |
+      =< link_to 'SVG', @bucket.link('flags/SVG/CPS-ECP.svg'), disposition: 'inline'
+    .table-cell
 
 h2 USPS Officer Flags
 center
