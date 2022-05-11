@@ -47,23 +47,7 @@ h1 = @user.full_name
     - if @user.permitted_roles.present?
       .table-row
         .table-cell.left-header Permissions
-        .table-cell
-          ul.roles
-            - @user.granted_roles.each do |g|
-              = content_tag(:li) do
-                = FA::Icon.p(@role_icons[g], style: :duotone, fa: :fw)
-                = g
-          - if @user.permitted_roles.present?
-            - if @user.permitted?(:admin)
-              .role.red
-                = FA::Icon.p('globe', style: :duotone, fa: 'fw swap-opacity')
-                | All
-            - else
-              ul.roles.red
-                - (@user.permitted_roles - @user.granted_roles).each do |p|
-                  = content_tag(:li) do
-                    = FA::Icon.p(@role_icons[p], style: :duotone, fa: :fw)
-                    = p
+        .table-cell = role_flags(@user)
     .table-row
       .table-cell.left-header JumpStart Boat Types
       .table-cell

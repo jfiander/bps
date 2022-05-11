@@ -17,6 +17,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'USPS'
   inflect.acronym 'BPS'
   inflect.acronym 'ABC'
+  inflect.acronym 'ExCom'
   inflect.acronym 'VSC'
   inflect.acronym 'GPS'
   inflect.acronym 'VHF'

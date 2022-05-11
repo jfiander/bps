@@ -177,14 +177,15 @@ h1 = "#{@edit_mode} #{@event_title}"
       .right = switch_box(f, :advance_payment, 'lightblue-red', 'no yes')
       br.clear
 
-      .left
-        = label_tag :notifications, 'Committee Notifications'
-        ul
-          li Put each committee on a separate line.
-          li This will automatically include the appropriate department head(s).
-          li.red These apply to all events of this type.
-      .right = text_area_tag :notifications, @notifications, class: 'bulletted'
-      .br.clear
+      - if event_type_param == 'event'
+        .left
+          = label_tag :notifications, 'Committee Notifications'
+          ul
+            li Put each committee on a separate line.
+            li This will automatically include the appropriate department head(s).
+            li.red These apply to all events of this type.
+        .right = text_area_tag :notifications, @notifications, class: 'bulletted'
+        .br.clear
 
       .left
         = f.label :cutoff_at, 'Do not allow registrations after', class: 'red'

@@ -30,6 +30,34 @@
     .red { color: $dark-text; }
   }
 
+  div.flags > div {
+    color: $dark-text;
+    border-color: $old-glory-blue;
+    background: $dark-background-blue;
+    box-shadow: 1px 2px 1px $old-glory-blue;
+
+    &.birmingham-blue {
+      border-color: $birmingham-blue-desaturated;
+      background: rgba($birmingham-blue-desaturated, 0.5);
+    }
+    &.blue {
+      border-color: $old-glory-blue;
+      background: rgba($old-glory-blue, 0.5);
+    }
+    &.green {
+      border-color: $green;
+      background: rgba($dark-green, 0.5);
+    }
+    &.red {
+      border-color: $old-glory-red;
+      background: rgba($old-glory-red-desaturated, 0.5);
+    }
+    &.purple {
+      border-color: $purple;
+      background: rgba($dark-purple, 0.5);
+    }
+  }
+
   .scrollable { border-color: $background-darken-10; }
 
   body {

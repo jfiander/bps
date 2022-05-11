@@ -60,6 +60,33 @@
     a:hover { filter: brightness(70%); }
   }
 
+  div.flags > div {
+    border-color: $old-glory-blue;
+    background: $background-blue;
+    box-shadow: 1px 2px 1px $old-glory-blue;
+
+    &.birmingham-blue {
+      border-color: $birmingham-blue;
+      background: rgba($birmingham-blue, 0.1);
+    }
+    &.blue {
+      border-color: $old-glory-blue;
+      background: rgba($old-glory-blue, 0.1);
+    }
+    &.green {
+      border-color: $green;
+      background: rgba($green, 0.1);
+    }
+    &.red {
+      border-color: $old-glory-red;
+      background: rgba($old-glory-red, 0.1);
+    }
+    &.purple {
+      border-color: $purple;
+      background: rgba($purple, 0.1);
+    }
+  }
+
   .scrollable { border-color: $background-darken-10; }
 
   input.medium.light, button.medium.light, a.medium.light { color: $old-glory-blue; }

@@ -36,7 +36,37 @@ module UserHelper
     content_tag(:div, class: class_list.join(' ')) { check ? INSTRUCTOR_YES : INSTRUCTOR_NO }
   end
 
+  def role_flags(user)
+    @role_icons ||= Role.icons
+
+    content_tag(:div, class: 'flags') do
+      # Granted Roles
+      user.granted_roles.each { |role| concat role_flag(role, :blue, :granted) }
+
+      # Permitted Roles
+      if user.permitted?(:admin)
+        concat role_flag(:all, :red, :permitted)
+      else
+        user.implied_roles.each { |role| concat role_flag(role, :red, :permitted) }
+      end
+    end
+  end
+
 private
+
+  def role_flag(role, color, type)
+    title =
+      if role == :all
+        "#{type.to_s.titleize} for all actions"
+      else
+        "#{type.to_s.titleize} as #{role.to_s.titleize}"
+      end
+
+    content_tag(:div, class: color, title: title) do
+      concat FA::Icon.p(@role_icons[role.to_sym], style: :duotone, fa: :fw)
+      concat content_tag(:small, role.to_s.titleize)
+    end
+  end
 
   def class_list(key, highlight, header: false)
     list = %w[table-cell center]

@@ -72,13 +72,8 @@ div.events-unified-table {
       display: flex;
       flex-wrap: wrap;
 
-
-      div.event-detail-row, div.catalog {
+      div.event-detail-row {
         margin: 0.5em 0;
-      }
-
-      div.invisible-flag {
-        font-weight: bold;
       }
     }
 

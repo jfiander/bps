@@ -27,7 +27,7 @@ module EventsHelper
   end
 
   def event_flags(event)
-    content_tag(:div, class: 'event-flags') do
+    content_tag(:div, class: 'flags') do
       # Education Flags
       concat event_catalog_flag(event)
 
@@ -43,44 +43,48 @@ module EventsHelper
   def event_catalog_flag(event)
     return unless @current_user_permitted_event_type && event.show_in_catalog
 
-    content_tag(:div, class: 'catalog') do
+    title = 'This event is shown in the catalog.'
+
+    content_tag(:div, class: 'birmingham-blue', title: title) do
       concat FA::Icon.p('stars', style: :duotone, fa: :fw)
-      concat content_tag(:small, 'In catalog')
+      concat content_tag(:small, 'Catalog')
     end
   end
 
   def event_activity_flag(event)
     return unless @current_user_permitted_event_type && event.activity_feed
 
-    content_tag(:div, class: 'catalog') do
+    title = 'This event is available for display in the activity feed.'
+
+    content_tag(:div, class: 'birmingham-blue', title: title) do
       concat FA::Icon.p('stream', style: :duotone, fa: :fw)
-      concat content_tag(:small, 'Available for activity feed')
+      concat content_tag(:small, 'Activity Feed')
     end
   end
 
   def event_not_visible_flag(event)
     return unless @current_user_permitted_event_type && !event.visible
 
-    content_tag(:div, class: 'invisible-flag') do
+    title = 'This event is not visible to members or the public. Only editors can see it.'
+
+    content_tag(:div, class: 'red', title: title) do
       concat FA::Icon.p('eye-slash', style: :duotone, fa: :fw)
-      concat content_tag(
-        :small, 'Not visible',
-        title: 'This event is not visible to members or the public. Only editors can see it.'
-      )
+      concat content_tag(:small, 'Not Visible')
     end
   end
 
   def event_committees_flag(event)
     return unless @current_user_permitted_event_type && event.event_type.event_type_committees.any?
 
-    committees = event.event_type.event_type_committees.map do |etc|
-      content_tag(:small, etc.committee)
-    end.uniq
-    title = 'Will notify relevant bridge officers and the listed committees'
+    title = 'Will notify the listed committee in addition to the relevant bridge officers.'
 
-    content_tag(:div, class: 'catalog', title: title) do
-      concat FA::Icon.p('envelope', style: :duotone, fa: :fw)
-      concat safe_join(committees, tag(:br))
-    end
+    safe_join(
+      event.event_type.event_type_committees.uniq(&:committee).map do |etc|
+        content_tag(:div, class: 'green', title: title) do
+          concat FA::Icon.p('envelope', style: :duotone, fa: :fw)
+          concat content_tag(:small, etc.committee)
+        end
+      end
+    )
   end
 end

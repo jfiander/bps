@@ -61,8 +61,9 @@ RSpec.describe EventsHelper, type: :helper do
       event.show_in_catalog = true
 
       expect(event_catalog_flag(event)).to eq(
-        "<div class=\"catalog\"><i class='fad fa-fw fa-stars fa-1x' style='' data-fa-transform='' title=''></i>" \
-        '<small>In catalog</small></div>'
+        '<div class="birmingham-blue" title="This event is shown in the catalog.">' \
+        "<i class='fad fa-fw fa-stars fa-1x' style='' data-fa-transform='' title=''></i>" \
+        '<small>Catalog</small></div>'
       )
     end
 
@@ -70,8 +71,9 @@ RSpec.describe EventsHelper, type: :helper do
       event.activity_feed = true
 
       expect(event_activity_flag(event)).to eq(
-        "<div class=\"catalog\"><i class='fad fa-fw fa-stream fa-1x' style='' data-fa-transform='' title=''></i>" \
-        '<small>Available for activity feed</small></div>'
+        '<div class="birmingham-blue" title="This event is available for display in the activity feed.">' \
+        "<i class='fad fa-fw fa-stream fa-1x' style='' data-fa-transform='' title=''></i>" \
+        '<small>Activity Feed</small></div>'
       )
     end
 
@@ -79,10 +81,9 @@ RSpec.describe EventsHelper, type: :helper do
       event.visible = false
 
       expect(event_not_visible_flag(event)).to eq(
-        '<div class="invisible-flag">' \
+        '<div class="red" title="This event is not visible to members or the public. Only editors can see it.">' \
         "<i class='fad fa-fw fa-eye-slash fa-1x' style='' data-fa-transform='' title=''></i>" \
-        '<small title="This event is not visible to members or the public. Only editors can see it.">' \
-        'Not visible</small></div>'
+        '<small>Not Visible</small></div>'
       )
     end
 
@@ -90,7 +91,7 @@ RSpec.describe EventsHelper, type: :helper do
       event.event_type.assign(committee_1)
 
       expect(event_committees_flag(event)).to eq(
-        '<div class="catalog" title="Will notify relevant bridge officers and the listed committees">' \
+        '<div class="green" title="Will notify the listed committee in addition to the relevant bridge officers.">' \
         "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
         "<small>#{committee_1.name}</small></div>"
       )
@@ -101,9 +102,11 @@ RSpec.describe EventsHelper, type: :helper do
       event.event_type.assign(committee_2) # Pass in actual Committee object
 
       expect(event_committees_flag(event)).to eq(
-        '<div class="catalog" title="Will notify relevant bridge officers and the listed committees">' \
+        '<div class="green" title="Will notify the listed committee in addition to the relevant bridge officers.">' \
         "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
-        "<small>#{committee_1.name}</small><br />" \
+        "<small>#{committee_1.name}</small></div>" \
+        '<div class="green" title="Will notify the listed committee in addition to the relevant bridge officers.">' \
+        "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
         "<small>#{committee_2.name}</small></div>"
       )
     end
@@ -115,7 +118,7 @@ RSpec.describe EventsHelper, type: :helper do
       event.event_type.assign(committee_2)
 
       expect(event_committees_flag(event)).to eq(
-        '<div class="catalog" title="Will notify relevant bridge officers and the listed committees">' \
+        '<div class="green" title="Will notify the listed committee in addition to the relevant bridge officers.">' \
         "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
         "<small>#{committee_1.name}</small></div>"
       )
