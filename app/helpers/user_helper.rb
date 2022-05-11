@@ -37,38 +37,34 @@ module UserHelper
   end
 
   def role_flags(user)
-    @role_icons ||= Role.icons
-
-    content_tag(:div, class: 'flags') do
-      # Granted Roles
-      user.granted_roles.each { |role| concat role_flag(role, :blue, :granted) }
-
-      # Permitted Roles
-      if user.permitted?(:admin)
-        concat role_flag(:all, :red, :permitted)
-      else
-        user.implied_roles.each { |role| concat role_flag(role, :red, :permitted) }
-      end
-    end
+    generate_role_flags(user.granted_roles, user.implied_roles, admin: user.permitted?(:admin))
   end
 
   def role_flags_from_hash(user_hash)
+    generate_role_flags(
+      user_hash[:granted_roles].each,
+      user_hash[:implied_roles],
+      admin: user_hash[:permitted_roles].include?(:admin)
+    )
+  end
+
+private
+
+  def generate_role_flags(granted, implied, admin: false)
     @role_icons ||= Role.icons
 
     content_tag(:div, class: 'flags') do
       # Granted Roles
-      user_hash[:granted_roles].each { |role| concat role_flag(role, :blue, :granted) }
+      granted.each { |role| concat role_flag(role, :blue, :granted) }
 
       # Permitted Roles
-      if user_hash[:permitted_roles].include?(:admin)
+      if admin
         concat role_flag(:all, :red, :permitted)
       else
-        user_hash[:implied_roles].each { |role| concat role_flag(role, :red, :permitted) }
+        implied.each { |role| concat role_flag(role, :red, :permitted) }
       end
     end
   end
-
-private
 
   def role_flag(role, color, type)
     title =
