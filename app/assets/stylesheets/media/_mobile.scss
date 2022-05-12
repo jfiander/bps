@@ -2,6 +2,8 @@
   div#print-footer {
     display: none;
   }
+
+  div.chiclets { justify-content: center; }
 }
 
 @media all and (max-width: 750px) {
