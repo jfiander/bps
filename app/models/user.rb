@@ -171,6 +171,29 @@ class User < ApplicationRecord
     api_tokens.current.any? || persistent_api_tokens.current.any?
   end
 
+  def points
+    rank_points = YAML.safe_load(File.read("#{Rails.root}/app/lib/rank_points.yml"))
+    grade_points = YAML.safe_load(File.read("#{Rails.root}/app/lib/grade_points.yml"))
+
+    total = 0
+
+    if mm.present?
+      total += mm.to_i * 5
+      total += 10 if senior?
+      total += 30 if life?
+      total += 100 if mm >= 50
+    end
+
+    total += rank_points[rank] if rank
+
+    if grade
+      total += grade_points[grade]
+      total += 15 if ed_pro && grade != 'SN'
+    end
+
+    total
+  end
+
 private
 
   def cached_committees

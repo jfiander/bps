@@ -41,6 +41,7 @@ p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
               = image_tag(BPS::S3.new(:static).link('insignia/PNG/membership/tr/senior.png'), class: 'membership')
         - if user[:mm].positive?
           .mm.insignia-gold #{user[:mm]} MM
+          .points = user[:points]
         .notices
           = FA::Icon.p('diamond-exclamation', style: :duotone, css: 'red', title: 'Not included latest import') unless user[:in_latest_import]
           - if user[:rank_override]

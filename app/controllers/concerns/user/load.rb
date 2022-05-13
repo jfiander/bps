@@ -38,7 +38,7 @@ class User
         email: u.email, senior: u.senior.present?, life: u.life.present?,
         bridge_office: bridge_office_for(u), granted_roles: u.granted_roles,
         permitted_roles: u.permitted_roles, implied_roles: u.implied_roles,
-        rank_override: u.rank_override
+        rank_override: u.rank_override, points: u.points
       }
     end
 
