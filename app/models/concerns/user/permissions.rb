@@ -36,11 +36,11 @@ class User
     end
 
     def permitted_roles
-      (granted_roles + implied_roles).map(&:to_sym).uniq
+      (granted_roles + office_roles + child_roles).map(&:to_sym).uniq
     end
 
     def implied_roles
-      (office_roles + child_roles).map(&:to_sym).uniq
+      permitted_roles - granted_roles
     end
 
     def authorized_for_activity_feed?

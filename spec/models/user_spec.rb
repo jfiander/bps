@@ -466,6 +466,7 @@ RSpec.describe User, type: :model do
       user.permit! :admin
       expect(user.granted_roles).to eq([:admin])
       expect(user.permitted_roles).to eq(%i[admin child])
+      expect(user.implied_roles).to eq(%i[child])
     end
 
     describe 'show_admin_menu?' do
