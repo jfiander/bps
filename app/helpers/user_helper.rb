@@ -42,7 +42,7 @@ module UserHelper
 
   def role_flags_from_hash(user_hash)
     generate_role_flags(
-      user_hash[:granted_roles].each,
+      user_hash[:granted_roles],
       user_hash[:implied_roles],
       admin: user_hash[:permitted_roles].include?(:admin)
     )
