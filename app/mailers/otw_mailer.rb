@@ -11,7 +11,7 @@ class OTWMailer < ApplicationMailer
   end
 
   def jumpstart(options = {})
-    @options = options.symbolize_keys!
+    @options = options
     @to_list = to_list
 
     slack_notification('Jump Start')

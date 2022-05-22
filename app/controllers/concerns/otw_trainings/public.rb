@@ -5,7 +5,7 @@ module OTWTrainings
     def public; end
 
     def public_request
-      OTWMailer.jumpstart(otw_public_params)
+      OTWMailer.jumpstart(otw_public_params).deliver
     end
 
   private
