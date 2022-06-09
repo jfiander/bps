@@ -56,6 +56,17 @@ private
   def find_registration
     @registration = Registration.find_by(@registration_attributes.slice(:event_id, :email))
     @registration ||= Registration.new(@registration_attributes)
+    set_glyc_pricing
+    @registration
+  end
+
+  def set_glyc_pricing
+    return unless @registration.event.location&.name == 'Great Lakes Yacht Club'
+    return if @registration.event.member_cost.nil?
+    return unless GLYCMember.find_by(email: registration_attributes[:email])
+
+    @registration.override_cost = @registration.event.member_cost
+    @registration.override_comment = 'GLYC Member'
   end
 
   def block_registration
