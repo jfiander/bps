@@ -91,6 +91,8 @@ Rails.application.routes.draw do
   get     '/apply',        to: 'member_applications#new'
   get     '/applications', to: 'member_applications#review'
   get     '/dues',         to: 'members#dues'
+  get     '/glyc_members', to: 'members#glyc_members'
+  post    '/glyc_members', to: 'members#update_glyc_members'
 
   # Float plans
   resources :float_plans, only: %i[index show new create] do

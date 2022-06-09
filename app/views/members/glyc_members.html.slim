@@ -1,0 +1,12 @@
+h2 GLYC Members
+
+= editor('glyc_members_editor')
+
+h3 Current GLYC Member Emails
+
+.table.glyc-members.striped
+  - GLYCMember.all.each_slice(3) do |a, b, c|
+    .table-row
+      .table-cell = a&.email
+      .table-cell = b&.email
+      .table-cell = c&.email

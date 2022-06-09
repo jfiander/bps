@@ -1,2 +1,3 @@
 / = link 'Update Roster',    path: update_roster_path, fa: { name: 'clipboard-list', options: { style: :duotone, fa: :fw } } if current_user&.permitted?(:roster)
-= link 'Import user data', path: import_users_path,  fa: { name: 'upload', options: { style: :duotone, fa: :fw } } if show_link?(:users)
+= link 'Import user data', path: import_users_path, fa: { name: 'upload', options: { style: :duotone, fa: :fw } } if show_link?(:users)
+= link 'GLYC members',     path: glyc_members_path, fa: { name: 'users',  options: { style: :duotone, fa: :fw } } if show_link?(:users)

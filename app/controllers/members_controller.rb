@@ -9,10 +9,11 @@ class MembersController < ApplicationController
   include Members::Dues
   include Members::Nominations
   include Members::Subscriptions
+  include Members::GLYC
   include BraintreeHelper
 
   secure!
-  secure!(:admin, only: :admin)
+  secure!(:admin, only: %i[admin glyc_members update_glyc_members])
   secure!(:newsletter, only: %i[upload_bilge upload_announcement remove_announcement])
   secure!(:minutes, only: :upload_minutes)
   secure!(:roster, only: %i[update_roster upload_roster])
@@ -36,6 +37,7 @@ class MembersController < ApplicationController
   title!('Member Ranks and Grades', only: :ranks)
   title!('Automatic Permissions', only: :auto_permits)
   title!('Vessel Examiners', only: :vse)
+  title!('GLYC Members', only: :glyc_members)
 
   render_markdown_views
 
