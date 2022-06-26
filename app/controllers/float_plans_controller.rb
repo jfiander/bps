@@ -1,12 +1,20 @@
 # frozen_string_literal: true
 
-class FloatPlanController < ApplicationController
+class FloatPlansController < ApplicationController
   secure!
-  secure!(:float, only: %i[list refresh])
+  secure!(:float, only: %i[index refresh])
 
   title!('Float Plans')
 
-  after_action :slack_notification, only: :submit
+  after_action :slack_notification, only: :create
+
+  def index
+    @float_plans = FloatPlan.includes(:float_plan_onboards).all
+  end
+
+  def show
+    @float_plan = FloatPlan.includes(:float_plan_onboards).find_by(id: params[:id])
+  end
 
   def new
     @last = FloatPlan.where(user_id: current_user&.id)&.last
@@ -14,7 +22,7 @@ class FloatPlanController < ApplicationController
     @float_plan = FloatPlan.new(@last&.attributes&.except(*non_persisted))
   end
 
-  def submit
+  def create
     @float_plan = FloatPlan.new(float_plan_params.merge(user_id: current_user&.id))
     onboards = float_plan_params[:float_plan_onboards_attributes]
     return no_onboards if onboards.blank?
@@ -30,10 +38,6 @@ class FloatPlanController < ApplicationController
     # BPS::Invalidation.submit(:files, "/float_plans/#{float_plan.id}.pdf")
     flash[:success] = "#{verb} float plan ##{float_plan.id}"
     redirect_to float_plans_path
-  end
-
-  def list
-    @float_plans = FloatPlan.includes(:float_plan_onboards).all
   end
 
 private
@@ -81,7 +85,11 @@ private
       { title: 'Depart', value: format_fp_time(:leave_at), short: true },
       { title: 'Return', value: format_fp_time(:return_at), short: true },
       { title: 'Alert', value: format_fp_time(:alert_at), short: true },
-      { title: 'Link', value: "<#{@float_plan.link}|PDF>", short: true }
+      {
+        title: 'Links',
+        value: "<#{@float_plan.link}|PDF> <#{float_plan_url(@float_plan)}|Web>",
+        short: true
+      }
     ].compact
   end
 

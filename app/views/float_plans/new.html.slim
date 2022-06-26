@@ -8,13 +8,13 @@ p Please fill out the following form to generate a float plan for your trip.
   .notice
     .table-cell.icon = FA::Icon.p('exclamation-triangle', style: :duotone)
     .table-cell
-      p 
+      p
         | This form has been pre-populated with data from your most recent float plan,
         br
         | except for the <b>leave</b>, <b>return</b>, and <b>alert times</b>, and any <b>persons onboard</b>.
       p.italic Please update it as necessary.
 
-= form_for(@float_plan, url: submit_float_plan_path, multipart: true) do |f|
+= form_for(@float_plan, url: float_plans_path, multipart: true) do |f|
   #float-plan
     h2 Primary Contact
     .table

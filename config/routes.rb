@@ -86,10 +86,9 @@ Rails.application.routes.draw do
   get     '/dues',         to: 'members#dues'
 
   # Float plans
-  get     '/float_plan',  to: 'float_plan#new',     as: 'float_plan'
-  post    '/float_plan',  to: 'float_plan#submit',  as: 'submit_float_plan'
-  patch   '/float_plan',  to: 'float_plan#refresh', as: 'refresh_float_plan'
-  get     '/float_plans', to: 'float_plan#list'
+  resources :float_plans, only: %i[index show new create] do
+    patch :refresh, on: :member
+  end
 
   # Admin utilities
   namespace :admin do

@@ -14,6 +14,7 @@ h1 Submitted Float Plans
       .table-cell = float_plan&.user&.full_name || float_plan.name
       .table-cell = float_plan&.leave_at&.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
       .table-cell = float_plan&.alert_at&.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+      .table-cell = link_to(float_plan_path(float_plan)) { FA::Icon.p('eye', style: :duotone, title: 'View') }
       - if float_plan.pdf.present?
         .table-cell = link_to(float_plan.link) { FA::Icon.p('file-pdf', style: :duotone, title: 'View PDF') }
         .table-cell = link_to(refresh_float_plan_path(id: float_plan.id), method: :patch) { FA::Icon.p('redo', style: :duotone, title: 'Refresh PDF', css: 'green') }

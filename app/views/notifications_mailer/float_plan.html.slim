@@ -6,6 +6,8 @@ p The following float plan has been submitted.
 
 p Please check the dates and times and plan to follow up on this plan as appropriate.
 
+p = link_to 'Float Plan', float_plan_url(@float_plan)
+
 p = link_to 'Float Plan PDF', @float_plan.link
 
 - if @float_plan.user.present?

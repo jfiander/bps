@@ -1,0 +1,224 @@
+h1 Float Plan
+
+#float-plan
+  h2 Primary Contact
+  .table.striped
+    .table-row
+      .table-cell.left-header Name
+      .table-cell.field = @float_plan.name
+    .table-row
+      .table-cell.left-header Phone
+      .table-cell.field = @float_plan.phone
+
+  h2 Boat Information
+  .table.striped
+    .table-row
+      .table-cell.left-header Boat Type
+      .table-cell
+        div = @float_plan.boat_type
+        small = @float_plan.subtype
+    .table-row
+      .table-cell.left-header Length
+      .table-cell.field #{@float_plan.length} feet
+    .table-row
+      .table-cell.left-header Hull Color
+      .table-cell.field = @float_plan.hull_color
+    .table-row
+      .table-cell.left-header Trim Color
+      .table-cell.field = @float_plan.trim_color
+    .table-row
+      .table-cell.left-header Deck Color
+      .table-cell.field = @float_plan.deck_color
+    .table-row
+      .table-cell.left-header Sail Color
+      .table-cell.field = @float_plan.sail_color
+    .table-row
+      .table-cell.left-header Documentation or Registration Number
+      .table-cell.field = @float_plan.registration_number
+    .table-row
+      .table-cell.left-header HIN
+      .table-cell.field = @float_plan.hin
+    .table-row
+      .table-cell.left-header Boat Name
+      .table-cell.field = @float_plan.boat_name
+    .table-row
+      .table-cell.left-header Make
+      .table-cell.field = @float_plan.make
+    .table-row
+      .table-cell.left-header Model
+      .table-cell.field = @float_plan.model
+    .table-row
+      .table-cell.left-header Year
+      .table-cell.field = @float_plan.year
+    .table-row
+      .table-cell.left-header Engine type(s)
+      .table-cell.field
+        div = @float_plan.engine_type_1
+        div = @float_plan.engine_type_2
+    .table-row
+      .table-cell.left-header Horsepower
+      .table-cell.field = @float_plan.horse_power
+    .table-row
+      .table-cell.left-header Number of Engines
+      .table-cell.field = @float_plan.number_of_engines
+    .table-row
+      .table-cell.left-header Fuel Capacity
+      .table-cell.field = "#{@float_plan.fuel_capacity} gallons" if @float_plan.fuel_capacity&.positive?
+
+  h2 Safety Equipment
+  .table.striped
+    .table-row
+      .table-cell
+        = check_box_tag :pfds, '1', @float_plan.pfds, disabled: true
+        | PFDs
+      .table-cell
+        = check_box_tag :flares, '1', @float_plan.flares, disabled: true
+        | Flares
+      .table-cell
+        = check_box_tag :mirror, '1', @float_plan.mirror, disabled: true
+        | Mirror
+    .table-row
+      .table-cell
+        = check_box_tag :horn, '1', @float_plan.horn, disabled: true
+        | Horn / Whistle
+      .table-cell
+        = check_box_tag :smoke, '1', @float_plan.smoke, disabled: true
+        | Smoke
+      .table-cell
+        = check_box_tag :flashlight, '1', @float_plan.flashlight, disabled: true
+        | Flashlight
+    .table-row
+      .table-cell
+        = check_box_tag :raft, '1', @float_plan.raft, disabled: true
+        | Raft / Dinghy
+      .table-cell
+        = check_box_tag :epirb, '1', @float_plan.epirb, disabled: true
+        | EPIRB / PLB
+      .table-cell
+        = check_box_tag :paddles, '1', @float_plan.paddles, disabled: true
+        | Paddles
+    .table-row
+      .table-cell
+        = check_box_tag :food, '1', @float_plan.food, disabled: true
+        | Food
+      .table-cell
+        = check_box_tag :water, '1', @float_plan.water, disabled: true
+        | Water
+      .table-cell
+        = check_box_tag :anchor, '1', @float_plan.anchor, disabled: true
+        | Anchor
+
+  h2 Radio
+  .table.striped
+    .table-row
+      .table-cell.left-header EPIRB Frequencies
+      .table-cell.field
+        .table
+          .table-row
+            .table-cell
+              = check_box_tag :epirb_1215, '1', @float_plan.epirb_1215, disabled: true
+              | 121.5 MHz
+            .table-cell
+              = check_box_tag :epirb_406, '1', @float_plan.epirb_406, disabled: true
+              | 406 MHz
+    .table-row
+      .table-cell.left-header Radio equipment
+      .table-cell.field
+        .table
+          .table-row
+            .table-cell
+              = check_box_tag :radio_vhf, '1', @float_plan.radio_vhf, disabled: true
+              | VHF
+            .table-cell
+              = check_box_tag :radio_ssb, '1', @float_plan.radio_ssb, disabled: true
+              | SSB
+            .table-cell
+              = check_box_tag :radio_cb, '1', @float_plan.radio_cb, disabled: true
+              | CB
+            .table-cell
+              = check_box_tag :radio_cell_phone, '1', @float_plan.radio_cell_phone, disabled: true
+              | Cell phone
+    .table-row
+      .table-cell.left-header Channels / Frequencies Monitored
+      .table-cell.field = @float_plan.channels_monitored
+    .table-row
+      .table-cell.left-header Call Sign / MMSI
+      .table-cell.field = @float_plan.call_sign
+    .table-row
+      .table-cell.left-header Radio Comments
+      .table-cell.field = @float_plan.radio
+
+  h2 Route Plan
+  .table.striped
+    .table-row
+      .table-cell.left-header Leave From
+      .table-cell.field = @float_plan.leave_from
+    .table-row
+      .table-cell.left-header Goign To
+      .table-cell.field = @float_plan.going_to
+    .table-row
+      .table-cell.left-header Leave At
+      .table-cell.field = @float_plan.leave_at.strftime(TimeHelper::LONG_TIME_FORMAT)
+    .table-row
+      .table-cell.left-header Return At
+      .table-cell.field = @float_plan.return_at.strftime(TimeHelper::LONG_TIME_FORMAT)
+
+  h2.red Alert
+  p.red.italic If not returned or contacted by this time, report missing.
+  .table.striped
+    .table-row
+      .table-cell.left-header Alert Time
+      .table-cell.field = @float_plan.alert_at.strftime(TimeHelper::LONG_TIME_FORMAT)
+    .table-row
+      .table-cell.left-header Who to Alert
+      .table-cell.field = @float_plan.alert_name
+    .table-row
+      .table-cell.left-header Phone
+      .table-cell.field = @float_plan.alert_phone
+
+  h2 Transportation Ashore
+  .table.striped
+    .table-row
+      .table-cell.left-header Make
+      .table-cell.field = @float_plan.car_make
+    .table-row
+      .table-cell.left-header Model
+      .table-cell.field = @float_plan.car_model
+    .table-row
+      .table-cell.left-header Year
+      .table-cell.field = @float_plan.car_year
+    .table-row
+      .table-cell.left-header Color
+      .table-cell.field = @float_plan.car_color
+    .table-row
+      .table-cell.left-header License Plate
+      .table-cell.field = @float_plan.car_license_plate
+    .table-row
+      .table-cell.left-header Trailer License Plate
+      .table-cell.field = @float_plan.trailer_license_plate
+    .table-row
+      .table-cell.left-header Parked at
+      .table-cell.field = @float_plan.car_parked_at
+
+  h2 Misc
+  .table.striped
+    .table-row
+      .table-cell.left-header Comments
+      .table-cell.field = @float_plan.comments
+
+  h2 Persons Onboard
+  #persons-onboard
+    - @float_plan.float_plan_onboards.each do |onboard|
+      .table.striped
+        .table-row
+          .table-cell.left-header Name
+          .table-cell.field = onboard.name
+        .table-row
+          .table-cell.left-header Age
+          .table-cell.field = onboard.age
+        .table-row
+          .table-cell.left-header Address
+          .table-cell.field = onboard.address
+        .table-row
+          .table-cell.left-header Phone
+          .table-cell.field = onboard.phone
