@@ -194,3 +194,11 @@ div.chiclets {
     small { margin-right: 0.5em; }
   }
 }
+
+div.flexible {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 1em;
+}

@@ -69,44 +69,43 @@ h1 Float Plan
   .table.striped
     .table-row
       .table-cell
-        = check_box_tag :pfds, '1', @float_plan.pfds, disabled: true
-        | PFDs
-      .table-cell
-        = check_box_tag :flares, '1', @float_plan.flares, disabled: true
-        | Flares
-      .table-cell
-        = check_box_tag :mirror, '1', @float_plan.mirror, disabled: true
-        | Mirror
-    .table-row
-      .table-cell
-        = check_box_tag :horn, '1', @float_plan.horn, disabled: true
-        | Horn / Whistle
-      .table-cell
-        = check_box_tag :smoke, '1', @float_plan.smoke, disabled: true
-        | Smoke
-      .table-cell
-        = check_box_tag :flashlight, '1', @float_plan.flashlight, disabled: true
-        | Flashlight
-    .table-row
-      .table-cell
-        = check_box_tag :raft, '1', @float_plan.raft, disabled: true
-        | Raft / Dinghy
-      .table-cell
-        = check_box_tag :epirb, '1', @float_plan.epirb, disabled: true
-        | EPIRB / PLB
-      .table-cell
-        = check_box_tag :paddles, '1', @float_plan.paddles, disabled: true
-        | Paddles
-    .table-row
-      .table-cell
-        = check_box_tag :food, '1', @float_plan.food, disabled: true
-        | Food
-      .table-cell
-        = check_box_tag :water, '1', @float_plan.water, disabled: true
-        | Water
-      .table-cell
-        = check_box_tag :anchor, '1', @float_plan.anchor, disabled: true
-        | Anchor
+        .flexible
+          span class=(@float_plan.pfds ? :green : :red)
+            = check_box_tag :pfds, '1', @float_plan.pfds, disabled: true
+            | PFDs
+          span class=(@float_plan.flares ? :green : :red)
+            = check_box_tag :flares, '1', @float_plan.flares, disabled: true
+            | Flares
+          span class=(@float_plan.mirror ? :green : :red)
+            = check_box_tag :mirror, '1', @float_plan.mirror, disabled: true
+            | Mirror
+          span class=(@float_plan.horn ? :green : :red)
+            = check_box_tag :horn, '1', @float_plan.horn, disabled: true
+            | Horn / Whistle
+          span class=(@float_plan.smoke ? :green : :red)
+            = check_box_tag :smoke, '1', @float_plan.smoke, disabled: true
+            | Smoke
+          span class=(@float_plan.flashlight ? :green : :red)
+            = check_box_tag :flashlight, '1', @float_plan.flashlight, disabled: true
+            | Flashlight
+          span class=(@float_plan.raft ? :green : :red)
+            = check_box_tag :raft, '1', @float_plan.raft, disabled: true
+            | Raft / Dinghy
+          span class=(@float_plan.epirb ? :green : :red)
+            = check_box_tag :epirb, '1', @float_plan.epirb, disabled: true
+            | EPIRB / PLB
+          span class=(@float_plan.paddles ? :green : :red)
+            = check_box_tag :paddles, '1', @float_plan.paddles, disabled: true
+            | Paddles
+          span class=(@float_plan.food ? :green : :red)
+            = check_box_tag :food, '1', @float_plan.food, disabled: true
+            | Food
+          span class=(@float_plan.water ? :green : :red)
+            = check_box_tag :water, '1', @float_plan.water, disabled: true
+            | Water
+          span class=(@float_plan.anchor ? :green : :red)
+            = check_box_tag :anchor, '1', @float_plan.anchor, disabled: true
+            | Anchor
 
   h2 Radio
   .table.striped
@@ -116,28 +115,32 @@ h1 Float Plan
         .table
           .table-row
             .table-cell
-              = check_box_tag :epirb_1215, '1', @float_plan.epirb_1215, disabled: true
-              | 121.5 MHz
-            .table-cell
-              = check_box_tag :epirb_406, '1', @float_plan.epirb_406, disabled: true
-              | 406 MHz
+              .flexible
+                span class=(@float_plan.epirb_1215 ? :green : :red)
+                  = check_box_tag :epirb_1215, '1', @float_plan.epirb_1215, disabled: true
+                  | 121.5 MHz
+                span class=(@float_plan.epirb_406 ? :green : :red)
+                  = check_box_tag :epirb_406, '1', @float_plan.epirb_406, disabled: true
+                  | 406 MHz
     .table-row
       .table-cell.left-header Radio equipment
       .table-cell.field
         .table
           .table-row
             .table-cell
-              = check_box_tag :radio_vhf, '1', @float_plan.radio_vhf, disabled: true
-              | VHF
-            .table-cell
-              = check_box_tag :radio_ssb, '1', @float_plan.radio_ssb, disabled: true
-              | SSB
-            .table-cell
-              = check_box_tag :radio_cb, '1', @float_plan.radio_cb, disabled: true
-              | CB
-            .table-cell
-              = check_box_tag :radio_cell_phone, '1', @float_plan.radio_cell_phone, disabled: true
-              | Cell phone
+              .flexible
+                span class=(@float_plan.radio_vhf ? :green : :red)
+                  = check_box_tag :radio_vhf, '1', @float_plan.radio_vhf, disabled: true
+                  | VHF
+                span class=(@float_plan.radio_ssb ? :green : :red)
+                  = check_box_tag :radio_ssb, '1', @float_plan.radio_ssb, disabled: true
+                  | SSB
+                span class=(@float_plan.radio_cb ? :green : :red)
+                  = check_box_tag :radio_cb, '1', @float_plan.radio_cb, disabled: true
+                  | CB
+                span class=(@float_plan.radio_cell_phone ? :green : :red)
+                  = check_box_tag :radio_cell_phone, '1', @float_plan.radio_cell_phone, disabled: true
+                  | Cell phone
     .table-row
       .table-cell.left-header Channels / Frequencies Monitored
       .table-cell.field = @float_plan.channels_monitored
@@ -222,3 +225,4 @@ h1 Float Plan
         .table-row
           .table-cell.left-header Phone
           .table-cell.field = onboard.phone
+      hr
