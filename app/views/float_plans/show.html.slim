@@ -23,47 +23,59 @@ h1 Float Plan
     .table-row
       .table-cell.left-header Hull Color
       .table-cell.field = @float_plan.hull_color
-    .table-row
-      .table-cell.left-header Trim Color
-      .table-cell.field = @float_plan.trim_color
-    .table-row
-      .table-cell.left-header Deck Color
-      .table-cell.field = @float_plan.deck_color
-    .table-row
-      .table-cell.left-header Sail Color
-      .table-cell.field = @float_plan.sail_color
-    .table-row
-      .table-cell.left-header Documentation or Registration Number
-      .table-cell.field = @float_plan.registration_number
-    .table-row
-      .table-cell.left-header HIN
-      .table-cell.field = @float_plan.hin
-    .table-row
-      .table-cell.left-header Boat Name
-      .table-cell.field = @float_plan.boat_name
+    - if @float_plan.trim_color.present?
+      .table-row
+        .table-cell.left-header Trim Color
+        .table-cell.field = @float_plan.trim_color
+    - if @float_plan.deck_color.present?
+      .table-row
+        .table-cell.left-header Deck Color
+        .table-cell.field = @float_plan.deck_color
+    - if @float_plan.sail_color.present?
+      .table-row
+        .table-cell.left-header Sail Color
+        .table-cell.field = @float_plan.sail_color
+    - if @float_plan.registration_number.present?
+      .table-row
+        .table-cell.left-header Documentation or Registration Number
+        .table-cell.field = @float_plan.registration_number
+    - if @float_plan.hin.present?
+      .table-row
+        .table-cell.left-header HIN
+        .table-cell.field = @float_plan.hin
+    - if @float_plan.boat_name.present?
+      .table-row
+        .table-cell.left-header Boat Name
+        .table-cell.field = @float_plan.boat_name
     .table-row
       .table-cell.left-header Make
       .table-cell.field = @float_plan.make
-    .table-row
-      .table-cell.left-header Model
-      .table-cell.field = @float_plan.model
-    .table-row
-      .table-cell.left-header Year
-      .table-cell.field = @float_plan.year
-    .table-row
-      .table-cell.left-header Engine type(s)
-      .table-cell.field
-        div = @float_plan.engine_type_1
-        div = @float_plan.engine_type_2
-    .table-row
-      .table-cell.left-header Horsepower
-      .table-cell.field = @float_plan.horse_power
-    .table-row
-      .table-cell.left-header Number of Engines
-      .table-cell.field = @float_plan.number_of_engines
-    .table-row
-      .table-cell.left-header Fuel Capacity
-      .table-cell.field = "#{@float_plan.fuel_capacity} gallons" if @float_plan.fuel_capacity&.positive?
+    - if @float_plan.model.present?
+      .table-row
+        .table-cell.left-header Model
+        .table-cell.field = @float_plan.model
+    - if @float_plan.year.present?
+      .table-row
+        .table-cell.left-header Year
+        .table-cell.field = @float_plan.year
+    - if @float_plan.engine_type_1.present? || @float_plan.engine_type_2.present?
+      .table-row
+        .table-cell.left-header Engine type(s)
+        .table-cell.field
+          div = @float_plan.engine_type_1
+          div = @float_plan.engine_type_2
+    - if @float_plan.horse_power&.positive?
+      .table-row
+        .table-cell.left-header Horsepower
+        .table-cell.field = @float_plan.horse_power
+    - if @float_plan.number_of_engines&.positive?
+      .table-row
+        .table-cell.left-header Number of Engines
+        .table-cell.field = @float_plan.number_of_engines
+    - if @float_plan.fuel_capacity&.positive?
+      .table-row
+        .table-cell.left-header Fuel Capacity
+        .table-cell.field = "#{@float_plan.fuel_capacity} gallons"
 
   h2 Safety Equipment
   .table.striped
@@ -144,12 +156,14 @@ h1 Float Plan
     .table-row
       .table-cell.left-header Channels / Frequencies Monitored
       .table-cell.field = @float_plan.channels_monitored
-    .table-row
-      .table-cell.left-header Call Sign / MMSI
-      .table-cell.field = @float_plan.call_sign
-    .table-row
-      .table-cell.left-header Radio Comments
-      .table-cell.field = @float_plan.radio
+    - if @float_plan.call_sign.present?
+      .table-row
+        .table-cell.left-header Call Sign / MMSI
+        .table-cell.field = @float_plan.call_sign
+    - if @float_plan.radio.present?
+      .table-row
+        .table-cell.left-header Radio Comments
+        .table-cell.field = @float_plan.radio
 
   h2 Route Plan
   .table.striped
@@ -175,9 +189,10 @@ h1 Float Plan
     .table-row
       .table-cell.left-header Who to Alert
       .table-cell.field = @float_plan.alert_name
-    .table-row
-      .table-cell.left-header Phone
-      .table-cell.field = @float_plan.alert_phone
+    - if @float_plan.alert_phone.present?
+      .table-row
+        .table-cell.left-header Phone
+        .table-cell.field = @float_plan.alert_phone
 
   h2 Transportation Ashore
   .table.striped
@@ -196,22 +211,26 @@ h1 Float Plan
     .table-row
       .table-cell.left-header License Plate
       .table-cell.field = @float_plan.car_license_plate
-    .table-row
-      .table-cell.left-header Trailer License Plate
-      .table-cell.field = @float_plan.trailer_license_plate
+    - if @float_plan.trailer_license_plate.present?
+      .table-row
+        .table-cell.left-header Trailer License Plate
+        .table-cell.field = @float_plan.trailer_license_plate
     .table-row
       .table-cell.left-header Parked at
       .table-cell.field = @float_plan.car_parked_at
 
-  h2 Misc
-  .table.striped
-    .table-row
-      .table-cell.left-header Comments
-      .table-cell.field = @float_plan.comments
+  - if @float_plan.comments.present?
+    h2 Misc
+    .table.striped
+      .table-row
+        .table-cell.left-header Comments
+        .table-cell.field = @float_plan.comments
 
   h2 Persons Onboard
   #persons-onboard
-    - @float_plan.float_plan_onboards.each do |onboard|
+    - @float_plan.float_plan_onboards.each_with_index do |onboard, index|
+      - unless index.zero?
+        hr
       .table.striped
         .table-row
           .table-cell.left-header Name
@@ -225,4 +244,3 @@ h1 Float Plan
         .table-row
           .table-cell.left-header Phone
           .table-cell.field = onboard.phone
-      hr
