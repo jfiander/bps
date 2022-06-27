@@ -35,7 +35,7 @@ class FloatPlansController < ApplicationController
     float_plan = FloatPlan.find_by(id: refresh_params[:id])
     verb = float_plan.pdf.exists? ? 'Refreshed' : 'Generated'
     float_plan.generate_pdf
-    # BPS::Invalidation.submit(:files, "/float_plans/#{float_plan.id}.pdf")
+    BPS::Invalidation.submit(:files, "/float_plans/#{float_plan.id}.pdf")
     flash[:success] = "#{verb} float plan ##{float_plan.id}"
     redirect_to float_plans_path
   end
