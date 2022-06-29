@@ -201,4 +201,6 @@ div.flexible {
   flex-wrap: wrap;
   align-content: center;
   gap: 1em;
+
+  &.center { justify-content: center; }
 }

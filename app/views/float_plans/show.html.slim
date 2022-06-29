@@ -81,7 +81,7 @@ h1 Float Plan
   .table.striped
     .table-row
       .table-cell
-        .flexible
+        .flexible.center
           span class=(@float_plan.pfds ? :green : :red)
             = check_box_tag :pfds, '1', @float_plan.pfds, disabled: true
             | PFDs
@@ -227,20 +227,20 @@ h1 Float Plan
         .table-cell.field = @float_plan.comments
 
   h2 Persons Onboard
-  #persons-onboard
+  #persons-onboard.table.striped
     - @float_plan.float_plan_onboards.each_with_index do |onboard, index|
-      - unless index.zero?
-        hr
-      .table.striped
-        .table-row
-          .table-cell.left-header Name
-          .table-cell.field = onboard.name
-        .table-row
-          .table-cell.left-header Age
-          .table-cell.field = onboard.age
-        .table-row
-          .table-cell.left-header Address
-          .table-cell.field = onboard.address
-        .table-row
-          .table-cell.left-header Phone
-          .table-cell.field = onboard.phone
+      .table-row
+        .table-cell
+          .table
+            .table-row
+              .table-cell.left-header Name
+              .table-cell.field = onboard.name
+            .table-row
+              .table-cell.left-header Age
+              .table-cell.field = onboard.age
+            .table-row
+              .table-cell.left-header Address
+              .table-cell.field = onboard.address
+            .table-row
+              .table-cell.left-header Phone
+              .table-cell.field = onboard.phone
