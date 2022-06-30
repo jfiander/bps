@@ -358,6 +358,20 @@
 
   div#otw-progress div.table-row div.table-cell.satisfied { color: $green; }
 
+  div#float-plan {
+    div.flexible span {
+      &.red {
+        background-color: rgba($old-glory-red, 0.1);
+        border-color: $old-glory-red;
+      }
+
+      &.green {
+        background-color: rgba($green, 0.1);
+        border-color: $green;
+      }
+    }
+  }
+
 
   // Sliders
 

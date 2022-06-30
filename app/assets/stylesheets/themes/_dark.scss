@@ -349,6 +349,21 @@
     a { color: $old-glory-blue-desaturated; }
   }
 
+  div#float-plan {
+    div.flexible span {
+      &.red {
+        background-color: rgba($dark-red, 0.1);
+        border-color: $dark-red;
+      }
+
+      &.green {
+        color: $dark-green;
+        background-color: rgba($dark-green, 0.1);
+        border-color: $dark-green;
+      }
+    }
+  }
+
   div.table-row.gray {
     div.table-cell {
       color: $old-glory-blue;

@@ -59,6 +59,14 @@ div#float-plan {
   label {
     padding: 0 0.25em;
   }
+
+  div.flexible {
+    span {
+      border: thin solid black;
+      border-radius: 0.25em;
+      padding: 0.1em 0.2em;
+    }
+  }
 }
 
 div#float-plans div.table-cell {
