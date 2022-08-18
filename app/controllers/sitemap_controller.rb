@@ -3,6 +3,8 @@
 class SitemapController < ApplicationController
   layout false
 
+  skip_before_action :load_layout_images
+
   def index
     @pages = pages
     @priorities = priorities
