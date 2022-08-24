@@ -24,6 +24,7 @@ module ImportUsers
     def mark_not_imported
       User.where(certificate: @certificates).update_all(in_latest_import: true)
       @removed_users.update_all(in_latest_import: false)
+      @removed_users
     end
   end
 end

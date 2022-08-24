@@ -9,4 +9,10 @@ RSpec.describe ImportLog, type: :model do
 
     expect(described_class.latest).to eql(described_class.first)
   end
+
+  it 'decodes proto' do
+    log = FactoryBot.create(:import_log, proto: BPS::Update::UserDataImport.new.to_proto)
+
+    expect(log.decode).to be_a(BPS::Update::UserDataImport)
+  end
 end

@@ -1,0 +1,45 @@
+syntax = "proto3";
+package b_p_s.update;
+
+import "google/protobuf/timestamp.proto";
+
+message UserDataImport {
+  repeated User created = 1;
+  repeated UserUpdate updated = 2;
+  repeated UserCompletion completions = 3;
+  repeated UserFamily families = 4;
+  bool locked = 5;
+  repeated User not_in_import = 6;
+}
+
+message User {
+  int64 id = 1;
+  string certificate = 2;
+  string name = 3;
+}
+
+message UserUpdate {
+  User user = 1;
+  repeated UserChange changes = 2;
+}
+
+message UserChange {
+  string field = 1;
+  string from = 2;
+  string to = 3;
+}
+
+message UserCompletion {
+  User user = 1;
+  repeated Completion completions = 2;
+}
+
+message Completion {
+  string key = 1;
+  google.protobuf.Timestamp date = 2;
+}
+
+message UserFamily {
+  User user = 1;
+  repeated User family = 2;
+}

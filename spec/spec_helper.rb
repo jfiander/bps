@@ -26,6 +26,7 @@ SimpleCov.start('rails') do
   # Not application code
   add_filter '/spec'
   add_filter '/config'
+  add_filter '/lib'
   add_filter '/app/mailers/previews'
 
   # Exclude controller code

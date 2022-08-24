@@ -317,3 +317,7 @@ div#corner-stripes {
     &.district { height: 4em; }
   }
 }
+
+#import-results .table .table {
+  .table-cell { width: 10em; }
+}

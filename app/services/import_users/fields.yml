@@ -59,6 +59,7 @@ ignore:
   - Org.Dst
   - Pre.Sqd
   - Pre.Dst
+  - Zip+4
 
   - Last BDU
   - Last HQ

@@ -23,8 +23,8 @@ module ImportUsers
 
     def update_parent_for(user, parent)
       user&.update(parent_id: parent.id)
-      @families[user&.parent_id] ||= []
-      @families[user&.parent_id] << user&.id
+      @families[user&.parent] ||= []
+      @families[user&.parent] << user
     end
 
     def user_and_parent(row)
