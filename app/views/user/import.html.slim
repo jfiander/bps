@@ -225,7 +225,7 @@ hr
                 - user_completion.completions.each do |completion|
                   .table-row
                     .table-cell = completion.key
-                    .table-cell = completion.date.to_datetime.strftime(TimeHelper::FULL_DATE)
+                    .table-cell = Time.at(completion.date.seconds).strftime(TimeHelper::FULL_DATE)
 
     - if @import_results[:proto].families.any?
       h3 Families
