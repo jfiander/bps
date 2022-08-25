@@ -8,7 +8,9 @@ module Api
       authenticate_user!
 
       def automatic_update(silent: false, dryrun: false)
-        @import_results = AutomaticUpdate::Run.new.update
+        updater = AutomaticUpdate::Run.new
+        @import_proto = updater.update
+        @log_timestamp = updater.log_timestamp
         import_success(silent: silent, dryrun: dryrun)
       rescue StandardError => e
         import_failure(e, silent: silent, dryrun: dryrun)
@@ -38,7 +40,7 @@ module Api
         by = current_user ? current_user.full_name : 'API'
         import_notification(:success, by: by, dryrun: dryrun)
         log_import(by: by) unless dryrun
-        render(json: @import_results, status: :ok) unless silent
+        render(json: @import_proto.to_json, status: :ok) unless silent
       end
 
       def import_failure(error, silent: false, dryrun: false)
@@ -60,8 +62,9 @@ module Api
           fallback: "#{dry}User information has #{fallback}.",
           fields: [
             { title: 'By', value: by, short: true },
+            { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
             ({ title: 'Dryrun', value: 'true', short: true } if dryrun),
-            { title: 'Results', value: @import_results.to_s, short: false }
+            { title: 'Results', value: @import_proto.to_json, short: false }
           ].compact
         ).notify!
       end
@@ -70,7 +73,7 @@ module Api
         log = File.open("#{Rails.root}/log/user_import.log", 'a')
 
         log.write("[#{Time.now}] User import by: #{by}\n")
-        log.write(@import_results)
+        log.write(@import_proto.to_json)
         log.write("\n\n")
         log.close
       end
