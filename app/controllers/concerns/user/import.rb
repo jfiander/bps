@@ -74,7 +74,7 @@ class User
         fallback: "User information has #{notification_fallback(type)}.",
         fields: [
           { title: 'By', value: current_user.full_name, short: true },
-          { title: 'Results', value: @import_results.to_s, short: false }
+          { title: 'Results', value: @import_results[:proto].to_json, short: false }
         ]
       ).notify!
     end
