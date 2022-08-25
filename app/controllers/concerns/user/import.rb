@@ -13,9 +13,11 @@ class User
       return only_csv unless uploaded_file.content_type.in?(ACCEPTABLE_CONTENT_TYPES)
 
       begin
-        @import_proto = ImportUsers::Import.new(
+        importer = ImportUsers::Import.new(
           upload_import_file(uploaded_file), lock: clean_params[:lock_missing]
-        ).call
+        )
+        @import_proto = importer.call
+        @log_timestamp = importer.log_timestamp
         import_success
       rescue StandardError => e
         import_failure(e)
@@ -23,7 +25,9 @@ class User
     end
 
     def automatic_update
-      @import_proto = AutomaticUpdate::Run.new.update
+      updater = AutomaticUpdate::Run.new
+      @import_proto = updater.update
+      @log_timestamp = updater.log_timestamp
       import_success
     rescue StandardError => e
       import_failure(e)
@@ -74,6 +78,7 @@ class User
         fallback: "User information has #{notification_fallback(type)}.",
         fields: [
           { title: 'By', value: current_user.full_name, short: true },
+          { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
           { title: 'Results', value: @import_proto.to_json, short: false }
         ]
       ).notify!

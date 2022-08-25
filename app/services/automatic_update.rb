@@ -17,6 +17,8 @@ module AutomaticUpdate
   class Run
     OUTPUT_PATH = Rails.root.join('tmp/automatic_update/ReadyForImport.csv')
 
+    attr_reader :log_timestamp
+
     def initialize
       @file_headers = []
     end
@@ -28,9 +30,11 @@ module AutomaticUpdate
       write_output_file
       return unless import
 
-      result = ImportUsers::Import.new(OUTPUT_PATH, lock: lock).call
+      importer = ImportUsers::Import.new(OUTPUT_PATH, lock: lock)
+      proto = importer.call
+      @log_timestamp = importer.log_timestamp
       cleanup_files
-      result
+      proto
     end
 
   private

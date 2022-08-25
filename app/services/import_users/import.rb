@@ -3,6 +3,8 @@
 module ImportUsers
   # Main API for user importing
   class Import
+    attr_reader :log_timestamp
+
     def initialize(path, lock: false)
       @path = path
       @lock = lock
@@ -93,7 +95,9 @@ module ImportUsers
       archive.write(@proto.to_proto)
       archive.rewind
 
-      BPS::S3.new(:files).upload(file: archive, key: "user_imports/#{Time.now.to_i}.proto")
+      @log_timestamp = Time.now.to_i
+
+      BPS::S3.new(:files).upload(file: archive, key: "user_imports/#{@log_timestamp}.proto")
     end
   end
 end
