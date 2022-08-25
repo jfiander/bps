@@ -252,21 +252,22 @@ hr
                     .table-cell = f.certificate
                     .table-cell = f.name
 
-    - if @import_proto.locked
-      h3 Locked Users
-    - else
-      h3 Users Not in Import
+    - @import_proto.not_in_import.any?
+      - if @import_proto.locked
+        h3 Locked Users
+      - else
+        h3 Users Not in Import
 
-    .table.striped
-        .table-row.bold
-          .table-cell ID
-          .table-cell Certificate
-          .table-cell Name
-        - @import_proto.not_in_import.each do |user|
-          .table-row
-            .table-cell = user.id
-            .table-cell = user.certificate
-            .table-cell = user.name
+      .table.striped
+          .table-row.bold
+            .table-cell ID
+            .table-cell Certificate
+            .table-cell Name
+          - @import_proto.not_in_import.each do |user|
+            .table-row
+              .table-cell = user.id
+              .table-cell = user.certificate
+              .table-cell = user.name
 hr
 
 p You can also:
