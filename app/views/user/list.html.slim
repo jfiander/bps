@@ -1,6 +1,10 @@
 h1 All users
 
-p = "Current: #{@unlocked.count}, Locked: #{@locked.count}"
+p
+  = @show_locked ? link_to('Current', users_path) : 'Current'
+  ' : #{@unlocked.count},
+  = @show_locked ? 'Locked' : link_to('Locked', users_path(locked: true))
+  | : #{@locked.count}
 
 - if ENV["ALLOW_BULK_INVITE"] == "true"
   = link_to "Send invitations to all new users", invite_all_path, method: :put

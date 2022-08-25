@@ -18,6 +18,8 @@ class User
     end
 
     def load_users
+      @show_locked = params[:locked].present?
+
       all_users = User.alphabetized.include_positions
       @user_roles = UserRole.preload
       @role_icons = Role.icons
@@ -25,7 +27,8 @@ class User
 
       @unlocked = all_users.unlocked.map { |user| user_hash(user) }
       @locked = all_users.locked.map { |user| user_hash(user) }
-      @users = @unlocked + @locked
+
+      @users = @show_locked ? @locked : @unlocked
     end
 
     def user_hash(u)
