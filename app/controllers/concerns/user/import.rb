@@ -13,7 +13,7 @@ class User
       return only_csv unless uploaded_file.content_type.in?(ACCEPTABLE_CONTENT_TYPES)
 
       begin
-        @import_results = ImportUsers::Import.new(
+        @import_proto = ImportUsers::Import.new(
           upload_import_file(uploaded_file), lock: clean_params[:lock_missing]
         ).call
         import_success
@@ -23,7 +23,7 @@ class User
     end
 
     def automatic_update
-      @import_results = AutomaticUpdate::Run.new.update
+      @import_proto = AutomaticUpdate::Run.new.update
       import_success
     rescue StandardError => e
       import_failure(e)
@@ -74,7 +74,7 @@ class User
         fallback: "User information has #{notification_fallback(type)}.",
         fields: [
           { title: 'By', value: current_user.full_name, short: true },
-          { title: 'Results', value: @import_results[:proto].to_json, short: false }
+          { title: 'Results', value: @import_proto.to_json, short: false }
         ]
       ).notify!
     end
@@ -95,7 +95,7 @@ class User
       log = File.open("#{Rails.root}/log/user_import.log", 'a')
 
       log.write("[#{Time.now}] User import by: #{current_user.full_name}\n")
-      log.write(@import_results)
+      log.write(@import_proto.to_json)
       log.write("\n\n")
       log.close
     end

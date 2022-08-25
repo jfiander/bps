@@ -7,8 +7,6 @@ module ImportUsers
       @path = path
       @lock = lock
       @proto = BPS::Update::UserDataImport.new
-      @created = []
-      @updated = {}
       @certificates = []
       @completions = []
     end
@@ -17,9 +15,9 @@ module ImportUsers
       @parsed_csv = ImportUsers::ParseCSV.new(@path).call
       process_import
       File.unlink(@path) if File.exist?(@path)
-      results = results_hash
-      ImportLog.create(json: results.to_json, proto: @proto.to_proto)
-      results
+      ImportLog.create(proto: @proto.to_proto)
+      archive_proto
+      @proto
     end
 
   private
@@ -33,9 +31,9 @@ module ImportUsers
         proto_families
 
         lock_users = ImportUsers::LockUsers.new(@certificates)
-        @removed = @lock ? lock_users.call : lock_users.mark_not_imported
+        removed = @lock ? lock_users.call : lock_users.mark_not_imported
 
-        @removed.each do |user|
+        removed.each do |user|
           u = BPS::Update::User.new(
             id: user.id, certificate: user.certificate, name: user.simple_name
           )
@@ -52,14 +50,12 @@ module ImportUsers
 
     def record_results(user, changes)
       @certificates << user.certificate
-      if changes == :created
-        @proto.created << BPS::Update::User.new(
-          id: user.id, certificate: user.certificate, name: user.simple_name
-        )
-        return @created << user
-      end
+      return if changes.blank?
+      return proto_updated(user, changes) unless changes == :created
 
-      proto_updated(user, changes) if changes.present?
+      @proto.created << BPS::Update::User.new(
+        id: user.id, certificate: user.certificate, name: user.simple_name
+      )
     end
 
     def proto_completions
@@ -90,19 +86,14 @@ module ImportUsers
           { field: field, from: from.to_s, to: to.to_s }
         end
       )
-      @updated[user] = changes
     end
 
-    def results_hash
-      {
-        created: @created,
-        updated: @updated,
-        completions: @completions&.flatten&.group_by(&:user),
-        completion_ids: @completions&.flatten&.map(&:id),
-        families: @families,
-        locked: @lock ? @removed : :skipped,
-        proto: @proto
-      }
+    def archive_proto
+      archive = File.open(Rails.root.join('tmp/user_import.proto'), 'wb')
+      archive.write(@proto.to_proto)
+      archive.rewind
+
+      BPS::S3.new(:files).upload(file: archive, key: "user_imports/#{Time.now.to_i}.proto")
     end
   end
 end
