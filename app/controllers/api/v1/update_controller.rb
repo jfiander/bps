@@ -64,9 +64,15 @@ module Api
             { title: 'By', value: by, short: true },
             { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
             ({ title: 'Dryrun', value: 'true', short: true } if dryrun),
-            { title: 'Results', value: @import_proto.to_json, short: false }
+            { title: 'Results', value: update_results, short: false }
           ].compact
         ).notify!
+      end
+
+      def update_results
+        return 'No changes' if @import_proto == BPS::Update::UserDataImport.new
+
+        @import_proto.to_json
       end
 
       def log_import(by: nil)

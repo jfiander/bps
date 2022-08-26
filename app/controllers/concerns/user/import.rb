@@ -79,9 +79,15 @@ class User
         fields: [
           { title: 'By', value: current_user.full_name, short: true },
           { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
-          { title: 'Results', value: @import_proto.to_json, short: false }
+          { title: 'Results', value: update_results, short: false }
         ]
       ).notify!
+    end
+
+    def update_results
+      return 'No changes' if @import_proto == BPS::Update::UserDataImport.new
+
+      @import_proto.to_json
     end
 
     def notification_title(type)
