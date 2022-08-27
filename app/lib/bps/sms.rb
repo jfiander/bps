@@ -7,14 +7,13 @@ module BPS
   class SMS
     ALLOWED_TYPES = %i[promotional transactional].freeze
 
-    # Allow the public API to be called directly on the class
     class << self
-      %w[
+      # Allow the public API to be called directly on the class
+      API_METHODS = %w[
         publish broadcast opt_in! create_topic delete_topic
         subscribe confirm_subscription unsubscribe
-      ].each do |method|
-        define_method(method) { |*args| new.send(method, *args) }
-      end
+      ].freeze
+      delegate(*API_METHODS, to: :new)
 
       # Ensure US/Canada country code
       def validate_number(number)
