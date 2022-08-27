@@ -102,7 +102,22 @@ module BPS
   private
 
     def client
-      @client ||= Aws::SNS::Client.new(region: 'us-east-1')
+      @client ||= Aws::SNS::Client.new(sns_attributes)
+    end
+
+    def sns_attributes
+      attributes = { region: 'us-east-1' }
+
+      unless BPS::Application.deployed?
+        attributes.merge!(
+          credentials: Aws::Credentials.new(
+            ENV['AWS_ACCESS_KEY'],
+            ENV['AWS_SECRET']
+          )
+        )
+      end
+
+      attributes
     end
 
     def opted_out?(number)
