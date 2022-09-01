@@ -1,0 +1,12 @@
+h2 = admin_header 'Import Logs'
+
+.table.striped
+  .table-row.bold
+    .table-cell ID
+    .table-cell Date
+    .table-cell View
+  - @import_logs.each do |import_log|
+    .table-row
+      .table-cell = import_log.id
+      .table-cell = import_log.created_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+      .table-cell = link_to(admin_import_log_path(import_log)) { FA::Icon.p('file-import', style: :duotone, fa: :fw) }

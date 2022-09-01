@@ -121,6 +121,9 @@ Rails.application.routes.draw do
     get    '/generic_payments',          to: 'generic_payments#index'
     get    '/generic_payments/new',      to: 'generic_payments#new'
     post   '/generic_payments',          to: 'generic_payments#create'
+
+    # Import Logs
+    resources :import_logs, only: %i[index show]
   end
 
   # Newsletter

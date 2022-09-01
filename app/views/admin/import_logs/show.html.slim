@@ -1,0 +1,9 @@
+h2 = admin_header 'Import Log'
+
+b> Imported:
+= @import_log.created_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+
+- if @import_log.proto.nil?
+  p.bold.red Proto log not available
+- else
+  = render 'user/import_results', import_proto: @import_log.decode
