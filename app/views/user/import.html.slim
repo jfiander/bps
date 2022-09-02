@@ -146,18 +146,11 @@ hr
   .center Any additional columns will be interpreted as educational completion dates.
   .center.bold Users who are not included in the import file (except current bridge officers) can be automatically locked.
 
-hr
-
-= form_tag import_path, multipart: true
-  = FA::Icon.p('file-csv', style: :duotone, title: 'CSV files only')
-  = file_field_tag :import_file, required: true
-  br
-  p For users not in import file:
-  = switch_box(nil, :lock_missing, 'lightblue-red', 'ignore lock-missing')
-  br
-  = spinner_button button_text: 'Upload', css: 'big'
-
 - if defined?(@import_proto)
+  hr
+
+  h2 Import Results
+
   - if @import_proto.empty?
     h3.green No changes were logged
   - else
@@ -172,9 +165,22 @@ hr
 
 hr
 
-p You can also:
+h2 Update Automatically from National
 
 #auto-update-buttons
-  = link_to(automatic_update_path, method: :post, class: 'big') { FA::Icon.p('cloud-download-alt', style: :duotone) + 'Auto-Update' }
-  = link_to(automatic_update_path(lock_missing: true), method: :post, class: 'big blue') { FA::Icon.p('cloud-check', style: :duotone) + 'Auto-Update and Lock' }
-  = link_to(automatic_update_dryrun_path, method: :post, class: 'big green') { FA::Icon.p('cloud-question', style: :duotone) + 'Dryrun Update' }
+  = link_to(automatic_update_path, method: :post, class: 'big') { FA::Icon.p('cloud-download-alt', style: :duotone) + 'Update' }
+  = link_to(automatic_update_path(lock_missing: true), method: :post, class: 'big blue') { FA::Icon.p('cloud-check', style: :duotone) + 'Update and Lock' }
+  = link_to(automatic_update_dryrun_path, method: :post, class: 'big green') { FA::Icon.p('cloud-question', style: :duotone) + 'Dryrun' }
+
+hr
+
+h2 Manual Upload from DB2000
+
+= form_tag import_path, multipart: true
+  = FA::Icon.p('file-csv', style: :duotone, title: 'CSV files only')
+  = file_field_tag :import_file, required: true
+  br
+  p For users not in import file:
+  = switch_box(nil, :lock_missing, 'lightblue-red', 'ignore lock-missing')
+  br
+  = spinner_button button_text: 'Upload', css: 'big'
