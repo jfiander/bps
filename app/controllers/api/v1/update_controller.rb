@@ -63,9 +63,8 @@ module Api
           fallback: "#{dry}User information has #{fallback}.",
           fields: [
             { title: 'By', value: by, short: true },
-            { title: 'Via', value: 'API', short: true },
-            { title: 'S3 Log Timestamp', value: @log_timestamp, short: true }
-          ] + live_results_fields
+            { title: 'Via', value: 'API', short: true }
+          ] + live_results_fields(dryrun: dryrun)
         ).notify!
 
         return if update_results == 'No changes' || type != :success
@@ -73,8 +72,8 @@ module Api
         BPS::SlackFile.new('Update Results', update_results).call
       end
 
-      def live_results_fields
-        return [] if @dryrun
+      def live_results_fields(dryrun: false)
+        return [] if dryrun
 
         [
           { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
