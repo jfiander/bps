@@ -54,6 +54,15 @@
     background-color: darken($green, 5%);
   }
 
+  a.big.blue {
+    color: $white;
+    background-color: $old-glory-blue-lighten-20;
+  }
+
+  a.big.blue:hover {
+    background-color: $old-glory-blue-lighten-10;
+  }
+
   /* Allow for cascading container color to links, and reasonable hover colors */
   .color-links {
     a { color: inherit; }

@@ -226,6 +226,12 @@ div#import-info {
   }
 }
 
+div#auto-update-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 div#instructors {
   div.table-cell {
     line-height: 2em;

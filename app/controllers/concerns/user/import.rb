@@ -27,7 +27,7 @@ class User
 
     def automatic_update
       updater = AutomaticUpdate::Run.new
-      @import_proto = updater.update
+      @import_proto = updater.update(lock: params[:lock_missing].present?)
       @log_timestamp = updater.log_timestamp
       @import_log_id = updater.import_log_id
       import_success

@@ -232,6 +232,15 @@
     background-color: $green;
   }
 
+  a.big.blue {
+    color: $dark-text;
+    background-color: $old-glory-blue;
+  }
+
+  a.big.blue:hover {
+    background-color: $old-glory-blue-lighten-20;
+  }
+
   input:not([type='file']), select, textarea { background-color: $dark-text; }
 
   div#new textarea.bulletted { background-color: $dark-background-blue-faded-10; }

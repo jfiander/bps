@@ -173,5 +173,8 @@ hr
 hr
 
 p You can also:
-p = link_to(automatic_update_path, method: :post, class: 'big') { FA::Icon.p('cloud-download-alt', style: :duotone) + 'Update Automatically from National' }
-p = link_to(automatic_update_dryrun_path, method: :post, class: 'big green') { FA::Icon.p('cloud-download-alt', style: :duotone) + 'Dryrun' }
+
+#auto-update-buttons
+  = link_to(automatic_update_path, method: :post, class: 'big') { FA::Icon.p('cloud-download-alt', style: :duotone) + 'Auto-Update' }
+  = link_to(automatic_update_path(lock_missing: true), method: :post, class: 'big blue') { FA::Icon.p('cloud-check', style: :duotone) + 'Auto-Update and Lock' }
+  = link_to(automatic_update_dryrun_path, method: :post, class: 'big green') { FA::Icon.p('cloud-question', style: :duotone) + 'Dryrun Update' }
