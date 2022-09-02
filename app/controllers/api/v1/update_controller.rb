@@ -11,6 +11,7 @@ module Api
         updater = AutomaticUpdate::Run.new
         @import_proto = updater.update
         @log_timestamp = updater.log_timestamp
+        @import_log_id = updater.import_log_id
         import_success(silent: silent, dryrun: dryrun)
       rescue StandardError => e
         import_failure(e, silent: silent, dryrun: dryrun)
@@ -62,14 +63,27 @@ module Api
           fallback: "#{dry}User information has #{fallback}.",
           fields: [
             { title: 'By', value: by, short: true },
-            { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
-            ({ title: 'Dryrun', value: 'true', short: true } if dryrun)
-          ].compact
+            { title: 'Via', value: 'API', short: true },
+            { title: 'S3 Log Timestamp', value: @log_timestamp, short: true }
+          ] + live_results_fields
         ).notify!
 
         return if update_results == 'No changes' || type != :success
 
         BPS::SlackFile.new('Update Results', update_results).call
+      end
+
+      def live_results_fields
+        return [] if @dryrun
+
+        [
+          { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
+          {
+            title: 'Import Log',
+            value: "<#{admin_import_log_url(id: @import_log_id)}|Import ##{@import_log_id}>",
+            short: true
+          }
+        ]
       end
 
       def update_results

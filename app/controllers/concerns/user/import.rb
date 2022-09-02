@@ -18,6 +18,7 @@ class User
         )
         @import_proto = importer.call
         @log_timestamp = importer.log_timestamp
+        @import_log_id = importer.import_log_id
         import_success
       rescue StandardError => e
         import_failure(e)
@@ -28,6 +29,7 @@ class User
       updater = AutomaticUpdate::Run.new
       @import_proto = updater.update
       @log_timestamp = updater.log_timestamp
+      @import_log_id = updater.import_log_id
       import_success
     rescue StandardError => e
       import_failure(e)
@@ -78,13 +80,26 @@ class User
         fallback: "User information has #{notification_fallback(type)}.",
         fields: [
           { title: 'By', value: current_user.full_name, short: true },
-          { title: 'S3 Log Timestamp', value: @log_timestamp, short: true }
-        ]
+          { title: 'Via', value: 'UI', short: true }
+        ] + live_results_fields
       ).notify!
 
       return if update_results == 'No changes' || type != :success
 
       BPS::SlackFile.new('Update Results', update_results).call
+    end
+
+    def live_results_fields
+      return [] if @dryrun
+
+      [
+        { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
+        {
+          title: 'Import Log',
+          value: "<#{admin_import_log_url(id: @import_log_id)}|Import ##{@import_log_id}>",
+          short: true
+        }
+      ]
     end
 
     def update_results

@@ -3,7 +3,7 @@
 module ImportUsers
   # Main API for user importing
   class Import
-    attr_reader :log_timestamp
+    attr_reader :log_timestamp, :import_log_id
 
     def initialize(path, lock: false)
       @path = path
@@ -17,7 +17,7 @@ module ImportUsers
       @parsed_csv = ImportUsers::ParseCSV.new(@path).call
       process_import
       File.unlink(@path) if File.exist?(@path)
-      ImportLog.create(proto: @proto.to_proto)
+      @import_log_id = ImportLog.create(proto: @proto.to_proto).id
       archive_proto
       @proto
     end
