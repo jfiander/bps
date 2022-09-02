@@ -63,10 +63,13 @@ module Api
           fields: [
             { title: 'By', value: by, short: true },
             { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
-            ({ title: 'Dryrun', value: 'true', short: true } if dryrun),
-            { title: 'Results', value: update_results, short: false }
+            ({ title: 'Dryrun', value: 'true', short: true } if dryrun)
           ].compact
         ).notify!
+
+        return if update_results == 'No changes' || type != :success
+
+        BPS::SlackFile.new('Update Results', update_results).call
       end
 
       def update_results

@@ -71,6 +71,11 @@ GOOGLE_AUTH_EXP: 1500000000000
 # Push Notifications
 PUSHOVER_APP_TOKEN: pushover_token
 
+# Slack API
+SLACK_BOT_USER_TOKEN: bot_user_token
+SLACK_CHANNEL_ID_NOTIFICATIONS: notifications_channel_id
+SLACK_CHANNEL_ID_TEST: test_channel_id
+
 # Slack Webhooks
 SLACK_URL_EDUCATION: https://hooks.slack.com/services/<webhook_path>
 SLACK_URL_EXCOM: https://hooks.slack.com/services/<webhook_path>

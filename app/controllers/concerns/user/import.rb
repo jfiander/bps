@@ -78,10 +78,13 @@ class User
         fallback: "User information has #{notification_fallback(type)}.",
         fields: [
           { title: 'By', value: current_user.full_name, short: true },
-          { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
-          { title: 'Results', value: update_results, short: false }
+          { title: 'S3 Log Timestamp', value: @log_timestamp, short: true }
         ]
       ).notify!
+
+      return if update_results == 'No changes' || type != :success
+
+      BPS::SlackFile.new('Update Results', update_results).call
     end
 
     def update_results

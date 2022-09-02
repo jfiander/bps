@@ -7,7 +7,6 @@ module AutomaticUpdate
   require 'automatic_update/seminar_data_request'
   require 'automatic_update/training_data_request'
   require 'automatic_update/boc_data_request'
-  require 'automatic_update/update_error'
 
   REQUESTS = %i[
     MemberDataRequest ClassDataRequest SeminarDataRequest
@@ -43,7 +42,6 @@ module AutomaticUpdate
       login
 
       REQUESTS.each do |name|
-        puts "\nDownloading #{name}..."
         req = AutomaticUpdate.const_get(name).new(@cookie_key, verbose: true)
         req.call
         req.download
@@ -99,7 +97,7 @@ module AutomaticUpdate
     def validate_combined_csv
       return if main_csv.headers.uniq == main_csv.headers
 
-      raise BugsnagError.call(
+      raise ErrorWithDetails.call(
         InvalidCSVHeadersError,
         'Invalid CSV headers',
         actual: main_csv.headers
@@ -116,15 +114,15 @@ module AutomaticUpdate
 
           new_row = normalize_row(row)
 
-          raise bugsnag_error(row, headers_count, headers) unless row.length == headers_count
+          raise error_with_details(row, headers_count, headers) unless row.length == headers_count
 
           f << new_row
         end
       end
     end
 
-    def bugsnag_error(row, headers_count, headers)
-      BugsnagError.call(
+    def error_with_details(row, headers_count, headers)
+      ErrorWithDetails.call(
         InvalidCSVHeadersError,
         'Unexpected column count',
         certificate: row['Certificate'],
@@ -158,7 +156,7 @@ module AutomaticUpdate
       row['Member Type'] == 'HR' # Honorary Member
     end
 
-    class InvalidCSVHeadersError < AutomaticUpdate::UpdateError
+    class InvalidCSVHeadersError < BPS::ErrorWithMetadata
       def bugsnag_meta_data
         {
           summary: {

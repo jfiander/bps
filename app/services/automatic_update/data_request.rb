@@ -1,30 +1,13 @@
 # frozen_string_literal: true
 
-require 'net/http'
-require 'net/https'
-
 require 'fileutils'
 
 module AutomaticUpdate
-  class DataRequest
-    require 'automatic_update/update_error'
-
-    FORM_CONTENT_TYPE = 'application/x-www-form-urlencoded; charset=utf-8'
-
+  class DataRequest < BPS::HTTPRequest
     def initialize(cookie_key = nil, verbose: false)
       @cookie_key = cookie_key
-      @verbose = verbose
       FileUtils.mkdir_p(Rails.root.join('tmp/automatic_update'))
-    end
-
-    def call
-      uri = URI(self.class::REQUEST_URL)
-
-      req = request(uri)
-      req.add_field('Content-Type', FORM_CONTENT_TYPE)
-      req.body = URI.encode_www_form(self.class::REQUEST_DATA)
-
-      submit(uri, req)
+      super(verbose: verbose)
     end
 
     def download
@@ -38,44 +21,12 @@ module AutomaticUpdate
 
   private
 
-    def client(uri)
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      http
-    end
-
-    def request(uri)
-      req = Net::HTTP::Post.new(uri)
+    def authorization(req)
       req.add_field('Cookie', "uspskey=#{@cookie_key}")
-      req
     end
 
-    def submit(uri, req)
-      print " [     ]  #{uri}\r\033[3C" if @verbose
-      result = client(uri).request(req)
-      print "#{result.code}\n" if @verbose
-
-      return result if result.code == '200'
-
-      BugsnagError.call(
-        DataRequestError,
-        'Response error received',
-        code: result.code, request: req, uri: uri, body: result.response.body
-      )
-    end
-
-    class DataRequestError < AutomaticUpdate::UpdateError
-      def bugsnag_meta_data
-        {
-          data_request: {
-            code: metadata[:code],
-            request: metadata[:request],
-            uri: metadata[:uri],
-            body: metadata[:body]
-          }
-        }
-      end
+    def before_submit
+      puts "\nDownloading #{self.class.name.demodulize}..."
     end
   end
 end
