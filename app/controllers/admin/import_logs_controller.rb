@@ -7,7 +7,7 @@ module Admin
     end
 
     def show
-      @import_log = ImportLog.find(params[:id])
+      @import_log = ImportLog.find_by(id: params[:id])
     end
   end
 end

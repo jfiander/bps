@@ -46,3 +46,4 @@ Dotenv.load unless BPS::Application.deployed?
 require 'redcarpet/render_strip'
 
 require_relative '../app/lib/proto/user_update_pb'
+require_relative '../app/lib/proto/proto_extensions'

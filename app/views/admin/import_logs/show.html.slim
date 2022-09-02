@@ -1,9 +1,16 @@
 h2 = admin_header 'Import Log'
 
-b> Imported:
-= @import_log.created_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+- unless @import_log.nil?
+  b> Imported:
+  = @import_log.created_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
 
-- if @import_log.proto.nil?
-  p.bold.red Proto log not available
+- if @import_log.nil?
+  h3.red Log not found
+  p This is probably due to a dryrun.
+- elsif @import_log.proto.nil?
+  h3.red Proto log not available
+  p This import predates generation of proto logs.
+- elsif @import_log.decode.empty?
+  h3.green No changes were logged
 - else
   = render 'user/import_results', import_proto: @import_log.decode
