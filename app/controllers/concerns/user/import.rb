@@ -103,9 +103,7 @@ class User
     end
 
     def update_results
-      return 'No changes' if @import_proto == BPS::Update::UserDataImport.new
-
-      @import_proto.to_json
+      @import_proto.empty? ? 'No changes' : @import_proto.to_json
     end
 
     def notification_title(type)
