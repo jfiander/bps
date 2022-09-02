@@ -158,14 +158,17 @@ hr
   = spinner_button button_text: 'Upload', css: 'big'
 
 - if defined?(@import_proto)
-  p = "Created #{@import_proto.created.count} new #{'user'.pluralize(@import_proto.created.count)}."
-  p = "Updated #{@import_proto.updated.count} existing #{'user'.pluralize(@import_proto.updated.count)}."
-  p = "Added #{@import_proto.completions.count} completion #{'date'.pluralize(@import_proto.completions.count)}."
-  p = "Set #{@import_proto.families.count} new #{'family'.pluralize(@import_proto.families.count)}."
-  - if @import_proto.locked
-    p = "Locked #{@import_proto.not_in_import.count} missing #{'user'.pluralize(@import_proto.not_in_import.count)}."
+  - if @import_proto.empty?
+    h3.green No changes were logged
+  - else
+    p = "Created #{@import_proto.created.count} new #{'user'.pluralize(@import_proto.created.count)}."
+    p = "Updated #{@import_proto.updated.count} existing #{'user'.pluralize(@import_proto.updated.count)}."
+    p = "Added #{@import_proto.completions.count} completion #{'date'.pluralize(@import_proto.completions.count)}."
+    p = "Set #{@import_proto.families.count} new #{'family'.pluralize(@import_proto.families.count)}."
+    - if @import_proto.locked
+      p = "Locked #{@import_proto.not_in_import.count} missing #{'user'.pluralize(@import_proto.not_in_import.count)}."
 
-  = render 'import_results', import_proto: @import_proto
+    = render 'import_results', import_proto: @import_proto
 
 hr
 
