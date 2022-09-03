@@ -27,7 +27,7 @@ module BPS
     end
 
     def channel_id
-      Rails.env.deployed? ? ENV['SLACK_CHANNEL_ID_NOTIFICATIONS'] : ENV['SLACK_CHANNEL_ID_TEST']
+      ENV[BPS::Application.deployed? ? 'SLACK_CHANNEL_ID_NOTIFICATIONS' : 'SLACK_CHANNEL_ID_TEST']
     end
 
     def authorization(req)
