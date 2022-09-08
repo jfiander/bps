@@ -292,6 +292,7 @@ Rails.application.routes.draw do
   # Import
   get     '/import',                  to: 'user#import',                  as: 'import_users'
   post    '/import',                  to: 'user#do_import'
+  get     '/import/automatic',        to: 'user#automatic_update',        as: 'apply_update' # Temporary route, until Slack action buttons
   post    '/import/automatic',        to: 'user#automatic_update',        as: 'automatic_update'
   post    '/import/automatic/dryrun', to: 'user#automatic_update_dryrun', as: 'automatic_update_dryrun'
 
