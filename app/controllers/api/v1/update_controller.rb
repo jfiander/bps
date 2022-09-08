@@ -58,13 +58,11 @@ module Api
         title = type == :success ? 'Complete' : 'Failed'
         fallback = type == :success ? 'successfully imported' : 'failed to import'
         dry = dryrun ? '[Dryrun] ' : ''
+
         SlackNotification.new(
           channel: :notifications, type: type, title: "#{dry}User Data Import #{title}",
           fallback: "#{dry}User information has #{fallback}.",
-          fields: [
-            { title: 'By', value: by, short: true },
-            { title: 'Via', value: 'API', short: true }
-          ] + live_results_fields(dryrun: dryrun)
+          fields: fields(by, dryrun, update_results, type)
         ).notify!
 
         return if update_results == 'No changes' || type != :success
@@ -72,14 +70,32 @@ module Api
         BPS::SlackFile.new('Update Results', update_results).call
       end
 
-      def live_results_fields(dryrun: false)
-        return [] if dryrun
+      def fields(by, dryrun, update_results, type)
+        f = [
+          { title: 'By', value: by, short: true },
+          { title: 'Via', value: 'API', short: true }
+        ]
+        f += live_results_fields unless dryrun
+        f += dryrun_fields if dryrun && update_results != 'No changes' && type == :success
+        f
+      end
 
+      def live_results_fields
         [
           { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
           {
             title: 'Import Log',
             value: "<#{admin_import_log_url(id: @import_log_id)}|Import ##{@import_log_id}>",
+            short: true
+          }
+        ]
+      end
+
+      def dryrun_fields
+        [
+          {
+            title: 'Apply Changes?',
+            value: "<#{automatic_update_url}|Apply>",
             short: true
           }
         ]
