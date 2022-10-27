@@ -23,12 +23,12 @@ h1 = admin_header('Override Registration Cost')
       .table-cell.bold.birmingham-blue
         = FA::Icon.p('dollar-sign', style: :duotone)
         = @registration.payment_amount
+        = link_to(pay_path(@registration.payment.token), target: :_blank) { FA::Icon.p('share-square', style: :duotone, css: 'green') }
     .table-row
       .table-cell.left-header = f.label :override_cost
       .table-cell.bold
         = FA::Icon.p('dollar-sign', style: :duotone)
         = f.number_field :override_cost, class: 'number', min: 0, placeholder: '0.00'
-        = link_to(pay_path(@registration.payment.token), target: :_blank) { FA::Icon.p('share-square', style: :duotone, css: 'green') }
     .table-row
       .table-cell.left-header = f.label :override_comment, 'Reason for override (optional)'
       .table-cell
