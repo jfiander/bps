@@ -346,6 +346,8 @@
     background-color: $dark-editor-background;
     border-color: $old-glory-blue;
 
+    div.braintree-methods--active { background-color: $dark-editor-background; }
+
     div#payment-description { color: $dark-red; }
 
     button#pay-button {

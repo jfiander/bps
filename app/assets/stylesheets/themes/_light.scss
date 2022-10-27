@@ -272,6 +272,8 @@
   div#payment-box {
     background-color: $background-lighten-5;
     border-color: $old-glory-blue;
+
+    div.braintree-methods--active { background-color: $background-lighten-5; }
   }
 
   div#payment-description { color: $old-glory-red; }
