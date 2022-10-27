@@ -1,4 +1,4 @@
 $(document).ready ->
   $('#pay-button').click ->
-    $(this).html 'Submitting...'
+    # $(this).html 'Submitting...'
   return
