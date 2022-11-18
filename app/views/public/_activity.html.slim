@@ -4,7 +4,7 @@ div#activity-feed
     - @activity_feed.each do |event|
       = link_to(event.path) do
         li.blue
-          .name.birmingham-blue = event.event_type.display_title
+          .name.birmingham-blue = event.summary.present? ? event.summary : event.event_type.display_title
           .date-time
             .date
               = FA::Icon.p('calendar-day', style: :duotone, fa: :fw)
