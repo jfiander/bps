@@ -1,12 +1,11 @@
 - name: Boating Course
   code: BC
-  exam:
 - name: Seamanship
-  code:
-    any:
-      - S
-      - BH
+  code: S
   exam_prefix: SE
+- name: Boat Handling
+  code: BH
+  exam_prefix: BH
 - name: Piloting
   code: P
   exam_prefix: PI
@@ -26,13 +25,22 @@
   code: EM
   exam_prefix: EM
 - name: Marine Communication Systems
-  code: CS
+  code:
+    any:
+      - CS
+      - MCS
   exam_prefix: CS
 - name: Marine Electrionic Systems
-  code: ES
+  code:
+    any:
+      - ES
+      - MES
   exam_prefix: ES
 - name: Electronic Navigation
-  code: NS
+  code:
+    any:
+      - NS
+      - MNS
   exam_prefix: NS
 - name: Marine Electrionics
   code: ME
@@ -45,9 +53,21 @@
     all:
       - IT
       - IA
-  exam_prefix:
 - name: Instructor Aids
   code: IA
+  exam_prefix: IA
+- name: Instructor Training
+  code: IT
+  exam_prefix: IT
+- name: Instructor Qualification
+  code: IQ
+  exam_prefix: IQ
+- name: Radar
+  code:
+    any:
+      - RA
+      - RA_COUR
+  exam_prefix: RA
 - name: Sail
   code: SA
   exam_prefix: SA

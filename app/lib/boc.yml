@@ -24,9 +24,23 @@
   code: PYROD
 - name: First Aid
   code: FAID
+- name: On-the-Water Power Boat Handling
+  code:
+    any:
+      - BPH
+      - OTWBPH
 - name: On-the-Water Navigation
-  code: NAV
+  code:
+    any:
+      - NAV
+      - OWTNAV
 - name: Advanced Navigation
-  code: ADN
+  code:
+    any:
+      - ADN
+      - OTWADN
 - name: Offshore Navigation
-  code: ONC
+  code:
+    any:
+      - ONC
+      - OTWONC

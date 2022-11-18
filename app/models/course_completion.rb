@@ -9,7 +9,7 @@ class CourseCompletion < ApplicationRecord
   default_scope { order('date ASC') }
 
   scope :by_user, -> { group_by(&:user) }
-  scope :ytd, -> { where('date > ?', Date.today.beginning_of_year) }
+  scope :ytd, -> { for_year(Date.today.year) }
   scope :with_users, -> { includes(user: User.position_associations) }
 
   def self.for_year(year)

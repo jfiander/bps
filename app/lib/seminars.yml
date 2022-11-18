@@ -32,6 +32,18 @@
       - BOC_ACN
       - BOC_ON
   yellow: true
+- name: Boat Handling - Rules
+  code: BHRULES
+- name: Boat Handling - Knots
+  code: BHKNOTS
+- name: Boat Handling - Anchoring
+  code: BHANCH
+- name: Boat Handling - Docking
+  code: BHDOCK
+- name: Boat Handling - Emergencies
+  code: BHEMER
+- name: Boat Handling - Confidence
+  code: BHBOAT
 - name: Advanced Power Boat Handling
   code: APBH
 - name: AIS Electronics for Boaters
@@ -55,6 +67,7 @@
     any:
       - EMEROB
       - EMER_W
+      - EMERW
 - name: Fuel and Boating
   code: FUEL
 - name: Using GPS
@@ -101,3 +114,5 @@
   code: OCCNAV
 - name: Thunderstorms & Severe Weather Forecasting
   code: TSWFOR
+- name: Weather (webinar)
+  code: WEW
