@@ -19,7 +19,7 @@ on:
 jobs:
   rubocop:
     runs-on: ubuntu-20.04
-    environment: bpsd9-build
+    environment: bpsd9
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
         run: bundle exec rubocop
   rspec:
     runs-on: ubuntu-20.04
-    environment: bpsd9-build
+    environment: bpsd9
     env:
       ACTIVITY_FEED_LENGTH: ${{ secrets.ACTIVITY_FEED_LENGTH }}
       ASSET_ENVIRONMENT: ${{ secrets.ASSET_ENVIRONMENT }}
@@ -141,7 +141,7 @@ jobs:
     needs: [rubocop, rspec]
     if: needs.rspec.outputs.branch == 'master' || needs.rspec.outputs.branch == 'staging'
     runs-on: ubuntu-20.04
-    environment: bpsd9-build
+    environment: bpsd9
     steps:
       - name: Deploying Branch
         run: echo "${{ needs.rspec.outputs.branch }}"
