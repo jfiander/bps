@@ -38,6 +38,7 @@ import:
   - Birthday
   - Spouse
   - Fax Phone
+  - Last MM
 
 ignore:
   - DA
