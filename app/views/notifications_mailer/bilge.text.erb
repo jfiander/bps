@@ -1,0 +1,11 @@
+<%= render 'application/mailers/auto' %>
+
+Bilge Chatter Posted
+
+
+The following issue of the Bilge Chatter has been posted.
+
+
+Issue: <%= @year %> <%= BilgeFile.issues[@month] %>
+
+Link: <%= bilge_url(year: @year, month: @month) %>

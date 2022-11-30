@@ -9,6 +9,10 @@ class NotificationsMailerPreview < ApplicationMailerPreview
     NotificationsMailer.float_plan(mock_float_plan)
   end
 
+  def bilge
+    NotificationsMailer.bilge(['editor@bpsd9.org', 'membership@bpsd9.org'], year: 2022, month: 11)
+  end
+
 private
 
   def bridge_office

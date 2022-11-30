@@ -5,6 +5,8 @@ module Members
     def upload_bilge
       verb = update_file(:bilge)
 
+      notify_for_bilge
+
       redirect_to(
         newsletter_path,
         success: "Bilge Chatter #{@issue} #{verb} successfully."
@@ -39,6 +41,17 @@ module Members
         year: bilge_params[:issue]['date(1i)'],
         month: bilge_params[:issue]['date(2i)'],
         file: bilge_params[:file]
+      )
+    end
+
+    def notify_for_bilge
+      editor = Committee.where(department: :secretary, name: 'Newsletter Editor')
+      membership = Committee.where(department: :administrative, name: 'Membership')
+
+      NotificationsMailer.bilge(
+        editor.or(membership).map { |c| c.user.email }.compact,
+        year: bilge_params[:issue]['date(1i)'],
+        month: bilge_params[:issue]['date(2i)']
       )
     end
   end

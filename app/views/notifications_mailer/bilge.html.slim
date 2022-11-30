@@ -1,0 +1,11 @@
+= render 'application/mailers/auto'
+
+h1.birmingham Bilge Chatter Posted
+
+p The following issue of the Bilge Chatter has been posted.
+
+h2 Issue
+p #{@year} #{BilgeFile.issues[@month]}
+
+h2 Link
+p = bilge_url(year: @year, month: @month)

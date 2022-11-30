@@ -63,4 +63,25 @@ RSpec.describe NotificationsMailer, type: :mailer do
       end
     end
   end
+
+  describe '#bilge' do
+    let(:mail) do
+      described_class.bilge(['editor@bpsd9.org', 'membership@bpsd9.org'], year: 2022, month: 11)
+    end
+
+    it 'renders the headers' do
+      expect(mail).to contain_mail_headers(
+        subject: 'Bilge Chatter Posted',
+        to: ['editor@bpsd9.org', 'membership@bpsd9.org'],
+        from: ['support@bpsd9.org']
+      )
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to contain_and_match(
+        'The following issue of the Bilge Chatter has been posted.',
+        '2022 Nov'
+      )
+    end
+  end
 end

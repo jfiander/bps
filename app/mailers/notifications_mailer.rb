@@ -17,6 +17,15 @@ class NotificationsMailer < ApplicationMailer
     mail(to: @to_list, subject: 'Float Plan Submitted')
   end
 
+  def bilge(emails, year:, month:)
+    @to_list = emails.empty? ? ['dev@bpsd9.org'] : emails
+    @year = year
+    @month = month
+
+    mail(to: @to_list, subject: 'Bilge Chatter Posted')
+    bilge_slack_notification
+  end
+
 private
 
   def user_descriptor(user)
@@ -32,6 +41,18 @@ private
         'Previous holder' => user_descriptor(@previous),
         'New holder' => user_descriptor(@bridge_office.user),
         'Updated by' => user_descriptor(@by)
+      }
+    ).notify!
+  end
+
+  def bilge_slack_notification
+    SlackNotification.new(
+      channel: :notifications, type: :info, title: 'Bilge Chatter Posted',
+      fallback: 'A Bilge Chatter issue has been posted.',
+      fields: {
+        'Year' => @year,
+        'Issue' => BilgeFile.issues[@month],
+        'Link' => bilge_url(year: @year, month: @month)
       }
     ).notify!
   end
