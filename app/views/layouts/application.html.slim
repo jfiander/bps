@@ -48,9 +48,9 @@ html lang='en'
           - if current_user&.show_admin_menu? && admin_menu.values.any?
             #nested-navigation = render 'application/navigation/admin/nested', admin_links: admin_menu
           #flashes
-            #success class=(success ? '' : 'hide') = render 'application/flash', icon: 'check-circle', contents: success
-            #notice class=(notice ? '' : 'hide') = render 'application/flash', icon: 'info-circle', contents: notice
-            #alert class=(alert ? '' : 'hide') = render 'application/flash', icon: 'exclamation-circle', contents: alert
+            #success class=(success ? '' : 'hide') = render 'application/flash', icon: 'check-circle', contents: success, name: 'success'
+            #notice class=(notice ? '' : 'hide') = render 'application/flash', icon: 'info-circle', contents: notice, name: 'info'
+            #alert class=(alert ? '' : 'hide') = render 'application/flash', icon: 'exclamation-circle', contents: alert, name: 'error'
             #error class=(error ? '' : 'hide') = render 'application/flash', icon: nil, contents: formatted_error_flash(error)
         #content-main = yield
       footer
