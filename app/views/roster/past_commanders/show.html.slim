@@ -6,13 +6,13 @@ h1 Past Commanders
   .table-row.header
     .table-cell Year
     .table-cell Name
-    .table-cell Deceased?
+    .table-cell.center Deceased?
     .table-cell
   - @collection.each do |commander|
     .table-row
         .table-cell = commander.year.strftime('%Y')
         .table-cell = commander.user&.simple_name || commander.name
-        .table-cell = FA::Icon.p('dot-circle', style: :duotone, css: 'red') if commander.deceased
+        .table-cell.center = FA::Icon.p('dot-circle', style: :duotone, css: 'red') if commander.deceased
         .table-cell
           = link_to(edit_roster_past_commanders_path(id: commander.id)) { FA::Icon.p('edit', style: :duotone) }
           = link_to(roster_past_commanders_path(id: commander.id), class: 'red', method: :delete, data: { confirm: 'Are you sure you want to remove this Past Commander?' }) { FA::Icon.p('minus-square', style: :duotone) }
