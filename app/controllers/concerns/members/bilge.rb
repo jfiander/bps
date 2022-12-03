@@ -4,12 +4,13 @@ module Members
   module Bilge
     def upload_bilge
       verb = update_file(:bilge)
+      issue = "#{bilge_params[:issue]['date(1i)']}/#{bilge_params[:issue]['date(2i)']}"
 
       notify_for_bilge
 
       redirect_to(
         newsletter_path,
-        success: "Bilge Chatter #{@issue} #{verb} successfully."
+        success: "Bilge Chatter #{issue} #{verb} successfully."
       )
     end
 
