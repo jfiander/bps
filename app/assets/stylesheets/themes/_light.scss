@@ -285,19 +285,22 @@
     div.table-row:nth-child(even) div.table-cell.user div.actions {
       border-top: thin solid darken($light-gray, 10%);
     }
+  }
 
-    div.table-row.locked div.table-cell {
+  div#users div.table-row.locked,
+  div.table div.table-row.red {
+    div.table-cell {
       background-color: $old-glory-red-lighten-50;
       color: $gray;
 
       a { color: $old-glory-red; }
     }
 
-    div.table-row.locked:nth-child(odd) div.table-cell {
+    &:nth-child(odd) div.table-cell {
       background-color: $old-glory-red-lighten-50;
     }
 
-    div.table-row.locked:nth-child(even) div.table-cell {
+    &:nth-child(even) div.table-cell {
       background-color: $old-glory-red-lighten-45;
     }
   }
