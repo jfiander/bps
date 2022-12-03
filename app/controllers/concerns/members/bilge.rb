@@ -54,7 +54,7 @@ module Members
         editor.or(membership).or(web).map { |c| c.user.email }.compact,
         year: bilge_params[:issue]['date(1i)'],
         month: bilge_params[:issue]['date(2i)']
-      )
+      ).deliver
     end
   end
 end
