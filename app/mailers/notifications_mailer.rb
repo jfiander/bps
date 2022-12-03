@@ -19,8 +19,8 @@ class NotificationsMailer < ApplicationMailer
 
   def bilge(emails, year:, month:)
     @to_list = emails.empty? ? ['dev@bpsd9.org'] : emails
-    @year = year
-    @month = month
+    @year = year.to_i
+    @month = month.to_i
 
     mail(to: @to_list, subject: 'Bilge Chatter Posted')
     bilge_slack_notification
