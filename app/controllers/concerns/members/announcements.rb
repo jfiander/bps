@@ -11,6 +11,24 @@ module Members
       )
     end
 
+    def hide_announcement
+      AnnouncementFile.find(announcement_params[:id]).hide!
+
+      redirect_to(
+        newsletter_path,
+        success: 'Announcement hidden successfully.'
+      )
+    end
+
+    def unhide_announcement
+      AnnouncementFile.find(announcement_params[:id]).unhide!
+
+      redirect_to(
+        newsletter_path,
+        success: 'Announcement unhidden successfully.'
+      )
+    end
+
     def remove_announcement
       AnnouncementFile.find_by(
         id: announcement_params[:id]

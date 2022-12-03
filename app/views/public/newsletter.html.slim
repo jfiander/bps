@@ -10,13 +10,14 @@ h3 Click on a button below to view or download that issue.
 
 = render('bilge_table')
 
-hr
+- if @announcements.any?
+  hr
 
-h2 Announcements
+  h2 Announcements
 
-h3 Click on a button below to view or download an announcement.
+  h3 Click on a button below to view or download an announcement.
 
-= render('announcements_table')
+  = render('announcements_table')
 
 hr
 = link_to('https://get.adobe.com/reader/', target: :_blank) { image_tag(BPS::S3.new(:static).link('acrobat_reader.png'), alt: 'Get Adobe Acrobat Reader') }

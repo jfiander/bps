@@ -17,6 +17,7 @@ module Public
 
     def load_announcements
       @announcements = AnnouncementFile.ordered
+      @announcements = @announcements.visible unless current_user&.permitted?(:newsletter)
     end
 
     def announcement_not_found
