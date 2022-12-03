@@ -47,9 +47,10 @@ module Members
     def notify_for_bilge
       editor = Committee.where(department: :secretary, name: 'Newsletter Editor')
       membership = Committee.where(department: :administrative, name: 'Membership')
+      web = Committee.where(department: :secretary, name: 'Webmaster')
 
       NotificationsMailer.bilge(
-        editor.or(membership).map { |c| c.user.email }.compact,
+        editor.or(membership).or(web).map { |c| c.user.email }.compact,
         year: bilge_params[:issue]['date(1i)'],
         month: bilge_params[:issue]['date(2i)']
       )
