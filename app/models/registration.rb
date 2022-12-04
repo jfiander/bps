@@ -51,7 +51,7 @@ class Registration < ApplicationRecord
   # Otherwise, a different notification will be sent, and the regular one will
   # be triggered by BraintreeController once the registration is paid for.
   def confirm_to_registrant
-    if event.advance_payment && !paid?
+    if event.advance_payment && !reload.paid?
       RegistrationMailer.advance_payment(self).deliver
     else
       RegistrationMailer.confirm(self).deliver
