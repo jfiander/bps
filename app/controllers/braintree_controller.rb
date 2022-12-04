@@ -99,28 +99,24 @@ private
     transaction = @result.transaction
     @payment.paid!(transaction.id)
     ReceiptMailer.paid(@payment).deliver
-    send_registration_email(@payment.parent)
-    send_application_email(@payment.parent)
+    send_parent_email(@payment.parent)
     send_receipt_email(transaction)
     slack_notification(@payment)
+  end
+
+  def send_parent_email(parent)
+    case parent
+    when Registration
+      parent.confirm_to_registrant if parent.event.advance_payment
+    when MemberApplication
+      MemberApplicationMailer.new_application(parent).deliver
+    end
   end
 
   def send_receipt_email(transaction)
     return unless transaction.customer_details.email.present?
 
     ReceiptMailer.receipt(@payment, transaction).deliver
-  end
-
-  def send_registration_email(registration)
-    return unless registration.is_a?(Registration) && registration.event.advance_payment
-
-    registration.confirm_to_registrant
-  end
-
-  def send_application_email(member_application)
-    return unless member_application.is_a?(MemberApplication)
-
-    MemberApplicationMailer.new_application(member_application).deliver
   end
 
   def flash_error_message
