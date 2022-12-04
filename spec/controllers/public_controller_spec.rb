@@ -56,7 +56,7 @@ RSpec.describe PublicController, type: :controller do
         post :register, params: params(@event)
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(flash[:alert]).to eql('You are already registered for this course.')
+        expect(flash[:alert]).to eql('You are already registered.')
       end
     end
 

@@ -68,7 +68,7 @@ private
 
   def register_js
     if @registration.persisted?
-      flash[:alert] = 'You are already registered for this course.'
+      flash[:alert] = 'You are already registered.'
       render status: :unprocessable_entity
     elsif @registration.save
       flash[:success] = 'You have successfully registered!'
@@ -89,7 +89,7 @@ private
   end
 
   def registration_existed
-    flash[:alert] = 'You are already registered for this course.'
+    flash[:alert] = 'You are already registered.'
     redirect_to send("show_#{register_event_type}_path", id: @event_id)
   end
 
