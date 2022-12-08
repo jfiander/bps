@@ -38,7 +38,6 @@ import:
   - Birthday
   - Spouse
   - Fax Phone
-  - Last MM
 
 ignore:
   - DA
@@ -50,6 +49,7 @@ ignore:
   - Spo Sex
   - Wedding
   - Nickname
+  - Last MM
 
   - Seascout
   - Affiliation
