@@ -1,0 +1,10 @@
+#merit-marks {
+  img { width: 100px; }
+
+  div.table-row {
+    &.gb_emeritus, &.life {
+      background-color: $highlight-green;
+      font-weight: bold;
+    }
+  }
+}

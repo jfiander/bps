@@ -1,0 +1,33 @@
+h1 Members Earning a Merit Mark in #{@year}
+
+#merit-marks.table.striped
+  .table-row.bold
+    .table-cell Member
+    .table-cell.center Merit Marks
+    .table-cell.center Insignia
+    .table-cell
+  - @recent_mm_users.each do |user|
+    - if user.mm == 50
+      - status = :gb_emeritus
+    - elsif user.mm == 25
+      - status = :life
+    - elsif user.mm == 5
+      - status = :senior
+    - else
+      - status = nil
+
+    .table-row class=(:highlight if status)
+      .table-cell = user.full_name
+      .table-cell.center = user.mm
+      .table-cell.center
+        - if user.life
+          = image_tag(BPS::S3.new(:static).link('insignia/PNG/membership/tr/life.png'), class: 'membership')
+        - elsif user.senior
+          = image_tag(BPS::S3.new(:static).link('insignia/PNG/membership/tr/senior.png'), class: 'membership')
+      .table-cell.center.bold
+        - if status == :gb_emeritus
+          | New GB Member Emeritus
+        - elsif status == :life
+          | New Life Member
+        - elsif status == :senior
+          | New Senior Member

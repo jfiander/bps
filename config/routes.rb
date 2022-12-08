@@ -237,6 +237,9 @@ Rails.application.routes.draw do
   get    '/birthdays(/:month)',        to: 'birthdays#birthdays',  as: 'birthdays'
   post   '/birthdays(/:month)',        to: 'birthdays#birthdays'
 
+  # Merit Marks
+  get    '/merit_marks', to: 'merit_marks#index'
+
   [:course, :seminar, :event].each do |event_type|
     get     "/#{event_type}s",               to: "events/#{event_type}s#schedule"
     get     "/#{event_type}s/catalog",       to: "events/#{event_type}s#catalog",       as: "#{event_type}_catalog" unless event_type == :event

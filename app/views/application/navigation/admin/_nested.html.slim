@@ -31,6 +31,12 @@ ul.desktop
               = FA::Icon.p('clipboard-list', style: :duotone, fa: :fw) + 'Roster'
               .arrow = FA::Icon.p('chevron-right', style: :regular, fa: :fw)
             ul = admin_links[:roster]
+        - if show_link?(:users)
+          li.menu onclick=""
+            a.menu-header
+              = FA::Icon.p('table-list', style: :duotone, fa: :fw) + 'Lists'
+              .arrow = FA::Icon.p('chevron-right', style: :regular, fa: :fw)
+            ul = admin_links[:lists]
         = admin_links[:users_bottom]
 
   - if show_link?(:otw)

@@ -53,8 +53,8 @@ private
     {
       current: admin_current?, files: [:page], users_top: [:users],
       review: %i[users float roster excom], upload: %i[users roster],
-      roster: %i[users roster], users_bottom: [:users], education: [:education],
-      otw: [:education], completions: [:education],
+      roster: %i[users roster], lists: %i[users], users_bottom: [:users],
+      education: [:education], otw: [:education], completions: [:education],
       admin: [:admin, { strict: true }]
     }
   end
