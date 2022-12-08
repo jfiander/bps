@@ -15,6 +15,7 @@ module AutomaticUpdate
 
   class Run
     OUTPUT_PATH = Rails.root.join('tmp/automatic_update/ReadyForImport.csv')
+    CACHE_DOWNLOADS_PATH = Rails.root.join('tmp/automatic_update/cache_downloads')
 
     attr_reader :log_timestamp, :import_log_id
 
@@ -23,7 +24,7 @@ module AutomaticUpdate
     end
 
     def update(download: true, import: true, lock: false)
-      download_all if download
+      download_all if download && !File.exist?(OUTPUT_PATH)
       combine_csv_data
       validate_combined_csv
       write_output_file
@@ -33,7 +34,7 @@ module AutomaticUpdate
       proto = importer.call
       @log_timestamp = importer.log_timestamp
       @import_log_id = importer.import_log_id
-      cleanup_files
+      cleanup_files unless File.exist?(CACHE_DOWNLOADS_PATH)
       proto
     end
 
