@@ -16,7 +16,7 @@ RSpec.describe ImportUsers, type: :service do
     end
 
     describe 'creating' do
-      it 'correctlies add new users' do
+      it 'correctly adds new users' do
         expect(User.find_by(certificate: 'E123456')).to be_blank
 
         ImportUsers::Import.new(import).call
@@ -73,7 +73,7 @@ RSpec.describe ImportUsers, type: :service do
       end
     end
 
-    it 'correctlies lock users' do
+    it 'correctly locks users' do
       user = User.find_by(certificate: 'E001234')
       expect(user).to be_present
       expect(user.locked?).to be(false)
@@ -84,7 +84,7 @@ RSpec.describe ImportUsers, type: :service do
       expect(user.locked?).to be(true)
     end
 
-    it 'correctlies not lock users' do
+    it 'correctly does not lock users' do
       user = User.find_by(certificate: 'E001234')
       expect(user).to be_present
       expect(user.locked?).to be(false)

@@ -3,21 +3,21 @@
 require 'rails_helper'
 
 RSpec.describe MemberApplicant, type: :model do
-  context 'with only a primary applicant' do
-    before do
-      @application = FactoryBot.build(:member_application)
-      @applicant = FactoryBot.build(
-        :member_applicant,
-        member_application: @application,
-        primary: true,
-        first_name: '',
-        last_name: ''
-      )
-    end
+  let(:application) { FactoryBot.build(:member_application) }
+  let!(:primary) do
+    FactoryBot.build(
+      :member_applicant,
+      member_application: application,
+      primary: true,
+      first_name: '',
+      last_name: ''
+    )
+  end
 
+  context 'with only a primary applicant' do
     it 'requires names, full address, and a phone number' do
-      @applicant.validate
-      expect(@applicant.errors.messages).to eql(
+      primary.validate
+      expect(primary.errors.messages).to eql(
         first_name: ["can't be blank"],
         last_name: ["can't be blank"],
         address_1: ["can't be blank"],
@@ -30,20 +30,26 @@ RSpec.describe MemberApplicant, type: :model do
   end
 
   context 'with an additional member' do
-    before do
-      @application = FactoryBot.build(:member_application)
-      @applicant = FactoryBot.build(:member_applicant, member_application: @application, first_name: '', last_name: '')
+    let(:additional) do
+      FactoryBot.build(
+        :member_applicant,
+        member_application: application,
+        primary: false,
+        first_name: '',
+        last_name: ''
+      )
     end
 
     it 'requires names' do
-      @applicant.validate
-      expect(@applicant.errors.messages).to eql(first_name: ["can't be blank"], last_name: ["can't be blank"])
+      additional.validate
+      expect(additional.errors.messages).to eql(first_name: ["can't be blank"], last_name: ["can't be blank"])
     end
 
     it "refuses an application with a member's email address" do
-      FactoryBot.create(:user, email: @applicant.email)
-      @applicant.validate
-      expect(@applicant.errors.messages).to eql(
+      FactoryBot.create(:user, email: additional.email)
+
+      additional.validate
+      expect(additional.errors.messages).to eql(
         first_name: ["can't be blank"],
         last_name: ["can't be blank"],
         email: ['is already taken']

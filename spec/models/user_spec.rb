@@ -4,14 +4,13 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:blank_photo) { 'https://static.bpsd9.org/no_profile.png' }
+  let(:user) { FactoryBot.create(:user) }
 
   context 'with a new user' do
-    before do
-      @user = FactoryBot.build(:user)
-    end
+    let(:user) { FactoryBot.build(:user) }
 
     it 'defaults to the blank profile photo' do
-      expect(@user.photo).to eql(blank_photo)
+      expect(user.photo).to eql(blank_photo)
     end
   end
 
@@ -167,7 +166,7 @@ RSpec.describe User, type: :model do
             end
           end
 
-          context 'with vs' do
+          context 'with vc' do
             %w[vc pvc].each do |r|
               let(:rank) { r }
 
@@ -341,42 +340,40 @@ RSpec.describe User, type: :model do
   end
 
   describe 'inviting' do
-    before do
-      @user = FactoryBot.create(:user)
-      @placeholder_user = FactoryBot.create(:user, :placeholder_email)
-    end
+    let(:user) { FactoryBot.create(:user) }
+    let(:placeholder_user) { FactoryBot.create(:user, :placeholder_email) }
 
     it 'is invitable by default' do
-      expect(@user.invitable?).to be(true)
+      expect(user.invitable?).to be(true)
     end
 
     it 'does not have accepted an invitation' do
-      @user.update(invitation_accepted_at: Time.zone.now)
-      expect(@user.invitable?).to be(false)
+      user.update(invitation_accepted_at: Time.zone.now)
+      expect(user.invitable?).to be(false)
     end
 
     it 'is not logged in' do
-      @user.update(current_sign_in_at: Time.zone.now)
-      expect(@user.invitable?).to be(false)
+      user.update(current_sign_in_at: Time.zone.now)
+      expect(user.invitable?).to be(false)
     end
 
     it 'is not locked' do
-      @user.lock
-      expect(@user.invitable?).to be(false)
+      user.lock
+      expect(user.invitable?).to be(false)
     end
 
     it 'does not have a sign in count' do
-      @user.update(sign_in_count: 1)
-      expect(@user.invitable?).to be(false)
+      user.update(sign_in_count: 1)
+      expect(user.invitable?).to be(false)
     end
 
     it 'does not have a placeholder email' do
-      expect(@placeholder_user.invitable?).to be(false)
+      expect(placeholder_user.invitable?).to be(false)
     end
 
     it 'has received but not accepted an invitation' do
-      @user.update(invitation_sent_at: Time.zone.now)
-      expect(@user.invited?).to be(true)
+      user.update(invitation_sent_at: Time.zone.now)
+      expect(user.invited?).to be(true)
     end
   end
 
@@ -559,31 +556,32 @@ RSpec.describe User, type: :model do
   end
 
   describe 'scopes' do
+    let!(:user_inv) { FactoryBot.create(:user) }
+    let!(:user_pe) { FactoryBot.create(:user, email: 'nobody-asdfhjkl@bpsd9.org') }
+    let!(:user_inst) { FactoryBot.create(:user, sign_in_count: 1, id_expr: Time.zone.now + 1.year) }
+    let!(:user_vse) { FactoryBot.create(:user, sign_in_count: 23) }
+
     before do
-      @user_inv = FactoryBot.create(:user)
-      @user_pe = FactoryBot.create(:user, email: 'nobody-asdfhjkl@bpsd9.org')
-      @user_inst = FactoryBot.create(:user, sign_in_count: 1, id_expr: Time.zone.now + 1.year)
-      @user_vse = FactoryBot.create(:user, sign_in_count: 23)
-      @user_vse.course_completions << FactoryBot.create(
-        :course_completion, user: @user_vse, course_key: 'VSC_01', date: Time.zone.now - 1.month
+      user_vse.course_completions << FactoryBot.create(
+        :course_completion, user: user_vse, course_key: 'VSC_01', date: Time.zone.now - 1.month
       )
     end
 
     it 'returns the list of invitable users' do
-      expect(described_class.invitable.to_a).to eql([@user_inv])
+      expect(described_class.invitable.to_a).to eql([user_inv])
     end
 
     it 'returns the list of valid instructor users' do
-      expect(described_class.valid_instructors.to_a).to eql([@user_inst])
+      expect(described_class.valid_instructors.to_a).to eql([user_inst])
     end
 
     it 'returns the list of vessel examiner users' do
-      expect(described_class.vessel_examiners.to_a).to eql([@user_vse])
+      expect(described_class.vessel_examiners.to_a).to eql([user_vse])
     end
   end
 
   describe 'address' do
-    user = FactoryBot.create(:user, address_1: '100 N Capitol Ave', city: 'Lansing', state: 'MI', zip: '48933')
+    let(:user) { FactoryBot.create(:user, address_1: '100 N Capitol Ave', city: 'Lansing', state: 'MI', zip: '48933') }
 
     it 'returns a correct address array' do
       expect(user.mailing_address).to eql([user.full_name, user.address_1, "#{user.city} #{user.state} #{user.zip}"])
@@ -599,147 +597,123 @@ RSpec.describe User, type: :model do
   end
 
   describe 'profile photo' do
-    before do
-      @user = FactoryBot.create(:user)
-      @photo = File.new(test_image(500, 750))
-      @key = 'profile_photos/0/original/blank.jpg'
-    end
+    let(:user) { FactoryBot.create(:user) }
+    let(:photo) { File.new(test_image(500, 750)) }
 
     it 'returns the default photo if not present' do
-      expect(@user.photo).to eql(described_class.no_photo)
+      expect(user.photo).to eql(described_class.no_photo)
     end
 
     it 'requires a file path' do
-      expect { @user.assign_photo }.to raise_error(ArgumentError, 'missing keyword: :local_path')
+      expect { user.assign_photo }.to raise_error(ArgumentError, 'missing keyword: :local_path')
 
-      expect { @user.assign_photo(local_path: @photo.path) }.not_to raise_error
+      expect { user.assign_photo(local_path: photo.path) }.not_to raise_error
     end
 
     it 'has a photo after attaching' do
-      @user.assign_photo(local_path: @photo.path)
+      user.assign_photo(local_path: photo.path)
 
-      expect(@user.photo).to match(
-        %r{https://files\.development\.bpsd9\.org/profile_photos/#{@user.id}/medium/test_image\.jpg\?}
+      expect(user.photo).to match(
+        %r{https://files\.development\.bpsd9\.org/profile_photos/#{user.id}/medium/test_image\.jpg\?}
       )
     end
   end
 
   describe 'dues' do
-    before do
-      @parent = FactoryBot.create(:user)
-    end
-
     it 'returns the correct single member amount' do
-      expect(@parent.dues).to be(89)
+      expect(user.dues).to be(89)
     end
 
     it 'returns the correct discounted amount' do
-      expect(@parent.discounted_amount).to eq(86.75)
+      expect(user.discounted_amount).to eq(86.75)
     end
 
     context 'with family' do
-      before do
-        @child = FactoryBot.create(:user, parent: @parent)
-      end
+      let!(:child) { FactoryBot.create(:user, parent: user) }
 
       it 'returns the correct family amount' do
-        expect(@parent.dues).to eq(134)
+        expect(user.dues).to eq(134)
       end
 
       it 'returns the parent_id hash if a parent is assigned' do
-        expect(@child.dues).to eql(user_id: @parent.id)
+        expect(child.dues).to eql(user_id: user.id)
       end
 
       describe 'payable?' do
         it 'returns true for a parent' do
-          expect(@parent.payable?).to be(true)
+          expect(user.payable?).to be(true)
         end
 
         it 'returns false for a child' do
-          expect(@child.payable?).to be(false)
+          expect(child.payable?).to be(false)
         end
 
         it 'returns true for a recently-paid member' do
-          @parent.dues_paid!
-          expect(@parent.payable?).to be(true)
+          user.dues_paid!
+          expect(user.payable?).to be(true)
         end
       end
     end
   end
 
   describe 'dues_due' do
-    before do
-      @parent = FactoryBot.create(:user)
-      @child = FactoryBot.create(:user, parent: @parent)
-    end
+    let(:child) { FactoryBot.create(:user, parent: user) }
 
     it 'returns false with if not the head of a family' do
-      expect(@child.dues_due?).to be(false)
+      expect(child.dues_due?).to be(false)
     end
 
     it 'returns false with dues paid within 11 months' do
-      @parent.update(dues_last_paid_at: 3.months.ago)
-      expect(@parent.dues_due?).to be(false)
+      user.update(dues_last_paid_at: 3.months.ago)
+      expect(user.dues_due?).to be(false)
     end
 
     it 'returns true with dues paid over 11 months ago' do
-      @parent.update(dues_last_paid_at: 11.months.ago)
-      expect(@parent.dues_due?).to be(true)
+      user.update(dues_last_paid_at: 11.months.ago)
+      expect(user.dues_due?).to be(true)
     end
   end
 
   describe 'valid_instructor?' do
-    before do
-      @user = FactoryBot.create(:user)
-    end
-
     it 'returns false for a nil id_expr' do
-      expect(@user.valid_instructor?).to be(false)
+      expect(user.valid_instructor?).to be(false)
     end
 
     it 'returns false for a past id_expr' do
-      @user.update(id_expr: Time.zone.now - 1.month)
-      expect(@user.valid_instructor?).to be(false)
+      user.update(id_expr: Time.zone.now - 1.month)
+      expect(user.valid_instructor?).to be(false)
     end
 
     it 'returns true for a future id_expr' do
-      @user.update(id_expr: Time.zone.now + 1.month)
-      expect(@user.valid_instructor?).to be(true)
+      user.update(id_expr: Time.zone.now + 1.month)
+      expect(user.valid_instructor?).to be(true)
     end
   end
 
   describe 'vessel_examiner?' do
-    before do
-      @user = FactoryBot.create(:user)
-    end
-
     it 'returns false without VSC training' do
-      expect(@user.vessel_examiner?).to be(false)
+      expect(user.vessel_examiner?).to be(false)
     end
 
     it 'returns true with VSC training' do
-      FactoryBot.create(:course_completion, user: @user, course_key: 'VSC_01', date: Time.zone.today)
-      expect(@user.vessel_examiner?).to be(true)
+      FactoryBot.create(:course_completion, user: user, course_key: 'VSC_01', date: Time.zone.today)
+      expect(user.vessel_examiner?).to be(true)
     end
   end
 
   describe 'cpr_aed?' do
-    before do
-      @user = FactoryBot.create(:user)
-    end
-
     it 'returns false without the flag set' do
-      expect(@user.cpr_aed?).to be(false)
+      expect(user.cpr_aed?).to be(false)
     end
 
     it 'returns false with a past expiration date' do
-      @user.update(cpr_aed_expires_at: Time.zone.now - 1.day)
-      expect(@user.cpr_aed?).to be(false)
+      user.update(cpr_aed_expires_at: Time.zone.now - 1.day)
+      expect(user.cpr_aed?).to be(false)
     end
 
     it 'returns true with a future expiration date' do
-      @user.update(cpr_aed_expires_at: Time.zone.now + 1.day)
-      expect(@user.cpr_aed?).to be(true)
+      user.update(cpr_aed_expires_at: Time.zone.now + 1.day)
+      expect(user.cpr_aed?).to be(true)
     end
   end
 
@@ -750,7 +724,6 @@ RSpec.describe User, type: :model do
   end
 
   describe 'api access' do
-    let(:user) { FactoryBot.create(:user) }
     let(:token) { user.create_token }
 
     describe '#token_exists?' do

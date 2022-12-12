@@ -22,7 +22,7 @@ RSpec.describe BPS::PDF::Roster, type: :lib do
       expect { described_class.landscape(include_blank: true) }.not_to raise_error
     end
 
-    it 'successfullies generate a detailed roster' do
+    it 'successfullies generate a detailed roster', slow: true do
       today = Time.zone.today.strftime('%Y-%m-%d')
       FactoryBot.create(:user, grade: 'SN', ed_ach: '2018-01-01', life: '2017-03-05', mm: 35)
       FactoryBot.create(:user, grade: 'SN', ed_ach: '2002-01-01', life: '2001-03-05', mm: 50)

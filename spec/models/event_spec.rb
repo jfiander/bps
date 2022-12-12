@@ -395,7 +395,7 @@ RSpec.describe Event, type: :model, slow: true do
     end
 
     describe 'registration' do
-      it 'correctlies register a user' do
+      it 'correctly registers a user' do
         user = FactoryBot.create(:user)
         event = FactoryBot.create(:event)
 

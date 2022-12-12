@@ -26,48 +26,44 @@ RSpec.describe BPS::S3, type: :lib do
   end
 
   describe 'behaviors' do
-    before do
-      @bps_s3 = described_class.new(:files)
-    end
+    let(:bps_s3) { described_class.new(:files) }
 
     it 'detects files' do
-      expect(@bps_s3.has?('test-key.abc')).to be(true)
+      expect(bps_s3.has?('test-key.abc')).to be(true)
     end
 
     it 'generates a correct link' do
-      expect(@bps_s3.link('test-key.abc')).to match(%r{\Ahttps://files.development.bpsd9.org/test-key.abc\?[^ ]*?})
+      expect(bps_s3.link('test-key.abc')).to match(%r{\Ahttps://files.development.bpsd9.org/test-key.abc\?[^ ]*?})
     end
 
     it 'lists the contents of the bucket' do
-      expect(@bps_s3.list).to be_a(Aws::Resources::Collection)
+      expect(bps_s3.list).to be_a(Aws::Resources::Collection)
     end
 
     it 'gets a file from the bucket' do
-      expect(@bps_s3.object('something.abc')).to be_a(Aws::S3::Object)
+      expect(bps_s3.object('something.abc')).to be_a(Aws::S3::Object)
     end
 
     it 'downloads a file from the bucket' do
-      expect(@bps_s3.download('something.abc')).to eql('something goes here')
+      expect(bps_s3.download('something.abc')).to eql('something goes here')
     end
 
     it 'uploads a file to the bucket' do
-      expect(@bps_s3.upload(file: File.new('tmp/run/something.abc', 'w+'), key: 'something.abc')).to be(true)
+      expect(bps_s3.upload(file: File.new('tmp/run/something.abc', 'w+'), key: 'something.abc')).to be(true)
     end
 
     it 'moves a file in the bucket' do
-      expect { @bps_s3.move('something.abc', 'new.abc') }.not_to raise_error
+      expect { bps_s3.move('something.abc', 'new.abc') }.not_to raise_error
     end
 
     it 'removes a file to the bucket' do
-      expect { @bps_s3.remove_object('something.abc') }.not_to raise_error
+      expect { bps_s3.remove_object('something.abc') }.not_to raise_error
     end
   end
 
   describe 'CloudFront subdomains' do
-    before do
-      @files_bucket = described_class.new(:files)
-      @static_bucket = described_class.new(:static)
-    end
+    let(:files_bucket) { described_class.new(:files) }
+    let(:static_bucket) { described_class.new(:static) }
 
     context 'when in development' do
       before do
@@ -75,11 +71,11 @@ RSpec.describe BPS::S3, type: :lib do
       end
 
       it 'generates the correct subdomain' do
-        expect(@files_bucket.send(:cf_subdomain)).to eql('files.development')
+        expect(files_bucket.send(:cf_subdomain)).to eql('files.development')
       end
 
       it 'generates the correct static subdomain' do
-        expect(@static_bucket.send(:cf_subdomain)).to eql('static')
+        expect(static_bucket.send(:cf_subdomain)).to eql('static')
       end
     end
 
@@ -89,11 +85,11 @@ RSpec.describe BPS::S3, type: :lib do
       end
 
       it 'generates the correct subdomain' do
-        expect(@files_bucket.send(:cf_subdomain)).to eql('files.staging')
+        expect(files_bucket.send(:cf_subdomain)).to eql('files.staging')
       end
 
       it 'generates the correct static subdomain' do
-        expect(@static_bucket.send(:cf_subdomain)).to eql('static')
+        expect(static_bucket.send(:cf_subdomain)).to eql('static')
       end
     end
 
@@ -103,11 +99,11 @@ RSpec.describe BPS::S3, type: :lib do
       end
 
       it 'generates the correct subdomain' do
-        expect(@files_bucket.send(:cf_subdomain)).to eql('files')
+        expect(files_bucket.send(:cf_subdomain)).to eql('files')
       end
 
       it 'generates the correct static subdomain' do
-        expect(@static_bucket.send(:cf_subdomain)).to eql('static')
+        expect(static_bucket.send(:cf_subdomain)).to eql('static')
       end
     end
   end

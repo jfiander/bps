@@ -3,19 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe Roster::AwardRecipient, type: :model do
+  let(:user) { FactoryBot.create(:user, first_name: 'Jack', last_name: 'Frost') }
+
   describe 'validation' do
     context 'with a user' do
-      before do
-        @user = FactoryBot.create(:user)
-      end
-
       it 'is valid without a name' do
-        ar = FactoryBot.build(:roster_award_recipient, name: nil, user: @user)
+        ar = FactoryBot.build(:roster_award_recipient, name: nil, user: user)
         expect(ar.valid?).to be(true)
       end
 
       it 'is valid with a name' do
-        ar = FactoryBot.build(:roster_award_recipient, name: 'John Doe', user: @user)
+        ar = FactoryBot.build(:roster_award_recipient, name: 'John Doe', user: user)
         expect(ar.valid?).to be(true)
       end
     end
@@ -34,44 +32,38 @@ RSpec.describe Roster::AwardRecipient, type: :model do
   end
 
   describe 'scopes' do
-    before do
-      @ar1 = FactoryBot.create(:roster_award_recipient, name: 'John Doe', user_id: nil, year: '2015-01-01')
-      @ar2 = FactoryBot.create(:roster_award_recipient, name: 'John Doe', user_id: nil, year: '2014-01-01')
-      @ar3 = FactoryBot.create(:roster_award_recipient, name: 'John Doe', user_id: nil, year: '2013-01-01')
-    end
+    let!(:ar1) { FactoryBot.create(:roster_award_recipient, name: 'John Doe', user_id: nil, year: '2015-01-01') }
+    let!(:ar2) { FactoryBot.create(:roster_award_recipient, name: 'John Doe', user_id: nil, year: '2014-01-01') }
+    let!(:ar3) { FactoryBot.create(:roster_award_recipient, name: 'John Doe', user_id: nil, year: '2013-01-01') }
 
     describe 'current' do
       it 'returns only the latest from each award' do
-        expect(described_class.current.to_a).to eql([@ar1])
+        expect(described_class.current.to_a).to eql([ar1])
       end
     end
 
     describe 'past' do
       it 'returns all except the latest from each award in chronological order' do
-        expect(described_class.past.to_a).to eql([@ar3, @ar2])
+        expect(described_class.past.to_a).to eql([ar3, ar2])
       end
     end
   end
 
   describe 'display_name' do
     context 'with a user' do
-      before do
-        @user = FactoryBot.create(:user, first_name: 'Jack', last_name: 'Frost')
-      end
-
       it "returns the user's name without a separate name" do
-        ar = FactoryBot.create(:roster_award_recipient, name: nil, user: @user)
+        ar = FactoryBot.create(:roster_award_recipient, name: nil, user: user)
         expect(ar.display_name).to eql('Jack Frost')
       end
 
       it "returns the user's name with a separate name" do
-        ar = FactoryBot.create(:roster_award_recipient, name: 'John Doe', user: @user)
+        ar = FactoryBot.create(:roster_award_recipient, name: 'John Doe', user: user)
         expect(ar.display_name).to eql('Jack Frost')
       end
 
       it 'returns the combined name if an additional_user is present' do
         additional = FactoryBot.create(:user, first_name: 'Jane', last_name: 'Doe')
-        ar = FactoryBot.create(:roster_award_recipient, name: nil, user: @user, additional_user: additional)
+        ar = FactoryBot.create(:roster_award_recipient, name: nil, user: user, additional_user: additional)
         expect(ar.display_name).to eql('Jack Frost and Jane Doe')
       end
     end

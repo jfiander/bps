@@ -3,19 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe Roster::PastCommander, type: :model do
+  let(:user) { FactoryBot.create(:user, first_name: 'Jack', last_name: 'Frost') }
+
   describe 'validation' do
     context 'with a user' do
-      before do
-        @user = FactoryBot.create(:user)
-      end
-
       it 'is valid without a name' do
-        pc = FactoryBot.build(:roster_past_commander, name: nil, user: @user)
+        pc = FactoryBot.build(:roster_past_commander, name: nil, user: user)
         expect(pc.valid?).to be(true)
       end
 
       it 'is valid with a name' do
-        pc = FactoryBot.build(:roster_past_commander, name: 'John Doe', user: @user)
+        pc = FactoryBot.build(:roster_past_commander, name: 'John Doe', user: user)
         expect(pc.valid?).to be(true)
       end
     end
@@ -35,17 +33,13 @@ RSpec.describe Roster::PastCommander, type: :model do
 
   describe 'display_name' do
     context 'with a user' do
-      before do
-        @user = FactoryBot.create(:user, first_name: 'Jack', last_name: 'Frost')
-      end
-
       it "returns the user's name without a separate name" do
-        pc = FactoryBot.build(:roster_past_commander, name: nil, user: @user)
+        pc = FactoryBot.build(:roster_past_commander, name: nil, user: user)
         expect(pc.display_name).to eql('Jack Frost')
       end
 
       it "returns the user's name with a separate name" do
-        pc = FactoryBot.build(:roster_past_commander, name: 'John Doe', user: @user)
+        pc = FactoryBot.build(:roster_past_commander, name: 'John Doe', user: user)
         expect(pc.display_name).to eql('Jack Frost')
       end
     end

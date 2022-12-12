@@ -3,10 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe HeaderImage, type: :model do
+  let(:demo_image) { File.new(test_image(1500, 500)) }
+
   describe 'pick' do
     before do
-      FactoryBot.create_list(:header_image, 5, file: File.new(test_image(1500, 500)))
-      @pick = FactoryBot.create(:header_image, file: File.new(test_image(1500, 500)))
+      FactoryBot.create_list(:header_image, 5, file: demo_image)
+      @pick = FactoryBot.create(:header_image, file: demo_image)
       @picks = []
     end
 
@@ -41,7 +43,7 @@ RSpec.describe HeaderImage, type: :model do
     end
 
     it 'accepts if correctly sized' do
-      header = FactoryBot.build(:header_image, file: File.new(test_image(1500, 500)))
+      header = FactoryBot.build(:header_image, file: demo_image)
       expect(header.validate).to be(true)
       expect(header.errors.messages).to be_blank
     end
@@ -50,7 +52,7 @@ RSpec.describe HeaderImage, type: :model do
   describe 'dimensions' do
     let(:header) do
       FactoryBot.create(
-        :header_image, file: File.new(test_image(1500, 500)), width: 1500, height: 500
+        :header_image, file: demo_image, width: 1500, height: 500
       )
     end
 

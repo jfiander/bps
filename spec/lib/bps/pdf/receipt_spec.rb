@@ -3,13 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe BPS::PDF::Receipt, type: :lib do
-  before do
-    generic_seo_and_ao
-    @user = FactoryBot.create(:user)
-  end
+  let(:user) { FactoryBot.create(:user) }
+
+  before { generic_seo_and_ao }
 
   it 'successfullies generate a receipt for a user registration' do
-    user_reg = FactoryBot.create(:registration, user: @user)
+    user_reg = FactoryBot.create(:registration, user: user)
     user_reg.payment.paid!('1234567890')
     user_reg.payment.update(cost_type: 'Member')
     expect { user_reg.payment.receipt! }.not_to raise_error
@@ -28,7 +27,7 @@ RSpec.describe BPS::PDF::Receipt, type: :lib do
   end
 
   it 'successfullies generate a receipt for annual dues' do
-    payment = FactoryBot.create(:payment, parent: @user)
+    payment = FactoryBot.create(:payment, parent: user)
     expect { payment.receipt! }.not_to raise_error
   end
 end

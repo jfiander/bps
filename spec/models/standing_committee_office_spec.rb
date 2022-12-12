@@ -42,15 +42,15 @@ RSpec.describe StandingCommitteeOffice, type: :model do
 
   describe 'display details' do
     context 'with the executive committee' do
-      it 'alwayses return 1 year remaining' do
+      it 'always returns 1 year remaining' do
         expect(executive.years_remaining).to be(1)
       end
 
-      it 'alwayses return term year 1' do
+      it 'always returns term year 1' do
         expect(executive.term_year).to be(1)
       end
 
-      it 'alwayses return a blank term fraction' do
+      it 'always returns a blank term fraction' do
         expect(executive.term_fraction).to eql('')
       end
     end
