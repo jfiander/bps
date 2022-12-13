@@ -104,7 +104,7 @@ group :development, :test do
   gem 'fuubar',                   '~> 2.3.2'
   gem 'parallel_tests',           '~> 3.8.1'
   gem 'rails-controller-testing', '~> 1.0.4'
-  gem 'rspec-rails',              '~> 3.7.1'
+  gem 'rspec-rails',              '~> 5.1.2'
   gem 'simplecov',                '~> 0.15.1'
 
   # Rubocop
