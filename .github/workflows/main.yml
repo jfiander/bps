@@ -22,9 +22,9 @@ jobs:
     environment: bpsd9
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.97.0
+        uses: ruby/setup-ruby@v1.127.0
         with:
           bundler-cache: true
       - name: Run Rubocop
@@ -105,9 +105,9 @@ jobs:
       branch: ${{ steps.extract_branch.outputs.branch }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.97.0
+        uses: ruby/setup-ruby@v1.127.0
         with:
           bundler-cache: true
       - name: Setup MySQL
@@ -135,7 +135,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       - name: Get Current Branch
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
         id: extract_branch
   deploy:
     needs: [rubocop, rspec]
@@ -149,17 +149,17 @@ jobs:
         run: |
           if [[ "${{ needs.rspec.outputs.branch }}" == "master" ]]; then
             echo "Deploying master to Production"
-            echo "##[set-output name=deploy_env;]$(echo 'production')"
+            echo "deploy_env=production" >> $GITHUB_OUTPUT
           elif [[ "${{ needs.rspec.outputs.branch }}" == "staging" ]]; then
             echo "Deploying staging to Staging"
-            echo "##[set-output name=deploy_env;]$(echo 'staging')"
+            echo "deploy_env=staging" >> $GITHUB_OUTPUT
           else
             echo "Not an auto-deployable branch"
             exit 1
           fi
         id: deploy_environment
       - name: Deploy
-        uses: garygrossgarten/github-action-ssh@v0.6.3
+        uses: garygrossgarten/github-action-ssh@v0.7.0
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
