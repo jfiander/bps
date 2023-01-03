@@ -9,7 +9,7 @@ cover:
     Public Service: "We provide basic and advanced boating education to the general public and to our members. Another public service activity is our Vessel Safety Check, in which trained examiners will, at the request of the boat owner, check a boat for required equipment and award a Coast Guard-recognized Vessel Safety Check compliance decal to boats that pass the inspection. To arrange for a vessel safety check, contact <u>vsc@bpsd9.org</u>. Birmingham Squadron and other squadrons provide chart update information to National Oceanic and Atmospheric Administration (NOAA) as part of the Cooperative Charting Program. For information on current public education, vessel safety checks and other activities, check out our web site at <u>www.bpsd9.org</u>."
     Education: "Each year, Birmingham Squadron offers a broad range of boating classes ranging from basic skills, to subjects such as engine maintenance, weather, sail, and cruise planning, right up to celestial navigation. Details and class schedules may be found on the Squadron website at <u>www.bpsd9.org</u> . All instructors are USPS-certified; America's Boating Course instructors are dually certified by USPS and DNR."
     Social Activities: "Birmingham Squadron members participate in regular social events throughout the year. These include summer boating rendezvous, mainly in the waters around Lake St. Clair, and large and small get-togethers where we share boating and other experiences. Information on individual events is posted monthly on the Birmingham Squadron website at <u>www.bpsd9.org</u> ."
-    Meetings: "Meet us at monthly meetings held on the 2nd Tuesday of each month at <b>Kerby's Koney Island at 5407 Crooks Rd, Troy, MI</b> beginning at 1900, with dinner off the menu and camaraderie beginning at 1830. In addition to a short business meeting, we enjoy a presentation on important and interesting boating topics by outside speakers. Meeting information is on the web site at <u>www.bpsd9.org</u>."
+    Meetings: "Meet us at monthly meetings held on the 2nd Tuesday of each month, with dinner off the menu and camaraderie beforehand. In addition to a short business meeting, we often enjoy a presentation on important and interesting boating topics by outside speakers. Meeting information is on the website at <u>www.bpsd9.org</u>."
 flags:
   ensign: "The USPS ensign features a red canton with 13 white stars around a fouled anchor. The body of the flag contains 13 vertical blue and white stripes. The USPS ensign, which may be flown in U.S. waters in place of the U.S. national ensign, was first flown in 1915."
   burgee: "Our squadron burgee, first flown in 1964, is a pennant design with a white seahorse and white stars on a field of blue. The seahorse represents the original home of the squadron, The Open Hunt Club of Bloomfield Hills. The three stars represent the three neighboring Power Squadrons: Detroit, Grosse Pointe and Mt. Clemens, that provided a majority of the charter members and invaluable assistance. The blue field represents the Great Lakes and Michigan waters. The burgee was designed by the daughter of Richard W. Shirk, who became our 5th Commander."
@@ -56,7 +56,7 @@ benefits:
         url: http://www.usps.org/index.php/departments/14000/14900/476-caskey-embroidery
       - text: CVS Photo business Account Program
         url: http://www.usps.org/index.php/departments/14000/14900/squadron-district-benefits/542-cvs
-      - text: HelmsBriscoe 
+      - text: HelmsBriscoe
         url: http://www.usps.org/index.php/departments/14000/14900/530-helmsbriscoe
       - text: Life Lock
         url: http://www.usps.org/index.php/departments/14000/14900/495-lifelock
@@ -75,7 +75,7 @@ benefits:
         url: http://www.usps.org/index.php/departments/14000/14900/533-heartsine
       - text: Life Line Screening
         url: http://www.usps.org/index.php/departments/14000/14900/485-life-line-screening
-      - text: USPS Prescription Savings Card 
+      - text: USPS Prescription Savings Card
         url: http://www.usps.org/index.php/departments/14000/14900/499-rx-benefits
     Insurance Benefits:
       - text: BoatUS
@@ -105,7 +105,7 @@ benefits:
         url: http://www.usps.org/index.php/departments/14000/14900/493-maritech-industries
       - text: McGraw Hill
         url: http://www.usps.org/index.php/departments/14000/14900/483-mcgraw-hill
-      - text: Pyrocool 
+      - text: Pyrocool
         url: http://www.usps.org/index.php/departments/14000/14900/510-pyrocool
       - text: Sea Tow
         url: http://www.usps.org/index.php/departments/14000/14900/490-sea-tow
@@ -197,7 +197,7 @@ roster_info:
       - Merit Marks
       - Member Level
       - Fax
-      - Cell Phone 
+      - Cell Phone
     right:
       - Boat Name
       - Home Port
