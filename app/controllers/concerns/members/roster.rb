@@ -48,6 +48,7 @@ module Members
       redirect_to update_roster_path
     end
 
+    # Always returns the most recent already-existing roster filename
     def roster_filename
       return @roster_filename if @roster_filename
 
@@ -91,9 +92,11 @@ module Members
       pdf_file.write(pdf)
       pdf_file.rewind
 
-      pdf_file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'r+')
-      BPS::S3.new(:files).upload(file: pdf_file, key: "roster/#{roster_filename}")
-      BPS::Invalidation.submit(:files, "roster/#{roster_filename}")
+      year = Date.today.strftime('%Y').to_i
+      new_roster_filename = "Birmingham_Power_Squadron_-_#{year}_Roster.pdf"
+
+      BPS::S3.new(:files).upload(file: pdf_file, key: "roster/#{new_roster_filename}")
+      BPS::Invalidation.submit(:files, "roster/#{new_roster_filename}")
     end
   end
 end
