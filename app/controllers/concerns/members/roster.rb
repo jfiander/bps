@@ -95,7 +95,11 @@ module Members
       year = Date.today.strftime('%Y').to_i
       new_roster_filename = "Birmingham_Power_Squadron_-_#{year}_Roster.pdf"
 
-      BPS::S3.new(:files).upload(file: pdf_file, key: "roster/#{new_roster_filename}")
+      BPS::S3.new(:files).upload(
+        file: pdf_file,
+        key: "roster/#{new_roster_filename}",
+        content_type: 'application/pdf'
+      )
       BPS::Invalidation.submit(:files, "roster/#{new_roster_filename}")
     end
   end
