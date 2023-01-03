@@ -50,6 +50,8 @@ class User
       end
 
       def mm(u)
+        return unless u.mm&.positive?
+
         postfix(u.mm, 'Merit Mark'.pluralize(u.mm))
       end
 
