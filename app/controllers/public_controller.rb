@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PublicController < ApplicationController
+  include Application::RateLimit
   include Public::Bilge
   include Public::Announcements
   include Public::Donations
@@ -11,6 +12,8 @@ class PublicController < ApplicationController
   before_action :find_event,              only: %i[register]
   before_action :find_registration,       only: %i[register]
   before_action :block_registration,      only: %i[register], if: :block_registration?
+
+  rate_limit!(:public_registrations, only: :register)
 
   title!('The Bilge Chatter', only: :newsletter)
   title!("Ship's Store", only: :store)
