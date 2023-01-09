@@ -63,7 +63,7 @@ gem 'sanitize_email',      '~> 1.2'
 
 # View Management
 gem 'fa_rails',            '~> 0.1.28'
-gem 'inline_svg',          '~> 1.3.0'
+gem 'inline_svg',          '~> 1.7.2'
 gem 'nested_form_fields',  '~> 0.8.2'
 gem 'redcarpet',           '~> 3.5.1'
 gem 'slim',                '~> 3.0.6'
