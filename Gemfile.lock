@@ -176,7 +176,7 @@ GEM
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     geocoder (1.6.7)
-    globalid (1.0.0)
+    globalid (1.0.1)
       activesupport (>= 5.0)
     google-api-client (0.23.9)
       addressable (~> 2.5, >= 2.5.1)
