@@ -19,6 +19,28 @@ class Registration < ApplicationRecord
   after_create :notify_on_create
   after_create :confirm_to_registrant
 
+  # Registrations can be created by a publicly-accessible interface.
+  # Executing these queries will completely remove all traces of those from the database.
+  #
+  def self.obliterate_sql(start_at, end_at = nil)
+    start_at = start_at.strftime('%Y-%m-%d %H:%M:%S')
+    end_at = "AND created_at < \"#{end_at.strftime('%Y-%m-%d %H:%M:%S')}\"" unless end_at.nil?
+
+    <<~SQL
+      DELETE FROM registrations WHERE created_at > "#{start_at}" #{end_at};
+      DELETE FROM payments WHERE parent_type = 'Registration' AND created_at > "#{start_at}" #{end_at};
+      DELETE FROM versions WHERE item_type = 'Registration' AND created_at > "#{start_at}" #{end_at};
+      DELETE FROM versions WHERE item_type = 'Payment' AND created_at > "#{start_at}" #{end_at};
+    SQL
+  end
+
+  def self.obliterate!(start_at, end_at = nil)
+    sql = obliterate_sql(start_at, end_at)
+    queries = sql.split("\n")
+
+    queries.each { |q| ApplicationRecord.connection.execute(q) }
+  end
+
   def payment_amount
     convert_email_to_user && save
     return override_cost if override_cost.present?

@@ -77,6 +77,65 @@ RSpec.describe Registration, type: :model do
     end
   end
 
+  describe '.obliterate_sql' do
+    let(:event) { FactoryBot.create(:event, cost: 5) }
+    let!(:registration) { FactoryBot.create(:registration, :with_email, event: event) }
+
+    let(:start_at) { registration.created_at - 5.minutes }
+    let(:end_at) { registration.created_at + 10.minutes }
+    let(:start_at_str) { start_at.strftime('%Y-%m-%d %H:%M:%S') }
+    let(:end_at_str) { end_at.strftime('%Y-%m-%d %H:%M:%S') }
+
+    it 'generates the correct sql' do
+      expect(described_class.obliterate_sql(start_at)).to eq(
+        <<~SQL
+          DELETE FROM registrations WHERE created_at > "#{start_at_str}" ;
+          DELETE FROM payments WHERE parent_type = 'Registration' AND created_at > "#{start_at_str}" ;
+          DELETE FROM versions WHERE item_type = 'Registration' AND created_at > "#{start_at_str}" ;
+          DELETE FROM versions WHERE item_type = 'Payment' AND created_at > "#{start_at_str}" ;
+        SQL
+      )
+    end
+
+    it 'generates the correct sql with an end time' do
+      expect(described_class.obliterate_sql(start_at, end_at)).to eq(
+        <<~SQL
+          DELETE FROM registrations WHERE created_at > "#{start_at_str}" AND created_at < "#{end_at_str}";
+          DELETE FROM payments WHERE parent_type = 'Registration' AND created_at > "#{start_at_str}" AND created_at < "#{end_at_str}";
+          DELETE FROM versions WHERE item_type = 'Registration' AND created_at > "#{start_at_str}" AND created_at < "#{end_at_str}";
+          DELETE FROM versions WHERE item_type = 'Payment' AND created_at > "#{start_at_str}" AND created_at < "#{end_at_str}";
+        SQL
+      )
+    end
+  end
+
+  describe '.obliterate!' do
+    let(:event) { FactoryBot.create(:event, cost: 5) }
+    let!(:registration) { FactoryBot.create(:registration, :with_email, event: event) }
+
+    it 'removes the base records and associated records from the database', :aggregate_failures do
+      described_class.obliterate!(Time.now - 5.minutes)
+
+      versions_count = ApplicationRecord.connection.execute('SELECT COUNT(*) FROM versions').first.first
+
+      expect(versions_count).to eq(7)
+      expect(Payment.count).to eq(0)
+      expect(described_class.count).to eq(0)
+    end
+
+    it 'does not remove the record with just #destroy' do
+      expect { registration.destroy }.not_to(
+        change { described_class.unscoped.count }
+      )
+    end
+
+    it 'does not remove associated records with just #destroy' do
+      expect { registration.destroy }.not_to(
+        change { Payment.unscoped.count }
+      )
+    end
+  end
+
   it 'converts a public registration user email to user' do
     reg = FactoryBot.create(:registration, email: user.email, event: event)
     expect(reg.user).to eql(user)
