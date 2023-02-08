@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FlagsController < ApplicationController
-  before_action :bucket, only: %i[flags national]
+  before_action :bucket, only: %i[flags national signals]
 
   title!('Flags')
 
@@ -36,6 +36,10 @@ class FlagsController < ApplicationController
     respond_to do |format|
       format.svg { render inline: svg }
     end
+  end
+
+  def signals
+    render(:signals, layout: 'application')
   end
 
 private
