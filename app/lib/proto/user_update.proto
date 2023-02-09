@@ -5,6 +5,7 @@ import "google/protobuf/timestamp.proto";
 
 message UserDataImport {
   repeated User created = 1;
+  repeated UserUpdate new = 7;
   repeated UserUpdate updated = 2;
   repeated UserCompletion completions = 3;
   repeated UserFamily families = 4;

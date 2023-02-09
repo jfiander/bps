@@ -9,6 +9,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("user_update.proto", :syntax => :proto3) do
     add_message "b_p_s.update.UserDataImport" do
       repeated :created, :message, 1, "b_p_s.update.User"
+      repeated :new, :message, 7, "b_p_s.update.UserUpdate"
       repeated :updated, :message, 2, "b_p_s.update.UserUpdate"
       repeated :completions, :message, 3, "b_p_s.update.UserCompletion"
       repeated :families, :message, 4, "b_p_s.update.UserFamily"

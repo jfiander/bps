@@ -6,7 +6,7 @@ module ImportUsers
     def initialize(user, row)
       @user = user
       @row = row
-      @completions = []
+      @completions = {}
     end
 
     def call
@@ -21,13 +21,8 @@ module ImportUsers
       return unless (date = ImportUsers::CleanDate.new(date, key: key).call)
       return if exists?(key, date)
 
-      @completions << create_completion(key, date)
-    end
-
-    def create_completion(key, date)
-      CourseCompletion.create!(
-        user: @user, course_key: key, date: date
-      )
+      @completions[@row['certificate']] ||= {}
+      @completions[@row['certificate']][key] = date
     end
 
     def ignored_columns

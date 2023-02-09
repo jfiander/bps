@@ -16,14 +16,13 @@ module ImportUsers
   private
 
     def new_user
-      [User.create!(ImportUsers::Hash.new(@row).new_user), :created]
+      [nil, ImportUsers::Hash.new(@row).new_user]
     end
 
     def update_user
       @user.assign_attributes(ImportUsers::Hash.new(@row).update_user)
       unless @user.changed.blank?
         changes = @user.changes
-        @user.save!
       end
       [@user, changes]
     end

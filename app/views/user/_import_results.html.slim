@@ -1,16 +1,23 @@
 #import-results
-  - if import_proto.created.any?
+  - if import_proto.new.any?
     h3 Created
     .table.striped
       .table-row.bold
-        .table-cell ID
         .table-cell Certificate
         .table-cell Name
-      - import_proto.created.each do |user|
+      - import_proto.new.each do |user_update|
         .table-row
-          .table-cell = user.id
-          .table-cell = user.certificate
-          .table-cell = user.name
+          .table-cell = user_update.user.certificate
+          .table-cell = user_update.user.name
+          .table-cell.no-pad
+            .table.striped
+              .table-row.bold
+                .table-cell Field
+                .table-cell.green Value
+              - user_update.changes.each do |change|
+                .table-row
+                  .table-cell = change.field
+                  .table-cell.green = change.to
 
   - if import_proto.updated.any?
     h3 Updated

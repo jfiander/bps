@@ -154,7 +154,7 @@ hr
   - if @import_proto.empty?
     h3.green No changes were logged
   - else
-    p = "Created #{@import_proto.created.count} new #{'user'.pluralize(@import_proto.created.count)}."
+    p = "Created #{@import_proto.new.count} new #{'user'.pluralize(@import_proto.new.count)}."
     p = "Updated #{@import_proto.updated.count} existing #{'user'.pluralize(@import_proto.updated.count)}."
     p = "Added #{@import_proto.completions.count} completion #{'date'.pluralize(@import_proto.completions.count)}."
     p = "Set #{@import_proto.families.count} new #{'family'.pluralize(@import_proto.families.count)}."

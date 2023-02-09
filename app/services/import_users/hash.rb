@@ -18,8 +18,7 @@ module ImportUsers
         certificate: @row['Certificate'],
         first_name: @row['First Name'],
         last_name: @row['Last Name'],
-        email: import_email,
-        password: SecureRandom.hex(16)
+        email: import_email
       }.merge(update_user)
     end
 

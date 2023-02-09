@@ -51,20 +51,19 @@ module ImportUsers
     end
 
     def record_results(user, changes)
-      @certificates << user.certificate
+      @certificates << user.certificate unless user.nil?
       return if changes.blank?
-      return proto_updated(user, changes) unless changes == :created
+      return proto_updated(user, changes) unless user.nil?
 
-      @proto.created << BPS::Update::User.new(
-        id: user.id, certificate: user.certificate, name: user.simple_name
-      )
+      proto_create(changes)
     end
 
     def proto_completions
-      completions = @completions&.flatten&.group_by(&:user)
-      completions_array = completions&.each_with_object([]) do |(user, comps), array|
+      completions_array = @completions&.each_with_object([]) do |(certificate, comps), array|
+        next if comps.blank?
+
         array << {
-          user: { id: user.id, certificate: user.certificate, name: user.simple_name },
+          user: { certificate: certificate },
           completions: comps.map { |c| { key: c.course_key, date: c.date.to_time } }
         }
       end
@@ -86,6 +85,19 @@ module ImportUsers
         user: { id: user.id, certificate: user.certificate, name: user.simple_name },
         changes: changes.map do |field, (from, to)|
           { field: field, from: from.to_s, to: to.to_s }
+        end
+      )
+    end
+
+    def proto_create(changes)
+      @proto.new << BPS::Update::UserUpdate.new(
+        user: {
+          id: nil,
+          certificate: changes[:certificate],
+          name: "#{changes[:first_name]} #{changes[:last_name]}"
+        },
+        changes: changes.map do |field, (from, _to)|
+          { field: field, to: from.to_s }
         end
       )
     end

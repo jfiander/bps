@@ -22,7 +22,6 @@ module ImportUsers
   private
 
     def update_parent_for(user, parent)
-      user&.update(parent_id: parent.id)
       @families[user&.parent] ||= []
       @families[user&.parent] << user
     end
