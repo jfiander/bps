@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails',               '~> 5.2.8.1'
+gem 'rails',               '6.0.0'
 
 gem 'puma',                '~> 4.3'
 
@@ -27,7 +27,7 @@ gem 'figaro',              '~> 1.2.0'
 
 # Model Behavior
 gem 'paperclip',           '~> 6.1.0'
-gem 'paper_trail',         '~> 9.2.0'
+gem 'paper_trail',         '~> 11.0'
 gem 'paranoia',            '~> 2.4.1'
 
 # APIs and External Services
@@ -46,7 +46,7 @@ gem 'slack-notifier',      '~> 2.3'
 gem 'slack-notification',  '~> 0.1.9'
 
 # General Functionality
-gem 'devise',              '~> 4.7.1'
+gem 'devise',              '~> 4.7'
 gem 'devise_invitable',    '~> 1.7'
 gem 'encrypted-keystore',  '~> 0.0.6'
 gem 'exp_retry',           '~> 0.0.13'
@@ -113,6 +113,6 @@ group :development, :test do
   gem 'brakeman',                 '~> 4.3'
 
   # Debugging
-  gem 'bullet',                   '~> 5.7.0'
+  # gem 'bullet',                   '~> 5.7.0'
   gem 'listen',                   '~> 3.1.5'
 end
