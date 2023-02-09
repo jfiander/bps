@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# TODO: Trigger this automatically from UI interactions
+# TODO: Add a new controller action to trigger this for an ImportLog in the database
+#         - Add an applied_at timestamp to ImportLog, and set it to deploy-time for all existing
 module ImportUsers
   # Process result proto to apply changes for user importing
   class Process
