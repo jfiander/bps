@@ -410,6 +410,56 @@
         | )
     hr
 
+    h2 Signal Flags
+    p You can specify a sequence of signal flags, with words separated by spaces, also supporting optional CSS classes.
+    - bucket = BPS::S3.new(:static)
+    .table
+      .table-row.bold.center
+        .table-cell Key
+        .table-cell Result
+      .table-row.center
+        .table-cell: pre
+          span.bold.red %sf/
+          | text to display
+          span.bold.red
+            | /
+        .table-cell.center
+          .signals
+            .word
+              = image_tag(bucket.link('signals/SVG/short/t.svg'))
+              = image_tag(bucket.link('signals/SVG/short/e.svg'))
+              = image_tag(bucket.link('signals/SVG/short/x.svg'))
+              = image_tag(bucket.link('signals/SVG/short/t.svg'))
+            .word
+              = image_tag(bucket.link('signals/SVG/short/t.svg'))
+              = image_tag(bucket.link('signals/SVG/short/o.svg'))
+            .word
+              = image_tag(bucket.link('signals/SVG/short/d.svg'))
+              = image_tag(bucket.link('signals/SVG/short/i.svg'))
+              = image_tag(bucket.link('signals/SVG/short/s.svg'))
+              = image_tag(bucket.link('signals/SVG/short/p.svg'))
+              = image_tag(bucket.link('signals/SVG/short/l.svg'))
+              = image_tag(bucket.link('signals/SVG/short/a.svg'))
+              = image_tag(bucket.link('signals/SVG/short/y.svg'))
+      .table-row.center
+        .table-cell: pre
+          span.bold.red %sf/
+          | bigger
+          span.bold.red
+            | :
+          | double
+          span.bold.red
+            | /
+        .table-cell.center
+          .signals.double
+            .word
+              = image_tag(bucket.link('signals/SVG/short/b.svg'))
+              = image_tag(bucket.link('signals/SVG/short/i.svg'))
+              = image_tag(bucket.link('signals/SVG/short/g.svg'))
+              = image_tag(bucket.link('signals/SVG/short/g.svg'))
+              = image_tag(bucket.link('signals/SVG/short/e.svg'))
+              = image_tag(bucket.link('signals/SVG/short/r.svg'))
+
     h2 Shortcuts
     p Copy the red text into the page.
     p.italic These are listed here for reference. You will probably not need to use these.

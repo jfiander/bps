@@ -5,7 +5,7 @@ class ParsedMarkdown < String
   PARSERS ||= %i[
     comments center big reg list email
     burgee education meeting excom classed activity
-    image link button fam fa
+    image link button fam fa signal_flag
   ].freeze
 
   include ParsedMarkdown::Parsers
@@ -14,6 +14,7 @@ class ParsedMarkdown < String
     super(string)
     @view_context = options[:view_context]
     @files_bucket = options[:files_bucket]
+    @static_bucket = options[:static_bucket]
     @burgee_html = options[:burgee]
     @education_menu = options[:education]
     @next_meeting = options[:next_meeting]
@@ -42,6 +43,20 @@ private
 
   def file_button(id, title: nil)
     markdown_link_or_button(prefix: 'uploaded/markdown_files', id: id, title: title, mode: :button)
+  end
+
+  def signal_flag(text, css: nil)
+    @view_context.content_tag(:div, class: ['signals', css].compact.join(' ')) do
+      text.scan(/[A-Za-z0-9\s]/).map(&:downcase).split(' ').map do |word|
+        @view_context.content_tag(:div, class: 'word') do
+          word.map do |letter|
+            @view_context.image_tag(
+              @static_bucket.link("signals/SVG/short/#{letter}.svg")
+            ).html_safe
+          end.join.html_safe
+        end
+      end.join.html_safe
+    end
   end
 
   def markdown_link_or_button(prefix:, id:, title: nil, mode: :link)

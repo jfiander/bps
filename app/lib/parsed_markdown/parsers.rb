@@ -91,6 +91,12 @@ class ParsedMarkdown
       end
     end
 
+    def parse_signal_flag
+      match_replace(%r{%sf/([A-Za-z0-9\s]+)(:([^/]*?))?/}) do |match|
+        signal_flag(match[1], css: match[3])
+      end
+    end
+
     # Custom key for "FA-Multiple" - layered icons
     def parse_fam
       layer_regexp = %r{%fam/[^/]*/}

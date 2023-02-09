@@ -108,6 +108,7 @@ private
       @markdown_div,
       view_context: (view_context unless Rails.env.test?),
       files_bucket: BPS::S3.new(:files),
+      static_bucket: BPS::S3.new(:static),
       burgee: burgee_html(@page_markdown),
       education: education_menu(@page_markdown),
       next_meeting: next_scheduled(:meeting, @page_markdown),

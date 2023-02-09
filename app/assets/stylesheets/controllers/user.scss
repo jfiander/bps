@@ -340,4 +340,8 @@ div#corner-stripes {
     display: flex;
     gap: 5px;
   }
+
+  &.double img { width: 40px; }
+  &.triple img { width: 60px; }
+  &.half   img { width: 10px; }
 }
