@@ -17,10 +17,6 @@ module Application
 
   private
 
-    def ssl_configured?
-      BPS::Application.deployed? && request.host !~ /.#{ENV['INTERNAL_DOMAIN']}$/
-    end
-
     def handle_unverified_request
       flash[:alert] = 'Sorry, please try that again.'
       redirect_to :back
