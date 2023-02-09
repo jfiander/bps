@@ -14,7 +14,7 @@ class ParsedMarkdown
       self
     end
 
-    # Only allows one subsitution per page
+    # Only allows one substitution per page
     def subs!(pattern, replacement)
       sub!(pattern, replacement)
       self
@@ -53,12 +53,12 @@ class ParsedMarkdown
       gsubs!(%r{<p>%education</p>}, @education_menu)
     end
 
-    # Only allows one subsitution per page
+    # Only allows one substitution per page
     def parse_meeting
       subs!(%r{<p>%meeting#{PARAGRAPH_CONTENTS}</p>}, @next_meeting)
     end
 
-    # Only allows one subsitution per page
+    # Only allows one substitution per page
     def parse_excom
       subs!(%r{<p>%excom#{PARAGRAPH_CONTENTS}</p>}, @next_excom)
     end
