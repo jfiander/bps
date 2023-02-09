@@ -17,7 +17,7 @@ RSpec.describe MemberApplicant, type: :model do
   context 'with only a primary applicant' do
     it 'requires names, full address, and a phone number' do
       primary.validate
-      expect(primary.errors.messages).to eql(
+      expect(primary.errors.messages.to_h).to eql(
         first_name: ["can't be blank"],
         last_name: ["can't be blank"],
         address_1: ["can't be blank"],
@@ -42,14 +42,14 @@ RSpec.describe MemberApplicant, type: :model do
 
     it 'requires names' do
       additional.validate
-      expect(additional.errors.messages).to eql(first_name: ["can't be blank"], last_name: ["can't be blank"])
+      expect(additional.errors.messages.to_h).to eql(first_name: ["can't be blank"], last_name: ["can't be blank"])
     end
 
     it "refuses an application with a member's email address" do
       FactoryBot.create(:user, email: additional.email)
 
       additional.validate
-      expect(additional.errors.messages).to eql(
+      expect(additional.errors.messages.to_h).to eql(
         first_name: ["can't be blank"],
         last_name: ["can't be blank"],
         email: ['is already taken']

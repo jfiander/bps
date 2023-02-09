@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class LinksController < ApplicationController
+  class LinksController < ::ApplicationController
     secure!(:admin, strict: true)
 
     def s3

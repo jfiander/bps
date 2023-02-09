@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Roster
-  class AwardRecipientsController < RosterController
+  class AwardRecipientsController < ::RosterController
     before_action :awards, only: %i[list new create edit update]
 
   private

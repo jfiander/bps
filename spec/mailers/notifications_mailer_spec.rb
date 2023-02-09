@@ -24,9 +24,9 @@ RSpec.describe NotificationsMailer, type: :mailer do
       expect(mail.body.encoded).to contain_and_match(
         'The following bridge office has been updated.',
         'Office: Administrative Officer',
-        /Previous holder:=0D\n#{user_identifier(previous)}/,
-        /New holder:=0D\n#{user_identifier(generic_seo_and_ao[:ao].user)}/,
-        /Updated by:=0D\n#{user_identifier(by)}/
+        /Previous holder:\r\n#{user_identifier(previous)}/,
+        /New holder:\r\n#{user_identifier(generic_seo_and_ao[:ao].user)}/,
+        /Updated by:\r\n#{user_identifier(by)}/
       )
     end
   end

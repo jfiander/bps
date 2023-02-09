@@ -46,7 +46,7 @@ RSpec.describe BridgeOffice, type: :model do
   it 'rejects invalid offices' do
     invalid = FactoryBot.build(:bridge_office, office: 'invalid')
     expect(invalid.valid?).to be(false)
-    expect(invalid.errors.messages).to eql(office: ['must be in BridgeOffice.departments(assistants: true)'])
+    expect(invalid.errors.messages.to_h).to eql(office: ['must be in BridgeOffice.departments(assistants: true)'])
   end
 
   describe 'advance' do

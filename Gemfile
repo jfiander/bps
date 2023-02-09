@@ -99,12 +99,12 @@ group :development, :test do
   gem 'dotenv',                   '~> 2.7.6'
 
   # Specs
-  gem 'database_cleaner',         '~> 1.6.2'
-  gem 'factory_bot_rails',        '~> 4.8.2'
-  gem 'fuubar',                   '~> 2.3.2'
-  gem 'rails-controller-testing', '~> 1.0.4'
-  gem 'rspec-rails',              '~> 3.9'
-  gem 'simplecov',                '~> 0.15.1'
+  gem 'database_cleaner',         '~> 1'
+  gem 'factory_bot_rails',        '~> 4'
+  gem 'fuubar',                   '~> 2'
+  gem 'rails-controller-testing', '~> 1'
+  gem 'rspec-rails',              '~> 4.1'
+  gem 'simplecov',                '~> 0'
 
   # Rubocop
   gem 'rubocop',                  '~> 0.90'

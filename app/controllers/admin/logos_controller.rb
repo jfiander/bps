@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class LogosController < ApplicationController
+  class LogosController < ::ApplicationController
     secure!(:admin)
 
     def logo

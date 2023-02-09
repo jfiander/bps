@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Roster
-  class AwardRecipient < ApplicationRecord
+  class AwardRecipient < ::ApplicationRecord
     belongs_to :user, optional: true
     belongs_to :additional_user, optional: true, class_name: 'User'
 

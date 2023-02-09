@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BPS
-  class ErrorWithMetadata < StandardError
+  class ErrorWithMetadata < ::StandardError
     attr_reader :metadata
 
     def initialize(message, **metadata)

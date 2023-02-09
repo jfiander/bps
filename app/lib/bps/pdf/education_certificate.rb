@@ -2,7 +2,7 @@
 
 module BPS
   module PDF
-    class EducationCertificate < BPS::PDF::Base
+    class EducationCertificate < Base
       MODULES ||= %w[
         Heading NameAndGrade Details Completions Seminars
       ].freeze

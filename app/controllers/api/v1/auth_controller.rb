@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class AuthController < ActionController::API
+    class AuthController < ::ActionController::API
       ACCESS_RESTRICTIONS_NOT_ALLOWED = 'You are not allowed to set those access restrictions.'
 
       include Api::V1::JWT::Encode

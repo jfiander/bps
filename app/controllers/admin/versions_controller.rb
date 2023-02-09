@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class VersionsController < ApplicationController
+  class VersionsController < ::ApplicationController
     secure!(:admin, strict: true)
 
     before_action :load_versions, only: %i[show diff revert]

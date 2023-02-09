@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Roster
-  class PastCommander < ApplicationRecord
+  class PastCommander < ::ApplicationRecord
     belongs_to :user, optional: true
 
     validate :user_or_name

@@ -72,7 +72,8 @@ class Event < ApplicationRecord
   end
 
   def self.catalog(category)
-    include_details.where(show_in_catalog: true).order(EventType.order_sql).for_category(category)
+    include_details.where(show_in_catalog: true)
+                   .order(Arel.sql(EventType.order_sql)).for_category(category)
   end
 
   def self.include_details

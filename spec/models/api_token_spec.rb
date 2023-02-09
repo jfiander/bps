@@ -16,7 +16,7 @@ RSpec.describe ApiToken, type: :model do
   it 'validates expires_at', :aggregate_failures do
     token.expires_at = nil
     expect(token).not_to be_valid
-    expect(token.errors.messages).to include(expires_at: ['must not be nil'])
+    expect(token.errors.messages.to_h).to include(expires_at: ['must not be nil'])
   end
 
   describe '#current?' do

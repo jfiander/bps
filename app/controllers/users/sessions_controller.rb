@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class SessionsController < Devise::SessionsController
+  class SessionsController < ::Devise::SessionsController
     def after_sign_in_path_for(resource)
       return welcome_path if resource.sign_in_count == 1
       return referrer_params[:user][:referrer] if valid_referrer?

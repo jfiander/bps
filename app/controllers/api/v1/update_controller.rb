@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class UpdateController < Api::V1::ApplicationController
+    class UpdateController < ApplicationController
       REQUIRED_ROLES = %i[users].freeze
 
       authenticate_user!

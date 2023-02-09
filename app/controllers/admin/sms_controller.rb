@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class SmsController < ApplicationController
+  class SmsController < ::ApplicationController
     def new
       @users = User.unlocked.alphabetized.where.not(phone_c: nil).map { |u| [u.full_name, u.id] }
     end

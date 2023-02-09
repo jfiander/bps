@@ -3,7 +3,7 @@
 require 'fileutils'
 
 module AutomaticUpdate
-  class DataRequest < BPS::HTTPRequest
+  class DataRequest < ::BPS::HTTPRequest
     def initialize(cookie_key = nil, verbose: false)
       @cookie_key = cookie_key
       FileUtils.mkdir_p(Rails.root.join('tmp/automatic_update'))

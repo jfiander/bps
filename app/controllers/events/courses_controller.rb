@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Events
-  class CoursesController < EventController
+  class CoursesController < ::EventController
     secure!(:course, except: %i[schedule catalog show])
     title!('Courses')
 

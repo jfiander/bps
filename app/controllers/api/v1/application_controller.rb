@@ -4,7 +4,7 @@ require 'ipaddr'
 
 module Api
   module V1
-    class ApplicationController < ActionController::API
+    class ApplicationController < ::ActionController::API
       BAD_REQUEST = 'We could not process your request.'
       NOT_AUTHENTICATED = 'Authentication is required.'
       NOT_AUTHORIZED = 'You are not authorized to access that.'

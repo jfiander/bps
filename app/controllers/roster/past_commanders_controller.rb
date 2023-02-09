@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Roster
-  class PastCommandersController < RosterController
+  class PastCommandersController < ::RosterController
     # This class defines no public methods.
     def _; end
 

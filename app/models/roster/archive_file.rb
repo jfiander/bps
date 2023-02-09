@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Roster
-  class ArchiveFile < UploadedFile
+  class ArchiveFile < ::UploadedFile
     def self.table_name_prefix
       'roster_'
     end

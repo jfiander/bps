@@ -2,7 +2,7 @@
 
 module BPS
   module PDF
-    class FloatPlan < BPS::PDF::Base
+    class FloatPlan < Base
       MODULES ||= %w[
         Heading PrimaryContact BoatInformation SafetyEquipment
         CommunicationInformation RoutePlan AlertPlan GroundTransportation

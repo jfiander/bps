@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class GenericPaymentsController < ApplicationController
+  class GenericPaymentsController < ::ApplicationController
     secure!(:admin, strict: true)
 
     before_action :users, only: :new

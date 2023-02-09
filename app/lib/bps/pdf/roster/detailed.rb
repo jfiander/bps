@@ -3,7 +3,7 @@
 module BPS
   module PDF
     class Roster
-      class Detailed < BPS::PDF::Base
+      class Detailed < ::BPS::PDF::Base
         include  BPS::PDF::Roster::Shared
         include  BPS::PDF::Roster::Detailed::Helpers
 

@@ -2,7 +2,7 @@
 
 module BPS
   module PDF
-    class Base < Prawn::Document
+    class Base < ::Prawn::Document
       def self.generate(filename, **options)
         timestamp = Time.zone.now.to_i
         full_path = Rails.root.join('tmp', 'run', "#{filename}_#{timestamp}.pdf")

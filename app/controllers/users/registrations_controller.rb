@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class RegistrationsController < Devise::RegistrationsController
+  class RegistrationsController < ::Devise::RegistrationsController
     include Application::Security
 
     secure!(:admin, strict: true, only: %i[admin_edit admin_update])

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class PromoCodesController < ApplicationController
+  class PromoCodesController < ::ApplicationController
     secure!(:admin, strict: true)
 
     before_action :find_promo_code, only: %i[activate expire]

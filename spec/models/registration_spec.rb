@@ -144,7 +144,7 @@ RSpec.describe Registration, type: :model do
   it 'is invalid without an email or user' do
     reg = FactoryBot.build(:registration, event: event)
     expect(reg.valid?).to be(false)
-    expect(reg.errors.messages).to eql(base: ['Must have a user or email'])
+    expect(reg.errors.messages.to_h).to eql(base: ['Must have a user or email'])
   end
 
   it 'is valid with an email' do
@@ -161,7 +161,7 @@ RSpec.describe Registration, type: :model do
     FactoryBot.create(:registration, event: event, user: user)
     reg = FactoryBot.build(:registration, event: event, user: user)
     expect(reg.valid?).to be(false)
-    expect(reg.errors.messages).to eql(base: ['Duplicate'])
+    expect(reg.errors.messages.to_h).to eql(base: ['Duplicate'])
   end
 
   it 'sends a confirmation email for public registrations' do

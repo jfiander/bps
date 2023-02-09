@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class ImportLogsController < ApplicationController
+  class ImportLogsController < ::ApplicationController
     def index
       @import_logs = ImportLog.where.not(proto: nil)
     end

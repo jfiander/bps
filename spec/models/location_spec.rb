@@ -42,7 +42,7 @@ RSpec.describe Location, type: :model do
     it 'rejects invalid URLs' do
       location.map_link = 'blah blah'
       expect(location.valid?).to be(false)
-      expect(location.errors.messages).to eql(map_link: ['is not a valid URL.'])
+      expect(location.errors.messages.to_h).to eql(map_link: ['is not a valid URL.'])
     end
   end
 

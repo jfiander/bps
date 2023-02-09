@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BPS
-  class SlackFile < BPS::HTTPRequest
+  class SlackFile < HTTPRequest
     REQUEST_URL = 'https://slack.com/api/files.upload'
 
     def initialize(title, content, filetype = 'json', verbose: true)

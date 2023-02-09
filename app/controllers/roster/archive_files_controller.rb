@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Roster
-  class ArchiveFilesController < RosterController
+  class ArchiveFilesController < ::RosterController
     def create
       status = Roster::ArchiveFile.archive!
       if status == :current

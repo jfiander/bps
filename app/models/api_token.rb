@@ -20,6 +20,7 @@ class ApiToken < ApplicationRecord
   validate :validate_expiration
 
   def self.generate_unique_secure_token(length: self::MINIMUM_TOKEN_LENGTH)
+    length = self::MINIMUM_TOKEN_LENGTH if length < self::MINIMUM_TOKEN_LENGTH
     SecureRandom.base58(length)
   end
 

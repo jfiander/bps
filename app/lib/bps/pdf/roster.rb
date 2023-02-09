@@ -2,7 +2,7 @@
 
 module BPS
   module PDF
-    class Roster < BPS::PDF::Base
+    class Roster < Base
       include  BPS::PDF::Roster::Shared
       include  BPS::PDF::Roster::Simple::CoverPage
       include  BPS::PDF::Roster::Simple::RosterPages

@@ -7,14 +7,14 @@ RSpec.describe Role, type: :model do
     orphan = FactoryBot.build(:role, name: 'orphan')
 
     expect(orphan.valid?).to be(false)
-    expect(orphan.errors.messages).to eql(parent: ['must descend from :admin'])
+    expect(orphan.errors.messages.to_h).to eql(parent: ['must descend from :admin'])
   end
 
   it 'cannot set a parent_id for admin', :aggregate_failures do
     admin = FactoryBot.build(:role, name: 'admin', parent_id: 1)
 
     expect(admin.valid?).to be(false)
-    expect(admin.errors.messages).to eql(parent: ['must not be set for :admin'])
+    expect(admin.errors.messages.to_h).to eql(parent: ['must not be set for :admin'])
   end
 
   it 'returns the appropriate icons hash' do

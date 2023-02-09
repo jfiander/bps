@@ -24,7 +24,7 @@ def distro(key)
     },
     cache_behaviors: { quantity: 0 }, custom_error_responses: { quantity: 0 },
     restrictions: { geo_restriction: { restriction_type: 'none', quantity: 0 } },
-    comment: 'stub', price_class: 'Standard', enabled: true,
+    comment: 'stub', price_class: 'Standard', enabled: true, staging: false,
     viewer_certificate: {}, web_acl_id: 'stub', http_version: '1.2', is_ipv6_enabled: false
   }
 end
