@@ -88,11 +88,11 @@ h1 = @user.full_name
 - if current_user&.permitted?(:admin) && current_user.id != @user.id
   .photo-editor = editor('photo_editor', id: @user.id)
 
-.signals
+.signals title=(@user.full_name)
   - bucket = BPS::S3.new(:static)
   - @user.full_name.scan(/[A-Za-z0-9\s]/).map(&:downcase).split(' ').each do |word|
     .word
       - word.each do |letter|
-        = image_tag(bucket.link("signals/PNG/short/#{letter}.png"))
+        = image_tag(bucket.link("signals/PNG/short/#{letter}.png"), alt: letter)
 
 = render('corner_stripes', stripe_rank: @user.stripe_rank, first_stripe_class: @user.first_stripe_class)

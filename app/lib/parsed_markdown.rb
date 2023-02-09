@@ -46,12 +46,12 @@ private
   end
 
   def signal_flag(text, css: nil)
-    @view_context.content_tag(:div, class: ['signals', css].compact.join(' ')) do
+    @view_context.content_tag(:div, class: ['signals', css].compact.join(' '), title: text) do
       text.scan(/[A-Za-z0-9\s]/).map(&:downcase).split(' ').map do |word|
         @view_context.content_tag(:div, class: 'word') do
           word.map do |letter|
             @view_context.image_tag(
-              @static_bucket.link("signals/SVG/short/#{letter}.svg")
+              @static_bucket.link("signals/SVG/short/#{letter}.svg"), alt: letter
             ).html_safe
           end.join.html_safe
         end
