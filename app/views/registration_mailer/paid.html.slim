@@ -2,7 +2,7 @@
 
 h1.birmingham Paid Registration
 
-h2.red Amount paid: #{number_to_currency(@registration.payment_amount)}
+h2.red Amount paid: #{number_to_currency(@registration.payment.amount)}
 h3 Received amount (est.): #{number_to_currency(@registration.payment.discounted_amount)}
 
 - if @registration.override_comment.present?

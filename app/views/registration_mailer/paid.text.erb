@@ -6,7 +6,7 @@ Someone has paid for a registration!
 
 **********
 
-Amount paid: <%= number_to_currency(@registration.payment_amount) %>
+Amount paid: <%= number_to_currency(@registration.payment.amount) %>
 Received amount (est.): <%= number_to_currency(@registration.payment.discounted_amount) %>
 <%- if @registration.override_comment.present? %>
 Price override: <%= @registration.override_comment %>
