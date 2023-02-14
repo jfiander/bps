@@ -123,6 +123,17 @@ RSpec.describe PromoCode, type: :model do
       promo_code.expire!
       expect(promo_code).to be_expired
     end
+
+    describe '#registrations' do
+      before { generic_seo_and_ao }
+
+      let!(:used) { FactoryBot.create(:registration, :with_email).tap { |r| r.payment.update(promo_code: promo_code) } }
+      let!(:other) { FactoryBot.create(:registration, :with_email) }
+
+      it 'returns registrations that use the promo code' do
+        expect(promo_code.registrations).to eq([used])
+      end
+    end
   end
 
   describe 'scopes' do

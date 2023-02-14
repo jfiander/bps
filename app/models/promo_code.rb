@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class PromoCode < ApplicationRecord
-  has_many :registrations
   has_many :payments
   has_many :event_promo_codes
   has_many :events, through: :event_promo_codes
@@ -54,5 +53,9 @@ class PromoCode < ApplicationRecord
 
   def expire!
     update(expires_at: Time.now)
+  end
+
+  def registrations
+    Registration.joins(:payment).where(payments: { promo_code: self })
   end
 end

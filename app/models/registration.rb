@@ -41,6 +41,11 @@ class Registration < ApplicationRecord
     queries.each { |q| ApplicationRecord.connection.execute(q) }
   end
 
+  delegate :promo_code, to: :payment
+
+  # Normal amount for this registration
+  #
+  # For the actual amount paid, use `payment.amount`
   def payment_amount
     convert_email_to_user && save
     return override_cost if override_cost.present?
