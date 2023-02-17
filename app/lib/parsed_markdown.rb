@@ -9,6 +9,7 @@ class ParsedMarkdown < String
   ].freeze
 
   include ParsedMarkdown::Parsers
+  include SignalFlagsHelper
 
   def initialize(string, **options)
     super(string)
@@ -46,17 +47,7 @@ private
   end
 
   def signal_flag(text, css: nil)
-    @view_context.content_tag(:div, class: ['signals', css].compact.join(' '), title: text) do
-      text.scan(/[A-Za-z0-9\s]/).map(&:downcase).split(' ').map do |word|
-        @view_context.content_tag(:div, class: 'word') do
-          word.map do |letter|
-            @view_context.image_tag(
-              @static_bucket.link("signals/SVG/short/#{letter}.svg"), alt: letter
-            ).html_safe
-          end.join.html_safe
-        end
-      end.join.html_safe
-    end
+    signal_flags(text, css: css)
   end
 
   def markdown_link_or_button(prefix:, id:, title: nil, mode: :link)

@@ -42,6 +42,7 @@ SimpleCov.start('rails') do
   add_filter '/app/helpers/user_helper.rb'
   add_filter '/app/helpers/user_list_helper.rb'
   add_filter '/app/helpers/receipt_helper.rb'
+  add_filter '/app/helpers/signal_flags_helper.rb'
 
   # Config code located in app/helpers
   add_filter '/app/helpers/devise_helper.rb'
