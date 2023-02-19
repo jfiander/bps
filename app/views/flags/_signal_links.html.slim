@@ -1,0 +1,15 @@
+.table
+  .table-row
+    .table-cell.table-header
+      = FA::Icon.p('file-image', style: :duotone, fa: :fw)
+      | PNG
+    .table-cell.table-header
+      = FA::Icon.p('vector-polygon', style: :duotone, fa: :fw)
+      | SVG
+  .table-row
+    .table-cell = link_to(name, @bucket.link("signals/PNG/letters/#{name}.png"), disposition: 'inline')
+    .table-cell = link_to(name, @bucket.link("signals/SVG/letters/#{name}.svg"), disposition: 'inline')
+  - if defined?(short)
+    .table-row
+      .table-cell = link_to(short, @bucket.link("signals/PNG/short/#{short}.png"), disposition: 'inline')
+      .table-cell = link_to(short, @bucket.link("signals/SVG/short/#{short}.svg"), disposition: 'inline')

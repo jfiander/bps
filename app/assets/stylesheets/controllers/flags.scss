@@ -10,6 +10,8 @@ div.flags.table {
     height: 8em;
     vertical-align: middle;
   }
+
+  .table div.table-cell { height: fit-content; }
 }
 
 .signals {
