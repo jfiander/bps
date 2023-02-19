@@ -11,3 +11,39 @@ div.flags.table {
     vertical-align: middle;
   }
 }
+
+.signals {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+
+  img { width: 20px; }
+
+  .word {
+    display: flex;
+    gap: 5px;
+  }
+
+  &.double {
+    img { width: 40px; }
+    .word { gap: 7px; }
+  }
+
+  &.triple {
+    img { width: 60px; }
+    .word { gap: 9px; }
+  }
+
+  &.half   {
+    img { width: 10px; }
+    .word { gap: 3px; }
+  }
+
+  &.vertical {
+    flex-direction: column;
+    .word { flex-direction: column; }
+  }
+
+  &.center { align-items: center; }
+}

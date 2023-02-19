@@ -327,21 +327,3 @@ div#corner-stripes {
 #import-results .table .table {
   .table-cell { width: 10em; }
 }
-
-.signals {
-  width: 100%;
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-
-  img { width: 20px; }
-
-  .word {
-    display: flex;
-    gap: 5px;
-  }
-
-  &.double img { width: 40px; }
-  &.triple img { width: 60px; }
-  &.half   img { width: 10px; }
-}
