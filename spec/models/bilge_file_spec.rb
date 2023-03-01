@@ -32,4 +32,9 @@ RSpec.describe BilgeFile, type: :model do
   it 'does not return an error on invalidate!' do
     expect { bilge.invalidate! }.not_to raise_error
   end
+
+  it 'invalidates on destroy' do
+    expect(bilge).to receive(:invalidate!)
+    bilge.destroy
+  end
 end

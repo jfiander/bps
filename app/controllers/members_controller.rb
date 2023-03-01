@@ -60,16 +60,11 @@ private
       send("remove_#{model}")
       'removed'
     elsif (file = send("find_#{model}_issue")).present?
-      replace_file(model, file)
+      file.update(file: send("#{model}_params")[:file])
+      'replaced'
     else
       send("create_#{model}")
       'uploaded'
     end
-  end
-
-  def replace_file(model, file)
-    file.update(file: send("#{model}_params")[:file])
-    file.invalidate!
-    'replaced'
   end
 end
