@@ -146,3 +146,7 @@ input:checked + .slider div.description.lock-missing:after {
 input:checked + .slider div.description.eligible:after {
   content: "Eligible";
 }
+
+input:checked + .slider div.description.notify:after {
+  content: "Notify";
+}

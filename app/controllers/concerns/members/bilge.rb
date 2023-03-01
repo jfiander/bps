@@ -6,7 +6,7 @@ module Members
       verb = update_file(:bilge)
       issue = "#{bilge_params[:issue]['date(1i)']}/#{bilge_params[:issue]['date(2i)']}"
 
-      notify_for_bilge
+      notify_for_bilge if bilge_params[:bilge_notify]
 
       redirect_to(
         newsletter_path,
@@ -25,7 +25,7 @@ module Members
 
     def bilge_params
       params.permit(
-        :id, :page_name, :save, :preview, :file, :bilge_remove,
+        :id, :page_name, :save, :preview, :file, :bilge_remove, :bilge_notify,
         issue: ['date(1i)', 'date(2i)']
       )
     end
