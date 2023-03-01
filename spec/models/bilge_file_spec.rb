@@ -30,7 +30,7 @@ RSpec.describe BilgeFile, type: :model do
   end
 
   it 'does not return an error on invalidate!' do
-    expect { bilge.invalidate! }.not_to raise_error
+    expect(bilge.invalidate![:result].invalidation.status).to eq('InProgress')
   end
 
   it 'invalidates on destroy' do
