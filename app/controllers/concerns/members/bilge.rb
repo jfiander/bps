@@ -31,10 +31,7 @@ module Members
     end
 
     def remove_bilge
-      BilgeFile.find_by(
-        year: bilge_params[:issue]['date(1i)'],
-        month: bilge_params[:issue]['date(2i)']
-      )&.destroy
+      find_bilge_issue&.destroy
     end
 
     def create_bilge
