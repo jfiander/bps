@@ -3,6 +3,8 @@ p Files uploaded here can be displayed in any markdown page editor on this site.
 p Copy the <b>markdown key</b> from the list below into the editor where you want it to appear.
 = editor('file_editor')
 
+p.bold.italic.red This page is not generally visible, and files below may be out of date. They are kept here for reference.
+
 - if @markdown_files.present?
   #files.table.striped.markdown
     .table-row.header
