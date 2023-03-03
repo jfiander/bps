@@ -1,8 +1,4 @@
 @media screen and (max-width: 750px) {
-  div#print-footer {
-    display: none;
-  }
-
   div.chiclets { justify-content: center; }
 }
 
@@ -50,7 +46,7 @@
     display: none;
   }
 
-  div#print-header {
+  div#mobile-header {
     img {
       max-width: 95vw;
       margin: 0.5em auto;

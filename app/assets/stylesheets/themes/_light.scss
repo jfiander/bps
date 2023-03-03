@@ -161,14 +161,25 @@
       border-color: $old-glory-blue-faded;
 
       div#desktop-header {
-        .logo { background-color: $logo-background; }
+        .logo {
+          background-color: $logo-background;
+
+          .light { display: block; }
+          .dark  { display: none; }
+        }
+
         .slogan {
           color: $white;
           text-shadow: 3px 3px $old-glory-blue-faded;
         }
       }
 
-      // div#print-header { background-color: $dark-content-background-65; }
+      div#mobile-header {
+        .logo {
+          .light { display: block; }
+          .dark  { display: none; }
+        }
+      }
     }
 
     div#content { background-color: $content-background; }

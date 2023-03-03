@@ -36,9 +36,14 @@ html lang='en'
       header
         #desktop-header
           .header = image_tag @header_image, class: 'header', alt: 'Header Photo' if @header_image.present?
-          .logo = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
+          .logo
+            = image_tag @logos[:light], alt: "America's Boating Club", class: 'light'
+            = image_tag @logos[:dark], alt: "America's Boating Club", class: 'dark'
           .slogan For Boaters, By Boaters<sup>&reg;</sup>
-        #print-header = image_tag @print_logo, alt: "America's Boating Club" if @print_logo.present?
+        #mobile-header: .logo
+          = image_tag @logos[:light], alt: "America's Boating Club", class: 'light'
+          = image_tag @logos[:dark], alt: "America's Boating Club", class: 'dark'
+        #print-header = image_tag @logos[:light], alt: "America's Boating Club"
       #show-sidenav
         = FA::Icon.p('bars', style: :duotone)
         .nav Navigation

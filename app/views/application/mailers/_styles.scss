@@ -23,3 +23,15 @@ body {
 .gray {
   color: $gray;
 }
+
+img {
+  max-width: 750px;
+
+  &.light { display: block; }
+  &.dark  { display: none;}
+
+  @media screen and (prefers-color-scheme: dark) {
+    &.light { display: none; }
+    &.dark  { display: block;}
+  }
+}

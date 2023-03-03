@@ -1,4 +1,8 @@
 @media print {
+  div#print-header, div#print-footer {
+    display: block;
+  }
+
   .print {
     display: unset;
   }
@@ -16,8 +20,15 @@
     margin: 0;
   }
 
-  div#navigation, ul#admin-menu, ul#education, div#main-footer, div#payment-box, div#sidenav, div#show-sidenav {
+  div#desktop-header, div#mobile-header, div#navigation, ul#admin-menu, ul#education, div#main-footer, div#payment-box, div#sidenav, div#show-sidenav {
     display: none;
+  }
+
+  div#print-header {
+    img {
+      max-width: 95vw;
+      margin: 0.5em auto;
+    }
   }
 
   div#flashes {

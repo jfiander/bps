@@ -77,16 +77,29 @@
 
     header {
       div#desktop-header {
-        .logo { background-color: $dark-logo-background; }
+        .logo {
+          background-color: $dark-logo-background;
+
+          .light { display: none; }
+          .dark  { display: block; }
+        }
+
         .slogan { color: $dark-text; }
 
         div.header img.header { opacity: 50%; }
       }
 
-      div#print-header { background-color: $dark-content-background-65; }
+      div#mobile-header {
+        background-color: $dark-content-background-65;
+
+        .logo {
+          .light { display: none; }
+          .dark  { display: block; }
+        }
+      }
 
       // Desaturate logo
-      div#desktop-header .logo img, div#print-header img {
+      div#desktop-header .logo img, div#mobile-header img {
         filter: none;
         -webkit-filter: grayscale(25%);
         -moz-filter:    grayscale(25%);
