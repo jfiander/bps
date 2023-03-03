@@ -129,7 +129,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
       end
 
       it 'renders the body' do
-        expect(mail.body.encoded).to contain_and_match(
+        expect(mail.html_part.body.decoded).to contain_and_match(
           'which requires advance payment', 'Registration information',
           'If you have any questions', 'You can also cancel',
           'Educational Officer'
