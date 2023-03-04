@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StaticPage < ApplicationRecord
-  CUSTOM_TITLES ||= {
+  CUSTOM_TITLES = {
     'about' => 'About Us',
     'join' => 'Join Us',
     'civic' => 'Civic Services',

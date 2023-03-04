@@ -40,7 +40,7 @@ module BPS
           def bridge_box(office, y_pos)
             bridge_office = BridgeOffice.find_by(office: office)
             bridge_box_office(bridge_office, y_pos)
-            return unless bridge_office.present?
+            return if bridge_office.blank?
 
             bridge_box_email(bridge_office, y_pos)
           end
@@ -88,7 +88,7 @@ module BPS
 
           def contact_box(name, committee, email, y_pos)
             chair_name = Committee.find_by(name: committee)&.user&.full_name(html: false) || 'TBD'
-            return unless chair_name.present?
+            return if chair_name.blank?
 
             contact_box_committee(name, chair_name, y_pos)
             contact_box_email(email, y_pos)

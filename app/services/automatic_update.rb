@@ -138,7 +138,7 @@ module AutomaticUpdate
 
     def cleanup_files
       csv_paths.each do |path|
-        File.unlink(path) if File.exist?(path)
+        FileUtils.rm_f(path)
       end
     end
 

@@ -20,7 +20,7 @@ module BPS
     end
 
     def initialize(user, priority: :normal)
-      raise UserNotRegistered, "User id: #{user.id}" unless user.pushover_token.present?
+      raise UserNotRegistered, "User id: #{user.id}" if user.pushover_token.blank?
 
       @user = user
       @priority = priority.to_s.downcase.to_sym

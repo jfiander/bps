@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   let(:blank_photo) { 'https://static.bpsd9.org/no_profile.png' }
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
 
   context 'with a new user' do
-    let(:user) { FactoryBot.build(:user) }
+    let(:user) { build(:user) }
 
     it 'defaults to the blank profile photo' do
       expect(user.photo).to eql(blank_photo)
@@ -16,40 +16,40 @@ RSpec.describe User, type: :model do
 
   describe 'validations' do
     it 'rejects invalid ranks' do
-      user = FactoryBot.build(:user, rank: 'D/F/Lt/C')
+      user = build(:user, rank: 'D/F/Lt/C')
       expect(user).not_to be_valid
     end
 
     it 'accepts valid ranks' do
-      user = FactoryBot.build(:user, rank: 'D/F/Lt')
+      user = build(:user, rank: 'D/F/Lt')
       expect(user).to be_valid
     end
 
     it 'rejects invalid grades' do
-      user = FactoryBot.build(:user, grade: 'SP')
+      user = build(:user, grade: 'SP')
       expect(user).not_to be_valid
     end
 
     it 'accepts valid grades' do
-      user = FactoryBot.build(:user, grade: 'JN')
+      user = build(:user, grade: 'JN')
       expect(user).to be_valid
     end
 
     it 'replaces blank ranks with nil' do
-      user = FactoryBot.build(:user, rank: ' ')
+      user = build(:user, rank: ' ')
       user.validate
       expect(user.rank).to be_nil
     end
 
     it 'rejects invalid phone_c' do
-      user = FactoryBot.build(:user, phone_c: 'not-a-number')
+      user = build(:user, phone_c: 'not-a-number')
       user.validate
       expect(user).not_to be_valid
     end
   end
 
   context 'with specified user' do
-    let(:user) { FactoryBot.create(:user, first_name: 'John', last_name: 'Doe', rank: 'Lt/C', grade: 'AP') }
+    let(:user) { create(:user, first_name: 'John', last_name: 'Doe', rank: 'Lt/C', grade: 'AP') }
 
     describe 'auto_rank' do
       it 'correctlies detect Cdr' do
@@ -302,12 +302,12 @@ RSpec.describe User, type: :model do
 
       describe 'BOC' do
         it 'returns nil for no BOC level' do
-          expect(FactoryBot.create(:user).boc).to be_nil
+          expect(create(:user).boc).to be_nil
         end
 
         describe 'with BOC level' do
-          let(:user) { FactoryBot.create(:user) }
-          let!(:completion) { FactoryBot.create(:course_completion, user: user, course_key: 'BOC_IN') }
+          let(:user) { create(:user) }
+          let!(:completion) { create(:course_completion, user: user, course_key: 'BOC_IN') }
 
           it 'returns the correct BOC level' do
             expect(user.boc).to eql('IN')
@@ -315,7 +315,7 @@ RSpec.describe User, type: :model do
 
           describe 'with endorsements' do
             before do
-              FactoryBot.create(:course_completion, user: user, course_key: 'BOC_CAN')
+              create(:course_completion, user: user, course_key: 'BOC_CAN')
             end
 
             it 'returns the correct BOC level with endorsements' do
@@ -340,8 +340,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'inviting' do
-    let(:user) { FactoryBot.create(:user) }
-    let(:placeholder_user) { FactoryBot.create(:user, :placeholder_email) }
+    let(:user) { create(:user) }
+    let(:placeholder_user) { create(:user, :placeholder_email) }
 
     it 'is invitable by default' do
       expect(user.invitable?).to be(true)
@@ -378,8 +378,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'registration' do
-    let(:event) { FactoryBot.create(:event) }
-    let(:user) { FactoryBot.create(:user) }
+    let(:event) { create(:event) }
+    let(:user) { create(:user) }
 
     before { assign_bridge_office('educational', user) }
 
@@ -405,9 +405,9 @@ RSpec.describe User, type: :model do
   end
 
   describe 'permissions' do
-    let!(:admin) { FactoryBot.create(:role, name: 'admin') }
-    let!(:child) { FactoryBot.create(:role, name: 'child', parent: admin) }
-    let(:user) { FactoryBot.create(:user) }
+    let!(:admin) { create(:role, name: 'admin') }
+    let!(:child) { create(:role, name: 'child', parent: admin) }
+    let(:user) { create(:user) }
 
     it 'adds permissions correctly' do
       user_role = user.permit! :child
@@ -467,7 +467,7 @@ RSpec.describe User, type: :model do
     end
 
     describe 'show_admin_menu?' do
-      let!(:page) { FactoryBot.create(:role, name: 'page') }
+      let!(:page) { create(:role, name: 'page') }
 
       it 'shows the admin menu for correct users' do
         user.permit! :page
@@ -480,8 +480,8 @@ RSpec.describe User, type: :model do
     end
 
     describe 'authorized_for_activity_feed?' do
-      let!(:education) { FactoryBot.create(:role, name: 'education') }
-      let!(:event) { FactoryBot.create(:role, name: 'event') }
+      let!(:education) { create(:role, name: 'education') }
+      let!(:event) { create(:role, name: 'event') }
 
       it 'does not allow a regular user to edit' do
         expect(user).not_to be_authorized_for_activity_feed
@@ -499,14 +499,14 @@ RSpec.describe User, type: :model do
         end
 
         it 'allows implied education permissions to edit' do
-          FactoryBot.create(:bridge_office, office: 'asst_educational', user: user)
+          create(:bridge_office, office: 'asst_educational', user: user)
           expect(user).to be_authorized_for_activity_feed
         end
       end
     end
 
     describe 'role checkers' do
-      let!(:education) { FactoryBot.create(:role, name: 'education') }
+      let!(:education) { create(:role, name: 'education') }
 
       describe '#role?' do
         it 'is true when directly granted' do
@@ -539,7 +539,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'locking' do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { create(:user) }
 
     it 'does not create locked users' do
       expect(user.locked?).to be(false)
@@ -556,13 +556,13 @@ RSpec.describe User, type: :model do
   end
 
   describe 'scopes' do
-    let!(:user_inv) { FactoryBot.create(:user) }
-    let!(:user_pe) { FactoryBot.create(:user, email: 'nobody-asdfhjkl@bpsd9.org') }
-    let!(:user_inst) { FactoryBot.create(:user, sign_in_count: 1, id_expr: 1.year.from_now) }
-    let!(:user_vse) { FactoryBot.create(:user, sign_in_count: 23) }
+    let!(:user_inv) { create(:user) }
+    let!(:user_pe) { create(:user, email: 'nobody-asdfhjkl@bpsd9.org') }
+    let!(:user_inst) { create(:user, sign_in_count: 1, id_expr: 1.year.from_now) }
+    let!(:user_vse) { create(:user, sign_in_count: 23) }
 
     before do
-      user_vse.course_completions << FactoryBot.create(
+      user_vse.course_completions << create(
         :course_completion, user: user_vse, course_key: 'VSC_01', date: 1.month.ago
       )
     end
@@ -581,7 +581,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'address' do
-    let(:user) { FactoryBot.create(:user, address_1: '100 N Capitol Ave', city: 'Lansing', state: 'MI', zip: '48933') }
+    let(:user) { create(:user, address_1: '100 N Capitol Ave', city: 'Lansing', state: 'MI', zip: '48933') }
 
     it 'returns a correct address array' do
       expect(user.mailing_address).to eql([user.full_name, user.address_1, "#{user.city} #{user.state} #{user.zip}"])
@@ -597,7 +597,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'profile photo' do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { create(:user) }
     let(:photo) { File.new(test_image(500, 750)) }
 
     it 'returns the default photo if not present' do
@@ -629,7 +629,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'with family' do
-      let!(:child) { FactoryBot.create(:user, parent: user) }
+      let!(:child) { create(:user, parent: user) }
 
       it 'returns the correct family amount' do
         expect(user.dues).to eq(134)
@@ -657,7 +657,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'dues_due' do
-    let(:child) { FactoryBot.create(:user, parent: user) }
+    let(:child) { create(:user, parent: user) }
 
     it 'returns false with if not the head of a family' do
       expect(child.dues_due?).to be(false)
@@ -696,7 +696,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns true with VSC training' do
-      FactoryBot.create(:course_completion, user: user, course_key: 'VSC_01', date: Time.zone.today)
+      create(:course_completion, user: user, course_key: 'VSC_01', date: Time.zone.today)
       expect(user.vessel_examiner?).to be(true)
     end
   end
@@ -745,7 +745,7 @@ RSpec.describe User, type: :model do
     describe '#token_expired?' do
       it 'is expired' do
         t = token.new_token
-        token.update(expires_at: Time.now - 5.minutes)
+        token.update(expires_at: 5.minutes.ago)
         expect(user).to be_token_expired(t)
       end
 

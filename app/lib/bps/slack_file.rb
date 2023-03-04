@@ -37,7 +37,7 @@ module BPS
     end
 
     def before_submit
-      puts "\nUploading results to Slack..."
+      Rails.logger.debug "\nUploading results to Slack..."
     end
   end
 end

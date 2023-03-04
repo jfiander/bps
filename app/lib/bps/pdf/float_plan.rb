@@ -3,7 +3,7 @@
 module BPS
   module PDF
     class FloatPlan < Base
-      MODULES ||= %w[
+      MODULES = %w[
         Heading PrimaryContact BoatInformation SafetyEquipment
         CommunicationInformation RoutePlan AlertPlan GroundTransportation
         Comments PersonsOnboard

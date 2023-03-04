@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module MarkdownHelper
-  VIEWS ||= {
+  VIEWS = {
     'public' => %w[home about join requirements vsc education civic history links],
     'members' => %w[members welcome user_help]
   }.freeze

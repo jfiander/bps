@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe GenericPayment, type: :model do
-  subject(:payment) { FactoryBot.create(:generic_payment, amount: 7, email: user.email) }
+RSpec.describe GenericPayment do
+  subject(:payment) { create(:generic_payment, amount: 7, email: user.email) }
 
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
 
   it 'reassigns to the found user' do
     expect(payment.email).to be_blank

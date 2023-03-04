@@ -2,9 +2,9 @@
 
 module BPS
   class GitInfo
-    MASTER_URL ||= 'https://api.github.com/repos/jfiander/bps/branches/master'
-    STAGING_URL ||= 'https://api.github.com/repos/jfiander/bps/branches/staging'
-    TAGS_URL ||= 'https://api.github.com/repos/jfiander/bps/tags'
+    MASTER_URL = 'https://api.github.com/repos/jfiander/bps/branches/master'
+    STAGING_URL = 'https://api.github.com/repos/jfiander/bps/branches/staging'
+    TAGS_URL = 'https://api.github.com/repos/jfiander/bps/tags'
 
     def local_ref
       return last_tag if ENV['DOMAIN'] == 'www.bpsd9.org'

@@ -19,15 +19,15 @@ module Concerns
         registrations.each { |reg| RegistrationMailer.remind(reg).deliver }
         BPS::SMS.broadcast(topic_arn, reminder_message(event_type))
 
-        update(reminded_at: Time.now)
+        update(reminded_at: Time.zone.now)
       end
 
       def expire!
-        update(expires_at: Time.now)
+        update(expires_at: Time.zone.now)
       end
 
       def archive!
-        update(archived_at: Time.now)
+        update(archived_at: Time.zone.now)
       end
 
       def attach_promo_code(code, **args)

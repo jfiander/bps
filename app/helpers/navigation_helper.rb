@@ -46,7 +46,7 @@ private
   def generate_link
     icon_tag = @fa.present? ? FA::Icon.p(@fa) : ''
     @link_options = @link_options.merge(title: @options[:title])
-    @link_options[:class] = @css_class unless @link_options[:class].present?
+    @link_options[:class] = @css_class if @link_options[:class].blank?
     icon_tag.present? ? link_contents_with_icon(icon_tag) : link_contents_no_icon
   end
 

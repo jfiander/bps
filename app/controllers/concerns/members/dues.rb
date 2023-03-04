@@ -3,7 +3,7 @@
 module Members
   module Dues
     def dues
-      dues_not_payable unless @payment.present?
+      dues_not_payable if @payment.blank?
     end
 
   private

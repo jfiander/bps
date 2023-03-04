@@ -32,7 +32,7 @@ private
   end
 
   def lockable_link(user)
-    if !user[:permitted_roles].include?(:admin)
+    if user[:permitted_roles].exclude?(:admin)
       concat lock_link(user[:id])
     elsif user[:permitted_roles].include?(:admin)
       concat cannot_lock_admin

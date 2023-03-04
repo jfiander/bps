@@ -29,7 +29,7 @@ class MemberApplication < ApplicationRecord
   def approve!(approving_user)
     return { requires: :excom } unless approving_user.excom?
 
-    update(approved_at: Time.now, approver_id: approving_user.id)
+    update(approved_at: Time.zone.now, approver_id: approving_user.id)
 
     parent = create_primary_user(primary)
     users = [parent]

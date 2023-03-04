@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe GenericPaymentMailer, type: :mailer do
-  let(:generic_payment) { FactoryBot.create(:generic_payment, email: 'nobody@example.com') }
+RSpec.describe GenericPaymentMailer do
+  let(:generic_payment) { create(:generic_payment, email: 'nobody@example.com') }
   let(:mail) { described_class.paid(generic_payment) }
 
   it 'renders the headers' do

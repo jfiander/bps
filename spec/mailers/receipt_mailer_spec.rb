@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe ReceiptMailer, type: :mailer do
-  let!(:user) { FactoryBot.create(:user) }
-  let(:event) { FactoryBot.create(:event, cost: 10) }
-  let(:reg) { FactoryBot.create(:registration, user: user, event: event) }
-  let(:app) { FactoryBot.create(:family_application) }
-  let(:generic) { FactoryBot.create(:generic_payment, email: 'nobody@example.com') }
+RSpec.describe ReceiptMailer do
+  let!(:user) { create(:user) }
+  let(:event) { create(:event, cost: 10) }
+  let(:reg) { create(:registration, user: user, event: event) }
+  let(:app) { create(:family_application) }
+  let(:generic) { create(:generic_payment, email: 'nobody@example.com') }
 
   let(:transaction_struct) do
     Struct.new(:id, :created_at, :amount, :customer_details, :promo_code, :credit_card_details)
@@ -18,7 +18,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
   let(:transaction) do
     transaction_struct.new(
       SecureRandom.hex(8),
-      Time.now,
+      Time.zone.now,
       10,
       customer_struct.new(user.email),
       '',
@@ -31,7 +31,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
   describe 'receipt' do
     describe 'registration' do
       describe 'mail' do
-        let(:payment) { FactoryBot.create(:payment, parent: reg) }
+        let(:payment) { create(:payment, parent: reg) }
         let(:mail) { described_class.receipt(payment, transaction) }
 
         it 'renders the headers' do
@@ -52,7 +52,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'member application' do
-      let(:payment) { FactoryBot.create(:payment, parent: app) }
+      let(:payment) { create(:payment, parent: app) }
 
       describe 'mail' do
         let(:mail) { described_class.receipt(payment, transaction) }
@@ -75,7 +75,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'dues' do
-      let(:payment) { FactoryBot.create(:payment, parent: user) }
+      let(:payment) { create(:payment, parent: user) }
 
       describe 'mail' do
         let(:mail) { described_class.receipt(payment, transaction) }
@@ -100,7 +100,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
 
   describe 'paid' do
     describe 'registration' do
-      let(:payment) { FactoryBot.create(:payment, parent: reg) }
+      let(:payment) { create(:payment, parent: reg) }
       let(:mail) { described_class.paid(payment) }
 
       it 'renders the headers' do
@@ -120,7 +120,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'member application' do
-      let(:payment) { FactoryBot.create(:payment, parent: app) }
+      let(:payment) { create(:payment, parent: app) }
       let(:mail) { described_class.paid(payment) }
 
       it 'renders the headers' do
@@ -140,7 +140,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'dues' do
-      let(:payment) { FactoryBot.create(:payment, parent: user) }
+      let(:payment) { create(:payment, parent: user) }
       let(:mail) { described_class.paid(payment) }
 
       it 'renders the headers' do
@@ -160,7 +160,7 @@ RSpec.describe ReceiptMailer, type: :mailer do
     end
 
     describe 'generic payment' do
-      let(:payment) { FactoryBot.create(:payment, parent: generic) }
+      let(:payment) { create(:payment, parent: generic) }
       let(:mail) { described_class.paid(payment) }
 
       it 'renders the headers' do

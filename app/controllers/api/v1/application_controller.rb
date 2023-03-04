@@ -36,14 +36,14 @@ module Api
       end
 
       def user_from_jwt(auth_header)
-        token = auth_header.split(' ').last
+        token = auth_header.split.last
         jwt = decode_jwt(token)
         @current_user = User.find_by(certificate: jwt[0]['data']['certificate'])
       end
 
       def user_from_bearer(auth_header)
         key = request.headers['X-Key-ID']
-        token = auth_header.split(' ').last
+        token = auth_header.split.last
         user_from_credentials(key, token)
       end
 
@@ -66,7 +66,7 @@ module Api
       end
 
       def vpc?
-        ENV['VPC_CIDRS'].split(' ').any? do |cidr|
+        ENV['VPC_CIDRS'].split.any? do |cidr|
           IPAddr.new(cidr).include?(request.remote_ip)
         end
       end

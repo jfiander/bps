@@ -25,7 +25,7 @@ module Members
     end
 
     def submitted_nominations
-      nominations_params['nominations'].reject { |_, v| v.blank? }
+      nominations_params['nominations'].compact_blank
     end
 
     def submitted_descriptions
@@ -53,7 +53,7 @@ module Members
 
     def due_date
       @due_date = excom_date('November', Date.today.year) + 12.hours
-      return @due_date unless Time.now > @due_date
+      return @due_date unless Time.zone.now > @due_date
 
       @due_date = excom_date('November', Date.today.year + 1) + 12.hours
     end

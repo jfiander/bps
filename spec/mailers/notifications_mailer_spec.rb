@@ -6,10 +6,10 @@ def user_identifier(user)
   "#{user.full_name} \\(#{user.certificate}, ##{user.id}\\)"
 end
 
-RSpec.describe NotificationsMailer, type: :mailer do
+RSpec.describe NotificationsMailer do
   describe 'bridge office updated' do
-    let(:previous) { FactoryBot.create(:user) }
-    let(:by) { FactoryBot.create(:user) }
+    let(:previous) { create(:user) }
+    let(:by) { create(:user) }
     let(:mail) { described_class.bridge(generic_seo_and_ao[:ao], by: by, previous: previous) }
 
     before { generic_seo_and_ao }
@@ -32,7 +32,7 @@ RSpec.describe NotificationsMailer, type: :mailer do
   end
 
   describe 'new float plan' do
-    let(:float_plan) { FactoryBot.create(:float_plan, :one_onboard) }
+    let(:float_plan) { create(:float_plan, :one_onboard) }
     let(:mail) { described_class.float_plan(float_plan) }
 
     context 'with no monitors' do
@@ -54,8 +54,8 @@ RSpec.describe NotificationsMailer, type: :mailer do
 
     context 'with monitors' do
       it 'sends mail to the monitors' do
-        monitor = FactoryBot.create(:user)
-        FactoryBot.create(:committee, user: monitor, name: 'Float Plan Monitor')
+        monitor = create(:user)
+        create(:committee, user: monitor, name: 'Float Plan Monitor')
         expect(mail.to).to eql([monitor.email])
       end
     end

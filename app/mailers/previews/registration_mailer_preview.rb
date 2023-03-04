@@ -144,7 +144,7 @@ private
     event_type = EventType.new(event_category: category, title: 'Example')
     Event.new(
       event_type: event_type,
-      start_at: Time.now + 1.week, cutoff_at: Time.now + 3.days,
+      start_at: 1.week.from_now, cutoff_at: 3.days.from_now,
       cost: cost,
       sessions: sessions,
       advance_payment: advance,

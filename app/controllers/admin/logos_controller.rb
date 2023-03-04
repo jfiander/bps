@@ -6,7 +6,7 @@ module Admin
 
     def logo
       @logo_params = default_params
-      return unless logo_params.present?
+      return if logo_params.blank?
 
       @logo_params = logo_params
       find_logo
@@ -40,11 +40,11 @@ module Admin
     end
 
     def invalid_logo
-      flash[:alert] = 'Invalid logo configuration.'
+      flash.now[:alert] = 'Invalid logo configuration.'
     end
 
     def no_svg_available
-      flash[:alert] = 'That SVG logo is not available.'
+      flash.now[:alert] = 'That SVG logo is not available.'
     end
 
     def logo_key

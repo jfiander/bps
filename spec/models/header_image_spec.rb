@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe HeaderImage, type: :model do
+RSpec.describe HeaderImage do
   let(:demo_image) { File.new(test_image(1500, 500)) }
 
   describe 'pick' do
     before do
-      FactoryBot.create_list(:header_image, 5, file: demo_image)
-      @pick = FactoryBot.create(:header_image, file: demo_image)
+      create_list(:header_image, 5, file: demo_image)
+      @pick = create(:header_image, file: demo_image)
       @picks = []
     end
 
@@ -25,25 +25,25 @@ RSpec.describe HeaderImage, type: :model do
 
   describe 'valid image dimensions' do
     it 'rejects if too wide' do
-      header = FactoryBot.build(:header_image, file: File.new(test_image(1500, 300)))
+      header = build(:header_image, file: File.new(test_image(1500, 300)))
       expect(header.validate).to be(false)
       expect(header.errors.messages.to_h).to eql(file: ['aspect ratio > 3.5:1 (make it narrower)'])
     end
 
     it 'rejects if too narrow' do
-      header = FactoryBot.build(:header_image, file: File.new(test_image(1000, 500)))
+      header = build(:header_image, file: File.new(test_image(1000, 500)))
       expect(header.validate).to be(false)
       expect(header.errors.messages.to_h).to eql(file: ['aspect ratio < 2.75:1 (make it wider)'])
     end
 
     it 'rejects if too small' do
-      header = FactoryBot.build(:header_image, file: File.new(test_image(500, 150)))
+      header = build(:header_image, file: File.new(test_image(500, 150)))
       expect(header.validate).to be(false)
       expect(header.errors.messages.to_h).to eql(file: ['must be at least 750px wide'])
     end
 
     it 'accepts if correctly sized' do
-      header = FactoryBot.build(:header_image, file: demo_image)
+      header = build(:header_image, file: demo_image)
       expect(header.validate).to be(true)
       expect(header.errors.messages.to_h).to be_blank
     end
@@ -51,7 +51,7 @@ RSpec.describe HeaderImage, type: :model do
 
   describe 'dimensions' do
     let(:header) do
-      FactoryBot.create(
+      create(
         :header_image, file: demo_image, width: 1500, height: 500
       )
     end

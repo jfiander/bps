@@ -36,7 +36,7 @@ module BPS
           end
 
           def roster_entry(user, row_index, col_index)
-            return unless user.present?
+            return if user.blank?
 
             entry_box(user, entry_box_x(col_index), entry_box_y(row_index))
           end

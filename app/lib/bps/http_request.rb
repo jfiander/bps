@@ -54,9 +54,9 @@ module BPS
     end
 
     def submit(uri, req)
-      print " [     ]  #{uri}\r\033[3C" if @verbose
+      Rails.logger.debug { " [     ]  #{uri}\r\033[3C" } if @verbose
       result = client(uri).request(req)
-      print "#{result.code}\n" if @verbose
+      Rails.logger.debug { "#{result.code}\n" } if @verbose
 
       return result if result.code == '200'
 

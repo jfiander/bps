@@ -2,21 +2,21 @@
 
 require 'rails_helper'
 
-RSpec.describe EventType, type: :model do
+RSpec.describe EventType do
   it 'generates a valid searchable array' do
-    FactoryBot.create(:event_type, event_category: 'public', title: 'ABC')
-    FactoryBot.create(:event_type, event_category: 'seminar', title: '123')
+    create(:event_type, event_category: 'public', title: 'ABC')
+    create(:event_type, event_category: 'seminar', title: '123')
 
     expect(described_class.searchable).to eql([%w[public abc], %w[seminar 123]])
   end
 
   describe 'form selectors' do
     before do
-      @abc = FactoryBot.create(:event_type, title: "America's Boating Course")
-      @eob = FactoryBot.create(:event_type, title: 'Emergencies Onboard', event_category: 'seminar')
-      @n = FactoryBot.create(:event_type, title: 'Navigation', event_category: 'advanced_grade')
-      @jn = FactoryBot.create(:event_type, title: 'Junior Navigation', event_category: 'advanced_grade')
-      @sail = FactoryBot.create(:event_type, title: 'Sail', event_category: 'elective')
+      @abc = create(:event_type, title: "America's Boating Course")
+      @eob = create(:event_type, title: 'Emergencies Onboard', event_category: 'seminar')
+      @n = create(:event_type, title: 'Navigation', event_category: 'advanced_grade')
+      @jn = create(:event_type, title: 'Junior Navigation', event_category: 'advanced_grade')
+      @sail = create(:event_type, title: 'Sail', event_category: 'elective')
     end
 
     it 'generates the correct course select field data' do
@@ -40,11 +40,11 @@ RSpec.describe EventType, type: :model do
 
   describe 'ordering' do
     before do
-      FactoryBot.create(:event_type, event_category: :seminar, title: 'paddle')
-      FactoryBot.create(:event_type, event_category: :elective, title: 'sail')
-      FactoryBot.create(:event_type, event_category: :meeting, title: 'member')
-      FactoryBot.create(:event_type, event_category: :public)
-      FactoryBot.create(:event_type, event_category: :advanced_grade, title: 'advanced_piloting')
+      create(:event_type, event_category: :seminar, title: 'paddle')
+      create(:event_type, event_category: :elective, title: 'sail')
+      create(:event_type, event_category: :meeting, title: 'member')
+      create(:event_type, event_category: :public)
+      create(:event_type, event_category: :advanced_grade, title: 'advanced_piloting')
       @event_types = described_class.all
     end
 

@@ -36,7 +36,7 @@ module ImportUsers
     def handle_invalid_date(error)
       raise error unless error.message == 'invalid date'
 
-      puts "Invalid date in #{@key}:\t\"#{@string}\"" unless Rails.env.test?
+      Rails.logger.debug { "Invalid date in #{@key}:\t\"#{@string}\"" } unless Rails.env.test?
     end
   end
 end

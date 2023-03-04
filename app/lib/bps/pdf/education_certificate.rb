@@ -3,12 +3,12 @@
 module BPS
   module PDF
     class EducationCertificate < Base
-      MODULES ||= %w[
+      MODULES = %w[
         Heading NameAndGrade Details Completions Seminars
       ].freeze
 
-      ROW_HEIGHT ||= 36
-      COLUMN_WIDTH ||= 90
+      ROW_HEIGHT = 36
+      COLUMN_WIDTH = 90
 
       MODULES.each { |c| include "BPS::PDF::EducationCertificate::#{c}".constantize }
 

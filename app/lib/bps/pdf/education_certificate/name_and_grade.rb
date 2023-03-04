@@ -19,7 +19,7 @@ module BPS
         end
 
         def achieved(user)
-          return unless user.long_grade.present?
+          return if user.long_grade.blank?
 
           bounding_box([0, 540], width: 540, height: 30) do
             text 'has achieved the grade of', align: :center, size: 14, style: :italic

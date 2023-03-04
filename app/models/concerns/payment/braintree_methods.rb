@@ -76,7 +76,7 @@ module Concerns
           if result.success?
             user.update(customer_id: result.customer.id)
           else
-            p result.errors
+            Rails.logger.debug result.errors
           end
           result&.customer
         end

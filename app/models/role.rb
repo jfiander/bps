@@ -26,7 +26,7 @@ class Role < ApplicationRecord
   end
 
   def self.recursive_search(*searches, direction: :up)
-    clean_searches = searches.flatten.reject(&:blank?)
+    clean_searches = searches.flatten.compact_blank
     return [] if clean_searches.blank?
 
     connection.execute(recursive_search_query(*clean_searches, direction: direction)).to_a.flatten

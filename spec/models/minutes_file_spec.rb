@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe MinutesFile, type: :model do
+RSpec.describe MinutesFile do
   let(:minutes) do
-    FactoryBot.create(:minutes_file, year: 2017, month: 9, file: File.open(test_image(200, 500), 'r'))
+    create(:minutes_file, year: 2017, month: 9, file: File.open(test_image(200, 500), 'r'))
   end
 
   it 'has the correct number of issues' do

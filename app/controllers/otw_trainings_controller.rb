@@ -109,8 +109,8 @@ private
   end
 
   def user_request_failed(otw_request)
-    flash[:alert] = 'Unable to request training.'
-    flash[:alert] = otw_request.errors.full_messages
+    flash.now[:alert] = 'Unable to request training.'
+    flash.now[:alert] = otw_request.errors.full_messages
     render status: :unprocessable_entity
   end
 end

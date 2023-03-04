@@ -42,7 +42,7 @@ module BPS
             [
               float_plan.car_make, float_plan.car_model,
               float_plan.car_year, float_plan.car_color
-            ].reject(&:blank?).join(' / '),
+            ].compact_blank.join(' / '),
             x1: 25, x2: 120, y: (180 + @left_vertical_offset)
           )
         end

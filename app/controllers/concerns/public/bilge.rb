@@ -10,7 +10,7 @@ module Public
 
     def bilge
       bilge = pick_bilge
-      return bilge_not_found unless bilge.present?
+      return bilge_not_found if bilge.blank?
 
       send_bilge(bilge)
     end

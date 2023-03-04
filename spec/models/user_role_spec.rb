@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe UserRole, type: :model do
+RSpec.describe UserRole do
   it 'preloads correctly' do
-    admin = FactoryBot.create(:role, name: 'admin')
-    child = FactoryBot.create(:role, name: 'child', parent: admin)
-    users = FactoryBot.create_list(:user, 2)
-    users.each { |u| FactoryBot.create(:user_role, user: u, role: child) }
-    user_roles_hash = users.map { |u| [u.id, [:child]] }.to_h
+    admin = create(:role, name: 'admin')
+    child = create(:role, name: 'child', parent: admin)
+    users = create_list(:user, 2)
+    users.each { |u| create(:user_role, user: u, role: child) }
+    user_roles_hash = users.to_h { |u| [u.id, [:child]] }
 
     expect(described_class.preload).to eql(user_roles_hash)
   end

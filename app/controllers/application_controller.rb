@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
   after_action { flash.discard if request.xhr? }
 
-  ::GIT_INFORMATION ||= BPS::GitInfo.new
+  ::GIT_INFORMATION = BPS::GitInfo.new
 
   def self.render_markdown_views
     before_action :render_markdown, only: MarkdownHelper::VIEWS[controller_name]

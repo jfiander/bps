@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Album, type: :model do
+RSpec.describe Album do
   let(:album) do
-    FactoryBot.create(:album).tap do |a|
-      FactoryBot.create(:photo, album: a)
-      FactoryBot.create(:photo, album: a)
+    create(:album).tap do |a|
+      create(:photo, album: a)
+      create(:photo, album: a)
     end
   end
 

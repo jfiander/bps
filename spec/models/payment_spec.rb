@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Payment, type: :model do
-  let(:user) { FactoryBot.create(:user) }
+RSpec.describe Payment do
+  let(:user) { create(:user) }
   let(:token) { described_class.client_token }
   let(:user_token) { described_class.client_token(user_id: user.id) }
 
@@ -40,9 +40,9 @@ RSpec.describe Payment, type: :model do
     describe 'paid?' do
       let(:payment) do
         generic_seo_and_ao
-        event = FactoryBot.create(:event)
-        reg = FactoryBot.create(:registration, event: event, email: 'example@example.com')
-        FactoryBot.create(:payment, parent: reg)
+        event = create(:event)
+        reg = create(:registration, event: event, email: 'example@example.com')
+        create(:payment, parent: reg)
       end
 
       it 'is false if not paid' do
@@ -59,7 +59,7 @@ RSpec.describe Payment, type: :model do
   context 'with a registration' do
     let(:registration) do
       generic_seo_and_ao
-      FactoryBot.create(:registration, :with_user)
+      create(:registration, :with_user)
     end
 
     it 'has the correct transaction amount' do
@@ -94,7 +94,7 @@ RSpec.describe Payment, type: :model do
   end
 
   context 'with a membership application' do
-    let(:application) { FactoryBot.create(:member_application, :with_primary) }
+    let(:application) { create(:member_application, :with_primary) }
 
     it 'has the correct transaction amount' do
       expect(application.payment.transaction_amount).to eql("$#{application.payment_amount}.00")
@@ -108,7 +108,7 @@ RSpec.describe Payment, type: :model do
   end
 
   context 'with annual dues' do
-    let(:payment) { FactoryBot.create(:payment, parent: user) }
+    let(:payment) { create(:payment, parent: user) }
 
     it 'has the correct transaction amount' do
       expect(payment.transaction_amount).to eql("$#{user.payment_amount}.00")
@@ -127,25 +127,25 @@ RSpec.describe Payment, type: :model do
     before { generic_seo_and_ao }
 
     it 'returns false if cost is a Hash' do
-      parent = FactoryBot.create(:user)
-      child = FactoryBot.create(:user, parent: parent)
-      payment = FactoryBot.create(:payment, parent: child)
+      parent = create(:user)
+      child = create(:user, parent: parent)
+      payment = create(:payment, parent: child)
 
       expect(payment.cost?).to be(false)
     end
 
     it 'returns false if cost is nil' do
-      event = FactoryBot.create(:event, cost: nil)
-      reg = FactoryBot.create(:registration, event: event, email: 'example@example.com')
-      payment = FactoryBot.create(:payment, parent: reg)
+      event = create(:event, cost: nil)
+      reg = create(:registration, event: event, email: 'example@example.com')
+      payment = create(:payment, parent: reg)
 
       expect(payment.cost?).to be(false)
     end
 
     it 'returns true if cost is an Integer' do
-      event = FactoryBot.create(:event, cost: 7)
-      reg = FactoryBot.create(:registration, event: event, email: 'example@example.com')
-      payment = FactoryBot.create(:payment, parent: reg)
+      event = create(:event, cost: 7)
+      reg = create(:registration, event: event, email: 'example@example.com')
+      payment = create(:payment, parent: reg)
 
       expect(payment.cost?).to be(true)
     end
@@ -156,8 +156,8 @@ RSpec.describe Payment, type: :model do
 
     describe 'attach' do
       let(:payment) do
-        event_type = FactoryBot.create(:event_type)
-        event = FactoryBot.create(:event, event_type: event_type)
+        event_type = create(:event_type)
+        event = create(:event, event_type: event_type)
         reg, = register(event, email: 'test@example.com')
         reg.payment
       end
@@ -167,14 +167,14 @@ RSpec.describe Payment, type: :model do
       end
 
       it 'does not attach a promo code if not usable' do
-        FactoryBot.create(:promo_code, code: 'prior_code')
+        create(:promo_code, code: 'prior_code')
         payment.attach_promo_code('prior_code')
 
         expect(payment.promo_code).to be_blank
       end
 
       it 'correctlies attach a promo code when a match exists' do
-        FactoryBot.create(:promo_code, code: 'prior_code', valid_at: 1.hour.ago, discount_type: 'member')
+        create(:promo_code, code: 'prior_code', valid_at: 1.hour.ago, discount_type: 'member')
         payment.attach_promo_code('prior_code')
 
         expect(payment.promo_code.code).to eql('prior_code')
@@ -188,8 +188,8 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'uses the discounted transaction amount' do
-      event_type = FactoryBot.create(:event_type)
-      event = FactoryBot.create(:event, event_type: event_type, cost: 20)
+      event_type = create(:event_type)
+      event = create(:event, event_type: event_type, cost: 20)
       reg, = register(event, email: 'test@example.com')
       payment = reg.payment
       payment.attach_promo_code(

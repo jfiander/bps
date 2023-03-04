@@ -58,7 +58,7 @@ Aws.config[:cloudfront] = {
         items: [
           {
             id: 'I3TUSXES93FBM3',
-            create_time: Time.now - 1.minute,
+            create_time: 1.minute.ago,
             status: 'InProgress'
           }
         ]

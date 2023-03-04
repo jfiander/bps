@@ -2,7 +2,7 @@
 
 class User
   module Import
-    ACCEPTABLE_CONTENT_TYPES ||= %w[
+    ACCEPTABLE_CONTENT_TYPES = %w[
       text/csv text/plain application/octet-stream application/vnd.ms-excel
     ].freeze
 
@@ -136,7 +136,7 @@ class User
     def log_import
       log = File.open("#{Rails.root}/log/user_import.log", 'a')
 
-      log.write("[#{Time.now}] User import by: #{current_user.full_name}\n")
+      log.write("[#{Time.zone.now}] User import by: #{current_user.full_name}\n")
       log.write(@import_proto.to_json)
       log.write("\n\n")
       log.close

@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe OTWTraining, type: :model do
+RSpec.describe OTWTraining do
   it 'orders correctly' do
-    FactoryBot.create(:otw_training, boc_level: 'Advanced Coastal Navigator', name: '5')
-    FactoryBot.create(:otw_training, boc_level: 'Coastal Navigator', name: '4')
-    FactoryBot.create(:otw_training, boc_level: 'Offshore Navigator', name: '3')
-    FactoryBot.create(:otw_training, boc_level: 'Inland Navigator', name: '2')
-    FactoryBot.create(:otw_training, boc_level: 'Coastal Navigator', name: '1')
+    create(:otw_training, boc_level: 'Advanced Coastal Navigator', name: '5')
+    create(:otw_training, boc_level: 'Coastal Navigator', name: '4')
+    create(:otw_training, boc_level: 'Offshore Navigator', name: '3')
+    create(:otw_training, boc_level: 'Inland Navigator', name: '2')
+    create(:otw_training, boc_level: 'Coastal Navigator', name: '1')
 
     expect(described_class.all.ordered.map { |o| [o.boc_level, o.name] }).to eql(
       [

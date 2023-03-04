@@ -68,7 +68,7 @@ module ApplicationHelper
   end
 
   def truncate_mail_to(email)
-    return unless email.present?
+    return if email.blank?
 
     address, domain = email.split('@')
     short = address.truncate(12)

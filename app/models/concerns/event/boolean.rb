@@ -6,15 +6,15 @@ module Concerns
       extend ActiveSupport::Concern
 
       def expired?
-        expires_at.present? && expires_at < Time.now
+        expires_at.present? && expires_at < Time.zone.now
       end
 
       def archived?
-        archived_at.present? && archived_at < Time.now
+        archived_at.present? && archived_at < Time.zone.now
       end
 
       def cutoff?
-        (cutoff_at.present? && cutoff_at < Time.now) || full?
+        (cutoff_at.present? && cutoff_at < Time.zone.now) || full?
       end
 
       def full?
@@ -26,7 +26,7 @@ module Concerns
       end
 
       def within_a_week?
-        time_diff = (start_at - Time.now)
+        time_diff = (start_at - Time.zone.now)
         time_diff < 7.days && time_diff > 0.days
       end
 
@@ -39,7 +39,7 @@ module Concerns
       end
 
       def registerable?
-        allow_any_registrations? && !cutoff? && (!expired? || start_at > Time.now)
+        allow_any_registrations? && !cutoff? && (!expired? || start_at > Time.zone.now)
       end
 
     private

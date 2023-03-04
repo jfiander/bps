@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ViewHelper, type: :helper do
+RSpec.describe ViewHelper do
   describe 'officer flags' do
     it 'gets the correct SVG for Lt/C' do
       expect(described_class.officer_flag('educational')).to include(

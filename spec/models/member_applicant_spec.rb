@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe MemberApplicant, type: :model do
-  let(:application) { FactoryBot.build(:member_application) }
+RSpec.describe MemberApplicant do
+  let(:application) { build(:member_application) }
   let!(:primary) do
-    FactoryBot.build(
+    build(
       :member_applicant,
       member_application: application,
       primary: true,
@@ -31,7 +31,7 @@ RSpec.describe MemberApplicant, type: :model do
 
   context 'with an additional member' do
     let(:additional) do
-      FactoryBot.build(
+      build(
         :member_applicant,
         member_application: application,
         primary: false,
@@ -46,7 +46,7 @@ RSpec.describe MemberApplicant, type: :model do
     end
 
     it "refuses an application with a member's email address" do
-      FactoryBot.create(:user, email: additional.email)
+      create(:user, email: additional.email)
 
       additional.validate
       expect(additional.errors.messages.to_h).to eql(

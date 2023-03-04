@@ -4,7 +4,7 @@ module BPS
   module PDF
     class Roster
       class Detailed
-        CONFIG_TEXT ||= YAML.safe_load(
+        CONFIG_TEXT = YAML.safe_load(
           File.read("#{Rails.root}/app/lib/bps/pdf/roster/detailed/text.yml")
         ).deep_symbolize_keys!
 

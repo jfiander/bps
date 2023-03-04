@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FlagsHelper, type: :helper do
+RSpec.describe FlagsHelper do
   it 'generates the correct officer flag HTML' do
     expect(officer_flags('PSTFC')).to eql(
       '<div class="officer-flags"><img width="150" height="100" ' \

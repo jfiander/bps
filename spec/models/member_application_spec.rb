@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe MemberApplication, type: :model do
-  let(:single_application) { FactoryBot.create(:single_application) }
-  let(:family_application) { FactoryBot.create(:family_application) }
-  let(:apprentice_application) { FactoryBot.create(:apprentice_application) }
+RSpec.describe MemberApplication do
+  let(:single_application) { create(:single_application) }
+  let(:family_application) { create(:family_application) }
+  let(:apprentice_application) { create(:apprentice_application) }
 
   context 'with a single application' do
     it 'has one applicant' do
@@ -32,7 +32,7 @@ RSpec.describe MemberApplication, type: :model do
   end
 
   it 'does not allow non-excom members to approve applications' do
-    approver = FactoryBot.create(:user)
+    approver = create(:user)
     expect(family_application.approve!(approver)).to eql(requires: :excom)
   end
 

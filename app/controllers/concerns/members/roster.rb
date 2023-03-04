@@ -2,7 +2,7 @@
 
 module Members
   module Roster
-    ROSTER_UPLOAD_RETRY_EXCEPTIONS ||= [
+    ROSTER_UPLOAD_RETRY_EXCEPTIONS = [
       Aws::S3::Errors::BadDigest, Aws::S3::Errors::XAmzContentSHA256Mismatch
     ].freeze
 
@@ -41,7 +41,7 @@ module Members
   private
 
     def reject_invalid_file
-      return unless roster_params[:roster].present?
+      return if roster_params[:roster].blank?
       return unless roster_params[:roster].content_type == 'application/pdf'
 
       flash[:alert] = 'You must upload a valid file.'

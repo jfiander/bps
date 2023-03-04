@@ -11,7 +11,7 @@ private
       event_emails
     else
       education_emails
-    end.flatten.uniq.reject(&:blank?)
+    end.flatten.uniq.compact_blank
   end
 
   def event_emails
@@ -43,7 +43,7 @@ private
     [
       Committee.get(:administrative, 'Rendezvous', 'Meetings & Programs'),
       Committee.get(:educational, 'Seminars', 'ABC', 'Advanced Grades', 'Electives')
-    ].flatten.reject(&:nil?)
+    ].flatten.compact
   end
 
   def get_chair_email(name)

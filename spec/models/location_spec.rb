@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Location, type: :model do
-  let!(:location) { FactoryBot.create(:location) }
+RSpec.describe Location do
+  let!(:location) { create(:location) }
 
   describe 'searchable' do
     it 'returns a hash' do
@@ -68,7 +68,7 @@ RSpec.describe Location, type: :model do
   end
 
   it 'returns the correct one-line address' do
-    location = FactoryBot.create(:location, address: "123\n456\n789")
+    location = create(:location, address: "123\n456\n789")
     expect(location.one_line).to eql('123, 456, 789')
   end
 end

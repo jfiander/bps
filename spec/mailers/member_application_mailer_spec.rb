@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe MemberApplicationMailer, type: :mailer do
-  let(:single_application) { FactoryBot.create(:single_application) }
-  let(:family_application) { FactoryBot.create(:family_application) }
+RSpec.describe MemberApplicationMailer do
+  let(:single_application) { create(:single_application) }
+  let(:family_application) { create(:family_application) }
 
   before { generic_seo_and_ao }
 
@@ -97,7 +97,7 @@ RSpec.describe MemberApplicationMailer, type: :mailer do
     end
 
     describe 'paid_dues' do
-      let(:user) { FactoryBot.create(:user) }
+      let(:user) { create(:user) }
       let(:mail) { described_class.paid_dues(user) }
 
       it 'renders the headers' do

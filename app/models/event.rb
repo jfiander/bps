@@ -25,11 +25,11 @@ class Event < ApplicationRecord
 
   scope :by_date, -> { order(:start_at) }
   scope :displayable, -> { where(archived_at: nil).where('start_at > ?', Event.auto_archive) }
-  scope :current, -> { where('expires_at > ?', Time.now) }
-  scope :expired, -> { where('expires_at <= ?', Time.now) }
+  scope :current, -> { where('expires_at > ?', Time.zone.now) }
+  scope :expired, -> { where('expires_at <= ?', Time.zone.now) }
   scope :visible, -> { where(visible: true) }
   scope(:activity_feed, lambda do
-    where('start_at > ? AND expires_at > ? AND activity_feed = ?', Time.now, Time.now, true)
+    where('start_at > ? AND expires_at > ? AND activity_feed = ?', Time.zone.now, Time.zone.now, true)
   end)
 
   has_attached_file(
@@ -45,7 +45,7 @@ class Event < ApplicationRecord
   end
 
   validates :repeat_pattern, inclusion: { in: %w[DAILY WEEKLY] << nil }
-  validates :event_type, :start_at, :expires_at, :cutoff_at, presence: true
+  validates :start_at, :expires_at, :cutoff_at, presence: true
   validates :slug, uniqueness: true, if: -> { slug.present? }
 
   validates_attachment_content_type(
@@ -174,7 +174,7 @@ class Event < ApplicationRecord
 private
 
   def validate_dates
-    return unless start_at.present?
+    return if start_at.blank?
 
     self.cutoff_at = start_at if cutoff_at.blank? || out_of_date(:cutoff_at)
     self.expires_at = start_at + 1.week if expires_at.blank? || out_of_date(:expires_at)

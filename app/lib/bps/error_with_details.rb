@@ -5,7 +5,7 @@ module BPS
     def self.call(klass, message, **metadata)
       e = klass.new(message, metadata)
       Bugsnag.notify(e) { |b| b.meta_data = e.bugsnag_meta_data }
-      puts ''
+      Rails.logger.debug ''
       e
     end
   end

@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe BridgeHelper, type: :helper do
-  let!(:cdr) { FactoryBot.create(:user, first_name: 'John', last_name: 'Doe') }
-  let!(:com) { FactoryBot.create(:user, first_name: 'Jane', last_name: 'Dore') }
-  let!(:stand) { FactoryBot.create(:user, first_name: 'Jack', last_name: 'Dodd') }
-  let!(:standing_committee_office) { FactoryBot.create(:standing_committee_office, user: stand) }
-  let!(:bridge_office) { FactoryBot.create(:bridge_office, user: cdr) }
-  let!(:committee) { FactoryBot.create(:committee, user: com) }
+RSpec.describe BridgeHelper do
+  let!(:cdr) { create(:user, first_name: 'John', last_name: 'Doe') }
+  let!(:com) { create(:user, first_name: 'Jane', last_name: 'Dore') }
+  let!(:stand) { create(:user, first_name: 'Jack', last_name: 'Dodd') }
+  let!(:standing_committee_office) { create(:standing_committee_office, user: stand) }
+  let!(:bridge_office) { create(:bridge_office, user: cdr) }
+  let!(:committee) { create(:committee, user: com) }
   let(:departments) do
     {
       commander: {

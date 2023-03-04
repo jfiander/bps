@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe ApiToken, type: :model do
-  let(:token) { FactoryBot.create(:api_token) }
+RSpec.describe ApiToken do
+  let(:token) { create(:api_token) }
 
   it 'sets an expiration date on create' do
     expect(token.expires_at).not_to be_nil
@@ -25,7 +25,7 @@ RSpec.describe ApiToken, type: :model do
     end
 
     it 'returns false when expired' do
-      token.expires_at = Time.now - 1.second
+      token.expires_at = 1.second.ago
       expect(token.current?).to be(false)
     end
   end

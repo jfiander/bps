@@ -107,7 +107,7 @@ module BPS
     end
 
     def signed_link(key, expires_at = nil)
-      expires_at ||= Time.now + 1.hour
+      expires_at ||= 1.hour.from_now
       cf_signer.signed_url(cf_link(key), expires: expires_at)
     end
 

@@ -10,7 +10,7 @@ module Roster
     default_scope { order(:year) }
 
     def display_name
-      return name unless user.present?
+      return name if user.blank?
 
       user.simple_name
     end

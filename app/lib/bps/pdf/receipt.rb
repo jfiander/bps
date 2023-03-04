@@ -3,7 +3,7 @@
 module BPS
   module PDF
     class Receipt < Base
-      MODULES ||= %w[
+      MODULES = %w[
         CustomerInfo TransactionInfo Cost PolicyLinks
       ].freeze
 

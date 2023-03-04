@@ -19,10 +19,10 @@ module ImportUsers
   require 'import_users/lock_users'
   require 'import_users/hash'
 
-  FIELDS ||= YAML.safe_load(
+  FIELDS = YAML.safe_load(
     File.read("#{Rails.root}/app/services/import_users/fields.yml")
   )
 
-  IMPORTED_FIELDS ||= ImportUsers::FIELDS['import'].freeze
-  IGNORED_FIELDS ||= ImportUsers::FIELDS['ignore'].freeze
+  IMPORTED_FIELDS = ImportUsers::FIELDS['import'].freeze
+  IGNORED_FIELDS = ImportUsers::FIELDS['ignore'].freeze
 end

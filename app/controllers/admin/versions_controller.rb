@@ -8,8 +8,8 @@ module Admin
     before_action :find_version_numbers, only: %i[diff]
 
     def index
-      return versioned_models unless clean_params[:model].present?
-      return unless list_objects.size.zero?
+      return versioned_models if clean_params[:model].blank?
+      return unless list_objects.empty?
 
       flash.now[:alert] = "No objects found for class #{clean_params[:model]}."
     end

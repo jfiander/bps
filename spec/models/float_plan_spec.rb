@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe FloatPlan, type: :model do
+RSpec.describe FloatPlan do
   context 'with default factory' do
-    let(:float_plan) { FactoryBot.create(:float_plan, :one_onboard) }
+    let(:float_plan) { create(:float_plan, :one_onboard) }
 
     it 'successfully generates a PDF' do
       expect { float_plan.generate_pdf }.not_to raise_error
@@ -26,7 +26,7 @@ RSpec.describe FloatPlan, type: :model do
 
     it 'successfully generates a PDF with three onboard' do
       2.times do
-        float_plan.float_plan_onboards << FactoryBot.create(
+        float_plan.float_plan_onboards << create(
           :float_plan_onboard, float_plan: float_plan
         )
       end
@@ -36,22 +36,22 @@ RSpec.describe FloatPlan, type: :model do
   end
 
   it 'successfully generates a PDF with engines' do
-    float_plan = FactoryBot.create(:float_plan_with_engines)
+    float_plan = create(:float_plan_with_engines)
     expect { float_plan.generate_pdf }.not_to raise_error
   end
 
   it 'successfully generates a PDF with a trailer plate' do
-    float_plan = FactoryBot.create(:float_plan_with_trailer)
+    float_plan = create(:float_plan_with_trailer)
     expect { float_plan.generate_pdf }.not_to raise_error
   end
 
   it 'successfully generates a PDF with a car' do
-    float_plan = FactoryBot.create(:float_plan_with_car)
+    float_plan = create(:float_plan_with_car)
     expect { float_plan.generate_pdf }.not_to raise_error
   end
 
   it 'does not return an error on invalidate!' do
-    float_plan = FactoryBot.create(:float_plan, :one_onboard)
+    float_plan = create(:float_plan, :one_onboard)
     expect { float_plan.invalidate! }.not_to raise_error
   end
 end

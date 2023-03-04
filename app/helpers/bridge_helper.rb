@@ -62,7 +62,7 @@ module BridgeHelper
   end
 
   def generate_officer_hash(officer)
-    return unless officer.present?
+    return if officer.blank?
 
     {
       title: officer.title,

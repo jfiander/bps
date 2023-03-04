@@ -6,7 +6,7 @@ module SignalFlagsHelper
 
     <<~OUTER.html_safe
       <div class="signals #{css}" title="#{text}">
-        #{text.scan(/[A-Za-z0-9\s]/).map(&:downcase).split(' ').map do |word|
+        #{text.scan(/[A-Za-z0-9\s]/).map(&:downcase).split.map do |word|
           <<~INNER
             <div class="word">
               #{word.map do |letter|

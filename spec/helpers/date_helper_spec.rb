@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe DateHelper, type: :helper do
+RSpec.describe DateHelper do
   describe 'ExCom' do
     it 'correctlies determine if ExCom is in session' do
       expect(excom_in_session?(Date.strptime('2018-01-01'))).to be(true)

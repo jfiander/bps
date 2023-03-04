@@ -71,7 +71,7 @@ class User < ApplicationRecord
   scope :alphabetized, -> { order(:last_name) }
   scope :with_name, ->(name) { where(simple_name: name) }
   scope :with_any_name, -> { where.not(simple_name: [nil, '', ' ']) }
-  scope :valid_instructors, -> { where('id_expr > ?', Time.now) }
+  scope :valid_instructors, -> { where('id_expr > ?', Time.zone.now) }
   scope :invitable, -> { unlocked.where('sign_in_count = 0').reject(&:placeholder_email?) }
   scope :vessel_examiners, (lambda do
     includes(:course_completions).where(course_completions: { course_key: 'VSC_01' })
@@ -109,7 +109,7 @@ class User < ApplicationRecord
 
   def add_subscription(reg)
     # :nocov:
-    return unless reg.event.topic_arn.present?
+    return if reg.event.topic_arn.blank?
 
     arn = BPS::SMS.subscribe(reg.event.topic_arn, phone_c).subscription_arn
     reg.update_attribute(:subscription_arn, arn)
@@ -121,7 +121,7 @@ class User < ApplicationRecord
   end
 
   def bridge_officer?
-    BridgeOffice.where(user_id: id).exists?
+    BridgeOffice.exists?(user_id: id)
   end
 
   def completions
@@ -142,7 +142,7 @@ class User < ApplicationRecord
   end
 
   def valid_instructor?
-    id_expr.present? && id_expr > Time.now
+    id_expr.present? && id_expr > Time.zone.now
   end
 
   def vessel_examiner?
@@ -150,7 +150,7 @@ class User < ApplicationRecord
   end
 
   def cpr_aed?
-    cpr_aed_expires_at.present? && cpr_aed_expires_at > Time.now
+    cpr_aed_expires_at.present? && cpr_aed_expires_at > Time.zone.now
   end
 
   def token_exists?(token)
@@ -186,7 +186,7 @@ private
   end
 
   def bridge_office_name
-    BridgeOffice.where(user_id: id).pluck(:office).first
+    BridgeOffice.where(user_id: id).pick(:office)
   end
 
   def update_last_mm

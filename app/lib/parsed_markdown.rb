@@ -2,7 +2,7 @@
 
 # Custom string class for parsing markdown helpers
 class ParsedMarkdown < String
-  PARSERS ||= %i[
+  PARSERS = %i[
     comments center big reg list email
     burgee education meeting excom classed activity
     image link button fam fa signal_flag

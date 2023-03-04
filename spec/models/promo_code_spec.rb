@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe PromoCode, type: :model do
+RSpec.describe PromoCode do
   context 'with a single testing code' do
-    let(:promo_code) { FactoryBot.create(:promo_code, code: 'testing') }
+    let(:promo_code) { create(:promo_code, code: 'testing') }
 
     describe 'flags' do
       describe 'pending' do
@@ -127,8 +127,8 @@ RSpec.describe PromoCode, type: :model do
     describe '#registrations' do
       before { generic_seo_and_ao }
 
-      let!(:used) { FactoryBot.create(:registration, :with_email).tap { |r| r.payment.update(promo_code: promo_code) } }
-      let!(:other) { FactoryBot.create(:registration, :with_email) }
+      let!(:used) { create(:registration, :with_email).tap { |r| r.payment.update(promo_code: promo_code) } }
+      let!(:other) { create(:registration, :with_email) }
 
       it 'returns registrations that use the promo code' do
         expect(promo_code.registrations).to eq([used])
@@ -137,9 +137,9 @@ RSpec.describe PromoCode, type: :model do
   end
 
   describe 'scopes' do
-    let!(:pending) { FactoryBot.create(:promo_code, code: 'pending', valid_at: 1.hour.from_now) }
-    let!(:current) { FactoryBot.create(:promo_code, code: 'current', valid_at: 1.hour.ago) }
-    let!(:expired) { FactoryBot.create(:promo_code, code: 'expired', expires_at: 1.hour.ago) }
+    let!(:pending) { create(:promo_code, code: 'pending', valid_at: 1.hour.from_now) }
+    let!(:current) { create(:promo_code, code: 'current', valid_at: 1.hour.ago) }
+    let!(:expired) { create(:promo_code, code: 'expired', expires_at: 1.hour.ago) }
 
     it 'returns the list of current codes' do
       expect(described_class.current.to_a).to eql([current])

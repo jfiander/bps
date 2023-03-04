@@ -46,7 +46,7 @@ module BPS
 
         def decrypt_signature
           EncryptedKeystore.decrypt(
-            file: File.join(Rails.root, 'app/assets/images/signatures/education.png.enc'),
+            file: Rails.root.join('app/assets/images/signatures/education.png.enc'),
             out: Rails.root.join('tmp', 'run', 'signature.png'),
             key: ENV.fetch('SIGNATURE_KEY', nil), iv: ENV.fetch('SIGNATURE_IV', nil)
           )

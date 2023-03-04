@@ -16,7 +16,7 @@ class User
       @only = clean_params[:only] == '1'
       @instructors = User.includes(:course_completions).where(
         'id_expr > ? OR (cpr_aed_expires_at IS NOT NULL AND cpr_aed_expires_at > ?)',
-        Time.now, Time.now
+        Time.zone.now, Time.zone.now
       )
       @keys = %w[ABC CPR/AED S P AP JN N CP EM ID ME MCS MES EN RA SA WE] << %w[Exam SN]
     end
@@ -31,7 +31,7 @@ class User
     end
 
     def abc_instructors
-      @instructors.select { |u| u.id_expr.present? && u.id_expr > Time.now }
+      @instructors.select { |u| u.id_expr.present? && u.id_expr > Time.zone.now }
     end
 
     def sn_instructors

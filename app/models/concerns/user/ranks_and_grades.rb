@@ -38,7 +38,7 @@ class User
     end
 
     def ranks(html: true)
-      [bridge_rank(html: html), override_rank(html: html), committee_rank].reject(&:blank?)
+      [bridge_rank(html: html), override_rank(html: html), committee_rank].compact_blank
     end
 
     def formatted_grade
