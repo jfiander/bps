@@ -36,6 +36,7 @@ RSpec.describe BPS::Invalidation, type: :lib do
   end
 
   context 'with a submitted request' do
+    # TODO: This is potentially invalid?
     let(:inv_hash) { described_class.submit(:files, 'dev/test_file') }
 
     it 'returns a pending invalidation' do
