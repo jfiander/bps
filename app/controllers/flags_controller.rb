@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 class FlagsController < ApplicationController
-  before_action :bucket, only: %i[flags national signals]
+  before_action :bucket, only: %i[index national signals]
 
   title!('Flags')
 
-  def flags
+  def index
     @show_birmingham = true
-    render(:flags, layout: 'application')
+    render(:index, layout: 'application')
   end
 
   def national
     @show_birmingham = false
-    @generic_logo = @bucket.link('logos/ABC/png/long/tr/slogan/1000.png')
-    render(:flags, layout: 'flags')
+    @generic_logo = @bucket.link('logos/ABC/png/long/tr/slogan/2000.png')
+    render(:index, layout: 'flags')
   end
 
   def tridents

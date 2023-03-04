@@ -68,6 +68,12 @@ Rails.application.routes.draw do
   get     '/bilge/:year/:month', to: 'v2/bilges#bilge', as: 'bilge'
   get     '/bilge(/:year)',      to: redirect('/newsletter')
 
+  # Flags
+  resources :flags, only: %i[index] do
+    get :tridents, :intersections, :signals, :national, on: :collection
+  end
+  get '/signals', to: redirect('/flags/signals')
+
   ##### LEGACY ROUTES #####
 
   ### Markdown pages
@@ -90,11 +96,6 @@ Rails.application.routes.draw do
   ### Static pages
   get     '/refunds',        to: 'braintree#refunds'
   get     '/payment_terms',  to: 'braintree#terms'
-  get     '/flags',          to: 'flags#flags'
-  get     '/flags/national', to: 'flags#national'
-  get     '/tridents',       to: 'flags#tridents'
-  get     '/intersections',  to: 'flags#intersections'
-  get     '/signals',        to: 'flags#signals'
   get     '/complete',       to: 'public#complete'
   get     '/cancelled',      to: 'public#cancelled'
 
