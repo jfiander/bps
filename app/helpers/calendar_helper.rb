@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CalendarHelper
-  def render_calendar(calendar_data = ENV['CALENDARS'])
+  def render_calendar(calendar_data = ENV.fetch('CALENDARS', nil))
     @calendar_data = calendar_data
     "https://calendar.google.com/calendar/b/2/embed?#{calendar_options}&#{calendars}"
   end

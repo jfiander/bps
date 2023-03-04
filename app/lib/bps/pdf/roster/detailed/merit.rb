@@ -35,7 +35,7 @@ module BPS
 
           def emeritus
             emeriti = @users.where('mm >= ?', 50)
-            @emeritus_height = (50 + emeriti.count * 6 + (emeriti.present? ? 10 : 0))
+            @emeritus_height = (50 + (emeriti.count * 6) + (emeriti.present? ? 10 : 0))
             bounding_box([0, 470], width: 325, height: @emeritus_height) do
               member_collection('Emeritus Members', emeriti, :emeritus, honor: true)
             end
@@ -43,7 +43,7 @@ module BPS
 
           def life
             life_members = @users.where('mm >= ?', 25).where('mm < ?', 50)
-            @life_height = (50 + life_members.count * 6 + (life_members.present? ? 10 : 0))
+            @life_height = (50 + (life_members.count * 6) + (life_members.present? ? 10 : 0))
             bounding_box([0, 450 - @emeritus_height], width: 325, height: @life_height) do
               member_collection('Life Members', life_members, :life, honor: true)
             end
@@ -54,7 +54,7 @@ module BPS
 
           def senior
             senior_members = @users.where('mm >= ?', 5).where('mm < ?', 25)
-            @senior_height = (50 + senior_members.count * 6 + (senior_members.present? ? 10 : 0))
+            @senior_height = (50 + (senior_members.count * 6) + (senior_members.present? ? 10 : 0))
             bounding_box([0, 540], width: 325, height: @senior_height) do
               member_collection('Senior Members', senior_members, :senior)
             end
@@ -62,7 +62,7 @@ module BPS
 
           def merit_marks
             recent_mms = @users.recent_mm
-            @mm_height = (50 + recent_mms.count * 6 + (recent_mms.present? ? 10 : 0))
+            @mm_height = (50 + (recent_mms.count * 6) + (recent_mms.present? ? 10 : 0))
             bounding_box([0, 540 - @senior_height], width: 325, height: @mm_height) do
               member_collection('Merit Marks', recent_mms, :merit_marks, mm: true)
             end
@@ -107,7 +107,7 @@ module BPS
 
           def load_life_member
             insignia = BPS::S3.new(:static).download('insignia/PNG/membership/tr/life.png')
-            File.open('tmp/run/Life.png', 'w+') { |f| f.write(insignia) }
+            File.write('tmp/run/Life.png', insignia)
           end
         end
       end

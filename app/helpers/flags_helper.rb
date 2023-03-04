@@ -4,7 +4,7 @@ module FlagsHelper
   def officer_flags(rank, height = 100)
     content_tag(:div, class: 'officer-flags') do
       concat flag_image("flags/PNG/#{rank}.thumb.png", width: 150, height: height)
-      concat tag(:br)
+      concat tag.br
       concat dl_link('PNG', "flags/PNG/#{rank}.png")
       concat content_tag(:span, ' | ')
       concat dl_link('SVG', "flags/SVG/#{rank}.svg")
@@ -14,7 +14,7 @@ module FlagsHelper
   def officer_insignia(rank)
     content_tag(:div, class: 'officer-insignia') do
       concat flag_image("flags/PNG/insignia/#{rank}.thumb.png", height: 75)
-      concat tag(:br)
+      concat tag.br
       concat dl_link('PNG', "flags/PNG/insignia/#{rank}.png")
       concat content_tag(:span, ' | ')
       concat dl_link('SVG', "flags/SVG/insignia/#{rank}.svg")
@@ -29,7 +29,7 @@ module FlagsHelper
     edpro_tag = edpro ? '_edpro' : ''
     content_tag(:div, class: 'grade-insignia') do
       concat flag_image("insignia/PNG/grades/tr/#{grade}#{edpro_tag}.png", height: height)
-      concat tag(:br)
+      concat tag.br
       link_list('insignia/PNG/grades') { "#{grade}#{edpro_tag}" }
     end
   end
@@ -37,7 +37,7 @@ module FlagsHelper
   def membership_insignia(membership)
     content_tag(:div, class: 'membership-insignia') do
       concat flag_image("insignia/PNG/membership/tr/#{membership}.png", width: 250)
-      concat tag(:br)
+      concat tag.br
       link_list('insignia/PNG/membership') { membership }
     end
   end
@@ -45,7 +45,7 @@ module FlagsHelper
   def mm_insignia
     content_tag(:div, class: 'mm-insignia') do
       concat flag_image('insignia/PNG/mm.png', height: 30)
-      concat tag(:br)
+      concat tag.br
       concat dl_link('PNG', 'insignia/PNG/mm.png')
       concat content_tag(:span, ' | ')
       concat dl_link('SVG', 'insignia/SVG/mm.svg')

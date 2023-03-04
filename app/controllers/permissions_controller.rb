@@ -99,7 +99,7 @@ private
       return
     end
 
-    return unless clean_params[:role].blank?
+    return if clean_params[:role].present?
 
     redirect_to permit_path, alert: 'Permission was not selected.'
   end
@@ -140,9 +140,9 @@ private
   end
 
   def calendar_id
-    return ENV['GOOGLE_CALENDAR_ID_GEN'] if Rails.env.production?
+    return ENV.fetch('GOOGLE_CALENDAR_ID_GEN', nil) if Rails.env.production?
 
-    ENV['GOOGLE_CALENDAR_ID_TEST']
+    ENV.fetch('GOOGLE_CALENDAR_ID_TEST', nil)
   end
 
   def update_calendar_acl(user)

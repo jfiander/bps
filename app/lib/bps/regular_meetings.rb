@@ -25,32 +25,32 @@ module BPS
       meeting_hash(
         summary: 'Membership Meeting', description: membership_description,
         months: months_except(6, 7, 8), date: '09', week: '2', conference: {
-          conference: { id: ENV['MEMBERSHIP_MEET_ID'], signature: ENV['MEMBERSHIP_MEET_SIGNATURE'] }
+          conference: { id: ENV.fetch('MEMBERSHIP_MEET_ID', nil), signature: ENV.fetch('MEMBERSHIP_MEET_SIGNATURE', nil) }
         }
       )
     end
 
     def membership_description
       "Monthly general membership meeting.\n\n" \
-      "All members and their guests are welcome to attend!\n\n" \
-      'If you would like to join this meeting remotely, ' \
-      'please notify a bridge officer ahead of time.'
+        "All members and their guests are welcome to attend!\n\n" \
+        'If you would like to join this meeting remotely, ' \
+        'please notify a bridge officer ahead of time.'
     end
 
     def excom
       meeting_hash(
         summary: 'Executive Committee Meeting', description: excom_description,
         months: months_except(7, 8), date: '02', week: '1', conference: {
-          conference: { id: ENV['EXCOM_MEET_ID'], signature: ENV['EXCOM_MEET_SIGNATURE'] }
+          conference: { id: ENV.fetch('EXCOM_MEET_ID', nil), signature: ENV.fetch('EXCOM_MEET_SIGNATURE', nil) }
         }
       )
     end
 
     def excom_description
       "Monthly meeting of the Executive Committee.\n\n" \
-      "All members are welcome to attend!\n\n" \
-      'If you would like to join this meeting remotely, ' \
-      'please notify a bridge officer ahead of time.'
+        "All members are welcome to attend!\n\n" \
+        'If you would like to join this meeting remotely, ' \
+        'please notify a bridge officer ahead of time.'
     end
 
     def meeting_hash(**options)

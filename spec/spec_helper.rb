@@ -149,7 +149,7 @@ RSpec::Matchers.define :contain_mail_headers do |**expected|
   end
 
   failure_message do |actual|
-    hash = expected.keys.each_with_object({}) { |k, h| h[k] = actual.send(k) }
+    hash = expected.keys.index_with { |k| actual.send(k) }
     "expected that #{hash} would match #{expected}"
   end
 end

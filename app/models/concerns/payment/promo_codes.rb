@@ -26,7 +26,7 @@ module Concerns
       end
 
       def percent_discount(base)
-        base * (1.00 - promo_code.discount_amount.to_f / 100)
+        base * (1.00 - (promo_code.discount_amount.to_f / 100))
       end
 
       def usd_discount(base)

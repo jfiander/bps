@@ -32,7 +32,7 @@ RSpec.describe Registration, type: :model do
 
     describe 'instance.paid?' do
       it 'returns nil for a non-payable object' do
-        expect(FactoryBot.create(:static_page).paid?).to be(nil)
+        expect(FactoryBot.create(:static_page).paid?).to be_nil
       end
 
       it 'returns the paid flag for a payable object' do
@@ -60,7 +60,7 @@ RSpec.describe Registration, type: :model do
       end
 
       it 'is not payable if advance_payment is required' do
-        reg.event.update(advance_payment: true, cutoff_at: Time.zone.now - 1.hour)
+        reg.event.update(advance_payment: true, cutoff_at: 1.hour.ago)
         expect(reg.payable?).to be(false)
       end
 

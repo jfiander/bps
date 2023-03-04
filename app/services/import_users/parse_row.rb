@@ -21,7 +21,7 @@ module ImportUsers
 
     def update_user
       @user.assign_attributes(ImportUsers::Hash.new(@row).update_user)
-      unless @user.changed.blank?
+      if @user.changed.present?
         changes = @user.changes
         @user.save!
       end

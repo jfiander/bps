@@ -77,6 +77,12 @@ class EventController < ApplicationController
     render :new
   end
 
+  def edit
+    @submit_path = send("update_#{event_type_param}_path")
+    @edit_mode = 'Modify'
+    render :new
+  end
+
   def create
     @event = Event.create(event_params)
 
@@ -86,12 +92,6 @@ class EventController < ApplicationController
     else
       failed_to_save_event(mode: :add)
     end
-  end
-
-  def edit
-    @submit_path = send("update_#{event_type_param}_path")
-    @edit_mode = 'Modify'
-    render :new
   end
 
   def update

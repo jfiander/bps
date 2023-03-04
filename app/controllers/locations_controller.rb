@@ -20,15 +20,15 @@ class LocationsController < ApplicationController
     @submit_path = create_location_path
   end
 
+  def edit
+    @location = Location.find_by(id: update_params[:id])
+    render :new
+  end
+
   def create
     redirect_with_status(locations_path, object: 'location', verb: 'create') do
       @location = Location.create(location_params)
     end
-  end
-
-  def edit
-    @location = Location.find_by(id: update_params[:id])
-    render :new
   end
 
   def update

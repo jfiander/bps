@@ -15,7 +15,7 @@ module Roster
 
     def self.download_current_roster
       file = BPS::S3.new(:files).download("roster/#{roster_file_name}")
-      File.open("#{Rails.root}/tmp/run/roster.pdf", 'wb') { |f| f.write(file) }
+      File.binwrite("#{Rails.root}/tmp/run/roster.pdf", file)
     end
 
     def self.create_new_archive(generated_at)

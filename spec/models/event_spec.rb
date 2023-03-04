@@ -9,7 +9,7 @@ require 'rails_helper'
 #   skip 'Exceeded rate limit. Skipping spec.'
 # end
 
-RSpec.describe Event, type: :model, slow: true do
+RSpec.describe Event, slow: true, type: :model do
   before { generic_seo_and_ao }
 
   describe 'scopes' do
@@ -76,36 +76,36 @@ RSpec.describe Event, type: :model, slow: true do
     describe 'flags' do
       describe 'expiration' do
         it 'returns true when expired' do
-          event.update(expires_at: Time.zone.now - 1.day)
+          event.update(expires_at: 1.day.ago)
           expect(event.expired?).to be(true)
         end
 
         it 'returns false when not expired' do
-          event.update(expires_at: Time.zone.now + 1.day)
+          event.update(expires_at: 1.day.from_now)
           expect(event.expired?).to be(false)
         end
       end
 
       describe 'archival' do
         it 'returns true when archived' do
-          event.update(archived_at: Time.zone.now - 1.day)
+          event.update(archived_at: 1.day.ago)
           expect(event.archived?).to be(true)
         end
 
         it 'returns false when not archived' do
-          event.update(archived_at: Time.zone.now + 1.day)
+          event.update(archived_at: 1.day.from_now)
           expect(event.archived?).to be(false)
         end
       end
 
       describe 'cutoff' do
         it 'returns true when not accepting registrations' do
-          event.update(cutoff_at: Time.zone.now - 1.day)
+          event.update(cutoff_at: 1.day.ago)
           expect(event.cutoff?).to be(true)
         end
 
         it 'returns false when accepting registrations' do
-          event.update(cutoff_at: Time.zone.now + 1.day)
+          event.update(cutoff_at: 1.day.from_now)
           expect(event.cutoff?).to be(false)
         end
       end
@@ -117,7 +117,7 @@ RSpec.describe Event, type: :model, slow: true do
 
         it 'does not allow duplicate reminders' do
           expect(event.remind!).to be(true)
-          expect(event.remind!).to be(nil)
+          expect(event.remind!).to be_nil
         end
       end
 
@@ -307,12 +307,12 @@ RSpec.describe Event, type: :model, slow: true do
 
       describe 'within a week' do
         it 'returns false if the start date is more than 1 week away' do
-          event.start_at = Time.zone.now + 2.weeks
+          event.start_at = 2.weeks.from_now
           expect(event.within_a_week?).to be(false)
         end
 
         it 'returns true if the start date is less than 1 week away' do
-          event.start_at = Time.zone.now + 3.days
+          event.start_at = 3.days.from_now
           expect(event.within_a_week?).to be(true)
         end
       end
@@ -373,22 +373,22 @@ RSpec.describe Event, type: :model, slow: true do
         end
 
         it 'returns false if cutoff date is past' do
-          event.update(cutoff_at: Time.zone.now - 1.day)
+          event.update(cutoff_at: 1.day.ago)
           expect(event.registerable?).to be(false)
         end
 
         it 'returns true if only expiration date is past' do
-          event.update(expires_at: Time.zone.now - 1.day)
+          event.update(expires_at: 1.day.ago)
           expect(event.registerable?).to be(true)
         end
 
         it 'returns false if expiration date and start date are past' do
-          event.update(expires_at: Time.zone.now - 1.day, start_at: Time.zone.now - 2.days)
+          event.update(expires_at: 1.day.ago, start_at: 2.days.ago)
           expect(event.registerable?).to be(false)
         end
 
         it 'returns true if both cutoff not expiration are future' do
-          event.update(cutoff_at: Time.zone.now + 1.day, expires_at: Time.zone.now + 2.days)
+          event.update(cutoff_at: 1.day.from_now, expires_at: 2.days.from_now)
           expect(event.registerable?).to be(true)
         end
       end
@@ -572,26 +572,26 @@ RSpec.describe Event, type: :model, slow: true do
     it 'uses the test calendar when not in production' do
       event_type = FactoryBot.create(:event_type, event_category: 'public')
       event = FactoryBot.create(:event, event_type: event_type)
-      expect(event.send(:calendar_id)).to eql(ENV['GOOGLE_CALENDAR_ID_TEST'])
+      expect(event.send(:calendar_id)).to eql(ENV.fetch('GOOGLE_CALENDAR_ID_TEST', nil))
     end
 
     context 'when in production' do
       it 'uses the education calendar for courses' do
         event_type = FactoryBot.create(:event_type, event_category: 'public')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.send(:calendar_id, prod: true)).to eql(ENV['GOOGLE_CALENDAR_ID_EDUC'])
+        expect(event.send(:calendar_id, prod: true)).to eql(ENV.fetch('GOOGLE_CALENDAR_ID_EDUC', nil))
       end
 
       it 'uses the education calendar for seminars' do
         event_type = FactoryBot.create(:event_type, event_category: 'seminar')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.send(:calendar_id, prod: true)).to eql(ENV['GOOGLE_CALENDAR_ID_EDUC'])
+        expect(event.send(:calendar_id, prod: true)).to eql(ENV.fetch('GOOGLE_CALENDAR_ID_EDUC', nil))
       end
 
       it 'uses the education calendar for meetings' do
         event_type = FactoryBot.create(:event_type, event_category: 'meeting')
         event = FactoryBot.create(:event, event_type: event_type)
-        expect(event.send(:calendar_id, prod: true)).to eql(ENV['GOOGLE_CALENDAR_ID_GEN'])
+        expect(event.send(:calendar_id, prod: true)).to eql(ENV.fetch('GOOGLE_CALENDAR_ID_GEN', nil))
       end
     end
   end

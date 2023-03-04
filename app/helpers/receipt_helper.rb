@@ -28,7 +28,7 @@ module ReceiptHelper
     content_tag(:div, class: "table-cell #{receipt_amount_color(payment)}", title: title) do
       concat payment.transaction_amount
       if payment.promo_code.present?
-        concat tag(:br)
+        concat tag.br
         concat receipt_promo_code(payment)
       end
     end

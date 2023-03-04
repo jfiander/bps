@@ -17,8 +17,8 @@ class ApplicationRecord < ActiveRecord::Base
 
     unless BPS::Application.deployed?
       defaults[:s3_credentials].merge!(
-        access_key_id: ENV['AWS_ACCESS_KEY'],
-        secret_access_key: ENV['AWS_SECRET']
+        access_key_id: ENV.fetch('AWS_ACCESS_KEY', nil),
+        secret_access_key: ENV.fetch('AWS_SECRET', nil)
       )
     end
 

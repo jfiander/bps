@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe BPS::PDF::EducationCertificate, type: :lib, slow: true do
+RSpec.describe BPS::PDF::EducationCertificate, slow: true, type: :lib do
   let(:user) { FactoryBot.create(:user, grade: 'N') }
 
   context 'with a default user' do

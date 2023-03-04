@@ -558,12 +558,12 @@ RSpec.describe User, type: :model do
   describe 'scopes' do
     let!(:user_inv) { FactoryBot.create(:user) }
     let!(:user_pe) { FactoryBot.create(:user, email: 'nobody-asdfhjkl@bpsd9.org') }
-    let!(:user_inst) { FactoryBot.create(:user, sign_in_count: 1, id_expr: Time.zone.now + 1.year) }
+    let!(:user_inst) { FactoryBot.create(:user, sign_in_count: 1, id_expr: 1.year.from_now) }
     let!(:user_vse) { FactoryBot.create(:user, sign_in_count: 23) }
 
     before do
       user_vse.course_completions << FactoryBot.create(
-        :course_completion, user: user_vse, course_key: 'VSC_01', date: Time.zone.now - 1.month
+        :course_completion, user: user_vse, course_key: 'VSC_01', date: 1.month.ago
       )
     end
 
@@ -680,12 +680,12 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns false for a past id_expr' do
-      user.update(id_expr: Time.zone.now - 1.month)
+      user.update(id_expr: 1.month.ago)
       expect(user.valid_instructor?).to be(false)
     end
 
     it 'returns true for a future id_expr' do
-      user.update(id_expr: Time.zone.now + 1.month)
+      user.update(id_expr: 1.month.from_now)
       expect(user.valid_instructor?).to be(true)
     end
   end
@@ -707,12 +707,12 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns false with a past expiration date' do
-      user.update(cpr_aed_expires_at: Time.zone.now - 1.day)
+      user.update(cpr_aed_expires_at: 1.day.ago)
       expect(user.cpr_aed?).to be(false)
     end
 
     it 'returns true with a future expiration date' do
-      user.update(cpr_aed_expires_at: Time.zone.now + 1.day)
+      user.update(cpr_aed_expires_at: 1.day.from_now)
       expect(user.cpr_aed?).to be(true)
     end
   end

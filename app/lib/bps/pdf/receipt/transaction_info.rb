@@ -47,7 +47,7 @@ module BPS
         end
 
         def people_height(payment)
-          150 + (people(payment).count - 4) * 20
+          150 + ((people(payment).count - 4) * 20)
         end
 
         def people_details(payment)

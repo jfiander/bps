@@ -74,12 +74,12 @@ module Concerns
       end
 
       def calendar_id(prod: false)
-        return ENV['GOOGLE_CALENDAR_ID_TEST'] unless prod || Rails.env.production?
+        return ENV.fetch('GOOGLE_CALENDAR_ID_TEST', nil) unless prod || Rails.env.production?
 
         if category.in?(%w[course seminar])
-          ENV['GOOGLE_CALENDAR_ID_EDUC']
+          ENV.fetch('GOOGLE_CALENDAR_ID_EDUC', nil)
         else
-          ENV['GOOGLE_CALENDAR_ID_GEN']
+          ENV.fetch('GOOGLE_CALENDAR_ID_GEN', nil)
         end
       end
 
@@ -135,7 +135,7 @@ module Concerns
 
       def calendar_description
         strip_markdown.render(description.to_s).gsub("\n", "\n\n") +
-          "\n\n#{link}\n\n*** Booked automatically by #{ENV['DOMAIN']} ***"
+          "\n\n#{link}\n\n*** Booked automatically by #{ENV.fetch('DOMAIN', nil)} ***"
       end
 
       def strip_markdown

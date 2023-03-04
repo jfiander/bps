@@ -31,7 +31,7 @@ module BPS
                   commander executive educational administrative secretary treasurer
                   asst_educational asst_secretary
                 ].each_with_index do |officer, index|
-                  bridge_box(officer, 350 - 44 * index)
+                  bridge_box(officer, 350 - (44 * index))
                 end
               end
             end
@@ -79,10 +79,11 @@ module BPS
           def other_contacts_list
             contact_box('Webmaster', 'Webmaster', 'webmaster@bpsd9.org', 160)
             contact_box(
-              'Bilge Chatter Editor', 'Newsletter Editor', 'newsletter@bpsd9.org', 160 - 40 * 1
+              'Bilge Chatter Editor', 'Newsletter Editor', 'newsletter@bpsd9.org', 160 - (40 * 1)
             )
-            contact_box('Vessel Safety Check', 'Vessel Safety Check', 'vsc@bpsd9.org', 160 - 40 * 2)
-            contact_box('Membership', 'Membership', 'membership@bpsd9.org', 160 - 40 * 3)
+            contact_box('Vessel Safety Check', 'Vessel Safety Check', 'vsc@bpsd9.org',
+                        160 - (40 * 2))
+            contact_box('Membership', 'Membership', 'membership@bpsd9.org', 160 - (40 * 3))
           end
 
           def contact_box(name, committee, email, y_pos)

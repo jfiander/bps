@@ -58,12 +58,12 @@ module BPS
 
     def create_topic(name, display_name = nil)
       client.create_topic({
-        name: "#{ENV['ASSET_ENVIRONMENT']}-#{name}",
+        name: "#{ENV.fetch('ASSET_ENVIRONMENT', nil)}-#{name}",
         attributes: {
           'DisplayName' => display_name || name
         },
         tags: [
-          { key: 'Environment', value: ENV['ASSET_ENVIRONMENT'] },
+          { key: 'Environment', value: ENV.fetch('ASSET_ENVIRONMENT', nil) },
           { key: 'CreatedAt', value: Time.now.to_s }
         ]
       })
@@ -111,8 +111,8 @@ module BPS
       unless BPS::Application.deployed?
         attributes.merge!(
           credentials: Aws::Credentials.new(
-            ENV['AWS_ACCESS_KEY'],
-            ENV['AWS_SECRET']
+            ENV.fetch('AWS_ACCESS_KEY', nil),
+            ENV.fetch('AWS_SECRET', nil)
           )
         )
       end
@@ -136,7 +136,7 @@ module BPS
     def origination_number
       {
         data_type: 'String',
-        string_value: BPS::SMS.validate_number(ENV['SMS_ORIGINATION_NUMBER'])
+        string_value: BPS::SMS.validate_number(ENV.fetch('SMS_ORIGINATION_NUMBER', nil))
       }
     end
 

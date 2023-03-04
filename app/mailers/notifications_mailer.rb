@@ -64,10 +64,6 @@ private
   end
 
   def float_plan_to_list
-    if float_plan_monitor_emails.present?
-      float_plan_monitor_emails
-    else
-      ['"No Monitors" <dev@bpsd9.org>']
-    end
+    (float_plan_monitor_emails.presence || ['"No Monitors" <dev@bpsd9.org>'])
   end
 end

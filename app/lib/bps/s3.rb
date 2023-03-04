@@ -21,9 +21,7 @@ module BPS
       s3.objects(prefix: prefix)
     end
 
-    def object(key)
-      s3.object(key)
-    end
+    delegate :object, to: :s3
 
     def has?(key)
       s3.object(key)&.exists?
@@ -63,8 +61,8 @@ module BPS
       unless BPS::Application.deployed?
         attributes.merge!(
           credentials: Aws::Credentials.new(
-            ENV['AWS_ACCESS_KEY'],
-            ENV['AWS_SECRET']
+            ENV.fetch('AWS_ACCESS_KEY', nil),
+            ENV.fetch('AWS_SECRET', nil)
           )
         )
       end
@@ -93,7 +91,7 @@ module BPS
 
     def cf_subdomain
       first = @endpoint
-      second = ENV['ASSET_ENVIRONMENT'] unless single_subdomain?
+      second = ENV.fetch('ASSET_ENVIRONMENT', nil) unless single_subdomain?
 
       [first, second].compact.join('.')
     end
@@ -115,7 +113,7 @@ module BPS
 
     def cf_signer
       @cf_signer ||= Aws::CloudFront::UrlSigner.new(
-        key_pair_id: ENV['CF_KEYPAIR_ID'],
+        key_pair_id: ENV.fetch('CF_KEYPAIR_ID', nil),
         private_key_path: "#{Rails.root}/config/keys/cf.pem"
       )
     end

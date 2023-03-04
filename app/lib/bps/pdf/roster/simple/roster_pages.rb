@@ -42,11 +42,11 @@ module BPS
           end
 
           def entry_box_x(col_index)
-            roster_config[:base][:x] + col_index * (roster_config[:member][:width] + 10)
+            roster_config[:base][:x] + (col_index * (roster_config[:member][:width] + 10))
           end
 
           def entry_box_y(row_index)
-            roster_config[:base][:y] - row_index * (roster_config[:member][:height] + 20)
+            roster_config[:base][:y] - (row_index * (roster_config[:member][:height] + 20))
           end
 
           def entry_box(user, base_x, base_y)

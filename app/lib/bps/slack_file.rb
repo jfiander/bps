@@ -27,11 +27,13 @@ module BPS
     end
 
     def channel_id
-      ENV[BPS::Application.deployed? ? 'SLACK_CHANNEL_ID_NOTIFICATIONS' : 'SLACK_CHANNEL_ID_TEST']
+      ENV.fetch(
+        BPS::Application.deployed? ? 'SLACK_CHANNEL_ID_NOTIFICATIONS' : 'SLACK_CHANNEL_ID_TEST', nil
+      )
     end
 
     def authorization(req)
-      req.add_field('Authorization', "Bearer #{ENV['SLACK_BOT_USER_TOKEN']}")
+      req.add_field('Authorization', "Bearer #{ENV.fetch('SLACK_BOT_USER_TOKEN', nil)}")
     end
 
     def before_submit

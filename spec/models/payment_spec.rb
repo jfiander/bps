@@ -7,8 +7,8 @@ RSpec.describe Payment, type: :model do
   let(:token) { described_class.client_token }
   let(:user_token) { described_class.client_token(user_id: user.id) }
 
-  let(:braintree_api_token_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/client_token 201} }
-  let(:braintree_api_customer_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/customers 201} }
+  let(:braintree_api_token_regex) { %r{POST /merchants/#{ENV.fetch('BRAINTREE_MERCHANT_ID', nil)}/client_token 201} }
+  let(:braintree_api_customer_regex) { %r{POST /merchants/#{ENV.fetch('BRAINTREE_MERCHANT_ID', nil)}/customers 201} }
 
   it 'uses the correct discount rate' do
     expect(described_class.discount(1)).to eq(0.32)
@@ -86,7 +86,7 @@ RSpec.describe Payment, type: :model do
       end
 
       it 'is not payable when the parent is not payable' do
-        registration.event.update(cost: 1, advance_payment: true, cutoff_at: Time.zone.now - 1.hour)
+        registration.event.update(cost: 1, advance_payment: true, cutoff_at: 1.hour.ago)
         expect(registration.payment.payable?).to eql(registration.payable?)
         expect(registration.payment.payable?).to be(false)
       end
@@ -174,14 +174,14 @@ RSpec.describe Payment, type: :model do
       end
 
       it 'correctlies attach a promo code when a match exists' do
-        FactoryBot.create(:promo_code, code: 'prior_code', valid_at: Time.zone.now - 1.hour, discount_type: 'member')
+        FactoryBot.create(:promo_code, code: 'prior_code', valid_at: 1.hour.ago, discount_type: 'member')
         payment.attach_promo_code('prior_code')
 
         expect(payment.promo_code.code).to eql('prior_code')
       end
 
       it 'correctlies attach a promo code when a match does not exist' do
-        payment.attach_promo_code('new_code', valid_at: Time.zone.now - 1.hour, discount_type: 'member')
+        payment.attach_promo_code('new_code', valid_at: 1.hour.ago, discount_type: 'member')
 
         expect(payment.promo_code.code).to eql('new_code')
       end
@@ -193,7 +193,7 @@ RSpec.describe Payment, type: :model do
       reg, = register(event, email: 'test@example.com')
       payment = reg.payment
       payment.attach_promo_code(
-        'new_code', valid_at: Time.zone.now - 1.hour, discount_type: 'percent', discount_amount: 5
+        'new_code', valid_at: 1.hour.ago, discount_type: 'percent', discount_amount: 5
       )
 
       expect(payment.transaction_amount).to eql('$19.00')

@@ -16,13 +16,13 @@ class RosterController < ApplicationController
     @record = model.new
   end
 
+  def edit
+    render :new
+  end
+
   def create
     @record = model.new(formatted_params)
     check_and_redirect(:create, :new) { @record.save }
-  end
-
-  def edit
-    render :new
   end
 
   def update

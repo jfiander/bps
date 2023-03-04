@@ -32,12 +32,12 @@ module BPS
 
         def terms_link
           text_with_fa('Terms & Conditions', "\uf15c")
-          text "https://#{ENV['DOMAIN']}/payment_terms", size: 10, align: :center
+          text "https://#{ENV.fetch('DOMAIN', nil)}/payment_terms", size: 10, align: :center
         end
 
         def refund_link
           text_with_fa('Refund Policy', "\uf571")
-          text "https://#{ENV['DOMAIN']}/refunds", size: 10, align: :center
+          text "https://#{ENV.fetch('DOMAIN', nil)}/refunds", size: 10, align: :center
         end
 
         def security_link

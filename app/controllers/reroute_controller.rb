@@ -2,10 +2,10 @@
 
 class RerouteController < ApplicationController
   def excom
-    redirect_to("https://meet.google.com/#{ENV['EXCOM_MEET_ID']}")
+    redirect_to("https://meet.google.com/#{ENV.fetch('EXCOM_MEET_ID', nil)}")
   end
 
   def member_meeting
-    redirect_to("https://meet.google.com/#{ENV['MEMBERSHIP_MEET_ID']}")
+    redirect_to("https://meet.google.com/#{ENV.fetch('MEMBERSHIP_MEET_ID', nil)}")
   end
 end

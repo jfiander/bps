@@ -12,9 +12,9 @@ module BPS
       private
 
         def route_plan_details(float_plan)
-          h = 360 - 10 - route_plan_text(float_plan, :leave_from, 360) * 10
-          h = h - 10 - route_plan_text(float_plan, :going_to, h) * 10
-          h = h - 10 - route_plan_text(float_plan, :leave_at, h) * 10
+          h = 360 - 10 - (route_plan_text(float_plan, :leave_from, 360) * 10)
+          h = h - 10 - (route_plan_text(float_plan, :going_to, h) * 10)
+          h = h - 10 - (route_plan_text(float_plan, :leave_at, h) * 10)
           route_plan_text(float_plan, :return_at, h)
         end
 

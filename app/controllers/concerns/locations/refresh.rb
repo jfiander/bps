@@ -5,9 +5,9 @@ module Locations
     def refresh
       # html_safe: Text is sanitized before display
       new_locations = <<~HTML
-        "<option value=\\\"\\\">Please select a location</option>" +
-        "<option value=\\\"\\\"></option>" +
-        "<optgroup label=\\\"TBD\\\"><option value=\\\"TBD\\\">TBD</option></optgroup>" +
+        "<option value=\\"\\">Please select a location</option>" +
+        "<option value=\\"\\"></option>" +
+        "<optgroup label=\\"TBD\\"><option value=\\"TBD\\">TBD</option></optgroup>" +
       HTML
 
       @locations = Location.grouped

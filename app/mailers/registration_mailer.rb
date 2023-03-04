@@ -125,7 +125,7 @@ private
   end
 
   # Copied from MarkdownHelper
-  #:nocov:
+  # :nocov:
   def simple_markdown(markdown)
     view_context.sanitize(redcarpet.render(markdown.to_s))
   end
@@ -143,5 +143,5 @@ private
       underline: true
     )
   end
-  #:nocov:
+  # :nocov:
 end

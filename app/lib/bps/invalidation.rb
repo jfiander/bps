@@ -84,8 +84,8 @@ module BPS
       unless BPS::Application.deployed?
         attributes.merge!(
           credentials: Aws::Credentials.new(
-            ENV['AWS_ACCESS_KEY'],
-            ENV['AWS_SECRET']
+            ENV.fetch('AWS_ACCESS_KEY', nil),
+            ENV.fetch('AWS_SECRET', nil)
           )
         )
       end
@@ -105,7 +105,7 @@ module BPS
 
       return @alias_name.to_s if ENV['ASSET_ENVIRONMENT'] == 'production'
 
-      "#{@alias_name}.#{ENV['ASSET_ENVIRONMENT']}"
+      "#{@alias_name}.#{ENV.fetch('ASSET_ENVIRONMENT', nil)}"
     end
 
     def new_caller_reference

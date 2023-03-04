@@ -53,10 +53,10 @@ class Event < ApplicationRecord
   )
 
   before_save { self.slug = slug.downcase.tr('/', '_') if slug.present? }
-  before_destroy :unbook!
-
   after_create :book!, if: :visible?
   after_create :create_sns_topic!
+  before_destroy :unbook!
+
   after_commit :refresh_calendar!, if: proc { calendar_details_updated? && visible }
   after_commit :unbook!, if: proc { booked? && !visible }
 
@@ -129,14 +129,15 @@ class Event < ApplicationRecord
   end
 
   def public_link
-    Rails.application.routes.url_helpers.send(*public_link_path, host: ENV['DOMAIN'])
+    Rails.application.routes.url_helpers.send(*public_link_path, host: ENV.fetch('DOMAIN', nil))
   end
 
   def link
     return if id.blank?
 
     route = category == 'meeting' ? 'event' : category
-    Rails.application.routes.url_helpers.send("show_#{route}_url", id, host: ENV['DOMAIN'])
+    Rails.application.routes.url_helpers.send("show_#{route}_url", id,
+                                              host: ENV.fetch('DOMAIN', nil))
   end
 
   def path

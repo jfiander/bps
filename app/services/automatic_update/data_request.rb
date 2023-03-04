@@ -16,7 +16,7 @@ module AutomaticUpdate
       result = submit(uri, req)
 
       path = Rails.root.join('tmp/automatic_update', "#{self.class.name.demodulize}.csv")
-      File.open(path, 'w+') { |file| file.write(result.body) }
+      File.write(path, result.body)
     end
 
   private

@@ -45,7 +45,7 @@ module BPS
   private
 
     def client
-      @client ||= Rushover::Client.new(ENV['PUSHOVER_APP_TOKEN'])
+      @client ||= Rushover::Client.new(ENV.fetch('PUSHOVER_APP_TOKEN', nil))
     end
 
     def handle_error(response)

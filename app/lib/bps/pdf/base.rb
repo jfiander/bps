@@ -49,7 +49,7 @@ module BPS
 
       def load_logo
         logo = BPS::S3.new(:static).download('logos/ABC/png/long/white/birmingham/1000.png')
-        File.open('tmp/run/ABC-B.png', 'w+') { |f| f.write(logo) }
+        File.write('tmp/run/ABC-B.png', logo)
       end
     end
   end
