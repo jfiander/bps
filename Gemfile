@@ -107,8 +107,9 @@ group :development, :test do
   gem 'simplecov',                '~> 0'
 
   # Rubocop
-  gem 'rubocop',                  '~> 0.90'
-  gem 'rubocop-rspec',            '~> 1.30'
+  gem 'rubocop',                  '~> 1.47'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec',            '~> 2.18'
 
   gem 'brakeman',                 '~> 4.3'
 

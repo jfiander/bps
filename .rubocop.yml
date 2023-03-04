@@ -1,7 +1,5 @@
-# inherit_gem:
-#   rubocop-rails_config:
-#     - config/rails.yml
 require:
+  - rubocop-rails
   - rubocop-rspec
 AllCops:
   TargetRubyVersion: 2.5
@@ -69,7 +67,10 @@ Naming/MemoizedInstanceVariableName:
 Naming/MethodParameterName:
   Enabled: false
 Naming/VariableNumber:
-  Enabled: false
+  Enabled: true
+  EnforcedStyle: snake_case
+  AllowedIdentifiers:
+    - s3
 
 Style/Documentation:
   Enabled: false
