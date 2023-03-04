@@ -6,6 +6,8 @@ Controllers that have been split out into better structure.
 
 - BilgesController
 - AnnouncementsController
+- FilesController
+- HeadersController
 
 ## Root Level
 
