@@ -18,8 +18,8 @@ class UploadedFile < ApplicationRecord
   validates_attachment_content_type(:file, content_type: ACCEPTABLE_CONTENT_TYPES)
   validates(:file, presence: true)
 
-  before_destroy :invalidate!
   after_update :invalidate!
+  before_destroy :invalidate!
 
   def link(permalinks: false)
     return permalink if permalinks

@@ -71,7 +71,22 @@ Naming/VariableNumber:
   EnforcedStyle: snake_case
   AllowedIdentifiers:
     - s3
+    - bps_s3
+    - from_s3
+    - latest_from_s3
+    - x1
+    - x2
+  # AllowedPatterns:
+  #   - '_s_3+z'
 
+Rails/HasManyOrHasOneDependent:
+  Enabled: false # This should eventually be enabled
+Rails/HelperInstanceVariable:
+  Enabled: false # This should eventually be enabled
+Rails/I18nLocaleTexts:
+  Enabled: false
+Rails/OutputSafety:
+  Enabled: false # Disable this cop on each line, instead of in this config
 Rails/SquishedSQLHeredocs:
   Enabled: false
 
