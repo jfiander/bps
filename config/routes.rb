@@ -74,6 +74,24 @@ Rails.application.routes.draw do
   end
   get '/signals', to: redirect('/flags/signals')
 
+  ### Reroutes
+  resources :reroute, only: [], path: '' do
+    get :excom, :member_meeting, on: :collection
+  end
+
+  ### Miscellaneous
+  resources :sitemap, only: [], path: '' do
+    collection do
+      get :sitemap, format: 'xml'
+      get :robots, format: 'txt'
+    end
+  end
+
+  ### Error codes
+  match   '/404', to: 'errors#not_found',             via: :all
+  match   '/406', to: 'errors#not_acceptable',        via: :all
+  match   '/500', to: 'errors#internal_server_error', via: :all
+
   ##### LEGACY ROUTES #####
 
   ### Markdown pages
@@ -341,17 +359,4 @@ Rails.application.routes.draw do
       post '/update/queue/dryrun', to: 'update#queue_dryrun'
     end
   end
-
-  ### Miscellaneous
-  get     '/sitemap.xml',    to: 'sitemap#index',  as: 'sitemap', format: 'xml'
-  get     '/robots.:format', to: 'sitemap#robots', as: 'robots'
-
-  ### Error codes
-  match   '/404', to: 'errors#not_found',             via: :all
-  match   '/406', to: 'errors#not_acceptable',        via: :all
-  match   '/500', to: 'errors#internal_server_error', via: :all
-
-  ### Reroutes
-  get     '/excom',          to: 'reroute#excom'
-  get     '/member_meeting', to: 'reroute#member_meeting'
 end

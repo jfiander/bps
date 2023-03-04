@@ -5,7 +5,7 @@ class SitemapController < ApplicationController
 
   skip_before_action :load_layout_images
 
-  def index
+  def sitemap
     @pages = pages
     @priorities = priorities
     @frequencies = frequeincies
