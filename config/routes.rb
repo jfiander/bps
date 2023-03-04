@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength Layout/LineLength
 Rails.application.routes.draw do
   root 'public#home'
 
@@ -357,3 +358,4 @@ Rails.application.routes.draw do
   get     '/excom',          to: 'reroute#excom'
   get     '/member_meeting', to: 'reroute#member_meeting'
 end
+# rubocop:enable Metrics/BlockLength Layout/LineLength
