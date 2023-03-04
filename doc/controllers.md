@@ -9,6 +9,10 @@ Controllers that have been split out into better structure.
 - FilesController
 - HeadersController
 
+### Pending
+
+- Bridge and committee controllers
+
 ## Root Level
 
 Existing controllers that have had their routes updated.
