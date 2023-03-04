@@ -44,6 +44,10 @@ h1 = @user.full_name
             .phone_w title="Work"
               = FA::Icon.p('building', style: :duotone, fa: :fw)
               = @user.phone_w
+    - if @user.mm.positive?
+      .table-row
+        .table-cell.left-header Merit Marks
+        .table-cell class=(mm_color(@user.mm)) = @user.mm
     - if @user.permitted_roles.present?
       .table-row
         .table-cell.left-header Permissions
@@ -88,6 +92,6 @@ h1 = @user.full_name
 - if current_user&.permitted?(:admin) && current_user.id != @user.id
   .photo-editor = editor('photo_editor', id: @user.id)
 
-= signal_flags(@user.full_name)
+= signal_flags(@user.full_name(html: false).sub(/1st/, '1'))
 
 = render('corner_stripes', stripe_rank: @user.stripe_rank, first_stripe_class: @user.first_stripe_class)

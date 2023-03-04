@@ -48,6 +48,19 @@ module UserHelper
     )
   end
 
+  def mm_color(mm)
+    case mm
+    when 0..4
+      nil
+    when 5..24
+      'bold gold'
+    when 25..49
+      'bold insignia-silver'
+    else
+      'bold birmingham-blue'
+    end
+  end
+
 private
 
   def generate_role_flags(granted, implied, admin: false)
