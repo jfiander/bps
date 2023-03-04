@@ -1,0 +1,23 @@
+h1 Squadron Newsletter
+h2 The Bilge Chatter
+
+= editor('bilge_editor') if current_user&.permitted?(:newsletter)
+
+h3 Click on a button below to view or download that issue.
+
+- if user_signed_in?
+  .information Only the 18 most recent issues (with lighter buttons) are displayed to the public.
+
+= render('bilge_table')
+
+- if @announcements.any?
+  hr
+
+  h2 Announcements
+
+  h3 Click on a button below to view or download an announcement.
+
+  = render('announcements_table')
+
+hr
+= link_to('https://get.adobe.com/reader/', target: :_blank) { image_tag(BPS::S3.new(:static).link('acrobat_reader.png'), alt: 'Get Adobe Acrobat Reader') }

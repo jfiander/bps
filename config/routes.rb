@@ -41,6 +41,23 @@ Rails.application.routes.draw do
     delete '/profile/tokens/:id', to: 'user#revoke_token', as: 'revoke_token'
   end
 
+  namespace :v2 do
+    get :newsletter, to: redirect('/v2/bilges')
+    resources :bilges, except: %i[show new create edit update] do
+      collection do
+        get  '/:year/:month', to: 'bilges#bilge', as: 'bilge'
+        post :upload
+      end
+    end
+
+    resources :announcements do
+      member do
+        patch :hide,   to: 'announcements#hide'
+        patch :unhide, to: 'announcements#unhide'
+      end
+    end
+  end
+
   ### Markdown pages
   %i[
     home about join requirements vsc education calendar civic history links
