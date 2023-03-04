@@ -27,19 +27,19 @@ module V2
     def destroy
       @announcement.destroy
 
-      redirect_to(v2_bilges_path, success: 'Announcement removed successfully.')
+      redirect_to(newsletter_path, success: 'Announcement removed successfully.')
     end
 
     def hide
       @announcement.hide!
 
-      redirect_to(v2_bilges_path, success: 'Announcement hidden successfully.')
+      redirect_to(newsletter_path, success: 'Announcement hidden successfully.')
     end
 
     def unhide
       @announcement.unhide!
 
-      redirect_to(v2_bilges_path, success: 'Announcement unhidden successfully.')
+      redirect_to(newsletter_path, success: 'Announcement unhidden successfully.')
     end
 
   private

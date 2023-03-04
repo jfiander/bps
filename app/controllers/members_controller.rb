@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class MembersController < ApplicationController
-  include Members::Bilge
-  include Members::Announcements
   include Members::Minutes
   include Members::Roster
   include Members::Markdown
@@ -13,7 +11,6 @@ class MembersController < ApplicationController
 
   secure!
   secure!(:admin, only: :admin)
-  secure!(:newsletter, only: %i[upload_bilge upload_announcement remove_announcement])
   secure!(:minutes, only: :upload_minutes)
   secure!(:roster, only: %i[update_roster upload_roster])
   secure!(:page, only: %i[edit_markdown update_markdown])

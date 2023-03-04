@@ -5,7 +5,7 @@ class AnnouncementFile < UploadedFile
   scope :visible, -> { where(hidden_at: nil) }
 
   def permalink
-    Rails.application.routes.url_helpers.announcement_path(id: id)
+    Rails.application.routes.url_helpers.v2_announcement_path(id: id)
   end
 
   def hidden?

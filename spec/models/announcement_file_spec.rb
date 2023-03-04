@@ -16,7 +16,7 @@ RSpec.describe AnnouncementFile do
   end
 
   it 'returns a valid permalink' do
-    expect(announcement.link(permalinks: true)).to match(%r{\A/announcement/\d+$})
+    expect(announcement.link(permalinks: true)).to match(%r{\A/v2/announcements/\d+$})
   end
 
   it 'does not return an error on invalidate!' do

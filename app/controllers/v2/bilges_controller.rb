@@ -25,7 +25,7 @@ module V2
       issue = "#{bilge_params[:issue]['date(1i)']}/#{bilge_params[:issue]['date(2i)']}"
 
       notify_for_bilge if bilge_params[:bilge_notify]
-      redirect_to(v2_bilges_path, success: "Bilge Chatter #{issue} #{verb} successfully.")
+      redirect_to(newsletter_path, success: "Bilge Chatter #{issue} #{verb} successfully.")
     end
 
   private

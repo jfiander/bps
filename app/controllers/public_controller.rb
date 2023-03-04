@@ -2,12 +2,9 @@
 
 class PublicController < ApplicationController
   include Application::RateLimit
-  include Public::Bilge
-  include Public::Announcements
   include Public::Donations
   include CalendarHelper
 
-  before_action :list_bilges,             only: %i[newsletter bilge]
   before_action :registration_attributes, only: %i[register]
   before_action :find_event,              only: %i[register]
   before_action :find_registration,       only: %i[register]
@@ -15,7 +12,6 @@ class PublicController < ApplicationController
 
   rate_limit!(:public_registrations, only: :register)
 
-  title!('The Bilge Chatter', only: :newsletter)
   title!("Ship's Store", only: :store)
   title!('Calendar', only: :calendar)
 

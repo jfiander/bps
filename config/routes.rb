@@ -30,11 +30,11 @@ Rails.application.routes.draw do
   end
 
   ### Short URLs
-  get     '/e/:slug',         to: 'events/events#slug',         as: 'event_slug'
-  get     '/a/:id',           to: 'public#announcement_direct', as: 'short_announcement'
-  get     '/b/:year/:month',  to: 'public#bilge',               as: 'short_bilge'
-  get     '/m/:year/:month',  to: 'members#find_minutes',       as: 'short_minutes'
-  get     '/ex/:year/:month', to: 'members#find_minutes',       as: 'short_excom', defaults: { minutes_excom: true }
+  get     '/e/:slug',         to: 'events/events#slug',    as: 'event_slug'
+  get     '/a/:id',           to: 'v2/announcements#show', as: 'short_announcement'
+  get     '/b/:year/:month',  to: 'v2/bilges#bilge',       as: 'short_bilge'
+  get     '/m/:year/:month',  to: 'members#find_minutes',  as: 'short_minutes'
+  get     '/ex/:year/:month', to: 'members#find_minutes',  as: 'short_excom', defaults: { minutes_excom: true }
 
   ### Profile management
   as :user do
@@ -48,8 +48,7 @@ Rails.application.routes.draw do
   end
 
   namespace :v2 do
-    get :newsletter, to: redirect('/v2/bilges')
-    resources :bilges, except: %i[show new create edit update] do
+    resources :bilges, except: %i[index show new create edit update] do
       collection do
         get  '/:year/:month', to: 'bilges#bilge', as: 'bilge'
         post :upload
@@ -63,6 +62,13 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # Newsletter
+  get     '/newsletter',         to: 'v2/bilges#index'
+  get     '/bilge/:year/:month', to: 'v2/bilges#bilge', as: 'bilge'
+  get     '/bilge(/:year)',      to: redirect('/newsletter')
+
+  ##### LEGACY ROUTES #####
 
   ### Markdown pages
   %i[
@@ -149,21 +155,6 @@ Rails.application.routes.draw do
     # Import Logs
     resources :import_logs, only: %i[index show]
   end
-
-  # Newsletter
-  get     '/newsletter',         to: 'public#newsletter'
-  get     '/bilge/:year/:month', to: 'public#bilge',         as: 'bilge'
-  post    '/bilge',              to: 'members#upload_bilge', as: 'upload_bilge'
-  get     '/bilge(/:year)',      to: redirect('/newsletter')
-
-  # Announcements
-  get     '/announcement/:id',        to: 'public#announcement_direct',  as: 'announcement'
-  post    '/announcement',            to: 'members#upload_announcement', as: 'upload_announcement'
-  patch   '/announcement/:id/hide',   to: 'members#hide_announcement',   as: 'hide_announcement'
-  patch   '/announcement/:id/unhide', to: 'members#unhide_announcement', as: 'unhide_announcement'
-  delete  '/announcement/:id',        to: 'members#remove_announcement', as: 'remove_announcement'
-  get     '/announcement',            to: redirect('/newsletter')
-  get     '/announcements',           to: redirect('/newsletter')
 
   # Minutes
   get     '/minutes',              to: 'members#minutes'
