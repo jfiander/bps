@@ -1,0 +1,18 @@
+h1 Header Images
+p Every time the site is loaded, a random image listed from this page will be displayed in the header.
+= editor('header_editor')
+
+- if @headers.present?
+    #files.table.striped.headers
+      .table-row.header
+        .table-cell Preview
+        .table-cell Dimensions
+        .table-cell
+        .table-cell
+      - @headers.each do |header|
+        .table-row
+          .table-cell.preview: a data-fancybox="album_headers" href=(BPS::S3.new(:files).link(header.file.path))
+            = image_tag BPS::S3.new(:files).link(header.file.path(:thumb))
+          .table-cell.dimensions #{header.dimensions} (#{header.ratio}:1)
+          .table-cell.show = link_to FA::Icon.p('eye', style: :duotone, title: 'View this header on the page'), "?header=#{header.id}"
+          .table-cell.remove = link_to(v2_header_path(header.id), method: :delete, class: 'red', data: {confirm: 'Are you sure you want to remove this header image?'}) { FA::Icon.p('minus-square', style: :duotone) }

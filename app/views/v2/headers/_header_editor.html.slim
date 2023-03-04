@@ -1,0 +1,15 @@
+hr
+h2 Upload a new header image
+p
+  b Header images must:
+  ul.simple
+    li be at least 750px wide
+    li have an aspect ratio between 2.75:1 and 3.5:1
+    li jpg, png, or gif
+small Header images will be automatically scaled to a maximum of 1500 px wide for display. (The original file will be kept.)
+= form_for(@header, url: v2_headers_path, multipart: true) do |f|
+  = FA::Icon.p('file-image', style: :duotone, css: 'file-type')
+  = f.file_field :file, required: true
+  br
+  = spinner_button(f, button_text: 'Upload file', disable_text: 'Uploading', css: 'big')
+hr

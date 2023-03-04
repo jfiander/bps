@@ -1,0 +1,27 @@
+h1 Markdown Files
+p Files uploaded here can be displayed in any markdown page editor on this site.
+p Copy the <b>markdown key</b> from the list below into the editor where you want it to appear.
+= editor('file_editor')
+
+p.bold.italic.red This page is not generally visible, and files below may be out of date. They are kept here for reference.
+
+- if @markdown_files.present?
+  #files.table.striped.markdown
+    .table-row.header
+      .table-cell File / Image
+      .table-cell Markdown key
+      .table-cell
+    - @markdown_files.each do |file|
+      .table-row
+        .table-cell
+          - if file.file_content_type.match(/image/)
+            = image_tag(file.link)
+          - else
+            = link_to(file.file_file_name.truncate(20), file.link)
+        .table-cell
+          - if file.file_content_type.match(/image/)
+            - key = "\%image/#{file.id}/"
+          - else
+            - key = "\%file/#{file.id}/#{file.file_file_name.match(/^(.*?)\.\w{2,4}$/)[1].titleize}/"
+          = text_field_tag("file_#{file.id}", key, readonly: true, onclick: "this.select();")
+        .table-cell = link_to(v2_file_path(file.id), method: :delete, class: 'red', data: {confirm: 'Are you sure you want to remove this file? This will break any remaining links to this file.'}) { FA::Icon.p('minus-square', style: :duotone) }

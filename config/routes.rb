@@ -61,6 +61,10 @@ Rails.application.routes.draw do
         patch :unhide, to: 'announcements#unhide'
       end
     end
+
+    # Markdown files and header images
+    resources :files, only: %i[index create destroy]
+    resources :headers, only: %i[index create destroy]
   end
 
   # Newsletter

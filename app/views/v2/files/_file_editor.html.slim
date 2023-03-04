@@ -1,0 +1,9 @@
+hr
+h2 Upload a new file
+= form_for(@file, url: v2_files_path, multipart: true) do |f|
+  = FA::Icon.p('file-pdf', style: :duotone, css: 'file-type')
+  = FA::Icon.p('file-image', style: :duotone, css: 'file-type')
+  = f.file_field :file, required: true
+  br
+  = spinner_button(f, button_text: 'Upload file', disable_text: 'Uploading', css: 'big')
+hr
