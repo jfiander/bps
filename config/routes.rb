@@ -198,14 +198,6 @@ Rails.application.routes.draw do
   put     '/invite/:id', to: 'user#invite', as: 'invite'
   put     '/invite_all', to: 'user#invite_all'
 
-  # Markdown files and header images
-  get     '/file',               to: 'file#new',            as: 'file'
-  post    '/file/upload',        to: 'file#create',         as: 'upload_file'
-  delete  '/file/:id/destroy',   to: 'file#destroy',        as: 'remove_file'
-  get     '/header',             to: 'file#new_header',     as: 'header'
-  post    '/header/upload',      to: 'file#create_header',  as: 'upload_header'
-  delete  '/header/:id/destroy', to: 'file#destroy_header', as: 'remove_header'
-
   # Locations and Event Types
   %i[location event_type].each do |model|
     get     "/#{model}s",               to: "#{model}s#list",    as: "#{model}s"
