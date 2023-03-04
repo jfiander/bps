@@ -2,7 +2,7 @@ h1#profile-title = t('grant_permission')
 
 / Add a new role assignment
 #add-permissions
-  = form_tag permit_path, id: "add-permission", name: "add-permission"
+  = form_tag permissions_path, id: "add-permission", name: "add-permission"
     = select_tag "user_id", options_for_select(@users), class: "add-permission", include_blank: true, required: true, prompt: "Please select a user"
     = select_tag "role", options_for_select(@roles.sort), class: "add-permission", include_blank: true, required: true, prompt: "Please select a permission"
     br
@@ -28,7 +28,7 @@ h1#profile-title Current Permissions
       .table-cell
         - if p.role.name != 'admin'
           = link_to( \
-              remove_permit_path(permit_id: p.id), method: :delete, class: 'red', data: { \
+              permission_path(id: p.id), method: :delete, class: 'red', data: { \
                 confirm: "Are you sure you want to remove the #{p.role.name} permission from #{display_name}?" \
               } \
             ) { FA::Icon.p('minus-square', style: :duotone, fa: :fw) }

@@ -8,34 +8,34 @@ class PermissionsController < ApplicationController
   before_action :find_roles, only: %i[index]
   before_action :restrict_roles, only: %i[index]
   before_action :users_for_select, only: %i[index]
-  before_action :find_user_role, only: %i[remove]
-  before_action :block_remove_admin, only: %i[remove]
-  before_action :process_permissions_errors, only: %i[add]
-  before_action :find_user_and_role, only: %i[add]
-  before_action :block_duplicate_permissions, only: %i[add]
+  before_action :find_user_role, only: %i[destroy]
+  before_action :block_remove_admin, only: %i[destroy]
+  before_action :process_permissions_errors, only: %i[create]
+  before_action :find_user_and_role, only: %i[create]
+  before_action :block_duplicate_permissions, only: %i[create]
 
   def index
     respond_to(&:html)
   end
 
-  def add
+  def create
     user_role = UserRole.create!(user: @user, role: @role)
     permission_notification(user_role, :added, current_user)
     update_calendar_acl(@user)
 
     flash[:success] = "Successfully added #{@role.name} " \
                       "permission to #{@user.simple_name}."
-    redirect_to permit_path
+    redirect_to permissions_path
   end
 
-  def remove
+  def destroy
     @user_role.destroy
     update_calendar_acl(@user_role.user)
     permission_notification(@user_role, :removed, current_user)
 
     flash[:success] = "Successfully removed #{@user_role.role.name} " \
                       "permission from #{@user_role.user.simple_name}."
-    redirect_to permit_path
+    redirect_to permissions_path
   end
 
   def auto
@@ -69,21 +69,21 @@ private
     return unless UserRole.find_by(user: @user, role: @role)
 
     flash[:notice] = "#{@user.simple_name} already has #{@role.name} permissions."
-    redirect_to permit_path
+    redirect_to permissions_path
   end
 
   def find_user_role
-    @user_role = UserRole.find_by(id: clean_params[:permit_id])
+    @user_role = UserRole.find_by(id: clean_params[:id])
   end
 
   def block_remove_admin
     return unless @user_role.role.name == 'admin'
 
-    redirect_to permit_path, alert: 'Cannot remove admin permissions.'
+    redirect_to permissions_path, alert: 'Cannot remove admin permissions.'
   end
 
   def clean_params
-    params.permit(:user_id, :role, :permit_id)
+    params.permit(:user_id, :role, :id)
   end
 
   def process_permissions_errors
@@ -93,19 +93,19 @@ private
 
   def missing_selection
     if clean_params[:user_id].blank?
-      redirect_to permit_path, alert: 'User was not selected.'
+      redirect_to permissions_path, alert: 'User was not selected.'
       return
     end
 
     return if clean_params[:role].present?
 
-    redirect_to permit_path, alert: 'Permission was not selected.'
+    redirect_to permissions_path, alert: 'Permission was not selected.'
   end
 
   def restricted_role
     return unless restricted_permission?(clean_params[:role])
 
-    redirect_to permit_path, alert: 'Unable to add that permission.'
+    redirect_to permissions_path, alert: 'Unable to add that permission.'
   end
 
   def restricted_permission?(role)

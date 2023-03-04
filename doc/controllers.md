@@ -17,6 +17,7 @@ Existing controllers that have had their routes updated.
 - RerouteController
 - SitemapController
 - VersionsController
+- PermissionsController
 
 ### No Changes Needed
 
