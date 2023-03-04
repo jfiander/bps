@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class BilgeFile < UploadedFile
+  AVAILABLE_ISSUES = {
+    1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',
+    's' => 'Sum', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec'
+  }.freeze
+
   def self.bucket
     :bilge
   end

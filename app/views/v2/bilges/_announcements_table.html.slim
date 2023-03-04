@@ -1,0 +1,18 @@
+#announcements.table.striped
+  .table-row.header
+    .table-cell Title
+    .table-cell Uploaded
+    .table-cell
+    .table-cell
+  - @announcements.each do |announcement|
+    .table-row class=(announcement.hidden? ? 'red' : '')
+      .table-cell = announcement.title
+      .table-cell = announcement.created_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+      .table-cell.center = link_to('Download', announcement.link(permalinks: current_user&.permalinks), target: :_blank, class: 'download')
+      .table-cell.center
+        - if current_user&.permitted?(:newsletter)
+          - if announcement.hidden?
+            = link_to(unhide_v2_announcement_path(announcement), method: :patch, class: 'red', title: 'Not displayed to most viewers', data: { confirm: "Are you sure you want to unhide this announcement?\n\n#{announcement.title}" }) { FA::Icon.p('eye-slash', style: :duotone, fa: :fw) }
+          - else
+            = link_to(hide_v2_announcement_path(announcement), method: :patch, class: 'green', title: 'Hide from most viewers', data: { confirm: "Are you sure you want to hide this announcement?\n\n#{announcement.title}" }) { FA::Icon.p('eye', style: :duotone, fa: :fw) }
+          = link_to(v2_announcement_path(announcement), method: :delete, class: 'red', title: 'Remove', data: { confirm: "Are you sure you want to remove this announcement?\n\n#{announcement.title}" }) { FA::Icon.p('minus-square', style: :duotone, fa: :fw) }
