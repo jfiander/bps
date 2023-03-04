@@ -150,11 +150,14 @@ Rails.application.routes.draw do
     post   '/s3',                        to: 'links#s3'
 
     # Versions
-    get    '/versions/:model/:id',       to: 'versions#show',   as: 'show_versions'
-    get    '/versions/:model/:id/:a/:b', to: 'versions#diff',   as: 'diff_versions'
-    post   '/versions/:model/:id/:a/:b', to: 'versions#diff'
-    patch  '/versions/:model/:id/:a',    to: 'versions#revert', as: 'revert_version'
-    get    '/versions(/:model)',         to: 'versions#index',  as: 'versions'
+    resources :versions, only: [] do
+      collection do
+        get    '(/:model)',         to: 'versions#index',  as: ''
+        get    '/:model/:id',       to: 'versions#show',   as: 'show'
+        get    '/:model/:id/:a/:b', to: 'versions#diff',   as: 'diff'
+        patch  '/:model/:id/:a',    to: 'versions#revert', as: 'revert'
+      end
+    end
 
     # Logo Generator
     get    '/logo',                      to: 'logos#logo'

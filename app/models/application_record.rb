@@ -38,7 +38,9 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def versions_path
-    Rails.application.routes.url_helpers.admin_show_versions_path(model: self.class.name, id: id)
+    Rails.application.routes.url_helpers.show_admin_versions_path(
+      model: self.class.name, id: id
+    )
   end
 
 private

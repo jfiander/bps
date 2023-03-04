@@ -33,13 +33,13 @@ module Admin
       @version = @versions.first(clean_params[:a].to_i).last
       @version.reify ? @version.reify.save! : @version.item.destroy
 
-      redirect_to admin_show_versions_path
+      redirect_to show_admin_versions_path(model: @version.item.class.name, id: @version.item.id)
     end
 
   private
 
     def versioned_models
-      Rails.application.eager_load!
+      # Rails.application.eager_load!
       @models = ApplicationRecord.descendants.map(&:name).sort
     end
 

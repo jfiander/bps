@@ -16,6 +16,7 @@ Existing controllers that have had their routes updated.
 - FlagsController
 - RerouteController
 - SitemapController
+- VersionsController
 
 ### No Changes Needed
 

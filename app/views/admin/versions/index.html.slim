@@ -15,7 +15,7 @@
         - headers.each do |header|
           .table-cell
             - if header == 'id'
-              = link_to object.send(header), admin_show_versions_path(id: object.id)
+              = link_to object.send(header), show_admin_versions_path(model: object.class.name, id: object.id)
             - else
               = object.send(header)&.to_s&.truncate(100, separator: /\s/)
 - else
