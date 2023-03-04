@@ -68,6 +68,8 @@ Naming/MemoizedInstanceVariableName:
   Enabled: false
 Naming/MethodParameterName:
   Enabled: false
+Naming/VariableNumber:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
