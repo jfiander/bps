@@ -2,7 +2,7 @@
   h2 = "Register for #{@event_title}"
 
   - if user_signed_in? && (@registered&.has_key?(@event.id) || @event.registerable?)
-    .center
+    .center id=("register_event_#{@event.id}")
       - if @registered&.has_key?(@event.id)
         = event_action_link( \
           @event, cancel_registration_path(id: @registered[@event.id]), method: :delete, remote: true, icon: 'calendar-times', \
