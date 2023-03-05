@@ -3,6 +3,11 @@ $old-glory-blue: #041E42;
 $old-glory-red: #BF0D3E;
 $gray: #999999;
 
+:root {
+  color-scheme: light dark;
+  supported-color-schemes: light dark;
+}
+
 body {
   font-family: "Arial";
   color: $old-glory-blue;
@@ -24,4 +29,19 @@ body {
   color: $gray;
 }
 
-img { max-width: 750px; }
+img {
+  max-width: 750px;
+
+  &.light { display: block; }
+  &.dark  { display: none; }
+
+  @media screen and (prefers-color-scheme: dark) {
+    &.light { display: none; }
+    &.dark  { display: block; }
+  }
+
+  @media screen and (prefers-color-scheme: light) {
+    &.light { display: block; }
+    &.dark  { display: none; }
+  }
+}
