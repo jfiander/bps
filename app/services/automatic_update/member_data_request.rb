@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module AutomaticUpdate
+  # https://www.usps.org/cgi-bin-nat/org/makecsv.cgi?|S|`
   class MemberDataRequest < DataRequest
     REQUEST_URL = 'https://www.usps.org/cgi-bin-nat/org/docsv.cgi?%7CS%7C'
     DOWNLOAD_URL = 'https://www.usps.org/info/temp/0525_9_Birmingham_member.csv'
@@ -55,9 +56,16 @@ module AutomaticUpdate
       'callsign'  => 'Y', 'callsignnm'  => 'Callsign',         'callsignnbr'   => '44',
       'btype'     => 'Y', 'btypenm'     => 'Boat Type',        'btypenbr'      => '45',
       'bname'     => 'Y', 'bnamenm'     => 'Boat Name',        'bnamenbr'      => '46',
-      'port'      => 'Y', 'portnm'      => 'Home Port',        'portnbr'       => '47',
-      'mmsi'      => 'Y', 'mmsinm'      => 'MMSI',             'mmsinbr'       => '48',
-      'actcertno' => 'Y', 'actcertnonm' => 'Prim.Cert',        'actcertnonbr'  => '48'
+      'actcertno' => 'Y', 'actcertnonm' => 'Prim.Cert',        'actcertnonbr'  => '47',
+      'job'       => 'Y', 'jobnm'       => 'Squad. Job',       'jobnbr'        => '48',
+      'vsc'       => 'Y', 'vscnm'       => 'VSC_01',           'vscnbr'        => '49'
+      # Former fields that have been removed: port, mmsi
     }.freeze
+
+  private
+
+    def request_data
+      REQUEST_DATA
+    end
   end
 end

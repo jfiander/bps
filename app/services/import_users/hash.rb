@@ -86,10 +86,8 @@ module ImportUsers
 
     def user_boat
       {
-        home_port: @row['Home Port'],
         boat_name: @row['Boat Name'],
         boat_type: @row['Boat Type'],
-        mmsi: @row['MMSI'],
         call_sign: @row['Call Sign']
       }
     end

@@ -29,11 +29,9 @@ import:
   - Bus. Phone
   - Prim.Cert
 
-  - MMSI
   - Call Sign
   - Boat Name
   - Boat Type
-  - Home Port
 
   - Birthday
   - Spouse
@@ -88,6 +86,7 @@ ignore:
   - Squad No.
   - Squad. Code
   - Squad. Name
+  - Squad. Job
 
   - Member Type
   - Past Rank
@@ -96,3 +95,6 @@ ignore:
   - Cell Text
   - Bus. Text
   - Callsign
+
+  - Home Port
+  - MMSI

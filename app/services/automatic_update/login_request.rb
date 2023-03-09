@@ -10,6 +10,10 @@ module AutomaticUpdate
 
   private
 
+    def request_data
+      REQUEST_DATA
+    end
+
     def request(uri)
       Net::HTTP::Post.new(uri) # No cookie sent on login
     end
