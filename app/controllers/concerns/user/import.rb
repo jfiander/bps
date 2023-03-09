@@ -118,7 +118,7 @@ class User
     end
 
     def update_results
-      @import_proto.empty? ? 'No changes' : @import_proto.to_json
+      @update_results ||= @import_proto.blank? ? 'No changes' : @import_proto.to_json
     end
 
     def notification_title(type)
