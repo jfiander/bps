@@ -9,7 +9,7 @@ module ImportUsers
     end
 
     def call
-      @user = User.find_by(certificate: @row['Certificate'])
+      @user = User.unscoped.find_by(certificate: @row['Certificate'])
       @user.present? ? update_user : new_user
     end
 

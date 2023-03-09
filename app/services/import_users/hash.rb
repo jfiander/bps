@@ -45,6 +45,7 @@ module ImportUsers
       nil
     end
 
+    # Include { locked_at: nil } here to automatically unlock users that are found in the import
     def user_personal
       {
         rank: import_rank, grade: @row['Grade'], mm: @row['MM'],
