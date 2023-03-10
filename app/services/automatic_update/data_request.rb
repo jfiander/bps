@@ -24,14 +24,14 @@ module AutomaticUpdate
   private
 
     def request_data
-      self.class::REQUEST_HEADER_DATA.merge(request_data_ignored_fields).merge(main_request_data)
+      self.class::REQUEST_HEADER_DATA.merge(request_data_ignored).merge(request_data_main)
     end
 
-    def request_data_ignored_fields
+    def request_data_ignored
       self.class::FIELDS_TO_IGNORE.times.each_with_object({}) { |i, h| h["fld#{i + 1}"] = 'N' }
     end
 
-    def request_data_main_fields
+    def request_data_main
       {}.tap do |hash|
         self.class::REQUEST_FIELD_NAMES.each_with_index do |field, index|
           id = FIELDS_TO_IGNORE + index + 1
