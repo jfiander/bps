@@ -99,6 +99,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_controller.default_url_options = { host: 'https://' + ENV['DOMAIN'] }
+  config.active_job.default_url_options = { host: 'https://' + ENV['DOMAIN'] }
 
   config.action_mailer.default_url_options = { host: 'https://' + ENV['DOMAIN'] }
   config.action_mailer.logger = nil

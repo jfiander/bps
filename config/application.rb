@@ -24,6 +24,10 @@ module BPS
 
     config.middleware.use Rack::Deflater
 
+    config.active_job.queue_adapter = :sidekiq
+    # config.active_job.queue_name_prefix = Rails.env
+    # config.active_job.queue_name_delimiter = '.'
+
     config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.default_timezone = :local
     config.active_record.time_zone_aware_types = %i[datetime time]

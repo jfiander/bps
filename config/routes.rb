@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   root 'public#home'
 
@@ -21,6 +23,10 @@ Rails.application.routes.draw do
   devise_scope :user do
     get    '/users/:id/edit',     to: 'users/registrations#admin_edit',   as: 'admin_edit'
     put    '/users/:id',          to: 'users/registrations#admin_update', as: 'admin_update'
+  end
+
+  authenticate :user, lambda { |u| u.permitted?(:admin, strict: true) } do
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   ### Short URLs

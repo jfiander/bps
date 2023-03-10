@@ -152,6 +152,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.2.0)
+    connection_pool (2.3.0)
     crass (1.0.6)
     css_parser (1.14.0)
       addressable
@@ -357,6 +358,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redcarpet (3.5.1)
+    redis-client (0.14.0)
+      connection_pool
     regexp_parser (2.7.0)
     representable (3.2.0)
       declarative (< 0.1.0)
@@ -428,6 +431,11 @@ GEM
     sendgrid-ruby (5.3.0)
       ruby_http_client (~> 3.3.0)
       sinatra (>= 1.4.7, < 3)
+    sidekiq (7.0.6)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.11.0)
     signet (0.17.0)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
@@ -558,6 +566,7 @@ DEPENDENCIES
   sanitize_email (~> 1.2)
   sass-rails (~> 5.0)
   sendgrid-ruby (~> 5.2)
+  sidekiq (~> 7.0)
   simplecov (~> 0)
   sinatra (~> 2.2.3)
   slack-notification (~> 0.1.9)

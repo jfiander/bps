@@ -32,6 +32,9 @@ SimpleCov.start('rails') do
   # Exclude controller code
   add_filter '/app/controllers'
 
+  # Exclude job code
+  add_filter '/app/jobs'
+
   # Exclude static view-oriented helper code
   add_filter '/app/helpers/application_helper.rb'
   add_filter '/app/helpers/admin_menu_helper.rb'

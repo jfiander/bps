@@ -59,7 +59,7 @@ gem 'sanitize_email',      '~> 1.2'
 
 # # Background Tasks
 # gem 'redis',             '~> 3.0'
-# gem 'sidekiq',           '~> 5.0'
+gem 'sidekiq',             '~> 7.0'
 
 # View Management
 gem 'fa_rails',            '~> 0.1.28'
