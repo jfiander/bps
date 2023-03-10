@@ -7,6 +7,8 @@ module Api
 
       authenticate_user!
 
+      after_action :join_thread, only: %i[queue_update queue_dryrun]
+
       def automatic_update(silent: false, dryrun: false)
         updater = AutomaticUpdate::Run.new
         @import_proto = updater.update
@@ -18,15 +20,13 @@ module Api
       end
 
       def queue_update
-        thread = Thread.new { automatic_update(silent: true) }
+        @thread = Thread.new { automatic_update(silent: true) }
         render(json: { status: 'Queued automatic update.' }, status: :accepted)
-        thread.join
       end
 
       def queue_dryrun
-        thread = Thread.new { automatic_update_dryrun }
+        @thread = Thread.new { automatic_update_dryrun }
         render(json: { status: 'Queued automatic update dryrun.' }, status: :accepted)
-        thread.join
       end
 
     private
@@ -114,6 +114,10 @@ module Api
         log.write(@import_proto.to_json)
         log.write("\n\n")
         log.close
+      end
+
+      def join_thread
+        @thread.join
       end
     end
   end
