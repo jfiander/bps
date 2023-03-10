@@ -8,8 +8,8 @@ RSpec.describe ViewHelper, type: :helper do
       expect(described_class.officer_flag('educational')).to include(
         '<svg ',
         '<title>LTC</title>',
-        'fill="#E4002B"',
-        "<path d=\"M 1536 512\nl 80 184\nl -40 -24\nl 0 864"
+        '<path d="M 0 0 l 384 0 l 0 256 l -384 0 l 0 -256 z" fill="#E4002B" stroke="none" />',
+        '<g transform="translate(-64)" stroke="none">'
       )
     end
 
@@ -18,8 +18,8 @@ RSpec.describe ViewHelper, type: :helper do
       expect(described_class.officer_flag('commander')).to include(
         '<svg ',
         '<title>CDR</title>',
-        'fill="#012169"',
-        "<path d=\"M 1536 512\nl 80 184\nl -40 -24\nl 0 864"
+        '<path d="M 0 0 l 384 0 l 0 256 l -384 0 l 0 -256 z" fill="#012169" stroke="none" />',
+        '<g transform="translate(-96, 24)" stroke="none">'
       )
     end
 
@@ -27,7 +27,8 @@ RSpec.describe ViewHelper, type: :helper do
       expect(described_class.officer_flag('asst_secretary')).to include(
         '<svg ',
         '<title>1LT</title>',
-        "<path d=\"M 1536 512\nl 80 184\nl -40 -24\nl 0 864"
+        '<path d="M 0 0 l 384 0 l 0 256 l -384 0 l 0 -256 z" fill="#FFFFFF" ' \
+          'stroke="#000000" stroke-width="1" />'
       )
     end
   end
