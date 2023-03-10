@@ -26,22 +26,11 @@ class User
     end
 
     def automatic_update
-      updater = AutomaticUpdate::Run.new
-      @import_proto = updater.update(lock: params[:lock_missing].present?)
-      @log_timestamp = updater.log_timestamp
-      @import_log_id = updater.import_log_id
-      import_success
-    rescue StandardError => e
-      import_failure(e)
+      run_automatic_import(dryrun: false)
     end
 
     def automatic_update_dryrun
-      @dryrun = true
-
-      User.transaction do
-        automatic_update
-        raise ActiveRecord::Rollback
-      end
+      run_automatic_import(dryrun: true)
     end
 
   private
@@ -59,11 +48,14 @@ class User
       import_path
     end
 
+    def run_automatic_import(dryrun:)
+      result = AutomaticUpdateJob.new.perform(current_user.id, dryrun: dryrun)
+      result == :success ? import_success : import_failure(result)
+    end
+
     def import_success
       flash.now[:success] = "Successfully #{@dryrun ? 'tested importing' : 'imported'} user data."
       render :import
-      import_notification(:success)
-      log_import
     end
 
     def import_failure(error)
@@ -71,75 +63,6 @@ class User
       flash.now[:error] = error.message
       Bugsnag.notify(error)
       render :import
-      import_notification(:failure)
-    end
-
-    def import_notification(type)
-      SlackNotification.new(
-        channel: :notifications, type: type, title: "User Data Import #{notification_title(type)}",
-        fallback: "User information has #{notification_fallback(type)}.",
-        fields: fields(update_results, type)
-      ).notify!
-
-      return if update_results == 'No changes' || type != :success
-
-      BPS::SlackFile.new('Update Results', update_results).call
-    end
-
-    def fields(update_results, type)
-      f = [
-        { title: 'By', value: current_user.full_name, short: true },
-        { title: 'Via', value: 'UI', short: true }
-      ]
-      f += live_results_fields unless @dryrun
-      f += dryrun_fields if @dryrun && update_results != 'No changes' && type == :success
-      f
-    end
-
-    def live_results_fields
-      [
-        { title: 'S3 Log Timestamp', value: @log_timestamp, short: true },
-        {
-          title: 'Import Log',
-          value: "<#{admin_import_log_url(id: @import_log_id)}|Import ##{@import_log_id}>",
-          short: true
-        }
-      ]
-    end
-
-    def dryrun_fields
-      [
-        {
-          title: 'Apply Changes?',
-          value: "<#{automatic_update_url}|Apply>",
-          short: true
-        }
-      ]
-    end
-
-    def update_results
-      @update_results ||= @import_proto.blank? ? 'No changes' : @import_proto.to_json
-    end
-
-    def notification_title(type)
-      return "#{'Test ' if @dryrun}Complete" if type == :success
-
-      "#{'Test ' if @dryrun}Failed"
-    end
-
-    def notification_fallback(type)
-      return "successfully #{@dryrun ? 'tested importing' : 'imported'}" if type == :success
-
-      "failed to #{@dryrun ? 'test importing' : 'import'}"
-    end
-
-    def log_import
-      log = File.open("#{Rails.root}/log/user_import.log", 'a')
-
-      log.write("[#{Time.now}] User import by: #{current_user.full_name}\n")
-      log.write(@import_proto.to_json)
-      log.write("\n\n")
-      log.close
     end
   end
 end
