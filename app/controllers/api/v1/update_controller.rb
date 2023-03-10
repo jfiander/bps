@@ -18,13 +18,15 @@ module Api
       end
 
       def queue_update
-        Thread.new { automatic_update(silent: true) }
+        thread = Thread.new { automatic_update(silent: true) }
         render(json: { status: 'Queued automatic update.' }, status: :accepted)
+        thread.join
       end
 
       def queue_dryrun
-        Thread.new { automatic_update_dryrun }
+        thread = Thread.new { automatic_update_dryrun }
         render(json: { status: 'Queued automatic update dryrun.' }, status: :accepted)
+        thread.join
       end
 
     private
