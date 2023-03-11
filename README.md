@@ -1,8 +1,6 @@
 # Birmingham Power Squadron – 2018 Website
 
 [![Status](https://github.com/jfiander/bps/actions/workflows/main.yml/badge.svg)](https://github.com/jfiander/bps/actions/workflows/main.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/96881399c3ad513707e3/maintainability)](https://codeclimate.com/github/jfiander/bps/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/96881399c3ad513707e3/test_coverage)](https://codeclimate.com/github/jfiander/bps/test_coverage)
 
 ## Location
 

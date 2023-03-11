@@ -119,21 +119,12 @@ jobs:
           mysql -uroot -h127.0.0.1 -e 'SELECT version()'
           mysql -uroot -h127.0.0.1 -e 'CREATE USER "${{ secrets.DB_USERNAME }}"@"${{ secrets.DB_HOSTNAME }}" IDENTIFIED BY "${{ secrets.DB_PASSWORD }}";'
           mysql -uroot -h127.0.0.1 -e 'GRANT ALL PRIVILEGES ON * . * TO "${{ secrets.DB_USERNAME }}"@"${{ secrets.DB_HOSTNAME }}";'
-      - name: Setup CodeClimate
-        run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter || (print "Will not report" && true)
-          chmod +x ./cc-test-reporter || true
-          ./cc-test-reporter before-build || true
       - name: Setup Test Database Schema
         run: 'bundle exec rails db:setup'
         env:
           RAILS_ENV: test
       - name: Run Rspec
         run: bundle exec rspec --format progress --order rand --color --tty
-      - name: Report to CodeClimate
-        run: ./cc-test-reporter after-build --exit-code $? || true
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       - name: Get Current Branch
         run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
         id: extract_branch
