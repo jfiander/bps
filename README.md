@@ -34,7 +34,7 @@ Run migrations to setup the database:
 bundle exec rails db:setup
 ```
 
-Set environment variables as appropriate – expected variables are listed below.
+Set environment variables as appropriate.
 
 Run the server:
 
