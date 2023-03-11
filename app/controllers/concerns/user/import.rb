@@ -49,19 +49,22 @@ class User
     end
 
     def run_automatic_import(dryrun:)
-      result = AutomaticUpdateJob.new.perform(current_user.id, dryrun: dryrun)
-      result == :success ? import_success : import_failure(result)
+      @result = AutomaticUpdateJob.new.perform(current_user.id, dryrun: dryrun)
+      @result.success? ? import_success : import_failure
     end
 
     def import_success
       flash.now[:success] = "Successfully #{@dryrun ? 'tested importing' : 'imported'} user data."
+      @import_proto = @result.import_proto
+      @log_timestamp = @result.log_timestamp
+      @import_log_id = @result.import_log_id
       render :import
     end
 
-    def import_failure(error)
+    def import_failure
       flash.now[:alert] = 'Unable to import user data.'
-      flash.now[:error] = error.message
-      Bugsnag.notify(error)
+      flash.now[:error] = @result.error.message
+      Bugsnag.notify(@result.error)
       render :import
     end
   end

@@ -4,9 +4,16 @@
 class AutomaticUpdateJob < ApplicationJob
   queue_as :automatic_update
 
+  attr_reader :import_proto, :log_timestamp, :import_log_id, :error
+
   def perform(user_id, dryrun:)
     @user_id = user_id
     dryrun ? automatic_update_dryrun : automatic_update
+    self
+  end
+
+  def success?
+    @success
   end
 
 private
@@ -40,12 +47,13 @@ private
   def import_success(dryrun: false)
     import_notification(:success, by: by, dryrun: dryrun)
     log_import(by: by) unless dryrun
-    :success
+    @success = true
   end
 
   def import_failure(error, dryrun: false)
     import_notification(:failure, by: by, dryrun: dryrun, error: error)
-    error
+    @success = false
+    @error = error
   end
 
   def import_notification(type, by: nil, dryrun: false, error: nil)
