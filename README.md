@@ -56,13 +56,35 @@ To upgrade the deployed Ruby version, make sure to update the following location
 
 Deploys are handled through Capistrano.
 
-Environment variables must be set in: config/application.yml
+Environment variables must be set in: `config/application.yml`
 
 | Description                  | Command                                                     |
 |------------------------------|-------------------------------------------------------------|
 | Update environment variables | `bundle exec cap <ENVIRONMENT> setup`                       |
 | Deploy                       | `bundle exec cap <ENVIRONMENT> deploy [BRANCH=branch_name]` |
 | Restart                      | `bundle exec cap <ENVIRONMENT> passenger:restart`           |
+
+### Sidekiq
+
+Sidekiq will be automatically restarted on deploy. It can also be manually controlled without
+needing to redeploy the entire application.
+
+| Description                | Command                                         |
+|----------------------------|-------------------------------------------------|
+| Start service              | `bundle exec cap <ENVIRONMENT> sidekiq:start`   |
+| Restart service            | `bundle exec cap <ENVIRONMENT> sidekiq:restart` |
+| Stop service               | `bundle exec cap <ENVIRONMENT> sidekiq:stop`    |
+| Copy service configuration | `bundle exec cap <ENVIRONMENT> sidekiq:setup`   |
+
+#### Permissions
+
+These tasks require some `sudo` permissions.
+
+```
+# /etc/sudoers.d/deploy
+
+deploy ALL = NOPASSWD: /usr/sbin/service sidekiq start, /usr/sbin/service sidekiq stop, /usr/sbin/service sidekiq restart, /usr/bin/systemctl daemon-reload
+```
 
 ## Testing
 
