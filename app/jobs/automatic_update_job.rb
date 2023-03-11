@@ -6,8 +6,9 @@ class AutomaticUpdateJob < ApplicationJob
 
   attr_reader :import_proto, :log_timestamp, :import_log_id, :error
 
-  def perform(user_id, dryrun:)
+  def perform(user_id, dryrun:, via: 'API')
     @user_id = user_id
+    @via = via
     dryrun ? automatic_update_dryrun : automatic_update
     self
   end
@@ -78,7 +79,7 @@ private
   def fields(by, dryrun, update_results, type)
     f = [
       { title: 'By', value: by, short: true },
-      { title: 'Via', value: 'API', short: true }
+      { title: 'Via', value: @via, short: true }
     ]
     f += live_results_fields unless dryrun
     f += dryrun_fields if dryrun && update_results != 'No changes' && type == :success

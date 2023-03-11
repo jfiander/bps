@@ -49,7 +49,7 @@ class User
     end
 
     def run_automatic_import(dryrun:)
-      @result = AutomaticUpdateJob.new.perform(current_user.id, dryrun: dryrun)
+      @result = AutomaticUpdateJob.new.perform(current_user.id, dryrun: dryrun, via: 'UI')
       @result.success? ? import_success : import_failure
     end
 
