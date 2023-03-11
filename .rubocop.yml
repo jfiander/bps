@@ -45,6 +45,11 @@ Lint/UnusedMethodArgument:
 Lint/UselessAssignment:
   Enabled: true
 
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - lib/tasks/*
+    - lib/capistrano/tasks/*
 Metrics/MethodLength:
   Enabled: true
   Max: 15

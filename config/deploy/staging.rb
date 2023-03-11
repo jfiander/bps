@@ -6,6 +6,7 @@ role :app, "deploy@#{staging_instance}"
 role :web, "deploy@#{staging_instance}"
 role :db,  "deploy@#{staging_instance}"
 
+set :environment, 'staging'
 set :branch, ENV.fetch('BRANCH', 'staging')
 
 set :ssh_options, {
