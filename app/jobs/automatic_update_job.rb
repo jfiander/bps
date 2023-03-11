@@ -31,9 +31,10 @@ private
 
   def automatic_update_dryrun
     User.transaction do
-      automatic_update(dryrun: true)
+      @result = automatic_update(dryrun: true)
       raise ActiveRecord::Rollback
     end
+    @result
   end
 
   def import_success(dryrun: false)
