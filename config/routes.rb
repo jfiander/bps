@@ -330,6 +330,7 @@ Rails.application.routes.draw do
       post '/update',              to: 'update#automatic_update'
       post '/update/queue',        to: 'update#queue_update'
       post '/update/queue/dryrun', to: 'update#queue_dryrun'
+      post '/update/queue/slack',  to: 'slack#queue_update_from_slack'
     end
   end
 

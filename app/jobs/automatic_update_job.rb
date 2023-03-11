@@ -7,7 +7,7 @@ class AutomaticUpdateJob < ApplicationJob
   attr_reader :import_proto, :log_timestamp, :import_log_id, :error
 
   def perform(user_id, dryrun:, via: 'API')
-    @user_id = user_id
+    @user = User.find_by(id: user_id)
     @via = via
     dryrun ? automatic_update_dryrun : automatic_update
     self
@@ -20,29 +20,32 @@ class AutomaticUpdateJob < ApplicationJob
 private
 
   def by
-    user = User.find_by(id: @user_id)
-    user ? user.full_name : 'API'
+    @user ? @user.full_name : 'API'
   end
 
   def updater
     @updater ||= AutomaticUpdate::Run.new
   end
 
-  def automatic_update(dryrun: false)
+  def automatic_update
     @import_proto = updater.update
     @log_timestamp = updater.log_timestamp
     @import_log_id = updater.import_log_id
-    import_success(dryrun: dryrun)
+    import_success(dryrun: false)
   rescue StandardError => e
-    import_failure(e, dryrun: dryrun)
+    import_failure(e, dryrun: false)
   end
 
   def automatic_update_dryrun
     User.transaction do
-      @result = automatic_update(dryrun: true)
+      @import_proto = updater.update
+      @log_timestamp = updater.log_timestamp
+      @import_log_id = updater.import_log_id
       raise ActiveRecord::Rollback
     end
-    @result
+    import_success(dryrun: true)
+  rescue StandardError => e
+    import_failure(e, dryrun: true)
   end
 
   def import_success(dryrun: false)
@@ -62,13 +65,14 @@ private
     fallback = type == :success ? 'successfully imported' : 'failed to import'
     dry = dryrun ? '[Dryrun] ' : ''
 
-    fields = fields(by, dryrun, update_results, type)
+    fields = fields(by, dryrun)
     fields << { title: 'Error Message', value: error.message, short: false } if type == :failure
 
     SlackNotification.new(
       channel: :notifications, type: type, title: "#{dry}User Data Import #{title}",
       fallback: "#{dry}User information has #{fallback}.",
-      fields: fields
+      fields: fields,
+      blocks: (blocks if dryrun && update_results != 'No changes' && type == :success)
     ).notify!
 
     return if update_results == 'No changes' || type != :success
@@ -76,14 +80,31 @@ private
     BPS::SlackFile.new('Update Results', update_results).call
   end
 
-  def fields(by, dryrun, update_results, type)
+  def fields(by, dryrun)
     f = [
       { title: 'By', value: by, short: true },
       { title: 'Via', value: @via, short: true }
     ]
     f += live_results_fields unless dryrun
-    f += dryrun_fields if dryrun && update_results != 'No changes' && type == :success
     f
+  end
+
+  def blocks
+    token = @user.create_token(description: 'Automatic Update Slack button')
+
+    [
+      {
+        'type': 'actions',
+        'elements': [
+          {
+            'type': 'button',
+            'text': { 'type': 'plain_text', 'emoji': true, 'text': 'Apply Changes' },
+            'style': 'primary',
+            'value': { key: token.key, token: token.new_token }.to_json
+          }
+        ]
+      }
+    ]
   end
 
   def live_results_fields
@@ -92,16 +113,6 @@ private
       {
         title: 'Import Log',
         value: "<#{admin_import_log_url(id: @import_log_id)}|Import ##{@import_log_id}>",
-        short: true
-      }
-    ]
-  end
-
-  def dryrun_fields
-    [
-      {
-        title: 'Apply Changes?',
-        value: "<#{automatic_update_url}|Apply>",
         short: true
       }
     ]
