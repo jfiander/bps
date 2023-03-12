@@ -52,12 +52,12 @@ private
   end
 
   def import_failure(error, dryrun: false)
-    import_notification(:failure, by: by, dryrun: dryrun, error: error)
+    import_notification(:failure, by: by, dryrun: dryrun, channel: :alarms, error: error)
     @success = false
     @error = error
   end
 
-  def import_notification(type, by: nil, dryrun: false, error: nil)
+  def import_notification(type, by: nil, dryrun: false, channel: :auto_updates, error: nil)
     title = type == :success ? 'Complete' : 'Failed'
     fallback = type == :success ? 'successfully imported' : 'failed to import'
     dry = dryrun ? '[Dryrun] ' : ''
@@ -66,14 +66,14 @@ private
     fields << { title: 'Error Message', value: error.message, short: false } if type == :failure
 
     SlackNotification.new(
-      channel: :auto_updates, type: type, title: "#{dry}User Data Import #{title}",
+      channel: channel, type: type, title: "#{dry}User Data Import #{title}",
       fallback: "#{dry}User information has #{fallback}.",
       fields: fields
     ).notify!
 
     return if update_results == 'No changes' || type != :success
 
-    BPS::SlackFile.new('Update Results', update_results, channel: :auto_updates).call
+    BPS::SlackFile.new('Update Results', update_results, channel: channel).call
 
     import_alarm_notification(update_results, by: by) if dryrun
   end
