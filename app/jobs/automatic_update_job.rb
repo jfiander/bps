@@ -75,17 +75,17 @@ private
 
     BPS::SlackFile.new('Update Results', update_results, channel: channel).call
 
-    import_alarm_notification(update_results, by: by) if dryrun
+    changes_available_notification(update_results, by: by) if dryrun
   end
 
-  def import_alarm_notification(update_results, by: nil)
+  def changes_available_notification(update_results, by: nil)
     SlackNotification.new(
-      channel: :alarms, type: :info, title: 'User Data Changes Available',
+      channel: :notifications, type: :info, title: 'User Data Changes Available',
       fallback: 'User data changes are available to import.',
       fields: fields(by, true, update_results, :success)
     ).notify!
 
-    BPS::SlackFile.new('Update Results', update_results, channel: :alarms).call
+    BPS::SlackFile.new('Update Results', update_results, channel: :notifications).call
   end
 
   def fields(by, dryrun, update_results, type)
