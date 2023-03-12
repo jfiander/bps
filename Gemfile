@@ -43,7 +43,7 @@ gem 'rushover',            '~> 0.3.0'
 gem 'sendgrid-ruby',       '~> 5.2'
 gem 'slack-notifier',      '~> 2.3'
 
-gem 'slack-notification',  '~> 0.1.9'
+gem 'slack-notification',  '~> 0.1.11'
 
 # General Functionality
 gem 'devise',              '~> 4.7'

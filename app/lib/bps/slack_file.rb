@@ -4,10 +4,11 @@ module BPS
   class SlackFile < HTTPRequest
     REQUEST_URL = 'https://slack.com/api/files.upload'
 
-    def initialize(title, content, filetype = 'json', verbose: true)
+    def initialize(title, content, filetype = 'json', channel: :auto_updates, verbose: true)
       @title = title
       @content = content
       @filetype = filetype
+      @channel = channel.to_s
       super(verbose: verbose)
     end
 
@@ -27,7 +28,8 @@ module BPS
     end
 
     def channel_id
-      ENV[BPS::Application.deployed? ? 'SLACK_CHANNEL_ID_NOTIFICATIONS' : 'SLACK_CHANNEL_ID_TEST']
+      deployed_channel = "SLACK_CHANNEL_ID_#{@channel.upcase}"
+      ENV[BPS::Application.deployed? ? deployed_channel : 'SLACK_CHANNEL_ID_TEST']
     end
 
     def authorization(req)

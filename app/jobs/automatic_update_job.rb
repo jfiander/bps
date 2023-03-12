@@ -66,14 +66,26 @@ private
     fields << { title: 'Error Message', value: error.message, short: false } if type == :failure
 
     SlackNotification.new(
-      channel: :notifications, type: type, title: "#{dry}User Data Import #{title}",
+      channel: :auto_updates, type: type, title: "#{dry}User Data Import #{title}",
       fallback: "#{dry}User information has #{fallback}.",
       fields: fields
     ).notify!
 
     return if update_results == 'No changes' || type != :success
 
-    BPS::SlackFile.new('Update Results', update_results).call
+    BPS::SlackFile.new('Update Results', update_results, channel: :auto_updates).call
+
+    import_alarm_notification(update_results, by: by) if dryrun
+  end
+
+  def import_alarm_notification(update_results, by: nil)
+    SlackNotification.new(
+      channel: :alarms, type: :info, title: 'User Data Changes Available',
+      fallback: 'User data changes are available to import.',
+      fields: fields(by, true, update_results, :success)
+    ).notify!
+
+    BPS::SlackFile.new('Update Results', update_results, channel: :alarms).call
   end
 
   def fields(by, dryrun, update_results, type)
