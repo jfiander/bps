@@ -2,7 +2,9 @@
 
 module SignalFlagsHelper
   def signal_flags(text, css: nil)
+    # html_safe: Text sanitized before display
     bucket = BPS::S3.new(:static)
+    text = sanitize(text)
 
     <<~OUTER.html_safe
       <div class="signals #{css}" title="#{text}">
