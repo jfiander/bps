@@ -102,9 +102,7 @@ module BPS
               next unless award&.photo&.path && BPS::S3.new(:files)&.has?(award&.photo&.path)
 
               photo = BPS::S3.new(:files)&.download(award&.photo&.path)
-              File.open("tmp/run/#{award.award_name}.png", 'w+') do |f|
-                f.write(photo)
-              end
+              File.write("tmp/run/#{award.award_name}.png", photo)
             end
           end
         end

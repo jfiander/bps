@@ -3,7 +3,7 @@
 module Events
   module Update
     ATTACHMENTS = JSON.parse(
-      File.read(Rails.root.join('app', 'controllers', 'concerns', 'events', 'attachments.json'))
+      Rails.root.join('app/controllers/concerns/events/attachments.json').read
     ).map(&:symbolize_keys).freeze
 
   private
@@ -27,7 +27,7 @@ module Events
     # Update various attachments, then remove any that were not updated
     def update_or_remove
       Event.transaction do
-        clear_before_time = Time.now - 1.second
+        clear_before_time = 1.second.ago
         yield
         remove_old_attachments(clear_before_time)
       end

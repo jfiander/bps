@@ -62,7 +62,7 @@ module BridgeHelper
   end
 
   def generate_officer_hash(officer)
-    return unless officer.present?
+    return if officer.blank?
 
     {
       title: officer.title,
@@ -72,8 +72,9 @@ module BridgeHelper
     }
   end
 
+  # rubocop:disable Rails/OutputSafety
+  # html_safe: Text is sanitized before display.
   def generate_committees(dept)
-    # html_safe: Text is sanitized before display.
     @all_committees[dept]&.map do |c|
       {
         name: sanitize(c.display_name).html_safe,
@@ -82,6 +83,7 @@ module BridgeHelper
       }
     end
   end
+  # rubocop:enable Rails/OutputSafety
 
 private
 

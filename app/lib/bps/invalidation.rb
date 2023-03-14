@@ -2,8 +2,8 @@
 
 module BPS
   class Invalidation
-    GLOBAL_DISTROS ||= %i[static seo].freeze
-    AVAILABLE_DISTROS ||= (GLOBAL_DISTROS + %i[files bilge photos]).freeze
+    GLOBAL_DISTROS = %i[static seo].freeze
+    AVAILABLE_DISTROS = (GLOBAL_DISTROS + %i[files bilge photos]).freeze
 
     attr_reader :alias_name, :keys, :caller_reference
 
@@ -59,7 +59,11 @@ module BPS
         distribution_id: find_distro_id
       )
 
-      puts(result.invalidation_list.items.map { |l| "#{l.id} -> #{l.status}" }, '') if verbose
+      if verbose
+        Rails.logger.debug(result.invalidation_list.items.map do |l|
+                             "#{l.id} -> #{l.status}"
+                           end, '')
+      end
 
       result
     end

@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe BilgeFile, type: :model do
-  let(:bilge) { FactoryBot.create(:bilge_file, year: 2017, month: 9, file: File.open(test_image(200, 500), 'r')) }
+RSpec.describe BilgeFile do
+  let(:bilge) { create(:bilge_file, year: 2017, month: 9, file: File.open(test_image(200, 500), 'r')) }
 
   it 'has the correct number of issues' do
     expect(described_class.issues.count).to be(11)

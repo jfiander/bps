@@ -41,7 +41,7 @@ module BPS
 
       def config
         @config ||= YAML.safe_load(
-          File.read("#{Rails.root}/app/lib/bps/pdf/roster/roster.yml")
+          Rails.root.join('app/lib/bps/pdf/roster/roster.yml').read
         ).deep_symbolize_keys!
       end
     end

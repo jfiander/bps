@@ -21,9 +21,7 @@ module BPS
       s3.objects(prefix: prefix)
     end
 
-    def object(key)
-      s3.object(key)
-    end
+    delegate :object, to: :s3
 
     def has?(key)
       s3.object(key)&.exists?
@@ -109,14 +107,14 @@ module BPS
     end
 
     def signed_link(key, expires_at = nil)
-      expires_at ||= Time.now + 1.hour
+      expires_at ||= 1.hour.from_now
       cf_signer.signed_url(cf_link(key), expires: expires_at)
     end
 
     def cf_signer
       @cf_signer ||= Aws::CloudFront::UrlSigner.new(
         key_pair_id: ENV['CF_KEYPAIR_ID'],
-        private_key_path: "#{Rails.root}/config/keys/cf.pem"
+        private_key_path: Rails.root.join('config/keys/cf.pem')
       )
     end
   end

@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe EventsHelper, type: :helper do
-  let(:user) { FactoryBot.create(:user) }
-  let(:event) { FactoryBot.create(:event) }
+RSpec.describe EventsHelper do
+  let(:user) { create(:user) }
+  let(:event) { create(:event) }
 
   describe 'override_icon' do
-    let(:reg) { FactoryBot.create(:registration, user: user, event: event) }
+    let(:reg) { create(:registration, user: user, event: event) }
 
     before { generic_seo_and_ao }
 
@@ -48,8 +48,8 @@ RSpec.describe EventsHelper, type: :helper do
   end
 
   describe 'event_flags' do
-    let(:committee_1) { FactoryBot.create(:committee) }
-    let(:committee_2) { FactoryBot.create(:committee, name: 'Vessel Safety Check') }
+    let(:committee_1) { create(:committee) }
+    let(:committee_2) { create(:committee, name: 'Vessel Safety Check') }
 
     before { @current_user_permitted_event_type = true }
 

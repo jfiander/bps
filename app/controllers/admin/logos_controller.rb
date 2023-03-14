@@ -6,7 +6,7 @@ module Admin
 
     def logo
       @logo_params = default_params
-      return unless logo_params.present?
+      return if logo_params.blank?
 
       @logo_params = logo_params
       find_logo
@@ -103,17 +103,17 @@ module Admin
       generate_png(svg, time, background)
 
       USPSFlags::Helpers.resize_png(
-        "#{Rails.root}/tmp/run/logo-#{time}.png",
-        outfile: "#{Rails.root}/tmp/run/logo-#{time}_sized.png", size: size
+        Rails.root.join("tmp/run/logo-#{time}.png"),
+        outfile: Rails.root.join("tmp/run/logo-#{time}_sized.png"), size: size
       )
 
-      "#{Rails.root}/tmp/run/logo-#{time}_sized.png"
+      Rails.root.join("tmp/run/logo-#{time}_sized.png")
     end
 
     def generate_png(svg, time, background)
       USPSFlags::Generate.png(
         svg,
-        outfile: "#{Rails.root}/tmp/run/logo-#{time}.png",
+        outfile: Rails.root.join("tmp/run/logo-#{time}.png"),
         background: background == 'white' ? '#FFFFFF' : 'none'
       )
     end

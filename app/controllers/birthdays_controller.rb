@@ -24,7 +24,7 @@ private
   end
 
   def current
-    @month = Date.today.strftime('%m').to_i
+    @month = Time.zone.today.strftime('%m').to_i
     @birthdays = sorted_users
   end
 

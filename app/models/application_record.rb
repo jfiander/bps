@@ -26,7 +26,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def self.order_sql_path
-    "#{Rails.root}/app/models/concerns/#{name.underscore}/order.sql"
+    Rails.root.join("app/models/concerns/#{name.underscore}/order.sql")
   end
 
   def self.order_sql
@@ -38,9 +38,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def versions_path
-    Rails.application.routes.url_helpers.admin_show_versions_path(
-      model: self.class.name, id: id
-    )
+    Rails.application.routes.url_helpers.admin_show_versions_path(model: self.class.name, id: id)
   end
 
 private

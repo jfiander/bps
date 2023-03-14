@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Events::CoursesController, type: :controller do
+RSpec.describe Events::CoursesController do
   let(:event_type) { 'course' }
 
   it 'renders the schedule view' do

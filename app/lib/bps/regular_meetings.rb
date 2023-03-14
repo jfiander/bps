@@ -32,9 +32,9 @@ module BPS
 
     def membership_description
       "Monthly general membership meeting.\n\n" \
-      "All members and their guests are welcome to attend!\n\n" \
-      'If you would like to join this meeting remotely, ' \
-      'please notify a bridge officer ahead of time.'
+        "All members and their guests are welcome to attend!\n\n" \
+        'If you would like to join this meeting remotely, ' \
+        'please notify a bridge officer ahead of time.'
     end
 
     def excom
@@ -48,9 +48,9 @@ module BPS
 
     def excom_description
       "Monthly meeting of the Executive Committee.\n\n" \
-      "All members are welcome to attend!\n\n" \
-      'If you would like to join this meeting remotely, ' \
-      'please notify a bridge officer ahead of time.'
+        "All members are welcome to attend!\n\n" \
+        'If you would like to join this meeting remotely, ' \
+        'please notify a bridge officer ahead of time.'
     end
 
     def meeting_hash(**options)

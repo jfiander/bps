@@ -114,7 +114,7 @@ private
   end
 
   def send_receipt_email(transaction)
-    return unless transaction.customer_details.email.present?
+    return if transaction.customer_details.email.blank?
 
     ReceiptMailer.receipt(@payment, transaction).deliver
   end

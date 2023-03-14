@@ -27,6 +27,13 @@ class EventTypesController < ApplicationController
     @event_types = @event_types.where.not(event_category: 'meeting')
   end
 
+  def edit
+    @event_type = EventType.find_by(id: update_params[:id])
+    @edit_action = 'Modify'
+    @submit_path = update_event_type_path
+    render :new
+  end
+
   def create
     event_type_params[:title] = event_type_params[:title].underscore
     if restricted?
@@ -37,13 +44,6 @@ class EventTypesController < ApplicationController
     redirect_with_status(event_types_path, object: 'event_type', verb: 'create') do
       @event_type = EventType.create(event_type_params)
     end
-  end
-
-  def edit
-    @event_type = EventType.find_by(id: update_params[:id])
-    @edit_action = 'Modify'
-    @submit_path = update_event_type_path
-    render :new
   end
 
   def update

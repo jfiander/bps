@@ -4,7 +4,7 @@ module Public
   module Announcements
     def announcement_direct
       af = AnnouncementFile.find_by(id: announcement_params[:id])
-      return announcement_not_found unless af.present?
+      return announcement_not_found if af.blank?
 
       send_announcement(af)
     end

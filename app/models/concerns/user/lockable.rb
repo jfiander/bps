@@ -9,7 +9,7 @@ class User
     end
 
     def lock
-      update(locked_at: Time.now)
+      update(locked_at: Time.zone.now)
     end
 
     def unlock

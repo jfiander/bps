@@ -7,5 +7,5 @@
           - if month.in?(bilges.map(&:month))
             - bilge = bilges.select { |b| b.month == month }.first
             = link_to(bilge.issue, bilge.link(permalinks: current_user&.permalinks), target: :_blank, class: (bilge.id.in?(@public_ids) ? '' : 'members'))
-          - elsif year < Date.today.year || month <= Date.today.month
+          - elsif year < Time.zone.today.year || month <= Time.zone.today.month
             = FA::Icon.p(:ban, style: :duotone, css: 'gray', title: "No issue posted for #{BilgeFile.issues[month]} #{year}")

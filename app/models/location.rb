@@ -26,7 +26,7 @@ class Location < ApplicationRecord
   scope :others, -> { where('favorite IS NULL OR favorite = ?', false) }
 
   def display
-    return { id: 0, address: 'TBD' } unless address.present?
+    return { id: 0, address: 'TBD' } if address.blank?
 
     { id: id }.merge(details_hash)
   end

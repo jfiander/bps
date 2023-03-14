@@ -108,7 +108,7 @@ private
 
   def missing_committees
     auto_roles = YAML.safe_load(
-      File.read("#{Rails.root}/config/implicit_permissions.yml")
+      Rails.root.join('config/implicit_permissions.yml').read
     )['committee'].keys
     @missing_committees = auto_roles - Committee.all.map(&:name)
   end

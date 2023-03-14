@@ -67,7 +67,7 @@ module BPS
 
           def load_pc_flag
             flag = BPS::S3.new(:static).download('flags/PNG/PC.500.png')
-            File.open('tmp/run/PC.png', 'w+') { |f| f.write(flag) }
+            File.write('tmp/run/PC.png', flag)
           end
         end
       end

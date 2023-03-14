@@ -2,7 +2,7 @@
 
 class User
   module Import
-    ACCEPTABLE_CONTENT_TYPES ||= %w[
+    ACCEPTABLE_CONTENT_TYPES = %w[
       text/csv text/plain application/octet-stream application/vnd.ms-excel
     ].freeze
 

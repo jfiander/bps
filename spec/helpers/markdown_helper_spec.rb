@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe MarkdownHelper, type: :helper do
+RSpec.describe MarkdownHelper do
   it 'defines a constant of available views' do
     expect(MarkdownHelper::VIEWS).to be_a(Hash)
     expect(MarkdownHelper::VIEWS.keys.all? { |l| l.is_a?(String) }).to be(true)
@@ -17,7 +17,7 @@ RSpec.describe MarkdownHelper, type: :helper do
 
   describe 'rendering a page' do
     before do
-      @page = FactoryBot.create(:static_page)
+      @page = create(:static_page)
     end
 
     it 'correctly renders a page' do

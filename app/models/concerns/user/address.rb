@@ -10,7 +10,7 @@ class User
         address_1,
         address_2,
         "#{city} #{state} #{zip}"
-      ].reject(&:blank?)
+      ].compact_blank
     end
 
     def geo_address
@@ -20,7 +20,7 @@ class User
 
     def lat_lon(human: true)
       coordinates = Geocoder.search(geo_address).first&.coordinates
-      return unless coordinates.present?
+      return if coordinates.blank?
       return coordinates unless human
 
       lat = format_coordinate(coordinates[0], hemi: :ns)

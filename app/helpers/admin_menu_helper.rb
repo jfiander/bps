@@ -80,25 +80,25 @@ private
   end
 
   def missing_controller?(req_controller = nil)
-    return false unless req_controller.present?
+    return false if req_controller.blank?
 
     !controller_name.in?(req_controller)
   end
 
   def wrong_controller?(not_controller = nil)
-    return false unless not_controller.present?
+    return false if not_controller.blank?
 
     controller_name.in?(not_controller)
   end
 
   def missing_action?(req_action = nil)
-    return false unless req_action.present?
+    return false if req_action.blank?
 
     !controller.action_name.in?(req_action)
   end
 
   def wrong_action?(not_action = nil)
-    return false unless not_action.present?
+    return false if not_action.blank?
 
     controller.action_name.in?(not_action)
   end

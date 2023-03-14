@@ -11,8 +11,8 @@ class ApiToken < ApplicationRecord
 
   attr_reader :new_token
 
-  scope :current, -> { where('expires_at > ?', Time.now) }
-  scope :expired, -> { where('expires_at <= ?', Time.now) }
+  scope :current, -> { where('expires_at > ?', Time.zone.now) }
+  scope :expired, -> { where('expires_at <= ?', Time.zone.now) }
 
   before_validation :set_expiration
   before_create :encrypt_token
@@ -25,7 +25,7 @@ class ApiToken < ApplicationRecord
   end
 
   def current?
-    expires_at > Time.now
+    expires_at > Time.zone.now
   end
 
   def match?(other)
@@ -33,13 +33,13 @@ class ApiToken < ApplicationRecord
   end
 
   def expire!
-    update!(expires_at: Time.now)
+    update!(expires_at: Time.zone.now)
   end
 
 private
 
   def set_expiration
-    self.expires_at = Time.now + 15.minutes unless persisted?
+    self.expires_at = 15.minutes.from_now unless persisted?
   end
 
   def encrypt_token

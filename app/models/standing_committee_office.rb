@@ -16,13 +16,13 @@ class StandingCommitteeOffice < ApplicationRecord
   validates :committee_name, presence: COMMITTEES
 
   default_scope { ordered }
-  scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.now) }
+  scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.zone.now) }
   scope :chair_first, -> { order(chair: :desc) }
 
   class << self
     COMMITTEES.each do |committee|
       define_method("#{committee}?") do |user_id|
-        where(committee_name: committee, user_id: user_id).exists?
+        exists?(committee_name: committee, user_id: user_id)
       end
     end
   end
@@ -36,7 +36,7 @@ class StandingCommitteeOffice < ApplicationRecord
   end
 
   def years_remaining
-    executive? ? 1 : ((term_expires_at - Time.now) / 1.year).ceil
+    executive? ? 1 : ((term_expires_at - Time.zone.now) / 1.year).ceil
   end
 
   def term_year
@@ -48,7 +48,7 @@ class StandingCommitteeOffice < ApplicationRecord
   end
 
   def current?
-    term_expires_at.present? && term_expires_at > Time.now
+    term_expires_at.present? && term_expires_at > Time.zone.now
   end
 
 private

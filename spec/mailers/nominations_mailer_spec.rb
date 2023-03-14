@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe NominationsMailer, type: :mailer do
+RSpec.describe NominationsMailer do
   describe 'nomination' do
-    let(:nominator) { FactoryBot.create(:user) }
+    let(:nominator) { create(:user) }
 
     context 'with an ExCom award' do
       let(:mail) do

@@ -13,7 +13,7 @@ module Users
 
     def valid_referrer?
       valid_pattern = %r{\A/?(?!login)(#{referrer_paths.join('|')})\z}
-      return false unless referrer_params[:user][:referrer].present?
+      return false if referrer_params[:user][:referrer].blank?
 
       referrer_params[:user][:referrer].match?(valid_pattern)
     rescue StandardError

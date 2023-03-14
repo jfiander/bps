@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe BridgeOffice, type: :model do
-  let!(:commander) { FactoryBot.create(:bridge_office, office: 'commander') }
-  let!(:executive) { FactoryBot.create(:bridge_office, office: 'executive') }
-  let!(:educational) { FactoryBot.create(:bridge_office, office: 'educational') }
-  let!(:administrative) { FactoryBot.create(:bridge_office, office: 'administrative') }
-  let!(:asst_educational) { FactoryBot.create(:bridge_office, office: 'asst_educational') }
-  let!(:asst_secretary) { FactoryBot.create(:bridge_office, office: 'asst_secretary') }
+RSpec.describe BridgeOffice do
+  let!(:commander) { create(:bridge_office, office: 'commander') }
+  let!(:executive) { create(:bridge_office, office: 'executive') }
+  let!(:educational) { create(:bridge_office, office: 'educational') }
+  let!(:administrative) { create(:bridge_office, office: 'administrative') }
+  let!(:asst_educational) { create(:bridge_office, office: 'asst_educational') }
+  let!(:asst_secretary) { create(:bridge_office, office: 'asst_secretary') }
 
   describe 'titles' do
     it 'adds officer when appropriate' do
@@ -44,7 +44,7 @@ RSpec.describe BridgeOffice, type: :model do
   end
 
   it 'rejects invalid offices' do
-    invalid = FactoryBot.build(:bridge_office, office: 'invalid')
+    invalid = build(:bridge_office, office: 'invalid')
     expect(invalid.valid?).to be(false)
     expect(invalid.errors.messages.to_h).to eql(office: ['must be in BridgeOffice.departments(assistants: true)'])
   end
@@ -75,7 +75,7 @@ RSpec.describe BridgeOffice, type: :model do
     end
 
     context 'with an AO id' do
-      let(:new_ao) { FactoryBot.create(:user) }
+      let(:new_ao) { create(:user) }
 
       it 'updates the commander' do
         expect { described_class.advance(new_ao.id) }.to change { officer('commander') }

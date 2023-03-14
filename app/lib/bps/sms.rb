@@ -64,7 +64,7 @@ module BPS
         },
         tags: [
           { key: 'Environment', value: ENV['ASSET_ENVIRONMENT'] },
-          { key: 'CreatedAt', value: Time.now.to_s }
+          { key: 'CreatedAt', value: Time.zone.now.to_s }
         ]
       })
     end

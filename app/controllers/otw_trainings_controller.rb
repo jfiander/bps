@@ -31,6 +31,10 @@ class OTWTrainingsController < ApplicationController
     @otw_training = OTWTraining.new
   end
 
+  def edit
+    render :new
+  end
+
   def create
     @otw_training = OTWTraining.new(otw_training_params)
 
@@ -42,10 +46,6 @@ class OTWTrainingsController < ApplicationController
       flash.now[:error] = @otw_training.errors.full_messages
       render :new
     end
-  end
-
-  def edit
-    render :new
   end
 
   def update

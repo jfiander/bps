@@ -124,9 +124,9 @@ private
   end
 
   def log_import(by: nil)
-    log = File.open("#{Rails.root}/log/user_import.log", 'a')
+    log = Rails.root.join('log/user_import.log').open('a')
 
-    log.write("[#{Time.now}] User import by: #{by}\n")
+    log.write("[#{Time.zone.now}] User import by: #{by}\n")
     log.write(@import_proto.to_json)
     log.write("\n\n")
     log.close

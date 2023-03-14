@@ -22,7 +22,7 @@ module Api
         end
 
         def jwt_expires_at
-          @jwt_expires_at ||= Time.now + 15.minutes
+          @jwt_expires_at ||= 15.minutes.from_now
         end
 
         def jwt_payload(data)

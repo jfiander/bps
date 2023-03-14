@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe PersistentApiToken, type: :model do
-  let(:token) { FactoryBot.create(:persistent_api_token) }
+RSpec.describe PersistentApiToken do
+  let(:token) { create(:persistent_api_token) }
 
   it 'does not set an expiration date on create' do
     expect(token.expires_at).to be_nil
@@ -15,7 +15,7 @@ RSpec.describe PersistentApiToken, type: :model do
 
   describe 'current scope' do
     it 'does not include non-persistent tokens', :aggregate_failures do
-      user = FactoryBot.create(:user)
+      user = create(:user)
       at = ApiToken.create(user: user)
       pat = described_class.create(user: user)
       pat_at = ApiToken.find(pat.id)
@@ -31,7 +31,7 @@ RSpec.describe PersistentApiToken, type: :model do
     end
 
     it 'returns false when expired' do
-      token.expires_at = Time.now - 1.second
+      token.expires_at = 1.second.ago
       expect(token.current?).to be(false)
     end
   end

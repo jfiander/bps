@@ -12,7 +12,7 @@
     .left
       span.red = FA::Icon.p('dot-circle', style: :duotone, css: 'red', shrink: 4)
       = f.label :year
-    .right = f.number_field :year, value: (@record.year || Date.today).strftime('%Y'), class: 'number', required: true
+    .right = f.number_field :year, value: (@record.year || Time.zone.today).strftime('%Y'), class: 'number', required: true
     br.clear
 
     .left = f.label :user_id

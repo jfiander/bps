@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PublicController, type: :controller do
+RSpec.describe PublicController do
   before { generic_seo_and_ao }
 
   render_views
@@ -41,7 +41,7 @@ RSpec.describe PublicController, type: :controller do
 
     context 'when accepting registrations' do
       before do
-        @event = FactoryBot.create(:event)
+        @event = create(:event)
       end
 
       it 'allows registering to a registerable event' do
@@ -51,7 +51,7 @@ RSpec.describe PublicController, type: :controller do
       end
 
       it 'returns the correct error response for an already-registered event' do
-        FactoryBot.create(:registration, event: @event, email: 'someone@example.com')
+        create(:registration, event: @event, email: 'someone@example.com')
 
         post :register, params: params(@event)
 
@@ -61,7 +61,7 @@ RSpec.describe PublicController, type: :controller do
     end
 
     it 'does not allow registering to a closed event' do
-      event = FactoryBot.create(:event, :not_public_registerable)
+      event = create(:event, :not_public_registerable)
 
       post :register, params: params(event)
 

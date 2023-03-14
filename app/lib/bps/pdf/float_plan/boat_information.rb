@@ -27,7 +27,7 @@ module BPS
             'Make',
             [
               float_plan.make, float_plan.model, float_plan.year
-            ].reject(&:blank?).join(' / '),
+            ].compact_blank.join(' / '),
             x1: 300, x2: 375, y: 520, split: 20
           )
         end

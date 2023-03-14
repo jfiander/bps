@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe RegistrationMailer, type: :mailer do
-  let(:ed_user_reg) { FactoryBot.create(:registration, :with_user) }
-  let(:ed_email_reg) { FactoryBot.create(:registration, :with_email) }
-  let(:event_user_reg) { FactoryBot.create(:event_registration, :with_user) }
-  let(:event_email_reg) { FactoryBot.create(:event_registration, :with_email) }
+RSpec.describe RegistrationMailer do
+  let(:ed_user_reg) { create(:registration, :with_user) }
+  let(:ed_email_reg) { create(:registration, :with_email) }
+  let(:event_user_reg) { create(:event_registration, :with_user) }
+  let(:event_email_reg) { create(:event_registration, :with_email) }
 
   before { generic_seo_and_ao }
 
@@ -53,9 +53,9 @@ RSpec.describe RegistrationMailer, type: :mailer do
 
     describe 'registered (event with committee set)' do
       let(:mail) { described_class.registered(event_user_reg.reload) }
-      let(:user) { FactoryBot.create(:user, email: 'something@example.com') }
-      let(:bridge) { FactoryBot.create(:bridge_office, office: 'executive') }
-      let(:committee) { FactoryBot.create(:committee, department: 'executive', user: user) }
+      let(:user) { create(:user, email: 'something@example.com') }
+      let(:bridge) { create(:bridge_office, office: 'executive') }
+      let(:committee) { create(:committee, department: 'executive', user: user) }
 
       before { event_user_reg.event.event_type.assign(committee.name) }
 
@@ -159,7 +159,7 @@ RSpec.describe RegistrationMailer, type: :mailer do
       context 'with a commander and no AO' do
         before do
           ao = BridgeOffice.find_by(office: 'administrative')
-          ao.update(office: 'commander', user: FactoryBot.create(:user))
+          ao.update(office: 'commander', user: create(:user))
         end
 
         it 'renders the headers' do

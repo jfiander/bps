@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe OTWMailer, type: :mailer do
+RSpec.describe OTWMailer do
   describe 'requested' do
-    let(:otw) { FactoryBot.create(:otw_training_user) }
+    let(:otw) { create(:otw_training_user) }
     let(:mail) { described_class.requested(otw) }
 
     it 'renders the headers' do

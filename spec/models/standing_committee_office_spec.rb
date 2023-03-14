@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe StandingCommitteeOffice, type: :model do
+RSpec.describe StandingCommitteeOffice do
   let(:executive) do
-    FactoryBot.create(
+    create(
       :standing_committee_office,
       committee_name: 'executive',
       term_start_at: Time.zone.now.beginning_of_year,
@@ -12,7 +12,7 @@ RSpec.describe StandingCommitteeOffice, type: :model do
     )
   end
   let(:auditing) do
-    FactoryBot.create(
+    create(
       :standing_committee_office,
       committee_name: 'auditing',
       term_start_at: Time.zone.now.beginning_of_year - 1.year,
@@ -22,7 +22,7 @@ RSpec.describe StandingCommitteeOffice, type: :model do
 
   describe '#current?' do
     it 'returns true if current' do
-      auditing.term_expires_at = Time.now + 1.week
+      auditing.term_expires_at = 1.week.from_now
 
       expect(auditing.current?).to be(true)
     end
@@ -71,22 +71,22 @@ RSpec.describe StandingCommitteeOffice, type: :model do
   end
 
   it 'generates the correct mailing list' do
-    e1 = FactoryBot.create(:standing_committee_office, committee_name: 'executive')
-    e2 = FactoryBot.create(:standing_committee_office, committee_name: 'executive')
-    FactoryBot.create(:standing_committee_office, committee_name: 'auditing')
+    e1 = create(:standing_committee_office, committee_name: 'executive')
+    e2 = create(:standing_committee_office, committee_name: 'executive')
+    create(:standing_committee_office, committee_name: 'auditing')
 
     expect(described_class.mail_all(:executive).sort).to eql([e1.user.email, e2.user.email].sort)
   end
 
   it 'rejects multiple current chairs' do
-    auditing.update_attribute(:chair, true)
-    second_chair = FactoryBot.build(:standing_committee_office, committee_name: 'auditing', chair: true)
+    auditing.update(chair: true)
+    second_chair = build(:standing_committee_office, committee_name: 'auditing', chair: true)
 
     expect(second_chair).to be_invalid
   end
 
   it 'rejects multiple current users' do
-    second_assignment = FactoryBot.build(:standing_committee_office, committee_name: 'auditing', user: auditing.user)
+    second_assignment = build(:standing_committee_office, committee_name: 'auditing', user: auditing.user)
 
     expect(second_assignment).to be_invalid
   end

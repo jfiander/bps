@@ -12,7 +12,7 @@ module Members
 
     def find_minutes
       minute = find_minutes_issue
-      return minute_not_found unless minute.present?
+      return minute_not_found if minute.blank?
 
       send_minute(minute, excom: minutes_params[:minutes_excom].present?)
     end

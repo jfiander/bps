@@ -90,7 +90,7 @@ class User
       end
 
       def birthday(u)
-        return unless u.birthday.present?
+        return if u.birthday.blank?
 
         "Birthday: #{u.birthday&.strftime('%d %b')}"
       end

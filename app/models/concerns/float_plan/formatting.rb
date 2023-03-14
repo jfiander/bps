@@ -17,7 +17,7 @@ module Concerns
         if engines?
           [
             number_of_engines,
-            [engine_types, hp].reject(&:blank?).join(' – ')
+            [engine_types, hp].compact_blank.join(' – ')
           ].join(' ')
         else
           'n/a'
@@ -55,7 +55,7 @@ module Concerns
       end
 
       def engine_types
-        engine_types = [engine_type_1, engine_type_2].reject(&:blank?).join(' / ')
+        engine_types = [engine_type_1, engine_type_2].compact_blank.join(' / ')
         engine_types.present? ? "(#{engine_types})" : nil
       end
 

@@ -2,17 +2,19 @@
 
 module EventTypes
   module Refresh
+    # rubocop:disable Rails/OutputSafety
+    # html_safe: Text is sanitized before display
     def refresh
-      # html_safe: Text is sanitized before display
       @new_event_types = <<~HTML.html_safe
-        "<option value=\\\"\\\">#{refresh_prompt}</option>" +
-        "<option value=\\\"\\\"></option>" +
+        "<option value=\\"\\">#{refresh_prompt}</option>" +
+        "<option value=\\"\\"></option>" +
       HTML
 
       event = Event.find_by(id: update_params[:id].to_i)
 
       @new_event_types << new_options(event).html_safe
     end
+    # rubocop:enable Rails/OutputSafety
 
   private
 

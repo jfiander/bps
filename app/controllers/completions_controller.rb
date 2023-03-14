@@ -53,9 +53,9 @@ private
 
   def multi_seminar_hash(code, name)
     if code.key?('any')
-      code['any'].each_with_object({}) { |e, h| h[e] = name }
+      code['any'].index_with { |_e| name }
     elsif code.key?('all')
-      code['all'].each_with_object({}) { |e, h| h[e] = name }
+      code['all'].index_with { |_e| name }
     end
   end
 

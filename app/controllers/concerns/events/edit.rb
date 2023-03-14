@@ -89,7 +89,7 @@ module Events
     end
 
     def check_for_blank
-      return unless event_params['event_type_id'].blank?
+      return if event_params['event_type_id'].present?
 
       prepare_form
       reset_vars_for_blank

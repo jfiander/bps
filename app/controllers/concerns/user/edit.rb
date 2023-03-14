@@ -34,11 +34,9 @@ class User
       case clean_params[:redirect_to]
       when 'show'
         user_path(clean_params[:id])
-      when 'list'
-        users_path
       when 'bridge'
         bridge_path
-      else
+      else # 'list'
         users_path
       end
     end

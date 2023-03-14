@@ -73,7 +73,7 @@ module BPS
         end
 
         def gb_emeritus(user)
-          return unless user.mm.present?
+          return if user.mm.blank?
 
           'Yes' if user.mm > 50
         end

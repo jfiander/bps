@@ -20,7 +20,7 @@ private
   end
 
   def payment_with_promo_code
-    Payment.new(promo_code: PromoCode.new(code: 'testing123', valid_at: Time.now - 1.hour))
+    Payment.new(promo_code: PromoCode.new(code: 'testing123', valid_at: 1.hour.ago))
   end
 
   def transaction

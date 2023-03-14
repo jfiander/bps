@@ -16,7 +16,7 @@ module ImportUsers
     def call
       @parsed_csv = ImportUsers::ParseCSV.new(@path).call
       process_import
-      File.unlink(@path) if File.exist?(@path)
+      FileUtils.rm_f(@path)
       @import_log_id = ImportLog.create(proto: @proto.to_proto).id
       archive_proto
       @proto
@@ -91,7 +91,7 @@ module ImportUsers
     end
 
     def archive_proto
-      archive = File.open(Rails.root.join('tmp/user_import.proto'), 'wb')
+      archive = Rails.root.join('tmp/user_import.proto').open('wb')
       archive.write(@proto.to_proto)
       archive.rewind
 

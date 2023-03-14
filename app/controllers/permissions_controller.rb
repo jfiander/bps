@@ -15,7 +15,7 @@ class PermissionsController < ApplicationController
   before_action :block_duplicate_permissions, only: %i[add]
 
   def index
-    respond_to { |format| format.html }
+    respond_to(&:html)
   end
 
   def add
@@ -39,9 +39,7 @@ class PermissionsController < ApplicationController
   end
 
   def auto
-    @auto ||= YAML.safe_load(
-      File.read("#{Rails.root}/config/implicit_permissions.yml")
-    )
+    @auto ||= YAML.safe_load(Rails.root.join('config/implicit_permissions.yml').read)
   end
 
 private
@@ -99,7 +97,7 @@ private
       return
     end
 
-    return unless clean_params[:role].blank?
+    return if clean_params[:role].present?
 
     redirect_to permit_path, alert: 'Permission was not selected.'
   end

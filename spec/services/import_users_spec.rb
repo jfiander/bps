@@ -3,16 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe ImportUsers, type: :service do
-  let(:import) { File.open(Rails.root.join('spec', 'import.csv'), 'r+') }
+  let(:import) { Rails.root.join('spec/import.csv').open('r+') }
 
   before do
-    FileUtils.cp(Rails.root.join('spec', 'demo_import.csv'), Rails.root.join('spec', 'import.csv'))
+    FileUtils.cp(Rails.root.join('spec/demo_import.csv'), Rails.root.join('spec/import.csv'))
   end
 
   describe 'user handling' do
     before do
-      @update = FactoryBot.create(:user, certificate: 'E012345', email: 'updated.person@example.com')
-      @remove = FactoryBot.create(:user, certificate: 'E001234')
+      @update = create(:user, certificate: 'E012345', email: 'updated.person@example.com')
+      @remove = create(:user, certificate: 'E001234')
     end
 
     describe 'creating' do

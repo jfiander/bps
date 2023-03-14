@@ -36,17 +36,17 @@ module BPS
           end
 
           def roster_entry(user, row_index, col_index)
-            return unless user.present?
+            return if user.blank?
 
             entry_box(user, entry_box_x(col_index), entry_box_y(row_index))
           end
 
           def entry_box_x(col_index)
-            roster_config[:base][:x] + col_index * (roster_config[:member][:width] + 10)
+            roster_config[:base][:x] + (col_index * (roster_config[:member][:width] + 10))
           end
 
           def entry_box_y(row_index)
-            roster_config[:base][:y] - row_index * (roster_config[:member][:height] + 20)
+            roster_config[:base][:y] - (row_index * (roster_config[:member][:height] + 20))
           end
 
           def entry_box(user, base_x, base_y)

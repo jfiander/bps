@@ -28,7 +28,7 @@ class User < ApplicationRecord
   has_many :persistent_api_tokens
 
   belongs_to :parent, class_name: 'User', optional: true
-  has_many(:children, class_name: 'User', inverse_of: :parent, foreign_key: :parent_id)
+  has_many :children, class_name: 'User', inverse_of: :parent, foreign_key: :parent_id
 
   has_many :course_completions
 
@@ -71,16 +71,17 @@ class User < ApplicationRecord
   scope :alphabetized, -> { order(:last_name) }
   scope :with_name, ->(name) { where(simple_name: name) }
   scope :with_any_name, -> { where.not(simple_name: [nil, '', ' ']) }
-  scope :valid_instructors, -> { where('id_expr > ?', Time.now) }
+  scope :valid_instructors, -> { where('id_expr > ?', Time.zone.now) }
   scope :invitable, -> { unlocked.where('sign_in_count = 0').reject(&:placeholder_email?) }
   scope :vessel_examiners, (lambda do
     includes(:course_completions).where(course_completions: { course_key: 'VSC_01' })
   end)
   scope :include_positions, -> { includes(position_associations) }
-  scope :recent_mm, -> { where('last_mm_year >= ?', Date.today.beginning_of_year - 6.months) }
+  scope :recent_mm, -> { where('last_mm_year >= ?', Time.zone.today.beginning_of_year - 6.months) }
 
+  # rubocop:disable Rails/OutputSafety
+  # html_safe: Text is sanitized before storage
   def full_name(html: true, show_boc: false)
-    # html_safe: Text is sanitized before storage
     sanitize(
       [
         auto_rank(html: html),
@@ -100,6 +101,7 @@ class User < ApplicationRecord
       photo: photo
     }
   end
+  # rubocop:enable Rails/OutputSafety
 
   def register_for(event)
     reg = Registration.not_refunded.find_or_create_by(user: self, event: event)
@@ -109,10 +111,10 @@ class User < ApplicationRecord
 
   def add_subscription(reg)
     # :nocov:
-    return unless reg.event.topic_arn.present?
+    return if reg.event.topic_arn.blank?
 
     arn = BPS::SMS.subscribe(reg.event.topic_arn, phone_c).subscription_arn
-    reg.update_attribute(:subscription_arn, arn)
+    reg.update(subscription_arn: arn)
     # :nocov:
   end
 
@@ -121,7 +123,7 @@ class User < ApplicationRecord
   end
 
   def bridge_officer?
-    BridgeOffice.where(user_id: id).exists?
+    BridgeOffice.exists?(user_id: id)
   end
 
   def completions
@@ -142,7 +144,7 @@ class User < ApplicationRecord
   end
 
   def valid_instructor?
-    id_expr.present? && id_expr > Time.now
+    id_expr.present? && id_expr > Time.zone.now
   end
 
   def vessel_examiner?
@@ -150,7 +152,7 @@ class User < ApplicationRecord
   end
 
   def cpr_aed?
-    cpr_aed_expires_at.present? && cpr_aed_expires_at > Time.now
+    cpr_aed_expires_at.present? && cpr_aed_expires_at > Time.zone.now
   end
 
   def token_exists?(token)
@@ -186,14 +188,14 @@ private
   end
 
   def bridge_office_name
-    BridgeOffice.where(user_id: id).pluck(:office).first
+    BridgeOffice.where(user_id: id).pick(:office)
   end
 
   def update_last_mm
     return unless mm.to_i > mm_cache.to_i
 
     self.mm_cache = mm
-    self.last_mm_year = Date.today
+    self.last_mm_year = Time.zone.today
   end
 
   def valid_phone_c

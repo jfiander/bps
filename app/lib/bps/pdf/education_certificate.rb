@@ -3,12 +3,12 @@
 module BPS
   module PDF
     class EducationCertificate < Base
-      MODULES ||= %w[
+      MODULES = %w[
         Heading NameAndGrade Details Completions Seminars
       ].freeze
 
-      ROW_HEIGHT ||= 36
-      COLUMN_WIDTH ||= 90
+      ROW_HEIGHT = 36
+      COLUMN_WIDTH = 90
 
       MODULES.each { |c| include "BPS::PDF::EducationCertificate::#{c}".constantize }
 
@@ -30,7 +30,7 @@ module BPS
       end
 
       def completion_box(column, label, date = nil, color: 'FFFFCC')
-        x = COLUMN_WIDTH * (column - 1) + 1
+        x = (COLUMN_WIDTH * (column - 1)) + 1
         bounding_box([x, (ROW_HEIGHT - 1)], width: (COLUMN_WIDTH - 2), height: (ROW_HEIGHT - 2)) do
           stroke_bounds
           date.present? ? completed_rectangle(color) : configure_colors('CCCCCC')

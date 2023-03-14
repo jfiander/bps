@@ -33,8 +33,8 @@ module Roster
     end
 
     def display_name
-      return name unless user_id.present?
-      return user&.simple_name unless additional_user.present?
+      return name if user_id.blank?
+      return user&.simple_name if additional_user.blank?
 
       "#{user&.simple_name} and #{additional_user&.simple_name}"
     end

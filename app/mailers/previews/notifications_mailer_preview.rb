@@ -31,9 +31,9 @@ private
     @float_plan ||= FloatPlan.new(
       user: User.first,
       name: 'Jack Member', phone: '123-456-7890',
-      leave_at: Time.now + 1.week,
-      return_at: Time.now + 2.weeks,
-      alert_at: Time.now + 2.weeks + 4.hours
+      leave_at: 1.week.from_now,
+      return_at: 2.weeks.from_now,
+      alert_at: 2.weeks.from_now + 4.hours
     )
     @float_plan.id = -99
     @float_plan

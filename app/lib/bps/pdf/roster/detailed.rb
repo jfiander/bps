@@ -7,17 +7,17 @@ module BPS
         include  BPS::PDF::Roster::Shared
         include  BPS::PDF::Roster::Detailed::Helpers
 
-        MODULES ||= %w[
+        MODULES = %w[
           Cover Flags Bridge Merit Awards PastAwards PastCommanders EdAwards Benefits
           RosterInfo Directory
         ].freeze
 
-        TITLE_SIZE ||= 16
-        SUBTITLE_SIZE ||= 14
-        SECTION_TITLE_SIZE ||= 11
-        HEADING_SIZE ||= 9
-        BODY_REG_SIZE ||= 8
-        BODY_SM_SIZE ||= 7
+        TITLE_SIZE = 16
+        SUBTITLE_SIZE = 14
+        SECTION_TITLE_SIZE = 11
+        HEADING_SIZE = 9
+        BODY_REG_SIZE = 8
+        BODY_SM_SIZE = 7
 
         MODULES.each { |c| include "BPS::PDF::Roster::Detailed::#{c}".constantize }
 

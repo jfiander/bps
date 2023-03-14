@@ -18,7 +18,7 @@ module Admin
 
     def expires_at
       @t = clean_params[:t].present? ? clean_params[:t].to_i : 1.week
-      Time.now + @t
+      Time.zone.now + @t
     end
 
     def links

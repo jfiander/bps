@@ -66,7 +66,7 @@ module Concerns
 
       def registration_subject
         "#{parent.event.display_title} on " \
-        "#{parent.event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT)}"
+          "#{parent.event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT)}"
       end
 
       def registration_times

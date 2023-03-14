@@ -26,11 +26,11 @@ module Concerns
       end
 
       def percent_discount(base)
-        base * (1.00 - promo_code.discount_amount.to_f / 100)
+        base * (1.00 - (promo_code.discount_amount.to_f / 100))
       end
 
       def usd_discount(base)
-        return nil unless promo_code.discount_amount.present?
+        return nil if promo_code.discount_amount.blank?
 
         promo_code.discount_amount > base ? 0 : base - promo_code.discount_amount
       end

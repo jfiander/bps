@@ -2,7 +2,7 @@
 
 module Members
   module Roster
-    ROSTER_UPLOAD_RETRY_EXCEPTIONS ||= [
+    ROSTER_UPLOAD_RETRY_EXCEPTIONS = [
       Aws::S3::Errors::BadDigest, Aws::S3::Errors::XAmzContentSHA256Mismatch
     ].freeze
 
@@ -41,7 +41,7 @@ module Members
   private
 
     def reject_invalid_file
-      return unless roster_params[:roster].present?
+      return if roster_params[:roster].blank?
       return unless roster_params[:roster].content_type == 'application/pdf'
 
       flash[:alert] = 'You must upload a valid file.'
@@ -52,13 +52,13 @@ module Members
     def roster_filename
       return @roster_filename if @roster_filename
 
-      @year ||= Date.today.strftime('%Y').to_i
+      @year ||= Time.zone.today.strftime('%Y').to_i
 
       filename = "Birmingham_Power_Squadron_-_#{@year}_Roster.pdf"
       return filename if BPS::S3.new(:files).has?("roster/#{filename}")
 
       @year -= 1
-      redirect_to root_path if @year < Date.today.strftime('%Y').to_i - 3
+      redirect_to root_path if @year < Time.zone.today.strftime('%Y').to_i - 3
 
       @roster_filename = roster_filename
     end
@@ -88,11 +88,11 @@ module Members
     end
 
     def upload_roster_to_s3(pdf)
-      pdf_file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'w+')
+      pdf_file = Rails.root.join('tmp/run/roster.pdf').open('w+')
       pdf_file.write(pdf)
       pdf_file.rewind
 
-      year = Date.today.strftime('%Y').to_i
+      year = Time.zone.today.strftime('%Y').to_i
       new_roster_filename = "Birmingham_Power_Squadron_-_#{year}_Roster.pdf"
 
       BPS::S3.new(:files).upload(

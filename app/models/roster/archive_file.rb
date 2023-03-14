@@ -15,16 +15,16 @@ module Roster
 
     def self.download_current_roster
       file = BPS::S3.new(:files).download("roster/#{roster_file_name}")
-      File.open("#{Rails.root}/tmp/run/roster.pdf", 'wb') { |f| f.write(file) }
+      Rails.root.join('tmp/run/roster.pdf').binwrite(file)
     end
 
     def self.create_new_archive(generated_at)
-      file = File.open("#{Rails.root}/tmp/run/roster.pdf", 'rb')
+      file = Rails.root.join('tmp/run/roster.pdf').open
       Roster::ArchiveFile.create(file: file, generated_at: generated_at)
     end
 
     def self.roster_file_name
-      year = Date.today.strftime('%Y')
+      year = Time.zone.today.strftime('%Y')
       "Birmingham_Power_Squadron_-_#{year}_Roster.pdf"
     end
 

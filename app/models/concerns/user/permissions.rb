@@ -53,7 +53,7 @@ class User
     end
 
     def exact_role?(*names)
-      user_roles.joins(:role).where(roles: { name: names }).exists?
+      user_roles.joins(:role).exists?(roles: { name: names })
     end
 
   private
@@ -73,7 +73,7 @@ class User
 
     def implicit_permissions
       @implicit_permissions ||= YAML.safe_load(
-        File.read("#{Rails.root}/config/implicit_permissions.yml")
+        Rails.root.join('config/implicit_permissions.yml').read
       )
     end
 

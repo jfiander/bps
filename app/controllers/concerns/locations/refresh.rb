@@ -2,12 +2,13 @@
 
 module Locations
   module Refresh
+    # rubocop:disable Rails/OutputSafety
+    # html_safe: Text is sanitized before display
     def refresh
-      # html_safe: Text is sanitized before display
       new_locations = <<~HTML
-        "<option value=\\\"\\\">Please select a location</option>" +
-        "<option value=\\\"\\\"></option>" +
-        "<optgroup label=\\\"TBD\\\"><option value=\\\"TBD\\\">TBD</option></optgroup>" +
+        "<option value=\\"\\">Please select a location</option>" +
+        "<option value=\\"\\"></option>" +
+        "<optgroup label=\\"TBD\\"><option value=\\"TBD\\">TBD</option></optgroup>" +
       HTML
 
       @locations = Location.grouped
@@ -17,6 +18,7 @@ module Locations
 
       @new_locations = new_locations.html_safe
     end
+    # rubocop:enable Rails/OutputSafety
 
   private
 

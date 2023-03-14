@@ -5,29 +5,29 @@ class PromoCode < ApplicationRecord
   has_many :event_promo_codes
   has_many :events, through: :event_promo_codes
 
-  scope :expired, -> { where('expires_at < ?', Time.now) }
+  scope :expired, -> { where('expires_at < ?', Time.zone.now) }
   scope :current, (lambda do
-    where('valid_at < ? AND (expires_at > ? OR expires_at IS NULL)', Time.now, Time.now)
+    where('valid_at < ? AND (expires_at > ? OR expires_at IS NULL)', Time.zone.now, Time.zone.now)
   end)
   scope :pending, (lambda do
     where(
       '(valid_at > ? OR valid_at IS NULL) AND (expires_at > ? OR expires_at IS NULL)',
-      Time.now, Time.now
+      Time.zone.now, Time.zone.now
     )
   end)
 
   validates :code, presence: true
 
   def pending?
-    valid_at.nil? || valid_at > Time.now
+    valid_at.nil? || valid_at > Time.zone.now
   end
 
   def active?
-    valid_at.present? && valid_at < Time.now && (expires_at.nil? || expires_at > Time.now)
+    valid_at.present? && valid_at < Time.zone.now && (expires_at.nil? || expires_at > Time.zone.now)
   end
 
   def expired?
-    expires_at.present? && expires_at < Time.now
+    expires_at.present? && expires_at < Time.zone.now
   end
 
   def usable?
@@ -46,13 +46,13 @@ class PromoCode < ApplicationRecord
   end
 
   def activate!
-    now = Time.now
+    now = Time.zone.now
     update(valid_at: now)
     update(expires_at: nil) if expired?
   end
 
   def expire!
-    update(expires_at: Time.now)
+    update(expires_at: Time.zone.now)
   end
 
   def registrations

@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe NavigationHelper, type: :helper do
+RSpec.describe NavigationHelper do
   context 'with user logged in' do
     let(:user_signed_in?) { true }
-    let(:current_user) { FactoryBot.create(:user) }
+    let(:current_user) { create(:user) }
 
     it 'generates the correct login link' do
       expect(link(:login_or_logout)).to eql(

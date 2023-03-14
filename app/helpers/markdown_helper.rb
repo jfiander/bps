@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module MarkdownHelper
-  VIEWS ||= {
+  VIEWS = {
     'public' => %w[home about join requirements vsc education civic history links],
     'members' => %w[members welcome user_help]
   }.freeze
@@ -64,8 +64,10 @@ private
   #   ^%#{key}              Beginning with primary key
   #   ((?:\r?\n)(.*?))*?    Optionally followed by any number of immediate newline with more text
   #   (?:(?:\r?\n){2}|\z)   Ending with either two newlines, or the end of the entire page contents
+  #
+  # rubocop:disable Rails/OutputSafety
+  # html_safe: Text is sanitized before storage
   def next_scheduled(key, markdown)
-    # html_safe: Text is sanitized before storage
     contents = '(?:\r?\n)(.*?)'
     tail = '(?:(?:\r?\n){2}|\z)'
     pattern = /^%#{key}((#{contents})*?)#{tail}/
@@ -76,6 +78,7 @@ private
       view_context.render("members/next_#{key}", details: details)
     end
   end
+  # rubocop:enable Rails/OutputSafety
 
   def activity_feed(markdown)
     @activity_feed = Event.fetch_activity_feed

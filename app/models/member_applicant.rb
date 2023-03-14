@@ -3,8 +3,8 @@
 class MemberApplicant < ApplicationRecord
   belongs_to :member_application
 
-  validates_presence_of %i[member_type first_name last_name email]
-  validates_presence_of %i[address_1 city state zip], if: :primary
+  validates :member_type, :first_name, :last_name, :email, presence: true
+  validates :address_1, :city, :state, :zip, presence: { if: :primary }
   validates :email, uniqueness: true
 
   validate :at_least_one_phone, if: :primary

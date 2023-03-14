@@ -11,7 +11,7 @@ class User
     end
 
     def boc_display
-      return nil unless boc.present?
+      return nil if boc.blank?
 
       "-#{boc(endorsements: false)}"
     end

@@ -117,7 +117,7 @@ private
       'Event date' => slack_start_time,
       'Registrant name' => @registration&.user&.full_name,
       'Registrant email' => @registration&.user&.email || @registration&.email
-    }.reject { |_, v| v.nil? }
+    }.compact
   end
 
   def slack_start_time
@@ -125,7 +125,7 @@ private
   end
 
   # Copied from MarkdownHelper
-  #:nocov:
+  # :nocov:
   def simple_markdown(markdown)
     view_context.sanitize(redcarpet.render(markdown.to_s))
   end
@@ -143,5 +143,5 @@ private
       underline: true
     )
   end
-  #:nocov:
+  # :nocov:
 end

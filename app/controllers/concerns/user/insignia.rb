@@ -19,7 +19,7 @@ class User
   private
 
     def grade_and_title
-      return unless @user.grade.present?
+      return if @user.grade.blank?
 
       if @user.ed_pro.present? && @user.grade != 'SN'
         [

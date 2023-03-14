@@ -24,7 +24,7 @@ module BPS
 
         def date
           bounding_box([0, 440], width: 160, height: 20) do
-            text Date.today.strftime('%-d %B %Y'), align: :center, size: 14
+            text Time.zone.today.strftime('%-d %B %Y'), align: :center, size: 14
           end
           stroke_line([0, 425], [160, 425])
           bounding_box([0, 420], width: 160, height: 15) do
@@ -46,8 +46,8 @@ module BPS
 
         def decrypt_signature
           EncryptedKeystore.decrypt(
-            file: File.join(Rails.root, 'app/assets/images/signatures/education.png.enc'),
-            out: Rails.root.join('tmp', 'run', 'signature.png'),
+            file: Rails.root.join('app/assets/images/signatures/education.png.enc'),
+            out: Rails.root.join('tmp/run/signature.png'),
             key: ENV['SIGNATURE_KEY'], iv: ENV['SIGNATURE_IV']
           )
         end

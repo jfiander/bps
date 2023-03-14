@@ -8,8 +8,8 @@ module Admin
     before_action :find_version_numbers, only: %i[diff]
 
     def index
-      return versioned_models unless clean_params[:model].present?
-      return unless list_objects.size.zero?
+      return versioned_models if clean_params[:model].blank?
+      return unless list_objects.empty?
 
       flash.now[:alert] = "No objects found for class #{clean_params[:model]}."
     end
@@ -95,11 +95,9 @@ module Admin
       case @mode
       when 'word'
         :diff_by_word
-      when 'line'
-        :diff_by_line
       when 'char'
         :diff_by_char
-      else
+      else # 'line'
         :diff_by_line
       end
     end
@@ -117,13 +115,15 @@ module Admin
       @previous = User.find_by(id: version_a&.whodunnit.to_i)
     end
 
+    # rubocop:disable Rails/OutputSafety
+    # html_safe: Text is sanitized before display
     def generate_diff
-      # html_safe: Text is sanitized before display
       jsons = version_jsons.map { |j| pretty_json(j) }
       differ = Differ.send(diff_method, *jsons).format_as(:html)
       differ.gsub!('<ins', "\n<ins") if diff_method == :diff_by_line
       @diff = sanitize(differ).html_safe
     end
+    # rubocop:enable Rails/OutputSafety
 
     def pretty_json(json)
       JSON.pretty_generate(JSON.parse(json), indent: '  ')

@@ -11,12 +11,12 @@ module BPS
 
         def load_burgee
           burgee = BPS::S3.new(:static).download('flags/Birmingham/Birmingham.png')
-          File.open('tmp/run/Burgee.png', 'w+') { |f| f.write(burgee) }
+          File.write('tmp/run/Burgee.png', burgee)
         end
 
         def load_ensign
           ensign = BPS::S3.new(:static).download('flags/PNG/ENSIGN.500.png')
-          File.open('tmp/run/Ensign.png', 'w+') { |f| f.write(ensign) }
+          File.write('tmp/run/Ensign.png', ensign)
         end
 
         def format_name(name)

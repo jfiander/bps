@@ -25,12 +25,12 @@ module Application
         FileUtils.touch(log_path)
         timestamp = request_time.strftime('%Y-%m-%dT%H:%M:%S%Z')
         count = 0
-        File.open(log_path, 'w+') { |f| f.write("#{timestamp} #{count}") }
+        File.write(log_path, "#{timestamp} #{count}")
       end
 
       # Check if log is in limit state
       log = File.open(log_path, 'r')
-      timestamp, count = log.read.chomp.split(' ')
+      timestamp, count = log.read.chomp.split
       time = DateTime.parse(timestamp, '%Y-%m-%dT%H:%M:%S%Z')
       count = count.to_i
 
@@ -46,13 +46,13 @@ module Application
           flash[:alert] = 'Too many recent requests. Please try again later.'
           render(status: :too_many_requests)
           timestamp = DateTime.now.strftime('%Y-%m-%dT%H:%M:%S%Z') # Refresh timestamp
-          File.open(log_path, 'w+') { |f| f.write("#{timestamp} #{count}") }
+          File.write(log_path, "#{timestamp} #{count}")
           return false
         end
       end
 
       # Update log and allow request to proceed
-      File.open(log_path, 'w+') { |f| f.write("#{timestamp} #{count}") }
+      File.write(log_path, "#{timestamp} #{count}")
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength

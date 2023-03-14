@@ -54,7 +54,7 @@ module AutomaticUpdate
       result = AutomaticUpdate::LoginRequest.new.call
 
       cookies = result.response['set-cookie']
-                      .split(/; ?/).map { |s| s.split('=') }.to_h
+                      .split(/; ?/).to_h { |s| s.split('=') }
 
       @cookie_key = cookies['uspskey']
     end
@@ -138,7 +138,7 @@ module AutomaticUpdate
 
     def cleanup_files
       csv_paths.each do |path|
-        File.unlink(path) if File.exist?(path)
+        FileUtils.rm_f(path)
       end
     end
 

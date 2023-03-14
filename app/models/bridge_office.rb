@@ -19,7 +19,9 @@ class BridgeOffice < ApplicationRecord
 
   before_validation do
     self.office = office.to_s
+    # rubocop:disable Rails/SkipsModelValidations
     BridgeOffice.other_than(office).where(user: user).update_all(user_id: nil)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   after_save { update_excom_group }

@@ -5,7 +5,7 @@ require 'bcrypt'
 class PersistentApiToken < ApiToken
   MINIMUM_TOKEN_LENGTH = 64
 
-  scope :current, -> { where('expires_at IS NULL', Time.now) }
+  scope :current, -> { where(expires_at: nil) }
 
   def current?
     expires_at.nil?

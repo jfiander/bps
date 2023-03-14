@@ -21,10 +21,12 @@ module ImportUsers
       @removed_users
     end
 
+    # rubocop:disable Rails/SkipsModelValidations
     def mark_not_imported
       User.where(certificate: @certificates).update_all(in_latest_import: true)
       @removed_users.update_all(in_latest_import: false)
       @removed_users
     end
+    # rubocop:enable Rails/SkipsModelValidations
   end
 end

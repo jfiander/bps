@@ -11,7 +11,7 @@ module ImportUsers
     def call
       @csv.each do |row|
         user, user_parent = user_and_parent(row)
-        next unless user_parent.present?
+        next if user_parent.blank?
 
         update_parent_for(user, user_parent)
       end

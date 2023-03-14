@@ -188,9 +188,11 @@ module Concerns
         calendar_attributes[:link_override] = nil
       end
 
+      # rubocop:disable Rails/SkipsModelValidations
       def commit_calendar_attributes
         update_columns(calendar_attributes) if calendar_attributes.any?
       end
+      # rubocop:enable Rails/SkipsModelValidations
     end
   end
 end

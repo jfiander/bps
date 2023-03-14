@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  # rubocop:disable Rails/OutputSafety
+  # html_safe: No user content
   def formatted_error_flash(error)
-    # html_safe: No user content
     if error.present? && error.is_a?(String)
       error
     elsif error.present? && error&.count == 1
@@ -12,6 +13,7 @@ module ApplicationHelper
       content_tag(:ul, errors).html_safe
     end
   end
+  # rubocop:enable Rails/OutputSafety
 
   def get_user(id)
     user = @users.find_all { |u| u.id == id }.first
@@ -20,8 +22,9 @@ module ApplicationHelper
     { full_name: 'TBD', simple_name: 'TBD', photo: User.no_photo }
   end
 
+  # rubocop:disable Rails/OutputSafety
+  # html_safe: No user content
   def editor(partial, options = {})
-    # html_safe: No user content
     content_for :head do
       <<~HTML.html_safe
         <script>#{render('application/show_editor.js', page_name: partial)}</script>
@@ -38,6 +41,7 @@ module ApplicationHelper
       <div id='editor' class='#{auto_show(partial)}'>#{render(partial, options)}</div>
     HTML
   end
+  # rubocop:enable Rails/OutputSafety
 
   def auto_show(partial)
     session[:auto_shows]&.include?(partial) ? 'auto-show' : ''
@@ -68,7 +72,7 @@ module ApplicationHelper
   end
 
   def truncate_mail_to(email)
-    return unless email.present?
+    return if email.blank?
 
     address, domain = email.split('@')
     short = address.truncate(12)

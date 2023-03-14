@@ -43,9 +43,10 @@ require_relative('aws_stub_responses')
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = Rails.root.join('spec/fixtures')
 
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include FactoryBot::Syntax::Methods
 
   config.fuubar_progress_bar_options = {
     progress_mark: ' ', remainder_mark: "\u{FF65}", title: 'Specs Run', autofinish: true,

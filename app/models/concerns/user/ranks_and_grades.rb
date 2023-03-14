@@ -6,7 +6,7 @@ class User
 
     def valid_ranks
       @valid_ranks ||= YAML.safe_load(
-        File.read("#{Rails.root}/app/models/concerns/user/valid_ranks.yml")
+        Rails.root.join('app/models/concerns/user/valid_ranks.yml').read
       )
     end
 
@@ -38,7 +38,7 @@ class User
     end
 
     def ranks(html: true)
-      [bridge_rank(html: html), override_rank(html: html), committee_rank].reject(&:blank?)
+      [bridge_rank(html: html), override_rank(html: html), committee_rank].compact_blank
     end
 
     def formatted_grade
@@ -65,8 +65,8 @@ class User
       cleanup_1st(rank, html: html)
     end
 
+    # html_safe: No user content
     def bridge_rank(html: true)
-      # html_safe: No user content
       case bridge_office_name
       when 'commander'
         'Cdr'
@@ -90,11 +90,13 @@ class User
       return 'Lt' if cached_standing_committees.present? || cached_committees.present?
     end
 
+    # rubocop:disable Rails/OutputSafety
+    # html_safe: No user content
     def cleanup_1st(output_rank, html: true)
-      # html_safe: No user content
       r = output_rank&.gsub(%r{1/}, '1st/')
       html ? r&.gsub(/1st/, '1<sup>st</sup>')&.html_safe : r
     end
+    # rubocop:enable Rails/OutputSafety
 
     def valid_rank
       return true if rank.nil?
@@ -121,7 +123,7 @@ class User
     end
 
     def rank_priority
-      @rank_priority ||= YAML.safe_load(File.read("#{Rails.root}/app/lib/rank_priority.yml"))
+      @rank_priority ||= YAML.safe_load(Rails.root.join('app/lib/rank_priority.yml').read)
     end
   end
 end

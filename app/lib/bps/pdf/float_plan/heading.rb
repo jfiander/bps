@@ -14,7 +14,7 @@ module BPS
 
         def load_header_image
           header = BPS::S3.new(:static).download('logos/ABC/png/long/white/birmingham/1000.png')
-          File.open('tmp/run/ABC.png', 'w+') { |f| f.write(header) }
+          File.write('tmp/run/ABC.png', header)
         end
       end
     end

@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe RegistrationHelper, type: :helper do
-  let(:event) { FactoryBot.create(:event, cost: 15) }
-  let(:registration) { FactoryBot.create(:registration, event: event, email: 'nobody@example.com') }
+RSpec.describe RegistrationHelper do
+  let(:event) { create(:event, cost: 15) }
+  let(:registration) { create(:registration, event: event, email: 'nobody@example.com') }
 
   before { generic_seo_and_ao }
 
@@ -40,8 +40,8 @@ RSpec.describe RegistrationHelper, type: :helper do
   describe '#subscribe_reg_link' do
     subject(:link) { described_class.subscribe_reg_link(registration) }
 
-    let(:user) { FactoryBot.create(:user, phone_c: '555-555-5555') }
-    let(:registration) { FactoryBot.create(:registration, event: event, user: user) }
+    let(:user) { create(:user, phone_c: '555-555-5555') }
+    let(:registration) { create(:registration, event: event, user: user) }
 
     it 'generates a valid subscribe link' do
       expect(link).to match(%r{/subscribe/#{registration.id}})

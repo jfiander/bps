@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe AnnouncementFile, type: :model do
+RSpec.describe AnnouncementFile do
   let(:announcement) do
-    FactoryBot.create(
+    create(
       :announcement_file, title: 'An Announcement', file: File.open(test_image(200, 500), 'r')
     )
   end

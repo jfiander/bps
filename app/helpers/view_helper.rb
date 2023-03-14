@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module ViewHelper
+  # rubocop:disable Rails/OutputSafety
   # html_safe: No user content
   def officer_flag(office, mode: :svg)
     rank = office_rank(office)
@@ -12,6 +13,7 @@ module ViewHelper
       image_tag(BPS::S3.new(:static).link("flags/PNG/#{rank}.thumb.png"), alt: rank)
     end
   end
+  # rubocop:enable Rails/OutputSafety
 
   def spinner_button(form = nil, button_text: 'Submit', disable_text: nil, name: 'button', css: '')
     disable_text ||= button_text == 'Submit' ? 'Submitting' : "#{button_text.sub(/e$/, '')}ing"
@@ -21,12 +23,15 @@ module ViewHelper
     button_tag(button_text, data: data_hash, name: name, class: css)
   end
 
+  # rubocop:disable Rails/OutputSafety
+  # html_safe: No user content
   def summer_months(select_tag, mode: :summer)
     select_tag.gsub(
       "<option value=\"7\">July</option>\n<option value=\"8\">August</option>\n",
       (mode == :summer ? '<option value="7">* Summer</option>' : '')
     ).html_safe
   end
+  # rubocop:enable Rails/OutputSafety
 
 private
 

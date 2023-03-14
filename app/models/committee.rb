@@ -39,7 +39,6 @@ class Committee < ApplicationRecord
   end
 
   def display_name
-    # html_safe: Text is sanitized before display
     return name unless name.match?('//')
 
     lines = name.split('//')
@@ -48,6 +47,7 @@ class Committee < ApplicationRecord
 
 private
 
+  # html_safe: Text is sanitized before display
   def format_committee_lines(lines)
     lines.map { |l| ActionController::Base.helpers.sanitize(l) }
     committee = lines.shift

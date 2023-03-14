@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CalendarHelper, type: :helper do
+RSpec.describe CalendarHelper do
   it 'generates a correctly formatted calendar URL' do
     expect(render_calendar('bpsd9.org_12345:FFFFFF/bpsd9.org_67890:ABCDEF')).to eql(
       'https://calendar.google.com/calendar/b/2/embed?showTitle=0&showPrint=0&height=600&wkst=1&bgcolor=%23FFFFFF&' \

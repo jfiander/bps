@@ -11,9 +11,7 @@ class SitemapController < ApplicationController
     @frequencies = frequeincies
     @base_url = "http://#{request.host_with_port}/"
 
-    respond_to do |format|
-      format.xml
-    end
+    respond_to(&:xml)
   end
 
   def robots

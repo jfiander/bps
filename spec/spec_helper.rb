@@ -152,7 +152,7 @@ RSpec::Matchers.define :contain_mail_headers do |**expected|
   end
 
   failure_message do |actual|
-    hash = expected.keys.each_with_object({}) { |k, h| h[k] = actual.send(k) }
+    hash = expected.keys.index_with { |k| actual.send(k) }
     "expected that #{hash} would match #{expected}"
   end
 end
@@ -197,7 +197,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
-    FileUtils.mkdir_p(Rails.root.join('tmp', 'run'))
+    FileUtils.mkdir_p(Rails.root.join('tmp/run'))
   end
 
   config.after do
@@ -208,7 +208,7 @@ RSpec.configure do |config|
     run_brakeman if ENV['RUN_BRAKEMAN'] == 'true'
 
     DatabaseCleaner.clean_with(:truncation)
-    Dir[Rails.root.join('tmp', 'run', '**', '*')].each { |file| File.delete(file) }
+    Dir[Rails.root.join('tmp/run/**/*')].each { |file| File.delete(file) }
 
     # clear_test_calendar if ENV['AUTO_CLEAR_CALENDAR'] == 'true'
 

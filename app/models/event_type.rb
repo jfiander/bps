@@ -67,7 +67,7 @@ class EventType < ApplicationRecord
   end
 
   def self.order_positions
-    YAML.safe_load(File.read("#{Rails.root}/app/models/concerns/event_type/order.yml"))
+    YAML.safe_load(Rails.root.join('app/models/concerns/event_type/order.yml').read)
   end
 
   def order_position

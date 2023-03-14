@@ -13,7 +13,7 @@ class AnnouncementFile < UploadedFile
   end
 
   def hide!
-    update(hidden_at: Time.now)
+    update(hidden_at: Time.zone.now)
   end
 
   def unhide!

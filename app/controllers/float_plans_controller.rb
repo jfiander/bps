@@ -94,7 +94,7 @@ private
   end
 
   def slack_by_field
-    return unless @float_plan.user.present?
+    return if @float_plan.user.blank?
 
     { title: 'Submitted by', value: @float_plan.user.full_name, short: false }
   end
