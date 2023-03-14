@@ -1,10 +1,8 @@
-# inherit_gem:
-#   rubocop-rails_config:
-#     - config/rails.yml
 require:
   - rubocop-rspec
+  - rubocop-rails
 AllCops:
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.7
   NewCops: enable
   Exclude:
     - app/assets/**/*
@@ -73,11 +71,24 @@ Naming/MemoizedInstanceVariableName:
   Enabled: false
 Naming/MethodParameterName:
   Enabled: false
+Naming/VariableNumber:
+  Enabled: false
+
+Rails/SquishedSQLHeredocs:
+  Enabled: false
+Rails/I18nLocaleTexts:
+  Enabled: false
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+Rails/RenderInline:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: true
+Style/FetchEnvVar:
+  Enabled: false
 Style/NumericLiterals:
   Enabled: true
 Style/StringLiterals:
@@ -88,6 +99,8 @@ Style/ClassCheck:
   Enabled: true
 Style/GuardClause:
   Enabled: true
+Style/HashSyntax:
+  Enabled: false
 
 Security/Eval:
   Enabled: true
@@ -95,3 +108,17 @@ Security/JSONLoad:
   Enabled: true
 Security/YAMLLoad:
   Enabled: true
+
+# Temporary Cops
+Rails/HelperInstanceVariable:
+  Enabled: false
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+Rails/Output:
+  Enabled: false
+
+# Investigate
+Rails/ActionControllerFlashBeforeRender:
+  Enabled: false

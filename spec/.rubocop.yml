@@ -13,6 +13,8 @@ Metrics/MethodLength:
 
 Naming/MethodParameterName:
   Enabled: false
+Naming/VariableNumber:
+  Enabled: false
 
 RSpec/ExampleLength:
   Enabled: false
@@ -34,7 +36,16 @@ RSpec/EmptyExampleGroup:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
+Rails/SquishedSQLHeredocs:
+    Enabled: false
+Rails/I18nLocaleTexts:
+  Enabled: false
+
+Style/FetchEnvVar:
+  Enabled: false
 Style/GlobalVars:
+  Enabled: false
+Style/HashSyntax:
   Enabled: false
 
 # Temporary cops

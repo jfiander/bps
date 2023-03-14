@@ -100,15 +100,16 @@ group :development, :test do
 
   # Specs
   gem 'database_cleaner',         '~> 1'
-  gem 'factory_bot_rails',        '~> 4'
+  gem 'factory_bot_rails',        '~> 6.2'
   gem 'fuubar',                   '~> 2'
   gem 'rails-controller-testing', '~> 1'
-  gem 'rspec-rails',              '~> 4.1'
+  gem 'rspec-rails',              '~> 6.0'
   gem 'simplecov',                '~> 0'
 
   # Rubocop
-  gem 'rubocop',                  '~> 0.90'
-  gem 'rubocop-rspec',            '~> 1.30'
+  gem 'rubocop',                  '>= 1.48'
+  gem 'rubocop-rails',            '~> 2.18'
+  gem 'rubocop-rspec',            '~> 2.19'
 
   gem 'brakeman',                 '~> 4.3'
 
