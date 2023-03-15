@@ -14,6 +14,14 @@
       h1 { margin-bottom: 2em; }
       div.copyright { margin-top: 5em; }
       svg.svg-inline--fa { margin: 0 0.5em; }
+      div.signals {
+        margin-bottom: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+      div.signals img { max-height: 50px; }
     </style>
   </head>
   <body>
@@ -26,6 +34,12 @@
       Error 500 - Internal Server Error
       <i class="fad fa-exclamation-triangle"></i>
     </h1>
+
+    <div class="signals" title="500">
+      <img src="https://static.bpsd9.org/signals/SVG/short/5.svg" alt="5">
+      <img src="https://static.bpsd9.org/signals/SVG/short/0.svg" alt="0">
+      <img src="https://static.bpsd9.org/signals/SVG/codes/repeat_2.svg" alt="0">
+    </div>
 
     <p>
       We're sorry, but something went wrong. Please try again later.
