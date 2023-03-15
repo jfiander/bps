@@ -42,6 +42,14 @@ div.flags.table {
     .word { gap: 3px; }
   }
 
+  &.tall {
+    img {
+      width: auto;
+      height: 60px;
+    }
+    .word { gap: 10px; }
+  }
+
   &.vertical {
     flex-direction: column;
     .word { flex-direction: column; }
