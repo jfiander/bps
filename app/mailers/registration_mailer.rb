@@ -61,7 +61,7 @@ private
     @registration = registration
     @signature = signature_for_confirm
     @to = @registration&.user&.email || @registration.email
-    @from = "\"#{@signature[:name]}\" <#{@signature[:email]}>"
+    @from = @signature[:from]
     attach_pdf if attachable?
   end
 
