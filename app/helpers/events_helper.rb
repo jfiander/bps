@@ -20,7 +20,8 @@ module EventsHelper
 
   def reg_override_options(reg)
     if reg.paid?
-      { title: 'Registration has already been paid', css: 'gray' }
+      color = reg.promo_code.present? ? 'purple' : 'gray'
+      { title: 'Registration has already been paid', css: color }
     else
       { title: "#{reg_override_verb(reg)} override cost", css: 'green' }
     end
