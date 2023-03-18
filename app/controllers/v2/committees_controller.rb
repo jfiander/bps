@@ -9,17 +9,13 @@ module V2
 
     secure!(:users)
 
-    before_action :users_for_select, only: %i[create]
-
     def create
       committee = Committee.new(
         name: clean_params[:committee], department: clean_params[:department],
         user_id: clean_params[:user_id]
       )
 
-      redirect_with_status(
-        bridge_path, object: 'committee', verb: 'assign', past: 'assigned'
-      ) do
+      redirect_with_status(bridge_path, object: 'committee', verb: 'assign', past: 'assigned') do
         committee.save
       end
     end

@@ -16,4 +16,4 @@
         .table-cell.committee-chair Chair
       - data[:committees]&.group_by { |h| h[:name] }&.each_with_index do |(_name, group), index|
         - group.each do |committee|
-          = render('bridge/list/committee', committee: committee, css: index.odd? ? 'odd' : 'even')
+          = render('v2/bridge_offices/committee', committee: committee, css: index.odd? ? 'odd' : 'even')

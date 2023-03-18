@@ -23,7 +23,7 @@ module V2
       build_bridge_list
     end
 
-    def update
+    def change
       previous = @bridge_office.user
 
       redirect_with_status(
@@ -50,6 +50,13 @@ module V2
       @bridge_office = BridgeOffice.find_or_create_by(
         office: clean_params[:bridge_office]
       )
+    end
+
+    def missing_committees
+      auto_roles = YAML.safe_load(
+        Rails.root.join('config/implicit_permissions.yml').read
+      )['committee'].keys
+      @missing_committees = auto_roles - Committee.all.map(&:name)
     end
   end
 end

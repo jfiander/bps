@@ -3,4 +3,4 @@
   .table-cell
     .table.striped
       - members&.each do |member|
-        .table-row: .table-cell = render('bridge/list/standing_com_member', committee: committee, member: member)
+        .table-row: .table-cell = render('v2/bridge_offices/standing_committee_member', committee: committee, member: member)

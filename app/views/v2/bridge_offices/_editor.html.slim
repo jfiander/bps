@@ -1,7 +1,7 @@
 hr
 h2 Assign to Bridge Office
 .assign-bridge
-  = form_tag assign_bridge_path, id: "assign-bridge", name: "assign-bridge"
+  = form_tag change_v2_bridge_offices_path, id: "assign-bridge", name: "assign-bridge"
     = select_tag :bridge_office, options_for_select(@select[:bridge_offices]), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a bridge office"
     = select_tag :user_id, options_for_select(@select[:users]), class: "assign-bridge", include_blank: true, required: true, prompt: "Please select a user"
     br
@@ -10,7 +10,7 @@ hr
 
 h2 Assign to Committee
 .assign-bridge
-  = form_tag assign_committee_path, id: "assign-committee", name: "assign-committee"
+  = form_tag v2_committees_path, id: "assign-committee", name: "assign-committee"
     = select_tag :department, options_for_select(@select[:departments]), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a department"
     = text_field_tag :committee, "", required: true, placeholder: "Enter committee name"
     = select_tag "user_id", options_for_select(@select[:users]), class: "assign-committee", include_blank: true, required: true, prompt: "Please select a user"
@@ -31,7 +31,7 @@ hr
 
 h2 Assign to Standing Committee
 .assign-bridge
-  = form_tag assign_standing_committee_path, id: "assign-standing-committee", name: "assign-standing-committee"
+  = form_tag v2_standing_committees_path, id: "assign-standing-committee", name: "assign-standing-committee"
     = select_tag :committee_name, options_for_select(@select[:standing_committees]), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a committee"
     = select_tag :user_id, options_for_select(@select[:users]), class: "assign-standing-committee", include_blank: true, required: true, prompt: "Please select a user"
     .start-date
@@ -48,6 +48,7 @@ h2 Assign to Standing Committee
     br
     = spinner_button(button_text: "Assign to standing committee", disable_text: "Assigning to standing committee", css: 'big')
 hr
+
 - if current_user&.permitted?(:admin)
-  = render 'user/assign_photo', redirect_to: 'show', id: nil
+  = render 'v2/user/assign_photo', redirect_to: 'show', id: nil
   hr

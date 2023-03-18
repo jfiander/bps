@@ -62,6 +62,12 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :bridge_offices, only: %i[index] do
+      post :change, on: :collection
+    end
+    resources :committees, only: %i[create destroy]
+    resources :standing_committees, only: %i[create destroy]
+
     # Markdown files and header images
     resources :files, only: %i[index create destroy]
     resources :headers, only: %i[index create destroy]
@@ -71,6 +77,10 @@ Rails.application.routes.draw do
   get     '/newsletter',         to: 'v2/bilges#index'
   get     '/bilge/:year/:month', to: 'v2/bilges#bilge', as: 'bilge'
   get     '/bilge(/:year)',      to: redirect('/newsletter')
+
+  # Bridge
+
+  get    '/bridge', to: 'v2/bridge_offices#index'
 
   # Flags
   resources :flags, only: %i[index] do
@@ -126,7 +136,6 @@ Rails.application.routes.draw do
   get     '/auto_permissions', to: 'permissions#auto'
 
   ### Functional pages
-  get     '/bridge', to: 'bridge#list'
   get     '/store',  to: 'public#store'
 
   # Photo gallery
@@ -305,13 +314,6 @@ Rails.application.routes.draw do
 
   # Permissions
   resources :permissions, only: %i[index create destroy]
-
-  # Bridge and committee management
-  post    '/assign_bridge',                 to: 'bridge#assign_bridge'
-  post    '/assign_committee',              to: 'bridge#assign_committee'
-  delete  '/remove_committee/:id',          to: 'bridge#remove_committee',          as: 'remove_committee'
-  post    '/assign_standing_committee',     to: 'bridge#assign_standing_committee'
-  delete  '/remove_standing_committee/:id', to: 'bridge#remove_standing_committee', as: 'remove_standing_committee'
 
   # Registration
   patch   '/register/add/:id',      to: 'user#add_registrants',     as: 'add_registrants'

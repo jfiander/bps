@@ -9,8 +9,6 @@ module V2
 
     secure!(:users)
 
-    # before_action :users_for_select, only: %i[create]
-
     def create
       standing_committee = create_standing_committee
 
