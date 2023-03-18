@@ -22,26 +22,10 @@ module ApplicationHelper
     { full_name: 'TBD', simple_name: 'TBD', photo: User.no_photo }
   end
 
-  # rubocop:disable Rails/OutputSafety
-  # html_safe: No user content
-  def editor(partial, options = {})
-    content_for :head do
-      <<~HTML.html_safe
-        <script>#{render('application/show_editor.js', page_name: partial)}</script>
-        <script>#{render('application/hide_editor.js', page_name: partial)}</script>
-        <noscript><style>div#editor{display:block;}a#show-editor,a#hide-editor{display:none;}</style></noscript>
-      HTML
-    end
-
-    <<~HTML.html_safe
-      <div id='editor-buttons'>
-        <a href='#' id='show-editor' class='medium #{auto_show(partial)}'>Show Editor</a>
-        <a href='#' id='hide-editor' class='medium #{auto_show(partial)}'>Hide Editor</a>
-      </div>
-      <div id='editor' class='#{auto_show(partial)}'>#{render(partial, options)}</div>
-    HTML
+  def editor(partial = 'editor', options = {})
+    content_for(:head) { render('application/editor/head', partial: partial) }
+    render('application/editor/buttons', partial: partial, options: options)
   end
-  # rubocop:enable Rails/OutputSafety
 
   def auto_show(partial)
     session[:auto_shows]&.include?(partial) ? 'auto-show' : ''

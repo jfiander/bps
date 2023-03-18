@@ -1,0 +1,4 @@
+#editor-buttons
+  = link_to('Show Editor', '#', id: 'show-editor', class: "medium #{auto_show(partial)}")
+  = link_to('Hide Editor', '#', id: 'hide-editor', class: "medium #{auto_show(partial)}")
+#editor class=(auto_show(partial)) = render(partial, options)
