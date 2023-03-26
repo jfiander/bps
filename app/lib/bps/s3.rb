@@ -3,7 +3,8 @@
 # Helper for accessing environmented S3 buckets and CloudFront links
 module BPS
   class S3
-    VALID_BUCKETS = %i[files photos bilge static seo floatplans].freeze
+    VALID_BUCKETS = %i[files photos bilge static seo floatplans automatic_updates].freeze
+    GLOBAL_BUCKETS = %i[seo automatic_updates].freeze
 
     attr_reader :bucket
 
@@ -46,7 +47,7 @@ module BPS
     end
 
     def full_bucket
-      @full_bucket ||= ['bps', @environment, @bucket].compact.join('-')
+      @full_bucket ||= ['bps', @environment, @bucket].compact.join('-').gsub('_', '-')
     end
 
   private
@@ -74,7 +75,7 @@ module BPS
       raise 'Invalid bucket.' unless @bucket.in?(VALID_BUCKETS)
 
       @endpoint = @bucket
-      @environment = nil if @bucket == :seo
+      @environment = nil if @bucket.in?(GLOBAL_BUCKETS)
       return unless @bucket == :static
 
       @endpoint = @environment = :static

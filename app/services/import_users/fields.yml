@@ -49,11 +49,14 @@ ignore:
   - Nickname
   - Last MM
 
+  - Chap
+
   - Seascout
   - Affiliation
   - Squadron 1
   - Squadron 2
 
+  - Dist Account
   - Org.Sqd
   - Org.Dst
   - Pre.Sqd
@@ -89,6 +92,7 @@ ignore:
   - Squad. Job
 
   - Member Type
+  - Member Status
   - Past Rank
   - Birthday Display
   - Home Text
@@ -98,3 +102,6 @@ ignore:
 
   - Home Port
   - MMSI
+
+  - DAN Boater
+  - DAN Boater Date
