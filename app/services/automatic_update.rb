@@ -15,6 +15,7 @@ module AutomaticUpdate
     def update(_download: true, import: true, lock: false)
       combine_tsv_data_from_s3
       write_output_file
+      automatic_updates_bucket.upload(file: OUTPUT_PATH, key: 'ReadyForImport.csv')
       return unless import
 
       importer = ImportUsers::Import.new(OUTPUT_PATH, lock: lock)

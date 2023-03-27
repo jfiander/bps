@@ -25,7 +25,7 @@ module BPS
     delegate :object, to: :s3
 
     def has?(key)
-      s3.object(key)&.exists?
+      object(key)&.exists?
     end
 
     def download(key)
@@ -33,7 +33,7 @@ module BPS
     end
 
     def upload(file:, key:, content_type: nil)
-      file = File.open(file, 'rb') if file.is_a?(String)
+      file = File.open(file, 'rb') if file.is_a?(String) || file.is_a?(Pathname)
 
       object(key).upload_file(file.path, content_type: content_type)
     end
