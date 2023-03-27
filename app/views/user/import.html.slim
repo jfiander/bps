@@ -1,7 +1,7 @@
 h1 Import user data
 
 p
-  b Last import completed:
+  b> Last import completed:
   = ImportLog.latest&.created_at&.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
 
 hr
