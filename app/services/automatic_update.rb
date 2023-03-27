@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'fileutils'
+
 module AutomaticUpdate
   class Run
     OUTPUT_PATH = Rails.root.join('tmp/automatic_update/ReadyForImport.csv')
@@ -51,6 +53,7 @@ module AutomaticUpdate
     end
 
     def write_output_file
+      FileUtils.mkdir_p(Rails.root.join('tmp/automatic_update'))
       headers = main_tsv.first.keys.to_a
       headers_count = headers.size
       CSV.open(OUTPUT_PATH, 'w+') do |f|
