@@ -24,7 +24,7 @@ module ImportUsers
 
       current_ids = @found.map(&:id) + @created.map(&:id)
 
-      @expired = Jobcode.where.not(id: current_ids)
+      @expired = Jobcode.where(current: true).where.not(id: current_ids)
       @expired.update_all(current: false) # rubocop:disable Rails/SkipsModelValidations
     end
   end
