@@ -109,4 +109,30 @@ RSpec.describe ImportUsers, type: :service do
       expect(User.find_by(certificate: 'E012345').rank).to eql('P/Lt/C')
     end
   end
+
+  describe 'jobcodes' do
+    let(:user) { create(:user) }
+    let!(:job_a) { create(:jobcode, user_id: user.id, code: '31098', year: 2023, description: 'A') }
+    let!(:job_b) { create(:jobcode, user_id: user.id, code: '31099', year: 2022, description: 'B') }
+    let(:jobcodes) do
+      [
+        { user_id: user.id, code: '31098', year: 2023, description: 'A' },
+        { user_id: user.id, code: '31099', year: 2023, description: 'B' }
+      ]
+    end
+
+    it 'creates new jobcodes', :aggregate_failures do
+      expect { ImportUsers::Import.new(import, jobcodes: jobcodes).call }.to change { Jobcode.count }.by(1)
+
+      expect(Jobcode.last).to have_attributes(user_id: user.id, code: '31099', year: 2023, description: 'B')
+    end
+
+    it 'marks expired jobcodes' do
+      expect { ImportUsers::Import.new(import, jobcodes: jobcodes).call }.to change { job_b.reload.current? }.to(false)
+    end
+
+    it 'ignores found jobcodes' do
+      expect { ImportUsers::Import.new(import, jobcodes: jobcodes).call }.not_to(change { job_a })
+    end
+  end
 end

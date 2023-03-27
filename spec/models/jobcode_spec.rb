@@ -6,13 +6,13 @@ RSpec.describe Jobcode do
   let(:current_jobcode) { create(:jobcode, code: '31000', year: Time.zone.today.year) }
   let(:past_jobcode) { create(:jobcode, code: '31000', year: 1.year.ago.year) }
 
-  describe '#current?' do
-    it 'detects current jobcodes' do
-      expect(current_jobcode).to be_current
+  describe '#current_year?' do
+    it 'detects current year jobcodes' do
+      expect(current_jobcode).to be_current_year
     end
 
-    it 'detects past jobcodes' do
-      expect(past_jobcode).not_to be_current
+    it 'detects past year jobcodes' do
+      expect(past_jobcode).not_to be_current_year
     end
   end
 

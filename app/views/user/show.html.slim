@@ -58,20 +58,7 @@ h1 = @user.full_name
           = FA::Icon.p('do-not-enter', css: 'gray')
           span.italic None specified
 
-- if @user.jobcodes.current.any?
-  h2 Jobs
-  .table#jobs.striped
-    .table-row.header
-      .table-cell Code
-      .table-cell Year
-      .table-cell Level
-      .table-cell Description
-    - @user.jobcodes.each do |jobcode|
-      .table-row
-        .table-cell = jobcode.code
-        .table-cell = jobcode.year
-        .table-cell = jobcode.level.to_s.titleize
-        .table-cell = jobcode.description
+= render('jobcodes', jobcodes: @user.jobcodes.current)
 
 - if current_user.id != @user.id && current_user.permitted?(:admin, strict: true)
   h2 Actions

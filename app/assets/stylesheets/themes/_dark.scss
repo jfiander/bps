@@ -408,6 +408,8 @@
     }
   }
 
+  div.table-row.outdated div.table-cell { color: $gray; }
+
   div.table.striped {
     & > div.table-row:nth-child(odd)  { background-color: $dark-background-blue-faded-30; }
     & > div.table-row:nth-child(even) { background-color: $dark-background-blue-faded-40; }

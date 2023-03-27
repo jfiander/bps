@@ -1,0 +1,14 @@
+- if jobcodes.any?
+  h2 Jobs
+  .table#jobs.striped
+    .table-row.header
+      .table-cell Code
+      .table-cell Year
+      .table-cell Level
+      .table-cell Description
+    - jobcodes.each do |jobcode|
+      .table-row class=('outdated' unless jobcode.current_year?)
+        .table-cell = jobcode.code
+        .table-cell = jobcode.year
+        .table-cell = jobcode.level.to_s.titleize
+        .table-cell = jobcode.description

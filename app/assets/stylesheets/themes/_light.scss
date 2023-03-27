@@ -121,6 +121,8 @@
     button.otw { background-color: $background-lighten-3; }
   }
 
+  div.table-row.outdated div.table-cell { color: $gray; }
+
   div#main { border-color: $old-glory-blue-faded; }
 
   div#flashes {

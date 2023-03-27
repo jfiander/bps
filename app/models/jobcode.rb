@@ -6,9 +6,10 @@ class Jobcode < ApplicationRecord
   scope :squadron, -> { where('jobcodes.jobcode LIKE "3%"') }
   scope :district, -> { where('jobcodes.jobcode LIKE "2%"') }
   scope :national, -> { where('jobcodes.jobcode LIKE "1%"') }
-  scope :current, -> { where(year: Time.zone.today.year) }
+  scope :current, -> { where(current: true) }
+  scope :current_year, -> { where(year: Time.zone.today.year) }
 
-  def current?
+  def current_year?
     year == Time.zone.today.year
   end
 
@@ -17,6 +18,19 @@ class Jobcode < ApplicationRecord
   end
 
   def to_s
-    "#{code}\t#{year}#{'*' unless current?}\t#{level}\t#{description}"
+    "#{code}\t#{year}#{'*' unless current_year?}\t#{level}\t#{description}"
+  end
+
+  def to_proto
+    BPS::Update::JobCode.new(
+      user: {
+        id: user_id,
+        certificate: user.certificate,
+        name: user.simple_name
+      },
+      code: code,
+      year: year,
+      description: description
+    )
   end
 end

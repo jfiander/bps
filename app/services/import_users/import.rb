@@ -57,8 +57,8 @@ module ImportUsers
       jobcodes.call
 
       @proto.jobcodes = BPS::Update::JobCodes.new(
-        created: jobcodes.created.map { |j| BPS::Update::JobCode.new(j) },
-        expired: jobcodes.expired.map { |j| BPS::Update::JobCode.new(j) }
+        created: jobcodes.created.map(&:to_proto),
+        expired: jobcodes.expired.map(&:to_proto)
       )
     end
 
