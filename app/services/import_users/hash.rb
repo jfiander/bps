@@ -53,7 +53,8 @@ module ImportUsers
         life: ImportUsers::CleanDate.new(@row['Life']).call,
         total_years: @row['Tot.Years'],
         membership_date: ImportUsers::CleanDate.new(@row['Cert. Date']).call,
-        spouse_name: @row['Spouse'], birthday: @row['Birthday']
+        spouse_name: @row['Spouse'], birthday: @row['Birthday'],
+        dan_boater: @row['DAN Boater'] == 'Y'
       }
     end
 
@@ -88,7 +89,9 @@ module ImportUsers
       {
         boat_name: @row['Boat Name'],
         boat_type: @row['Boat Type'],
-        call_sign: @row['Call Sign']
+        call_sign: @row['Callsign'],
+        home_port: @row['Home Port'],
+        mmsi: @row['MMSI']
       }
     end
   end

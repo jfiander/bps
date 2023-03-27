@@ -37,6 +37,12 @@ import:
   - Spouse
   - Fax Phone
 
+  - Callsign
+  - Home Port
+  - MMSI
+
+  - DAN Boater
+
 ignore:
   - DA
   - H/A
@@ -98,10 +104,5 @@ ignore:
   - Home Text
   - Cell Text
   - Bus. Text
-  - Callsign
 
-  - Home Port
-  - MMSI
-
-  - DAN Boater
   - DAN Boater Date

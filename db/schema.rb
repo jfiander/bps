@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_27_194312) do
+ActiveRecord::Schema.define(version: 2023_03_27_203259) do
 
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -671,6 +671,7 @@ ActiveRecord::Schema.define(version: 2023_03_27_194312) do
     t.string "pushover_token"
     t.boolean "in_latest_import"
     t.boolean "mfa_enabled", default: false, null: false
+    t.boolean "dan_boater", default: false, null: false
     t.index ["certificate", "locked_at", "deleted_at"], name: "index_users_on_certificate"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true

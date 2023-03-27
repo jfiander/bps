@@ -16,6 +16,7 @@ h1 = @user.full_name
     p
       = image_tag(BPS::S3.new(:static).link('insignia/CI/CI.350.png'), class: 'pin', title: 'Certified Instructor') if @user.valid_instructor?
       = image_tag(BPS::S3.new(:static).link('insignia/VE/VE.350.png'), class: 'pin', title: 'Certified Vessel Examiner') if @user.vessel_examiner?
+    p = image_tag(BPS::S3.new(:static).link('logos/DAN/DAN_Boater.png'), class: 'long', title: 'DAN Boater Member') if @user.dan_boater?
 
   .table
     .table-row
