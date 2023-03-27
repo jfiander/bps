@@ -55,4 +55,5 @@ message JobCode {
   string code = 2;
   int64 year = 3;
   string description = 4;
+  bool acting = 5;
 }

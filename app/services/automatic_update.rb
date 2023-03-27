@@ -71,7 +71,8 @@ module AutomaticUpdate
             user_id: User.where(certificate: row['certno']).pick(:id),
             code: row['jobcode'],
             year: row['year'].to_i,
-            description: row['jdesc']
+            description: row['jdesc'],
+            acting: row['acting'] == 'Y'
           }
         end
       end

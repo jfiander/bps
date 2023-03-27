@@ -40,4 +40,8 @@ div.table-cell {
   vertical-align: middle;
 }
 
+.table-cell.align-right {
+  text-align: right;
+}
+
 .table-cell.no-pad { padding: 0; }

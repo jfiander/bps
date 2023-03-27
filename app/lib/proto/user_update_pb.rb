@@ -51,6 +51,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :code, :string, 2
       optional :year, :int64, 3
       optional :description, :string, 4
+      optional :acting, :bool, 5
     end
   end
 end

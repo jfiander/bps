@@ -30,7 +30,8 @@ class Jobcode < ApplicationRecord
       },
       code: code,
       year: year,
-      description: description
+      description: description,
+      acting: acting
     )
   end
 end

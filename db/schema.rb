@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_27_203259) do
+ActiveRecord::Schema.define(version: 2023_03_27_220533) do
 
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -346,6 +346,7 @@ ActiveRecord::Schema.define(version: 2023_03_27_203259) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
     t.boolean "current", default: true, null: false
+    t.boolean "acting", default: false, null: false
     t.index ["user_id", "code", "year"], name: "user_job_year", unique: true
   end
 
