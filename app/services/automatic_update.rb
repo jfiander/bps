@@ -86,7 +86,7 @@ module AutomaticUpdate
 
     def normalize_row(row)
       row.map do |k, v|
-        next nil if v.blank? || v.in?(['0', 0, '0000000000'])
+        next nil if v.blank? || v.in?(['0', 0, '0000000000', '00'])
         next v.split('-').first if k == 'Grade'
         next v.gsub(/1st/, '1') if k == 'HQ Rank'
         next v.gsub(/(.{3})(.{3})(.{4})/, '\1 \2-\3') if k =~ / Phone$/
