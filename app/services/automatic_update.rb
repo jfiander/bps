@@ -18,6 +18,8 @@ module AutomaticUpdate
       automatic_updates_bucket.upload(file: OUTPUT_PATH, key: 'ReadyForImport.csv')
       return unless import
 
+      save_jobcodes
+
       importer = ImportUsers::Import.new(OUTPUT_PATH, lock: lock)
       proto = importer.call
       @log_timestamp = importer.log_timestamp
@@ -52,6 +54,36 @@ module AutomaticUpdate
         ).map(&:to_h)
       end
     end
+
+    def combine_jobcode_tsv_data_from_s3
+      import_time = Time.zone.now
+      jobcode_tsv_data.each_with_object([]) do |tsv, array|
+        tsv.each do |row|
+          array << {
+            user_id: User.where(certificate: row['certno']).pick(:id),
+            code: row['jobcode'],
+            year: row['year'].to_i,
+            description: row['jdesc'],
+            created_at: import_time,
+            updated_at: import_time
+          }
+        end
+      end
+    end
+
+    def jobcode_tsv_data
+      @jobcode_tsv_data ||= %i[squad_jobs dist_jobs nat_jobs].map do |key|
+        CSV.new(
+          automatic_updates_bucket.download("#{key}.tsv"), col_sep: "\t", headers: true
+        ).map(&:to_h)
+      end
+    end
+
+    # rubocop:disable Rails/SkipsModelValidations
+    def save_jobcodes
+      Jobcode.insert_all(combine_jobcode_tsv_data_from_s3)
+    end
+    # rubocop:enable Rails/SkipsModelValidations
 
     def write_output_file
       FileUtils.mkdir_p(Rails.root.join('tmp/automatic_update'))

@@ -26,6 +26,7 @@ class User < ApplicationRecord
   has_many :float_plans
   has_many :api_tokens
   has_many :persistent_api_tokens
+  has_many :jobcodes
 
   belongs_to :parent, class_name: 'User', optional: true
   has_many :children, class_name: 'User', inverse_of: :parent, foreign_key: :parent_id
