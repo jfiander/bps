@@ -40,7 +40,7 @@ module AutomaticUpdate
     def combine_tsv_data_from_s3
       main_tsv.each do |row|
         row.merge!(*new_tsv_data.map do |tsv|
-          tsv.find { |r| r['certno'] == row['certno'] }
+          tsv.find { |r| r['certno'] == row['Certificate'] }
         end.compact)
       end
     end
