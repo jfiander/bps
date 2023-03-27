@@ -10,6 +10,7 @@ module AutomaticUpdate
 
     def initialize
       @file_headers = []
+      @downloads = {}
     end
 
     def update(_download: true, import: true, lock: false)
@@ -32,9 +33,18 @@ module AutomaticUpdate
       BPS::S3.new(:automatic_updates)
     end
 
+    def download(key)
+      return @downloads[key] if @downloads.key?(key)
+
+      object = automatic_updates_bucket.object(key)
+      raise "Outdated: #{key}" if object.last_modified < 23.hours.ago
+
+      @downloads[key] = object.get.body.read
+    end
+
     def main_tsv
       @main_tsv ||= CSV.new(
-        automatic_updates_bucket.download('member_info.tsv'), col_sep: "\t", headers: true
+        download('member_info.tsv'), col_sep: "\t", headers: true
       ).map(&:to_h)
     end
 
@@ -49,7 +59,7 @@ module AutomaticUpdate
     def new_tsv_data
       @new_tsv_data ||= %i[courses seminars training boc].map do |key|
         CSV.new(
-          automatic_updates_bucket.download("#{key}.tsv"), col_sep: "\t", headers: true
+          download("#{key}.tsv"), col_sep: "\t", headers: true
         ).map(&:to_h)
       end
     end
@@ -70,7 +80,7 @@ module AutomaticUpdate
     def jobcode_tsv_data
       @jobcode_tsv_data ||= %i[squad_jobs dist_jobs nat_jobs].map do |key|
         CSV.new(
-          automatic_updates_bucket.download("#{key}.tsv"), col_sep: "\t", headers: true
+          download("#{key}.tsv"), col_sep: "\t", headers: true
         ).map(&:to_h)
       end
     end
