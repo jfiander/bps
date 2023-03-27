@@ -10,6 +10,7 @@ message UserDataImport {
   repeated UserFamily families = 4;
   bool locked = 5;
   repeated User not_in_import = 6;
+  JobCodes jobcodes = 7;
 }
 
 message User {
@@ -42,4 +43,16 @@ message Completion {
 message UserFamily {
   User user = 1;
   repeated User family = 2;
+}
+
+message JobCodes {
+  repeated JobCode created = 1;
+  repeated JobCode expired = 2;
+}
+
+message JobCode {
+  User user = 1;
+  string code = 2;
+  int64 year = 3;
+  string description = 4;
 }

@@ -5,9 +5,10 @@ module ImportUsers
   class Import
     attr_reader :log_timestamp, :import_log_id
 
-    def initialize(path, lock: false)
+    def initialize(path, lock: false, jobcodes: [])
       @path = path
       @lock = lock
+      @jobcodes = jobcodes
       @proto = BPS::Update::UserDataImport.new
       @certificates = []
       @completions = []
@@ -16,6 +17,7 @@ module ImportUsers
     def call
       @parsed_csv = ImportUsers::ParseCSV.new(@path).call
       process_import
+      process_jobcodes
       FileUtils.rm_f(@path)
       @import_log_id = ImportLog.create(proto: @proto.to_proto).id
       archive_proto
@@ -48,6 +50,16 @@ module ImportUsers
       user, changes = ImportUsers::ParseRow.new(row).call
       record_results(user, changes)
       @completions << ImportUsers::CourseCompletions.new(user, row).call
+    end
+
+    def process_jobcodes
+      jobcodes = ImportUsers::ImportJobcodes.new(@jobcodes)
+      jobcodes.call
+
+      @proto.jobcodes = BPS::Update::JobCodes.new(
+        created: jobcodes.created.map { |j| BPS::Update::JobCode.new(j) },
+        expired: jobcodes.expired.map { |j| BPS::Update::JobCode.new(j) }
+      )
     end
 
     def record_results(user, changes)

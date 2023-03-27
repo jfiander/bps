@@ -160,6 +160,8 @@ hr
     p = "Set #{@import_proto.families.count} new #{'family'.pluralize(@import_proto.families.count)}."
     - if @import_proto.locked
       p = "Locked #{@import_proto.not_in_import.count} missing #{'user'.pluralize(@import_proto.not_in_import.count)}."
+    p = "Created #{@import_proto.jobcodes.created.count} new #{'jobcode'.pluralize(@import_proto.jobcodes.created.count)}."
+    p = "Expired #{@import_proto.jobcodes.expired.count} old #{'jobcode'.pluralize(@import_proto.jobcodes.expired.count)}."
 
     = render 'import_results', import_proto: @import_proto
 

@@ -14,6 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       repeated :families, :message, 4, "b_p_s.update.UserFamily"
       optional :locked, :bool, 5
       repeated :not_in_import, :message, 6, "b_p_s.update.User"
+      optional :jobcodes, :message, 7, "b_p_s.update.JobCodes"
     end
     add_message "b_p_s.update.User" do
       optional :id, :int64, 1
@@ -41,6 +42,16 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :user, :message, 1, "b_p_s.update.User"
       repeated :family, :message, 2, "b_p_s.update.User"
     end
+    add_message "b_p_s.update.JobCodes" do
+      repeated :created, :message, 1, "b_p_s.update.JobCode"
+      repeated :expired, :message, 2, "b_p_s.update.JobCode"
+    end
+    add_message "b_p_s.update.JobCode" do
+      optional :user, :message, 1, "b_p_s.update.User"
+      optional :code, :string, 2
+      optional :year, :int64, 3
+      optional :description, :string, 4
+    end
   end
 end
 
@@ -53,5 +64,7 @@ module BPS
     UserCompletion = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("b_p_s.update.UserCompletion").msgclass
     Completion = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("b_p_s.update.Completion").msgclass
     UserFamily = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("b_p_s.update.UserFamily").msgclass
+    JobCodes = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("b_p_s.update.JobCodes").msgclass
+    JobCode = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("b_p_s.update.JobCode").msgclass
   end
 end
