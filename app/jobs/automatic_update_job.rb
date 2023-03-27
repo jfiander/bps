@@ -34,6 +34,8 @@ private
     @import_log_id = updater.import_log_id
     import_success(dryrun: dryrun)
   rescue StandardError => e
+    raise e if Rails.env.development?
+
     import_failure(e, dryrun: dryrun)
   end
 
