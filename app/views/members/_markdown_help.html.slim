@@ -261,48 +261,12 @@
         .table-cell Class
         .table-cell Description
         .table-cell Examples
-      .table-row.center
-        .table-cell: pre fas
-        .table-cell solid
-        .table-cell
-          = FA::Icon.p('file-certificate', style: :solid)
-          = FA::Icon.p('users', style: :solid)
-          = FA::Icon.p('bars', style: :solid)
-      .table-row.center
-        .table-cell: pre far
-        .table-cell regular
-        .table-cell
-          = FA::Icon.p('file-certificate', style: :regular)
-          = FA::Icon.p('users', style: :regular)
-          = FA::Icon.p('bars', style: :regular)
-      .table-row.center
-        .table-cell: pre fal
-        .table-cell light
-        .table-cell
-          = FA::Icon.p('file-certificate', style: :light)
-          = FA::Icon.p('users', style: :light)
-          = FA::Icon.p('bars', style: :light)
-      .table-row.center
-        .table-cell: pre fat
-        .table-cell thin
-        .table-cell
-          = FA::Icon.p('file-certificate', style: :thin)
-          = FA::Icon.p('users', style: :thin)
-          = FA::Icon.p('bars', style: :thin)
-      .table-row.center
-        .table-cell: pre fad
-        .table-cell duotone
-        .table-cell
-          = FA::Icon.p('file-certificate', style: :duotone)
-          = FA::Icon.p('users', style: :duotone)
-          = FA::Icon.p('bars', style: :duotone)
-      .table-row.center
-        .table-cell: pre fa-fw
-        .table-cell fixed-width
-        .table-cell
-          = FA::Icon.p('file-certificate', fa: :fw)
-          = FA::Icon.p('users', fa: :fw)
-          = FA::Icon.p('bars', fa: :fw)
+      = render('members/markdown/icon_group', css: :fas, description: 'solid', icons: %w[file-certificate users bars])
+      = render('members/markdown/icon_group', css: :far, description: 'regular', icons: %w[file-certificate users bars])
+      = render('members/markdown/icon_group', css: :fal, description: 'light', icons: %w[file-certificate users bars])
+      = render('members/markdown/icon_group', css: :fat, description: 'thin', icons: %w[file-certificate users bars])
+      = render('members/markdown/icon_group', css: :fad, description: 'duotone', icons: %w[file-certificate users bars])
+      = render('members/markdown/icon_group', css: 'fa-fw', description: 'fixed-width', icons: %w[file-certificate users bars])
 
     h3 Style Shortcuts
     p You can use the style class as the initial key for invoking an icon.
@@ -312,46 +276,11 @@
         .table-cell Key
         .table-cell Style
         .table-cell Result
-      .table-row.center
-        .table-cell: pre
-          span.bold.red %fas/
-          | users
-          span.bold.red
-            | /
-        .table-cell solid
-        .table-cell = FA::Icon.p('users', style: :solid)
-      .table-row.center
-        .table-cell: pre
-          span.bold.red %far/
-          | users
-          span.bold.red
-            | /
-        .table-cell regular
-        .table-cell = FA::Icon.p('users', style: :regular)
-      .table-row.center
-        .table-cell: pre
-          span.bold.red %fal/
-          | users
-          span.bold.red
-            | /
-        .table-cell light
-        .table-cell = FA::Icon.p('users', style: :light)
-      .table-row.center
-        .table-cell: pre
-          span.bold.red %fat/
-          | users
-          span.bold.red
-            | /
-        .table-cell thin
-        .table-cell = FA::Icon.p('users', style: :thin)
-      .table-row.center
-        .table-cell: pre
-          span.bold.red %fad/
-          | users
-          span.bold.red
-            | /
-        .table-cell duotone
-        .table-cell = FA::Icon.p('users', style: :duotone)
+      = render('members/markdown/icon', key: :fas, name: :users, description: 'solid', icon: FA::Icon.p('users', style: :solid))
+      = render('members/markdown/icon', key: :far, name: :users, description: 'regular', icon: FA::Icon.p('users', style: :regular))
+      = render('members/markdown/icon', key: :fal, name: :users, description: 'light', icon: FA::Icon.p('users', style: :light))
+      = render('members/markdown/icon', key: :fat, name: :users, description: 'thin', icon: FA::Icon.p('users', style: :thin))
+      = render('members/markdown/icon', key: :fad, name: :users, description: 'duotone', icon: FA::Icon.p('users', style: :duotone))
 
     h3 Style and Mode Shortcuts
     p You can also include the icon mode with the style as the initial key for invoking an icon.
@@ -362,30 +291,9 @@
         .table-cell Key
         .table-cell Style
         .table-cell Result
-      .table-row.center
-        .table-cell: pre
-          span.bold.red %fass/
-          | users
-          span.bold.red
-            | /
-        .table-cell sharp / solid
-        .table-cell = FA::Icon.p('users', style: :solid, mode: :sharp)
-      .table-row.center
-        .table-cell: pre
-          span.bold.red %fasr/
-          | users
-          span.bold.red
-            | /
-        .table-cell sharp / regular
-        .table-cell = FA::Icon.p('users', style: :regular, mode: :sharp)
-      .table-row.center
-        .table-cell: pre
-          span.bold.red %fasl/
-          | users
-          span.bold.red
-            | /
-        .table-cell sharp / light
-        .table-cell = FA::Icon.p('users', style: :light, mode: :sharp)
+      = render('members/markdown/icon', key: :fass, name: :house, description: 'sharp / solid', icon: FA::Icon.p('house', style: :solid, mode: :sharp))
+      = render('members/markdown/icon', key: :fasr, name: :house, description: 'sharp / regular', icon: FA::Icon.p('house', style: :regular, mode: :sharp))
+      = render('members/markdown/icon', key: :fasl, name: :house, description: 'sharp / light', icon: FA::Icon.p('house', style: :light, mode: :sharp))
 
     h3 Custom Icons
     p There are also some custom icons available within this system. These may look better when scaled up.

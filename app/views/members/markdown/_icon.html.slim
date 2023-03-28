@@ -1,0 +1,17 @@
+.table-row.center
+  .table-cell
+    - if defined?(key)
+      pre
+        span.bold.red %#{key}/
+        = name
+        span.bold.red
+          | /
+    - else
+      pre = name
+  .table-cell = description
+  .table-cell
+    - if defined?(icon)
+      = icon
+    - else
+      - icons.each do |icon|
+        = icon
