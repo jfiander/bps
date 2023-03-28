@@ -270,7 +270,7 @@
           = FA::Icon.p('bars', style: :solid)
       .table-row.center
         .table-cell: pre far
-        .table-cell hollow
+        .table-cell regular
         .table-cell
           = FA::Icon.p('file-certificate', style: :regular)
           = FA::Icon.p('users', style: :regular)
@@ -326,7 +326,7 @@
           | users
           span.bold.red
             | /
-        .table-cell hollow
+        .table-cell regular
         .table-cell = FA::Icon.p('users', style: :regular)
       .table-row.center
         .table-cell: pre
@@ -352,6 +352,40 @@
             | /
         .table-cell duotone
         .table-cell = FA::Icon.p('users', style: :duotone)
+
+    h3 Style and Mode Shortcuts
+    p You can also include the icon mode with the style as the initial key for invoking an icon.
+    p.i The fixed-width style is not available using this method.
+    p.i The thin and duotone styles are not currently available using this method.
+    .table
+      .table-row.bold.center
+        .table-cell Key
+        .table-cell Style
+        .table-cell Result
+      .table-row.center
+        .table-cell: pre
+          span.bold.red %fass/
+          | users
+          span.bold.red
+            | /
+        .table-cell sharp / solid
+        .table-cell = FA::Icon.p('users', style: :solid, mode: :sharp)
+      .table-row.center
+        .table-cell: pre
+          span.bold.red %fasr/
+          | users
+          span.bold.red
+            | /
+        .table-cell sharp / regular
+        .table-cell = FA::Icon.p('users', style: :regular, mode: :sharp)
+      .table-row.center
+        .table-cell: pre
+          span.bold.red %fasl/
+          | users
+          span.bold.red
+            | /
+        .table-cell sharp / light
+        .table-cell = FA::Icon.p('users', style: :light, mode: :sharp)
 
     h3 Custom Icons
     p There are also some custom icons available within this system. These may look better when scaled up.
