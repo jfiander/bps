@@ -291,6 +291,9 @@
 
   div#corner-stripes > div { background: rgba($white, 0.1); }
 
+  img.light { display: none; }
+  img.dark { display: block; }
+
   div.events-unified-table div.event-unified {
     div.title { color: $old-glory-red-desaturated; }
 

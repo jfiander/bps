@@ -320,6 +320,9 @@
 
   div#corner-stripes > div { background: rgba($old-glory-blue, 0.1); }
 
+  img.light { display: block; }
+  img.dark { display: none; }
+
   div.red-border { border-color: $old-glory-red; }
 
   div#bilge {
