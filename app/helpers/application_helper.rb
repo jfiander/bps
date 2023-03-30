@@ -23,8 +23,9 @@ module ApplicationHelper
   end
 
   def editor(partial = 'editor', options = {})
+    opts = { name: 'Editor' }.merge(options)
     content_for(:head) { render('application/editor/head', partial: partial) }
-    render('application/editor/buttons', partial: partial, options: options)
+    render('application/editor/buttons', partial: partial, options: opts)
   end
 
   def auto_show(partial)

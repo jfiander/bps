@@ -1,0 +1,14 @@
+hr
+
+h2 Manual Upload from DB2000
+
+= form_tag import_path, multipart: true
+  = FA::Icon.p('file-csv', style: :duotone, title: 'CSV files only')
+  = file_field_tag :import_file, required: true
+  br
+  p For users not in import file:
+  = switch_box(nil, :lock_missing, 'lightblue-red', 'ignore lock-missing')
+  br
+  = spinner_button button_text: 'Upload', css: 'big'
+
+hr
