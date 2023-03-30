@@ -122,7 +122,13 @@ private
   end
 
   def update_results
-    @import_proto.empty? ? 'No changes' : @import_proto.to_json
+    return 'No changes' if @import_proto.empty?
+
+    json = @import_proto.to_json
+    return json unless @import_proto.jobcodes.empty?
+
+    # Exclude empty jobcodes from JSON
+    JSON.parse(json).tap { |h| h.delete('jobcodes') }.to_json
   end
 
   def log_import(by: nil)
