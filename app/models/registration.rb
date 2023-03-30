@@ -16,9 +16,6 @@ class Registration < ApplicationRecord
     joins(:payment).where('payments.refunded IS NULL OR payments.refunded = ?', false)
   end)
 
-  after_create :notify_on_create
-  after_create :confirm_to_registrant
-
   # Registrations can be created by a publicly-accessible interface.
   # Executing these queries will completely remove all traces of those from the database.
   #
@@ -67,22 +64,6 @@ class Registration < ApplicationRecord
 
   def payable?
     super && !(event.cutoff? && event.advance_payment)
-  end
-
-  def notify_on_create
-    RegistrationMailer.registered(self).deliver
-  end
-
-  # If the event does not require advance payment, this will notify on create.
-  #
-  # Otherwise, a different notification will be sent, and the regular one will
-  # be triggered by BraintreeController once the registration is paid for.
-  def confirm_to_registrant
-    if event.advance_payment && !reload.paid?
-      RegistrationMailer.advance_payment(self).deliver
-    else
-      RegistrationMailer.confirm(self).deliver
-    end
   end
 
 private

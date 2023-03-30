@@ -47,11 +47,26 @@ module Members
       membership = Committee.where(department: :administrative, name: 'Membership')
       web = Committee.where(department: :secretary, name: 'Webmaster')
 
+      year = bilge_params[:issue]['date(1i)']
+      month = bilge_params[:issue]['date(2i)']
+
       NotificationsMailer.bilge(
-        editor.or(membership).or(web).map { |c| c.user.email }.compact,
-        year: bilge_params[:issue]['date(1i)'],
-        month: bilge_params[:issue]['date(2i)']
+        editor.or(membership).or(web).map { |c| c.user.email }.compact, year: year, month: month
       ).deliver
+
+      bilge_slack_notification(year, month)
+    end
+
+    def bilge_slack_notification(year, month)
+      SlackNotification.new(
+        channel: :notifications, type: :info, title: 'Bilge Chatter Posted',
+        fallback: 'A Bilge Chatter issue has been posted.',
+        fields: {
+          'Year' => year,
+          'Issue' => BilgeFile.issues[month],
+          'Link' => bilge_url(year: year, month: month)
+        }
+      ).notify!
     end
   end
 end

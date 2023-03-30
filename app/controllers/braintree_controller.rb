@@ -110,7 +110,28 @@ private
       parent.confirm_to_registrant if parent.event.advance_payment
     when MemberApplication
       MemberApplicationMailer.new_application(parent).deliver
+      new_application_slack_notification(parent)
     end
+  end
+
+  def new_application_slack_notification(application)
+    SlackNotification.new(
+      channel: :notifications, type: :info, title: 'Membership Application Received',
+      fallback: 'Someone has applied for membership.',
+      fields: new_application_slack_fields(
+        "#{application.primary.first_name} #{application.primary.last_name}",
+        application.primary.email,
+        application.member_applicants.count
+      )
+    ).notify!
+  end
+
+  def new_application_slack_fields(name, email, number)
+    [
+      { 'title' => 'Primary applicant name', 'value' => name, 'short' => true },
+      { 'title' => 'Primary applicant email', 'value' => email, 'short' => true },
+      { 'title' => 'Number of applicants', 'value' => number, 'short' => true }
+    ]
   end
 
   def send_receipt_email(transaction)

@@ -51,6 +51,33 @@ RSpec.describe RegistrationMailer do
       end
     end
 
+    describe 'registered (rendezvous)' do
+      let(:event_user_reg) { create(:event_registration, :with_user) }
+      let(:rendezvous_chair) { Committee.create(department: :administrative, name: 'Rendezvous', user: create(:user)) }
+      let(:mail) { described_class.registered(event_user_reg) }
+
+      before do
+        rendezvous_chair
+        event_user_reg.event.event_type.update(title: 'rendezvous')
+      end
+
+      it 'renders the headers' do
+        expect(mail).to contain_mail_headers(
+          subject: 'New registration',
+          to: ['ao@bpsd9.org', rendezvous_chair.user.email],
+          from: ['support@bpsd9.org']
+        )
+      end
+
+      it 'renders the body' do
+        expect(mail.body.encoded).to contain_and_match(
+          'This is an automated message that was sent to',
+          'New Registration', 'Registration information', 'Registrant information',
+          'please reach out to this registrant'
+        )
+      end
+    end
+
     describe 'registered (event with committee set)' do
       let(:mail) { described_class.registered(event_user_reg.reload) }
       let(:user) { create(:user, email: 'something@example.com') }

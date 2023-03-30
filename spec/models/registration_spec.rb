@@ -164,20 +164,6 @@ RSpec.describe Registration do
     expect(reg.errors.messages.to_h).to eql(base: ['Duplicate'])
   end
 
-  it 'sends a confirmation email for public registrations' do
-    expect(RegistrationMailer).to receive(:confirm).and_call_original
-
-    create(:registration, email: 'nobody@example.com', event: event)
-  end
-
-  it 'sends an advance_payment email when applicable' do
-    event.update(advance_payment: true, cost: 5)
-
-    expect(RegistrationMailer).to receive(:advance_payment).and_call_original
-
-    create(:registration, email: 'nobody@example.com', event: event)
-  end
-
   it 'notifies the chair of registrations' do
     create(:committee, user: generic_seo_and_ao[:ao].user, name: 'rendezvous')
     event_type = create(:event_type, event_category: 'meeting', title: 'rendezvous')

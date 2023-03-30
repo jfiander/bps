@@ -9,7 +9,6 @@ class RegistrationMailer < ApplicationMailer
     @registration = registration
     @to_list = to_list
 
-    registered_slack_notification
     mail(to: @to_list, subject: 'New registration')
   end
 
@@ -17,7 +16,6 @@ class RegistrationMailer < ApplicationMailer
     @registration = registration
     @to_list = to_list
 
-    cancelled_slack_notification
     mail(to: @to_list, subject: 'Cancelled registration')
   end
 
@@ -83,45 +81,6 @@ private
   def attachable?
     @registration.event.flyer.present? &&
       @registration.event.flyer.content_type == 'application/pdf'
-  end
-
-  def registered_slack_notification
-    slack_notification(
-      :info,
-      'Registration Received',
-      'Someone has registered for an event.'
-    )
-  end
-
-  def cancelled_slack_notification
-    slack_notification(
-      :warning,
-      'Registration Cancelled',
-      'Someone has cancelled their registration for an event.'
-    )
-  end
-
-  def slack_notification(type, title, fallback)
-    return if @registration.event.id.nil?
-
-    SlackNotification.new(
-      channel: :notifications, type: type, title: title,
-      fallback: fallback,
-      fields: slack_fields
-    ).notify!
-  end
-
-  def slack_fields
-    {
-      'Event' => "<#{show_event_url(@registration.event)}|#{@registration.event.display_title}>",
-      'Event date' => slack_start_time,
-      'Registrant name' => @registration&.user&.full_name,
-      'Registrant email' => @registration&.user&.email || @registration&.email
-    }.compact
-  end
-
-  def slack_start_time
-    @registration.event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT)
   end
 
   # Copied from MarkdownHelper

@@ -9,7 +9,6 @@ class MemberApplicationMailer < ApplicationMailer
     @to_list = new_app_to
     @next_excom = next_excom
 
-    new_application_slack_notification
     mail(to: @to_list, subject: 'New member application')
   end
 
@@ -62,25 +61,5 @@ private
     @application = application
     @to = @application.primary.email
     @signature = ao_signature
-  end
-
-  def new_application_slack_notification
-    SlackNotification.new(
-      channel: :notifications, type: :info, title: 'Membership Application Received',
-      fallback: 'Someone has applied for membership.',
-      fields: new_application_slack_fields(
-        "#{@application.primary.first_name} #{@application.primary.last_name}",
-        @application.primary.email,
-        @application.member_applicants.count
-      )
-    ).notify!
-  end
-
-  def new_application_slack_fields(name, email, number)
-    [
-      { 'title' => 'Primary applicant name', 'value' => name, 'short' => true },
-      { 'title' => 'Primary applicant email', 'value' => email, 'short' => true },
-      { 'title' => 'Number of applicants', 'value' => number, 'short' => true }
-    ]
   end
 end

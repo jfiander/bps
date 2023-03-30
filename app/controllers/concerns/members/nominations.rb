@@ -60,10 +60,26 @@ module Members
 
     def nomination_mails
       submitted_nominations.each do |award, nominee|
+        target = award_target(award)
+
         NominationsMailer.nomination(
-          current_user, award, nominee, submitted_descriptions[award], award_target(award)
+          current_user, award, nominee, submitted_descriptions[award], target
         ).deliver
+
+        slack_notification(current_user, award, nominee) if target == 'Executive Committee'
       end
+    end
+
+    def slack_notification(current_user, award, nominee)
+      SlackNotification.new(
+        channel: :excom, type: :info, title: 'Award Nomination Submitted',
+        fallback: 'Someone has submitted a nomination for an ExCom award.',
+        fields: {
+          'Nominator' => current_user.full_name,
+          'Award' => award,
+          'Nominee' => nominee
+        }
+      ).notify!
     end
   end
 end

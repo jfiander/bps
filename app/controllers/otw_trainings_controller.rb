@@ -105,6 +105,7 @@ private
   def user_request_succeeded(otw_request)
     flash[:success] = 'Successfully requested training.'
     OTWMailer.requested(otw_request).deliver
+    slack_notification(otw_request, current_user)
     @check = FA::Icon.p('check', css: 'green', size: 2)
   end
 
@@ -112,5 +113,17 @@ private
     flash[:alert] = 'Unable to request training.'
     flash[:alert] = otw_request.errors.full_messages
     render status: :unprocessable_entity
+  end
+
+  def slack_notification(name, user)
+    SlackNotification.new(
+      channel: :notifications, type: :info, title: 'OTW Training Requested',
+      fallback: 'Someone has requested OTW training.',
+      fields: {
+        'Training' => name,
+        'Requested by' => user.full_name,
+        'Email' => user.email
+      }
+    ).notify!
   end
 end

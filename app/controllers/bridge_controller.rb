@@ -32,6 +32,7 @@ class BridgeController < ApplicationController
       NotificationsMailer.bridge(
         @bridge_office, by: current_user, previous: previous
       ).deliver
+      bridge_slack_notification(@bridge_office, current_user, previous)
     end
   end
 
@@ -129,5 +130,22 @@ private
     d = clean_params[:term_start_at]['(3i)']
 
     "#{y}-#{m}-#{d}"
+  end
+
+  def user_descriptor(user)
+    user.present? ? "#{user.full_name(html: false)}\n#{user.certificate}, ##{user.id}" : 'TBD'
+  end
+
+  def bridge_slack_notification(bridge_office, current_user, previous)
+    SlackNotification.new(
+      channel: :notifications, type: :info, title: 'Bridge Office Updated',
+      fallback: 'A bridge office has been updated.',
+      fields: {
+        'Office' => bridge_office.title,
+        'Previous holder' => user_descriptor(previous),
+        'New holder' => user_descriptor(bridge_office.user),
+        'Updated by' => user_descriptor(current_user)
+      }
+    ).notify!
   end
 end
