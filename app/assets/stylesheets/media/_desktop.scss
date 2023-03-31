@@ -132,7 +132,11 @@
 @media all and (min-width: 1051px) {
   div#main div#content div#content-main.activity {
     padding-right: 0;
-    height: 95%;
+
+    div#activity-feed {
+      height: auto;
+      margin-bottom: -0.5em;
+    }
   }
 }
 
