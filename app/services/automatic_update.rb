@@ -51,7 +51,8 @@ module AutomaticUpdate
     def combine_tsv_data_from_s3
       main_tsv.each do |row|
         row.merge!(*new_tsv_data.map do |tsv|
-          tsv.find { |r| r['certno'] == row['Certificate'] }
+          tsv.find { |r| r['certno'] == row['Certificate'] } ||
+            tsv.first.dup.transform_values { nil }
         end.compact)
       end
     end
@@ -97,7 +98,7 @@ module AutomaticUpdate
 
           new_row = normalize_row(row)
 
-          raise error_with_details(row, headers_count, headers) unless row.length == headers_count
+          raise error_with_details(row, headers_count, headers) unless row.keys == headers
 
           f << new_row
         end
@@ -112,7 +113,7 @@ module AutomaticUpdate
         expected_count: headers_count,
         actual_count: row.length,
         expected: headers,
-        actual: row.headers,
+        actual: row.keys,
         row: row
       )
     end
