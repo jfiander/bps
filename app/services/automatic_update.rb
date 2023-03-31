@@ -105,7 +105,7 @@ module AutomaticUpdate
     end
 
     def error_with_details(row, headers_count, headers)
-      ErrorWithDetails.call(
+      BPS::ErrorWithDetails.call(
         InvalidCSVHeadersError,
         'Unexpected column count',
         certificate: row['Certificate'],
