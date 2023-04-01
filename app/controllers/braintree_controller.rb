@@ -107,7 +107,7 @@ private
   def send_parent_email(parent)
     case parent
     when Registration
-      parent.confirm_to_registrant if parent.event.advance_payment
+      RegistrationMailer.confirm(parent).deliver if parent.event.advance_payment
     when MemberApplication
       MemberApplicationMailer.new_application(parent).deliver
       new_application_slack_notification(parent)
