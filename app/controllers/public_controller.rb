@@ -12,6 +12,7 @@ class PublicController < ApplicationController
   before_action :find_event,              only: %i[register]
   before_action :find_registration,       only: %i[register]
   before_action :block_registration,      only: %i[register], if: :block_registration?
+  before_action :block_url_data!,         only: %i[register]
 
   rate_limit!(:public_registrations, only: :register)
 
@@ -114,5 +115,12 @@ private
     event_type = @event.category
     event_type = 'event' if event_type == 'meeting'
     event_type
+  end
+
+  def block_url_data!
+    return unless params.key?(:registration)
+    return unless %i[name email phone].any? { |field| register_params[field] =~ %r{://} }
+
+    unprocessable!
   end
 end
