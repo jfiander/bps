@@ -17,6 +17,15 @@ class ErrorsController < ApplicationController
     end
   end
 
+  def unprocessable_entity
+    respond_to do |format|
+      format.html { render(status: :unprocessable_entity) }
+      format.json do
+        render(json: { error: 'Request not processable.' }, status: :unprocessable_entity)
+      end
+    end
+  end
+
   def internal_server_error
     respond_to do |format|
       format.html { render(status: :internal_server_error) }

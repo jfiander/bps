@@ -50,4 +50,8 @@ private
       created_at: current_user.created_at
     }
   end
+
+  def unprocessable!
+    render('errors/unprocessable_entity', status: :unprocessable_entity)
+  end
 end
