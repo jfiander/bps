@@ -78,6 +78,10 @@ gem 'bugsnag',             '~> 6.1.0'
 gem 'awesome_print',       '~> 1.8.0'
 gem 'differ',              '~> 0.1.2'
 
+# Manual Inclusion to Resolve Warnings
+gem 'net-http'
+gem 'uri',                 '0.10.0'
+
 # Manual Upgrades
 gem 'fileutils',           '~> 1.4.1'
 gem 'loofah',              '~> 2.19.1'
