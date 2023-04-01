@@ -101,3 +101,6 @@
             .table-cell = user.id
             .table-cell = user.certificate
             .table-cell = user.name
+
+- unless import_proto.created.empty? || User.invitable_from(import_proto.created).empty?
+  = render('user/invite_imported_form', users: import_proto.created)

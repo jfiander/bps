@@ -33,7 +33,24 @@ class User
       run_automatic_import(dryrun: true)
     end
 
+    def invite_imported_users
+      new_users = User.invitable_from(invite_imported_params[:users])
+
+      if new_users.empty?
+        flash[:notice] = 'No invitable users found.'
+      else
+        new_users.each(&:invite!)
+        flash[:success] = "Successfully invited #{new_users.count} newly imported users!"
+      end
+
+      redirect_to(admin_import_log_path(invite_imported_params[:import_log_id]))
+    end
+
   private
+
+    def invite_imported_params
+      params.permit(:import_log_id, users: [])
+    end
 
     def only_csv
       flash.now[:alert] = 'You can only upload CSV files.'

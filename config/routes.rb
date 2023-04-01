@@ -307,6 +307,7 @@ Rails.application.routes.draw do
   get     '/import/automatic',        to: 'user#automatic_update',        as: 'apply_update' # Temporary route, until Slack action buttons
   post    '/import/automatic',        to: 'user#automatic_update',        as: 'automatic_update'
   post    '/import/automatic/dryrun', to: 'user#automatic_update_dryrun', as: 'automatic_update_dryrun'
+  post    '/import/invite',           to: 'user#invite_imported_users',   as: 'invite_imported_users'
 
   # Payments
   get     '/pay/:token',            to: 'braintree#index',      as: 'pay'

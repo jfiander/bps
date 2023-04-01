@@ -375,6 +375,14 @@ RSpec.describe User do
       user.update(invitation_sent_at: Time.zone.now)
       expect(user.invited?).to be(true)
     end
+
+    describe '.invitable_from' do
+      subject { described_class.invitable_from(user.id, already_invited.id) }
+
+      let(:already_invited) { create(:user, invitation_sent_at: Time.zone.now) }
+
+      it { is_expected.to eq([user]) }
+    end
   end
 
   describe 'registration' do

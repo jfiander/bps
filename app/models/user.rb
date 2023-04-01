@@ -80,6 +80,10 @@ class User < ApplicationRecord
   scope :include_positions, -> { includes(position_associations) }
   scope :recent_mm, -> { where('last_mm_year >= ?', Time.zone.today.beginning_of_year - 6.months) }
 
+  def self.invitable_from(*user_ids)
+    where(id: user_ids).where(invitation_sent_at: nil).invitable
+  end
+
   # rubocop:disable Rails/OutputSafety
   # html_safe: Text is sanitized before storage
   def full_name(html: true, show_boc: false)
