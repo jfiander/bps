@@ -80,7 +80,7 @@ gem 'differ',              '~> 0.1.2'
 
 # Manual Inclusion to Resolve Warnings
 gem 'net-http'
-gem 'uri',                 '0.10.0'
+gem 'uri',                 '0.10.0.1'
 
 # Manual Upgrades
 gem 'fileutils',           '~> 1.4.1'
