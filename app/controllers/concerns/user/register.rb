@@ -17,16 +17,16 @@ class User
     end
 
     def cancel_registration
-      @reg = Registration.find_by(id: clean_params[:id])
+      @registration = Registration.find_by(id: clean_params[:id])
 
       return unless can_cancel_registration?
 
-      @event = @reg.event
-      @cancel_link = (@reg&.user == current_user)
+      @event = @registration.event
+      @cancel_link = (@registration&.user == current_user)
 
-      return cannot_cancel_paid if @reg&.paid?
+      return cannot_cancel_paid if @registration&.paid?
 
-      @reg&.destroy ? successfully_cancelled : unable_to_cancel
+      @registration&.destroy ? successfully_cancelled : unable_to_cancel
     end
 
     def override_cost
@@ -137,7 +137,7 @@ class User
     end
 
     def allowed_to_cancel?
-      (@reg&.user == current_user) ||
+      (@registration&.user == current_user) ||
         current_user&.permitted?(:course, :seminar, :event)
     end
 
@@ -145,7 +145,7 @@ class User
       flash[:success] = 'Successfully cancelled registration!'
       return unless @cancel_link
 
-      RegistrationMailer.cancelled(@reg).deliver
+      RegistrationMailer.cancelled(@registration).deliver
       slack_notification
     end
 
