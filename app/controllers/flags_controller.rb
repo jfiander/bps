@@ -39,8 +39,21 @@ class FlagsController < ApplicationController
   end
 
   def signals
+    @letters = %w[
+      alpha bravo charlie delta echo foxtrot golf hotel india juliet kilo lima mike november oscar
+      papa quebec romeo sierra tango uniform victor whiskey xray yankee zulu
+    ].map { |name| Signal.new(name, name[0], :letters) }
+
+    @numerals = [
+      [:zero, 0], [:one, 1], [:two, 2], [:three, 3], [:four, 4],
+      [:five, 5], [:six, 6], [:seven, 7], [:eight, 8], [:nine, 9]
+    ].map { |name, short| Signal.new(name, short, :numbers) }
+
+    @codes = %i[repeat_1 repeat_2 repeat_3 code].map { |name| Signal.new(name, nil, :codes) }
+
     render(:signals, layout: 'application')
   end
+  Signal = Struct.new(:name, :short, :dir)
 
 private
 

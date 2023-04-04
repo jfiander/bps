@@ -1,0 +1,7 @@
+.signal
+  = image_tag @bucket.link("signals/PNG/#{signal.dir}/#{signal.name}.png"), width: 150, alt: signal.name
+  .bold = signal.name.to_s.titleize
+  - if signal.short
+    = render('signal_links', name: signal.name, short: signal.short, dir: signal.dir)
+  - else
+    = render('signal_links', name: signal.name, dir: signal.dir)

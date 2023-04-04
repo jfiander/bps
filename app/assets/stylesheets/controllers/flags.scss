@@ -57,3 +57,14 @@ div.flags.table {
 
   &.center { align-items: center; }
 }
+
+div.signals-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: end;
+  gap: 2em;
+  margin: 0 2em;
+
+  div.signal div.table-cell { text-align: center; }
+}
