@@ -6,11 +6,7 @@
         .table-cell ID
         .table-cell Certificate
         .table-cell Name
-      - import_proto.created.each do |user|
-        .table-row
-          .table-cell = user.id
-          .table-cell = user.certificate
-          .table-cell = user.name
+      = render(partial: 'user/import_results/user', collection: import_proto.created, as: :user)
 
   - if import_proto.updated.any?
     h3 Updated
@@ -20,22 +16,7 @@
         .table-cell Certificate
         .table-cell Name
         .table-cell Changes
-      - import_proto.updated.each do |user_update|
-        .table-row
-          .table-cell = user_update.user.id
-          .table-cell = user_update.user.certificate
-          .table-cell = user_update.user.name
-          .table-cell.no-pad
-            .table.striped
-              .table-row.bold
-                .table-cell Field
-                .table-cell.red From
-                .table-cell.green To
-              - user_update.changes.each do |change|
-                .table-row
-                  .table-cell = change.field
-                  .table-cell.red = change.from
-                  .table-cell.green = change.to
+      = render(partial: 'user/import_results/updated', collection: import_proto.updated, as: :user_update)
 
   - if import_proto.completions.any?
     h3 Completions
@@ -45,20 +26,7 @@
         .table-cell Certificate
         .table-cell Name
         .table-cell Completions
-      - import_proto.completions.each do |user_completion|
-        .table-row
-          .table-cell = user_completion.user.id
-          .table-cell = user_completion.user.certificate
-          .table-cell = user_completion.user.name
-          .table-cell.no-pad
-            .table.striped
-              .table-row.bold
-                .table-cell Key
-                .table-cell Date
-              - user_completion.completions.each do |completion|
-                .table-row
-                  .table-cell = completion.key
-                  .table-cell = Time.at(completion.date.seconds).strftime(TimeHelper::FULL_DATE)
+      = render(partial: 'user/import_results/completion', collection: import_proto.completions, as: :user_completion)
 
   - if import_proto.families.any?
     h3 Families
@@ -68,22 +36,7 @@
         .table-cell Certificate
         .table-cell Name
         .table-cell Family
-      - import_proto.families.each do |user_family|
-        .table-row
-          .table-cell = user_family.user.id
-          .table-cell = user_family.user.certificate
-          .table-cell = user_family.user.name
-          .table-cell.no-pad
-            .table.striped
-              .table-row.bold
-                .table-cell ID
-                .table-cell Certificate
-                .table-cell Name
-              - user_family.family.each do |f|
-                .table-row
-                  .table-cell = f.id
-                  .table-cell = f.certificate
-                  .table-cell = f.name
+      = render(partial: 'user/import_results/family', collection: import_proto.families, as: :user_family)
 
   - import_proto.not_in_import.any?
     - if import_proto.locked
@@ -96,11 +49,31 @@
           .table-cell ID
           .table-cell Certificate
           .table-cell Name
-        - import_proto.not_in_import.each do |user|
-          .table-row
-            .table-cell = user.id
-            .table-cell = user.certificate
-            .table-cell = user.name
+        = render(partial: 'user/import_results/user', collection: import_proto.not_in_import, as: :user)
+
+  - if import_proto.jobcodes&.created&.any?
+    h3 New Jobcodes
+    .table.striped
+      .table-row.bold
+        .table-cell ID
+        .table-cell Certificate
+        .table-cell Name
+        .table-cell Code
+        .table-cell Year
+        .table-cell Description
+      = render(partial: 'user/import_results/jobcode', collection: import_proto.jobcodes.created, as: :jobcode)
+
+  - if import_proto.jobcodes&.expired&.any?
+    h3 Expired Jobcodes
+    .table.striped
+      .table-row.bold
+        .table-cell ID
+        .table-cell Certificate
+        .table-cell Name
+        .table-cell Code
+        .table-cell Year
+        .table-cell Description
+      = render(partial: 'user/import_results/jobcode', collection: import_proto.jobcodes.expired, as: :jobcode)
 
 - unless import_proto.created.empty? || User.invitable_from(import_proto.created).empty?
   = render('user/invite_imported_form', users: import_proto.created)

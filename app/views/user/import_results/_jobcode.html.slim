@@ -1,0 +1,10 @@
+.table-row
+  .table-cell = jobcode.user.id
+  .table-cell = jobcode.user.certificate
+  .table-cell = jobcode.user.name
+  .table-cell = jobcode.code
+  .table-cell = jobcode.year
+  .table-cell
+    - if jobcode.acting
+      span.acting Acting
+    = jobcode.description

@@ -1,0 +1,15 @@
+.table-row
+  .table-cell = user_family.user.id
+  .table-cell = user_family.user.certificate
+  .table-cell = user_family.user.name
+  .table-cell.no-pad
+    .table.striped
+      .table-row.bold
+        .table-cell ID
+        .table-cell Certificate
+        .table-cell Name
+      - user_family.family.each do |f|
+        .table-row
+          .table-cell = f.id
+          .table-cell = f.certificate
+          .table-cell = f.name

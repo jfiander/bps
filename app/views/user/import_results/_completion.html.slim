@@ -1,0 +1,13 @@
+.table-row
+  .table-cell = user_completion.user.id
+  .table-cell = user_completion.user.certificate
+  .table-cell = user_completion.user.name
+  .table-cell.no-pad
+    .table.striped
+      .table-row.bold
+        .table-cell Key
+        .table-cell Date
+      - user_completion.completions.each do |completion|
+        .table-row
+          .table-cell = completion.key
+          .table-cell = Time.at(completion.date.seconds).strftime(TimeHelper::FULL_DATE)
