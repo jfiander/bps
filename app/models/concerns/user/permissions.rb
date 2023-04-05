@@ -56,8 +56,9 @@ class User
     end
 
     def exact_role?(*names)
+      names = names.flatten.map(&:to_sym)
       @exact_role ||= {}
-      @exact_role[names] ||= roles.find { |r| r.name.to_sym.in?(names) }
+      @exact_role[names] ||= roles.find { |r| r.name.to_sym.in?(names) }.present?
     end
 
     def clear_cached_roles!
