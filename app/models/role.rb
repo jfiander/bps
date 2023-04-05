@@ -29,7 +29,10 @@ class Role < ApplicationRecord
     clean_searches = searches.flatten.compact_blank
     return [] if clean_searches.blank?
 
-    connection.execute(recursive_search_query(*clean_searches, direction: direction)).to_a.flatten
+    Rails.logger.info '   ↻ Executing recursive role query'
+    Rails.logger.silence(Logger::WARN) do
+      connection.execute(recursive_search_query(*clean_searches, direction: direction)).to_a.flatten
+    end
   end
 
   # Recursive Common Table Expression
@@ -38,15 +41,9 @@ class Role < ApplicationRecord
     join_predicate = direction == :up ? 'r.id = cte.parent_id' : 'r.parent_id = cte.id'
     <<~SQL
       WITH RECURSIVE cte (id, name, parent_id) AS (
-        SELECT id, name, parent_id
-        FROM roles
-        WHERE name IN (#{search})
-
+        SELECT id, name, parent_id FROM roles WHERE name IN (#{search})
         UNION ALL
-
-        SELECT r.id, r.name, r.parent_id
-        FROM roles r
-        INNER JOIN cte ON #{join_predicate}
+        SELECT r.id, r.name, r.parent_id FROM roles r INNER JOIN cte ON #{join_predicate}
       )
       SELECT DISTINCT(name) FROM cte;
     SQL

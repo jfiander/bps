@@ -15,16 +15,18 @@ class User
     def permit!(role)
       return false if locked?
 
-      UserRole.find_or_create_by(
-        user: self,
-        role: Role.find_by(name: role.to_s)
-      )
+      return true if UserRole.exists?(user: self, role: Role.find_by(name: role.to_s))
+
+      user_role = UserRole.create(user: self, role: Role.find_by(name: role.to_s))
+      clear_cached_roles!
+      user_role
     end
 
     def unpermit!(role)
       user_roles = UserRole.where(user: self)
       user_roles = user_roles.where(role: Role.find_by(name: role.to_s)) unless role == :all
       user_roles.destroy_all.present?
+      clear_cached_roles!
     end
 
     def show_admin_menu?
@@ -32,7 +34,7 @@ class User
     end
 
     def granted_roles
-      @granted_roles ||= roles.pluck(:name).map(&:to_sym).uniq
+      @granted_roles ||= roles.map { |r| r.name.to_sym }.uniq
     end
 
     def permitted_roles
@@ -48,12 +50,19 @@ class User
     end
 
     def role?(*names)
-      check_roles = Role.recursive_lookup(*names).map(&:to_sym)
-      permitted_roles.any? { |u| u.in?(check_roles) }
+      @roles ||= {}
+      @roles[names] ||= Role.recursive_lookup(*names).map(&:to_sym)
+      permitted_roles.any? { |u| u.in?(@roles[names]) }
     end
 
     def exact_role?(*names)
-      user_roles.joins(:role).exists?(roles: { name: names })
+      @exact_role ||= {}
+      @exact_role[names] ||= roles.find { |r| r.name.to_sym.in?(names) }
+    end
+
+    def clear_cached_roles!
+      remove_instance_variable(:@roles) if defined?(@roles)
+      remove_instance_variable(:@exact_role) if defined?(@exact_role)
     end
 
   private
