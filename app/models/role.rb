@@ -29,7 +29,7 @@ class Role < ApplicationRecord
     clean_searches = searches.flatten.compact_blank
     return [] if clean_searches.blank?
 
-    Rails.logger.info '   ↻ Executing recursive role query'
+    Rails.logger.debug '   ↻ Executing recursive role query'
     Rails.logger.silence(Logger::WARN) do
       connection.execute(recursive_search_query(*clean_searches, direction: direction)).to_a.flatten
     end
