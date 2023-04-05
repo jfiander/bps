@@ -193,7 +193,7 @@ private
   end
 
   def bridge_office_name
-    BridgeOffice.where(user_id: id).pick(:office)
+    bridge_office&.office
   end
 
   def update_last_mm
