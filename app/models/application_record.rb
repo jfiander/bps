@@ -25,18 +25,6 @@ class ApplicationRecord < ActiveRecord::Base
     defaults
   end
 
-  def self.order_sql_path
-    Rails.root.join("app/models/concerns/#{name.underscore}/order.sql")
-  end
-
-  def self.order_sql
-    File.read(order_sql_path) if File.exist?(order_sql_path)
-  end
-
-  def self.ordered
-    order(Arel.sql(order_sql)) if File.exist?(order_sql_path)
-  end
-
   def versions_path
     Rails.application.routes.url_helpers.admin_show_versions_path(model: self.class.name, id: id)
   end
@@ -45,11 +33,5 @@ private
 
   def sanitize(text)
     ActionController::Base.helpers.sanitize text
-  end
-
-  def email_or_user_present
-    return if user.present? || email.present?
-
-    errors.add(:base, 'Must have a user or email')
   end
 end

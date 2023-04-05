@@ -4,6 +4,7 @@ class StandingCommitteeOffice < ApplicationRecord
   COMMITTEES = %w[executive auditing nominating rules].freeze
 
   include Excom
+  extend Ordered
 
   belongs_to :user
 
@@ -15,7 +16,6 @@ class StandingCommitteeOffice < ApplicationRecord
   validate :only_one_current_chair, :no_duplicate_assignments
   validates :committee_name, presence: COMMITTEES
 
-  default_scope { ordered }
   scope :current, -> { where('term_expires_at IS NULL OR term_expires_at > ?', Time.zone.now) }
   scope :chair_first, -> { order(chair: :desc) }
 

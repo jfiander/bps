@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class EventType < ApplicationRecord
+  extend Ordered
+
   has_many :events
   has_many :event_type_committees
 

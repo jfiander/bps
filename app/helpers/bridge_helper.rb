@@ -16,7 +16,7 @@ module BridgeHelper
     )
     @all_bridge_officers = BridgeOffice.ordered
     @all_committees = Committee.sorted
-    @standing_coms = StandingCommitteeOffice.current.chair_first
+    @standing_coms = StandingCommitteeOffice.current.ordered.chair_first
                                             .group_by(&:committee_name)
   end
 

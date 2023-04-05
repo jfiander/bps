@@ -19,4 +19,10 @@ RSpec.describe GenericPayment do
   it 'generates the correct link' do
     expect(payment.link).to match(%r{/pay/\w+\z})
   end
+
+  it 'is invalid without an email or user' do
+    reg = build(:generic_payment, amount: 7)
+    expect(reg.valid?).to be(false)
+    expect(reg.errors.messages.to_h).to eql(base: ['Must have a user or email'])
+  end
 end

@@ -2,6 +2,7 @@
 
 class BridgeOffice < ApplicationRecord
   include Excom
+  extend Ordered
 
   EMAILS = {
     commander: 'cdr', executive: 'xo', administrative: 'ao',
