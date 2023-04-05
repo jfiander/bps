@@ -49,7 +49,6 @@ private
 
   def import_success(dryrun: false)
     import_notification(:success, by: by, dryrun: dryrun)
-    log_import(by: by) unless dryrun
     @success = true
   end
 
@@ -129,14 +128,5 @@ private
 
     # Exclude empty jobcodes from JSON
     JSON.parse(json).tap { |h| h.delete('jobcodes') }.to_json
-  end
-
-  def log_import(by: nil)
-    log = Rails.root.join('log/user_import.log').open('a')
-
-    log.write("[#{Time.zone.now}] User import by: #{by}\n")
-    log.write(@import_proto.to_json)
-    log.write("\n\n")
-    log.close
   end
 end
