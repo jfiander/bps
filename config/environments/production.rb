@@ -3,6 +3,15 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.lograge.enabled = true
+  config.log_level = :info
+
+  # Highlight code that triggered database queries in logs.
+  config.active_record.verbose_query_logs = false
+
+  # Annotate rendered view with file names.
+  config.action_view.annotate_rendered_view_with_filenames = false
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -88,12 +97,6 @@ Rails.application.configure do
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
-
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
-    logger = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger = ActiveSupport::TaggedLogging.new(logger)
-  end
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

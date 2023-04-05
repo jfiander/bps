@@ -325,5 +325,5 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  Devise::Models::Authenticatable::BLACKLIST_FOR_SERIALIZATION.concat %i[pushover_token]
+  Devise::Models::Authenticatable::UNSAFE_ATTRIBUTES_FOR_SERIALIZATION.concat %i[pushover_token]
 end
