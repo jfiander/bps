@@ -1,0 +1,11 @@
+- if jobcodes.any?
+  h3 #{title} Jobcodes
+  .table.striped
+    .table-row.bold
+      .table-cell ID
+      .table-cell Certificate
+      .table-cell Name
+      .table-cell Code
+      .table-cell Year
+      .table-cell Description
+    = render(partial: 'user/import_results/jobcode', collection: jobcodes, as: :jobcode)

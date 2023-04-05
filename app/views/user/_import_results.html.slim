@@ -51,29 +51,9 @@
           .table-cell Name
         = render(partial: 'user/import_results/user', collection: import_proto.not_in_import, as: :user)
 
-  - if import_proto.jobcodes&.created&.any?
-    h3 New Jobcodes
-    .table.striped
-      .table-row.bold
-        .table-cell ID
-        .table-cell Certificate
-        .table-cell Name
-        .table-cell Code
-        .table-cell Year
-        .table-cell Description
-      = render(partial: 'user/import_results/jobcode', collection: import_proto.jobcodes.created, as: :jobcode)
-
-  - if import_proto.jobcodes&.expired&.any?
-    h3 Expired Jobcodes
-    .table.striped
-      .table-row.bold
-        .table-cell ID
-        .table-cell Certificate
-        .table-cell Name
-        .table-cell Code
-        .table-cell Year
-        .table-cell Description
-      = render(partial: 'user/import_results/jobcode', collection: import_proto.jobcodes.expired, as: :jobcode)
+  - if import_proto.jobcodes
+    = render('user/import_results/jobcodes', jobcodes: import_proto.jobcodes.created, title: 'New')
+    = render('user/import_results/jobcodes', jobcodes: import_proto.jobcodes.expired, title: 'Expired')
 
 - unless import_proto.created.empty? || User.invitable_from(import_proto.created).empty?
-  = render('user/invite_imported_form', users: import_proto.created)
+  = render('user/import_results/invite_form', users: import_proto.created)
