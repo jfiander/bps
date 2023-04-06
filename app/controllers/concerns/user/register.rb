@@ -120,7 +120,7 @@ class User
         RegistrationMailer.confirm(@registration).deliver
       end
 
-      slack_notification
+      registered_slack_notification
     end
 
     def unable_to_register
@@ -146,7 +146,7 @@ class User
       return unless @cancel_link
 
       RegistrationMailer.cancelled(@registration).deliver
-      slack_notification
+      cancelled_slack_notification
     end
 
     def unable_to_cancel
@@ -159,7 +159,15 @@ class User
       render status: :unprocessable_entity
     end
 
-    def slack_notification
+    def registered_slack_notification
+      SlackNotification.new(
+        channel: :notifications, type: :warning, title: 'New Registration',
+        fallback: 'Someone has registered for an event.',
+        fields: slack_fields
+      ).notify!
+    end
+
+    def cancelled_slack_notification
       SlackNotification.new(
         channel: :notifications, type: :warning, title: 'Registration Cancelled',
         fallback: 'Someone has cancelled their registration for an event.',
@@ -171,8 +179,8 @@ class User
       {
         'Event' => "<#{show_event_url(@registration.event)}|#{@registration.event.display_title}>",
         'Event date' => @registration.event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT),
-        'Registrant name' => @registration&.user&.full_name,
-        'Registrant email' => @registration&.user&.email || @registration&.email
+        'Registrant name' => @registration.user.full_name,
+        'Registrant email' => @registration.user.email
       }.compact
     end
   end

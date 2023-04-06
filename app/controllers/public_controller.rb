@@ -76,6 +76,7 @@ private
       render status: :unprocessable_entity
     elsif @registration.save
       flash[:success] = 'You have successfully registered!'
+      send_registered_emails
     else
       flash[:alert] = 'We are unable to register you at this time.'
       render status: :unprocessable_entity
@@ -94,16 +95,51 @@ private
 
   def registration_existed
     flash[:alert] = 'You are already registered.'
+    send_registered_emails
     redirect_to send("show_#{register_event_type}_path", id: @event_id)
   end
 
   def registration_saved
     flash[:success] = 'You have successfully registered!'
+    send_registered_emails
     if @registration.payable?
       redirect_to ask_to_pay_path(token: @registration.payment.token)
     else
       redirect_to send("show_#{register_event_type}_path", id: @event_id)
     end
+  end
+
+  def send_registered_emails
+    RegistrationMailer.registered(@registration).deliver
+
+    # If the event does not require advance payment, this will notify on create.
+    #
+    # Otherwise, a different notification will be sent, and the regular one will
+    # be triggered by BraintreeController once the registration is paid for.
+    if @registration.event.advance_payment && !@registration.reload.paid?
+      RegistrationMailer.advance_payment(@registration).deliver
+    else
+      RegistrationMailer.confirm(@registration).deliver
+    end
+
+    slack_notification
+  end
+
+  def slack_notification
+    SlackNotification.new(
+      channel: :notifications, type: :warning, title: 'New Registration',
+      fallback: 'Someone has registered for an event.',
+      fields: slack_fields
+    ).notify!
+  end
+
+  def slack_fields
+    {
+      'Event' => "<#{show_event_url(@registration.event)}|#{@registration.event.display_title}>",
+      'Event date' => @registration.event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT),
+      'Registrant name' => @registration&.name,
+      'Registrant email' => @registration.email
+    }.compact
   end
 
   def registration_problem
