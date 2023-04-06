@@ -48,6 +48,7 @@ Metrics/BlockLength:
   Exclude:
     - lib/tasks/*
     - lib/capistrano/tasks/*
+    - Guardfile
 Metrics/MethodLength:
   Enabled: true
   Max: 15
@@ -100,6 +101,8 @@ Style/ClassCheck:
 Style/GuardClause:
   Enabled: true
 Style/HashSyntax:
+  Enabled: false
+Style/CommentAnnotation:
   Enabled: false
 
 Security/Eval:

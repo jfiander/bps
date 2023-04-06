@@ -78,7 +78,7 @@ needing to redeploy the entire application.
 
 These tasks require some `sudo` permissions.
 
-```
+```sh
 # /etc/sudoers.d/deploy
 
 deploy ALL = NOPASSWD: /usr/sbin/service sidekiq start, /usr/sbin/service sidekiq stop, /usr/sbin/service sidekiq restart, /usr/bin/systemctl daemon-reload
@@ -106,6 +106,12 @@ The spec suite will fail if under 100% coverage.
 Rubocop formatting validation is available:
 
 `bundle exec rubocop`
+
+### Guard
+
+Testing in development can be monitored automatically by Guard. Run it in another terminal with:
+
+`bundle exec guard`
 
 ### Automatic Builds
 
