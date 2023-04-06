@@ -130,9 +130,9 @@ private
       channel: :notifications, type: :info, title: "Permission #{mode.to_s.titleize}",
       fallback: "A permission was #{mode}.",
       fields: [
-        { title: 'User', value: user_role.user.full_name,  short: true },
+        { title: 'User', value: user_role.user.full_name(html: false), short: true },
         { title: 'Permission', value: user_role.role.name, short: true },
-        { title: 'By', value: by.full_name, short: true }
+        { title: 'By', value: by.full_name(html: false), short: true }
       ]
     ).notify!
   end
