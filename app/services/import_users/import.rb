@@ -33,16 +33,7 @@ module ImportUsers
 
         proto_completions
         proto_families
-
-        lock_users = ImportUsers::LockUsers.new(@certificates)
-        removed = @lock ? lock_users.call : lock_users.mark_not_imported
-
-        removed.each do |user|
-          u = BPS::Update::User.new(
-            id: user.id, certificate: user.certificate, name: user.simple_name
-          )
-          @proto.not_in_import << u
-        end
+        lock_or_mark_users
       end
     end
 
@@ -91,6 +82,19 @@ module ImportUsers
         }
       end
       families_array.each { |f| @proto.families << BPS::Update::UserFamily.new(f) }
+    end
+
+    def lock_or_mark_users
+      lock_users = ImportUsers::LockUsers.new(@certificates)
+      removed = @lock ? lock_users.call : lock_users.mark_not_imported
+      @proto.locked = @lock
+
+      removed.each do |user|
+        u = BPS::Update::User.new(
+          id: user.id, certificate: user.certificate, name: user.simple_name
+        )
+        @proto.not_in_import << u
+      end
     end
 
     def proto_updated(user, changes)

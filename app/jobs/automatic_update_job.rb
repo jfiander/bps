@@ -6,9 +6,10 @@ class AutomaticUpdateJob < ApplicationJob
 
   attr_reader :import_proto, :log_timestamp, :import_log_id, :error
 
-  def perform(user_id, dryrun:, via: 'API')
+  def perform(user_id, dryrun:, via: 'API', lock: false)
     @user_id = user_id
     @via = via
+    @lock = lock
     dryrun ? automatic_update_dryrun : automatic_update
     self
   end
@@ -29,7 +30,7 @@ private
   end
 
   def automatic_update(dryrun: false)
-    @import_proto = updater.update
+    @import_proto = updater.update(lock: @lock)
     @log_timestamp = updater.log_timestamp
     @import_log_id = updater.import_log_id
     import_success(dryrun: dryrun)

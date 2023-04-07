@@ -66,7 +66,12 @@ class User
     end
 
     def run_automatic_import(dryrun:)
-      @result = AutomaticUpdateJob.new.perform(current_user.id, dryrun: dryrun, via: 'UI')
+      @result = AutomaticUpdateJob.new.perform(
+        current_user.id,
+        dryrun: dryrun,
+        via: 'UI',
+        lock: clean_params[:lock_missing] == 'true'
+      )
       @result.success? ? import_success : import_failure
     end
 
