@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FloatPlan < ApplicationRecord
-  include Concerns::FloatPlan::Formatting
+  include FloatPlan::Formatting
 
   belongs_to :user, optional: true
   has_many :float_plan_onboards
