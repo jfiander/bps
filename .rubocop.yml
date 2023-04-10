@@ -101,7 +101,9 @@ Style/ClassCheck:
 Style/GuardClause:
   Enabled: true
 Style/HashSyntax:
-  Enabled: false
+  Enabled: true
+  EnforcedStyle: ruby19
+  EnforcedShorthandSyntax: either
 Style/CommentAnnotation:
   Enabled: false
 

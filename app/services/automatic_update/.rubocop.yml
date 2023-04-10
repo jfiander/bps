@@ -8,3 +8,7 @@ Layout/HashAlignment:
 
 Style/Documentation:
   Enabled: false
+Style/HashSyntax:
+  Enabled: true
+  EnforcedStyle: ruby19
+  EnforcedShorthandSyntax: either
