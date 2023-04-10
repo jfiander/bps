@@ -26,7 +26,7 @@ gem 'uglifier',            '~> 4.1'
 gem 'figaro',              '~> 1.2.0'
 
 # Model Behavior
-gem 'paperclip',           '~> 6.1.0'
+gem 'kt-paperclip',        '~> 7.1'
 gem 'paper_trail',         '~> 11.0'
 gem 'paranoia',            '~> 2.4.1'
 
@@ -36,11 +36,10 @@ gem 'aws-sdk-rails',       '~> 3.6'
 gem 'aws-sdk-s3',          '~> 1.111'
 gem 'aws-sdk-ses',         '~> 1.45'
 gem 'aws-sdk-sns',         '~> 1.50'
-gem 'bps-google-api',      '~> 0.6.0'
+gem 'bps-google-api',      '~> 0.6.1'
 gem 'braintree',           '~> 3.3'
 gem 'geocoder',            '~> 1.6.1'
 gem 'rushover',            '~> 0.3.0'
-gem 'sendgrid-ruby',       '~> 5.2'
 gem 'slack-notifier',      '~> 2.3'
 
 gem 'slack-notification',  '~> 0.1.11'
@@ -52,7 +51,7 @@ gem 'encrypted-keystore',  '~> 0.0.6'
 gem 'exp_retry',           '~> 0.0.13'
 gem 'google-protobuf',     '~> 3.21'
 gem 'jwt',                 '~> 2.2.3'
-gem 'lograge'
+gem 'lograge',             '~> 0.12'
 gem 'prawn',               '~> 2.2.2'
 gem 'prawn-svg',           '~> 0.28.0'
 gem 'ruby-progressbar',    '~> 1.10'
@@ -80,12 +79,7 @@ gem 'awesome_print',       '~> 1.8.0'
 gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
-gem 'fileutils',           '~> 1.4.1'
-gem 'loofah',              '~> 2.19.1'
-gem 'mimemagic',           '>= 0.3.6'
 gem 'nokogiri',            '>= 1.13.2'
-gem 'rubyzip',             '>= 1.3.0'
-gem 'sinatra',             '~> 2.2.3'
 
 group :development do
   gem 'capistrano',            '~> 3.16.0'
