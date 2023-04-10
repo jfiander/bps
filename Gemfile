@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.7.4'
+ruby '3.1.3'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -52,7 +52,7 @@ gem 'exp_retry',           '~> 0.0.13'
 gem 'google-protobuf',     '~> 3.21'
 gem 'jwt',                 '~> 2.2.3'
 gem 'lograge',             '~> 0.12'
-gem 'prawn',               '~> 2.2.2'
+gem 'prawn',               '~> 2.2'
 gem 'prawn-svg',           '~> 0.28.0'
 gem 'ruby-progressbar',    '~> 1.10'
 gem 'sanitize_email',      '~> 1.2'
@@ -114,5 +114,5 @@ group :development, :test do
 
   # Debugging
   # gem 'bullet',                   '~> 5.7.0'
-  gem 'listen',                   '~> 3.1.5'
+  gem 'listen',                   '~> 3.1'
 end
