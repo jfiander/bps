@@ -46,7 +46,7 @@ private
       when String
         h[s['code']] = s['name']
       when Hash
-        h.merge(multi_seminar_hash(s['code'], s['name']))
+        h.merge!(multi_seminar_hash(s['code'], s['name']))
       end
     end
   end

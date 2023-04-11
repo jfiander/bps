@@ -33,7 +33,7 @@
   code:
     any:
       - NAV
-      - OWTNAV
+      - OTWNAV
 - name: Advanced Navigation
   code:
     any:
