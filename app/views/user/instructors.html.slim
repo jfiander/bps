@@ -15,6 +15,7 @@ hr
 #instructors.table.striped
   .table-row.header
     .table-cell Name
+    .table-cell Certificate
     .table-cell title="Instructor certification expiration" ID Exp.
     - UserHelper::INSTRUCTOR_COURSES.each do |key, label|
       = instructor_header(key, @highlight, label: label)
@@ -22,6 +23,7 @@ hr
     - completions = user.completions.keys
     .table-row
       .table-cell = mail_to user.email, user.simple_name
+      .table-cell = user.certificate
       - id_expr = user.id_expr&.strftime(TimeHelper::FULL_DATE)
       - if user.id_expr.present? && user.id_expr > Time.now
         .table-cell = id_expr
