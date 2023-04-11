@@ -40,7 +40,7 @@ private
 
   def seminar_list
     @seminar_list = BPS::CodeList.new.seminars.each_with_object({}) do |s, h|
-      s = s.except('green', 'yellow')
+      s = s.except('green', 'yellow', 'purple')
 
       case s['code']
       when String

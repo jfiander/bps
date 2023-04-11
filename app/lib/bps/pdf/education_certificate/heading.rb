@@ -35,9 +35,8 @@ module BPS
         def title_slogan
           bounding_box([150, 685], width: 390, height: 20) do
             text(
-              'Come for the Boating Education... Stay for the friends.℠',
-              size: 12,
-              style: :italic
+              'For Boaters, By Boaters.<sup>®</sup>',
+              size: 12, inline_format: true, style: :italic
             )
           end
         end

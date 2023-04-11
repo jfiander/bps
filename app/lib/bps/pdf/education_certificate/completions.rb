@@ -29,7 +29,7 @@ module BPS
           color = 'CCFFFF'
           completion_row(2) do
             s_or_bh_completion_box(course_completions, color)
-            completion_box(2, 'Piloting', course_completions['P'], color: color)
+            p_or_mn_completion_box(course_completions, color)
             completion_box(3, 'Advanced Piloting', course_completions['AP'], color: color)
             completion_box(4, 'Junior Navigation', course_completions['JN'], color: color)
             completion_box(5, 'Navigation', course_completions['N'], color: color)
@@ -55,6 +55,14 @@ module BPS
             completion_box(1, 'Boat Handling', course_completions['BH'], color: color)
           else
             completion_box(1, 'Seamanship', course_completions['S'], color: color)
+          end
+        end
+
+        def p_or_mn_completion_box(course_completions, color)
+          if course_completions['MN']
+            completion_box(2, 'Marine Navigation', course_completions['MN'], color: color)
+          else
+            completion_box(2, 'Piloting', course_completions['P'], color: color)
           end
         end
 

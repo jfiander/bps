@@ -25,7 +25,7 @@ module BPS
     private
 
       def completion_row(row, &block)
-        y = 370 - (ROW_HEIGHT * (row - 1))
+        y = 390 - (ROW_HEIGHT * (row - 1))
         bounding_box([0, y], width: 510, height: ROW_HEIGHT, &block)
       end
 

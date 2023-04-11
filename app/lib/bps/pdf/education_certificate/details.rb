@@ -34,7 +34,7 @@ module BPS
 
         def signature
           decrypt_signature
-          bounding_box([200, 460], width: 200, height: 50) do
+          bounding_box([185, 460], width: 215, height: 50) do
             # seo = BridgeOffice.find_by(office: :educational).user
             image 'tmp/run/signature.png', width: 150, position: :center
           end

@@ -3,6 +3,8 @@
 module BPS
   module PDF
     class EducationCertificate
+      # Dynamically handle seminar completions, certification statuses, and supplementary courses.
+      #
       module Seminars
         def seminars(user, **_)
           @user = user
@@ -40,6 +42,7 @@ module BPS
         def seminar_color(seminar)
           return 'FFFFCC' if seminar['yellow']
           return 'CCFFCC' if seminar['green']
+          return 'CCCCFF' if seminar['purple']
 
           'FFCCCC'
         end

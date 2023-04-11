@@ -1,19 +1,20 @@
+- name: Radar
+  code: RA
+  purple: true
 - name: Operations Training
   code: OT
   green: true
 - name: Leadership Development
-  code: LDP
-  green: true
-- name: Leadership Development Modules
   code:
+    any:
+      - LDP
+      - LDAO
+      - LDXO
+      - LDCDR
     all:
       - LD101
       - LD102
       - LD103
-    any:
-      - LDAO
-      - LDXO
-      - LDCDR
   green: true
 - name: Certified Instructor Expiration
   code: ID_EXPR
