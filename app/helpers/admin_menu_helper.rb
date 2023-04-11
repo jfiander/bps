@@ -2,12 +2,12 @@
 
 module AdminMenuHelper
   def admin_menu
-    @admin_menu ||= admin_menus.map do |menu, permit|
+    @admin_menu ||= admin_menus.each_with_object({}) do |(menu, permit), hash|
       next if permit == false
       next unless permit == true || show_link?(*permit)
 
-      { menu => render("application/navigation/admin/#{menu}") }
-    end.compact.reduce({}, :merge)
+      hash[menu] = render("application/navigation/admin/#{menu}")
+    end
   end
 
   def admin_menu_groups
