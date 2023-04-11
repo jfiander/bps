@@ -1,6 +1,51 @@
 # frozen_string_literal: true
 
 module AdminMenuHelper
+  def sidenav_admin_menu
+    return unless current_user&.show_admin_menu? && admin_menu.values.any?
+
+    buttons = []
+    submenus = []
+
+    admin_menu_groups.map do |heading, id|
+      menu_id = "sidenav-#{id}"
+      buttons << show_sidenav_submenu_link(heading, menu_id)
+      submenus << sidenav_admin_submenu(heading, menu_id)
+    end
+
+    sidenav_construct_menu(buttons, submenus)
+  end
+
+  def sidenav_construct_menu(buttons, submenus)
+    content_tag(:h3, 'Admin') +
+      safe_join(submenus) +
+      content_tag(:ul, safe_join(buttons), class: 'simple') +
+      content_tag(:div, nil, class: 'sidenav-spacer')
+  end
+
+  def sidenav_admin_submenu(heading, menu_id)
+    content_tag(:div, class: 'sub-menu', id: menu_id) do
+      close_sidenav_submenu_link(menu_id) +
+        content_tag(:h3, heading) +
+        content_tag(:ul, admin_menu_sidenav(menu_id), class: 'simple') +
+        content_tag(:div, nil, class: 'sidenav-spacer')
+    end
+  end
+
+  def show_sidenav_submenu_link(heading, menu_id)
+    button_class = { 'Admin' => 'admin', 'Current Page' => '' }[heading] || 'members'
+
+    link_to('#', id: "show-#{menu_id}", class: "show-sub-menu #{button_class}") do
+      content_tag(:li, heading)
+    end
+  end
+
+  def close_sidenav_submenu_link(menu_id)
+    link_to('#', id: "hide-#{menu_id}", class: 'red close-sidenav') do
+      safe_join([FA::Icon.p('times-square', style: :duotone), 'Close'])
+    end
+  end
+
   def admin_menu
     @admin_menu ||= admin_menus.each_with_object({}) do |(menu, permit), hash|
       next if permit == false
@@ -11,13 +56,13 @@ module AdminMenuHelper
   end
 
   def admin_menu_groups
-    {
-      'Current Page' => 'sidenav-current',
-      'Files' => 'sidenav-files',
-      'Users' => 'sidenav-users',
-      'Education' => 'sidenav-education',
-      'Admin' => 'sidenav-admin'
-    }
+    @admin_menu_groups ||= {}.tap do |h|
+      h['Current Page'] = 'current' if admin_current?
+      h['Files'] = 'files' if show_link?(:page)
+      h['Users'] = 'users' if show_link?(:users, :float, :roster, :excom)
+      h['Education'] = 'education' if show_link?(:otw, :education)
+      h['Admin'] = 'admin' if show_link?(:admin, strict: true)
+    end
   end
 
   def admin_menu_sidenav(menu_id)
