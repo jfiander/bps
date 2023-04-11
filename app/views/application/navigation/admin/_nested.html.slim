@@ -9,12 +9,12 @@ ul.desktop
       a.menu-header Files
       ul = admin_links[:files]
 
-  - if show_link?(:users, :float, :roster, :education, :excom)
+  - if show_link?(:users, :float, :roster, :excom)
     li.menu onclick=""
       a.menu-header Users
       ul
         = admin_links[:users_top]
-        - if show_link?(:float, :education, :excom)
+        - if show_link?(:float, :excom)
           li.menu onclick=""
             a.menu-header
               = FA::Icon.p('list', style: :duotone, fa: :fw) + 'Review'
