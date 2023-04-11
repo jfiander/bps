@@ -6,9 +6,7 @@ class CourseCompletion < ApplicationRecord
   validates :course_key, presence: true
   validates :date, presence: true
 
-  default_scope { order('date ASC') }
-
-  scope :by_user, -> { group_by(&:user) }
+  scope :by_user, -> { joins(:user).order('users.last_name' => :asc, date: :asc).group_by(&:user) }
   scope :ytd, -> { for_year(Time.zone.today.year) }
   scope :with_users, -> { includes(user: User.position_associations) }
 
