@@ -232,6 +232,18 @@ div.markdown {
     @include blue-button(0.25em);
     padding: 0.25em 0.75em;
   }
+
+  p.flex {
+    width: 75%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2em 3em;
+
+    a { max-width: fit-content; }
+  }
 }
 
 iframe#calendar {
