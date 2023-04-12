@@ -294,6 +294,13 @@
   img.light { display: none; }
   img.dark { display: block; }
 
+  div#instructors-flex {
+    div.table-row > div.certifications > span {
+      background-color: $gray;
+      border-color: $old-glory-blue-desaturated;
+    }
+  }
+
   div.events-unified-table div.event-unified {
     div.title { color: $old-glory-red-desaturated; }
 

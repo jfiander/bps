@@ -241,8 +241,48 @@ div#auto-update-buttons {
 }
 
 div#instructors {
+  margin-bottom: 2em;
+
   div.table-cell {
     line-height: 2em;
+  }
+}
+
+div#instructors-flex {
+  margin-bottom: 2em;
+
+  div.table-row {
+    display: block;
+
+    & > div {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2em;
+      padding: 0.5em;
+
+      &.information {
+        margin: 0;
+        gap: 0.5em 2em;
+
+        & > div.name { flex-grow: 3; }
+        & > div.certificate { flex-grow: 1; }
+        & > div.expiration { flex-grow: 1; }
+      }
+
+      &.certifications {
+        justify-content: center;
+        gap: 1em;
+
+        & > span {
+          max-width: fit-content;
+
+          border: solid thin;
+          border-radius: 0.25em;
+          padding: 0.2em 0.3em;
+        }
+      }
+    }
   }
 }
 

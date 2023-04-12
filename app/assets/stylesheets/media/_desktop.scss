@@ -19,6 +19,15 @@
   }
 }
 
+@media all and (min-width: 1651px) {
+  div#instructors-flex.table.striped { display: none; }
+}
+
+@media all and (max-width: 1650px) {
+  div#instructors.table.striped.desktop { display: none; }
+  div#instructors-flex.table.striped { display: block; }
+}
+
 @media all and (min-width: 1251px) {
   div#navigation {
     max-width: 11.4em;
@@ -141,9 +150,7 @@
 }
 
 @media all and (min-width: 751px) {
-  div#user-ranks-mobile, img.mobile, a.mobile, br.mobile {
-    display: none;
-  }
+  div#user-ranks-mobile, .mobile { display: none; }
 
   div.events-table-mobile {
     display: none;
@@ -191,5 +198,5 @@
 }
 
 @media screen and (min-width: 751px) {
-  div#mobile-header, div.flags.table.mobile { display: none; }
+  div#mobile-header { display: none; }
 }

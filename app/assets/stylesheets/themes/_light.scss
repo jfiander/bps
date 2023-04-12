@@ -323,6 +323,13 @@
   img.light { display: block; }
   img.dark { display: none; }
 
+  div#instructors-flex {
+    div.table-row > div.certifications > span {
+      background-color: $light-gray;
+      border-color: $old-glory-blue;
+    }
+  }
+
   div.red-border { border-color: $old-glory-red; }
 
   div#bilge {

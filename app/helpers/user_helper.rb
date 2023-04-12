@@ -36,6 +36,30 @@ module UserHelper
     content_tag(:div, class: class_list.join(' ')) { check ? INSTRUCTOR_YES : INSTRUCTOR_NO }
   end
 
+  def instructor_check(key, completions = nil, grade: nil, cpr: nil)
+    case key
+    when 'SN'
+      return true if grade == 'SN'
+    when 'CPR/AED'
+      return true if cpr
+    when Array
+      return true if key.any? { |k| completions.include?(k) }
+    else
+      return true if completions.include?(key)
+    end
+  end
+
+  def instructor_highlight(key, highlight)
+    return unless highlight
+
+    case key
+    when Array
+      highlight.in?(key)
+    else
+      highlight == key
+    end
+  end
+
   def role_flags(user)
     generate_role_flags(user.granted_roles, user.implied_roles, admin: user.permitted?(:admin))
   end
@@ -83,26 +107,6 @@ private
   def class_list(key, highlight, header: false)
     list = %w[table-cell center]
     list << 'bold' if header
-    list.tap do |l|
-      case key
-      when Array
-        l << 'highlight' if highlight.in?(key)
-      when highlight
-        l << 'highlight'
-      end
-    end
-  end
-
-  def instructor_check(key, completions = nil, grade: nil, cpr: nil)
-    case key
-    when 'SN'
-      return true if grade == 'SN'
-    when 'CPR/AED'
-      return true if cpr
-    when Array
-      return true if key.any? { |k| completions.include?(k) }
-    else
-      return true if completions.include?(key)
-    end
+    list.tap { |l| l << 'highlight' if instructor_highlight(key, highlight) }
   end
 end

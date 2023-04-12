@@ -12,7 +12,7 @@ h1 Current Instructors
 
 hr
 
-#instructors.table.striped
+#instructors.table.striped.desktop
   .table-row.header
     .table-cell Name
     .table-cell Certificate
@@ -32,5 +32,18 @@ hr
       - UserHelper::INSTRUCTOR_COURSES.each do |key, _|
         = instructor_row(key, @highlight, completions, grade: user.grade, cpr: user.cpr_aed?)
 
-h3 Email Visible Instructors (#{@instructors.count})
-textarea.large = @instructors.map(&:email).compact.uniq.join(', ')
+#instructors-flex.table.striped
+  - @instructors.each do |user|
+    - completions = user.completions.keys
+    .table-row
+      .information
+        .name = mail_to user.email, user.simple_name
+        .certificate = user.certificate
+        .expiration title="Instructor certification expiration" = user.id_expr&.strftime(TimeHelper::FULL_DATE)
+      .certifications.flex
+        - UserHelper::INSTRUCTOR_COURSES.each do |key, label|
+          - if instructor_check(key, completions, grade: user.grade, cpr: user.cpr_aed?)
+            - class_list = [key, ('highlight' if instructor_highlight(key, @highlight))].compact.join(' ')
+            span class=(class_list) = label == 'SN?' ? 'Exam' : label
+
+= link_to("Email Visible Instructors (#{@instructors.count})", "mailto:#{@instructors.map(&:email).compact.uniq.join(',')}", class: 'big')
