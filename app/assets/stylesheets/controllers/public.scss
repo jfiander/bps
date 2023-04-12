@@ -235,7 +235,7 @@ div.markdown {
 
   p.flex {
     width: 75%;
-    margin: 0 auto;
+    margin: 3em auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -243,6 +243,11 @@ div.markdown {
     gap: 2em 3em;
 
     a { max-width: fit-content; }
+
+    span {
+      display: inline-block;
+      max-width: fit-content;
+    }
   }
 }
 
