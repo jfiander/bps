@@ -14,7 +14,7 @@ class User
     def load_instructor_data
       @highlight = clean_params[:key].to_s.upcase
       @only = clean_params[:only] == '1'
-      @instructors = User.unlocked.includes(:course_completions).where(
+      @instructors = User.unlocked.alphabetized.includes(:course_completions).where(
         'id_expr > ? OR (cpr_aed_expires_at IS NOT NULL AND cpr_aed_expires_at > ?)',
         Time.zone.now, Time.zone.now
       )

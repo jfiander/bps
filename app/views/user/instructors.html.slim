@@ -4,7 +4,7 @@ h1 Current Instructors
 
 = form_tag do
   div
-    = submit_tag 'Find Instructors', class: 'medium'
+    => submit_tag 'Find Instructors', class: 'medium find-instructors'
     ' for
     = select_tag :key, options_for_select(@keys, @highlight), required: true
 
@@ -24,11 +24,7 @@ hr
     .table-row
       .table-cell = mail_to user.email, user.simple_name
       .table-cell = user.certificate
-      - id_expr = user.id_expr&.strftime(TimeHelper::FULL_DATE)
-      - if user.id_expr.present? && user.id_expr > Time.now
-        .table-cell = id_expr
-      - else
-        .table-cell.red = id_expr || 'Not Certified'
+      .table-cell class=('red' if user.id_expr < Time.zone.today.end_of_year) = user.id_expr.strftime(TimeHelper::FULL_DATE)
       - UserHelper::INSTRUCTOR_COURSES.each do |key, _|
         = instructor_row(key, @highlight, completions, grade: user.grade, cpr: user.cpr_aed?)
 
@@ -39,7 +35,7 @@ hr
       .information
         .name = mail_to user.email, user.simple_name
         .certificate = user.certificate
-        .expiration title="Instructor certification expiration" = user.id_expr&.strftime(TimeHelper::FULL_DATE)
+        .expiration class=('red' if user.id_expr < Time.zone.today.end_of_year) title="Instructor certification expiration" = user.id_expr&.strftime(TimeHelper::FULL_DATE)
       .certifications.flex
         - UserHelper::INSTRUCTOR_COURSES.each do |key, label|
           - if instructor_check(key, completions, grade: user.grade, cpr: user.cpr_aed?)

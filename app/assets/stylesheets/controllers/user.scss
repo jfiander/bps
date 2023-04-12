@@ -282,6 +282,8 @@ div#instructors-flex {
   }
 }
 
+input.find-instructors { max-width: fit-content !important; }
+
 a.email-instructors {
   display: inline-block;
   margin: 2em 0;
