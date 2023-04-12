@@ -241,16 +241,12 @@ div#auto-update-buttons {
 }
 
 div#instructors {
-  margin-bottom: 2em;
-
   div.table-cell {
     line-height: 2em;
   }
 }
 
 div#instructors-flex {
-  margin-bottom: 2em;
-
   div.table-row {
     display: block;
 
@@ -284,6 +280,11 @@ div#instructors-flex {
       }
     }
   }
+}
+
+a.email-instructors {
+  display: inline-block;
+  margin: 2em 0;
 }
 
 img.lamp {

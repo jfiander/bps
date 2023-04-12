@@ -46,4 +46,4 @@ hr
             - class_list = [key, ('highlight' if instructor_highlight(key, @highlight))].compact.join(' ')
             span class=(class_list) = label == 'SN?' ? 'Exam' : label
 
-= link_to("Email Visible Instructors (#{@instructors.count})", "mailto:#{@instructors.map(&:email).compact.uniq.join(',')}", class: 'big')
+= link_to("Email Visible Instructors (#{@instructors.count})", "mailto:#{@instructors.map(&:email).compact.uniq.join(',')}", class: 'big email-instructors')
