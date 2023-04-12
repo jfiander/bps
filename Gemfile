@@ -83,7 +83,7 @@ gem 'differ',              '~> 0.1.2'
 gem 'fileutils',           '~> 1.4.1'
 gem 'loofah',              '~> 2.19.1'
 gem 'mimemagic',           '>= 0.3.6'
-gem 'nokogiri',            '>= 1.13.2'
+gem 'nokogiri',            '>= 1.14.3'
 gem 'rubyzip',             '>= 1.3.0'
 gem 'sinatra',             '~> 2.2.3'
 
