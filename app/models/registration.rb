@@ -4,6 +4,7 @@ class Registration < ApplicationRecord
   payable
   belongs_to :user, optional: true
   belongs_to :event
+  has_many :registration_options
 
   before_validation :convert_email_to_user
 

@@ -17,6 +17,7 @@ class Event < ApplicationRecord
   belongs_to :location, optional: true
   has_many :event_promo_codes
   has_many :promo_codes, through: :event_promo_codes
+  has_many :event_selections
 
   has_many :event_instructors
   has_many :instructors, through: :event_instructors, source: :user

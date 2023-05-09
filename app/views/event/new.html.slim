@@ -218,6 +218,16 @@ h1 = "#{@edit_mode} #{@event_title}"
       .right = f.text_area :important_notes
       br.clear
 
+      .left
+        = f.label :event_selections
+        ul
+          li Enter selectable options for this event.
+          li Start with a unique description.
+          li Below that, indent each available option with two spaces.
+          li.red Each option will require a selection be made when registering.
+      .right = text_area_tag 'event[event_selections]', event_selections_indented(@event)
+      br.clear
+
       - if event_type_param.in? %w[course seminar]
         .left
           = f.label :requirements, 'Student requirements'

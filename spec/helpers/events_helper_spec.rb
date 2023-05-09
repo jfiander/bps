@@ -124,4 +124,13 @@ RSpec.describe EventsHelper do
       )
     end
   end
+
+  describe '#event_selections_indented' do
+    it 'generates the correct indented string' do
+      selection = event.event_selections.create(description: 'An Option')
+      selection.event_options.create([{ name: 'One' }, { name: 'Two' }])
+
+      expect(event_selections_indented(event)).to eq("An Option\n  One\n  Two")
+    end
+  end
 end

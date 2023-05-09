@@ -37,6 +37,7 @@ module Events
 
     def after_save_event(mode: :added)
       update_attachments
+      update_event_selections
       redirect_to(
         send("#{event_type_param}s_path"),
         success: "Successfully #{mode} #{event_type_param}."

@@ -102,10 +102,17 @@ private
   def registration_saved
     flash[:success] = 'You have successfully registered!'
     send_registered_emails
+    save_registration_options if @registration.event.event_selections.any?
     if @registration.payable?
       redirect_to ask_to_pay_path(token: @registration.payment.token)
     else
       redirect_to send("show_#{register_event_type}_path", id: @event_id)
+    end
+  end
+
+  def save_registration_options
+    params.permit(event_selections: {})[:event_selections].each do |_selection, option_id|
+      @registration.registration_options.create!(event_option_id: option_id)
     end
   end
 

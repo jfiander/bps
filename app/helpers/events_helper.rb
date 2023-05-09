@@ -88,4 +88,15 @@ module EventsHelper
       end
     )
   end
+
+  def event_selections_indented(event)
+    [].tap do |combined|
+      event.event_selections.map do |selection|
+        combined << selection.description
+        selection.event_options.each do |option|
+          combined << "  #{option.name}"
+        end
+      end
+    end.join("\n")
+  end
 end

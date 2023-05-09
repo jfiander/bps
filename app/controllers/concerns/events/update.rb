@@ -12,6 +12,27 @@ module Events
       event_type_param.in?(%w[course seminar]) ? education_attachments : event_attachments
     end
 
+    def update_event_selections
+      combined = params.permit(event: :event_selections)[:event][:event_selections]
+      lines = combined.split(/\r?\n/)
+      @selections = []
+
+      lines.each { |line| parse_selection_line(line) }
+
+      # Remove any options and selections no longer included
+      (@selection.event_options - @options).map(&:destroy)
+      (@event.event_selections - @selections).map(&:destroy)
+    end
+
+    def parse_selection_line(line)
+      if line =~ /^[^\s]/
+        @selections << @selection = @event.event_selections.find_or_create_by(description: line)
+        @options = []
+      else
+        @options << @selection.event_options.find_or_create_by(name: line.sub(/^\s\s/, ''))
+      end
+    end
+
     def education_attachments
       update_or_remove do
         magic_update(:includes)

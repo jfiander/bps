@@ -1,4 +1,4 @@
-input.map-link {
+input.map-link, input.long {
   width: 20em;
 }
 
@@ -207,4 +207,16 @@ div.events-table span.fa-layers,
 div.events-unified-table span.fa-layers {
   display: block;
   float: left;
+}
+
+div.event-selection {
+  margin: 1em 0;
+
+  div.event-options {
+    margin-top: 1em;
+
+    div.left, div.right { margin-bottom: 0.5em !important; }
+
+    label { font-weight: normal !important; }
+  }
 }

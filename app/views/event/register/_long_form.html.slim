@@ -10,11 +10,16 @@
           if: @event.allow_member_registrations \
         )
       - elsif @event.registerable?
-        = event_action_link( \
-          @event, register_path(@event.id), method: :put, remote: true, icon: 'calendar-check', \
-          text: 'Register', css: 'no-float', id: "event_#{@event.id}", expired: false, \
-          if: @event.allow_member_registrations \
-        )
+        - if @event.event_selections.any?
+          - @registration.name = current_user.full_name(html: false)
+          - @registration.email = current_user.email
+          = render 'event/register/long_form_public_form'
+        - else
+          = event_action_link( \
+            @event, register_path(@event.id), method: :put, remote: true, icon: 'calendar-check', \
+            text: 'Register', css: 'no-float', id: "event_#{@event.id}", expired: false, \
+            if: @event.allow_member_registrations \
+          )
   - elsif @event.allow_public_registrations?
     = render 'event/register/long_form_public_form'
   - else

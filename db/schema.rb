@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_27_220533) do
+ActiveRecord::Schema.define(version: 2023_05_08_235710) do
 
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -137,6 +137,14 @@ ActiveRecord::Schema.define(version: 2023_03_27_220533) do
     t.index ["event_id", "deleted_at"], name: "index_event_instructors_on_event_id"
   end
 
+  create_table "event_options", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "event_selection_id"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.timestamp "deleted_at"
+  end
+
   create_table "event_promo_codes", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "event_id"
     t.integer "promo_code_id"
@@ -145,6 +153,14 @@ ActiveRecord::Schema.define(version: 2023_03_27_220533) do
     t.datetime "updated_at", null: false
     t.index ["event_id", "deleted_at"], name: "index_event_promo_codes_on_event_id"
     t.index ["promo_code_id", "deleted_at"], name: "index_event_promo_codes_on_code_id"
+  end
+
+  create_table "event_selections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "event_id"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.timestamp "deleted_at"
   end
 
   create_table "event_type_committees", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -511,6 +527,15 @@ ActiveRecord::Schema.define(version: 2023_03_27_220533) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code", "deleted_at"], name: "index_promo_codes_on_code"
+  end
+
+  create_table "registration_options", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "registration_id"
+    t.integer "event_option_id"
+    t.string "selection"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.timestamp "deleted_at"
   end
 
   create_table "registration_promo_codes", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
