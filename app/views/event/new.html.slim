@@ -61,6 +61,10 @@ h1 = "#{@edit_mode} #{@event_title}"
       .right = switch_box(f, :visible, 'red-lightblue', 'yes no')
       br.clear
 
+      .left = f.label :quiet
+      .right = switch_box(f, :quiet, 'lightblue-red', 'no yes')
+      br.clear
+
     #event-schedule
       h2 Schedule
 

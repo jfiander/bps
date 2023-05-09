@@ -1,6 +1,6 @@
 - class_list = []
 - class_list << (index % 2 == 0 ? 'even' : 'odd')
-- class_list << 'invisible' unless event.visible
+- class_list << 'invisible' if @current_user_permitted_event_type && (!event.visible || event.quiet)
 .event-unified class=(class_list.join(' '))
   .event-column-left
     .event-display-title

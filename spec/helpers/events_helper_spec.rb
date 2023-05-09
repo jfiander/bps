@@ -87,6 +87,16 @@ RSpec.describe EventsHelper do
       )
     end
 
+    it 'generates the correct quiet flag' do
+      event.quiet = true
+
+      expect(event_quiet_flag(event)).to eq(
+        '<div class="purple" title="This event is not displayed in the schedule. Direct links can still access it.">' \
+        "<i class='fad fa-fw fa-face-shush fa-1x' style='' data-fa-transform='' title=''></i>" \
+        '<small>Quiet</small></div>'
+      )
+    end
+
     it 'generates the correct committees flag with one committee' do
       event.event_type.assign(committee_1)
 

@@ -14,7 +14,7 @@ module Events
           map_link start_at length_h length_m sessions flyer cutoff_at expires_at prereq_id
           allow_member_registrations repeat_pattern allow_public_registrations show_in_catalog
           delete_attachment online registration_limit advance_payment slug all_day activity_feed
-          conference_id_cache link_override visible important_notes
+          conference_id_cache link_override visible important_notes quiet
         ]
       )
 
@@ -70,7 +70,7 @@ module Events
 
     def find_event_for(id)
       events = Event.includes(:event_instructors, :instructors)
-      events = events.visible unless current_user&.permitted?(event_type_param)
+      events = events.accessible unless current_user&.permitted?(event_type_param)
       @event = events.find_by(id: id)
     end
 

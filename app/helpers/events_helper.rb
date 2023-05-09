@@ -35,6 +35,7 @@ module EventsHelper
       # General Flags
       concat event_activity_flag(event)
       concat event_not_visible_flag(event)
+      concat event_quiet_flag(event)
 
       # Non-Education Flags
       concat event_committees_flag(event)
@@ -71,6 +72,17 @@ module EventsHelper
     content_tag(:div, class: 'red', title: title) do
       concat FA::Icon.p('eye-slash', style: :duotone, fa: :fw)
       concat content_tag(:small, 'Not Visible')
+    end
+  end
+
+  def event_quiet_flag(event)
+    return unless @current_user_permitted_event_type && event.quiet
+
+    title = 'This event is not displayed in the schedule. Direct links can still access it.'
+
+    content_tag(:div, class: 'purple', title: title) do
+      concat FA::Icon.p('face-shush', style: :duotone, fa: :fw)
+      concat content_tag(:small, 'Quiet')
     end
   end
 
