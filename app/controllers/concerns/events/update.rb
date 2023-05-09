@@ -20,7 +20,7 @@ module Events
       lines.each { |line| parse_selection_line(line) }
 
       # Remove any options and selections no longer included
-      (@selection.event_options - @options).map(&:destroy)
+      (@selection.event_options - @options).map(&:destroy) if @selection
       (@event.event_selections - @selections).map(&:destroy)
     end
 
