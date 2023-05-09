@@ -210,13 +210,21 @@ div.events-unified-table span.fa-layers {
 }
 
 div.event-selection {
+  display: flex;
+  flex-direction: column;
   margin: 1em 0;
 
   div.event-options {
-    margin-top: 1em;
+    width: fit-content;
+    margin: 1em auto 0;
 
-    div.left, div.right { margin-bottom: 0.5em !important; }
+    div.event-option {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 0.5em !important;
 
-    label { font-weight: normal !important; }
+      label { font-weight: normal !important; }
+    }
+
   }
 }

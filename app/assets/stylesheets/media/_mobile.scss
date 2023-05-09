@@ -392,6 +392,18 @@
       }
     }
   }
+
+  div.event-selection div.event-options {
+    div.event-option {
+      width: 100%;
+      margin-bottom: 0.5em !important;
+
+      input {
+        min-width: 0 !important;
+        width: 1em !important;
+      }
+    }
+  }
 }
 
 @media all and (max-width: 400px) {

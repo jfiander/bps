@@ -3,6 +3,6 @@
     .bold = selection.description
     .event-options
       - selection.event_options.each do |option|
-        .left = radio_button_tag("event_selections[#{selection.description}]", option.id, nil, required: true, id: "#{selection.description.gsub(' ', '_')}_#{option.id}")
-        .right = label_tag("#{selection.description}_#{option.id}", option.name)
-        br.clear
+        .event-option
+          => radio_button_tag("event_selections[#{selection.description}]", option.id, nil, required: true, id: "#{selection.description.gsub(' ', '_')}_#{option.id}")
+          = label_tag("#{selection.description}_#{option.id}", option.name)
