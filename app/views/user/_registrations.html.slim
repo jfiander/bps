@@ -1,0 +1,15 @@
+h2 Current Registrations
+#profile-registrations.table
+  - @registrations.each do |r|
+    .table-row
+      .table-cell.name
+        = r.event.display_title
+        .selections
+          - r.registration_options.each do |reg_option|
+            .option
+              b> #{reg_option.description}:
+              = reg_option.name
+      .table-cell = pay_reg_link(r)
+      .table-cell = subscribe_reg_link(r)
+      .table-cell = r.event.start_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+      .table-cell = cancel_reg_link(r)

@@ -81,16 +81,7 @@ h1.profile = @user.full_name
     - if current_user.any_current_tokens?
       li = link_to(profile_tokens_path) { FA::Icon.p('brackets-curly', style: :duotone) + 'Review API tokens' }
 
-- if @registrations.present?
-  h2 Current Registrations
-  #profile-registrations.table
-    - @registrations.each do |r|
-      .table-row
-        .table-cell.name = r.event.display_title
-        .table-cell = pay_reg_link(r)
-        .table-cell = subscribe_reg_link(r)
-        .table-cell = r.event.start_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
-        .table-cell = cancel_reg_link(r)
+= render('registrations') if @registrations.present?
 
 - if current_user&.permitted?(:admin) && current_user.id != @user.id
   .photo-editor = editor('photo_editor', id: @user.id)
