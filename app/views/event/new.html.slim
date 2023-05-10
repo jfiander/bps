@@ -226,9 +226,11 @@ h1 = "#{@edit_mode} #{@event_title}"
         = f.label :event_selections
         ul
           li Enter selectable options for this event.
+          li.red Each group will require one selection be made when registering, if displayed.
+          li &nbsp;
           li Start with a unique description.
           li Below that, indent each available option with two spaces.
-          li.red Each option will require a selection be made when registering.
+          li.red Removing an option here will remove all existing selections of that option.
       .right = text_area_tag 'event[event_selections]', event_selections_indented(@event)
       br.clear
 
