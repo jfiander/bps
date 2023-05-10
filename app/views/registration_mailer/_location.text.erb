@@ -1,4 +1,6 @@
-<%- if @registration.event.location.present? %>
+<%- if @registration.event.location.present? -%>
+**********
+
 Address:
   <%= @registration.event.location.address.gsub(/(\r?\n)/, '\1  ') %>
 

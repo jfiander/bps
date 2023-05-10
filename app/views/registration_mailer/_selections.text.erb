@@ -1,0 +1,5 @@
+<%- if @registration.registration_options.any? -%>
+<% @registration.registration_options.each do |reg_option| %>
+<%= reg_option.description %>: <%= reg_option.name %>
+<%- end %>
+<%- end %>

@@ -4,9 +4,13 @@ class RegistrationOption < ApplicationRecord
   belongs_to :registration
   belongs_to :event_option
 
-  delegate :name, to: :event_selection
-
   validate :option_can_be_selected
+
+  delegate :name, to: :event_option
+
+  def description
+    event_option.event_selection.description
+  end
 
 private
 

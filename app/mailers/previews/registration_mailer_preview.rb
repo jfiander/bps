@@ -9,6 +9,10 @@ class RegistrationMailerPreview < ApplicationMailerPreview
     RegistrationMailer.registered(reg_member_paid)
   end
 
+  def registered_paid_selection
+    RegistrationMailer.registered(reg_member_paid_selection)
+  end
+
   def registered_paid_public
     RegistrationMailer.registered(reg_public_advance)
   end
@@ -57,6 +61,10 @@ class RegistrationMailerPreview < ApplicationMailerPreview
     RegistrationMailer.confirm(reg_member_paid)
   end
 
+  def confirm_member_paid_selection
+    RegistrationMailer.confirm(reg_member_paid_selection)
+  end
+
   def confirm_public_free
     RegistrationMailer.confirm(reg_public_free)
   end
@@ -101,6 +109,16 @@ private
     # Registration.includes(:user_registrations).where.not(user_registrations: { user: nil })
     #             .select(&:payable?).last
     new_registration(event: event(cost: 5), user: user)
+  end
+
+  def reg_member_paid_selection
+    event = event(cost: 5)
+    event.location = Location.new(address: 'Somewhere')
+    selection = event.event_selections.build(description: 'Meal Selection')
+    selection.event_options.build([{ name: 'Chicken' }, { name: 'Whitefish' }])
+    registration = new_registration(event: event, user: user)
+    registration.registration_options.build(event_option: selection.event_options.first)
+    registration
   end
 
   def reg_member_already_paid
