@@ -15,6 +15,12 @@ RSpec.describe RegistrationOption do
   let(:other_event_selection) { create(:event_selection, event: other_event, description: 'Different Option') }
   let!(:other_event_option) { create(:event_option, event_selection: other_event_selection, name: 'Two') }
 
+  it 'delegates description to the event_selection' do
+    reg_opt = build(:registration_option, registration: registration, event_option: event_option)
+
+    expect(reg_opt.description).to eq(event_option.event_selection.description)
+  end
+
   describe 'validations' do
     it 'validates options belong to a selection for the current event' do
       reg_opt = build(:registration_option, registration: registration, event_option: event_option)
