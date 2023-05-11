@@ -23,7 +23,11 @@ class Location < ApplicationRecord
 
   validate :valid_map_link?
 
-  default_scope { order(Arel.sql('favorite IS NULL, favorite DESC')) }
+  default_scope do
+    specials = Location::SPECIAL.map { |l| "\"#{l}\"" }.join(', ')
+    order(Arel.sql("favorite IS NULL, favorite DESC, FIELD(address, #{specials}) DESC, address"))
+  end
+  scope :specials, -> { where(address: SPECIAL) }
   scope :favorites, -> { where(favorite: true) }
   scope :others, -> { where('favorite IS NULL OR favorite = ?', false) }
 
@@ -49,10 +53,14 @@ class Location < ApplicationRecord
 
   def self.grouped
     {
-      'Special' => ['TBD'] + SPECIAL.map { |l| [l, Location.find_by(address: l)&.id] }.compact,
-      'Favorites' => favorites.order(:address).map(&:display).pluck(:name, :id),
-      'Others' => others.order(:address).map(&:display).pluck(:name, :id)
+      'Special' => ['TBD'] + specials.pluck(:address, :id),
+      'Favorites' => format_for_select(favorites),
+      'Others' => format_for_select(others)
     }
+  end
+
+  def self.format_for_select(scope)
+    scope.order(:address).where.not(address: SPECIAL).map(&:display).pluck(:name, :id)
   end
 
   def details_hash

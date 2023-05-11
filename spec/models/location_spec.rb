@@ -17,7 +17,7 @@ RSpec.describe Location do
 
   describe 'grouped' do
     it 'returns a correctly-structrued hash' do
-      expect(described_class.grouped).to have_key('TBD')
+      expect(described_class.grouped).to have_key('Special')
       expect(described_class.grouped).to have_key('Favorites')
       expect(described_class.grouped).to have_key('Others')
     end

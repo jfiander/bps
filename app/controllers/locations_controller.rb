@@ -11,7 +11,7 @@ class LocationsController < ApplicationController
   before_action :update_form_data, only: %i[edit update]
 
   def list
-    @locations = Location.all.order(:id).map(&:display)
+    @locations = Location.all.map(&:display)
   end
 
   def new
