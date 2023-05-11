@@ -17,19 +17,21 @@ module Events
       lines = combined.split(/\r?\n/)
       @selections = []
 
-      lines.each { |line| parse_selection_line(line) }
+      lines.each_with_index { |line, index| parse_selection_line(line, index) }
 
       # Remove any options and selections no longer included
       (@selection.event_options - @options).map(&:destroy) if @selection
       (@event.event_selections - @selections).map(&:destroy)
     end
 
-    def parse_selection_line(line)
+    def parse_selection_line(line, index)
       if line =~ /^[^\s]/
         @selections << @selection = @event.event_selections.find_or_create_by(description: line)
         @options = []
       else
-        @options << @selection.event_options.find_or_create_by(name: line.sub(/^\s\s/, ''))
+        option = @selection.event_options.find_or_create_by(name: line.sub(/^\s\s/, ''))
+        option.update(position: index + 1) unless option.position == index + 1
+        @options << option
       end
     end
 
