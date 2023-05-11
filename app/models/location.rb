@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Location < ApplicationRecord
+  SPECIAL = %w[Virtual Self-Study].freeze
+
   has_attached_file(
     :picture,
     paperclip_defaults(:files).merge(
@@ -47,9 +49,9 @@ class Location < ApplicationRecord
 
   def self.grouped
     {
-      'TBD' => ['TBD'],
-      'Favorites' => favorites.map(&:display).pluck(:name, :id),
-      'Others' => others.map(&:display).pluck(:name, :id)
+      'Special' => ['TBD'] + SPECIAL.map { |l| [l, Location.find_by(address: l)&.id] }.compact,
+      'Favorites' => favorites.order(:address).map(&:display).pluck(:name, :id),
+      'Others' => others.order(:address).map(&:display).pluck(:name, :id)
     }
   end
 
