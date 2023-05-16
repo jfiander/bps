@@ -53,14 +53,19 @@ module BPS
         def s_or_bh_completion_box(course_completions, color)
           if course_completions['BH']
             completion_box(1, 'Boat Handling', course_completions['BH'], color: color)
+          elsif course_completions['S/BH'] && course_completions['S'].nil?
+            completion_box(1, 'Seamanship / BH', course_completions['S/BH'], color: color)
           else
             completion_box(1, 'Seamanship', course_completions['S'], color: color)
           end
         end
 
         def p_or_mn_completion_box(course_completions, color)
-          if course_completions['MN']
-            completion_box(2, 'Marine Navigation', course_completions['MN'], color: color)
+          mn_or_n1 = course_completions['MN'] || course_completions['N1']
+          if mn_or_n1
+            completion_box(2, 'Marine Navigation', mn_or_n1, color: color)
+          elsif course_completions['PI/N1'] && course_completions['P'].nil?
+            completion_box(2, 'MN / Piloting', course_completions['PI/N1'], color: color)
           else
             completion_box(2, 'Piloting', course_completions['P'], color: color)
           end

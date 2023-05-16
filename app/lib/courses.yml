@@ -11,6 +11,11 @@
 - name: Piloting
   code: P
   exam_prefix: PI
+- name: Marine Navigation
+  code:
+    any:
+      - MN
+      - N1
 - name: Piloting/Marine Navigation
   code: PI/N1
 - name: Advanced Piloting
