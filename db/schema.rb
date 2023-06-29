@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_11_204149) do
+ActiveRecord::Schema.define(version: 2023_06_29_004110) do
 
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -126,6 +126,13 @@ ActiveRecord::Schema.define(version: 2023_05_11_204149) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["course_id", "deleted_at"], name: "index_course_topics_on_course_id"
+  end
+
+  create_table "dmarc_reports", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "xml"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
   end
 
   create_table "event_instructors", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

@@ -1,0 +1,16 @@
+h1 = admin_header('DMARC Reports')
+
+= form_for([:admin, @new_report], multipart: true) do |f|
+  = f.file_field(:xml, accept: 'application/zip,application/gzip,text/xml')
+  = f.submit('Upload Report', class: 'big')
+
+#dmarc-reports.table.striped
+  .table-row.header
+    .table-cell ID
+    .table-cell Date
+    .table-cell
+  - @reports.each do |report|
+    .table-row
+      .table-cell = report.id
+      .table-cell = report.created_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)
+      .table-cell = link_to(admin_dmarc_report_path(report)) { FA::Icon.p('share', style: :duotone) + 'View' }

@@ -1,0 +1,5 @@
+h1 = admin_header("DMARC Report ##{@report.id}")
+
+b Uploaded at #{@report.created_at.strftime(TimeHelper::MEDIUM_TIME_FORMAT)}
+
+pre.xml = @report.xml
