@@ -2,6 +2,8 @@
 
 module Admin
   class ImportLogsController < ::ApplicationController
+    secure!(:admin)
+
     def index
       @import_logs = ImportLog.where.not(proto: nil)
     end

@@ -2,6 +2,8 @@
 
 module Admin
   class SmsController < ::ApplicationController
+    secure!(:admin)
+
     def new
       @users = User.unlocked.alphabetized.where.not(phone_c: nil).map { |u| [u.full_name, u.id] }
     end
