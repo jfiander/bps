@@ -11,6 +11,13 @@ module Admin
 
     def show
       @report = DmarcReport.find(params[:id])
+
+      respond_to do |format|
+        format.html
+        format.xml { render(xml: @report.xml) }
+        format.json { render(plain: @report.to_proto.to_json) }
+        format.proto { render(plain: @report.to_proto.to_proto) }
+      end
     end
 
     def create
