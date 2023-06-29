@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<feedback>
+  <report_metadata>
+    <org_name>google.com</org_name>
+    <email>noreply-dmarc-support@google.com</email>
+    <extra_contact_info>https://support.google.com/a/answer/2466580</extra_contact_info>
+    <report_id>00000000000000000002</report_id>
+    <date_range>
+      <begin>1687737600</begin>
+      <end>1687823999</end>
+    </date_range>
+  </report_metadata>
+  <policy_published>
+    <domain>bpsd9.org</domain>
+    <adkim>r</adkim>
+    <aspf>r</aspf>
+    <p>reject</p>
+    <sp>reject</sp>
+    <pct>100</pct>
+    <np>reject</np>
+  </policy_published>
+  <record>
+    <row>
+      <source_ip>23.251.226.1</source_ip>
+      <count>1</count>
+      <policy_evaluated>
+        <disposition>none</disposition>
+        <dkim>fail</dkim>
+        <spf>fail</spf>
+        <reason>
+          <type>other</type>
+          <comment>This is a demo failure report.</comment>
+        </reason>
+      </policy_evaluated>
+    </row>
+    <identifiers>
+      <header_from>bpsd9.org</header_from>
+    </identifiers>
+    <auth_results>
+      <dkim>
+        <domain>bpsd9.org</domain>
+        <result>fail</result>
+        <selector>7h2g3540927g65h03275690g37h29056</selector>
+      </dkim>
+      <dkim>
+        <domain>amazonses.com</domain>
+        <result>fail</result>
+        <selector>e57h069g7349w0g67036g5h730296hg7</selector>
+      </dkim>
+      <spf>
+        <domain>smtp.bpsd9.org</domain>
+        <result>fail</result>
+      </spf>
+    </auth_results>
+  </record>
+</feedback>
