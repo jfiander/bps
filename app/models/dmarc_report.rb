@@ -95,9 +95,8 @@ private
   end
 
   def value(node, name, default = '')
-    child(node, name)&.value || default
-  rescue NoMethodError
-    child(node, name)&.children&.first&.to_s || default
+    c = child(node, name)
+    c.respond_to?(:value) ? child(node, name)&.value : c&.children&.first&.to_s || default
   end
 
   def enum(node, name)
