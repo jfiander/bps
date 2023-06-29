@@ -14,7 +14,7 @@ module Admin
     end
 
     def create
-      content_type = 'application/x-gzip'
+      content_type = dmarc_report_params[:xml].content_type
       case content_type
       when 'text/xml'
         DmarcReport.create(xml: dmarc_report_params[:xml].read)
