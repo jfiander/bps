@@ -133,7 +133,9 @@ Rails.application.routes.draw do
     resources :import_logs, only: %i[index show]
 
     # DMARC Reports
-    resources :dmarc_reports, only: %i[index show create]
+    resources :dmarc_reports, only: %i[index show create] do
+      get :summary, on: :collection
+    end
   end
 
   # Newsletter

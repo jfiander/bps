@@ -1,0 +1,22 @@
+h1 = admin_header('DMARC Reports Summary')
+
+#dmarc-reports.table.striped
+  .table-row.header
+    .table-cell Org
+    .table-cell ID
+    .table-cell Begin
+    .table-cell End
+    .table-cell Disposition
+    .table-cell DKIM
+    .table-cell SPF
+  - @reports.each do |report|
+    - proto = report.proto
+    - proto.records.each_with_index do |record, index|
+      .table-row
+        .table-cell = proto.report_metadata.org_name if index.zero?
+        .table-cell = proto.report_metadata.report_id if index.zero?
+        .table-cell = DateTime.strptime(proto.report_metadata.date_range.begin.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
+        .table-cell = DateTime.strptime(proto.report_metadata.date_range.end.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
+        .table-cell = record.row.policy_evaluated.disposition
+        .table-cell class=(record.row.policy_evaluated.dkim == 'pass' ? :green : :red) = record.row.policy_evaluated.dkim
+        .table-cell class=(record.row.policy_evaluated.spf == 'pass' ? :green : :red) = record.row.policy_evaluated.spf

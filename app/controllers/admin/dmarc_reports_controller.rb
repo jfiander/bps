@@ -38,6 +38,10 @@ module Admin
       redirect_to(admin_dmarc_reports_path)
     end
 
+    def summary
+      @reports = DmarcReport.all
+    end
+
   private
 
     def dmarc_report_params
