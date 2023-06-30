@@ -47,7 +47,6 @@ module Admin
     def extract_zip(xml)
       Zip::File.open(xml) do |zip_file|
         zip_file.each do |entry|
-          entry.extract
           DmarcReport.create(xml: entry.get_input_stream.read)
         end
       end
