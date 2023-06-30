@@ -498,4 +498,21 @@
     &.red-lightblue      { background-color: $birmingham-blue-desaturated; }
     &.red-darkblue       { background-color: $old-glory-blue-desaturated; }
   }
+
+  .dmarc-disposition {
+    &.none { color: $dark-green; }
+    &.quarantine { color: $dark-purple; }
+    &.reject { color: $dark-red; }
+  }
+
+  .dmarc-result {
+    &.pass { color: $dark-green; }
+    &.fail { color: $dark-red; }
+
+    // SPF-only results
+    &.neutral { color: $dark-gray; }
+    &.softfail { color: $dark-red; }
+    &.temperror, &.unknown { color: $dark-gray; }
+    &.permerror, &.error { color: $dark-red; }
+  }
 }

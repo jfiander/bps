@@ -22,9 +22,9 @@ h1 = admin_header('DMARC Reports')
         .table-cell = proto.report_metadata.report_id if index.zero?
         .table-cell = DateTime.strptime(proto.report_metadata.date_range.begin.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
         .table-cell = DateTime.strptime(proto.report_metadata.date_range.end.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
-        .table-cell = record.row.policy_evaluated.disposition
-        .table-cell class=(record.row.policy_evaluated.dkim == 'pass' ? :green : :red) = record.row.policy_evaluated.dkim
-        .table-cell class=(record.row.policy_evaluated.spf == 'pass' ? :green : :red) = record.row.policy_evaluated.spf
+        .table-cell class=("dmarc-disposition #{record.row.policy_evaluated.disposition.to_s.downcase}") = record.row.policy_evaluated.disposition.to_s.downcase
+        .table-cell class=("dmarc-result #{record.row.policy_evaluated.dkim == 'pass' ? :pass : :fail}") = record.row.policy_evaluated.dkim
+        .table-cell class=("dmarc-result #{record.row.policy_evaluated.spf == 'pass' ? :pass : :fail}") = record.row.policy_evaluated.spf
         .table-cell
           - if index.zero?
             = link_to(admin_dmarc_report_path(report), title: 'View') { FA::Icon.p('desktop', style: :duotone) }

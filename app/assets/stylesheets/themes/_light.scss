@@ -449,4 +449,21 @@
     div.table-row:nth-of-type(4n+1), div.table-row:nth-of-type(4n+1) + * { background-color: $background-lighten-6;}
     div.table-row.header { background-color: inherit;}
   }
+
+  .dmarc-disposition {
+    &.none { color: $green; }
+    &.quarantine { color: $purple; }
+    &.reject { color: $red; }
+  }
+
+  .dmarc-result {
+    &.pass { color: $green; }
+    &.fail { color: $red; }
+
+    // SPF-only results
+    &.neutral { color: $gray; }
+    &.softfail { color: $red; }
+    &.temperror, &.unknown { color: $gray; }
+    &.permerror, &.error { color: $red; }
+  }
 }
