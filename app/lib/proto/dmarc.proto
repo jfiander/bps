@@ -8,12 +8,6 @@ enum Disposition {
   REJECT = 3;
 }
 
-enum Result {
-  UNKNOWN_RESULT = 0;
-  PASS = 1;
-  FAIL = 2;
-}
-
 message Feedback {
   string version = 1;
   ReportMetadata report_metadata = 2;
@@ -97,8 +91,14 @@ message AuthResults {
 }
 
 message Dkim {
+  enum DkimResult {
+    UNKNOWN_RESULT = 0;
+    PASS = 1;
+    FAIL = 2;
+  }
+
   string domain = 1;
-  Result result = 2;
+  DkimResult result = 2;
   string selector = 3;
   string human_result = 4;
 }

@@ -77,9 +77,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "dmarc.Dkim" do
       optional :domain, :string, 1
-      optional :result, :enum, 2, "dmarc.Result"
+      optional :result, :enum, 2, "dmarc.Dkim.DkimResult"
       optional :selector, :string, 3
       optional :human_result, :string, 4
+    end
+    add_enum "dmarc.Dkim.DkimResult" do
+      value :UNKNOWN_RESULT, 0
+      value :PASS, 1
+      value :FAIL, 2
     end
     add_message "dmarc.Spf" do
       optional :domain, :string, 1
@@ -103,11 +108,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :QUARANTINE, 2
       value :REJECT, 3
     end
-    add_enum "dmarc.Result" do
-      value :UNKNOWN_RESULT, 0
-      value :PASS, 1
-      value :FAIL, 2
-    end
   end
 end
 
@@ -125,8 +125,8 @@ module Dmarc
   Identifiers = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Identifiers").msgclass
   AuthResults = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.AuthResults").msgclass
   Dkim = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Dkim").msgclass
+  Dkim::DkimResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Dkim.DkimResult").enummodule
   Spf = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Spf").msgclass
   Spf::SpfResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Spf.SpfResult").enummodule
   Disposition = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Disposition").enummodule
-  Result = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Result").enummodule
 end
