@@ -4,6 +4,10 @@ h1 = admin_header('DMARC Reports')
   = f.file_field(:xml, accept: 'application/zip,application/gzip,text/xml')
   = f.submit('Upload Report', class: 'big')
 
+hr
+
+.information Rows listed without the first four columns are additional records from the same report.
+
 #dmarc-reports.table.striped
   .table-row.header
     .table-cell Org
@@ -18,14 +22,38 @@ h1 = admin_header('DMARC Reports')
     - proto = report.proto
     - proto.records.each_with_index do |record, index|
       .table-row
-        .table-cell = proto.report_metadata.org_name if index.zero?
-        .table-cell = proto.report_metadata.report_id if index.zero?
-        .table-cell = DateTime.strptime(proto.report_metadata.date_range.begin.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
-        .table-cell = DateTime.strptime(proto.report_metadata.date_range.end.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
-        .table-cell class=("dmarc-disposition #{record.row.policy_evaluated.disposition.to_s.downcase}") = record.row.policy_evaluated.disposition.to_s.downcase
-        .table-cell class=("dmarc-result #{record.row.policy_evaluated.dkim == 'pass' ? :pass : :fail}") = record.row.policy_evaluated.dkim
-        .table-cell class=("dmarc-result #{record.row.policy_evaluated.spf == 'pass' ? :pass : :fail}") = record.row.policy_evaluated.spf
-        .table-cell
+        .org_name.table-cell = proto.report_metadata.org_name if index.zero?
+        .report_id.table-cell = proto.report_metadata.report_id if index.zero?
+        .date_begin.table-cell = DateTime.strptime(proto.report_metadata.date_range.begin.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
+        .date_end.table-cell = DateTime.strptime(proto.report_metadata.date_range.end.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
+        .disposition.table-cell class=("dmarc-disposition #{record.row.policy_evaluated.disposition.to_s.downcase}")
+          div.mobile Disposition:
+          = record.row.policy_evaluated.disposition.to_s.downcase
+        .dkim.table-cell class=("dmarc-result #{record.row.policy_evaluated.dkim == 'pass' ? :pass : :fail}")
+          div.mobile DKIM:
+          span.result
+            - if record.row.policy_evaluated.dkim == 'pass'
+              = FA::Icon.p('circle-check', style: :duotone)
+            - else
+              = FA::Icon.p('octagon-xmark', style: :duotone)
+            = record.row.policy_evaluated.dkim
+        .spf.table-cell class=("dmarc-result #{record.row.policy_evaluated.spf == 'pass' ? :pass : :fail}")
+          div.mobile SPF:
+          span.result
+            - if record.row.policy_evaluated.spf == 'pass'
+              = FA::Icon.p('circle-check', style: :duotone)
+            - elsif record.row.policy_evaluated.spf == 'fail'
+              = FA::Icon.p('octagon-xmark', style: :duotone)
+            - elsif record.row.policy_evaluated.spf == 'softfail'
+              = FA::Icon.p('circle-xmark', style: :duotone)
+            - elsif record.row.policy_evaluated.spf.in?(%w[permerror error])
+              = FA::Icon.p('do-not-enter', style: :duotone)
+            - elsif record.row.policy_evaluated.spf.in?(%w[temperror unknown])
+              = FA::Icon.p('triangle-exclamation', style: :duotone)
+            - else
+              = FA::Icon.p('square-information', style: :duotone)
+            = record.row.policy_evaluated.spf
+        .actions.table-cell
           - if index.zero?
             = link_to(admin_dmarc_report_path(report), title: 'View') { FA::Icon.p('desktop', style: :duotone) }
             = link_to(admin_dmarc_report_path(report, format: :xml), title: 'XML') { FA::Icon.p('code', style: :duotone) }
