@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class DmarcReport < ApplicationRecord
+  before_create { self.proto = self.to_proto.to_proto }
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/BlockLength

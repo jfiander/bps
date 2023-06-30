@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_29_004110) do
+ActiveRecord::Schema.define(version: 2023_06_30_175933) do
 
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 2023_06_29_004110) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
+    t.binary "proto"
   end
 
   create_table "event_instructors", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
