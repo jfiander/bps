@@ -1,7 +1,25 @@
 # frozen_string_literal: true
 
 class DmarcReport < ApplicationRecord
-  before_create { self.proto = self.to_proto.to_proto }
+  before_create { self.proto = to_proto }
+
+  def proto
+    Dmarc::Feedback.decode(read_attribute(:proto))
+  end
+
+  def proto=(data)
+    new_proto =
+      case data
+      when Hash
+        Dmarc::Feedback.new(data)
+      when Dmarc::Feedback
+        data
+      else
+        raise 'Unexpected data format'
+      end
+
+    write_attribute(:proto, new_proto.to_proto)
+  end
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
