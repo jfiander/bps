@@ -3,20 +3,25 @@
 class DmarcReport < ApplicationRecord
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/BlockLength
   def to_proto
     noko = Nokogiri::XML(xml)
     feedback = noko.children.first
     report_metadata = child(feedback, :report_metadata)
     date_range = child(report_metadata, :date_range)
     policy_published = child(feedback, :policy_published)
-    record = child(feedback, :record)
-    row = child(record, :row)
-    policy_evaluated = child(row, :policy_evaluated)
-    reason = child(policy_evaluated, :reason)
-    identifiers = child(record, :identifiers)
-    auth_results = child(record, :auth_results)
-    dkim = children(auth_results, :dkim)
-    spf = children(auth_results, :spf)
+    records = children(feedback, :record)
+
+    record_data = records.each_with_object({}) do |record, hash|
+      hash[record] ||= {}
+      row = child(record, :row)
+      hash[record][:policy_evaluated] = policy_evaluated = child(row, :policy_evaluated)
+      hash[record][:reason] = child(policy_evaluated, :reason)
+      hash[record][:identifiers] = child(record, :identifiers)
+      hash[record][:auth_results] = auth_results = child(record, :auth_results)
+      hash[record][:dkim] = children(auth_results, :dkim)
+      hash[record][:spf] = children(auth_results, :spf)
+    end
 
     Dmarc::Feedback.new(
       version: value(feedback, :version),
@@ -41,48 +46,51 @@ class DmarcReport < ApplicationRecord
         np: value(policy_published, :np),
         fo: value(policy_published, :fo)
       },
-      record: {
-        row: {
-          source_ip: value(record, :source_ip),
-          count: value(record, :count).to_i,
-          policy_evaluated: {
-            disposition: enum(policy_evaluated, :disposition),
-            dkim: value(policy_evaluated, :dkim),
-            spf: value(policy_evaluated, :spf),
-            reason: if_present(reason) do
+      records: record_data.map do |record, data|
+        {
+          row: {
+            source_ip: value(record, :source_ip),
+            count: value(record, :count).to_i,
+            policy_evaluated: {
+              disposition: enum(data[:policy_evaluated], :disposition),
+              dkim: value(data[:policy_evaluated], :dkim),
+              spf: value(data[:policy_evaluated], :spf),
+              reason: if_present(data[:reason]) do
+                {
+                  type: enum(data[:reason], :type),
+                  comment: value(data[:reason], :comment)
+                }
+              end
+            }
+          },
+          identifiers: {
+            header_from: value(data[:identifiers], :header_from),
+            envelope_from: value(data[:identifiers], :envelope_from)
+          },
+          auth_results: {
+            dkim: data[:dkim].map do |d|
               {
-                type: enum(reason, :type),
-                comment: value(reason, :comment)
+                domain: value(d, :domain),
+                result: enum(d, :result),
+                selector: value(d, :selector),
+                human_result: value(d, :human_result)
+              }
+            end,
+            spf: data[:spf].map do |s|
+              {
+                domain: value(s, :domain),
+                result: handle_unknown_spf(enum(s, :result)),
+                scope: value(s, :scope)
               }
             end
           }
-        },
-        identifiers: {
-          header_from: value(identifiers, :header_from),
-          envelope_from: value(identifiers, :envelope_from)
-        },
-        auth_results: {
-          dkim: dkim.map do |d|
-            {
-              domain: value(d, :domain),
-              result: enum(d, :result),
-              selector: value(d, :selector),
-              human_result: value(d, :human_result)
-            }
-          end,
-          spf: spf.map do |s|
-            {
-              domain: value(s, :domain),
-              result: handle_unknown_spf(enum(s, :result)),
-              scope: value(s, :scope)
-            }
-          end
         }
-      }
+      end
     )
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/BlockLength
 
 private
 

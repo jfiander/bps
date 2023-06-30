@@ -18,7 +18,7 @@ message Feedback {
   string version = 1;
   ReportMetadata report_metadata = 2;
   PolicyPublished policy_published = 3;
-  Record record = 4;
+  repeated Record records = 4;
 }
 
 message ReportMetadata {

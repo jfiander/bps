@@ -9,7 +9,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :version, :string, 1
       optional :report_metadata, :message, 2, "dmarc.ReportMetadata"
       optional :policy_published, :message, 3, "dmarc.PolicyPublished"
-      optional :record, :message, 4, "dmarc.Record"
+      repeated :records, :message, 4, "dmarc.Record"
     end
     add_message "dmarc.ReportMetadata" do
       optional :org_name, :string, 1

@@ -29,7 +29,7 @@ RSpec.describe DmarcReport do
               pct: 100,
               np: 'reject'
             },
-            record: {
+            records: [{
               row: {
                 policy_evaluated: {
                   disposition: :NONE,
@@ -60,7 +60,7 @@ RSpec.describe DmarcReport do
                   }
                 ]
               }
-            }
+            }]
           )
         )
       end
@@ -91,7 +91,7 @@ RSpec.describe DmarcReport do
               pct: 100,
               np: 'reject'
             },
-            record: {
+            records: [{
               row: {
                 policy_evaluated: {
                   disposition: :NONE,
@@ -126,7 +126,7 @@ RSpec.describe DmarcReport do
                   }
                 ]
               }
-            }
+            }]
           )
         )
       end
