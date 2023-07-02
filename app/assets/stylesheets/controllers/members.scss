@@ -119,3 +119,16 @@ form#birthday-month {
 
   select { font-size: 1em; }
 }
+
+div#glyc-members {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5em 1em;
+
+  div.member {
+    border: thin solid gray;
+    border-radius: 0.5em;
+    padding: 0.25em 0.5em;
+  }
+}
