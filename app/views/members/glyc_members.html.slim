@@ -4,9 +4,17 @@ h2 GLYC Members
 
 h3 Current GLYC Member Emails
 
+- bps_emails = User.pluck(:email)
+
 .table.glyc-members.striped
   - GLYCMember.all.each_slice(3) do |a, b, c|
     .table-row
-      .table-cell = a&.email
-      .table-cell = b&.email
-      .table-cell = c&.email
+      .table-cell class=('birmingham-blue' if a&.email.in?(bps_emails))
+        = a&.email
+        = FA::Icon.p('seahorse', style: :kit_upload) if a&.email.in?(bps_emails)
+      .table-cell class=('birmingham-blue' if b&.email.in?(bps_emails))
+        = b&.email
+        = FA::Icon.p('seahorse', style: :kit_upload) if b&.email.in?(bps_emails)
+      .table-cell class=('birmingham-blue' if c&.email.in?(bps_emails))
+        = c&.email
+        = FA::Icon.p('seahorse', style: :kit_upload) if c&.email.in?(bps_emails)
