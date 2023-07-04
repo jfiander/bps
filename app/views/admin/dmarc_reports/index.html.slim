@@ -1,7 +1,7 @@
 h1 = admin_header('DMARC Reports')
 
 = form_for([:admin, @new_report], multipart: true) do |f|
-  = f.file_field(:xml, accept: 'application/zip,application/gzip,text/xml')
+  = f.file_field(:xml, accept: 'application/zip,application/gzip,text/xml', required: true)
   = f.submit('Upload Report', class: 'big')
 
 hr
