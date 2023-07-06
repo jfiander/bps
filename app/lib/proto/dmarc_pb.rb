@@ -50,9 +50,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "dmarc.PolicyEvaluated" do
       optional :disposition, :enum, 1, "dmarc.Disposition"
-      optional :dkim, :string, 2
-      optional :spf, :string, 3
+      optional :dkim, :enum, 2, "dmarc.PolicyEvaluated.DmarcResult"
+      optional :spf, :enum, 3, "dmarc.PolicyEvaluated.DmarcResult"
       optional :reason, :message, 4, "dmarc.Reason"
+    end
+    add_enum "dmarc.PolicyEvaluated.DmarcResult" do
+      value :UNKNOWN_DMARC_RESULT, 0
+      value :PASS, 1
+      value :FAIL, 2
     end
     add_message "dmarc.Reason" do
       optional :type, :enum, 1, "dmarc.Reason.PolicyOverride"
@@ -120,6 +125,7 @@ module Dmarc
   Record = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Record").msgclass
   Row = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Row").msgclass
   PolicyEvaluated = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.PolicyEvaluated").msgclass
+  PolicyEvaluated::DmarcResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.PolicyEvaluated.DmarcResult").enummodule
   Reason = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Reason").msgclass
   Reason::PolicyOverride = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Reason.PolicyOverride").enummodule
   Identifiers = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Identifiers").msgclass

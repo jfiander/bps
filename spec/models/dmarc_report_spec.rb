@@ -44,8 +44,8 @@ RSpec.describe DmarcReport do
             row: {
               policy_evaluated: {
                 disposition: :NONE,
-                dkim: 'pass',
-                spf: 'pass'
+                dkim: :PASS,
+                spf: :PASS
               }
             },
             identifiers: {
@@ -106,8 +106,8 @@ RSpec.describe DmarcReport do
             row: {
               policy_evaluated: {
                 disposition: :NONE,
-                dkim: 'fail',
-                spf: 'fail',
+                dkim: :FAIL,
+                spf: :FAIL,
                 reason: {
                   type: :OTHER,
                   comment: 'This is a demo failure report.'

@@ -73,8 +73,8 @@ class DmarcReport < ApplicationRecord
             count: value(record, :count).to_i,
             policy_evaluated: {
               disposition: enum(data[:policy_evaluated], :disposition),
-              dkim: value(data[:policy_evaluated], :dkim),
-              spf: value(data[:policy_evaluated], :spf),
+              dkim: enum(data[:policy_evaluated], :dkim),
+              spf: enum(data[:policy_evaluated], :spf),
               reason: if_present(data[:reason]) do
                 {
                   type: enum(data[:reason], :type),

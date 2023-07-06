@@ -59,9 +59,15 @@ message Row {
 }
 
 message PolicyEvaluated {
+  enum DmarcResult {
+    UNKNOWN_DMARC_RESULT = 0;
+    PASS = 1;
+    FAIL = 2;
+  }
+
   Disposition disposition = 1;
-  string dkim = 2;
-  string spf = 3;
+  DmarcResult dkim = 2;
+  DmarcResult spf = 3;
   Reason reason = 4;
 }
 
