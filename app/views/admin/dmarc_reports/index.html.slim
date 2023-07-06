@@ -29,22 +29,8 @@ hr
         .disposition.table-cell class=("dmarc-disposition #{record.row.policy_evaluated.disposition.to_s.downcase}")
           div.mobile Disposition:
           = record.row.policy_evaluated.disposition.to_s.downcase
-        .dkim.table-cell class=("dmarc-result #{record.row.policy_evaluated.dkim == :PASS ? :pass : :fail}")
-          div.mobile DKIM:
-          span.result
-            - if record.row.policy_evaluated.dkim == :PASS
-              = FA::Icon.p('circle-check', style: :duotone)
-            - else
-              = FA::Icon.p('octagon-xmark', style: :duotone)
-            = record.row.policy_evaluated.dkim.to_s.downcase
-        .spf.table-cell class=("dmarc-result #{record.row.policy_evaluated.spf == :PASS ? :pass : :fail}")
-          div.mobile SPF:
-          span.result
-            - if record.row.policy_evaluated.spf == :PASS
-              = FA::Icon.p('circle-check', style: :duotone)
-            - else
-              = FA::Icon.p('octagon-xmark', style: :duotone)
-            = record.row.policy_evaluated.spf.to_s.downcase
+        = render('dmarc_result', record: record, dmarc_field: :dkim)
+        = render('dmarc_result', record: record, dmarc_field: :spf)
         .actions.table-cell
           - if index.zero?
             = link_to(admin_dmarc_report_path(report), title: 'View') { FA::Icon.p('desktop', style: :duotone) }
