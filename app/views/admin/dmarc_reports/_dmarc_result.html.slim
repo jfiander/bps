@@ -1,5 +1,5 @@
 - result = record.row.policy_evaluated.public_send(dmarc_field).to_s.downcase
-.table-cell class=("dmarc-result #{dmarc_field} #{result}")
+.table-cell.dmarc-result class=("#{dmarc_field} #{result}")
   div.mobile #{dmarc_field.to_s.upcase}:
   span class=(result)
     - if result == 'pass'
