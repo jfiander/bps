@@ -3,6 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe DmarcReport do
+  describe '#check_report_uniqueness' do
+    it 'rejects duplicate reports' do
+      create(:dmarc_report, xml: file_fixture('dmarc_report/pass.xml').read)
+
+      expect { create(:dmarc_report, xml: file_fixture('dmarc_report/pass.xml').read) }.to(
+        raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Duplicate report')
+      )
+    end
+  end
+
   describe '#proto=' do
     let(:dmarc_report) { create(:dmarc_report, xml: file_fixture('dmarc_report/pass.xml').read) }
 

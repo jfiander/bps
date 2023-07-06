@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class DmarcReport < ApplicationRecord
-  before_create { self.proto = to_proto }
+  before_validation { self.proto = to_proto }
+
+  validate :check_report_uniqueness
 
   def proto
     Dmarc::Feedback.decode(read_attribute(:proto))
@@ -112,6 +114,14 @@ class DmarcReport < ApplicationRecord
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/BlockLength
 
+  def identifier
+    [proto.report_metadata.org_name, proto.report_metadata.report_id]
+  end
+
+  def ==(other)
+    identifier == other.identifier
+  end
+
 private
 
   def child(node, name)
@@ -137,5 +147,11 @@ private
 
   def handle_unknown_spf(result)
     result == :UNKNOWN ? :TEMPERROR : result
+  end
+
+  def check_report_uniqueness
+    return if DmarcReport.all.none? { |report| self == report }
+
+    errors.add(:base, 'Duplicate report')
   end
 end
