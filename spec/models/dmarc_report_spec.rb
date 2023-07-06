@@ -3,33 +3,35 @@
 require 'rails_helper'
 
 RSpec.describe DmarcReport do
+  def create_report(name)
+    create(:dmarc_report, xml: file_fixture("dmarc_report/#{name}.xml").read)
+  end
+
   describe '#check_report_uniqueness' do
     it 'rejects duplicate reports' do
-      create(:dmarc_report, xml: file_fixture('dmarc_report/pass.xml').read)
+      create_report(:pass)
 
-      expect { create(:dmarc_report, xml: file_fixture('dmarc_report/pass.xml').read) }.to(
-        raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Duplicate report')
+      expect { create_report(:pass) }.to raise_error(
+        ActiveRecord::RecordInvalid, 'Validation failed: Duplicate report'
       )
     end
   end
 
   describe '#proto=' do
-    let(:dmarc_report) { create(:dmarc_report, xml: file_fixture('dmarc_report/pass.xml').read) }
-
     it 'accepts hash input' do
-      expect { dmarc_report.proto = {} }.to change { dmarc_report.proto }.to(Dmarc::Feedback.new)
+      passing_report = create_report(:pass)
+
+      expect { passing_report.proto = {} }.to change { passing_report.proto }.to(Dmarc::Feedback.new)
     end
 
     it 'raises an exception with unexpected input' do
-      expect { dmarc_report.proto = 'incorrect' }.to raise_error('Unexpected data format')
+      expect { create_report(:pass).proto = 'incorrect' }.to raise_error('Unexpected data format')
     end
   end
 
   context 'with a passing report' do
-    let(:dmarc_report) { create(:dmarc_report, xml: file_fixture('dmarc_report/pass.xml').read) }
-
     it 'generates the correct proto' do
-      expect(dmarc_report.proto).to eq(
+      expect(create_report(:pass).proto).to eq(
         Dmarc::Feedback.new(
           report_metadata: {
             org_name: 'google.com',
@@ -88,10 +90,8 @@ RSpec.describe DmarcReport do
   end
 
   context 'with a failing report' do
-    let(:dmarc_report) { create(:dmarc_report, xml: file_fixture('dmarc_report/fail.xml').read) }
-
     it 'generates the correct proto' do
-      expect(dmarc_report.proto).to eq(
+      expect(create_report(:fail).proto).to eq(
         Dmarc::Feedback.new(
           report_metadata: {
             org_name: 'google.com',
