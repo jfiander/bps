@@ -109,8 +109,7 @@ RSpec.describe DmarcReport do
             aspf: :R,
             p: :REJECT,
             sp: :REJECT,
-            pct: 100,
-            np: :REJECT
+            pct: 100
           },
           records: [{
             row: {
