@@ -54,6 +54,8 @@ RSpec.describe DmarcReport do
           },
           records: [{
             row: {
+              source_ip: '23.251.226.1',
+              count: 1,
               policy_evaluated: {
                 disposition: :NONE,
                 dkim: :PASS,
@@ -113,6 +115,8 @@ RSpec.describe DmarcReport do
           },
           records: [{
             row: {
+              source_ip: '23.251.226.1',
+              count: 1,
               policy_evaluated: {
                 disposition: :NONE,
                 dkim: :FAIL,

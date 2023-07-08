@@ -34,15 +34,18 @@ class DmarcReport < ApplicationRecord
     policy_published = child(feedback, :policy_published)
     records = children(feedback, :record)
 
-    record_data = records.each_with_object({}) do |record, hash|
-      hash[record] ||= {}
+    record_data = records.each_with_object([]) do |record, array|
+      record_data = {}
       row = child(record, :row)
-      hash[record][:policy_evaluated] = policy_evaluated = child(row, :policy_evaluated)
-      hash[record][:reason] = child(policy_evaluated, :reason)
-      hash[record][:identifiers] = child(record, :identifiers)
-      hash[record][:auth_results] = auth_results = child(record, :auth_results)
-      hash[record][:dkim] = children(auth_results, :dkim)
-      hash[record][:spf] = children(auth_results, :spf)
+      record_data[:source_ip] = value(row, :source_ip)
+      record_data[:count] = value(row, :count)
+      record_data[:policy_evaluated] = policy_evaluated = child(row, :policy_evaluated)
+      record_data[:reason] = child(policy_evaluated, :reason)
+      record_data[:identifiers] = child(record, :identifiers)
+      record_data[:auth_results] = auth_results = child(record, :auth_results)
+      record_data[:dkim] = children(auth_results, :dkim)
+      record_data[:spf] = children(auth_results, :spf)
+      array << record_data
     end
 
     Dmarc::Feedback.new(
@@ -68,11 +71,11 @@ class DmarcReport < ApplicationRecord
         np: if_present(child(policy_published, :np)) { enum(policy_published, :np) },
         fo: value(policy_published, :fo)
       },
-      records: record_data.map do |record, data|
+      records: record_data.map do |data|
         {
           row: {
-            source_ip: value(record, :source_ip),
-            count: value(record, :count).to_i,
+            source_ip: data[:source_ip],
+            count: data[:count].to_i,
             policy_evaluated: {
               disposition: enum(data[:policy_evaluated], :disposition),
               dkim: enum(data[:policy_evaluated], :dkim),
