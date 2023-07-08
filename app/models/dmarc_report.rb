@@ -65,7 +65,7 @@ class DmarcReport < ApplicationRecord
         p: enum(policy_published, :p),
         sp: enum(policy_published, :sp),
         pct: value(policy_published, :pct).to_i,
-        np: value(policy_published, :np),
+        np: if_present(child(policy_published, :np)) { enum(policy_published, :np) },
         fo: value(policy_published, :fo)
       },
       records: record_data.map do |record, data|
@@ -101,7 +101,7 @@ class DmarcReport < ApplicationRecord
             spf: data[:spf].map do |s|
               {
                 domain: value(s, :domain),
-                result: handle_unknown_spf(enum(s, :result)),
+                result: enum(s, :result),
                 scope: value(s, :scope)
               }
             end
@@ -143,10 +143,6 @@ private
 
   def if_present(node)
     yield unless node.nil?
-  end
-
-  def handle_unknown_spf(result)
-    result == :UNKNOWN ? :TEMPERROR : result
   end
 
   def check_report_uniqueness

@@ -30,7 +30,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :p, :enum, 4, "dmarc.Disposition"
       optional :sp, :enum, 5, "dmarc.Disposition"
       optional :pct, :int32, 6
-      optional :np, :string, 7
+      optional :np, :enum, 7, "dmarc.Disposition"
       optional :fo, :string, 8
     end
     add_enum "dmarc.PolicyPublished.Alignment" do
@@ -104,8 +104,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :FAIL, 4
       value :SOFTFAIL, 5
       value :TEMPERROR, 6
+      value :UNKNOWN, 6
       value :PERMERROR, 7
-      value :ERROR, 8
+      value :ERROR, 7
     end
     add_enum "dmarc.Disposition" do
       value :UNKNOWN_DISPOSITION, 0

@@ -50,7 +50,7 @@ RSpec.describe DmarcReport do
             p: :REJECT,
             sp: :REJECT,
             pct: 100,
-            np: 'reject'
+            np: :REJECT
           },
           records: [{
             row: {
@@ -110,7 +110,7 @@ RSpec.describe DmarcReport do
             p: :REJECT,
             sp: :REJECT,
             pct: 100,
-            np: 'reject'
+            np: :REJECT
           },
           records: [{
             row: {

@@ -42,8 +42,8 @@ message PolicyPublished {
   Disposition p = 4;
   Disposition sp = 5;
   int32 pct = 6;
-  string np = 7; // Google-only? What values can this have?
-  string fo = 8;
+  Disposition np = 7; // Proposed field; implemented by Google
+  string fo = 8; // Deprecated field; forensic report; { 0 | 1 | s | d }
 }
 
 message Record {
@@ -111,6 +111,8 @@ message Dkim {
 
 message Spf {
   enum SpfResult {
+    option allow_alias = true;
+
     UNKNOWN_SPF_RESULT = 0;
     NONE = 1;
     NEUTRAL = 2;
@@ -118,8 +120,9 @@ message Spf {
     FAIL = 4;
     SOFTFAIL = 5;
     TEMPERROR = 6; // "TempError" commonly implemented as "unknown"
+    UNKNOWN = 6;
     PERMERROR = 7; // "PermError" commonly implemented as "error"
-    ERROR = 8;
+    ERROR = 7;
   }
 
   string domain = 1;
