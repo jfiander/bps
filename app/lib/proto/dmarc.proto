@@ -125,7 +125,13 @@ message Spf {
     ERROR = 7;
   }
 
+  enum DomainScope {
+    UNKNOWN_SCOPE = 0;
+    HELO = 1;
+    MFROM = 2;
+  }
+
   string domain = 1;
   SpfResult result = 2;
-  string scope = 3;
+  DomainScope scope = 3;
 }

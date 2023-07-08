@@ -143,7 +143,8 @@ RSpec.describe DmarcReport do
               spf: [
                 {
                   domain: 'smtp.bpsd9.org',
-                  result: :FAIL
+                  result: :FAIL,
+                  scope: :MFROM
                 }
               ]
             }

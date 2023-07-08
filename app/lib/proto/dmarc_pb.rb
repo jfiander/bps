@@ -94,7 +94,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "dmarc.Spf" do
       optional :domain, :string, 1
       optional :result, :enum, 2, "dmarc.Spf.SpfResult"
-      optional :scope, :string, 3
+      optional :scope, :enum, 3, "dmarc.Spf.DomainScope"
     end
     add_enum "dmarc.Spf.SpfResult" do
       value :UNKNOWN_SPF_RESULT, 0
@@ -107,6 +107,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :UNKNOWN, 6
       value :PERMERROR, 7
       value :ERROR, 7
+    end
+    add_enum "dmarc.Spf.DomainScope" do
+      value :UNKNOWN_SCOPE, 0
+      value :HELO, 1
+      value :MFROM, 2
     end
     add_enum "dmarc.Disposition" do
       value :UNKNOWN_DISPOSITION, 0
@@ -135,5 +140,6 @@ module Dmarc
   Dkim::DkimResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Dkim.DkimResult").enummodule
   Spf = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Spf").msgclass
   Spf::SpfResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Spf.SpfResult").enummodule
+  Spf::DomainScope = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Spf.DomainScope").enummodule
   Disposition = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Disposition").enummodule
 end

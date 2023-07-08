@@ -50,6 +50,7 @@
       <spf>
         <domain>smtp.bpsd9.org</domain>
         <result>fail</result>
+        <scope>mfrom</scope>
       </spf>
     </auth_results>
   </record>

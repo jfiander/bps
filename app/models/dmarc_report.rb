@@ -102,7 +102,7 @@ class DmarcReport < ApplicationRecord
               {
                 domain: value(s, :domain),
                 result: enum(s, :result),
-                scope: value(s, :scope)
+                scope: if_present(child(s, :scope)) { enum(s, :scope) }
               }
             end
           }
