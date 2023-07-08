@@ -123,8 +123,8 @@ Rails.application.routes.draw do
     delete '/promo_codes/:id/expire',    to: 'promo_codes#expire',   as: 'expire_promo_code'
 
     # Send Message
-    get    '/message',                   to: 'sms#new', as: 'message'
-    post   '/message',                   to: 'sms#send_message'
+    resources :messages, only: %i[new create]
+    resources :emails, only: %i[new create]
 
     # Generic Payments
     get    '/generic_payments',          to: 'generic_payments#index'

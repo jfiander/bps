@@ -1,10 +1,11 @@
 = link 'Receipts',         path: receipts_path,               admin: true, fa: { name: 'file-invoice-dollar',  options: { style: :duotone, fa: :fw } }
 = link 'ABC Logos',        path: admin_logo_path,             admin: true, fa: { name: 'image',                options: { style: :duotone, fa: %i[fw swap-opacity] } }
 = link 'S3 Links',         path: admin_s3_path,               admin: true, fa: { name: 'link',                 options: { style: :duotone, fa: :fw } }
-= link 'Send SMS',         path: admin_message_path,          admin: true, fa: { name: 'sms',                  options: { style: :duotone, fa: :fw } }
+= link 'Send SMS',         path: new_admin_message_path,      admin: true, fa: { name: 'sms',                  options: { style: :duotone, fa: :fw } }
+= link 'Send Email',       path: new_admin_email_path,        admin: true, fa: { name: 'envelope',             options: { style: :duotone, fa: :fw } }
 = link 'Promo Codes',      path: admin_promo_codes_path,      admin: true, fa: { name: 'hands-usd',            options: { style: :duotone, fa: :fw } }
 = link 'Generic Payments', path: admin_generic_payments_path, admin: true, fa: { name: 'money-check-edit-alt', options: { style: :duotone, fa: :fw } }
 = link 'Import Logs',      path: admin_import_logs_path,      admin: true, fa: { name: 'file-import',          options: { style: :duotone, fa: :fw } }
-= link 'DMARC Reports',    path: admin_dmarc_reports_path,    admin: true, fa: { name: 'envelope',             options: { style: :duotone, fa: :fw } }
+= link 'DMARC Reports',    path: admin_dmarc_reports_path,    admin: true, fa: { name: 'circle-envelope',      options: { style: :duotone, fa: :fw } }
 = link 'Versions',         path: admin_versions_path,         admin: true, fa: { name: 'code-branch',          options: { style: :duotone, fa: :fw } }
 = link 'Sidekiq',          path: sidekiq_web_path,            admin: true, fa: { name: 'gears',                options: { style: :duotone, fa: :fw } }

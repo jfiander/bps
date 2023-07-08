@@ -1,0 +1,14 @@
+h1 = admin_header('Send SMS')
+
+= form_tag(admin_messages_path) do
+  .field
+    .left = label_tag(:user_id, 'Send to: ')
+    .right = select_tag(:user_id, options_for_select(@users), prompt: 'Select a member to message', include_blank: true, required: true)
+    br.clear
+
+  .field
+    .left = label_tag(:message, 'Message: ')
+    .right = text_area_tag(:message, '', required: true, cols: 30, rows: 4)
+    br.clear
+
+  = submit_tag('Send Message', class: 'big')
