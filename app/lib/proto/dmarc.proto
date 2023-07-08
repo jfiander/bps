@@ -32,18 +32,18 @@ message DateRange {
 message PolicyPublished {
   enum Alignment {
     UNKNOWN_ALIGNMENT = 0;
-    R = 1;
-    S = 2;
+    R = 1; // Relaxed
+    S = 2; // Strict
   }
 
   string domain = 1;
   Alignment adkim = 2;
   Alignment aspf = 3;
-  Disposition p = 4;
-  Disposition sp = 5;
-  int32 pct = 6;
-  Disposition np = 7; // Proposed field; implemented by Google
-  string fo = 8; // Deprecated field; forensic report; { 0 | 1 | s | d }
+  Disposition p = 4; // Policy for domain
+  Disposition sp = 5; // Policy for subdomains
+  int32 pct = 6; // Percent of messages to which policy applies
+  Disposition np = 7; // Proposed field; policy for non-existent subdomains; implemented by Google
+  string fo = 8; // Deprecated field; failure reporting options; { 0 | 1 | s | d }
 }
 
 message Record {
