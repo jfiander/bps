@@ -33,7 +33,7 @@ hr
         = render('dmarc_result', record: record, dmarc_field: :spf)
         .actions.table-cell
           - if index.zero?
-            = link_to(admin_dmarc_report_path(report), title: 'View') { FA::Icon.p('desktop', style: :duotone) }
-            = link_to(admin_dmarc_report_path(report, format: :xml), title: 'XML') { FA::Icon.p('code', style: :duotone) }
-            = link_to(admin_dmarc_report_path(report, format: :json), title: 'JSON') { FA::Icon.p('brackets-curly', style: :duotone) }
-            = link_to(admin_dmarc_report_path(report, format: :proto), title: 'Proto') { FA::Icon.p('binary', style: :duotone) }
+            = link_to(admin_dmarc_report_path(report), title: 'View') { FA::Icon.p('desktop', style: :duotone, fa: :fw) }
+            = link_to(admin_dmarc_report_path(report, format: :xml), title: 'XML') { FA::Icon.p('code', style: :duotone, fa: :fw) }
+            = link_to(admin_dmarc_report_path(report, format: :json), title: 'JSON') { FA::Icon.p('brackets-curly', style: :duotone, fa: :fw) }
+            = link_to(admin_dmarc_report_path(report, format: :proto), title: 'Proto') { FA::Icon.p('binary', style: :duotone, fa: :fw) }
