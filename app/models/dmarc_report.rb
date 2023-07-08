@@ -146,7 +146,7 @@ private
   end
 
   def check_report_uniqueness
-    return if DmarcReport.all.none? { |report| self == report }
+    return if DmarcReport.all.none? { |report| self == report && id != report.id }
 
     errors.add(:base, 'Duplicate report')
   end
