@@ -2,8 +2,5 @@
 .table-cell.dmarc-result class=("#{dmarc_field} #{result}")
   div.mobile #{dmarc_field.to_s.upcase}:
   span class=(result)
-    - if result == 'pass'
-      = FA::Icon.p('circle-check', style: :duotone)
-    - else
-      = FA::Icon.p('octagon-xmark', style: :duotone)
+    = FA::Icon.p(dmarc_result_icon(result), style: :duotone)
     = result

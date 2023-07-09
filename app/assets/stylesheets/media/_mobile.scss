@@ -421,10 +421,10 @@
         text-align: center;
 
         order: 5; // Specified default
-        &.org_name    { flex-basis: 45%; order: 1; }
-        &.report_id   { flex-basis: 45%; order: 3; }
-        &.date_begin  { flex-basis: 45%; order: 2; }
-        &.date_end    { flex-basis: 45%; order: 4; }
+        &.report      { flex-basis: 45%; order: 1; }
+        &.dates       { flex-basis: 45%; order: 2; }
+        &.source_ip   { flex-basis: 45%; order: 3; }
+        &.count       { flex-basis: 45%; order: 4; }
         &.disposition { flex-basis: 30%; }
         &.dkim, &.spf {
           flex-basis: 30%;

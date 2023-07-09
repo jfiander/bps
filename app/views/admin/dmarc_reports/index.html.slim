@@ -10,10 +10,10 @@ hr
 
 #dmarc-reports.table.striped
   .table-row.header
-    .table-cell Org
-    .table-cell ID
-    .table-cell Begin
-    .table-cell End
+    .table-cell Report
+    .table-cell Date Range
+    .table-cell Source IP
+    .table-cell Count
     .table-cell Disposition
     .table-cell DKIM
     .table-cell SPF
@@ -22,12 +22,20 @@ hr
     - proto = report.proto
     - proto.records.each_with_index do |record, index|
       .table-row
-        .org_name.table-cell = proto.report_metadata.org_name if index.zero?
-        .report_id.table-cell = proto.report_metadata.report_id if index.zero?
-        .date_begin.table-cell = DateTime.strptime(proto.report_metadata.date_range.begin.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
-        .date_end.table-cell = DateTime.strptime(proto.report_metadata.date_range.end.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
+        .report.table-cell title=(proto.report_metadata.report_id)
+          .org_name = proto.report_metadata.org_name if index.zero?
+          .report_id.mobile: small: nolink = proto.report_metadata.report_id if index.zero?
+        .dates.table-cell
+          .date_begin = DateTime.strptime(proto.report_metadata.date_range.begin.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
+          .date_end = DateTime.strptime(proto.report_metadata.date_range.end.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
+        .source_ip.table-cell class=("ip-#{record.row.source_ip.gsub('.', '_')}")
+          nolink = record.row.source_ip
+        .count.table-cell
+          span.mobile> Count:
+          = record.row.count
         .disposition.table-cell class=("dmarc-disposition #{record.row.policy_evaluated.disposition.to_s.downcase}")
           div.mobile Disposition:
+          = FA::Icon.p(disposition_icon(record.row.policy_evaluated.disposition), style: :duotone)
           = record.row.policy_evaluated.disposition.to_s.downcase
         = render('dmarc_result', record: record, dmarc_field: :dkim)
         = render('dmarc_result', record: record, dmarc_field: :spf)

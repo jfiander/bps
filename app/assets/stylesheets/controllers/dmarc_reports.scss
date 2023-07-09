@@ -2,6 +2,8 @@ pre.xml {
   text-align: left;
 }
 
-div #dmarc-reports div.actions {
-  text-align: center;
+div #dmarc-reports {
+  div.actions {
+    text-align: center;
+  }
 }
