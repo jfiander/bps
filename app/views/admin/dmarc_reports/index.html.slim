@@ -28,7 +28,7 @@ hr
         .dates.table-cell
           .date_begin = DateTime.strptime(proto.report_metadata.date_range.begin.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
           .date_end = DateTime.strptime(proto.report_metadata.date_range.end.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
-        .source_ip.table-cell class=("ip-#{record.row.source_ip.gsub('.', '_')}")
+        .source_ip.table-cell class=(dmarc_sources[record.row.source_ip][:sender].present? ? :recognized : :unrecognized)
           nolink = record.row.source_ip
         .count.table-cell
           span.mobile> Count:
