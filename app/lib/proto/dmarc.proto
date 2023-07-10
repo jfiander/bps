@@ -1,6 +1,22 @@
 syntax = "proto3";
 package dmarc;
 
+message SourcesSummary {
+  repeated Source sources = 1;
+}
+
+message Source {
+  enum Sender {
+    UNKNOWN_SENDER = 0;
+    GOOGLE = 1;
+    AMAZON = 2;
+  }
+
+  string source_ip = 1;
+  string dns = 2;
+  Sender sender = 3;
+}
+
 enum Disposition {
   UNKNOWN_DISPOSITION = 0;
   NONE = 1;

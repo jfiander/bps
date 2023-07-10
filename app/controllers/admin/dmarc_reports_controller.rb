@@ -2,11 +2,6 @@
 
 module Admin
   class DmarcReportsController < ::ApplicationController
-    RECOGNIZED_SENDERS = {
-      google: /\.google\.com$/,
-      amazon: /smtp-out\.us-east-2\.amazonses\.com$/
-    }.freeze
-
     secure!(:admin, strict: true)
 
     def index
@@ -55,36 +50,6 @@ module Admin
           DmarcReport.create(xml: entry.get_input_stream.read)
         end
       end
-    end
-
-    def dmarc_sources
-      @dmarc_sources ||= source_ips.each_with_object({}) do |ip, h|
-        name = reverse_dns(ip)
-        h[ip] = { name: name, sender: dmarc_sender(name) }
-      end
-    end
-    helper_method :dmarc_sources
-
-    def reverse_dns(ip)
-      Resolv.getname(ip)
-    rescue StandardError
-      nil
-    end
-
-    def source_ips
-      DmarcReport.all.flat_map do |d|
-        d.proto.records
-         .flat_map(&:row)
-         .map(&:source_ip)
-      end.uniq
-    end
-
-    def dmarc_sender(name)
-      RECOGNIZED_SENDERS.each do |sender, pattern|
-        return sender if name&.match?(pattern)
-      end
-
-      nil # No match found
     end
   end
 end

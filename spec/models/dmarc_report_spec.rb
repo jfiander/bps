@@ -29,6 +29,26 @@ RSpec.describe DmarcReport do
     end
   end
 
+  describe '#sources_proto' do
+    let(:report) { build(:dmarc_report, xml: file_fixture('dmarc_report/pass.xml').read) }
+    let(:ip) { '23.251.226.1' }
+    let(:dns) { 'e226-1.smtp-out.us-east-2.amazonses.com' }
+
+    before { allow(report).to receive(:reverse_dns).with(ip).and_return(dns) }
+
+    it 'generates the correct sources proto' do
+      report.save!
+
+      expect(report.sources_proto).to eq(
+        Dmarc::SourcesSummary.new(
+          sources: [
+            { source_ip: ip, dns: dns, sender: :AMAZON }
+          ]
+        )
+      )
+    end
+  end
+
   context 'with a passing report' do
     it 'generates the correct proto' do
       expect(create_report(:pass).proto).to eq(

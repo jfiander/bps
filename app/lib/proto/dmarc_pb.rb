@@ -5,6 +5,19 @@ require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("dmarc.proto", :syntax => :proto3) do
+    add_message "dmarc.SourcesSummary" do
+      repeated :sources, :message, 1, "dmarc.Source"
+    end
+    add_message "dmarc.Source" do
+      optional :source_ip, :string, 1
+      optional :dns, :string, 2
+      optional :sender, :enum, 3, "dmarc.Source.Sender"
+    end
+    add_enum "dmarc.Source.Sender" do
+      value :UNKNOWN_SENDER, 0
+      value :GOOGLE, 1
+      value :AMAZON, 2
+    end
     add_message "dmarc.Feedback" do
       optional :version, :string, 1
       optional :report_metadata, :message, 2, "dmarc.ReportMetadata"
@@ -123,6 +136,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
 end
 
 module Dmarc
+  SourcesSummary = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.SourcesSummary").msgclass
+  Source = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Source").msgclass
+  Source::Sender = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Source.Sender").enummodule
   Feedback = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.Feedback").msgclass
   ReportMetadata = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.ReportMetadata").msgclass
   DateRange = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dmarc.DateRange").msgclass

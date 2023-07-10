@@ -28,8 +28,8 @@ hr
         .dates.table-cell
           .date_begin = DateTime.strptime(proto.report_metadata.date_range.begin.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
           .date_end = DateTime.strptime(proto.report_metadata.date_range.end.to_s, '%s').strftime(TimeHelper::MEDIUM_TIME_FORMAT) if index.zero?
-        .source_ip.table-cell class=(dmarc_sources[record.row.source_ip][:sender].present? ? :recognized : :unrecognized)
-          nolink = record.row.source_ip
+        .source_ip.table-cell class=(report.sources_proto.sources[index].sender == :UNKNOWN_SENDER ? :unrecognized : :recognized)
+          nolink title=(report.sources_proto.sources[index].dns) = record.row.source_ip
         .count.table-cell
           span.mobile> Count:
           = record.row.count
