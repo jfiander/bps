@@ -2,13 +2,6 @@ pre.xml {
   text-align: left;
 }
 
-div #dmarc-reports {
-  div.source_ip {
-    &.recognized { color: $green; }
-    &.unrecognized { color: $red; }
-  }
-
-  div.actions {
-    text-align: center;
-  }
+div#dmarc-reports div.actions {
+  text-align: center;
 }

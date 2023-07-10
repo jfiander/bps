@@ -452,6 +452,13 @@
     div.table-row.header { background-color: inherit;}
   }
 
+  // DMARC Reports
+
+  div#dmarc-reports div.source_ip {
+    &.recognized { color: $green; }
+    &.unrecognized { color: $red; }
+  }
+
   .dmarc-disposition {
     &.none { color: $green; }
     &.quarantine { color: $purple; }

@@ -501,6 +501,13 @@
     &.red-darkblue       { background-color: $old-glory-blue-desaturated; }
   }
 
+  // DMARC Reports
+
+  div#dmarc-reports div.source_ip {
+    &.recognized { color: $dark-green; }
+    &.unrecognized { color: $dark-red; }
+  }
+
   .dmarc-disposition {
     &.none { color: $dark-green; }
     &.quarantine { color: $dark-purple; }
