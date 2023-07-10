@@ -1,0 +1,61 @@
+admin:
+  button: 'admin'
+  order: 50
+  items:
+    - text: 'Import Logs'
+      path: <%= admin_import_logs_path %>
+      icon: 'file-import'
+      display: <%= show_link?(:admin) %>
+    - text: 'Payments'
+      icon: 'circle-dollar-to-slot'
+      children:
+        - text: 'Receipts'
+          path: <%= receipts_path %>
+          icon: 'file-invoice-dollar'
+          display: <%= show_link?(:admin) %>
+        - text: 'Promo Codes'
+          path: <%= admin_promo_codes_path %>
+          icon: 'hands-usd'
+          display: <%= show_link?(:admin) %>
+        - text: 'Generic Payments'
+          path: <%= admin_generic_payments_path %>
+          icon: 'money-check-edit-alt'
+          display: <%= show_link?(:admin) %>
+    - text: 'Downloads'
+      icon: 'download'
+      children:
+        - text: 'ABC Logos'
+          path: <%= admin_logo_path %>
+          icon: 'image'
+          fa: 'swap-opacity'
+          display: <%= show_link?(:admin) %>
+        - text: 'S3 Links'
+          path: <%= admin_s3_path %>
+          icon: 'link'
+          display: <%= show_link?(:admin) %>
+    - text: 'Messaging'
+      icon: 'messages'
+      children:
+        - text: 'Send SMS'
+          path: <%= new_admin_message_path %>
+          icon: 'sms'
+          display: <%= show_link?(:admin) %>
+        - text: 'Send Email'
+          path: <%= new_admin_email_path %>
+          icon: 'envelope'
+          display: <%= show_link?(:admin) %>
+        - text: 'DMARC Reports'
+          path: <%= admin_dmarc_reports_path %>
+          icon: 'circle-envelope'
+          display: <%= show_link?(:admin) %>
+    - text: 'Technical'
+      icon: 'gear-code'
+      children:
+        - text: 'Versions'
+          path: <%= admin_versions_path %>
+          icon: 'code-branch'
+          display: <%= show_link?(:admin) %>
+        - text: 'Sidekiq'
+          path: <%= sidekiq_web_path %>
+          icon: 'gears'
+          display: <%= show_link?(:admin) %>

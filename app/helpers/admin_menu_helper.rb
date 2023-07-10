@@ -1,78 +1,52 @@
 # frozen_string_literal: true
 
 module AdminMenuHelper
-  def sidenav_admin_menu
-    return unless current_user&.show_admin_menu? && admin_menu.values.any?
-
-    buttons = []
-    submenus = []
-
-    admin_menu_groups.map do |heading, id|
-      menu_id = "sidenav-#{id}"
-      buttons << show_sidenav_submenu_link(heading, menu_id)
-      submenus << sidenav_admin_submenu(heading, menu_id)
-    end
-
-    sidenav_construct_menu(buttons, submenus)
-  end
-
-  def sidenav_construct_menu(buttons, submenus)
-    content_tag(:h3, 'Admin') +
-      safe_join(submenus) +
-      content_tag(:ul, safe_join(buttons), class: 'simple') +
-      content_tag(:div, nil, class: 'sidenav-spacer')
-  end
-
-  def sidenav_admin_submenu(heading, menu_id)
-    content_tag(:div, class: 'sub-menu', id: menu_id) do
-      close_sidenav_submenu_link(menu_id) +
-        content_tag(:h3, heading) +
-        content_tag(:ul, admin_menu_sidenav(menu_id), class: 'simple') +
-        content_tag(:div, nil, class: 'sidenav-spacer')
-    end
-  end
-
-  def show_sidenav_submenu_link(heading, menu_id)
-    button_class = { 'Admin' => 'admin', 'Current Page' => '' }[heading] || 'members'
-
-    link_to('#', id: "show-#{menu_id}", class: "show-sub-menu #{button_class}") do
-      content_tag(:li, heading)
-    end
-  end
-
-  def close_sidenav_submenu_link(menu_id)
-    link_to('#', id: "hide-#{menu_id}", class: 'red close-sidenav') do
-      safe_join([FA::Icon.p('times-square', style: :duotone), 'Close'])
-    end
-  end
+  include Rails.application.routes.url_helpers
 
   def admin_menu
-    @admin_menu ||= admin_menus.each_with_object({}) do |(menu, permit), hash|
-      next if permit == false
-      next unless permit == true || show_link?(*permit)
+    content_tag(:ul, class: 'desktop') do
+      safe_join(combined_yaml.map do |menu, data|
+        next if data[:items].none? { |d| d[:display] }
 
-      hash[menu] = render("application/navigation/admin/#{menu}")
+        content_tag(:li, class: "menu #{menu}") do
+          safe_join(
+            [
+              link_to(data[:title] || menu.to_s.titleize, '#', class: "menu-header #{menu}"),
+              content_tag(:ul) { safe_join(admin_menu_contents(menu, data[:items])) }
+            ]
+          )
+        end
+      end)
     end
   end
 
-  def admin_menu_groups
-    @admin_menu_groups ||= {}.tap do |h|
-      h['Current Page'] = 'current' if admin_current?
-      h['Files'] = 'files' if show_link?(:page)
-      h['Users'] = 'users' if show_link?(:users, :float, :roster, :excom)
-      h['Education'] = 'education' if show_link?(:otw, :education)
-      h['Admin'] = 'admin' if show_link?(:admin, strict: true)
+  def sidenav_admin_menu
+    return unless any_admin_links?
+
+    safe_join(
+      [
+        content_tag(:h3, 'Admin'),
+        sidenav_content_divs,
+        content_tag(:ul, safe_join(sidenav_top_buttons), class: 'simple'),
+        sidenav_spacer
+      ]
+    )
+  end
+
+  def any_admin_links?
+    combined_yaml.each do |_menu, data|
+      data[:items].each do |d|
+        if d.key?(:children)
+          d[:children].each do |child|
+            return true if child[:display]
+          end
+        elsif d[:display]
+          return true
+        end
+      end
     end
-  end
 
-  def admin_menu_sidenav(menu_id)
-    menu = menu_id[8, menu_id.length]
-    render("application/navigation/admin/sidenav/#{menu}", admin_links: admin_menu)
-  end
-
-  def admin_current?
-    admin_markdown? || admin_events? || admin_otw? ||
-      admin_event_attachments? || admin_promos? || admin_generic_payments?
+    false
   end
 
   def show_link?(*roles, strict: false, **options)
@@ -85,6 +59,121 @@ module AdminMenuHelper
 
 private
 
+  def combined_yaml
+    return @combined_yaml unless @combined_yaml.nil?
+
+    yaml_files = Rails.root.glob('app/lib/admin_nav/*.yml.erb')
+    combined_yaml = yaml_files.each_with_object({}) do |path, hash|
+      yaml = YAML.safe_load(ERB.new(File.read(path)).result(binding))
+      hash.merge!(yaml)
+    end.deep_symbolize_keys!
+
+    @combined_yaml = combined_yaml.sort_by { |_menu, data| data[:order] }
+  end
+
+  def admin_menu_contents(menu, data)
+    data.map do |d|
+      next if d.key?(:display) && !d[:display]
+
+      if d.key?(:children)
+        next unless d[:children].any? { |c| c[:display] }
+
+        if d[:text].blank?
+          submenu_links(menu, d)
+        else
+          content_tag(:li, class: "menu #{menu}") do
+            submenu_header(menu, d) + content_tag(:ul) { submenu_links(menu, d) }
+          end
+        end
+      else
+        admin_menu_link(d, admin: menu == :admin)
+      end
+    end
+  end
+
+  def admin_menu_link(data, admin: false)
+    link(
+      data[:text],
+      path: data[:path],
+      admin: admin,
+      fa: { name: data[:icon], options: { style: :duotone, fa: "fw #{data[:fa]}" } }
+    )
+  end
+
+  def submenu_header(menu, data)
+    link_to('#', class: "menu-header #{menu}") do
+      safe_join(
+        [
+          FA::Icon.p(data[:icon], style: :duotone, fa: "fw #{data[:fa]}"),
+          data[:text],
+          content_tag(:div, FA::Icon.p('chevron-right', style: :regular, fa: :fw), class: 'arrow')
+        ]
+      )
+    end
+  end
+
+  def submenu_links(menu, data)
+    safe_join(data[:children].map { |child| admin_menu_link(child, admin: menu == :admin) })
+  end
+
+  def sidenav_content_divs
+    combined_yaml.map do |menu, data|
+      content_tag(:div, class: 'sub-menu', id: "sidenav-#{menu}") do
+        safe_join(
+          [
+            close_sidenav_submenu_link("sidenav-#{menu}"),
+            content_tag(:h3, data[:title] || menu.to_s.titleize),
+            content_tag(:ul, safe_join(sidenav_main_menu(menu, data[:items])), class: 'simple'),
+            sidenav_spacer
+          ]
+        )
+      end
+    end
+  end
+
+  def close_sidenav_submenu_link(menu_id)
+    link_to('#', id: "hide-#{menu_id}", class: 'red close-sidenav') do
+      safe_join([FA::Icon.p('times-square', style: :duotone), 'Close'])
+    end
+  end
+
+  def sidenav_main_menu(menu, data)
+    data.map do |d|
+      next if d.key?(:display) && !d[:display]
+
+      if d.key?(:children)
+        next unless d[:children].any? { |c| c[:display] }
+
+        safe_join(
+          [
+            sidenav_heading(d),
+            d[:children].map { |child| admin_menu_link(child, admin: menu == :admin) }
+          ]
+        )
+      else
+        admin_menu_link(d, admin: menu == :admin)
+      end
+    end
+  end
+
+  def sidenav_heading(data)
+    return content_tag(:h4, 'Misc') if data[:text].blank?
+
+    content_tag(:h4, data[:text])
+  end
+
+  def sidenav_top_buttons
+    combined_yaml.map do |menu, data|
+      link_to('#', id: "show-sidenav-#{menu}", class: "show-sub-menu #{data[:button]}") do
+        content_tag(:li, data[:title] || menu.to_s.titleize)
+      end
+    end
+  end
+
+  def sidenav_spacer
+    content_tag(:div, '', class: 'sidenav-spacer')
+  end
+
   def link_requirements(options)
     req_cont = *options[:controller] || []
     req_action = *options[:action] || []
@@ -92,16 +181,6 @@ private
     not_action = *options[:not_action] || []
 
     [req_cont, req_action, not_cont, not_action]
-  end
-
-  def admin_menus
-    {
-      current: admin_current?, files: [:page], users_top: [:users],
-      review: %i[users float roster excom], upload: %i[users roster],
-      roster: %i[users roster], lists: %i[users], users_bottom: [:users],
-      education: [:education], otw: [:education], completions: [:education],
-      admin: [:admin, { strict: true }]
-    }
   end
 
   def invalid?(req_cont, req_act, not_cont, not_act)
@@ -127,13 +206,13 @@ private
   def missing_controller?(req_controller = nil)
     return false if req_controller.blank?
 
-    !controller_name.in?(req_controller)
+    !controller.controller_name.in?(req_controller)
   end
 
   def wrong_controller?(not_controller = nil)
     return false if not_controller.blank?
 
-    controller_name.in?(not_controller)
+    controller.controller_name.in?(not_controller)
   end
 
   def missing_action?(req_action = nil)
@@ -148,27 +227,7 @@ private
     controller.action_name.in?(not_action)
   end
 
-  def admin_markdown?
-    show_link?(:page, action: StaticPage.names)
-  end
-
-  def admin_events?
-    show_link?(event_type_param, controller: %w[courses seminars events])
-  end
-
-  def admin_otw?
-    show_link?(:otw, controller: %w[otw_trainings])
-  end
-
-  def admin_event_attachments?
-    show_link?(%i[event seminar course], controller: %w[event_types locations])
-  end
-
-  def admin_promos?
-    show_link?(:admin, strict: true, controller: 'promo_codes')
-  end
-
-  def admin_generic_payments?
-    show_link?(:admin, strict: true, controller: 'generic_payments')
+  def default_url_options
+    Rails.application.config.active_job.default_url_options
   end
 end

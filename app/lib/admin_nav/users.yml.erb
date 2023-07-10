@@ -1,0 +1,74 @@
+users:
+  button: 'members'
+  order: 30
+  items:
+    - text: 'Users List'
+      path: <%= users_path %>
+      icon: 'users'
+      display: <%= show_link?(:users) %>
+    - text: 'Invite User'
+      path: <%= new_user_invitation_path %>
+      icon: 'user-plus'
+      display: <%= show_link?(:users) %>
+    - text: 'Permissions'
+      path: <%= permit_path %>
+      icon: 'user-shield'
+      display: <%= show_link?(:users) %>
+    - text: 'Review'
+      icon: 'list'
+      children:
+        - text: 'Applications'
+          path: <%= applications_path %>
+          icon: 'user-check'
+          display: <%= show_link?(:admin, :excom) %>
+        - text: 'Float Plans'
+          path: <%= float_plans_path %>
+          icon: 'ship'
+          display: <%= show_link?(:float) %>
+    - text: 'Upload'
+      icon: 'upload'
+      children:
+        - text: 'Import user data'
+          path: <%= import_users_path %>
+          icon: 'upload'
+          display: <%= show_link?(:users) %>
+        - text: 'GLYC members'
+          path: <%= glyc_members_path %>
+          icon: 'users'
+          display: <%= show_link?(:users) %>
+    - text: 'Roster'
+      icon: 'clipboard-list'
+      children:
+        - text: 'Award Recipients'
+          path: <%= roster_award_recipients_path %>
+          icon: 'trophy'
+          display: <%= show_link?(:users, :roster) %>
+        - text: 'P/Cs'
+          path: <%= roster_past_commanders_path %>
+          icon: 'hourglass-end'
+          display: <%= show_link?(:users, :roster) %>
+        - text: 'Generate'
+          path: <%= roster_gen_path %>
+          icon: 'file-plus'
+          display: <%= show_link?(:users, :roster) %>
+        - text: 'Archives'
+          path: <%= roster_archive_files_path %>
+          icon: 'archive'
+          display: <%= show_link?(:users, :roster) %>
+    - text: 'Lists'
+      icon: 'table-list'
+      children:
+        - text: 'Birthdays'
+          icon: 'birthday-cake'
+          path: <%= birthdays_path %>
+          display: <%= show_link?(:users) %>
+        - text: 'Merit Marks'
+          icon: 'award-simple'
+          path: <%= merit_marks_path %>
+          display: <%= show_link?(:users) %>
+    - text: ''
+      children:
+        - text: 'Help'
+          path: <%= user_help_path %>
+          icon: 'question-circle'
+          display: <%= show_link?(:users) %>

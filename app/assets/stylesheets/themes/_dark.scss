@@ -163,15 +163,17 @@
         background-color: $dark-background-blue-faded-35;
 
         a        { color: $birmingham-blue-darker; }
+        a.admin  { color: $purple; }
         a:hover  { background-color: $dark-background-blue-faded-40; }
         li:hover { background-color: $dark-background-blue-faded-40; }
 
         ul {
           background-color: $dark-background-blue-faded-35;
 
-          li { color: $birmingham-blue-darker; }
-          a:hover  { background-color: $dark-background-blue-faded-40; }
-          li:hover { background-color: $dark-background-blue-faded-40; }
+          li         { color: $birmingham-blue-darker; }
+          a.admin li { color: $purple; }
+          a:hover    { background-color: $dark-background-blue-faded-40; }
+          li:hover   { background-color: $dark-background-blue-faded-40; }
         }
       }
     }

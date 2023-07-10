@@ -1,0 +1,44 @@
+current:
+  title: 'Current Page'
+  order: 10
+  items:
+    - text: 'Edit This Page'
+      path: <%= edit_page_path(controller.action_name) %>
+      icon: 'edit'
+      display: <%= show_link?(:page, action: StaticPage.names) %>
+    - text: <%= "Add #{event_type_param.titleize}" if event_type_param %>
+      path: <%= send("new_#{event_type_param}_path") if event_type_param %>
+      icon: 'calendar-plus'
+      display: <%= show_link?(event_type_param) %>
+    - text: 'Registrations'
+      path: <%= send("#{event_type_param}_registrations_path") if event_type_param %>
+      icon: 'calendar-check'
+      display: <%= show_link?(event_type_param, not_action: 'registrations') %>
+    - text: 'Locations'
+      path: <%= locations_path %>
+      icon: 'map-marker-alt'
+      display: <%= show_link?(event_type_param, controller: %w[events courses seminars event_types]) %>
+    - text: 'Add Location'
+      path: <%= new_location_path %>
+      icon: 'map-marker-plus'
+      display: <%= show_link?(:event, :seminar, :course, controller: 'locations') %>
+    - text: 'Event Types'
+      path: <%= event_types_path %>
+      icon: 'list'
+      display: <%= show_link?(:admin, strict: true, controller: %w[events courses seminars event_types], not_action: 'list') %>
+    - text: 'Add Event Type'
+      path: <%= new_event_type_path %>
+      icon: 'plus-hexagon'
+      display: <%= show_link?(:admin, strict: true, controller: 'event_types') %>
+    - text: 'Add Training'
+      path: <%= new_otw_path %>
+      icon: 'plus-hexagon'
+      display: <%= show_link?(:education, controller: 'otw_trainings') %>
+    - text: 'Add Promo Code'
+      path: <%= admin_new_promo_code_path %>
+      icon: 'hands-usd'
+      display: <%= show_link?(:admin, strict: true, controller: 'promo_codes') %>
+    - text: 'Add Payment'
+      path: <%= admin_generic_payments_new_path %>
+      icon: 'cart-plus'
+      display: <%= show_link?(:admin, strict: true, controller: 'generic_payments') %>

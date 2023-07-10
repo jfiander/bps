@@ -1,0 +1,12 @@
+files:
+  button: 'members'
+  order: 20
+  items:
+    - text: 'Files'
+      path: <%= file_path %>
+      icon: 'upload'
+      display: <%= show_link?(:page) %>
+    - text: 'Headers'
+      path: <%= header_path %>
+      icon: 'desktop'
+      display: <%= show_link?(:page) %>

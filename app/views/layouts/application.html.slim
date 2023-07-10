@@ -37,8 +37,8 @@ html lang='en'
       #navigation = main_menu
       #content
         #content-top
-          - if current_user&.show_admin_menu? && admin_menu.values.any?
-            #nested-navigation = render 'application/navigation/admin/nested', admin_links: admin_menu
+          - if current_user&.show_admin_menu? && any_admin_links?
+            #nested-navigation = admin_menu
           #flashes
             #success class=(success ? '' : 'hide') = render 'application/flash', icon: 'check-circle', contents: success, name: 'success'
             #notice class=(notice ? '' : 'hide') = render 'application/flash', icon: 'info-circle', contents: notice, name: 'info'

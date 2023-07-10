@@ -223,15 +223,17 @@
         color: $birmingham-blue-dark;
         background: $old-glory-blue-lighten-65;
 
-        a { color: $birmingham-blue-dark; }
-        a:hover { background: $old-glory-blue-lighten-55; }
+        a        { color: $birmingham-blue-dark; }
+        a.admin  { color: $purple; }
+        a:hover  { background: $old-glory-blue-lighten-55; }
         li:hover { background: $old-glory-blue-lighten-55; }
         ul {
           background: $old-glory-blue-lighten-60;
 
-          li { color: $birmingham-blue-darker; }
-          a:hover { background: $old-glory-blue-lighten-50; }
-          li:hover { background: $old-glory-blue-lighten-50; }
+          li         { color: $birmingham-blue-darker; }
+          a.admin li { color: $purple; }
+          a:hover    { background: $old-glory-blue-lighten-50; }
+          li:hover   { background: $old-glory-blue-lighten-50; }
         }
       }
     }
