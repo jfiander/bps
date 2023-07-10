@@ -8,10 +8,8 @@ class StaticPage < ApplicationRecord
     'vsc' => 'Vessel Safety Check'
   }.freeze
 
-  class << self
-    def names
-      @names ||= all.map(&:name)
-    end
+  def self.names
+    all.map(&:name)
   end
 
   def title

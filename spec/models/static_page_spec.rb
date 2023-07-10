@@ -5,8 +5,9 @@ require 'rails_helper'
 RSpec.describe StaticPage do
   describe 'class methods' do
     it 'returns a list of names' do
-      create_list(:static_page, 3)
-      expect(described_class.names).to eql(described_class.all.map(&:name))
+      expect { create(:static_page, name: 'new static page') }.to(
+        change { described_class.names }.from([]).to(['new static page'])
+      )
     end
   end
 
