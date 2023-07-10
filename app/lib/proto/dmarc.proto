@@ -2,152 +2,152 @@ syntax = "proto3";
 package dmarc;
 
 message SourcesSummary {
+  message Source {
+    enum Sender {
+      UNKNOWN_SENDER = 0;
+      GOOGLE = 1;
+      AMAZON = 2;
+    }
+
+    string source_ip = 1;
+    string dns = 2;
+    Sender sender = 3;
+  }
+
   repeated Source sources = 1;
 }
 
-message Source {
-  enum Sender {
-    UNKNOWN_SENDER = 0;
-    GOOGLE = 1;
-    AMAZON = 2;
+message Feedback {
+  enum Disposition {
+    UNKNOWN_DISPOSITION = 0;
+    NONE = 1;
+    QUARANTINE = 2;
+    REJECT = 3;
   }
 
-  string source_ip = 1;
-  string dns = 2;
-  Sender sender = 3;
-}
+  message ReportMetadata {
+    message DateRange {
+      int32 begin = 1;
+      int32 end = 2;
+    }
 
-enum Disposition {
-  UNKNOWN_DISPOSITION = 0;
-  NONE = 1;
-  QUARANTINE = 2;
-  REJECT = 3;
-}
+    string org_name = 1;
+    string email = 2;
+    string extra_contact_info = 3;
+    string report_id = 4;
+    DateRange date_range = 5;
+    string error = 6;
+  }
 
-message Feedback {
+  message PolicyPublished {
+    enum Alignment {
+      UNKNOWN_ALIGNMENT = 0;
+      R = 1; // Relaxed
+      S = 2; // Strict
+    }
+
+    string domain = 1;
+    Alignment adkim = 2;
+    Alignment aspf = 3;
+    Disposition p = 4; // Policy for domain
+    Disposition sp = 5; // Policy for subdomains
+    int32 pct = 6; // Percent of messages to which policy applies
+    Disposition np = 7; // Proposed field; policy for non-existent subdomains; implemented by Google
+    string fo = 8; // Deprecated field; failure reporting options; { 0 | 1 | s | d }
+  }
+
+  message Record {
+    message Row {
+      message PolicyEvaluated {
+        enum DmarcResult {
+          UNKNOWN_DMARC_RESULT = 0;
+          PASS = 1;
+          FAIL = 2;
+        }
+
+        message Reason {
+          enum PolicyOverride {
+            UNKNOWN_POLICY_OVERRIDE = 0;
+            FORWARDED = 1;
+            SAMPLED_OUT = 2;
+            TRUSTED_FORWARDER = 3;
+            MAILING_LIST = 4;
+            LOCAL_POLICY = 5;
+            OTHER = 6;
+         }
+
+          PolicyOverride type = 1;
+          string comment = 2;
+        }
+
+        Disposition disposition = 1;
+        DmarcResult dkim = 2;
+        DmarcResult spf = 3;
+        Reason reason = 4;
+      }
+
+      string source_ip = 1;
+      int32 count = 2;
+      PolicyEvaluated policy_evaluated = 3;
+    }
+
+    message Identifiers {
+      string header_from = 1;
+      string envelope_from = 2;
+    }
+
+    message AuthResults {
+      message Dkim {
+        enum DkimResult {
+          UNKNOWN_RESULT = 0;
+          PASS = 1;
+          FAIL = 2;
+        }
+
+        string domain = 1;
+        DkimResult result = 2;
+        string selector = 3;
+        string human_result = 4;
+      }
+
+      message Spf {
+        enum SpfResult {
+          option allow_alias = true;
+
+          UNKNOWN_SPF_RESULT = 0;
+          NONE = 1;
+          NEUTRAL = 2;
+          PASS = 3;
+          FAIL = 4;
+          SOFTFAIL = 5;
+          TEMPERROR = 6; // "TempError" commonly implemented as "unknown"
+          UNKNOWN = 6;
+          PERMERROR = 7; // "PermError" commonly implemented as "error"
+          ERROR = 7;
+        }
+
+        enum DomainScope {
+          UNKNOWN_SCOPE = 0;
+          HELO = 1;
+          MFROM = 2;
+        }
+
+        string domain = 1;
+        SpfResult result = 2;
+        DomainScope scope = 3;
+      }
+
+      repeated Dkim dkim = 1;
+      repeated Spf spf = 2;
+    }
+
+    Row row = 1;
+    Identifiers identifiers = 2;
+    AuthResults auth_results = 3;
+  }
+
   string version = 1;
   ReportMetadata report_metadata = 2;
   PolicyPublished policy_published = 3;
   repeated Record records = 4;
-}
-
-message ReportMetadata {
-  string org_name = 1;
-  string email = 2;
-  string extra_contact_info = 3;
-  string report_id = 4;
-  DateRange date_range = 5;
-  string error = 6;
-}
-
-message DateRange {
-  int32 begin = 1;
-  int32 end = 2;
-}
-
-message PolicyPublished {
-  enum Alignment {
-    UNKNOWN_ALIGNMENT = 0;
-    R = 1; // Relaxed
-    S = 2; // Strict
-  }
-
-  string domain = 1;
-  Alignment adkim = 2;
-  Alignment aspf = 3;
-  Disposition p = 4; // Policy for domain
-  Disposition sp = 5; // Policy for subdomains
-  int32 pct = 6; // Percent of messages to which policy applies
-  Disposition np = 7; // Proposed field; policy for non-existent subdomains; implemented by Google
-  string fo = 8; // Deprecated field; failure reporting options; { 0 | 1 | s | d }
-}
-
-message Record {
-  Row row = 1;
-  Identifiers identifiers = 2;
-  AuthResults auth_results = 3;
-}
-
-message Row {
-  string source_ip = 1;
-  int32 count = 2;
-  PolicyEvaluated policy_evaluated = 3;
-}
-
-message PolicyEvaluated {
-  enum DmarcResult {
-    UNKNOWN_DMARC_RESULT = 0;
-    PASS = 1;
-    FAIL = 2;
-  }
-
-  Disposition disposition = 1;
-  DmarcResult dkim = 2;
-  DmarcResult spf = 3;
-  Reason reason = 4;
-}
-
-message Reason {
-  enum PolicyOverride {
-    UNKNOWN_POLICY_OVERRIDE = 0;
-    FORWARDED = 1;
-    SAMPLED_OUT = 2;
-    TRUSTED_FORWARDER = 3;
-    MAILING_LIST = 4;
-    LOCAL_POLICY = 5;
-    OTHER = 6;
- }
-
-  PolicyOverride type = 1;
-  string comment = 2;
-}
-
-message Identifiers {
-  string header_from = 1;
-  string envelope_from = 2;
-}
-
-message AuthResults {
-  repeated Dkim dkim = 1;
-  repeated Spf spf = 2;
-}
-
-message Dkim {
-  enum DkimResult {
-    UNKNOWN_RESULT = 0;
-    PASS = 1;
-    FAIL = 2;
-  }
-
-  string domain = 1;
-  DkimResult result = 2;
-  string selector = 3;
-  string human_result = 4;
-}
-
-message Spf {
-  enum SpfResult {
-    option allow_alias = true;
-
-    UNKNOWN_SPF_RESULT = 0;
-    NONE = 1;
-    NEUTRAL = 2;
-    PASS = 3;
-    FAIL = 4;
-    SOFTFAIL = 5;
-    TEMPERROR = 6; // "TempError" commonly implemented as "unknown"
-    UNKNOWN = 6;
-    PERMERROR = 7; // "PermError" commonly implemented as "error"
-    ERROR = 7;
-  }
-
-  enum DomainScope {
-    UNKNOWN_SCOPE = 0;
-    HELO = 1;
-    MFROM = 2;
-  }
-
-  string domain = 1;
-  SpfResult result = 2;
-  DomainScope scope = 3;
 }
