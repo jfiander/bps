@@ -14,30 +14,11 @@ main:
     - { text: 'Links of Interest',   path: <%= links_path %>      }
     - { text: 'Civic Services',      path: <%= civic_path %>      }
     - { text: 'History',             path: <%= history_path %>    }
-
-    - text: 'Members Area'
-      path: <%= members_path %>
-      show_when: 'logged_in'
-    - text: 'OTW Training'
-      path: <%= otw_path %>
-      show_when: 'logged_in'
-    - text: 'Jumpstart Coaches'
-      path: <%= jumpstart_available_path %>
-      show_when: 'logged_in'
-    - text: 'Vessel Examiners'
-      path: <%= vsc_available_path %>
-      show_when: 'logged_in'
-    - text: 'Roster'
-      path: <%= roster_path %>
-      show_when: 'logged_in'
-      icon: 'clipboard-list'
-    - text: 'Float Plan'
-      path: <%= new_float_plan_path %>
-      show_when: 'logged_in'
-      icon: 'ship'
-    - text: 'Profile'
-      path: <%= profile_path %>
-      show_when: 'logged_in'
-      icon: 'id-card'
-
+    - { text: 'Members Area',        path: <%= members_path %>,             show_when: 'logged_in' }
+    - { text: 'OTW Training',        path: <%= otw_path %>,                 show_when: 'logged_in' }
+    - { text: 'Jumpstart Coaches',   path: <%= jumpstart_available_path %>, show_when: 'logged_in' }
+    - { text: 'Vessel Examiners',    path: <%= vsc_available_path %>,       show_when: 'logged_in' }
+    - { text: 'Roster',              path: <%= roster_path %>,              show_when: 'logged_in', icon: 'clipboard-list' }
+    - { text: 'Float Plan',          path: <%= new_float_plan_path %>,      show_when: 'logged_in', icon: 'ship'           }
+    - { text: 'Profile',             path: <%= profile_path %>,             show_when: 'logged_in', icon: 'id-card'        }
     - text: 'login_or_logout'
