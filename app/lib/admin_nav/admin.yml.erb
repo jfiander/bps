@@ -15,17 +15,17 @@ admin:
           button: admin
           path: <%= receipts_path %>
           icon: file-invoice-dollar
-          display: <%= show_link?(:admin) %>
+          display: <%= show_link?(:admin, strict: true) %>
         - text: Promo Codes
           button: admin
           path: <%= admin_promo_codes_path %>
           icon: hands-usd
-          display: <%= show_link?(:admin) %>
+          display: <%= show_link?(:admin, strict: true) %>
         - text: Generic Payments
           button: admin
           path: <%= admin_generic_payments_path %>
           icon: money-check-edit-alt
-          display: <%= show_link?(:admin) %>
+          display: <%= show_link?(:admin, strict: true) %>
     - text: Downloads
       button: admin
       icon: download
@@ -40,7 +40,7 @@ admin:
           button: admin
           path: <%= admin_s3_path %>
           icon: link
-          display: <%= show_link?(:admin) %>
+          display: <%= show_link?(:admin, strict: true) %>
     - text: Messaging
       button: admin
       icon: messages
@@ -59,7 +59,7 @@ admin:
           button: admin
           path: <%= admin_dmarc_reports_path %>
           icon: circle-envelope
-          display: <%= show_link?(:admin) %>
+          display: <%= show_link?(:admin, strict: true) %>
     - text: Technical
       button: admin
       icon: gear-code
@@ -68,9 +68,9 @@ admin:
           button: admin
           path: <%= admin_versions_path %>
           icon: code-branch
-          display: <%= show_link?(:admin) %>
+          display: <%= show_link?(:admin, strict: true) %>
         - text: Sidekiq
           button: admin
           path: <%= sidekiq_web_path %>
           icon: gears
-          display: <%= show_link?(:admin) %>
+          display: <%= show_link?(:admin, strict: true) %>
