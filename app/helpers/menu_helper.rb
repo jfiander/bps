@@ -67,7 +67,7 @@ private
 
   def propagate_defaults!(yaml)
     yaml.each do |_menu, data|
-      menu_defaults = data&.slice(*DEFAULTABLE_FIELDS)
+      menu_defaults = data&.slice(*DEFAULTABLE_FIELDS).reverse_merge(display: true)
       data[:items].each do |item|
         item.reverse_merge!(menu_defaults)
         next unless item.key?(:children)
@@ -139,10 +139,11 @@ private
 
   def admin_menu_link(data)
     d = data.dup
+    return unless d.delete(:display)
+
     fa = d.delete(:fa)
     d[:fa] = { name: d.delete(:icon), options: { style: :duotone, fa: "fw #{fa}" } } if d[:icon]
 
-    d.delete(:display)
     d[:css_class] = d.delete(:button)
     link(d.delete(:text), d)
   end
@@ -246,7 +247,6 @@ private
       def display?(data)
         return data[:display] || data[:children].any? { |c| H.display?(c) } if data.key?(:children)
         return data[:display] || data[:items].any? { |d| H.display?(d) } if data.key?(:items)
-        return true unless data.key?(:display)
 
         data[:display]
       end
