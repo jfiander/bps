@@ -126,10 +126,7 @@ private
   def admin_menu_link(data)
     d = data.dup
     fa = d.delete(:fa)
-    d[:fa] =
-      if d.key?(:icon)
-        { name: d.delete(:icon), options: { style: :duotone, fa: "fw #{fa}" } }
-      end
+    d[:fa] = { name: d.delete(:icon), options: { style: :duotone, fa: "fw #{fa}" } } if d[:icon]
 
     d.delete(:display)
     d[:css_class] = d.delete(:button)
