@@ -100,7 +100,7 @@ private
       data[:text],
       path: data[:path],
       css_class: data[:button],
-      fa: { name: data[:icon], options: { style: :duotone, fa: "fw #{data[:fa]}" } }
+      fa: ({ name: data[:icon], options: { style: :duotone, fa: "fw #{data[:fa]}" } } if data.key?(:icon))
     )
   end
 
