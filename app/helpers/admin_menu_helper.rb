@@ -11,7 +11,7 @@ module AdminMenuHelper
         content_tag(:li, class: "menu #{menu}") do
           safe_join(
             [
-              link_to(data[:title] || menu.to_s.titleize, '#', class: "menu-header #{menu}"),
+              link_to(data[:title] || menu.to_s.titleize, '#', class: "menu-header #{menu} #{data[:button]}"),
               content_tag(:ul) { safe_join(admin_menu_contents(menu, data[:items])) }
             ]
           )
@@ -81,7 +81,7 @@ private
         if d[:text].blank?
           submenu_links(menu, d)
         else
-          content_tag(:li, class: "menu #{menu}") do
+          content_tag(:li, class: "menu #{menu} #{d[:button]}") do
             submenu_header(menu, d) + content_tag(:ul) { submenu_links(menu, d) }
           end
         end
@@ -95,13 +95,13 @@ private
     link(
       data[:text],
       path: data[:path],
-      admin: data[:button] == 'admin',
+      css_class: data[:button],
       fa: { name: data[:icon], options: { style: :duotone, fa: "fw #{data[:fa]}" } }
     )
   end
 
   def submenu_header(menu, data)
-    link_to('#', class: "menu-header #{menu}") do
+    link_to('#', class: "menu-header #{menu} #{data[:button]}") do
       safe_join(
         [
           FA::Icon.p(data[:icon], style: :duotone, fa: "fw #{data[:fa]}"),

@@ -8,6 +8,7 @@ admin:
       icon: 'file-import'
       display: <%= show_link?(:admin) %>
     - text: 'Payments'
+      button: 'admin'
       icon: 'circle-dollar-to-slot'
       children:
         - text: 'Receipts'
@@ -26,6 +27,7 @@ admin:
           icon: 'money-check-edit-alt'
           display: <%= show_link?(:admin) %>
     - text: 'Downloads'
+      button: 'admin'
       icon: 'download'
       children:
         - text: 'ABC Logos'
@@ -40,6 +42,7 @@ admin:
           icon: 'link'
           display: <%= show_link?(:admin) %>
     - text: 'Messaging'
+      button: 'admin'
       icon: 'messages'
       children:
         - text: 'Send SMS'
@@ -58,6 +61,7 @@ admin:
           icon: 'circle-envelope'
           display: <%= show_link?(:admin) %>
     - text: 'Technical'
+      button: 'admin'
       icon: 'gear-code'
       children:
         - text: 'Versions'
