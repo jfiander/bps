@@ -16,35 +16,28 @@ main:
     - { text: 'History',             path: <%= history_path %>    }
 
     - text: 'Members Area'
-      button: 'members'
       path: <%= members_path %>
-      display: <%= user_signed_in? %>
+      show_when: 'logged_in'
     - text: 'OTW Training'
-      button: 'members'
       path: <%= otw_path %>
-      display: <%= user_signed_in? %>
+      show_when: 'logged_in'
     - text: 'Jumpstart Coaches'
-      button: 'members'
       path: <%= jumpstart_available_path %>
-      display: <%= user_signed_in? %>
+      show_when: 'logged_in'
     - text: 'Vessel Examiners'
-      button: 'members'
       path: <%= vsc_available_path %>
-      display: <%= user_signed_in? %>
+      show_when: 'logged_in'
     - text: 'Roster'
-      button: 'members'
       path: <%= roster_path %>
-      display: <%= user_signed_in? %>
+      show_when: 'logged_in'
       icon: 'clipboard-list'
     - text: 'Float Plan'
-      button: 'members'
       path: <%= new_float_plan_path %>
-      display: <%= user_signed_in? %>
+      show_when: 'logged_in'
       icon: 'ship'
     - text: 'Profile'
-      button: 'members'
       path: <%= profile_path %>
-      display: <%= user_signed_in? %>
+      show_when: 'logged_in'
       icon: 'id-card'
 
     - text: 'login_or_logout'
