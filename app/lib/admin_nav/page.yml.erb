@@ -1,12 +1,11 @@
 page:
   button: members
   order: 20
+  display: <%= show_link?(:page) %>
   items:
     - text: Files
       path: <%= file_path %>
       icon: upload
-      display: <%= show_link?(:page) %>
     - text: Headers
       path: <%= header_path %>
       icon: desktop
-      display: <%= show_link?(:page) %>
