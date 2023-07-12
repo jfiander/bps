@@ -37,7 +37,7 @@
   }
 
   ul a.admin li {
-    @include blue-button(0.5em, purple);
+    @include blue-button(0.5em, $purple);
     padding: 0;
   }
 }

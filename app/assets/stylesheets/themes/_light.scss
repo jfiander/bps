@@ -247,7 +247,7 @@
 
     a.red li { @include blue-button(0.5em, $old-glory-red); }
     a.members li { @include blue-button(0.5em, $old-glory-blue-lighten-20); }
-    a.admin li { @include blue-button(0.5em, purple); }
+    a.admin li { @include blue-button(0.5em, $purple); }
   }
 
   div#modal {

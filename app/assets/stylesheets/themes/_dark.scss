@@ -155,7 +155,7 @@
 
     ul {
       a       { color: $birmingham-blue-darker; }
-      a.admin { color: $purple; }
+      a.admin { color: $purple-desaturated; }
 
       li:hover { background-color: $dark-background-blue-faded-35; }
 
@@ -163,7 +163,7 @@
         background-color: $dark-background-blue-faded-35;
 
         a        { color: $birmingham-blue-darker; }
-        a.admin  { color: $purple; }
+        a.admin  { color: $purple-desaturated; }
         a:hover  { background-color: $dark-background-blue-faded-40; }
         li:hover { background-color: $dark-background-blue-faded-40; }
 
@@ -171,7 +171,7 @@
           background-color: $dark-background-blue-faded-35;
 
           li         { color: $birmingham-blue-darker; }
-          a.admin li { color: $purple; }
+          a.admin li { color: $purple-desaturated; }
           a:hover    { background-color: $dark-background-blue-faded-40; }
           li:hover   { background-color: $dark-background-blue-faded-40; }
         }
