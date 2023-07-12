@@ -1,32 +1,20 @@
 main:
   order: 1
   items:
-    - text: 'Home'
-      path: <%= root_path %>
-    - text: 'About Us'
-      path: <%= about_path %>
-    - text: 'Join Us'
-      path: <%= join_path %>
-    - text: 'Vessel Safety Check'
-      path: <%= vsc_path %>
-    - text: 'Education'
-      path: <%= education_path %>
-    - text: 'Calendar'
-      path: <%= calendar_path %>
-    - text: 'Events'
-      path: <%= events_path %>
-    - text: 'Photos'
-      path: <%= photos_path %>
-    - text: 'Newsletter'
-      path: <%= newsletter_path %>
-    - text: 'Bridge Officers'
-      path: <%= bridge_path %>
-    - text: 'Links of Interest'
-      path: <%= links_path %>
-    - text: 'Civic Services'
-      path: <%= civic_path %>
-    - text: 'History'
-      path: <%= history_path %>
+    - { text: 'Home',                path: <%= root_path %>       }
+    - { text: 'About Us',            path: <%= about_path %>      }
+    - { text: 'Join Us',             path: <%= join_path %>       }
+    - { text: 'Vessel Safety Check', path: <%= vsc_path %>        }
+    - { text: 'Education',           path: <%= education_path %>  }
+    - { text: 'Calendar',            path: <%= calendar_path %>   }
+    - { text: 'Events',              path: <%= events_path %>     }
+    - { text: 'Photos',              path: <%= photos_path %>     }
+    - { text: 'Newsletter',          path: <%= newsletter_path %> }
+    - { text: 'Bridge Officers',     path: <%= bridge_path %>     }
+    - { text: 'Links of Interest',   path: <%= links_path %>      }
+    - { text: 'Civic Services',      path: <%= civic_path %>      }
+    - { text: 'History',             path: <%= history_path %>    }
+
     - text: 'Members Area'
       button: 'members'
       path: <%= members_path %>
@@ -58,4 +46,5 @@ main:
       path: <%= profile_path %>
       display: <%= user_signed_in? %>
       icon: 'id-card'
+
     - text: 'login_or_logout'
