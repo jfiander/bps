@@ -1,30 +1,30 @@
 education:
-  button: 'members'
+  button: members
   order: 40
   items:
-    - text: 'Instructors'
+    - text: Instructors
       path: <%= instructors_path %>
-      icon: 'graduation-cap'
+      icon: graduation-cap
       display: <%= show_link?(:education) %>
-    - text: 'On-the-Water'
-      icon: 'ship'
+    - text: On-the-Water
+      icon: ship
       children:
-        - text: 'List Trainings'
+        - text: List Trainings
           path: <%= otw_list_path %>
-          icon: 'ship'
+          icon: ship
           display: <%= show_link?(:otw) %>
-        - text: 'Requests'
+        - text: Requests
           path: <%= otw_requests_path %>
-          icon: 'list'
+          icon: list
           display: <%= show_link?(:otw) %>
-    - text: 'Completions'
-      icon: 'check'
+    - text: Completions
+      icon: check
       children:
-        - text: 'All'
+        - text: All
           path: <%= completions_path %>
-          icon: 'check-double'
+          icon: check-double
           display: <%= show_link?(:education) %>
-        - text: 'YTD'
+        - text: YTD
           path: <%= completions_ytd_path %>
-          icon: 'calendar-alt'
+          icon: calendar-alt
           display: <%= show_link?(:education) %>
