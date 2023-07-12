@@ -1,11 +1,11 @@
 education:
   button: members
   order: 40
+  display: <%= show_link?(:education) %>
   items:
     - text: Instructors
       path: <%= instructors_path %>
       icon: graduation-cap
-      display: <%= show_link?(:education) %>
     - text: On-the-Water
       icon: ship
       display: <%= show_link?(:otw) %>
@@ -18,7 +18,6 @@ education:
           icon: list
     - text: Completions
       icon: check
-      display: <%= show_link?(:education) %>
       children:
         - text: All
           path: <%= completions_path %>

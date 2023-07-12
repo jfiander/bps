@@ -3,6 +3,8 @@
 module MenuHelper
   include Rails.application.routes.url_helpers
 
+  DEFAULTABLE_FIELDS = %i[show_when display].freeze
+
   def main_menu
     content_tag(:ul, safe_join(main_menu_buttons), class: 'simple')
   end
@@ -56,34 +58,46 @@ module MenuHelper
 
 private
 
-  def main_menu_yaml
-    return @main_menu_yaml unless @main_menu_yaml.nil?
-
-    yaml_files = Rails.root.glob('app/lib/nav/*.yml.erb')
-    main_menu_yaml = yaml_files.each_with_object({}) do |path, hash|
+  def load_yaml(glob)
+    Rails.root.glob(glob).each_with_object({}) do |path, hash|
       yaml = YAML.safe_load(ERB.new(File.read(path)).result(binding))
       hash.merge!(yaml)
     end.deep_symbolize_keys!
+  end
 
+  def propagate_defaults!(yaml)
+    yaml.each do |_menu, data|
+      menu_defaults = data&.slice(*DEFAULTABLE_FIELDS)
+      data[:items].each do |item|
+        item.reverse_merge!(menu_defaults)
+        next unless item.key?(:children)
+
+        submenu_defaults = item&.slice(:show_when, :display)
+        item[:children].each { |child| child.reverse_merge!(submenu_defaults) }
+      end
+    end
+  end
+
+  def main_menu_yaml
+    return @main_menu_yaml unless @main_menu_yaml.nil?
+
+    main_menu_yaml = load_yaml('app/lib/nav/*.yml.erb')
+    propagate_defaults!(main_menu_yaml)
     @main_menu_yaml = main_menu_yaml.sort_by { |_menu, data| data[:order] }
   end
 
   def combined_yaml
     return @combined_yaml unless @combined_yaml.nil?
 
-    yaml_files = Rails.root.glob('app/lib/admin_nav/*.yml.erb')
-    combined_yaml = yaml_files.each_with_object({}) do |path, hash|
-      yaml = YAML.safe_load(ERB.new(File.read(path)).result(binding))
-      hash.merge!(yaml)
-    end.deep_symbolize_keys!
-
+    combined_yaml = load_yaml('app/lib/admin_nav/*.yml.erb')
+    propagate_defaults!(combined_yaml)
     @combined_yaml = combined_yaml.sort_by { |_menu, data| data[:order] }
   end
 
   def main_menu_buttons
     main_menu_yaml.map do |_menu, data|
       safe_join(data[:items].map do |d|
-        admin_menu_link(data.merge(d)) if H.display?(d)
+        admin_menu_link(d) if H.display?(d)
       end)
     end
   end
@@ -146,7 +160,7 @@ private
   end
 
   def submenu_links(data)
-    safe_join(data[:children].map { |child| admin_menu_link(data.merge(child)) })
+    safe_join(data[:children].map { |child| admin_menu_link(child) })
   end
 
   def sidenav_content_divs
@@ -180,7 +194,7 @@ private
         safe_join(
           [
             sidenav_heading(d),
-            d[:children].map { |child| admin_menu_link(d.merge(child)) }
+            d[:children].map { |child| admin_menu_link(child) }
           ]
         )
       else

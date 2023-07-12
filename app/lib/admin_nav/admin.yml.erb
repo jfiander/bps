@@ -33,7 +33,6 @@ admin:
           path: <%= admin_logo_path %>
           icon: image
           fa: swap-opacity
-          display: <%= show_link?(:admin) %>
         - text: S3 Links
           button: admin
           path: <%= admin_s3_path %>
@@ -42,7 +41,6 @@ admin:
     - text: Messaging
       button: admin
       icon: messages
-      display: <%= show_link?(:admin) %>
       children:
         - text: Send SMS
           button: admin
@@ -60,14 +58,13 @@ admin:
     - text: Technical
       button: admin
       icon: gear-code
+      display: <%= show_link?(:admin, strict: true) %>
       children:
         - text: Versions
           button: admin
           path: <%= admin_versions_path %>
           icon: code-branch
-          display: <%= show_link?(:admin, strict: true) %>
         - text: Sidekiq
           button: admin
           path: <%= sidekiq_web_path %>
           icon: gears
-          display: <%= show_link?(:admin, strict: true) %>

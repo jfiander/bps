@@ -25,7 +25,6 @@ users:
           display: <%= show_link?(:float) %>
     - text: Upload
       icon: upload
-      display: <%= show_link?(:users) %>
       children:
         - text: Import user data
           path: <%= import_users_path %>
@@ -51,7 +50,6 @@ users:
           icon: archive
     - text: Lists
       icon: table-list
-      display: <%= show_link?(:users) %>
       children:
         - text: Birthdays
           icon: birthday-cake
