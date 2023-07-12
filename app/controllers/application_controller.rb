@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   include Application::Security
   include MarkdownHelper
   include ApplicationHelper
-  include MenuHelper
+  include Menu::MenuHelper
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :load_layout_images

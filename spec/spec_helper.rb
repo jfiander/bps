@@ -37,7 +37,9 @@ SimpleCov.start('rails') do
 
   # Exclude static view-oriented helper code
   add_filter '/app/helpers/application_helper.rb'
-  add_filter '/app/helpers/menu_helper.rb'
+  add_filter '/app/helpers/menu/menu_helper.rb'
+  add_filter '/app/helpers/menu/main_menu_helper.rb'
+  add_filter '/app/helpers/menu/admin_menu_helper.rb'
   add_filter '/app/helpers/events_action_links_helper.rb'
   add_filter '/app/helpers/view_helper.rb'
   add_filter '/app/helpers/markdown_helper.rb'
