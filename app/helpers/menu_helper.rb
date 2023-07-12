@@ -133,7 +133,7 @@ private
 
     d.delete(:display)
     d[:css_class] = d.delete(:button)
-    link(d[:text], d)
+    link(d.delete(:text), d)
   end
 
   def submenu_header(menu, data)

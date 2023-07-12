@@ -8,7 +8,7 @@ RSpec.describe NavigationHelper do
     let(:current_user) { create(:user) }
 
     it 'generates the correct login link' do
-      expect(link(:login_or_logout)).to eql(
+      expect(link('login_or_logout')).to eql(
         '<a class="red" title="Logout" rel="nofollow" data-method="delete" href="/logout"><li class=" nav-with-icon">' \
         '<div class="nav-icon-contents">' \
         "<i class='fad fa-sign-out fa-1x' style='' data-fa-transform='' title=''></i>Logout</div></li></a>"
@@ -16,19 +16,19 @@ RSpec.describe NavigationHelper do
     end
 
     it 'generates the correct profile link' do
-      expect(link(:profile, path: '/profile', show_when: :logged_in)).to eql(
+      expect(link('Profile', path: '/profile', show_when: 'logged_in')).to eql(
         '<a class="members" title="Profile" href="/profile"><li class="">Profile</li></a>'
       )
     end
 
     it 'generates the correct admin link' do
-      expect(link(:something, path: '/something', admin: true)).to eql(
+      expect(link('Something', path: '/something', admin: true)).to eql(
         '<a class="admin" title="Something" href="/something"><li class="admin">Something</li></a>'
       )
     end
 
     it 'does not show an unpermitted link' do
-      expect(link(:something, path: '/something', permit: :admin, show_when: :logged_in)).to be_nil
+      expect(link('Something', path: '/something', permit: :admin, show_when: 'logged_in')).to be_nil
     end
   end
 
@@ -36,7 +36,7 @@ RSpec.describe NavigationHelper do
     let(:user_signed_in?) { false }
 
     it 'generates the correct login link' do
-      expect(link(:login_or_logout)).to eql(
+      expect(link('login_or_logout')).to eql(
         '<a class="members" title="Member Login" href="/login"><li class=" nav-with-icon">' \
         '<div class="nav-icon-contents">' \
         "<i class='fad fa-sign-in fa-1x' style='' data-fa-transform='' title=''></i>" \

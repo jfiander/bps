@@ -2,7 +2,7 @@
 
 module NavigationHelper
   def link(title = nil, options = {})
-    @options = default_options.merge(options.symbolize_keys).merge(title: title)
+    @options = default_options.merge(options).merge(title: title)
     return unless show_menu?(@options.except(:suffix, :active, :fa, :css_class))
 
     @link_options = { class: @options[:permit].to_s }
@@ -23,11 +23,11 @@ private
   end
 
   def parse_nav_presets
-    if @options[:title].to_sym == :login_or_logout && user_signed_in?
+    if @options[:title] == 'login_or_logout' && user_signed_in?
       logout_link
-    elsif @options[:title].to_sym == :login_or_logout
+    elsif @options[:title] == 'login_or_logout'
       login_link
-    elsif @options[:show_when]&.to_sym == :logged_in
+    elsif @options[:show_when] == 'logged_in'
       @link_options = { class: 'members' }
     elsif @options[:admin]
       @options[:css_class] = 'admin'
@@ -67,31 +67,31 @@ private
   end
 
   def show_menu?(**options)
-    options[:show_when]&.to_sym == :always ||
+    options[:show_when] == :always ||
       always_show_menu?(options[:title]) ||
       !hide_menu?(
-        permit: options[:permit], show_when: options[:show_when]&.to_sym,
+        permit: options[:permit], show_when: options[:show_when],
         path: options[:path]
       )
   end
 
   def hide_menu?(**options)
     options[:path.blank?] ||
-      requires_signed_in?(options[:show_when]&.to_sym) ||
-      requires_signed_out?(options[:show_when]&.to_sym) ||
+      requires_signed_in?(options[:show_when]) ||
+      requires_signed_out?(options[:show_when]) ||
       user_not_permitted?(options[:permit])
   end
 
   def always_show_menu?(title)
-    title.in?(%i[home login_or_logout])
+    title.in?(%w[Home login_or_logout])
   end
 
   def requires_signed_in?(show_when)
-    show_when == :logged_in && !user_signed_in?
+    show_when == 'logged_in' && !user_signed_in?
   end
 
   def requires_signed_out?(show_when)
-    show_when == :logged_out && user_signed_in?
+    show_when == 'logged_out' && user_signed_in?
   end
 
   def user_not_permitted?(permit)
