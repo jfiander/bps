@@ -2,7 +2,7 @@
 
 module NavigationHelper
   def link(title = nil, options = {})
-    @options = default_options.merge(options).merge(title: title)
+    @options = default_options.merge(options.symbolize_keys).merge(title: title)
     return unless show_menu?(@options.except(:suffix, :active, :fa, :css_class))
 
     @link_options = { class: @options[:permit].to_s }
@@ -27,7 +27,7 @@ private
       logout_link
     elsif @options[:title].to_sym == :login_or_logout
       login_link
-    elsif @options[:show_when] == :logged_in
+    elsif @options[:show_when]&.to_sym == :logged_in
       @link_options = { class: 'members' }
     elsif @options[:admin]
       @options[:css_class] = 'admin'
@@ -67,18 +67,18 @@ private
   end
 
   def show_menu?(**options)
-    options[:show_when] == :always ||
+    options[:show_when]&.to_sym == :always ||
       always_show_menu?(options[:title]) ||
       !hide_menu?(
-        permit: options[:permit], show_when: options[:show_when],
+        permit: options[:permit], show_when: options[:show_when]&.to_sym,
         path: options[:path]
       )
   end
 
   def hide_menu?(**options)
     options[:path.blank?] ||
-      requires_signed_in?(options[:show_when]) ||
-      requires_signed_out?(options[:show_when]) ||
+      requires_signed_in?(options[:show_when]&.to_sym) ||
+      requires_signed_out?(options[:show_when]&.to_sym) ||
       user_not_permitted?(options[:permit])
   end
 
