@@ -86,16 +86,16 @@ private
           end
         end
       else
-        admin_menu_link(d, admin: menu == :admin)
+        admin_menu_link(d)
       end
     end
   end
 
-  def admin_menu_link(data, admin: false)
+  def admin_menu_link(data)
     link(
       data[:text],
       path: data[:path],
-      admin: admin,
+      admin: data[:button] == 'admin',
       fa: { name: data[:icon], options: { style: :duotone, fa: "fw #{data[:fa]}" } }
     )
   end
@@ -113,7 +113,7 @@ private
   end
 
   def submenu_links(menu, data)
-    safe_join(data[:children].map { |child| admin_menu_link(child, admin: menu == :admin) })
+    safe_join(data[:children].map { |child| admin_menu_link(child) })
   end
 
   def sidenav_content_divs
@@ -147,11 +147,11 @@ private
         safe_join(
           [
             sidenav_heading(d),
-            d[:children].map { |child| admin_menu_link(child, admin: menu == :admin) }
+            d[:children].map { |child| admin_menu_link(child) }
           ]
         )
       else
-        admin_menu_link(d, admin: menu == :admin)
+        admin_menu_link(d)
       end
     end
   end

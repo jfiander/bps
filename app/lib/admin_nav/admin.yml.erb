@@ -3,6 +3,7 @@ admin:
   order: 50
   items:
     - text: 'Import Logs'
+      button: 'admin'
       path: <%= admin_import_logs_path %>
       icon: 'file-import'
       display: <%= show_link?(:admin) %>
@@ -10,14 +11,17 @@ admin:
       icon: 'circle-dollar-to-slot'
       children:
         - text: 'Receipts'
+          button: 'admin'
           path: <%= receipts_path %>
           icon: 'file-invoice-dollar'
           display: <%= show_link?(:admin) %>
         - text: 'Promo Codes'
+          button: 'admin'
           path: <%= admin_promo_codes_path %>
           icon: 'hands-usd'
           display: <%= show_link?(:admin) %>
         - text: 'Generic Payments'
+          button: 'admin'
           path: <%= admin_generic_payments_path %>
           icon: 'money-check-edit-alt'
           display: <%= show_link?(:admin) %>
@@ -25,11 +29,13 @@ admin:
       icon: 'download'
       children:
         - text: 'ABC Logos'
+          button: 'admin'
           path: <%= admin_logo_path %>
           icon: 'image'
           fa: 'swap-opacity'
           display: <%= show_link?(:admin) %>
         - text: 'S3 Links'
+          button: 'admin'
           path: <%= admin_s3_path %>
           icon: 'link'
           display: <%= show_link?(:admin) %>
@@ -37,14 +43,17 @@ admin:
       icon: 'messages'
       children:
         - text: 'Send SMS'
+          button: 'admin'
           path: <%= new_admin_message_path %>
           icon: 'sms'
           display: <%= show_link?(:admin) %>
         - text: 'Send Email'
+          button: 'admin'
           path: <%= new_admin_email_path %>
           icon: 'envelope'
           display: <%= show_link?(:admin) %>
         - text: 'DMARC Reports'
+          button: 'admin'
           path: <%= admin_dmarc_reports_path %>
           icon: 'circle-envelope'
           display: <%= show_link?(:admin) %>
@@ -52,10 +61,12 @@ admin:
       icon: 'gear-code'
       children:
         - text: 'Versions'
+          button: 'admin'
           path: <%= admin_versions_path %>
           icon: 'code-branch'
           display: <%= show_link?(:admin) %>
         - text: 'Sidekiq'
+          button: 'admin'
           path: <%= sidekiq_web_path %>
           icon: 'gears'
           display: <%= show_link?(:admin) %>
