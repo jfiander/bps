@@ -83,7 +83,7 @@ private
   def main_menu_buttons
     main_menu_yaml.map do |_menu, data|
       safe_join(data[:items].map do |d|
-        admin_menu_link(d) if H.display?(d)
+        admin_menu_link(data.merge(d)) if H.display?(d)
       end)
     end
   end
@@ -146,7 +146,7 @@ private
   end
 
   def submenu_links(data)
-    safe_join(data[:children].map { |child| admin_menu_link(child) })
+    safe_join(data[:children].map { |child| admin_menu_link(data.merge(child)) })
   end
 
   def sidenav_content_divs
@@ -180,7 +180,7 @@ private
         safe_join(
           [
             sidenav_heading(d),
-            d[:children].map { |child| admin_menu_link(child) }
+            d[:children].map { |child| admin_menu_link(d.merge(child)) }
           ]
         )
       else
