@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
-module AdminMenuHelper
+module MenuHelper
   include Rails.application.routes.url_helpers
+
+  def main_menu
+    content_tag(:ul, safe_join(main_menu_buttons), class: 'simple')
+  end
 
   def admin_menu
     content_tag(:ul, class: 'desktop') do
@@ -63,6 +67,18 @@ module AdminMenuHelper
 
 private
 
+  def main_menu_yaml
+    return @main_menu_yaml unless @main_menu_yaml.nil?
+
+    yaml_files = Rails.root.glob('app/lib/nav/*.yml.erb')
+    main_menu_yaml = yaml_files.each_with_object({}) do |path, hash|
+      yaml = YAML.safe_load(ERB.new(File.read(path)).result(binding))
+      hash.merge!(yaml)
+    end.deep_symbolize_keys!
+
+    @main_menu_yaml = main_menu_yaml.sort_by { |_menu, data| data[:order] }
+  end
+
   def combined_yaml
     return @combined_yaml unless @combined_yaml.nil?
 
@@ -73,6 +89,14 @@ private
     end.deep_symbolize_keys!
 
     @combined_yaml = combined_yaml.sort_by { |_menu, data| data[:order] }
+  end
+
+  def main_menu_buttons
+    main_menu_yaml.map do |_menu, data|
+      safe_join(data[:items].map do |d|
+        admin_menu_link(d) if H.display?(d)
+      end)
+    end
   end
 
   def admin_menu_contents(menu, data)

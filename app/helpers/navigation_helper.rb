@@ -23,9 +23,9 @@ private
   end
 
   def parse_nav_presets
-    if @options[:title] == :login_or_logout && user_signed_in?
+    if @options[:title].to_sym == :login_or_logout && user_signed_in?
       logout_link
-    elsif @options[:title] == :login_or_logout
+    elsif @options[:title].to_sym == :login_or_logout
       login_link
     elsif @options[:show_when] == :logged_in
       @link_options = { class: 'members' }

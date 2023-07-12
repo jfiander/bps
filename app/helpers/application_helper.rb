@@ -41,10 +41,6 @@ module ApplicationHelper
     end
   end
 
-  def main_menu
-    @main_menu ||= content_tag(:ul, render('application/navigation/links'), class: 'simple')
-  end
-
   def sanitize(text)
     ActionController::Base.helpers.sanitize text
   end
