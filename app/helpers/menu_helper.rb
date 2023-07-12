@@ -12,18 +12,7 @@ module MenuHelper
       safe_join(combined_yaml.map do |menu, data|
         next if data[:items].none? { |d| H.display?(d) }
 
-        content_tag(:li, class: "menu #{menu}") do
-          safe_join(
-            [
-              link_to(
-                data[:title] || menu.to_s.titleize,
-                '#',
-                class: "menu-header #{menu} #{data[:button]}"
-              ),
-              content_tag(:ul) { safe_join(admin_menu_contents(menu, data[:items])) }
-            ]
-          )
-        end
+        admin_menu_header(menu, data)
       end)
     end
   end
@@ -99,6 +88,21 @@ private
     end
   end
 
+  def admin_menu_header(menu, data)
+    content_tag(:li, class: "menu #{menu}") do
+      safe_join(
+        [
+          link_to(
+            data[:title] || menu.to_s.titleize,
+            '#',
+            class: "menu-header #{menu} #{data[:button]}"
+          ),
+          content_tag(:ul) { safe_join(admin_menu_contents(menu, data[:items])) }
+        ]
+      )
+    end
+  end
+
   def admin_menu_contents(menu, data)
     data.map do |d|
       next unless H.display?(d)
@@ -107,10 +111,10 @@ private
         next unless d[:children].any? { |c| H.display?(c) }
 
         if d[:text].blank?
-          submenu_links(menu, d)
+          submenu_links(d)
         else
           content_tag(:li, class: "menu #{menu} #{d[:button]}") do
-            submenu_header(menu, d) + content_tag(:ul) { submenu_links(menu, d) }
+            submenu_header(menu, d) + content_tag(:ul) { submenu_links(d) }
           end
         end
       else
@@ -120,12 +124,14 @@ private
   end
 
   def admin_menu_link(data)
-    link(
-      data[:text],
-      path: data[:path],
-      css_class: data[:button],
-      fa: ({ name: data[:icon], options: { style: :duotone, fa: "fw #{data[:fa]}" } } if data.key?(:icon))
-    )
+    icon =
+      if data.key?(:icon)
+        { name: data[:icon], options: { style: :duotone, fa: "fw #{data[:fa]}" } }
+      else
+        {}
+      end
+
+    link(data[:text], path: data[:path], css_class: data[:button], fa: icon)
   end
 
   def submenu_header(menu, data)
@@ -140,7 +146,7 @@ private
     end
   end
 
-  def submenu_links(menu, data)
+  def submenu_links(data)
     safe_join(data[:children].map { |child| admin_menu_link(child) })
   end
 
@@ -151,7 +157,7 @@ private
           [
             close_sidenav_submenu_link("sidenav-#{menu}"),
             content_tag(:h3, data[:title] || menu.to_s.titleize),
-            content_tag(:ul, safe_join(sidenav_main_menu(menu, data[:items])), class: 'simple'),
+            content_tag(:ul, safe_join(sidenav_main_menu(data[:items])), class: 'simple'),
             sidenav_spacer
           ]
         )
@@ -165,7 +171,7 @@ private
     end
   end
 
-  def sidenav_main_menu(menu, data)
+  def sidenav_main_menu(data)
     data.map do |d|
       next unless H.display?(d)
 
