@@ -124,14 +124,16 @@ private
   end
 
   def admin_menu_link(data)
-    fa = data.delete(:fa)
-    data[:fa] =
-      if data.key?(:icon)
-        { name: data.delete(:icon), options: { style: :duotone, fa: "fw #{fa}" } }
+    d = data.dup
+    fa = d.delete(:fa)
+    d[:fa] =
+      if d.key?(:icon)
+        { name: d.delete(:icon), options: { style: :duotone, fa: "fw #{fa}" } }
       end
 
-    data[:css_class] = data.delete(:button)
-    link(data[:text], **data)
+    d.delete(:display)
+    d[:css_class] = d.delete(:button)
+    link(d[:text], d)
   end
 
   def submenu_header(menu, data)
