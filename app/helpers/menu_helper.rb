@@ -67,7 +67,7 @@ private
 
   def propagate_defaults!(yaml)
     yaml.each do |_menu, data|
-      menu_defaults = data&.slice(*DEFAULTABLE_FIELDS).reverse_merge(display: true)
+      menu_defaults = data.slice(*DEFAULTABLE_FIELDS).reverse_merge(display: true)
       data[:items].each do |item|
         item.reverse_merge!(menu_defaults)
         next unless item.key?(:children)
