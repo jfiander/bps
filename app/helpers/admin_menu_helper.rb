@@ -6,12 +6,16 @@ module AdminMenuHelper
   def admin_menu
     content_tag(:ul, class: 'desktop') do
       safe_join(combined_yaml.map do |menu, data|
-        next if data[:items].none? { |d| d[:display] }
+        next if data[:items].none? { |d| H.display?(d) }
 
         content_tag(:li, class: "menu #{menu}") do
           safe_join(
             [
-              link_to(data[:title] || menu.to_s.titleize, '#', class: "menu-header #{menu} #{data[:button]}"),
+              link_to(
+                data[:title] || menu.to_s.titleize,
+                '#',
+                class: "menu-header #{menu} #{data[:button]}"
+              ),
               content_tag(:ul) { safe_join(admin_menu_contents(menu, data[:items])) }
             ]
           )
@@ -38,9 +42,9 @@ module AdminMenuHelper
       data[:items].each do |d|
         if d.key?(:children)
           d[:children].each do |child|
-            return true if child[:display]
+            return true if H.display?(child)
           end
-        elsif d[:display]
+        elsif H.display?(d)
           return true
         end
       end
@@ -73,10 +77,10 @@ private
 
   def admin_menu_contents(menu, data)
     data.map do |d|
-      next if d.key?(:display) && !d[:display]
+      next unless H.display?(d)
 
       if d.key?(:children)
-        next unless d[:children].any? { |c| c[:display] }
+        next unless d[:children].any? { |c| H.display?(c) }
 
         if d[:text].blank?
           submenu_links(menu, d)
@@ -139,10 +143,10 @@ private
 
   def sidenav_main_menu(menu, data)
     data.map do |d|
-      next if d.key?(:display) && !d[:display]
+      next unless H.display?(d)
 
       if d.key?(:children)
-        next unless d[:children].any? { |c| c[:display] }
+        next unless d[:children].any? { |c| H.display?(c) }
 
         safe_join(
           [
@@ -164,6 +168,8 @@ private
 
   def sidenav_top_buttons
     combined_yaml.map do |menu, data|
+      next unless H.display?(data)
+
       link_to('#', id: "show-sidenav-#{menu}", class: "show-sub-menu #{data[:button]}") do
         content_tag(:li, data[:title] || menu.to_s.titleize)
       end
@@ -192,6 +198,14 @@ private
         invalid_controller?(req_cont, req_act, not_cont, not_act) ||
           invalid_action?(req_cont, req_act, not_cont, not_act) ||
           invalid_combination?(req_cont, req_act, not_cont, not_act)
+      end
+
+      def display?(data)
+        return data[:display] || data[:children].any? { |c| H.display?(c) } if data.key?(:children)
+        return data[:display] || data[:items].any? { |d| H.display?(d) } if data.key?(:items)
+        return true unless data.key?(:display)
+
+        data[:display]
       end
 
     private
