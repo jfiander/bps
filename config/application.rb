@@ -46,7 +46,3 @@ end
 Dotenv.load unless BPS::Application.deployed?
 
 require 'redcarpet/render_strip'
-
-# Load all proto and extensions
-Dir.glob('lib/proto/descriptors/*_pb.rb').each { |f| require_relative("../#{f}") }
-Dir.glob('lib/proto/extensions/*').each { |f| require_relative("../#{f}") }
