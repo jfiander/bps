@@ -11,31 +11,39 @@ class DmarcConvert
 
     Dmarc::Feedback.new(
       version: string(feedback, :version),
-      report_metadata: report_metadata(child(feedback, :report_metadata)),
-      policy_published: policy_published(child(feedback, :policy_published)),
-      records: records(children(feedback, :record))
+      report_metadata: report_metadata(feedback),
+      policy_published: policy_published(feedback),
+      records: records(feedback)
     )
   end
 
 private
 
-  def report_metadata(data)
-    date_range = child(data, :date_range)
+  def report_metadata(feedback)
+    data = child(feedback, :report_metadata)
 
     {
       org_name: string(data, :org_name),
       email: string(data, :email),
       extra_contact_info: string(data, :extra_contact_info),
       report_id: string(data, :report_id),
-      date_range: {
-        begin: integer(date_range, :begin),
-        end: integer(date_range, :end)
-      },
+      date_range: date_range(data),
       error: string(data, :error)
     }
   end
 
-  def policy_published(data)
+  def date_range(metadata)
+    data = child(metadata, :date_range)
+
+    {
+      begin: integer(data, :begin),
+      end: integer(data, :end)
+    }
+  end
+
+  def policy_published(feedback)
+    data = child(feedback, :policy_published)
+
     {
       domain: string(data, :domain),
       adkim: enum(data, :adkim),
@@ -48,54 +56,67 @@ private
     }
   end
 
-  def records(data)
-    data.map do |r|
-      record(
-        child(r, :row),
-        child(r, :auth_results),
-        child(r, :identifiers)
-      )
+  def records(feedback)
+    children(feedback, :record).map do |record|
+      {
+        row: row(record),
+        identifiers: identifiers(record),
+        auth_results: auth_results(record)
+      }
     end
   end
 
-  def record(row, auth_results, identifiers)
+  def row(record)
+    data = child(record, :row)
+
     {
-      row: {
-        source_ip: string(row, :source_ip),
-        count: integer(row, :count),
-        policy_evaluated: policy_evaluated(child(row, :policy_evaluated))
-      },
-      identifiers: {
-        header_from: string(identifiers, :header_from),
-        envelope_from: string(identifiers, :envelope_from)
-      },
-      auth_results: {
-        dkim: dkim(children(auth_results, :dkim)),
-        spf: spf(children(auth_results, :spf))
-      }
+      source_ip: string(data, :source_ip),
+      count: integer(data, :count),
+      policy_evaluated: policy_evaluated(data)
     }
   end
 
-  def policy_evaluated(data)
-    reason_data = child(data, :reason)
+  def identifiers(record)
+    data = child(record, :identifiers)
+
+    {
+      header_from: string(data, :header_from),
+      envelope_from: string(data, :envelope_from)
+    }
+  end
+
+  def auth_results(record)
+    data = child(record, :auth_results)
+
+    {
+      dkim: dkim(data),
+      spf: spf(data)
+    }
+  end
+
+  def policy_evaluated(row)
+    data = child(row, :policy_evaluated)
 
     {
       disposition: enum(data, :disposition),
       dkim: enum(data, :dkim),
       spf: enum(data, :spf),
-      reason: (reason(reason_data) unless reason_data.nil?)
+      reason: reason(data)
     }
   end
 
-  def reason(data)
+  def reason(policy_evaluated)
+    data = child(policy_evaluated, :reason)
+    return if data.nil?
+
     {
       type: enum(data, :type),
       comment: string(data, :comment)
     }
   end
 
-  def dkim(data)
-    data.map do |d|
+  def dkim(auth_results)
+    children(auth_results, :dkim).map do |d|
       {
         domain: string(d, :domain),
         result: enum(d, :result),
@@ -105,8 +126,8 @@ private
     end
   end
 
-  def spf(data)
-    data.map do |s|
+  def spf(auth_results)
+    children(auth_results, :spf).map do |s|
       {
         domain: string(s, :domain),
         result: enum(s, :result),
