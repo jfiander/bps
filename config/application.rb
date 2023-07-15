@@ -47,7 +47,6 @@ Dotenv.load unless BPS::Application.deployed?
 
 require 'redcarpet/render_strip'
 
-# N.B. Deleting these files (including when recompiling proto) will prevent rake from running
-require_relative '../app/lib/proto/user_update_pb'
-require_relative '../app/lib/proto/dmarc_pb'
-require_relative '../app/lib/proto/proto_extensions'
+# Load all proto and extensions
+Dir.glob('lib/proto/descriptors/*_pb.rb').each { |f| require_relative("../#{f}") }
+Dir.glob('lib/proto/extensions/*').each { |f| require_relative("../#{f}") }

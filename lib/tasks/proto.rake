@@ -3,9 +3,8 @@
 namespace :proto do
   desc 'Compile proto definitions using protoc'
   task compile: :environment do
-    dir = Rails.root.join('app/lib/proto')
+    dir = Rails.root.join('lib/proto/descriptors')
     proto_files = Dir.glob("#{dir}/*.proto")
-    Dir.glob("#{dir}/*_pb.rb").each { |p| File.unlink(p) } # Clean ruby files
     `protoc --proto_path="#{dir}" --ruby_out="#{dir}" #{proto_files.join(' ')}`
   end
 end

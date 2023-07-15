@@ -6,10 +6,10 @@ AllCops:
   NewCops: enable
   Exclude:
     - app/assets/**/*
-    - app/lib/proto/**/*
     - bin/**/*
     - config/**/*
     - db/**/*
+    - lib/proto/**/*
     - vendor/**/*
     - tmp/**/*
 
