@@ -16,7 +16,7 @@ class ImportLog < ApplicationRecord
 
   def self.from_s3(timestamp)
     bin = BPS::S3.new(:files).download("user_imports/#{timestamp}.proto")
-    new(proto: bin).proto
+    new.proto.class.decode(bin)
   end
 
   def self.latest_from_s3

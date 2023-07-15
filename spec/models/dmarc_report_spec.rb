@@ -17,18 +17,6 @@ RSpec.describe DmarcReport do
     end
   end
 
-  describe '#proto=' do
-    it 'accepts hash input' do
-      passing_report = create_report(:pass)
-
-      expect { passing_report.proto = {} }.to change { passing_report.proto }.to(Dmarc::Feedback.new)
-    end
-
-    it 'raises an exception with unexpected input' do
-      expect { create_report(:pass).proto = 'incorrect' }.to raise_error('Unexpected data format')
-    end
-  end
-
   describe '#sources_proto' do
     let(:report) { build(:dmarc_report, xml: file_fixture('dmarc_report/pass.xml').read) }
     let(:ip) { '23.251.226.1' }

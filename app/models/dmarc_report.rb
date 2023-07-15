@@ -14,20 +14,6 @@ class DmarcReport < ApplicationRecord
   serialize :proto, Dmarc::Feedback
   serialize :sources_proto, Dmarc::SourcesSummary
 
-  def proto=(data)
-    new_proto =
-      case data
-      when Hash
-        Dmarc::Feedback.new(data)
-      when Dmarc::Feedback
-        data
-      else
-        raise 'Unexpected data format'
-      end
-
-    write_attribute(:proto, new_proto.to_proto)
-  end
-
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/BlockLength
@@ -166,7 +152,7 @@ private
       sources: source_ips.zip(source_dns).map do |ip, dns|
         { source_ip: ip, dns: dns, sender: dmarc_sender(dns) }
       end
-    ).to_proto
+    )
   end
 
   # :nocov:
