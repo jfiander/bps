@@ -13,6 +13,6 @@ RSpec.describe ImportLog do
   it 'decodes proto' do
     log = create(:import_log, proto: BPS::Update::UserDataImport.new.to_proto)
 
-    expect(log.decode).to be_a(BPS::Update::UserDataImport)
+    expect(log.proto).to be_a(BPS::Update::UserDataImport)
   end
 end

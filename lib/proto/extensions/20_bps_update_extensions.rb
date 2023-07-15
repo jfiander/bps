@@ -23,6 +23,7 @@ module BPS
       end
     end
 
+    UserDataImport.extend(ProtoSerialize)
     UserDataImport.include(Helpers)
     JobCodes.include(Helpers)
   end

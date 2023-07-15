@@ -11,13 +11,8 @@ class DmarcReport < ApplicationRecord
 
   validate :check_report_uniqueness
 
-  def proto
-    Dmarc::Feedback.decode(read_attribute(:proto))
-  end
-
-  def sources_proto
-    Dmarc::SourcesSummary.decode(read_attribute(:sources_proto))
-  end
+  serialize :proto, Dmarc::Feedback
+  serialize :sources_proto, Dmarc::SourcesSummary
 
   def proto=(data)
     new_proto =

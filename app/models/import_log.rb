@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ImportLog < ApplicationRecord
+  serialize :proto, BPS::Update::UserDataImport
+
   def self.latest
     all.order(:created_at).last
   end
@@ -14,15 +16,11 @@ class ImportLog < ApplicationRecord
 
   def self.from_s3(timestamp)
     bin = BPS::S3.new(:files).download("user_imports/#{timestamp}.proto")
-    new(proto: bin).decode
+    new(proto: bin).proto
   end
 
   def self.latest_from_s3
     from_s3(archives.last)
   end
   # :nocov:
-
-  def decode
-    BPS::Update::UserDataImport.decode(proto)
-  end
 end
