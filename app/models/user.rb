@@ -110,7 +110,8 @@ class User < ApplicationRecord
 
   def register_for(event)
     reg = Registration.not_refunded.find_or_create_by(user: self, event: event)
-    add_subscription(reg) if phone_c.present? && subscribe_on_register
+    mobile_phone = phone_c_preferred.present? || phone_c.present?
+    add_subscription(reg) if mobile_phone && subscribe_on_register
     reg
   end
 
@@ -118,7 +119,8 @@ class User < ApplicationRecord
     # :nocov:
     return if reg.event.topic_arn.blank?
 
-    arn = BPS::SMS.subscribe(reg.event.topic_arn, phone_c).subscription_arn
+    subscribe_phone = phone_c_preferred.presence || phone_c
+    arn = BPS::SMS.subscribe(reg.event.topic_arn, subscribe_phone).subscription_arn
     reg.update(subscription_arn: arn)
     # :nocov:
   end

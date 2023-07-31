@@ -40,7 +40,7 @@ h1.profile = @user.full_name
           - if @user.phone_c.present?
             .phone_c title="Mobile"
               = FA::Icon.p('mobile-alt', style: :duotone, fa: :fw)
-              = @user.phone_c
+              = @user.phone_c_preferred || @user.phone_c
               - if @user.subscribe_on_register
                 = FA::Icon.p('check-circle', fa: :fw, css: 'green', title: 'SMS reminders enabled')
               - else
