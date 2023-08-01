@@ -52,7 +52,7 @@ module Application
         :account_update,
         keys: %i[
           profile_photo rank first_name last_name jumpstart subscribe_on_register
-          phone_h phone_c phone_w rank_override
+          phone_h phone_c phone_w phone_c_preferred rank_override
         ]
       )
     end

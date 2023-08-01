@@ -10,7 +10,7 @@ module Admin
 
     def create
       if (user = User.find_by(id: sms_params[:user_id]))
-        BPS::SMS.publish(user.phone_c, sms_params[:message])
+        BPS::SMS.publish(mobile_phone(user), sms_params[:message])
         redirect_to(new_admin_message_path, success: 'Successfully sent message.')
       else
         redirect_to(new_admin_message_path, alert: 'Unable to find that user.')
@@ -21,6 +21,10 @@ module Admin
 
     def sms_params
       params.permit(:user_id, :message)
+    end
+
+    def mobile_phone(user)
+      user.phone_c_preferred.presence || user.phone_c
     end
   end
 end

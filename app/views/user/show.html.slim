@@ -29,7 +29,7 @@ h1.profile = @user.full_name
     .table-row
       .table-cell.left-header Email
       .table-cell = @user.email
-    - if @user.phone_h.present? || @user.phone_c.present? || @user.phone_w.present?
+    - if @user.phone_h.present? || mobile_phone(@user).present? || @user.phone_w.present?
       .table-row
         .table-cell.left-header Phone
         .table-cell
@@ -37,10 +37,10 @@ h1.profile = @user.full_name
             .phone_h title="Home"
               = FA::Icon.p('house', style: :duotone, fa: :fw)
               = @user.phone_h
-          - if @user.phone_c.present?
+          - if mobile_phone(@user).present?
             .phone_c title="Mobile"
               = FA::Icon.p('mobile-alt', style: :duotone, fa: :fw)
-              = @user.phone_c_preferred || @user.phone_c
+              = mobile_phone(@user)
               - if @user.subscribe_on_register
                 = FA::Icon.p('check-circle', fa: :fw, css: 'green', title: 'SMS reminders enabled')
               - else

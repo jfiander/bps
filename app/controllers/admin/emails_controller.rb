@@ -5,7 +5,9 @@ module Admin
     secure!(:admin)
 
     def new
-      @users = User.unlocked.alphabetized.where.not(phone_c: nil).map { |u| [u.full_name, u.id] }
+      @users = User.unlocked.alphabetized.reject(&:placeholder_email?).map do |u|
+        [u.full_name, u.id]
+      end
     end
 
     def create

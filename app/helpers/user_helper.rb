@@ -109,4 +109,8 @@ private
     list << 'bold' if header
     list.tap { |l| l << 'highlight' if instructor_highlight(key, highlight) }
   end
+
+  def mobile_phone(user)
+    user.phone_c_preferred.presence || user.phone_c
+  end
 end
