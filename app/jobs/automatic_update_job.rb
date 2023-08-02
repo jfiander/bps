@@ -75,7 +75,7 @@ private
 
     return if update_results == 'No changes' || type != :success
 
-    BPS::SlackFile.new('Update Results', update_results, channel: channel).call
+    upload_slack_file(channel)
 
     changes_available_notification(update_results, by: by) if dryrun
   end
@@ -129,5 +129,12 @@ private
 
     # Exclude empty jobcodes from JSON
     JSON.parse(json).tap { |h| h.delete('jobcodes') }.to_json
+  end
+
+  def upload_slack_file(channel)
+    BPS::SlackFile.new('Update Results', update_results, channel: channel).call
+  rescue BPS::RequestError
+    # This occasionally times out, but still succeeds eventually
+    nil
   end
 end
