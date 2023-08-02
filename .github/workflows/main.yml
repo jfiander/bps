@@ -125,6 +125,11 @@ jobs:
           RAILS_ENV: test
       - name: Run Rspec
         run: bundle exec rspec --format progress --order rand --color --tty
+      - name: Store Coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: coverage/
       - name: Get Current Branch
         run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
         id: extract_branch
