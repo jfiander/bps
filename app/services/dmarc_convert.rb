@@ -48,7 +48,7 @@ private
         adkim: enum(data, :adkim),
         aspf: enum(data, :aspf),
         p: enum(data, :p),
-        sp: enum(data, :sp),
+        sp: enum(data, :sp, optional: true),
         pct: integer(data, :pct),
         np: enum(data, :np, optional: true),
         fo: string(data, :fo)
