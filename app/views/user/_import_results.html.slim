@@ -55,5 +55,5 @@
     = render('user/import_results/jobcodes', jobcodes: import_proto.jobcodes.created, title: 'New')
     = render('user/import_results/jobcodes', jobcodes: import_proto.jobcodes.expired, title: 'Expired')
 
-- unless import_proto.created.empty? || User.invitable_from(import_proto.created).empty?
+- if import_proto.created.any? && User.invitable_from(import_proto.created.map(&:id)).any?
   = render('user/import_results/invite_form', users: import_proto.created)

@@ -165,9 +165,7 @@ hr
 
     = render 'import_results', import_proto: @import_proto
 
-    = render('invite_imported_form', users: @import_proto.created, import_log_id: @import_log_id) unless @import_proto.created.empty?
-
-    - unless @import_proto.created.empty? || User.invitable_from(@import_proto.created).empty?
+    - if import_proto.created.any? && User.invitable_from(import_proto.created.map(&:id)).any?
       = render('user/import_results/invite_form', users: @import_proto.created)
 
 hr
