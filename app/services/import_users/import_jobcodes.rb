@@ -13,7 +13,7 @@ module ImportUsers
 
     def call
       @configs.map do |config|
-        jobcode = Jobcode.find_by(config)
+        jobcode = Jobcode.find_by(config.slice(:user_id, :code, :year))
 
         if jobcode
           @found << jobcode
