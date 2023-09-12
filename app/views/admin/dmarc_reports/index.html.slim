@@ -8,6 +8,17 @@ hr
 
 .information Rows listed without the first four columns are additional records from the same report.
 
+#dmarc-reports-pagination
+  - if @page > 1
+    span.previous = link_to(admin_dmarc_reports_path(page: @page - 1)) do
+      = FA::Icon.p('backward', style: :duotone)
+      | Previous
+  span.current Page #{@page}
+  - unless @last_page
+    span.next = link_to(admin_dmarc_reports_path(page: @page + 1)) do
+      | Next
+      = FA::Icon.p('forward', style: :duotone)
+
 #dmarc-reports.table.striped
   .table-row.header
     .table-cell Report

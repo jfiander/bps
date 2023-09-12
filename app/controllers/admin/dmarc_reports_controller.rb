@@ -2,10 +2,24 @@
 
 module Admin
   class DmarcReportsController < ::ApplicationController
+    PAGE_SIZE = 10
+
     secure!(:admin, strict: true)
 
     def index
-      @reports = DmarcReport.all
+      @reports_count = DmarcReport.count
+      max_page = (@reports_count.to_f / PAGE_SIZE).ceil
+      @page = (params[:page].presence || 1).to_i
+
+      if @page.in?(1..max_page)
+        offset = (@page - 1) * PAGE_SIZE
+        @last_page = offset + PAGE_SIZE >= @reports_count
+      else
+        offset = 0
+        @page = 1
+      end
+
+      @reports = DmarcReport.limit(PAGE_SIZE).offset(offset).order('created_at DESC')
       @new_report = DmarcReport.new
     end
 

@@ -5,3 +5,10 @@ pre.xml {
 div#dmarc-reports div.actions {
   text-align: center;
 }
+
+div#dmarc-reports-pagination {
+  display: flex;
+  gap: 0.5em;
+  justify-content: center;
+  margin: 0.5em 0;
+}
