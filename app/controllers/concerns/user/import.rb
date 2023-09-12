@@ -58,7 +58,7 @@ class User
     end
 
     def upload_import_file(uploaded_file)
-      import_path = "#{Rails.root}/tmp/run/#{Time.now.to_i}-users_import.csv"
+      import_path = Rails.root.join("tmp/run/#{Time.now.to_i}-users_import.csv").to_s
       file = File.open(import_path, 'w+')
       file.write(uploaded_file.read)
       file.close

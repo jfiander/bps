@@ -95,7 +95,7 @@ class User < ApplicationRecord
         formatted_grade,
         (boc_display if show_boc)
       ].join
-    ).gsub(/&#39;/, '’').html_safe
+    ).gsub('&#39;', '’').html_safe
   end
 
   def bridge_hash

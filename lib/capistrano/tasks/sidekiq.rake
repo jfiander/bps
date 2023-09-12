@@ -35,7 +35,7 @@ namespace :sidekiq do
   task :setup do
     on roles(:app) do
       within current_path do
-        service_config = File.read('config/ops/sidekiq.service').sub(/ENV/, fetch(:environment))
+        service_config = File.read('config/ops/sidekiq.service').sub('ENV', fetch(:environment))
         File.write('tmp/sidekiq.service', service_config)
 
         upload! 'tmp/sidekiq.service', '/lib/systemd/system/sidekiq.service'

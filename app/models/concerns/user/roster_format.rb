@@ -86,7 +86,8 @@ class User
       def member_level(u)
         return 'Emeritus Member' if u.mm.to_i >= 50
         return 'Life Member' if u.life
-        return 'Senior Member' if u.senior
+
+        'Senior Member' if u.senior
       end
 
       def birthday(u)

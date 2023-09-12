@@ -30,7 +30,8 @@ class User
       return 'ON'  if boc_keys.include?(:BOC_ON)
       return 'ACN' if boc_keys.include?(:BOC_ACN)
       return 'CN'  if boc_keys.include?(:BOC_CN)
-      return 'IN'  if boc_keys.include?(:BOC_IN)
+
+      'IN' if boc_keys.include?(:BOC_IN)
     end
 
     def boc_endorsements

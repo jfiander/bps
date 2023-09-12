@@ -146,7 +146,7 @@ private
 
   def event_not_found?
     category = event_type_param == 'event' ? 'meeting' : event_type_param
-    return unless @event.blank? || @event.category != category
+    return false unless @event.blank? || @event.category != category
 
     flash[:notice] = "Couldn't find that #{event_type_param}."
     redirect_to send("#{event_type_param}s_path")

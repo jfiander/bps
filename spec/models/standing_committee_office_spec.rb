@@ -82,12 +82,12 @@ RSpec.describe StandingCommitteeOffice do
     auditing.update(chair: true)
     second_chair = build(:standing_committee_office, committee_name: 'auditing', chair: true)
 
-    expect(second_chair).to be_invalid
+    expect(second_chair).not_to be_valid
   end
 
   it 'rejects multiple current users' do
     second_assignment = build(:standing_committee_office, committee_name: 'auditing', user: auditing.user)
 
-    expect(second_assignment).to be_invalid
+    expect(second_assignment).not_to be_valid
   end
 end

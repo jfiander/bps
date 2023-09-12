@@ -32,7 +32,7 @@ module BPS
 
         def override_comment(payment)
           return unless payment.parent.respond_to?(:override_comment)
-          return unless payment.parent.override_comment&.present?
+          return if payment.parent.override_comment.blank?
 
           text payment.parent.override_comment, size: 12, align: :center, inline_format: true
         end

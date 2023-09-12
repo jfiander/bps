@@ -87,14 +87,15 @@ class User
 
     def committee_rank
       return 'F/Lt' if 'Flag Lieutenant'.in?(cached_committees.map(&:name))
-      return 'Lt' if cached_standing_committees.present? || cached_committees.present?
+
+      'Lt' if cached_standing_committees.present? || cached_committees.present?
     end
 
     # rubocop:disable Rails/OutputSafety
     # html_safe: No user content
     def cleanup_1st(output_rank, html: true)
       r = output_rank&.gsub(%r{1/}, '1st/')
-      html ? r&.gsub(/1st/, '1<sup>st</sup>')&.html_safe : r
+      html ? r&.gsub('1st', '1<sup>st</sup>')&.html_safe : r
     end
     # rubocop:enable Rails/OutputSafety
 

@@ -78,7 +78,8 @@ private
 
   def scale
     return clean_params[:scale].to_i if int_scale?
-    return clean_params[:scale].to_f if float_scale?
+
+    clean_params[:scale].to_f if float_scale?
   end
 
   def int_scale?

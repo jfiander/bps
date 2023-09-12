@@ -35,6 +35,8 @@ RSpec/EmptyExampleGroup:
     - models/event_spec.rb
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
+RSpec/IndexedLet:
+  Enabled: false
 
 Rails/SquishedSQLHeredocs:
     Enabled: false

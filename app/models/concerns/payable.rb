@@ -18,7 +18,7 @@ module Payable
   end
 
   def paid?
-    return nil unless self&.class&.payable?
+    return unless self&.class&.payable? # rubocop:disable Style/ReturnNilInPredicateMethodDefinition
 
     self&.payment&.paid
   end
@@ -28,7 +28,7 @@ module Payable
   end
 
   def payable?
-    payment&.present? && payment_amount&.to_i&.positive? && !paid? &&
+    payment.present? && payment_amount&.to_i&.positive? && !paid? &&
       ENV['ENABLE_BRAINTREE'] == 'enabled'
   end
 

@@ -84,6 +84,6 @@ private
     concat content_tag(:span, ' ')
     concat dl_link('W', "#{base_path}/white/#{filename}.png")
     concat content_tag(:span, ' | ')
-    concat dl_link('SVG', "#{base_path.sub(/PNG/, 'SVG')}/#{filename}.svg")
+    concat dl_link('SVG', "#{base_path.sub('PNG', 'SVG')}/#{filename}.svg")
   end
 end

@@ -40,7 +40,7 @@ module EventTypes
 
     def add_option(title, id, event: nil)
       selected = ' selected=\"selected\"' if id == event&.event_type_id
-      title = title.match?(/---/) ? title : title.titleize
+      title = title.titleize unless title.match?(/---/)
 
       "\"<option value=\\\"#{id}\\\"#{selected}>#{sanitize(title)}</option>\""
     end

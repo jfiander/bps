@@ -70,7 +70,7 @@ module BPS
 
           def name(user)
             Prawn::Text::Formatted::Box.new(
-              format_name(user.full_name(html: false).gsub(/&#39;/, "'")),
+              format_name(user.full_name(html: false).gsub('&#39;', "'")),
               document: self, overflow: :shrink_to_fit, style: :bold,
               width: roster_config[:member][:width], height: 20
             ).render

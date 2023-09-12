@@ -78,7 +78,7 @@ private
   end
 
   def valid_map_link?
-    return if map_link.blank?
+    return false if map_link.blank?
 
     uri = URI.parse(map_link)
     uri.is_a?(URI::HTTP) && !uri.host.nil?

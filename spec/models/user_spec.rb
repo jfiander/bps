@@ -87,8 +87,7 @@ RSpec.describe User do
       end
 
       it 'includes GB Emeritus' do
-        allow(user).to receive(:ranks).and_return(['Lt/C', 'D/Lt'])
-        allow(user).to receive(:mm).and_return(50)
+        allow(user).to receive_messages(ranks: ['Lt/C', 'D/Lt'], mm: 50)
 
         expect(user.stripe_rank).to eq('stfc')
       end

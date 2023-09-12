@@ -28,7 +28,7 @@ module RegistrationHelper
   end
 
   def subscribe_reg_link(reg)
-    return unless reg&.user&.phone_c&.present?
+    return if reg&.user&.phone_c.blank?
 
     if reg.subscription_arn.present?
       unsubscribe_link(reg.id)

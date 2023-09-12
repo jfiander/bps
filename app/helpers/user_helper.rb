@@ -39,13 +39,13 @@ module UserHelper
   def instructor_check(key, completions = nil, grade: nil, cpr: nil)
     case key
     when 'SN'
-      return true if grade == 'SN'
+      true if grade == 'SN'
     when 'CPR/AED'
-      return true if cpr
+      true if cpr
     when Array
-      return true if key.any? { |k| completions.include?(k) }
+      true if key.any? { |k| completions.include?(k) }
     else
-      return true if completions.include?(key)
+      true if completions.include?(key)
     end
   end
 

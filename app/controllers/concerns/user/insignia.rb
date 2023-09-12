@@ -44,7 +44,7 @@ class User
     def rank_flag
       @rank_flag = @user.auto_rank(html: false)&.delete('/')&.upcase
       @rank_flag = 'PRC' if @rank_flag == 'PNFLT'
-      @rank_flag = @rank_flag.gsub(/1STLT/, '1LT') if @rank_flag.present?
+      @rank_flag = @rank_flag.gsub('1STLT', '1LT') if @rank_flag.present?
     end
   end
 end

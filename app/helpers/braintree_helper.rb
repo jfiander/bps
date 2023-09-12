@@ -32,7 +32,8 @@ private
 
     return payment_not_found if @payment.nil?
     return payment_no_cost unless @payment.cost?
-    return payment_not_payable unless @payment.payable?
+
+    payment_not_payable unless @payment.payable?
   end
 
   def payment_not_found

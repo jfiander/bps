@@ -13,7 +13,7 @@ module Concerns
 
       def discount
         base = parent&.payment_amount
-        return base unless promo_code&.discount_type&.present?
+        return base if promo_code&.discount_type.blank?
 
         discount_cost(promo_code.discount_type, base)
       end
