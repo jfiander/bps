@@ -14,7 +14,7 @@ RSpec.describe EventsHelper do
     it 'generates the correct normal icon' do
       expect(reg_override_icon(reg)).to eql(
         "<a href=\"/override_cost/#{reg.payment.token}\"><i class='fad green fa-file-invoice-dollar fa-1x' " \
-        "style='' data-fa-transform='' title='Set override cost'></i></a>"
+        "id='' style='' data-fa-transform='' title='Set override cost'></i></a>"
       )
     end
 
@@ -23,7 +23,7 @@ RSpec.describe EventsHelper do
 
       expect(reg_override_icon(reg)).to eql(
         "<a href=\"/override_cost/#{reg.payment.token}\"><i class='fas green fa-file-invoice-dollar fa-1x' " \
-        "style='' data-fa-transform='' title='Update override cost'></i></a>"
+        "id='' style='' data-fa-transform='' title='Update override cost'></i></a>"
       )
     end
 
@@ -31,7 +31,7 @@ RSpec.describe EventsHelper do
       reg.payment.paid!('1234567890')
 
       expect(reg_override_icon(reg)).to eql(
-        "<i class='fad gray fa-file-invoice-dollar fa-1x' style='' data-fa-transform='' " \
+        "<i class='fad gray fa-file-invoice-dollar fa-1x' id='' style='' data-fa-transform='' " \
         "title='Registration has already been paid'></i>"
       )
     end
@@ -41,7 +41,7 @@ RSpec.describe EventsHelper do
       reg.payment.paid!('1234567890')
 
       expect(reg_override_icon(reg)).to eql(
-        "<i class='fas gray fa-file-invoice-dollar fa-1x' style='' data-fa-transform='' " \
+        "<i class='fas gray fa-file-invoice-dollar fa-1x' id='' style='' data-fa-transform='' " \
         "title='Registration has already been paid'></i>"
       )
     end
@@ -62,7 +62,7 @@ RSpec.describe EventsHelper do
 
       expect(event_catalog_flag(event)).to eq(
         '<div class="birmingham-blue" title="This event is shown in the catalog.">' \
-        "<i class='fad fa-fw fa-stars fa-1x' style='' data-fa-transform='' title=''></i>" \
+        "<i class='fad fa-fw fa-stars fa-1x' id='' style='' data-fa-transform='' title=''></i>" \
         '<small>Catalog</small></div>'
       )
     end
@@ -72,7 +72,7 @@ RSpec.describe EventsHelper do
 
       expect(event_activity_flag(event)).to eq(
         '<div class="birmingham-blue" title="This event is available for display in the activity feed.">' \
-        "<i class='fad fa-fw fa-stream fa-1x' style='' data-fa-transform='' title=''></i>" \
+        "<i class='fad fa-fw fa-stream fa-1x' id='' style='' data-fa-transform='' title=''></i>" \
         '<small>Activity Feed</small></div>'
       )
     end
@@ -82,7 +82,7 @@ RSpec.describe EventsHelper do
 
       expect(event_not_visible_flag(event)).to eq(
         '<div class="red" title="This event is not visible to members or the public. Only editors can see it.">' \
-        "<i class='fad fa-fw fa-eye-slash fa-1x' style='' data-fa-transform='' title=''></i>" \
+        "<i class='fad fa-fw fa-eye-slash fa-1x' id='' style='' data-fa-transform='' title=''></i>" \
         '<small>Not Visible</small></div>'
       )
     end
@@ -92,7 +92,7 @@ RSpec.describe EventsHelper do
 
       expect(event_quiet_flag(event)).to eq(
         '<div class="purple" title="This event is not displayed in the schedule. Direct links can still access it.">' \
-        "<i class='fad fa-fw fa-face-shush fa-1x' style='' data-fa-transform='' title=''></i>" \
+        "<i class='fad fa-fw fa-face-shush fa-1x' id='' style='' data-fa-transform='' title=''></i>" \
         '<small>Quiet</small></div>'
       )
     end
@@ -102,7 +102,7 @@ RSpec.describe EventsHelper do
 
       expect(event_committees_flag(event)).to eq(
         '<div class="green" title="Will notify the listed committee in addition to the relevant bridge officers.">' \
-        "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
+        "<i class='fad fa-fw fa-envelope fa-1x' id='' style='' data-fa-transform='' title=''></i>" \
         "<small>#{committee_1.name}</small></div>"
       )
     end
@@ -113,10 +113,10 @@ RSpec.describe EventsHelper do
 
       expect(event_committees_flag(event)).to eq(
         '<div class="green" title="Will notify the listed committee in addition to the relevant bridge officers.">' \
-        "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
+        "<i class='fad fa-fw fa-envelope fa-1x' id='' style='' data-fa-transform='' title=''></i>" \
         "<small>#{committee_1.name}</small></div>" \
         '<div class="green" title="Will notify the listed committee in addition to the relevant bridge officers.">' \
-        "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
+        "<i class='fad fa-fw fa-envelope fa-1x' id='' style='' data-fa-transform='' title=''></i>" \
         "<small>#{committee_2.name}</small></div>"
       )
     end
@@ -129,7 +129,7 @@ RSpec.describe EventsHelper do
 
       expect(event_committees_flag(event)).to eq(
         '<div class="green" title="Will notify the listed committee in addition to the relevant bridge officers.">' \
-        "<i class='fad fa-fw fa-envelope fa-1x' style='' data-fa-transform='' title=''></i>" \
+        "<i class='fad fa-fw fa-envelope fa-1x' id='' style='' data-fa-transform='' title=''></i>" \
         "<small>#{committee_1.name}</small></div>"
       )
     end
