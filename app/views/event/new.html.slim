@@ -65,6 +65,14 @@ h1 = "#{@edit_mode} #{@event_title}"
       .right = switch_box(f, :quiet, 'lightblue-red', 'no yes')
       br.clear
 
+      .left
+        = f.label :allow_quick_registration, 'Allow Quick Registration'
+        ul
+          li.red Disable this to require all registrations to use the long registration form.
+          li This also provides access to mutliple-person registration.
+      .right = switch_box(f, :allow_quick_registration, 'red-lightblue', 'no yes')
+      br.clear
+
     #event-schedule
       h2 Schedule
 

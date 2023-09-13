@@ -16,6 +16,12 @@
     )
   - elsif event.cutoff?
     = event_action_link(event, nil, icon: 'calendar-exclamation', text: 'Too late to register', css: 'gray', expired: false)
+  - elsif !event.allow_quick_registration?
+    = event_action_link( \
+      event, new_registration_path(event_id: event.id), method: :get, icon: 'calendar-check', \
+      text: 'Register', css: 'control', expired: false, \
+      if: user_signed_in? && event.allow_member_registrations && event.registerable? \
+    )
   - else
     = event_action_link( \
       event, register_path(event.id), method: :put, remote: true, icon: 'calendar-check', \
@@ -25,6 +31,12 @@
 - elsif event.registerable?
   - if !event.allow_public_registrations?
     = render('event/no/public_registrations')
+  - elsif !event.allow_quick_registration?
+    = event_action_link( \
+      event, new_registration_path(event_id: event.id), method: :get, icon: 'calendar-check', \
+      text: 'Register', css: 'control', expired: false, \
+      if: event.allow_public_registrations && event.registerable? \
+    )
   - else
     = render('event/register/public', event_id: event.id)
 - else

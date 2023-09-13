@@ -63,6 +63,12 @@ div#payment-description {
   }
 }
 
+div.registered {
+  margin-top: 1em;
+
+  ul { margin-top: 0.25em; }
+}
+
 button#pay-button {
   @include big-button;
   width: 35%;

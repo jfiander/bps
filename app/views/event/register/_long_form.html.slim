@@ -10,7 +10,13 @@
           if: @event.allow_member_registrations \
         )
       - elsif @event.registerable?
-        - if @event.event_selections.any?
+        - if !@event.allow_quick_registration?
+          = event_action_link( \
+            @event, new_registration_path(event_id: @event.id), method: :get, icon: 'calendar-check', \
+            text: 'Register', css: 'control', expired: false, \
+            if: @event.allow_member_registrations \
+          )
+        - elsif @event.event_selections.any?
           - @registration.name = current_user.full_name(html: false)
           - @registration.email = current_user.email
           = render 'event/register/long_form_public_form'

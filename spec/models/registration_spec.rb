@@ -240,4 +240,15 @@ RSpec.describe Registration do
       expect(reg.type).to eql('meeting')
     end
   end
+
+  context 'with additional registrants' do
+    it 'uses the correct combined cost' do
+      event_type = create(:event_type, event_category: 'meeting', title: 'rendezvous')
+      event = create(:event, event_type: event_type, cost: 5)
+      reg = create(:registration, event: event, user: user)
+      reg.additional_registrations.create(event: event, email: 'someone.else@example.com')
+
+      expect(reg.payment_amount).to eq(10)
+    end
+  end
 end

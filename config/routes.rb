@@ -269,6 +269,8 @@ Rails.application.routes.draw do
     delete  "/#{event_type}s/:id/unbook",    to: "events/#{event_type}s#unbook",        as: "unbook_#{event_type}"
   end
 
+  resources :registrations, only: %i[show new create destroy]
+
   ### User management
 
   # Profiles

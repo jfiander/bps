@@ -1,0 +1,12 @@
+#payment-description
+  .subject
+    = @event.display_title
+    - if @event.course?
+      span.type Course
+    - elsif @event.seminar?
+      span.type Seminar
+  .desc on
+  .date
+    b = @event.start_at.strftime(TimeHelper::PUBLIC_DATE_FORMAT)
+    |  at
+    b = @event.start_at.strftime(TimeHelper::PUBLIC_TIME_FORMAT)

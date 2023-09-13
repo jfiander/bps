@@ -4,7 +4,7 @@ module BPS
   module PDF
     class Receipt < Base
       MODULES = %w[
-        CustomerInfo TransactionInfo Cost PolicyLinks
+        CustomerInfo TransactionInfo Cost PolicyLinks RegistrantDetails
       ].freeze
 
       MODULES.each { |c| include "BPS::PDF::Receipt::#{c}".constantize }

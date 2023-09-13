@@ -1,0 +1,17 @@
+div#new.registrations {
+  margin-top: 2em;
+}
+
+
+div#registrants.table {
+  margin: 2em 0;
+}
+
+div.registgration-actions {
+  margin-bottom: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 1em;
+  column-gap: 4em;
+}

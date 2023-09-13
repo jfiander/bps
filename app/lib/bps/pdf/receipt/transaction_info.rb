@@ -15,7 +15,7 @@ module BPS
         end
 
         def transaction_details(payment)
-          bounding_box([300, 575], width: 250, height: 90) do
+          bounding_box([300, 575], width: 275, height: 90) do
             text 'Transaction Info', size: 18, style: :bold, align: :center
             move_down(10)
             text "<b>Transaction ID:</b> #{payment.transaction_id}", size: 14, inline_format: true

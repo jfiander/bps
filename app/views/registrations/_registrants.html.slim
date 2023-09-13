@@ -1,0 +1,18 @@
+#registrants.table.striped
+  .table-row.header
+    .table-cell Name
+    .table-cell Selection(s)
+  .table-row
+    .table-cell = registration.user&.simple_name || registration.email
+    .table-cell
+      - registration.registration_options.each do |option|
+        div
+          b> = option.description
+          = option.name
+  - registration.additional_registrations.each do |additional|
+    .table-cell = additional.user&.simple_name || additional.email
+    .table-cell
+      - additional.registration_options.each do |option|
+        div
+          b> = option.description
+          = option.name

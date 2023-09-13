@@ -13,6 +13,16 @@ h1.birmingham Transaction Receipt
       br
       | Time:
       b< = @purchase_info[:time]
+    - if @purchase_info[:additional_registrations].any?
+      p
+        b Also covered by this registration:
+        - @purchase_info[:additional_registrations].each do |additional_registration|
+          div
+            .registrant = additional_registration.user&.full_name || additional_registration.email
+            .options
+              - additional_registration.registration_options.each do |option|
+                b> #{option.description}:
+                = option.name
   - elsif @payment.member_application?
     p
       h2 Membership application
@@ -24,7 +34,7 @@ p
   | Transaction #
   b< = @transaction[:id]
   br
-  | Date: 
+  ' Date:
   = @transaction[:date]
   br
   | Total charged:

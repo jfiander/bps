@@ -1,0 +1,32 @@
+h1 Register for
+
+= render('event')
+
+#new.registrations
+  = form_for(@registration) do |f|
+    = f.hidden_field :event_id
+
+    - if user_signed_in?
+      .left = f.label :name
+      .right = current_user.simple_name
+      br.clear
+    - else
+      .left = f.label :name
+      .right = f.text_field :name, class: 'long', required: true
+      br.clear
+
+      .left = f.label :email
+      .right = f.email_field :email, class: 'long', required: true
+      br.clear
+
+      .left = f.label :phone
+      .right = f.text_field :phone
+      br.clear
+
+    = render 'event/register/selections', selections: @event.event_selections
+
+    = f.nested_fields_for :additional_registrations do |ff|
+      = render 'additional_registration', ff: ff
+    .center = f.add_nested_fields_link :additional_registrations, 'Add another person to this registration'
+
+    .center = spinner_button(f, button_text: 'Register', css: 'big')

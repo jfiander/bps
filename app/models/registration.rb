@@ -6,6 +6,17 @@ class Registration < ApplicationRecord
   belongs_to :event
   has_many :registration_options
 
+  attr_accessor :selections, :certificate
+
+  belongs_to(
+    :main_registration,
+    class_name: 'Registration', optional: true, inverse_of: :additional_registrations
+  )
+  has_many(
+    :additional_registrations,
+    class_name: 'Registration', inverse_of: :main_registration, foreign_key: 'main_registration_id'
+  )
+
   before_validation :convert_email_to_user
 
   validate :email_or_user_present, :no_duplicate_registrations
@@ -48,7 +59,10 @@ class Registration < ApplicationRecord
     convert_email_to_user && save
     return override_cost if override_cost.present?
 
-    event&.get_cost(member: user&.present?)
+    own_cost = event&.get_cost(member: user&.present?)
+    return own_cost unless additional_registrations.any?
+
+    own_cost + additional_registrations.sum(&:payment_amount)
   end
 
   def cost?
@@ -64,7 +78,7 @@ class Registration < ApplicationRecord
   end
 
   def payable?
-    super && !(event.cutoff? && event.advance_payment)
+    super && !(event.cutoff? && event.advance_payment) && main_registration_id.nil?
   end
 
 private

@@ -57,6 +57,13 @@ module Concerns
       def registration_info
         type = parent.type if parent.type.in?(displayable_registration_types)
 
+        info = registration_base_info(type)
+        return info unless parent.additional_registrations.any?
+
+        info.merge(registered: [parent] + parent.additional_registrations)
+      end
+
+      def registration_base_info(type)
         {
           name: parent.event.display_title,
           type: type,

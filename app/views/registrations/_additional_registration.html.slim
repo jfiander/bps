@@ -1,0 +1,19 @@
+h2 Additional Registration
+
+.left = ff.label :name
+.right = ff.text_field :name, required: true
+br.clear
+
+- if user_signed_in?
+  .left = ff.label :certificate
+  .right = ff.text_field :certificate
+  br.clear
+- else
+  .left = ff.label :email
+  .right = ff.text_field :email, required: true
+  br.clear
+
+= render 'registrations/additional_selections', ff: ff, selections: @event.event_selections
+
+br.clear
+= ff.remove_nested_fields_link 'Remove this person from this registration', data: { confirm: 'Are you sure you want to remove this person from the registration?' }, class: 'red'

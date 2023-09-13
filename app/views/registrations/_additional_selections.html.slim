@@ -1,0 +1,9 @@
+- selections.each do |selection|
+  .event-selection
+    .bold = selection.description
+    .event-options
+      - selection.event_options.order(:position).each do |option|
+        .event-option
+          = label_tag do
+            => ff.radio_button(:selections, option.id)
+            = option.name
