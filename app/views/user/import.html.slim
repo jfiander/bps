@@ -165,9 +165,6 @@ hr
 
     = render 'import_results', import_proto: @import_proto
 
-    - if @import_proto.created.any? && User.invitable_from(@import_proto.created.map(&:id)).any?
-      = render('user/import_results/invite_form', users: @import_proto.created)
-
 hr
 
 h2 Update Automatically from National

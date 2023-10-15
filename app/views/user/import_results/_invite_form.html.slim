@@ -2,4 +2,4 @@
   = hidden_field_tag(:import_log_id, 304)
   - users.each do |user|
     = hidden_field_tag('users[]', user.id)
-  = submit_tag("Import #{users.count} New Users", class: 'big')
+  = submit_tag("Invite #{users.count} New #{'User'.pluralize(users.count)}", class: 'big')
