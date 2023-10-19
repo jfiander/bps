@@ -20,17 +20,19 @@ class RegistrationsController < ApplicationController
   def create
     additional_registrations = params[:registration].delete(:additional_registrations_attributes)
 
-    registration = Registration.new(registration_params.merge(user: current_user))
+    @registration = Registration.new(registration_params.merge(user: current_user))
 
     registration_options_params.each do |_description, option_id|
-      registration.registration_options.build(event_option_id: option_id)
+      @registration.registration_options.build(event_option_id: option_id)
     end
 
-    process_additional_registrations(registration, additional_registrations)
+    process_additional_registrations(@registration, additional_registrations)
 
-    registration.save!
+    @registration.save!
 
-    redirect_to(registration_path(registration))
+    successfully_registered
+
+    redirect_to(registration_path(@registration))
   end
 
   def destroy
@@ -78,5 +80,38 @@ private
       selection = details[:selections] # DEV
       additional.registration_options.build(event_option_id: selection)
     end
+  end
+
+  def successfully_registered
+    RegistrationMailer.registered(@registration).deliver
+
+    # If the event does not require advance payment, this will notify on create.
+    #
+    # Otherwise, a different notification will be sent, and the regular one will
+    # be triggered by BraintreeController once the registration is paid for.
+    if @registration.event.advance_payment && !@registration.reload.paid?
+      RegistrationMailer.advance_payment(@registration).deliver
+    else
+      RegistrationMailer.confirm(@registration).deliver
+    end
+
+    registered_slack_notification
+  end
+
+  def registered_slack_notification
+    SlackNotification.new(
+      channel: :notifications, type: :warning, title: 'New Registration',
+      fallback: 'Someone has registered for an event.',
+      fields: slack_fields
+    ).notify!
+  end
+
+  def slack_fields
+    {
+      'Event' => "<#{show_event_url(@registration.event)}|#{@registration.event.display_title}>",
+      'Event date' => @registration.event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT),
+      'Registrant name' => @registration.user.full_name,
+      'Registrant email' => @registration.user.email
+    }.compact
   end
 end
