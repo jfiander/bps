@@ -179,7 +179,7 @@ class User
       {
         'Event' => "<#{show_event_url(@registration.event)}|#{@registration.event.display_title}>",
         'Event date' => @registration.event.start_at.strftime(TimeHelper::SHORT_TIME_FORMAT),
-        'Registrant name' => @registration.user.full_name,
+        'Registrant name' => @registration.user.full_name(html: false),
         'Registrant email' => @registration.user.email
       }.compact
     end
