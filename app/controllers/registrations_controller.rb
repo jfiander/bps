@@ -61,20 +61,27 @@ private
   end
 
   def redirect_if_existing
-    existing = user_signed_in? && Registration.find_by(event_id: params[:event_id], user: current_user)
+    return unless user_signed_in?
+
+    existing = Registration.find_by(event_id: params[:event_id], user: current_user)
     redirect_to(existing) if existing
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def process_additional_registrations(registration, additional_registrations)
     return unless additional_registrations
 
     parent_email = registration.user&.email || registration.email
-    additional_emails = additional_registrations.map { |a| a[:email] }
-    additional_emails += User.where(certificate: additional_registrations.map { |a| a[:certificate] }).pluck(:email)
+    additional_emails = additional_registrations.each_value.pluck(:email)
+    additional_emails +=
+      User.where(certificate: additional_registrations.each_value.pluck(:certificate)).pluck(:email)
 
     additional_registrations.each_value do |details|
-      user = User.find_by(certificate: details[:certificate]) if details[:certificate].present?\
-      email = details[:email] unless details[:email] == parent_email || details[:email].in?(additional_emails)
+      user = User.find_by(certificate: details[:certificate]) if details[:certificate].present?
+
+      matching_email = details[:email] == parent_email || details[:email].in?(additional_emails)
+      email = details[:email] unless matching_email
       email ||= "nobody-#{SecureRandom.hex(8)}@bpsd9.org"
 
       additional = registration.additional_registrations.build(
@@ -88,6 +95,8 @@ private
       additional.registration_options.build(event_option_id: selection)
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def successfully_registered
     RegistrationMailer.registered(@registration).deliver
