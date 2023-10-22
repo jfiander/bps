@@ -68,10 +68,17 @@ private
   def process_additional_registrations(registration, additional_registrations)
     return unless additional_registrations
 
+    parent_email = registration.user&.email || registration.email
+    additional_emails = additional_registrations.map { |a| a[:email] }
+    additional_emails += User.where(certificate: additional_registrations.map { |a| a[:certificate] }).pluck(:email)
+
     additional_registrations.each_value do |details|
-      user = User.find_by(certificate: details[:certificate]) if details[:certificate].present?
+      user = User.find_by(certificate: details[:certificate]) if details[:certificate].present?\
+      email = details[:email] unless details[:email] == parent_email || details[:email].in?(additional_emails)
+      email ||= "nobody-#{SecureRandom.hex(8)}@bpsd9.org"
+
       additional = registration.additional_registrations.build(
-        event_id: registration.event_id, name: details[:name], user: user
+        event_id: registration.event_id, name: details[:name], user: user, email: email
       )
 
       # details[:selections].each do |selection|
