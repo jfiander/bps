@@ -61,7 +61,7 @@ private
   end
 
   def redirect_if_existing
-    existing = Registration.find_by(event_id: params[:event_id], user: current_user)
+    existing = user_signed_in? && Registration.find_by(event_id: params[:event_id], user: current_user)
     redirect_to(existing) if existing
   end
 
