@@ -43,7 +43,7 @@ module BPS
 
         def registrant(registration)
           text(
-            "<b>#{registration.user.full_name || registration.email}</b>",
+            "<b>#{registration.user&.full_name || registration.email}</b>",
             size: 14, align: :left, inline_format: true
           )
         end
