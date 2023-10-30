@@ -21,6 +21,11 @@ class ApplicationController < ActionController::Base
 
   after_action { flash.discard if request.xhr? }
 
+  # Handle all requests for PHP files with a status code, instead of letting them raise exceptions
+  rescue_from ActionController::UnknownFormat do |e|
+    request.format.php? ? render(plain: 'No', status: :bad_request) : raise(e)
+  end
+
   ::GIT_INFORMATION = BPS::GitInfo.new
 
   def self.render_markdown_views
