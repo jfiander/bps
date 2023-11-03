@@ -4,3 +4,4 @@
 # Mime::Type.register "text/richtext", :rtf
 
 Mime::Type.register 'application/protobuf', :proto
+Mime::Type.register 'application/php', :php # This is to handle common invalid requests
