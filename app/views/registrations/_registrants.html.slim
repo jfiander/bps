@@ -10,9 +10,10 @@
           b> = option.description
           = option.name
   - registration.additional_registrations.each do |additional|
-    .table-cell = additional.user&.simple_name || additional.email
-    .table-cell
-      - additional.registration_options.each do |option|
-        div
-          b> = option.description
-          = option.name
+    .table-row
+      .table-cell = additional.user&.simple_name || additional.email
+      .table-cell
+        - additional.registration_options.each do |option|
+          div
+            b> = option.description
+            = option.name
