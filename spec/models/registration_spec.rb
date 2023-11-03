@@ -251,4 +251,27 @@ RSpec.describe Registration do
       expect(reg.payment_amount).to eq(10)
     end
   end
+
+  describe '#display_name' do
+    let(:event_type) { create(:event_type, event_category: 'meeting', title: 'rendezvous') }
+    let(:event) { create(:event, event_type: event_type, cost: 5) }
+
+    it 'uses the user name' do
+      reg = create(:registration, event: event, user: user)
+
+      expect(reg.display_name).to eq(user.full_name)
+    end
+
+    it 'uses the registration name if present' do
+      reg = create(:registration, event: event, email: 'nobody@example.com', name: 'Manual Name')
+
+      expect(reg.display_name).to eq('Manual Name')
+    end
+
+    it 'uses the registration email otherwise' do
+      reg = create(:registration, event: event, email: 'nobody@example.com')
+
+      expect(reg.display_name).to eq('nobody@example.com')
+    end
+  end
 end

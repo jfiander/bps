@@ -81,6 +81,12 @@ class Registration < ApplicationRecord
     super && !(event.cutoff? && event.advance_payment) && main_registration_id.nil?
   end
 
+  def display_name(html: true)
+    return user.full_name(html: html) if user
+
+    name || email
+  end
+
 private
 
   def no_duplicate_registrations

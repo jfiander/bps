@@ -3,7 +3,7 @@
     .table-cell Name
     .table-cell Selection(s)
   .table-row
-    .table-cell = registration.user&.simple_name || registration.email
+    .table-cell = registration.display_name
     .table-cell
       - registration.registration_options.each do |option|
         div
@@ -11,7 +11,7 @@
           = option.name
   - registration.additional_registrations.each do |additional|
     .table-row
-      .table-cell = additional.user&.simple_name || additional.email
+      .table-cell = additional.display_name
       .table-cell
         - additional.registration_options.each do |option|
           div
