@@ -136,6 +136,9 @@ Rails.application.routes.draw do
 
     # DMARC Reports
     resources :dmarc_reports, only: %i[index show create]
+
+    # Placecards
+    resources :placecards, only: %i[new create]
   end
 
   # Newsletter

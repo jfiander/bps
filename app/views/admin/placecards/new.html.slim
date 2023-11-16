@@ -1,0 +1,16 @@
+h1 Generate Placecards
+
+p
+  ' Upload a CSV file with headers:
+  tt name
+  ' ,
+  tt meal
+  ' ,
+  tt image
+  ' ,
+  tt sort
+
+= form_tag(admin_placecards_path, multipart: true) do
+  = file_field_tag(:csv, accept: 'text/csv', required: true)
+  br
+  = submit_tag('Generate', class: 'big blue')

@@ -1,0 +1,23 @@
+html lang='en'
+  head
+    title = @title
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all'
+    meta name='viewport' content='width=device-width, initial-scale=1.0'
+    = favicon_link_tag BPS::S3.new(:static).link('favicon.ico')
+    = FA::Link.kit(ENV['FONTAWESOME_KIT'])
+    = yield :head
+  body.placecards
+    - @data.each_slice(9) do |page|
+      div.page
+        div = render('card', person: page[0])
+        div = render('card', person: page[1])
+        div = render('card', person: page[2])
+
+        div = render('card', person: page[3])
+        div = render('card', person: page[4])
+        div = render('card', person: page[5])
+
+        div = render('card', person: page[6])
+        div = render('card', person: page[7])
+        div = render('card', person: page[8])

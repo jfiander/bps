@@ -1,0 +1,76 @@
+@import "themes/colors/_light";
+
+body.placecards {
+  // Override general website styling
+  background-color: white;
+
+  color: $birmingham-blue;
+  font-family: "Apple Chancery";
+  font-size: 1.25em;
+  margin: 8px;
+}
+
+body div.page:not(:first-child) {
+  page-break-before: always;
+  margin-top: -0.75%;
+}
+
+div.page {
+  width: 10.5in;
+  height: 7.5in;
+
+  margin-bottom: 0.75%;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  & > div {
+    border: thin dotted #F8F8F8;
+
+    & > div.back {
+      height: 15%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        height: 70%;
+        transform: rotate(180deg);
+      }
+    }
+
+    & > div.name {
+      text-align: center;
+
+      margin: 2%;
+      margin-top: 3%;
+      padding: 4% 0;
+
+      border-style: groove;
+      border-width: 6px;
+      border-color: $birmingham-blue;
+
+      background-color: rgba(16, 134, 255, 0.03);
+
+      &.long {
+        font-size: 0.75em;
+        padding: 5.1% 0;
+      }
+    }
+  }
+}
+
+svg {
+  width: 100%;
+
+  // Override general website styling
+  margin: 0 !important;
+  margin-top: 5% !important;
+  font-size: 24px !important;
+
+  &.fa-turkey { color: $orange; }
+  &.fa-fish { color: $birmingham-blue-dark; }
+  &.fa-carrot { color: $light-green; }
+  &.fa-circle-question { color: $purple; }
+}
+

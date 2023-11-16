@@ -1,0 +1,4 @@
+.back = placecard_image(person)
+.name class=('long' if person.present? && person['long'])
+  = person.nil? ? '_ _ _ _ _ _ _ _ _ _ _ _ _ _ _' : person['name']
+  = FA::Icon.p(placecard_meal(person), style: :duotone)

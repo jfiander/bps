@@ -61,3 +61,8 @@ users:
         - text: Help
           path: <%= user_help_path %>
           icon: question-circle
+    - text: Placecards
+      button: admin
+      path: <%= new_admin_placecard_path %>
+      icon: cards-blank
+      display: <%= show_link?(:admin, strict: true) %>
