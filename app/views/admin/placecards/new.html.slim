@@ -1,14 +1,33 @@
 h1 Generate Placecards
 
-p
-  ' Upload a CSV file with headers:
-  tt name
-  ' ,
-  tt meal
-  ' ,
-  tt image
-  ' ,
-  tt sort
+p Upload a CSV to generate placecards.
+
+p.information
+  ' All headers other than
+  tt> name
+  | are optional.
+
+#placecards-columns.table.striped
+  .table-row.header
+    .table-cell Column
+    .table-cell Description
+  .table-row
+    .table-cell: pre name
+    .table-cell Full formatted name
+  .table-row
+    .table-cell: pre meal
+    .table-cell Meal selection
+  .table-row
+    .table-cell: pre image
+    .table-cell URL of an image to display on the back
+  .table-row
+    .table-cell: pre sort
+    .table-cell Override last name for sorting cards
+  .table-row
+    .table-cell: pre long
+    .table-cell Reduce font size to fit a long name
+
+hr
 
 = form_tag(admin_placecards_path, multipart: true) do
   = file_field_tag(:csv, accept: 'text/csv', required: true)
