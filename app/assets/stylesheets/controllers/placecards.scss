@@ -12,54 +12,53 @@ body.placecards {
   color: $birmingham-blue;
   font-family: "Apple Chancery";
   font-size: 1.25em;
-  margin: 8px;
+  margin: 0;
 
-  & div.page:not(:first-child) {
-    page-break-before: always;
-    margin-top: -0.75%;
-  }
+  & div.page:not(:first-child) { page-break-before: always; }
 
+  // Avery 5011 Tent Cards (2x6 @ nominal 1-7/16" x 3-3/4")
   div.page {
-    width: 10.5in;
-    height: 7.5in;
+    width: 7.75in;
+    height: 8.6875in;
 
-    margin-bottom: 0.75%;
+    padding-top: 1.125in;
+    column-gap: 0.25in;
+    row-gap: 0.125in;
 
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
     & > div {
-      border: thin dotted #F8F8F8;
+      max-height: 2.875in;
+      margin: 0 0.125in;
 
       & > div.back {
-        height: 15%;
+        height: 1.3125in;
         display: flex;
         justify-content: center;
         align-items: center;
 
         img {
-          height: 70%;
+          height: 0.875in;
           transform: rotate(180deg);
         }
       }
 
       & > div.name {
+        margin-top: 0.1875in;
+        height: 1.125in;
+        display: flex;
+        flex-direction: column;
         text-align: center;
-
-        margin: 2%;
-        margin-top: 3%;
-        padding: 4% 0;
+        justify-content: center;
 
         border-style: groove;
-        border-width: 6px;
+        border-width: 0.0625in;
         border-color: $birmingham-blue;
 
         background-color: rgba(16, 134, 255, 0.03);
 
-        &.long {
-          font-size: 0.75em;
-          padding: 5.1% 0;
-        }
+        &.long { font-size: 0.75em; }
       }
     }
   }

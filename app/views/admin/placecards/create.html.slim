@@ -8,7 +8,7 @@ html lang='en'
     = FA::Link.kit(ENV['FONTAWESOME_KIT'])
     = yield :head
   body.placecards
-    - @data.each_slice(9) do |page|
+    - @data.each_slice(6) do |page|
       div.page
         div = render('card', person: page[0])
         div = render('card', person: page[1])
@@ -17,7 +17,3 @@ html lang='en'
         div = render('card', person: page[3])
         div = render('card', person: page[4])
         div = render('card', person: page[5])
-
-        div = render('card', person: page[6])
-        div = render('card', person: page[7])
-        div = render('card', person: page[8])
