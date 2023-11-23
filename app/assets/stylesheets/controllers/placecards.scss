@@ -13,6 +13,7 @@ body.placecards {
   font-family: "Apple Chancery";
   font-size: 1.25em;
   margin: 0;
+  margin-left: 0.0625in;
 
   & div.page:not(:first-child) { page-break-before: always; }
 
@@ -30,7 +31,7 @@ body.placecards {
 
     & > div {
       max-height: 2.875in;
-      margin: 0 0.125in;
+      margin: 0 0.1875in;
 
       & > div.back {
         height: 1.3125in;
