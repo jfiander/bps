@@ -13,8 +13,16 @@ module PlacecardsHelper
 
   def placecard_image(person)
     return if person.nil?
-    return if person['image'].nil?
 
-    image_tag(person['image'])
+    if person['image'].blank?
+      safe_join(
+        [
+          (image_tag(person['rank']) if person['rank'].present?),
+          (image_tag(person['burgee']) if person['burgee'].present?)
+        ]
+      )
+    else
+      image_tag(person['image'])
+    end
   end
 end
