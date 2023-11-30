@@ -273,5 +273,11 @@ RSpec.describe Registration do
 
       expect(reg.display_name).to eq('nobody@example.com')
     end
+
+    it 'truncates long emails' do
+      reg = create(:registration, event: event, email: 'nobody.nobody.nobody.nobody@example.com')
+
+      expect(reg.display_name(truncate: true)).to eq('nobody.no...@example.com')
+    end
   end
 end

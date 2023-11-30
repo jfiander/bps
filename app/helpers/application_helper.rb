@@ -52,15 +52,6 @@ module ApplicationHelper
     end
   end
 
-  def truncate_mail_to(email)
-    return if email.blank?
-
-    address, domain = email.split('@')
-    short = address.truncate(12)
-
-    mail_to(email, "#{short}@#{domain}", title: email)
-  end
-
 private
 
   def switch_box_field(f, field, value = nil, id: nil)

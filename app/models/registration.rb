@@ -81,10 +81,14 @@ class Registration < ApplicationRecord
     super && !(event.cutoff? && event.advance_payment) && main_registration_id.nil?
   end
 
-  def display_name(html: true)
+  def display_name(html: true, truncate: false)
     return user.full_name(html: html) if user
+    return name if name.present?
+    return email unless truncate
 
-    name || email
+    address, domain = email.split('@')
+    short = address.truncate(12)
+    "#{short}@#{domain}"
   end
 
 private

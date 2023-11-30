@@ -5,9 +5,4 @@
     = cancel_reg_link(r, event: event)
   - if current_user&.permitted?(:admin) && event&.cost&.positive? && r.main_registration.nil?
     = reg_override_icon(r)
-  - if r.user&.full_name&.present?
-    = link_to("mailto:#{r.user.email}") { r.user.full_name }
-  - elsif r.name.present?
-    = link_to("mailto:#{r.email || r.user&.email}") { r.name }
-  - else
-    = truncate_mail_to(r.email || r.user&.email)
+  = link_to(r.display_name(truncate: true), registration_path(r))
