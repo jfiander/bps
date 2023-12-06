@@ -61,6 +61,18 @@ body.placecards {
         background-color: rgba(16, 134, 255, 0.03);
 
         &.long { font-size: 0.75em; }
+
+        span { margin-top: 0.0625in; }
+
+        div.merit-marks {
+          margin-top: 0.1875in;
+          margin-bottom: 0.125in;
+          display: flex;
+          justify-content: center;
+          gap: 0.03125in;
+
+          img { width: 0.0625in; }
+        }
       }
     }
   }
@@ -70,7 +82,7 @@ body.placecards {
 
     // Override general website styling
     margin: 0 !important;
-    margin-top: 5% !important;
+    margin-top: 0.125in !important;
     font-size: 24px !important;
 
     &.fa-turkey { color: $orange; }

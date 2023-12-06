@@ -25,4 +25,12 @@ module PlacecardsHelper
       image_tag(person['image'])
     end
   end
+
+  def placecard_mm(person)
+    return if person.nil? || person['mm'].blank?
+
+    safe_join(person['mm'].to_i.times.map do
+      image_tag(BPS::S3.new(:static).link('insignia/PNG/mm.png'))
+    end)
+  end
 end
