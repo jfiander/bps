@@ -55,13 +55,46 @@ class ParsedMarkdown
 
     # Only allows one substitution per page
     def parse_meeting
+      process_date_override(:meeting, @next_meeting)
       subs!(%r{<p>%meeting#{PARAGRAPH_CONTENTS}</p>}, @next_meeting)
     end
 
     # Only allows one substitution per page
     def parse_excom
+      process_date_override(:excom, @next_excom)
       subs!(%r{<p>%excom#{PARAGRAPH_CONTENTS}</p>}, @next_excom)
     end
+
+    # This processing is done after the partial render, so any content will skip the default
+    # online attendance instructions.
+    # rubocop:disable Metrics/MethodLength
+    def process_date_override(key, rendered)
+      match = self.match(%r{<p>%#{key}\n([\w\s]+)(\n|</p>|<br>)})
+      return unless match
+
+      date = match[1]
+      begin
+        # Check if first line parses as a date
+        parsed_date = Date.parse(date)
+
+        # Use the parsed date iff it's in the future
+        if parsed_date > Time.current
+          rendered.sub!(
+            %r{<span class="meeting-date">.*?</span>},
+            "<span class=\"meeting-date\">#{date}</span>"
+          )
+        end
+
+        # Always hide the override line, future or past
+        rendered.sub!(
+          %r{<div class="attend information"><p>#{date}(<br>|(</p>))\n},
+          '<div class="attend information"><p>\1'
+        )
+      rescue ArgumentError
+        nil # There was no parseable date on the first line
+      end
+    end
+    # rubocop:enable Metrics/MethodLength
 
     def parse_classed
       gsubs!(%r{<p>%%(.*?)\n#{PARAGRAPH_CONTENTS}</p>}, '<p class="\1">\2</p>')

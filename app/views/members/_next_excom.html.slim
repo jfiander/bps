@@ -2,5 +2,5 @@ div.next-meeting
   .icon = FA::Icon.p('chevron-circle-down',  style: :duotone, fa: :fw, css: 'birminmgham-blue')
   .meeting
     .bold The next Executive Committee meeting is scheduled for
-    = next_excom.strftime(TimeHelper::VERBOSE_DATE)
-    = render('members/attend_meeting', key: :excom, details: details) if current_user.present?
+    span.meeting-date = next_excom.strftime(TimeHelper::VERBOSE_DATE)
+    = render('members/attend_meeting', key: :excom, details: details)

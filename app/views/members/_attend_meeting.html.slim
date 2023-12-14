@@ -1,7 +1,7 @@
 .attend.information
-  - if details
+  - if details.present?
     = details
-  - else
+  - elsif current_user.present?
     ' To attend, please go to:
     = link_to("#{key}.bpsd9.org", "http://#{key}.bpsd9.org", class: :bold)
     br

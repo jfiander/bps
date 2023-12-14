@@ -2,5 +2,5 @@ div.next-meeting
   .icon = FA::Icon.p('seahorse',  style: :kit_upload, fa: :fw, css: 'birminmgham-blue')
   .meeting
     .bold The next membership meeting is scheduled for
-    = next_membership.strftime(TimeHelper::VERBOSE_DATE)
-    = render('members/attend_meeting', key: :meeting, details: details) if current_user.present?
+    span.meeting-date = next_membership.strftime(TimeHelper::VERBOSE_DATE)
+    = render('members/attend_meeting', key: :meeting, details: details)
