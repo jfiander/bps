@@ -82,7 +82,7 @@ private
   end
 
   def process_photo_upload(photo_file)
-    photo_attributes = photo_params.to_hash.merge(photo_file: photo_file)
+    photo_attributes = photo_params.to_hash.merge('photo_file' => photo_file)
     photo = Photo.new(photo_attributes)
     photo.valid? ? photo.save! : @failed = true
     raise ActiveRecord::Rollback if @failed
