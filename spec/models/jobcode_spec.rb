@@ -24,11 +24,11 @@ RSpec.describe Jobcode do
 
   describe '#to_s' do
     it 'generates the correct string for a current jobcode' do
-      expect(current_jobcode.to_s).to eq("31000\t2023\tsquadron\tCommander")
+      expect(current_jobcode.to_s).to eq("31000\t#{Time.zone.today.year}\tsquadron\tCommander")
     end
 
     it 'generates the correct string for a past jobcode' do
-      expect(past_jobcode.to_s).to eq("31000\t2022*\tsquadron\tCommander")
+      expect(past_jobcode.to_s).to eq("31000\t#{Time.zone.today.year - 1}*\tsquadron\tCommander")
     end
   end
 end
