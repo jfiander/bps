@@ -6,7 +6,7 @@ module Public
       af = AnnouncementFile.find_by(id: announcement_params[:id])
       return announcement_not_found if af.blank?
 
-      send_announcement(af)
+      redirect_to(af.link)
     end
 
   private
