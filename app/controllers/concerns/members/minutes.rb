@@ -14,7 +14,7 @@ module Members
       minute = find_minutes_issue
       return minute_not_found if minute.blank?
 
-      send_minute(minute, excom: minutes_params[:minutes_excom].present?)
+      redirect_to(minute.link)
     end
 
     def upload_minutes
@@ -51,16 +51,6 @@ module Members
 
     def minute_not_found
       redirect_to(minutes_path, alert: 'Minutes not found.')
-    end
-
-    def send_minute(minute, excom: false)
-      e = excom ? 'ExCom ' : ''
-      send_data(
-        URI.parse(BPS::S3.new(:files).link(minute.file.s3_object.key)).open.read,
-        filename: "BPS #{e}Minutes - #{minute.full_issue}.pdf",
-        type: 'application/pdf',
-        disposition: 'inline'
-      )
     end
 
     def minutes_params
