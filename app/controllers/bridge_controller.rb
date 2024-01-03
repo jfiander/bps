@@ -80,7 +80,7 @@ private
   def clean_params
     params.permit(
       :id, :user_id, :bridge_office, :committee, :department, :committee_name,
-      :chair, :term_length, term_start_at: ['(1i)', '(2i)', '(3i)']
+      :chair, :term_length, :indefinite, term_start_at: ['(1i)', '(2i)', '(3i)']
     )
   end
 
@@ -120,7 +120,8 @@ private
       chair: clean_params[:chair],
       user_id: clean_params[:user_id],
       term_start_at: standing_committee_term_start_at,
-      term_length: clean_params[:term_length]
+      term_length: clean_params[:term_length],
+      indefinite: clean_params[:indefinite]
     )
   end
 

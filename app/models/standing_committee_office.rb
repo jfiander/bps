@@ -9,7 +9,9 @@ class StandingCommitteeOffice < ApplicationRecord
   belongs_to :user
 
   before_validation { self.chair = false if executive? }
-  before_create { self.term_expires_at = term_start_at + term_length.years unless executive? }
+  before_create do
+    self.term_expires_at = term_start_at + term_length.years unless executive? || indefinite?
+  end
   before_create { self.committee_name = committee_name.downcase }
   after_save { update_excom_group if committee_name == 'executive' }
 
@@ -36,19 +38,23 @@ class StandingCommitteeOffice < ApplicationRecord
   end
 
   def years_remaining
-    executive? ? 1 : ((term_expires_at - Time.zone.now) / 1.year).ceil
+    no_term_length? ? 1 : ((term_expires_at - Time.zone.now) / 1.year).ceil
   end
 
   def term_year
-    executive? ? 1 : term_length - years_remaining + 1
+    no_term_length? ? 1 : term_length - years_remaining + 1
   end
 
   def term_fraction
-    executive? ? '' : "year #{term_year} of #{term_length}"
+    no_term_length? ? '' : "year #{term_year} of #{term_length}"
   end
 
   def current?
     term_expires_at.present? && term_expires_at > Time.zone.now
+  end
+
+  def no_term_length?
+    executive? || indefinite?
   end
 
 private

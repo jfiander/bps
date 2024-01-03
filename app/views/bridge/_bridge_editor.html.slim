@@ -40,7 +40,10 @@ h2 Assign to Standing Committee
     = label_tag :term_length, "Years: "
     | 1
     = range_field_tag :term_length, 3, min: 1, max: 3, required: true, class: "number"
-    | 3
+    ' 3
+    span.italic> or
+    => check_box_tag(:indefinite)
+    = label_tag(:indefinite, 'indefinite')
     br
     = switch_box(nil, :chair, 'lightblue-darkblue', 'committee chair')
     br
