@@ -12,7 +12,7 @@ gem 'rails',               '>= 6.1.7.5'
 
 gem 'puma',                '~> 5.6'
 
-gem 'mysql2',              '~> 0.5.3'
+gem 'mysql2',              '~> 0.5.6'
 
 # Rails Plugins
 gem 'coffee-rails',        '~> 4.2'
