@@ -69,7 +69,7 @@ class ParsedMarkdown
     # online attendance instructions.
     # rubocop:disable Metrics/MethodLength
     def process_date_override(key, rendered)
-      match = self.match(%r{<p>%#{key}\n([\w\s]+)(\n|</p>|<br>)})
+      match = self.match(%r{<p>%#{key}\n([\w ]+)(\n|</p>|<br>)})
       return unless match
 
       date = match[1]
@@ -87,8 +87,8 @@ class ParsedMarkdown
 
         # Always hide the override line, future or past
         rendered.sub!(
-          %r{<div class="attend information"><p>#{date}(<br>|(</p>))\n},
-          '<div class="attend information"><p>\1'
+          %r{<div class="attend information"><p>#{date}},
+          '<div class="attend information"><p>'
         )
       rescue ArgumentError
         nil # There was no parseable date on the first line
