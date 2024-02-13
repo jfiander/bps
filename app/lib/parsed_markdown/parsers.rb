@@ -87,7 +87,7 @@ class ParsedMarkdown
 
         # Always hide the override line, future or past
         rendered.sub!(
-          %r{<div class="attend information"><p>#{date}},
+          /<div class="attend information"><p>#{date}/,
           '<div class="attend information"><p>'
         )
       rescue ArgumentError
