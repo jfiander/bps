@@ -78,9 +78,10 @@ class Event < ApplicationRecord
     e.by_date.for_category(category, flat: flat)
   end
 
-  def self.catalog(category)
-    include_details.where(show_in_catalog: true, visible: true)
-                   .order(Arel.sql(EventType.order_sql)).for_category(category)
+  def self.catalog(category, show_invisible: false)
+    query = include_details.where(show_in_catalog: true)
+    query = query.where(visible: true) unless show_invisible
+    query.order(Arel.sql(EventType.order_sql)).for_category(category)
   end
 
   def self.include_details

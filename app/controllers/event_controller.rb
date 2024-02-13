@@ -170,7 +170,12 @@ private
   end
 
   def load_catalog
-    @event_catalog = Event.catalog(event_type_param)
+    @event_catalog =
+      if @current_user_permitted_event_type
+        Event.catalog(event_type_param, show_invisible: true)
+      else
+        Event.catalog(event_type_param)
+      end
   end
 
   def registered_users
