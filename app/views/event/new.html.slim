@@ -266,7 +266,7 @@ h1 = "#{@edit_mode} #{@event_title}"
 
         - if event_type_param == 'course'
           .left = f.label :prereq_id, 'Prerequisite course'
-          .right = f.select :prereq_id, grouped_options_for_select(@event_types, @event.prereq_id), prompt: 'Please select a prerequisite course, if applicable'
+          .right = f.select :prereq_id, grouped_options_for_select({ 'N/A' => [['None', '']] }.merge(@event_types), @event.prereq_id), prompt: 'Please select a prerequisite course, if applicable'
         br.clear
 
       .left

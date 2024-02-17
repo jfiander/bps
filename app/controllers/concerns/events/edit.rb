@@ -75,7 +75,7 @@ module Events
     end
 
     def prepare_form
-      @event_types = { 'N/A' => [['None', '']] }.merge(EventType.selector(event_type_param))
+      @event_types = EventType.selector(event_type_param)
       @event_title = event_type_param.titleize
       @edit_mode = 'Add'
     end
