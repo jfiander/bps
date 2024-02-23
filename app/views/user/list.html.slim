@@ -53,7 +53,7 @@ p
         .center
           - if user[:bridge_office].present?
             = officer_flag(user[:bridge_office], mode: :png)
-        - if user[:granted_roles].present? || user[:imlpied_roles].present?
+        - if user[:granted_roles].present? || user[:implied_roles].present?
           = role_flags_from_hash(user)
       / .table-cell.center.small-text
       /   - if user[:current_login_at].present?
