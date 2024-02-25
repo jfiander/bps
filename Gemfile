@@ -47,7 +47,7 @@ gem 'slack-notification',  '~> 0.1.11'
 
 # General Functionality
 gem 'devise',              '~> 4.7'
-gem 'devise_invitable',    '~> 1.7'
+gem 'devise_invitable',    '~> 2.0', '>= 2.0.9'
 gem 'encrypted-keystore',  '~> 0.0.6'
 gem 'exp_retry',           '~> 0.0.13'
 gem 'google-protobuf',     '~> 3.21'
