@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails',               '>= 6.1.7.5'
+gem 'rails',               '>= 6.1.7.7'
 
 gem 'puma',                '~> 5.6'
 
@@ -19,7 +19,7 @@ gem 'coffee-rails',        '~> 4.2'
 gem 'jbuilder',            '~> 2.5'
 gem 'jquery-rails',        '~> 4.3'
 gem 'jquery-ui-rails',     '~> 6.0'
-gem 'rack-cors',           '~> 1.0'
+gem 'rack-cors',           '~> 2.0'
 gem 'sass-rails',          '~> 5.0'
 gem 'uglifier',            '~> 4.1'
 
@@ -31,7 +31,7 @@ gem 'paper_trail',         '~> 11.0'
 gem 'paranoia',            '~> 2.4.1'
 
 # APIs and External Services
-gem 'aws-sdk-cloudfront', '~> 1.61'
+gem 'aws-sdk-cloudfront',  '~> 1.61'
 gem 'aws-sdk-rails',       '~> 3.6'
 gem 'aws-sdk-s3',          '~> 1.111'
 gem 'aws-sdk-ses',         '~> 1.45'
