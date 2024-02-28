@@ -8,27 +8,27 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails',               '>= 6.1.7.7'
+gem 'rails',               '>= 7.1.3.2'
 
-gem 'puma',                '~> 5.6'
+gem 'puma',                '~> 6.4'
 
 gem 'mysql2',              '~> 0.5.6'
 
 # Rails Plugins
-gem 'coffee-rails',        '~> 4.2'
-gem 'jbuilder',            '~> 2.5'
-gem 'jquery-rails',        '~> 4.3'
+gem 'coffee-rails',        '~> 5.0'
+gem 'jbuilder',            '~> 2.11'
+gem 'jquery-rails',        '~> 4.6'
 gem 'jquery-ui-rails',     '~> 6.0'
 gem 'rack-cors',           '~> 2.0'
-gem 'sass-rails',          '~> 5.0'
-gem 'uglifier',            '~> 4.1'
+gem 'sass-rails',          '~> 6.0'
+gem 'uglifier',            '~> 4.2'
 
-gem 'figaro',              '~> 1.2.0'
+gem 'figaro',              '~> 1.2'
 
 # Model Behavior
 gem 'paperclip',           '~> 6.1.0'
 gem 'paper_trail',         '~> 11.0'
-gem 'paranoia',            '~> 2.4.1'
+gem 'paranoia',            '~> 2.6'
 
 # APIs and External Services
 gem 'aws-sdk-cloudfront',  '~> 1.61'
@@ -81,12 +81,12 @@ gem 'awesome_print',       '~> 1.8.0'
 gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
-gem 'fileutils',           '~> 1.4.1'
-gem 'loofah',              '~> 2.19.1'
+gem 'fileutils',           '>= 1.4.1'
+gem 'loofah',              '>= 2.19.1'
 gem 'mimemagic',           '>= 0.3.6'
 gem 'nokogiri',            '>= 1.14.3'
 gem 'rubyzip',             '>= 1.3.0'
-gem 'sinatra',             '~> 2.2.3'
+gem 'sinatra',             '>= 2.2.3'
 
 group :development do
   gem 'capistrano',            '~> 3.16.0'
@@ -121,5 +121,5 @@ group :development, :test do
 
   # Debugging
   # gem 'bullet',                   '~> 5.7.0'
-  gem 'listen',                   '~> 3.1.5'
+  gem 'listen',                   '~> 3.5'
 end
