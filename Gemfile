@@ -22,6 +22,7 @@ gem 'jquery-ui-rails',     '~> 6.0'
 gem 'rack-cors',           '~> 2.0'
 gem 'sass-rails',          '~> 6.0'
 gem 'uglifier',            '~> 4.2'
+gem 'cssbundling-rails',   '~> 1.4'
 
 gem 'figaro',              '~> 1.2'
 
