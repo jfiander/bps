@@ -54,8 +54,8 @@ gem 'google-protobuf',     '~> 3.21'
 gem 'jwt',                 '~> 2.2.3'
 gem 'lograge'
 gem 'pdf-reader',          '~> 2.10.0'
-gem 'prawn',               '~> 2.2.2'
-gem 'prawn-svg',           '~> 0.28.0'
+gem 'prawn',               '~> 2.4'
+gem 'prawn-svg',           '~> 0.28'
 gem 'ruby-progressbar',    '~> 1.10'
 gem 'sanitize_email',      '~> 1.2'
 
@@ -87,6 +87,9 @@ gem 'mimemagic',           '>= 0.3.6'
 gem 'nokogiri',            '>= 1.14.3'
 gem 'rubyzip',             '>= 1.3.0'
 gem 'sinatra',             '>= 2.2.3'
+
+# Legacy Gems
+gem 'matrix'
 
 group :development do
   gem 'capistrano',            '~> 3.16.0'
