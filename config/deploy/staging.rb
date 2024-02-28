@@ -1,6 +1,6 @@
 staging_instance = 'staging.internal.bpsd9.org'
 
-set :rvm_ruby_version, '2.7.4'
+set :rvm_ruby_version, '3.2.3'
 
 role :app, "deploy@#{staging_instance}"
 role :web, "deploy@#{staging_instance}"
