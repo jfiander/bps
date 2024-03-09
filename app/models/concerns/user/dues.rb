@@ -8,9 +8,9 @@ class User
       if parent.present?
         { user_id: parent_id }
       elsif children.blank?
-        89
+        93
       else
-        133 + children.count
+        139 + children.count
       end
     end
 

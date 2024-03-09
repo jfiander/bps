@@ -628,18 +628,18 @@ RSpec.describe User do
 
   describe 'dues' do
     it 'returns the correct single member amount' do
-      expect(user.dues).to be(89)
+      expect(user.dues).to be(93)
     end
 
     it 'returns the correct discounted amount' do
-      expect(user.discounted_amount).to eq(86.75)
+      expect(user.discounted_amount).to eq(90.66)
     end
 
     context 'with family' do
       let!(:child) { create(:user, parent: user) }
 
       it 'returns the correct family amount' do
-        expect(user.dues).to eq(134)
+        expect(user.dues).to eq(140)
       end
 
       it 'returns the parent_id hash if a parent is assigned' do
