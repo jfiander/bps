@@ -8,6 +8,7 @@
   .orange          { color: $orange; }
   .gold            { color: $gold; }
   .insignia-gold   { color: $dark-gold; }
+  .silver          { color: $silver; }
   .pending         { color: $pending-green; }
   .green           { color: $green; }
   .birmingham-blue { color: $birmingham-blue-desaturated; }
@@ -441,6 +442,11 @@
     a.admin:hover { color: $purple; }
     a.green       { color: $green-desaturated; }
     a.green:hover { color: $green; }
+
+    a.gold         { color: $gold; }
+    a.gold:hover   { color: $gold; }
+    a.silver       { color: $silver; }
+    a.silver:hover { color: $silver; }
   }
 
   div.table.double-striped {

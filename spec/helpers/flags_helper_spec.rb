@@ -13,13 +13,34 @@ RSpec.describe FlagsHelper do
     )
   end
 
-  it 'generates the correct officer insignia HTML' do
+  it 'generates the correct single officer insignia HTML' do
+    expect(officer_insignia('LT')).to eql(
+      '<div class="officer-insignia"><img height="75" ' \
+      'src="https://static.bpsd9.org/flags/PNG/insignia/LT.thumb.png" /><br>' \
+      '<a disposition="inline" href="https://static.bpsd9.org/flags/PNG/insignia/LT.png">PNG</a>' \
+      '<span> | </span>' \
+      '<a disposition="inline" href="https://static.bpsd9.org/flags/SVG/insignia/LT.svg">SVG</a>' \
+      '</div>'
+    )
+  end
+
+  it 'generates the correct multiple officer insignia HTML' do
     expect(officer_insignia('DLTC')).to eql(
       '<div class="officer-insignia"><img height="75" ' \
-      'src="https://static.bpsd9.org/flags/PNG/insignia/DLTC.thumb.png" /><br>' \
-      '<a disposition="inline" href="https://static.bpsd9.org/flags/PNG/insignia/DLTC.png">PNG</a>' \
-      '<span> | </span><a disposition="inline" ' \
-      'href="https://static.bpsd9.org/flags/SVG/insignia/DLTC.svg">SVG</a></div>'
+      'src="https://static.bpsd9.org/flags/PNG/insignia/DLTC.thumb.png" /><br>PNG: ' \
+      '<a disposition="inline" title="Red" class="red" ' \
+      'href="https://static.bpsd9.org/flags/PNG/insignia/DLTC.png">R</a> ' \
+      '<a disposition="inline" title="Gold" class="gold" ' \
+      'href="https://static.bpsd9.org/flags/PNG/insignia/gold/DLTC.png">G</a> ' \
+      '<a disposition="inline" title="Silver" class="silver" ' \
+      'href="https://static.bpsd9.org/flags/PNG/insignia/silver/DLTC.png">S</a>' \
+      '<span> | </span>SVG: ' \
+      '<a disposition="inline" title="Red" class="red" ' \
+      'href="https://static.bpsd9.org/flags/SVG/insignia/DLTC.svg">R</a> ' \
+      '<a disposition="inline" title="Gold" class="gold" ' \
+      'href="https://static.bpsd9.org/flags/SVG/insignia/gold/DLTC.svg">G</a> ' \
+      '<a disposition="inline" title="Silver" class="silver" ' \
+      'href="https://static.bpsd9.org/flags/SVG/insignia/silver/DLTC.svg">S</a></div>'
     )
   end
 

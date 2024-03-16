@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 module FlagsHelper
+  RANK_COLORS = {
+    red: %w[PORTCAP FLEETCAP LT FLT LTC DAIDE DLT DFLT DLTC VC],
+    blue: %w[1LT CDR D1LT DC NAIDE NFLT STFC RC CC],
+    gold: %w[1LT LTC CDR D1LT DLTC DC STFC RC VC CC],
+    silver: %w[LTC CDR DLTC DC STFC RC VC CC]
+  }.freeze
+
   def officer_flags(rank, height = 100)
     content_tag(:div, class: 'officer-flags') do
       concat flag_image("flags/PNG/#{rank}.thumb.png", width: 150, height: height)
@@ -15,9 +22,9 @@ module FlagsHelper
     content_tag(:div, class: 'officer-insignia') do
       concat flag_image("flags/PNG/insignia/#{rank}.thumb.png", height: 75)
       concat tag.br
-      concat dl_link('PNG', "flags/PNG/insignia/#{rank}.png")
+      officer_insignia_links(rank, 'png')
       concat content_tag(:span, ' | ')
-      concat dl_link('SVG', "flags/SVG/insignia/#{rank}.svg")
+      officer_insignia_links(rank, 'svg')
     end
   end
 
@@ -58,10 +65,12 @@ private
     image_tag(BPS::S3.new(:static).link(path), **options)
   end
 
-  def dl_link(text, path)
+  def dl_link(text, path, title: nil, css: nil)
     link_to(
       text, BPS::S3.new(:static).link(path),
-      disposition: 'inline', title: dl_link_title(text)
+      disposition: 'inline',
+      title: title || dl_link_title(text),
+      class: css
     )
   end
 
@@ -85,5 +94,24 @@ private
     concat dl_link('W', "#{base_path}/white/#{filename}.png")
     concat content_tag(:span, ' | ')
     concat dl_link('SVG', "#{base_path.sub('PNG', 'SVG')}/#{filename}.svg")
+  end
+
+  def officer_insignia_links(rank, format)
+    return single_insignia_link(rank, format) if number_of_colors(rank) == 1
+
+    concat "#{format.upcase}: "
+    concat safe_join(RANK_COLORS.map do |color, ranks|
+      color_dir = color.in?(%i[red blue]) ? '' : "#{color}/"
+      path = "flags/#{format.upcase}/insignia/#{color_dir}#{rank}.#{format}"
+      dl_link(color[0].upcase, path, title: color.to_s.titleize, css: color) if rank.in?(ranks)
+    end.compact, ' ')
+  end
+
+  def single_insignia_link(rank, format)
+    concat dl_link(format.upcase, "flags/#{format.upcase}/insignia/#{rank}.#{format}")
+  end
+
+  def number_of_colors(rank)
+    RANK_COLORS.count { |_color, ranks| rank.in?(ranks) }
   end
 end
