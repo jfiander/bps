@@ -59,6 +59,22 @@ module FlagsHelper
     end
   end
 
+  def gb_insignia
+    content_tag(:div, class: 'gb-insignia') do
+      concat flag_image('insignia/PNG/membership/tr/gb.png', height: 45)
+      concat tag.br
+      concat dl_link('PNG', 'insignia/PNG/membership/tr/gb.png')
+    end
+  end
+
+  def gb_emeritus_insignia
+    content_tag(:div, class: 'gb-emeritus-insignia') do
+      concat flag_image('insignia/PNG/membership/tr/gb_emeritus.png', height: 45)
+      concat tag.br
+      concat dl_link('PNG', 'insignia/PNG/membership/tr/gb_emeritus.png')
+    end
+  end
+
 private
 
   def flag_image(path, **options)

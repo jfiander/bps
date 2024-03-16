@@ -93,4 +93,24 @@ RSpec.describe FlagsHelper do
       'href="https://static.bpsd9.org/insignia/SVG/mm.svg">SVG</a></div>'
     )
   end
+
+  it 'generates the correct GB insignia HTML' do
+    expect(gb_insignia).to eql(
+      '<div class="gb-insignia"><img height="45" ' \
+      'src="https://static.bpsd9.org/insignia/PNG/membership/tr/gb.png" /><br>' \
+      '<a disposition="inline" ' \
+      'href="https://static.bpsd9.org/insignia/PNG/membership/tr/gb.png">PNG</a>' \
+      '</div>'
+    )
+  end
+
+  it 'generates the correct GB Emeritus insignia HTML' do
+    expect(gb_emeritus_insignia).to eql(
+      '<div class="gb-emeritus-insignia"><img height="45" ' \
+      'src="https://static.bpsd9.org/insignia/PNG/membership/tr/gb_emeritus.png" /><br>' \
+      '<a disposition="inline" ' \
+      'href="https://static.bpsd9.org/insignia/PNG/membership/tr/gb_emeritus.png">PNG</a>' \
+      '</div>'
+    )
+  end
 end
