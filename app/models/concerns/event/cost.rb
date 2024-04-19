@@ -7,13 +7,18 @@ module Concerns
 
       def get_cost(member: false)
         return member_cost if member && member_cost.present?
+        return usps_cost if member && usps_cost.present?
         return cost if cost.present?
 
         0
       end
 
       def costs
-        { general: cost, usps: usps_cost, member: member_cost }
+        {
+          general: cost ? cost + additional_registration_cost.to_i : nil,
+          usps: usps_cost ? usps_cost + additional_registration_cost.to_i : nil,
+          member: member_cost ? member_cost + additional_registration_cost.to_i : nil
+        }
       end
 
       def needs_advance_payment?

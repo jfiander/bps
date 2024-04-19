@@ -1,11 +1,11 @@
 - if event.member_cost.present?
   span.cost
     b Members:
-    span $#{event.member_cost}
+    span $#{event.member_cost + event.additional_registration_cost.to_i}
 - if event.usps_cost.present?
   span.cost
     b USPS Members:
-    span $#{event.usps_cost}
+    span $#{event.usps_cost + event.additional_registration_cost.to_i}
 span.cost
-  b = event.member_cost ? 'Non-members:' : 'Cost:'
-  span $#{event.cost}
+  b = event.member_cost || event.usps_cost ? 'Non-members:' : 'Cost:'
+  span $#{event.cost + event.additional_registration_cost.to_i}

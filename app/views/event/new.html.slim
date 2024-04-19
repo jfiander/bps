@@ -169,6 +169,16 @@ h1 = "#{@edit_mode} #{@event_title}"
         = f.number_field :usps_cost, class: 'number', min: 0, placeholder: '0.00'
       br.clear
 
+      .left
+        = f.label :additional_registration_cost, 'Additional registration cost'
+        ul
+          li This flat amount will be added to whichever cost above applies to a given registration.
+          li.red Only enter if applicable.
+      .right
+        = FA::Icon.p('dollar-sign', style: :duotone)
+        = f.number_field :additional_registration_cost, class: 'number', min: 0, placeholder: '0.00'
+      br.clear
+
       .left = f.label :allow_member_registrations, 'Member registrations'
       .right = switch_box(f, :allow_member_registrations, 'red-lightblue', 'deny allow')
       br.clear

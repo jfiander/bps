@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_03_020636) do
+ActiveRecord::Schema.define(version: 2024_04_19_002645) do
 
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -239,6 +239,7 @@ ActiveRecord::Schema.define(version: 2024_01_03_020636) do
     t.text "important_notes"
     t.boolean "quiet", default: false, null: false
     t.boolean "allow_quick_registration", default: true, null: false
+    t.integer "additional_registration_cost"
     t.index ["event_type_id", "deleted_at"], name: "index_events_on_event_type_id"
     t.index ["slug", "deleted_at"], name: "index_events_on_slug"
     t.index ["start_at", "expires_at", "archived_at", "deleted_at"], name: "index_events_on_dates"

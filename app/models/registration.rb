@@ -59,10 +59,7 @@ class Registration < ApplicationRecord
     convert_email_to_user && save
     return override_cost if override_cost.present?
 
-    own_cost = event&.get_cost(member: user&.present?)
-    return own_cost unless additional_registrations.any?
-
-    own_cost + additional_registrations.sum(&:payment_amount)
+    regular_payment_amount
   end
 
   def cost?
@@ -119,5 +116,13 @@ private
 
     self.email = nil
     self.user = user
+  end
+
+  def regular_payment_amount
+    own_cost = event.get_cost(member: user&.present?)
+    base_cost = own_cost + event.additional_registration_cost.to_i
+    return base_cost unless additional_registrations.any?
+
+    base_cost + additional_registrations.sum(&:payment_amount)
   end
 end
