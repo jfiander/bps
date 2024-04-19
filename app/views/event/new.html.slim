@@ -114,7 +114,7 @@ h1 = "#{@edit_mode} #{@event_title}"
 
         .left = f.label :length_h, 'Session length'
         .right
-          = f.select :length_h, options_for_select((0..12), @event.length_h || 2), disabled: @event.all_day
+          = f.select :length_h, options_for_select((0..24), @event.length_h || 2), disabled: @event.all_day
           = f.select :length_m, options_for_select(%w[00 15 30 45], @event.length_m || '00'), disabled: @event.all_day
         br.clear
 
