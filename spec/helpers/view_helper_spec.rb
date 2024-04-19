@@ -27,7 +27,7 @@ RSpec.describe ViewHelper do
         '<svg ',
         '<title>1LT</title>',
         '<path d="M 0 0 l 3072 0 l 0 2048 l -3072 0 l 0 -2048 z" fill="#FFFFFF" ' \
-        'stroke="#000000" stroke-width="5" />'
+        'stroke="#000000" stroke-width="5" stroke-opacity="1" />'
       )
     end
   end
