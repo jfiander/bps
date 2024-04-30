@@ -276,27 +276,27 @@ h2 Membership Pins
     .table-cell Qualifications
   .table-row
     .table-cell.bold.officer Member
-    .table-cell = image_tag(@bucket.link('insignia/PNG/pins/Member.png'))
+    .table-cell = membership_pin(0, 0)
     .table-cell All USPS members
   .table-row
     .table-cell.bold.officer 25-Year Member
-    .table-cell = image_tag(@bucket.link('insignia/PNG/pins/25-Year_Member.png'))
+    .table-cell = membership_pin(0, 25)
     .table-cell USPS members who have paid dues for at least 25 years
   .table-row
-    .table-cell.bold.officer Life Member
-    .table-cell = image_tag(@bucket.link('insignia/PNG/pins/Life_Member.png'))
-    .table-cell USPS members who have earned at least 25 Merit Marks
-  .table-row
     .table-cell.bold.officer 50-Year Member
-    .table-cell = image_tag(@bucket.link('insignia/PNG/pins/50-Year_Member.png'))
+    .table-cell = membership_pin(0, 50)
     .table-cell USPS members who have paid dues for at least 50 years
   .table-row
+    .table-cell.bold.officer Life Member
+    .table-cell = membership_pin(25, 25)
+    .table-cell USPS members who have earned at least 25 Merit Marks
+  .table-row
     .table-cell.bold.officer 50-Year Life Member
-    .table-cell = image_tag(@bucket.link('insignia/PNG/pins/50-Year_Life_Member.png'))
+    .table-cell = membership_pin(25, 50)
     .table-cell USPS members who have earned at least 25 Merit Marks and have been a member for at least 50 years
   .table-row
     .table-cell.bold.officer Governing Board Member Emeritus
-    .table-cell = image_tag(@bucket.link('insignia/PNG/pins/Governing_Board_Member_Emeritus.png'))
+    .table-cell = membership_pin(50, 50)
     .table-cell USPS members who have earned at least 50 Merit Marks
 
 - if @show_birmingham
