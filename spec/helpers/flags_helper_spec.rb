@@ -113,4 +113,48 @@ RSpec.describe FlagsHelper do
       '</div>'
     )
   end
+
+  describe 'membership_pin' do
+    it 'generates the correct Member pin' do
+      expect(membership_pin(24, 24)).to eql(
+        '<img width="50" ' \
+        'src="https://static.bpsd9.org/insignia/PNG/pins/Member.png" />'
+      )
+    end
+
+    it 'generates the correct 25-Year Member pin' do
+      expect(membership_pin(24, 25)).to eql(
+        '<img width="50" ' \
+        'src="https://static.bpsd9.org/insignia/PNG/pins/25-Year_Member.png" />'
+      )
+    end
+
+    it 'generates the correct 50-Year Member pin' do
+      expect(membership_pin(24, 50)).to eql(
+        '<img width="50" ' \
+        'src="https://static.bpsd9.org/insignia/PNG/pins/50-Year_Member.png" />'
+      )
+    end
+
+    it 'generates the correct Life Member pin' do
+      expect(membership_pin(25, 49)).to eql(
+        '<img width="50" ' \
+        'src="https://static.bpsd9.org/insignia/PNG/pins/Life_Member.png" />'
+      )
+    end
+
+    it 'generates the correct 50-Year Life Member pin' do
+      expect(membership_pin(25, 50)).to eql(
+        '<img width="50" ' \
+        'src="https://static.bpsd9.org/insignia/PNG/pins/50-Year_Life_Member.png" />'
+      )
+    end
+
+    it 'generates the correct GB Member Emeritus pin' do
+      expect(membership_pin(50, 50)).to eql(
+        '<img width="50" ' \
+        'src="https://static.bpsd9.org/insignia/PNG/pins/Governing_Board_Member_Emeritus.png" />'
+      )
+    end
+  end
 end

@@ -75,6 +75,23 @@ module FlagsHelper
     end
   end
 
+  def membership_pin(mm, years)
+    membership =
+      if mm >= 50
+        'Governing_Board_Member_Emeritus'
+      elsif mm >= 25
+        years >= 50 ? '50-Year_Life_Member' : 'Life_Member'
+      elsif years >= 50
+        '50-Year_Member'
+      elsif years >= 25
+        '25-Year_Member'
+      else
+        'Member'
+      end
+
+    flag_image("insignia/PNG/pins/#{membership}.png", width: 50)
+  end
+
 private
 
   def flag_image(path, **options)

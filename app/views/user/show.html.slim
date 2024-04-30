@@ -16,6 +16,7 @@ h1.profile = @user.full_name
     p
       = image_tag(BPS::S3.new(:static).link('insignia/CI/CI.350.png'), class: 'pin', title: 'Certified Instructor') if @user.valid_instructor?
       = image_tag(BPS::S3.new(:static).link('insignia/VE/VE.350.png'), class: 'pin', title: 'Certified Vessel Examiner') if @user.vessel_examiner?
+      = membership_pin(@user.mm, @user.total_years)
     - if @user.dan_boater?
       p
         = link_to('https://www.usps.org/DANBoater/dbindex.php') do
