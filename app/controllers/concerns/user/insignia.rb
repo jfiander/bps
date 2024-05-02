@@ -12,8 +12,6 @@ class User
         grade: grade_title, membership: membership_title,
         mm: @user.mm&.positive? ? "#{@user.mm} Merit Marks" : nil
       }
-
-      rank_flag
     end
 
   private
@@ -39,12 +37,6 @@ class User
       elsif @user.senior.present?
         [:senior, 'Senior Member']
       end
-    end
-
-    def rank_flag
-      @rank_flag = @user.auto_rank(html: false)&.delete('/')&.upcase
-      @rank_flag = 'PRC' if @rank_flag == 'PNFLT'
-      @rank_flag = @rank_flag.gsub('1STLT', '1LT') if @rank_flag.present?
     end
   end
 end

@@ -19,9 +19,20 @@ class User
     end
 
     def stripe_rank
-      r = ranks(html: false)
-      r << 'Stf/C' if mm.to_i >= 50
-      highest_rank(*r)&.gsub('/', '')&.gsub(/1(st)?Lt/, 'FirstLt')&.downcase
+      rank =
+        if preferred_stripe_rank.present?
+          preferred_stripe_rank
+        else
+          r = ranks(html: false)
+          r << 'Stf/C' if mm.to_i >= 50 || jobcodes.national.any?
+          highest_rank(*r)
+        end
+
+      rank&.gsub('/', '')&.gsub(/1(st)?Lt/, 'FirstLt')&.downcase
+    end
+
+    def flag_rank
+      preferred_flag_rank.presence || auto_rank(html: false)
     end
 
     def first_stripe_class

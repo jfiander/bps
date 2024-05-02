@@ -92,6 +92,15 @@ RSpec.describe User do
         expect(user.stripe_rank).to eq('stfc')
       end
 
+      it 'allows a manual override' do
+        allow(user).to receive_messages(
+          ranks: ['Stf/C', 'Lt/C', 'D/Lt'],
+          preferred_stripe_rank: 'P/R/C'
+        )
+
+        expect(user.stripe_rank).to eq('prc')
+      end
+
       describe 'regexes' do
         let(:narrow) { User::Stripes::NARROW }
         let(:two)    { User::Stripes::TWO }
@@ -259,6 +268,23 @@ RSpec.describe User do
             end
           end
         end
+      end
+    end
+
+    describe '#flag_rank' do
+      it 'returns the correct rank' do
+        allow(user).to receive(:ranks).and_return(['R/C', 'Lt/C', 'D/Lt'])
+
+        expect(user.flag_rank).to eq('R/C')
+      end
+
+      it 'allows a manual override' do
+        allow(user).to receive_messages(
+          ranks: ['R/C', 'Lt/C', 'D/Lt'],
+          preferred_flag_rank: 'P/N/F/Lt'
+        )
+
+        expect(user.flag_rank).to eq('P/N/F/Lt')
       end
     end
 

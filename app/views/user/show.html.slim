@@ -5,7 +5,7 @@ h1.profile = @user.full_name
 
   .insignia
     .long
-      p = image_tag(BPS::S3.new(:static).link("flags/PNG/#{@rank_flag}.500.png"), class: 'flag') if @user.auto_rank.present?
+      p = rank_flag(@user)
       p = image_tag(BPS::S3.new(:static).link("insignia/PNG/grades/tr/#{@insignia[:grade]}.png"), title: @insignia_title[:grade], class: @insignia[:grade]) if @insignia[:grade].present?
       p = image_tag(BPS::S3.new(:static).link("insignia/PNG/membership/tr/#{@insignia[:membership]}.png"), title: @insignia_title[:membership]) if @insignia[:membership].present?
     #merit-marks title=(@insignia_title[:mm])

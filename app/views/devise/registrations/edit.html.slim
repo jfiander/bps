@@ -19,8 +19,16 @@ br.clear
       .right title='If there is a problem with your certificate number, please contact the AO at ao@bpsd9.org.' = resource.certificate
       br.clear
 
-      .left = f.label :rank, "Preferred Rank"
+      .left = f.label :rank, 'Rank'
       .right = f.text_field :rank
+      br.clear
+
+      .left = f.label :rank, 'Preferred Flag Rank'
+      .right = f.text_field :preferred_flag_rank
+      br.clear
+
+      .left = f.label :rank, 'Preferred Stripe Rank'
+      .right = f.text_field :preferred_stripe_rank
       br.clear
 
       - if current_user.permitted?(:admin, strict: true)

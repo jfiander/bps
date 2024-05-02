@@ -72,6 +72,13 @@ module UserHelper
     )
   end
 
+  def rank_flag(user)
+    return if user.flag_rank.blank?
+
+    rank = user.flag_rank.delete('/').upcase.gsub('1STLT', '1LT')
+    image_tag(BPS::S3.new(:static).link("flags/PNG/#{rank}.500.png"), class: 'flag')
+  end
+
 private
 
   def generate_role_flags(granted, implied, admin: false)
