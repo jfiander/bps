@@ -89,7 +89,7 @@ module FlagsHelper
         'Member'
       end
 
-    flag_image("insignia/PNG/pins/#{membership}.png", width: 50)
+    image_tag("https://flags.aws.usps.org/pins/PNG/trimmed/100/#{membership}.png", width: 80)
   end
 
 private
