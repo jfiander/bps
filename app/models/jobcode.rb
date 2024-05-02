@@ -3,9 +3,9 @@
 class Jobcode < ApplicationRecord
   belongs_to :user
 
-  scope :squadron, -> { where('jobcodes.jobcode LIKE "3%"') }
-  scope :district, -> { where('jobcodes.jobcode LIKE "2%"') }
-  scope :national, -> { where('jobcodes.jobcode LIKE "1%"') }
+  scope :squadron, -> { where('jobcodes.code LIKE "3%"') }
+  scope :district, -> { where('jobcodes.code LIKE "2%"') }
+  scope :national, -> { where('jobcodes.code LIKE "1%"') }
   scope :current, -> { where(current: true) }
   scope :current_year, -> { where(year: Time.zone.today.year) }
 
