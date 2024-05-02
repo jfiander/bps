@@ -54,7 +54,7 @@ module BPS
     end
 
     def submit(uri, req)
-      print " [     ]  #{uri}\r\033[3C" if @verbose
+      print " [     ]  #{uri.to_s.truncate(120)}\r\033[3C" if @verbose
       result = client(uri).request(req)
       print "#{result.code}\n" if @verbose
 
