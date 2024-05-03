@@ -24,7 +24,7 @@ class User
           preferred_stripe_rank
         else
           r = ranks(html: false)
-          r << 'Stf/C' if mm.to_i >= 50 || jobcodes.national.any?
+          r << 'Stf/C' if mm.to_i >= 50 || jobcodes.national.exclude_special.any?
           highest_rank(*r)
         end
 
