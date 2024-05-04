@@ -57,6 +57,13 @@ div#profile {
       width: 0.5em; /* Unspecified width for accuracy. This prevents unintended wrapping. */
     }
 
+    div.pins {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5em;
+    }
+
     img.pin {
       max-width: 8em;
       max-height: 5em;

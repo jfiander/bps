@@ -288,6 +288,38 @@ RSpec.describe User do
       end
     end
 
+    describe '#pin_rank' do
+      it 'returns the correct rank' do
+        allow(user).to receive(:ranks).and_return(['R/C', 'Lt/C', 'D/Lt'])
+
+        expect(user.pin_rank).to eq('RC')
+      end
+
+      it 'allows a manual override' do
+        allow(user).to receive_messages(
+          ranks: ['R/C', 'Lt/C', 'D/Lt'],
+          preferred_pin_rank: 'P/C'
+        )
+
+        expect(user.pin_rank).to eq('PC')
+      end
+
+      it 'skips invalid ranks' do
+        allow(user).to receive(:preferred_pin_rank).and_return('P/N/F/Lt')
+
+        expect(user.pin_rank).to be_nil
+      end
+
+      it 'allows manual skip' do
+        allow(user).to receive_messages(
+          ranks: ['R/C', 'Lt/C', 'D/Lt'],
+          preferred_pin_rank: 'none'
+        )
+
+        expect(user.pin_rank).to be_nil
+      end
+    end
+
     describe '#first_stripe_class' do
       subject(:first_stripe_class) { user.first_stripe_class }
 

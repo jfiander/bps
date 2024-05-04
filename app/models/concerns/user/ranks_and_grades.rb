@@ -2,6 +2,8 @@
 
 class User
   module RanksAndGrades
+    TAB_RANKS_PATTERN = /^(?:(?:P?(?:C|V|R|STF|D)C)|PC|CDR)$/.freeze
+
     extend ActiveSupport::Concern
 
     def valid_ranks
@@ -33,6 +35,15 @@ class User
 
     def flag_rank
       preferred_flag_rank.presence || auto_rank(html: false)
+    end
+
+    def pin_rank
+      return if preferred_pin_rank == 'none'
+
+      r = preferred_pin_rank.presence || auto_rank(html: false)
+      normalized = r.gsub(%r{/}, '').upcase
+
+      normalized if normalized =~ TAB_RANKS_PATTERN
     end
 
     def first_stripe_class

@@ -75,21 +75,11 @@ module FlagsHelper
     end
   end
 
-  def membership_pin(mm, years)
-    membership =
-      if mm >= 50
-        'Governing_Board_Member_Emeritus'
-      elsif mm >= 25
-        years >= 50 ? '50-Year_Life_Member' : 'Life_Member'
-      elsif years >= 50
-        '50-Year_Member'
-      elsif years >= 25
-        '25-Year_Member'
-      else
-        'Member'
-      end
+  def membership_pin(mm, years, rank: nil)
+    membership = membership_pin_type(mm, years)
+    dir = membership_pin_rank_tab(rank)
 
-    image_tag("https://flags.aws.usps.org/pins/PNG/trimmed/100/#{membership}.png", width: 80)
+    image_tag("https://flags.aws.usps.org/pins/PNG/#{dir}trimmed/250/#{membership}.png", width: 80)
   end
 
 private
@@ -146,5 +136,26 @@ private
 
   def number_of_colors(rank)
     RANK_COLORS.count { |_color, ranks| rank.in?(ranks) }
+  end
+
+  def membership_pin_type(mm, years)
+    if mm >= 50
+      'Governing_Board_Member_Emeritus'
+    elsif mm >= 25
+      years >= 50 ? '50-Year_Life_Member' : 'Life_Member'
+    elsif years >= 50
+      '50-Year_Member'
+    elsif years >= 25
+      '25-Year_Member'
+    else
+      'Member'
+    end
+  end
+
+  def membership_pin_rank_tab(rank)
+    return if rank.blank?
+
+    dir = rank.gsub(%r{/}, '').upcase.sub(/^P/, '')
+    "tabs/#{dir}/"
   end
 end

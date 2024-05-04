@@ -53,7 +53,7 @@ module Application
         keys: %i[
           profile_photo rank first_name last_name jumpstart subscribe_on_register
           phone_h phone_c phone_w phone_c_preferred rank_override
-          preferred_flag_rank preferred_stripe_rank
+          preferred_flag_rank preferred_stripe_rank preferred_pin_rank
         ]
       )
     end

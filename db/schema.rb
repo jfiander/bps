@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_05_02_232343) do
+ActiveRecord::Schema.define(version: 2024_05_04_024739) do
 
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -716,6 +716,7 @@ ActiveRecord::Schema.define(version: 2024_05_02_232343) do
     t.string "phone_c_preferred"
     t.string "preferred_flag_rank"
     t.string "preferred_stripe_rank"
+    t.string "preferred_pin_rank"
     t.index ["certificate", "locked_at", "deleted_at"], name: "index_users_on_certificate"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true

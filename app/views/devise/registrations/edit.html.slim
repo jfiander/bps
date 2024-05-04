@@ -31,6 +31,10 @@ br.clear
       .right = f.text_field :preferred_stripe_rank
       br.clear
 
+      .left = f.label :rank, 'Preferred Pin Rank'
+      .right = f.text_field :preferred_pin_rank
+      br.clear
+
       - if current_user.permitted?(:admin, strict: true)
         .left = f.label :rank_override, 'Rank Override'
         .right = f.text_field :rank_override

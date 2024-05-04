@@ -118,42 +118,49 @@ RSpec.describe FlagsHelper do
     it 'generates the correct Member pin' do
       expect(membership_pin(24, 24)).to eql(
         '<img width="80" ' \
-        'src="https://flags.aws.usps.org/pins/PNG/trimmed/100/Member.png" />'
+        'src="https://flags.aws.usps.org/pins/PNG/trimmed/250/Member.png" />'
       )
     end
 
     it 'generates the correct 25-Year Member pin' do
       expect(membership_pin(24, 25)).to eql(
         '<img width="80" ' \
-        'src="https://flags.aws.usps.org/pins/PNG/trimmed/100/25-Year_Member.png" />'
+        'src="https://flags.aws.usps.org/pins/PNG/trimmed/250/25-Year_Member.png" />'
       )
     end
 
     it 'generates the correct 50-Year Member pin' do
       expect(membership_pin(24, 50)).to eql(
         '<img width="80" ' \
-        'src="https://flags.aws.usps.org/pins/PNG/trimmed/100/50-Year_Member.png" />'
+        'src="https://flags.aws.usps.org/pins/PNG/trimmed/250/50-Year_Member.png" />'
       )
     end
 
     it 'generates the correct Life Member pin' do
       expect(membership_pin(25, 49)).to eql(
         '<img width="80" ' \
-        'src="https://flags.aws.usps.org/pins/PNG/trimmed/100/Life_Member.png" />'
+        'src="https://flags.aws.usps.org/pins/PNG/trimmed/250/Life_Member.png" />'
       )
     end
 
     it 'generates the correct 50-Year Life Member pin' do
       expect(membership_pin(25, 50)).to eql(
         '<img width="80" ' \
-        'src="https://flags.aws.usps.org/pins/PNG/trimmed/100/50-Year_Life_Member.png" />'
+        'src="https://flags.aws.usps.org/pins/PNG/trimmed/250/50-Year_Life_Member.png" />'
       )
     end
 
     it 'generates the correct GB Member Emeritus pin' do
       expect(membership_pin(50, 50)).to eql(
         '<img width="80" ' \
-        'src="https://flags.aws.usps.org/pins/PNG/trimmed/100/Governing_Board_Member_Emeritus.png" />'
+        'src="https://flags.aws.usps.org/pins/PNG/trimmed/250/Governing_Board_Member_Emeritus.png" />'
+      )
+    end
+
+    it 'generates the correct pin with a rank tab' do
+      expect(membership_pin(25, 49, rank: 'RC')).to eql(
+        '<img width="80" ' \
+        'src="https://flags.aws.usps.org/pins/PNG/tabs/RC/trimmed/250/Life_Member.png" />'
       )
     end
   end
