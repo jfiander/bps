@@ -301,7 +301,7 @@ RSpec.describe User do
           preferred_pin_rank: 'P/C'
         )
 
-        expect(user.pin_rank).to eq('PC')
+        expect(user.pin_rank).to eq('CDR')
       end
 
       it 'skips invalid ranks' do

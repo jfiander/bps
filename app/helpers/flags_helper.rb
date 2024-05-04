@@ -77,7 +77,7 @@ module FlagsHelper
 
   def membership_pin(mm, years, rank: nil)
     membership = membership_pin_type(mm, years)
-    dir = membership_pin_rank_tab(rank)
+    dir = "tabs/#{rank}/" if rank
 
     image_tag("https://flags.aws.usps.org/pins/PNG/#{dir}trimmed/250/#{membership}.png", width: 80)
   end
@@ -150,12 +150,5 @@ private
     else
       'Member'
     end
-  end
-
-  def membership_pin_rank_tab(rank)
-    return if rank.blank?
-
-    dir = rank.gsub(%r{/}, '').upcase.sub(/^P/, '')
-    "tabs/#{dir}/"
   end
 end

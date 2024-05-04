@@ -43,7 +43,8 @@ class User
       r = preferred_pin_rank.presence || auto_rank(html: false)
       return unless r
 
-      normalized = r.gsub(%r{/}, '').upcase
+      normalized = r.gsub(%r{/}, '').upcase.gsub(%r{/}, '').upcase.sub(/^P/, '')
+      normalized = 'CDR' if normalized == 'C'
       normalized if normalized =~ TAB_RANKS_PATTERN
     end
 
