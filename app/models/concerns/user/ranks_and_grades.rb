@@ -41,8 +41,9 @@ class User
       return if preferred_pin_rank == 'none'
 
       r = preferred_pin_rank.presence || auto_rank(html: false)
-      normalized = r.gsub(%r{/}, '').upcase
+      return unless r
 
+      normalized = r.gsub(%r{/}, '').upcase
       normalized if normalized =~ TAB_RANKS_PATTERN
     end
 
