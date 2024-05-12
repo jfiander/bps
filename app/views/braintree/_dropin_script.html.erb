@@ -23,6 +23,16 @@
         shape: 'rect',
         size: 'medium'
       }
+    },
+    applePay: {
+      displayName: 'Birmingham Power Squadron',
+      paymentRequest: {
+        total: {
+          label: 'Birmingham Power Squadron',
+          amount: '<%= @payment.transaction_amount.tr('$', '') %>',
+          type: 'final'
+        }
+      }
     }
   }, function (createErr, instance) {
     button.addEventListener('click', function () {
