@@ -3,7 +3,7 @@
 module Payable
   module ClassMethods
     def payable
-      has_one :payment, foreign_key: :parent_id, dependent: :destroy, inverse_of: :parent
+      has_one :payment, dependent: :destroy, inverse_of: :parent, as: :parent
       before_destroy :block_destroy, if: :paid?
       after_create { self.payment = create_payment(parent: self) }
     end
