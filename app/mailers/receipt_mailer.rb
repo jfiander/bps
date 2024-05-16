@@ -78,15 +78,41 @@ private
       date: transaction.created_at.strftime('%Y-%m-%d'),
       amount: transaction.amount,
       email: transaction.customer_details.email,
-      promo_code: promo_code
-    }.merge(card_details(transaction))
+      promo_code: promo_code,
+      payment: {
+        credit_card: card_details(transaction),
+        paypal: paypal_details(transaction),
+        apple_pay: apple_pay_details(transaction)
+      }
+    }
   end
 
   def card_details(transaction)
+    return unless transaction.payment_instrument_type == 'credit_card'
+
     {
       card_type: transaction.credit_card_details.card_type,
       image: transaction.credit_card_details.image_url,
       last_4: transaction.credit_card_details.last_4
+    }
+  end
+
+  def paypal_details(transaction)
+    return unless transaction.payment_instrument_type == 'paypal_account'
+
+    {
+      email: transaction.paypal_details.payer_email,
+      image: transaction.paypal_details.image_url
+    }
+  end
+
+  def apple_pay_details(transaction)
+    return unless transaction.payment_instrument_type == 'apple_pay_card'
+
+    {
+      card_type: transaction.apple_pay_details.card_type,
+      image: transaction.apple_pay_details.image_url,
+      last_4: transaction.apple_pay_details.last_4
     }
   end
 end

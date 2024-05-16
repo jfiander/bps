@@ -44,12 +44,23 @@ p
     | Promo code:
     b< = @transaction[:promo_code]
     br
-  - if @transaction[:card_type].present?
-    - if @transaction[:image].present?
-      => image_tag @transaction[:image], alt: @transaction[:card_type], size: '32x20'
+  - if @transaction[:payment][:credit_card]
+    - if @transaction[:payment][:credit_card][:image].present?
+      => image_tag @transaction[:payment][:credit_card][:image], alt: @transaction[:payment][:credit_card][:card_type], size: '32x20'
     - else
-      => @transaction[:card_type]
+      => @transaction[:payment][:credit_card][:card_type]
     | ending in **
-    b = @transaction[:last_4]
-  - else
-    | Paid via PayPal
+    b = @transaction[:payment][:credit_card][:last_4]
+  - elsif @transaction[:payment][:paypal]
+    - if @transaction[:payment][:paypal][:image].present?
+      => image_tag @transaction[:payment][:paypal][:image], alt: 'PayPal', size: '32x20'
+    - else
+      b PayPal
+    b = @transaction[:payment][:paypal][:email]
+  - elsif @transaction[:payment][:apple_pay]
+    - if @transaction[:payment][:apple_pay][:image].present?
+      => image_tag @transaction[:payment][:apple_pay][:image], alt: @transaction[:payment][:apple_pay][:card_type], size: '32x20'
+    - else
+      => @transaction[:payment][:apple_pay][:card_type]
+    | ending in **
+    b = @transaction[:payment][:apple_pay][:last_4]
