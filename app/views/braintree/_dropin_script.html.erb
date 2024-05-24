@@ -3,20 +3,6 @@
 <script>
   var button = document.querySelector('#pay-button');
 
-  function sendNonceToServer() {
-    instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
-      $.ajax({
-        type: "POST",
-        url: '<%= checkout_url %>',
-        data: {
-          'payment_method_nonce': payload.nonce,
-          'token': '<%= @token %>',
-          'email': $("#receipt-email").serialize()
-        }
-      });
-    });
-  }
-
   braintree.dropin.create({
     authorization: '<%= @client_token %>',
     container: '#dropin-container',
@@ -49,6 +35,20 @@
       }
     }
   }, function (createErr, instance) {
+    function sendNonceToServer() {
+      instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+        $.ajax({
+          type: "POST",
+          url: '<%= checkout_url %>',
+          data: {
+            'payment_method_nonce': payload.nonce,
+            'token': '<%= @token %>',
+            'email': $("#receipt-email").serialize()
+          }
+        });
+      });
+    }
+
     // Allows Drop-in to still request the payment method manually,
     // such as when filling out a credit card form.
     button.addEventListener('click', sendNonceToServer);
