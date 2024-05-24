@@ -37,6 +37,10 @@
   }, function (createErr, instance) {
     function sendNonceToServer() {
       instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+        if (requestPaymentMethodErr) {
+          // Handle errors
+        }
+
         $.ajax({
           type: "POST",
           url: '<%= checkout_url %>',
