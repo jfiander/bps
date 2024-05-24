@@ -53,12 +53,12 @@
     // such as when filling out a credit card form.
     button.addEventListener('click', sendNonceToServer);
 
+    let applePayElements = document.getElementsByClassName('apple-pay');
+    let notApplePayElements = document.getElementsByClassName('not-apple-pay');
+
     // Hide or show information and blue Pay button, based on selected payment method
     // Vaulted methods are always not Apple Pay, so the default on page load is to show the button.
     instance.on('paymentOptionSelected', function (event) {
-      let applePayElements = document.getElementsByClassName('apple-pay');
-      let notApplePayElements = document.getElementsByClassName('not-apple-pay');
-
       if (event.paymentOption == 'applePay') {
         for (const elem of applePayElements) { elem.style.display = "inline-block"; }
         for (const elem of notApplePayElements) { elem.style.display = "none"; }
@@ -77,6 +77,9 @@
           // The selected method is Apple Pay, so we should auto-submit.
           // Other payment types require clicking the blue button.
           sendNonceToServer();
+        } else {
+          for (const elem of applePayElements) { elem.style.display = "none"; }
+          for (const elem of notApplePayElements) { elem.style.display = "inline-block"; }
         }
       }
     });
