@@ -8,8 +8,7 @@ html lang='en'
     meta name='description' content=(@site_description)
     meta name='keywords' content=(@site_keywords)
     meta name='viewport' content='width=device-width, initial-scale=1.0'
-    = favicon_link_tag BPS::S3.new(:static).link('favicon.ico')
-    link rel="apple-touch-icon" href=(BPS::S3.new(:static).link('misc/seahorse.square.blue.png'))
+    = render('application/icons')
     = FA::Link.kit(ENV['FONTAWESOME_KIT'])
     - if BPS::Application.deployed?
       = render 'application/trackers/analytics', keys: ENV.select { |k, _| k.match?(/\AGA_TRACKING_ID/) }.values
