@@ -8,13 +8,15 @@
     container: '#dropin-container',
     form: '#checkout',
     vaultManager: true,
+    paymentOptionPriority: ['applePay', 'card', 'paypal'],
     card: {
       cardholderName: { required: true },
-      vault: { allowVaultCardOverride: true }
-    },
-    overrides: {
-      fields: {
-        cvv: true
+      vault: { allowVaultCardOverride: true },
+      overrides: {
+        fields: {
+          number: { maskInput: { showLastFour: true } },
+          cvv: { type: "password" }
+        }
       }
     },
     paypal: {
