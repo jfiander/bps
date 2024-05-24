@@ -57,7 +57,12 @@
       if (event.paymentMethodIsSelected) {
         // The customer has completed the flow and we are
         // ready to submit the payment method nonce to the server.
-        sendNonceToServer();
+
+        if (event.type == "ApplePayCard") {
+          // The selected method is Apple Pay, so we should auto-submit.
+          // Other payment types require clicking the blue button.
+          sendNonceToServer();
+        }
       }
     });
   });
