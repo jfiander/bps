@@ -39,12 +39,9 @@
       ' Please
       = mail_to('payments@bpsd9.org', 'contact us', target: :_blank)
       |  if the above price is not correct.
-  #apple-pay-instructions
-    | If you are using Apple Pay, this page will update automatically once you have approved the purchase on your device.
-  button#pay-button
-    ' Pay
-    = @transaction_amount
-  .information Don't worry if you click twice – only the first click will be processed.
+  #apple-pay-instructions.apple-pay This page will submit automatically once you have approved the Apple Pay purchase on your device.
+  button#pay-button.not-apple-pay Pay #{@transaction_amount}
+  .information.not-apple-pay Don't worry if you click twice – only the first click will be processed.
   ul.policies
     li = link_to(payment_terms_path, target: :_blank) { FA::Icon.p('file-alt', style: :duotone) + 'Terms & Conditions' }
     li = link_to(refunds_path, target: :_blank) { FA::Icon.p('file-invoice-dollar', style: :duotone) + 'Refund Policy' }
