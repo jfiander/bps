@@ -39,8 +39,12 @@
       ' Please
       = mail_to('payments@bpsd9.org', 'contact us', target: :_blank)
       |  if the above price is not correct.
+  #dropin-errors.red-background
+    | There was a problem submitting the transaction.
+    br
+    | Please try again with a different payment method.
   #apple-pay-instructions.apple-pay This page will submit automatically once you have approved the Apple Pay purchase on your device.
-  button#pay-button.not-apple-pay Pay #{@transaction_amount}
+  button#pay-button.not-apple-pay data-amount=(@transaction_amount) Pay #{@transaction_amount}
   .information.not-apple-pay Don't worry if you click twice – only the first click will be processed.
   ul.policies
     li = link_to(payment_terms_path, target: :_blank) { FA::Icon.p('file-alt', style: :duotone) + 'Terms & Conditions' }

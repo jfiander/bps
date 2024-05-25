@@ -40,15 +40,40 @@
   }, function (createErr, instance) {
     function sendNonceToServer() {
       instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
-        $.ajax({
-          type: "POST",
-          url: '<%= checkout_url %>',
-          data: {
+        if (requestPaymentMethodErr) {
+          console.error(requestPaymentMethodErr);
+          return;
+        }
+
+        const dropinErrors = document.getElementById("dropin-errors");
+
+        dropinErrors.style.display = "none";
+
+        let spinner = document.createElement("span");
+        spinner.id = "pay-button-spinner";
+        spinner.innerHTML = "<%= FA::Icon.p('spinner', style: :duotone, fa: 'spin-pulse') %>";
+        button.innerHTML = "Paying...";
+        button.appendChild(spinner);
+
+        fetch('<%= checkout_url %>', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
             'payment_method_nonce': payload.nonce,
             'token': '<%= @token %>',
             'email': $("#receipt-email").serialize()
-          }
-        });
+          })
+        })
+          .then((res) => {
+            button.innerHTML = "Payment complete!";
+            return res.json();
+          })
+          .then((json) => window.location = json['url'])
+          .catch(() => {
+            instance.clearSelectedPaymentMethod();
+            button.innerHTML = `Pay ${button.dataset.amount}`;
+            dropinErrors.style.display = "block";
+          });
       });
     }
 

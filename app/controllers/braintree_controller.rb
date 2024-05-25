@@ -27,7 +27,7 @@ class BraintreeController < ApplicationController
 
     if @result.success?
       process_success
-      render js: "window.location='#{transaction_complete_path(token: @token)}'"
+      render json: { status: 'ok', url: transaction_complete_path(token: @token) }
     else
       flash_error_message
     end

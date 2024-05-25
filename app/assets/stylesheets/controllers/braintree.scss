@@ -97,3 +97,10 @@ div#apple-pay-instructions {
   width: 350px;
   height: 45px;
 }
+
+div#dropin-errors {
+  display: none;
+  margin-top: 1em;
+  font-weight: bold;
+  font-style: italic;
+}
