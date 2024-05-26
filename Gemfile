@@ -96,6 +96,9 @@ group :development do
   gem 'capistrano-rails',      '~> 1.6.1'
   gem 'capistrano-rvm',        '~> 0.1.2'
 
+  gem 'bcrypt_pbkdf'
+  gem 'ed25519'
+
   gem 'guard',                 '~> 2.18'
   gem 'guard-rspec',           '~> 4.7'
   gem 'guard-rubocop',         '~> 1.5'
