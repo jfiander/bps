@@ -123,6 +123,6 @@ private
     base_cost = own_cost + event.additional_registration_cost.to_i
     return base_cost unless additional_registrations.any?
 
-    base_cost + additional_registrations.sum(&:payment_amount)
+    base_cost + (own_cost * additional_registrations.size)
   end
 end

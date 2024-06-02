@@ -242,13 +242,25 @@ RSpec.describe Registration do
   end
 
   context 'with additional registrants' do
-    it 'uses the correct combined cost' do
+    let(:event) do
       event_type = create(:event_type, event_category: 'meeting', title: 'rendezvous')
-      event = create(:event, event_type: event_type, cost: 5)
-      reg = create(:registration, event: event, user: user)
-      reg.additional_registrations.create(event: event, email: 'someone.else@example.com')
+      create(:event, event_type: event_type, cost: 5)
+    end
 
-      expect(reg.payment_amount).to eq(10)
+    let!(:registration) do
+      create(:registration, event: event, user: user).tap do |reg|
+        reg.additional_registrations.create(event: event, email: 'someone.else@example.com')
+      end
+    end
+
+    it 'uses the correct combined cost' do
+      expect(registration.payment_amount).to eq(10)
+    end
+
+    it 'uses the correct combined cost with an event additional cost' do
+      event.update(additional_registration_cost: 3)
+
+      expect(registration.payment_amount).to eq(13)
     end
   end
 
