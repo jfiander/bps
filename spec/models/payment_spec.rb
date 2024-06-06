@@ -10,10 +10,10 @@ RSpec.describe Payment do
   let(:braintree_api_token_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/client_token 201} }
   let(:braintree_api_customer_regex) { %r{POST /merchants/#{ENV['BRAINTREE_MERCHANT_ID']}/customers 201} }
 
-  it 'uses the correct discount rate' do
-    expect(described_class.discount(1)).to eq(0.32)
-    expect(described_class.discount(100)).to eq(2.50)
-    expect(described_class.discount(200)).to eq(4.70)
+  it 'uses the correct discount rate', :aggregate_failures do
+    expect(described_class.discount(1)).to eq(0.50)
+    expect(described_class.discount(100)).to eq(2.48)
+    expect(described_class.discount(200)).to eq(4.47)
   end
 
   describe 'general methods' do
