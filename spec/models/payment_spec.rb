@@ -14,6 +14,14 @@ RSpec.describe Payment do
     expect(described_class.discount(1)).to eq(0.50)
     expect(described_class.discount(100)).to eq(2.48)
     expect(described_class.discount(200)).to eq(4.47)
+
+    # Actual discount rates from Braintree
+    expect(described_class.discount(25)).to eq(0.98)
+    expect(described_class.discount(35)).to eq(1.18)
+    expect(described_class.discount(45)).to eq(1.38)
+    expect(described_class.discount(50)).to eq(1.48)
+    expect(described_class.discount(70)).to eq(1.88)
+    expect(described_class.discount(89)).to eq(2.26)
   end
 
   describe 'general methods' do
