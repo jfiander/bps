@@ -117,6 +117,8 @@
         ul.simple
           - @registered_users[event.id].each do |r|
             li = render('event/register/member', r: r, event: event)
+        span.bold> Total Collected:
+        | $#{@registered_users[event.id].select(&:paid?).sum(&:payment_amount)}
 
   .event-column-right
     .event-actions
