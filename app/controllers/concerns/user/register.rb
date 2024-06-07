@@ -42,7 +42,8 @@ class User
         flash[:alert] = 'Unable to override registration cost.'
       end
 
-      redirect_to send("#{@registration.event.category}_registrations_path")
+      category = @registration.event.category == 'meeting' ? 'event' : @registration.event.category
+      redirect_to send("#{category}_registrations_path")
     end
 
   private
