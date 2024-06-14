@@ -4,5 +4,5 @@
   - elsif r.main_registration.nil?
     = cancel_reg_link(r, event: event)
   - if current_user&.permitted?(:admin) && event&.cost&.positive? && r.main_registration.nil?
-    = reg_override_icon(r)
+    = reg_override_icon(r, admin: current_user.permitted?(:admin, strict: true))
   = link_to(r.display_name(truncate: true), registration_path(r))

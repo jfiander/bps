@@ -36,6 +36,16 @@ RSpec.describe EventsHelper do
       )
     end
 
+    it 'generates the correct linked paid icon for admin' do
+      reg.payment.paid!('1234567890')
+
+      expect(reg_override_icon(reg, admin: true)).to eql(
+        "<a href=\"/receipts/#{reg.payment.token}\">" \
+        "<i class='fad gray fa-file-invoice-dollar fa-1x' id='' style='' data-fa-transform='' " \
+        "title='Registration has already been paid'></i></a>"
+      )
+    end
+
     it 'generates the correct set paid icon' do
       reg.update(override_cost: 1)
       reg.payment.paid!('1234567890')
