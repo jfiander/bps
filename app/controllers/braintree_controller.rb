@@ -85,7 +85,7 @@ private
       fallback: 'A payment was successfully completed.',
       fields: {
         'Amount' => payment.transaction_amount,
-        'Receipt' => "<#{payment.receipt_link}|Receipt>"
+        'Receipt' => "<#{receipt_url(payment.token)}|Receipt>"
       }.merge(promo_field(payment))
     ).notify!
   end
