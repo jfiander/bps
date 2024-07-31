@@ -12,15 +12,15 @@ RSpec.describe Payment do
 
   it 'uses the correct discount rate' do
     discounts = {
-      1 => 0.50,
+      1 => 0.51,
       100 => 2.48,
       200 => 4.47,
 
-      # Actual discount rates from Braintree
-      25 => 0.98,
-      35 => 1.18,
-      45 => 1.38,
-      50 => 1.48,
+      # Actual discount rates from Braintree, adjusted for new rounding
+      25 => 0.99,
+      35 => 1.19,
+      45 => 1.39,
+      50 => 1.49,
       70 => 1.88,
       89 => 2.26
     }

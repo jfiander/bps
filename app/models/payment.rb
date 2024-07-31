@@ -21,9 +21,9 @@ class Payment < ApplicationRecord
   scope :unpaid, -> { !paid }
 
   def self.discount(amount)
-    # Fee is rounded down to the nearest cent
+    # Fee is rounded to the nearest cent
     fee = (amount.to_d * 0.0199) + 0.49
-    fee.floor(2)
+    fee.round(2)
   end
 
   def payable?
