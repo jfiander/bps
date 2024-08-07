@@ -6,7 +6,7 @@
     .subject
       = @purchase_info[:name]
       - if @purchase_info[:type].present?
-        span.type
+        div.type
           |  (
           = @purchase_info[:type].titleize
           | )

@@ -2,9 +2,9 @@
   .subject
     = @event.display_title
     - if @event.course?
-      span.type Course
+      div.type Course
     - elsif @event.seminar?
-      span.type Seminar
+      div.type Seminar
   .desc on
   .date
     b = @event.start_at.strftime(TimeHelper::PUBLIC_DATE_FORMAT)
