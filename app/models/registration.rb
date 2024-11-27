@@ -88,6 +88,36 @@ class Registration < ApplicationRecord
     "#{short}@#{domain}"
   end
 
+  # Console helpers for building registrations without registering via the UI
+  #
+  # TODO: Add coverage
+  #
+  # :nocov:
+  def available_options
+    event.event_selections.each_with_object({}) do |event_selection, hash|
+      hash[event_selection.description] =
+        event_selection.event_options.each_with_object({}) do |option, h|
+          h[option.name] = option.id
+        end
+    end
+  end
+
+  def select_option(string)
+    available_options.each_value do |selections|
+      selections.each do |name, id|
+        return registration_options.build(event_option_id: id) if name =~ /#{string}/i
+      end
+    end
+  end
+
+  def select_option!(string)
+    result = select_option(string)
+    raise "Selection not found: #{string}" if result.nil?
+
+    save!
+  end
+  # :nocov:
+
 private
 
   def no_duplicate_registrations
