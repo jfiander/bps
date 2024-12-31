@@ -121,7 +121,7 @@ private
       user_id: clean_params[:user_id],
       term_start_at: standing_committee_term_start_at,
       term_length: clean_params[:term_length],
-      indefinite: clean_params[:indefinite]
+      indefinite: clean_params[:indefinite] || false
     )
   end
 
