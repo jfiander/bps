@@ -8,7 +8,7 @@ RSpec.describe MinutesFile do
   end
 
   it 'has the correct number of issues' do
-    expect(described_class.issues.count).to be(10)
+    expect(described_class.issues.count).to be(11)
   end
 
   describe 'issues' do
