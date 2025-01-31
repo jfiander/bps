@@ -35,35 +35,49 @@ module Admin
     end
 
     def create
+      report = process_report
+      convert = DmarcConvert.new(report.xml).tap(&:to_proto)
+
+      if convert.success?
+        report.save!
+        redirect_to(dmarc_reports_path)
+      else
+        @bugsnag_tabbed_metadata = { dmarc: convert.error } # DEV: Support this in ApplicationController
+        raise 'Error parsing DMARC report'
+      end
+    end
+
+  private
+
+    def process_report
       content_type = dmarc_report_params[:xml].content_type
+
       case content_type
       when 'text/xml'
-        DmarcReport.create(xml: dmarc_report_params[:xml].read)
+        DmarcReport.new(xml: dmarc_report_params[:xml].read)
       when 'application/zip'
         extract_zip(dmarc_report_params[:xml])
       when 'application/x-gzip'
-        DmarcReport.create(
+        DmarcReport.new(
           xml: Zlib::GzipReader.new(dmarc_report_params[:xml]).read
         )
       else
         raise "Unexpected file format: #{content_type}"
       end
-
-      redirect_to(admin_dmarc_reports_path)
     end
-
-  private
 
     def dmarc_report_params
       params.require(:dmarc_report).permit(:xml)
     end
 
     def extract_zip(xml)
-      Zip::File.open(xml) do |zip_file|
-        zip_file.each do |entry|
-          DmarcReport.create(xml: entry.get_input_stream.read)
+        reports = []
+        Zip::File.open(xml) do |zip_file|
+          zip_file.each do |entry|
+            reports << DmarcReport.new(xml: entry.get_input_stream.read)
+          end
         end
+        reports.size == 1 ? reports[0] : raise('Multiple reports contained in ZIP')
       end
-    end
   end
 end
