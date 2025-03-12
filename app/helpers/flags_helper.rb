@@ -139,6 +139,8 @@ private
   end
 
   def membership_pin_type(mm, years)
+    return 'Member' if mm.blank?
+
     if mm >= 50
       'Governing_Board_Member_Emeritus'
     elsif mm >= 25
