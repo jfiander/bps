@@ -1,0 +1,28 @@
+- proto = report.proto
+- source_domain = report.filename.split('!')[0] if report.filename
+- proto.records.each_with_index do |record, index|
+  .table-row
+    .report.table-cell title=(proto.report_metadata.report_id)
+      - if index.zero?
+        .org_name = proto.report_metadata.org_name
+        .source_domain = source_domain if source_domain && source_domain != proto.report_metadata.org_name
+        .report_id.mobile: small: nolink = proto.report_metadata.report_id
+    .dates.table-cell
+      - if index.zero?
+        .date_begin = DateTime.strptime(proto.report_metadata.date_range.begin.to_s, '%s').strftime('%-m/%-d/%Y @ %H%M')
+        .date_end = DateTime.strptime(proto.report_metadata.date_range.end.to_s, '%s').strftime('%-m/%-d/%Y @ %H%M')
+    .source_ip.table-cell class=(report.sources_proto.sources[index].sender == :UNKNOWN_SENDER ? :unrecognized : :recognized)
+      nolink title=(report.sources_proto.sources[index].dns) = record.row.source_ip
+    .count.table-cell.center = record.row.count
+    .disposition.table-cell class=("dmarc-disposition #{record.row.policy_evaluated.disposition.to_s.downcase}")
+      div.mobile = dmarc_field_icon(:disposition)
+      = FA::Icon.p(disposition_icon(record.row.policy_evaluated.disposition), style: :duotone)
+      span.desktop = record.row.policy_evaluated.disposition.to_s.downcase
+    = render('dmarc_result', record: record, dmarc_field: :dkim)
+    = render('dmarc_result', record: record, dmarc_field: :spf)
+    .actions.table-cell
+      - if index.zero?
+        = link_to(admin_dmarc_report_path(report), title: 'View') { FA::Icon.p('desktop', style: :duotone, fa: :fw) }
+        = link_to(admin_dmarc_report_path(report, format: :xml), title: 'XML') { FA::Icon.p('code', style: :duotone, fa: :fw) }
+        = link_to(admin_dmarc_report_path(report, format: :json), title: 'JSON') { FA::Icon.p('brackets-curly', style: :duotone, fa: :fw) }
+        = link_to(admin_dmarc_report_path(report, format: :proto), title: 'Proto') { FA::Icon.p('binary', style: :duotone, fa: :fw) }

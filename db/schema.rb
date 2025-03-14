@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_05_04_024739) do
+ActiveRecord::Schema.define(version: 2025_03_14_203534) do
 
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 2024_05_04_024739) do
     t.datetime "deleted_at"
     t.binary "proto"
     t.binary "sources_proto"
+    t.string "filename"
   end
 
   create_table "event_instructors", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

@@ -63,6 +63,8 @@ message Feedback {
           UNKNOWN_DMARC_RESULT = 0;
           PASS = 1;
           FAIL = 2;
+          TEMPERROR = 3;
+          PERMERROR = 4;
         }
 
         message Reason {
@@ -102,6 +104,8 @@ message Feedback {
           UNKNOWN_RESULT = 0;
           PASS = 1;
           FAIL = 2;
+          TEMPERROR = 3;
+          PERMERROR = 4;
         }
 
         string domain = 1;

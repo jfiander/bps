@@ -1,6 +1,5 @@
 - result = record.row.policy_evaluated.public_send(dmarc_field).to_s.downcase
 .table-cell.dmarc-result class=("#{dmarc_field} #{result}")
-  div.mobile #{dmarc_field.to_s.upcase}:
-  span class=(result)
-    = FA::Icon.p(dmarc_result_icon(result), style: :duotone)
-    = result
+  div.mobile = dmarc_field_icon(dmarc_field)
+  = FA::Icon.p(dmarc_result_icon(result), style: :duotone)
+  span.desktop = result

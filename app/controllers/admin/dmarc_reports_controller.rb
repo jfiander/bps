@@ -35,35 +35,63 @@ module Admin
     end
 
     def create
-      content_type = dmarc_report_params[:xml].content_type
-      case content_type
-      when 'text/xml'
-        DmarcReport.create(xml: dmarc_report_params[:xml].read)
-      when 'application/zip'
-        extract_zip(dmarc_report_params[:xml])
-      when 'application/x-gzip'
-        DmarcReport.create(
-          xml: Zlib::GzipReader.new(dmarc_report_params[:xml]).read
-        )
+      report = process_report
+      convert = DmarcConvert.new(report.xml).tap(&:to_proto)
+
+      if convert.success?
+        report.save!
+        redirect_to(admin_dmarc_reports_path)
       else
-        raise "Unexpected file format: #{content_type}"
+        @bugsnag_tabbed_metadata = { dmarc: convert.error }
+        raise 'Error parsing DMARC report'
       end
+    rescue ActiveRecord::RecordInvalid => e
+      raise(e) unless e.message == 'Validation failed: Duplicate report'
 
       redirect_to(admin_dmarc_reports_path)
     end
 
   private
 
+    # rubocop:disable Metrics/MethodLength
+    def process_report
+      content_type = dmarc_report_params[:xml].content_type
+      @filename = dmarc_report_params[:xml].original_filename
+
+      case content_type
+      when 'text/xml'
+        DmarcReport.new(
+          xml: dmarc_report_params[:xml].read,
+          filename: @filename
+        )
+      when 'application/zip'
+        extract_zip(dmarc_report_params[:xml])
+      when 'application/x-gzip'
+        DmarcReport.new(
+          xml: Zlib::GzipReader.new(dmarc_report_params[:xml]).read,
+          filename: @filename
+        )
+      else
+        raise "Unexpected file format: #{content_type}"
+      end
+    end
+    # rubocop:enable Metrics/MethodLength
+
     def dmarc_report_params
       params.require(:dmarc_report).permit(:xml)
     end
 
     def extract_zip(xml)
+      reports = []
       Zip::File.open(xml) do |zip_file|
         zip_file.each do |entry|
-          DmarcReport.create(xml: entry.get_input_stream.read)
+          reports << DmarcReport.new(
+            xml: entry.get_input_stream.read,
+            filename: @filename
+          )
         end
       end
+      reports.size == 1 ? reports[0] : raise('Multiple reports contained in ZIP')
     end
   end
 end
