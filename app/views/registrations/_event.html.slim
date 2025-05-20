@@ -7,6 +7,6 @@
       div.type Seminar
   .desc on
   .date
-    b = @event.start_at.strftime(TimeHelper::PUBLIC_DATE_FORMAT)
-    |  at
+    b => @event.start_at.strftime(TimeHelper::PUBLIC_DATE_FORMAT)
+    ' at
     b = @event.start_at.strftime(TimeHelper::PUBLIC_TIME_FORMAT)
