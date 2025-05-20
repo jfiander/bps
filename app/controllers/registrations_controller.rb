@@ -22,7 +22,7 @@ class RegistrationsController < ApplicationController
 
     @registration = Registration.new(registration_params.merge(user: current_user))
 
-    registration_options_params.each do |_description, option_id|
+    registration_options_params&.each do |_description, option_id|
       @registration.registration_options.build(event_option_id: option_id)
     end
 
