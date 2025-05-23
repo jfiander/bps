@@ -92,7 +92,7 @@ private
       #
       # end
       selection = details[:selections] # DEV
-      additional.registration_options.build(event_option_id: selection)
+      additional.registration_options.build(event_option_id: selection) if selection
     end
   end
   # rubocop:enable Metrics/AbcSize
