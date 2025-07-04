@@ -1,6 +1,9 @@
 h1 = admin_header('DMARC Reports')
 
 = form_for([:admin, @new_report], multipart: true) do |f|
+  = FA::Icon.p('file-xml', style: :duotone)
+  = FA::Icon.p('file-zip', style: :duotone)
+  = FA::Icon.p('file-zipper', style: :duotone, title: 'gzip')
   = f.file_field(:xml, accept: 'application/zip,application/gzip,text/xml', required: true)
   = f.submit('Upload Report', class: 'big')
 
