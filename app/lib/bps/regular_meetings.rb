@@ -2,9 +2,9 @@
 
 module BPS
   class RegularMeetings
-    def book!
-      calendar.create(membership)
-      calendar.create(excom)
+    def book!(skip_membership: false, skip_excom: false)
+      calendar.create(membership) unless skip_membership
+      calendar.create(excom) unless skip_excom
     end
 
   private
@@ -67,11 +67,11 @@ module BPS
     end
 
     def start_time(date)
-      Time.strptime("2018/01/#{date} 18:00 EST", '%Y/%m/%d %H:%M %Z').to_datetime
+      Time.strptime("2025/11/#{date} 18:00 EST", '%Y/%m/%d %H:%M %Z').to_datetime
     end
 
     def end_time(date)
-      Time.strptime("2018/01/#{date} 21:00 EST", '%Y/%m/%d %H:%M %Z').to_datetime
+      Time.strptime("2025/11/#{date} 21:00 EST", '%Y/%m/%d %H:%M %Z').to_datetime
     end
   end
 end
