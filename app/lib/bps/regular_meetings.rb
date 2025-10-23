@@ -54,7 +54,7 @@ module BPS
     end
 
     def meeting_hash(**options)
-      months = options[:months].join('.')
+      months = options[:months].join(',')
 
       {
         start: start_time(options[:date]),
