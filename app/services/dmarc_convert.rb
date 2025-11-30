@@ -195,6 +195,6 @@ private
   def enum(node, name, optional: false)
     return if child(node, name).nil? && optional
 
-    string(node, name).upcase.to_sym
+    string(node, name)&.upcase&.to_sym
   end
 end
