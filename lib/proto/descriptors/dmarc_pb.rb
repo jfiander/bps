@@ -105,6 +105,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :UNKNOWN_RESULT, 0
       value :PASS, 1
       value :FAIL, 2
+      value :TEMPERROR, 3
+      value :PERMERROR, 4
     end
     add_message "dmarc.Feedback.Record.AuthResults.Spf" do
       optional :domain, :string, 1
