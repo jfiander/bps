@@ -43,7 +43,7 @@ module Admin
         redirect_to(admin_dmarc_reports_path)
       else
         @bugsnag_tabbed_metadata = { dmarc: convert.error }
-        raise 'Error parsing DMARC report'
+        raise "Error parsing DMARC report: #{convert.error}"
       end
     rescue ActiveRecord::RecordInvalid => e
       raise(e) unless e.message == 'Validation failed: Duplicate report'
