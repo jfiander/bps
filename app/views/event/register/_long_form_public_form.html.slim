@@ -23,4 +23,6 @@
 
       = render 'event/register/selections', selections: @event.event_selections
 
+      .flexible.center = recaptcha_tags
+
       .center = spinner_button(f, button_text: 'Register', css: 'big')

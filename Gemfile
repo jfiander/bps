@@ -25,6 +25,8 @@ gem 'uglifier',            '~> 4.1'
 
 gem 'figaro',              '~> 1.2.0'
 
+gem 'recaptcha'
+
 # Model Behavior
 gem 'paperclip',           '~> 6.1.0'
 gem 'paper_trail',         '~> 11.0'

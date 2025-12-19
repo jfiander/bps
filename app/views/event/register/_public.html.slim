@@ -1,4 +1,5 @@
 = form_tag public_register_path, method: :put, remote: true, id: "public-register-#{event_id}#{defined?(mobile) ? '-mobile' : ''}"
   = hidden_field_tag :event_id, event_id
   = email_field_tag :email, '', required: true, placeholder: "Email address"
+  = recaptcha_tags
   = submit_tag "Register"

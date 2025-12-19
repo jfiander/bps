@@ -85,7 +85,7 @@ private
     if @registration.persisted?
       flash[:alert] = 'You are already registered.'
       render status: :unprocessable_entity
-    elsif @registration.save
+    elsif verify_recaptcha(model: @registration) && @registration.save
       flash[:success] = 'You have successfully registered!'
       send_registered_emails
     else
@@ -97,7 +97,7 @@ private
   def register_html
     if @registration.persisted?
       registration_existed
-    elsif @registration.save
+    elsif verify_recaptcha(model: @registration) && @registration.save
       registration_saved
     else
       registration_problem

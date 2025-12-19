@@ -109,6 +109,8 @@ private
     end
     @member_application_persons = [people]
 
+    raise 'Failed reCAPTCHA' unless verify_recaptcha(model: @member_application)
+
     @member_application.save!
   end
 
