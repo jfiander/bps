@@ -111,7 +111,7 @@ jobs:
       - name: Setup MySQL
         uses: shogo82148/actions-setup-mysql@v1
         with:
-          mysql-version: '8.0'
+          mysql-version: '8.4'
       - name: Prepare MySQL Database User
         run: |
           mysql -uroot -h127.0.0.1 -e 'SELECT version()'
