@@ -52,4 +52,9 @@
   ul.policies
     li = link_to('https://www.braintreepayments.com/features/data-security', target: :_blank) { FA::Icon.p('lock', style: :duotone) + 'Data Security' + content_tag(:sup, FA::Icon.p('external-link-alt', style: :duotone)) }
     li = mail_to('payments@bpsd9.org', target: :_blank) { FA::Icon.p('envelope', style: :duotone) + 'Contact us at payments@bpsd9.org' }
+
+  - if ENV.fetch('SECURITY_METRICS_TOKEN', nil)
+    = link_to("https://www.securitymetrics.com/site_certificate?#{ENV.fetch('SECURITY_METRICS_TOKEN')}", target: :blank, rel: 'noopener noreferrer') do
+      = image_tag('https://www.securitymetrics.com/portal/app/ngsm/assets/img/GreyContent_PCI_Validation_White_Rec.png', alt: 'SecurityMetrics PCI validated')
+
   = render 'braintree/dropin_script'
