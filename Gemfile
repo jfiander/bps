@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.7.4'
+ruby '3.3.11'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails',               '>= 6.1.7.5'
+gem 'rails',               '~> 6.1.7'
 
 gem 'puma',                '~> 5.6'
 
@@ -38,7 +38,7 @@ gem 'aws-sdk-rails',       '~> 3.6'
 gem 'aws-sdk-s3',          '~> 1.111'
 gem 'aws-sdk-ses',         '~> 1.45'
 gem 'aws-sdk-sns',         '~> 1.50'
-gem 'bps-google-api',      '~> 0.6.0'
+gem 'bps-google-api',      '~> 0.7.0'
 gem 'braintree',           '~> 4.26'
 gem 'geocoder',            '~> 1.6.1'
 gem 'rushover',            '~> 0.3.0'
@@ -56,7 +56,7 @@ gem 'google-protobuf',     '~> 3.21'
 gem 'jwt',                 '~> 2.2.3'
 gem 'lograge'
 gem 'pdf-reader',          '~> 2.10.0'
-gem 'prawn',               '~> 2.2.2'
+gem 'prawn',               '~> 2.5'
 gem 'prawn-svg',           '~> 0.28.0'
 gem 'ruby-progressbar',    '~> 1.10'
 gem 'sanitize_email',      '~> 1.2'
@@ -66,14 +66,14 @@ gem 'sanitize_email',      '~> 1.2'
 gem 'sidekiq',             '~> 7.1'
 
 # View Management
-gem 'fa_rails',            '~> 0.1.31'
+gem 'fa_rails',            '~> 0.2.0'
 gem 'inline_svg',          '~> 1.7.2'
 gem 'nested_form_fields',  '~> 0.8.2'
 gem 'redcarpet',           '~> 3.5.1'
 gem 'slim',                '~> 3.0.6'
-gem 'usps_flags',          '~> 0.6.3'
-gem 'usps_flags-burgees',  '~> 0.1.3'
-gem 'usps_flags-grades',   '~> 0.1.5'
+gem 'usps_flags',          '~> 0.7.1'
+gem 'usps_flags-burgees',  '~> 0.2.0'
+gem 'usps_flags-grades',   '~> 0.2.0'
 
 # Logging
 gem 'bugsnag',             '~> 6.1.0'
@@ -114,7 +114,7 @@ group :development, :test do
   gem 'factory_bot_rails',        '~> 6.2'
   gem 'fuubar',                   '~> 2'
   gem 'rails-controller-testing', '~> 1'
-  gem 'rspec-rails',              '~> 6.0'
+  gem 'rspec-rails',              '~> 6.1'
   gem 'simplecov',                '~> 0'
 
   # Rubocop
@@ -126,5 +126,5 @@ group :development, :test do
 
   # Debugging
   # gem 'bullet',                   '~> 5.7.0'
-  gem 'listen',                   '~> 3.1.5'
+  gem 'listen',                   '~> 3.8'
 end

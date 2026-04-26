@@ -3,8 +3,8 @@
 module BPS
   class RegularMeetings
     def book!(skip_membership: false, skip_excom: false)
-      calendar.create(membership) unless skip_membership
-      calendar.create(excom) unless skip_excom
+      calendar.create(**membership) unless skip_membership
+      calendar.create(**excom) unless skip_excom
     end
 
   private

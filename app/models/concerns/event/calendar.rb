@@ -14,7 +14,7 @@ module Concerns
         return if booked? || id.blank?
 
         calendar_update(call_if: true, set_to: :response) do
-          calendar.create(calendar_hash)
+          calendar.create(**calendar_hash)
         end
       end
 
@@ -31,7 +31,7 @@ module Concerns
         return book! unless booked? && on_calendar?
 
         calendar_update(call_if: true, set_to: :response) do
-          calendar.update(google_calendar_event_id, calendar_hash)
+          calendar.update(google_calendar_event_id, **calendar_hash)
         end
       end
 
