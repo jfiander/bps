@@ -2,12 +2,12 @@
 
 class User
   module Stripes
-    NARROW = /^P?[CD]C$/i.freeze
-    NATIONAL = /^P?(([CVR]|Stf)C|N(FLt|Aide))$/i.freeze
-    DISTRICT = /^P?D((Lt)?C|(F(irst)?)?Lt|Aide)$/i.freeze
-    SQUADRON = /^(P?((Lt)?C|(F(irst)?)?Lt)|Cdr)$/i.freeze
-    TWO = /^(P?([CVR]C|(D?(FirstLt|(Lt)?C)))|Cdr)$/i.freeze
-    THREE = /^(P?([CV]|D?(Lt)?)?C|Cdr)$/i.freeze
-    FOUR = /^(P?[CD]?C|Cdr)$/i.freeze
+    NARROW = /^P?[CD]C$/i
+    NATIONAL = /^P?(([CVR]|Stf)C|N(FLt|Aide))$/i
+    DISTRICT = /^P?D((Lt)?C|(F(irst)?)?Lt|Aide)$/i
+    SQUADRON = /^(P?((Lt)?C|(F(irst)?)?Lt)|Cdr)$/i
+    TWO = /^(P?([CVR]C|(D?(FirstLt|(Lt)?C)))|Cdr)$/i
+    THREE = /^(P?([CV]|D?(Lt)?)?C|Cdr)$/i
+    FOUR = /^(P?[CD]?C|Cdr)$/i
   end
 end

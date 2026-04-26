@@ -3,9 +3,9 @@
 module Concerns
   module Payment
     module PromoCodes
-      def attach_promo_code(code, **args)
+      def attach_promo_code(code, **)
         promo_code = PromoCode.find_by(code: code)
-        promo_code ||= PromoCode.create(code: code, **args)
+        promo_code ||= PromoCode.create(code: code, **)
         update(promo_code: promo_code) if promo_code&.usable?
       end
 

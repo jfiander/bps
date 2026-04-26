@@ -2,7 +2,7 @@
 
 class User
   module RanksAndGrades
-    TAB_RANKS_PATTERN = /^(?:(?:P?(?:C|V|R|STF|D)C)|PC|CDR)$/.freeze
+    TAB_RANKS_PATTERN = /^(?:(?:P?(?:C|V|R|STF|D)C)|PC|CDR)$/
 
     extend ActiveSupport::Concern
 

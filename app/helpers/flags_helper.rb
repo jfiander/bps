@@ -84,8 +84,8 @@ module FlagsHelper
 
 private
 
-  def flag_image(path, **options)
-    image_tag(BPS::S3.new(:static).link(path), **options)
+  def flag_image(path, **)
+    image_tag(BPS::S3.new(:static).link(path), **)
   end
 
   def dl_link(text, path, title: nil, css: nil)

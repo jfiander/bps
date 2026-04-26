@@ -10,7 +10,8 @@ class NotificationsMailerPreview < ApplicationMailerPreview
   end
 
   def bilge
-    NotificationsMailer.bilge(['editor@bpsd9.org', 'membership@bpsd9.org'], { year: 2022, month: 11 })
+    NotificationsMailer.bilge(['editor@bpsd9.org', 'membership@bpsd9.org'],
+                              { year: 2022, month: 11 })
   end
 
 private

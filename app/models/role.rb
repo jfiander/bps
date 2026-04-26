@@ -17,12 +17,12 @@ class Role < ApplicationRecord
     regular.merge(all: 'globe', excom: 'chevron-circle-down')
   end
 
-  def self.recursive_lookup(*searches)
-    recursive_search(*searches, direction: :up)
+  def self.recursive_lookup(*)
+    recursive_search(*, direction: :up)
   end
 
-  def self.recursive_lookdown(*searches)
-    recursive_search(*searches, direction: :down)
+  def self.recursive_lookdown(*)
+    recursive_search(*, direction: :down)
   end
 
   def self.recursive_search(*searches, direction: :up)

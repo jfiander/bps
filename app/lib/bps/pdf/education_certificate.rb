@@ -12,11 +12,11 @@ module BPS
 
       MODULES.each { |c| include "BPS::PDF::EducationCertificate::#{c}".constantize }
 
-      def self.for(*args)
+      def self.for(*)
         path = BPS::PDF::EducationCertificate.generate('Education_Certificate') do
           specify_font
           configure_colors
-          MODULES.each { |m| send(m.underscore, *args) }
+          MODULES.each { |m| send(m.underscore, *) }
         end
 
         File.open(path, 'r+')
@@ -24,9 +24,9 @@ module BPS
 
     private
 
-      def completion_row(row, &block)
+      def completion_row(row, &)
         y = 390 - (ROW_HEIGHT * (row - 1))
-        bounding_box([0, y], width: 510, height: ROW_HEIGHT, &block)
+        bounding_box([0, y], width: 510, height: ROW_HEIGHT, &)
       end
 
       def completion_box(column, label, date = nil, color: 'FFFFCC')

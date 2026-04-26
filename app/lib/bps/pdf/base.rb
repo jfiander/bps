@@ -41,8 +41,8 @@ module BPS
         fill_color(color)
       end
 
-      def insert_image(*args)
-        image(*args)
+      def insert_image(*)
+        image(*)
       rescue StandardError
         nil
       end

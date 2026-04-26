@@ -17,8 +17,8 @@ class Committee < ApplicationRecord
     includes(:user).for_department(department).where(name: names.map(&:to_s))
   end
 
-  def self.mail_all(department, *names)
-    get(department, *names)&.map(&:user)&.map(&:email)
+  def self.mail_all(department, *)
+    get(department, *)&.map(&:user)&.map(&:email)
   end
 
   def self.sorted

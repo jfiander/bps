@@ -30,8 +30,8 @@ module Concerns
         update(archived_at: Time.zone.now)
       end
 
-      def attach_promo_code(code, **args)
-        promo_code = PromoCode.find_or_create_by(code: code, **args)
+      def attach_promo_code(code, **)
+        promo_code = PromoCode.find_or_create_by(code: code, **)
 
         EventPromoCode.find_or_create_by(event: self, promo_code: promo_code)
       end

@@ -9,7 +9,7 @@ module AutomaticUpdate
     def initialize(cookie_key = nil, verbose: false)
       @cookie_key = cookie_key
       FileUtils.mkdir_p(Rails.root.join('tmp/automatic_update'))
-      super(verbose: verbose)
+      super(verbose:)
     end
 
     def download

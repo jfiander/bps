@@ -4,10 +4,10 @@ class User
   module Permissions
     extend ActiveSupport::Concern
 
-    def permitted?(*required_roles, strict: false)
+    def permitted?(*, strict: false)
       return false if locked?
 
-      permitted = strict ? exact_role?(*required_roles) : role?(*required_roles)
+      permitted = strict ? exact_role?(*) : role?(*)
       yield if block_given? && permitted
       permitted
     end

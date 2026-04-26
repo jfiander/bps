@@ -25,9 +25,9 @@ module BPS
       { invalidation: invalidation, result: invalidation.pending }
     end
 
-    def initialize(alias_name, *new_keys, caller_reference: nil)
+    def initialize(alias_name, *, caller_reference: nil)
       @alias_name = alias_name.to_sym
-      add_keys(*new_keys)
+      add_keys(*)
       @caller_reference = caller_reference || new_caller_reference
       @submitted = false
     end
