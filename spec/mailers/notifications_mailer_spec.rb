@@ -10,7 +10,7 @@ RSpec.describe NotificationsMailer do
   describe 'bridge office updated' do
     let(:previous) { create(:user) }
     let(:by) { create(:user) }
-    let(:mail) { described_class.bridge(generic_seo_and_ao[:ao], by: by, previous: previous) }
+    let(:mail) { described_class.bridge(generic_seo_and_ao[:ao], { by: by, previous: previous }) }
 
     before { generic_seo_and_ao }
 
@@ -63,7 +63,7 @@ RSpec.describe NotificationsMailer do
 
   describe '#bilge' do
     let(:mail) do
-      described_class.bilge(['editor@bpsd9.org', 'membership@bpsd9.org'], year: 2022, month: 11)
+      described_class.bilge(['editor@bpsd9.org', 'membership@bpsd9.org'], { year: 2022, month: 11 })
     end
 
     it 'renders the headers' do

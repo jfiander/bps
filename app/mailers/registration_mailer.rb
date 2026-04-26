@@ -44,11 +44,11 @@ class RegistrationMailer < ApplicationMailer
     mail(to: @to_list, subject: 'Registration paid')
   end
 
-  def request_schedule(event_type, by: nil)
+  def request_schedule(event_type, options = {})
     @to_list = ['seo@bpsd9.org', 'aseo@bpsd9.org']
     @to_list += get_chair_email(event_type.event_category)
     @event_type = event_type
-    @by = by
+    @by = options[:by]
 
     mail(to: @to_list, subject: 'Educational request')
   end

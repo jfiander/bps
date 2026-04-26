@@ -85,7 +85,7 @@ class RegistrationMailerPreview < ApplicationMailerPreview
 
   def request_schedule
     RegistrationMailer.request_schedule(
-      EventType.new(event_category: 'seminar', title: 'Example'), by: user
+      EventType.new(event_category: 'seminar', title: 'Example'), { by: user }
     )
   end
 
