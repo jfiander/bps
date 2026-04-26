@@ -28,7 +28,7 @@ gem 'figaro',              '~> 1.2.0'
 gem 'recaptcha'
 
 # Model Behavior
-gem 'paperclip',           '~> 6.1.0'
+gem 'kt-paperclip',        '~> 7.2'
 gem 'paper_trail',         '~> 11.0'
 gem 'paranoia',            '~> 2.4.1'
 
