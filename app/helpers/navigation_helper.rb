@@ -3,7 +3,7 @@
 module NavigationHelper
   def link(title = nil, options = {})
     @options = default_options.merge(options).merge(title: title)
-    return unless show_menu?(@options.except(:suffix, :active, :fa, :css_class))
+    return unless show_menu?(**@options.except(:suffix, :active, :fa, :css_class))
 
     @link_options = { class: @options[:permit].to_s }
     @fa = @options[:fa]

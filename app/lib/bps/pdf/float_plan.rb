@@ -32,7 +32,7 @@ module BPS
         height = (value.to_s.length.to_f / options[:split]).ceil
 
         draw_text "#{label}:", size: 14, at: [options[:x1], options[:y]]
-        bounded_box_value(value, height, options)
+        bounded_box_value(value, height, **options)
 
         height
       end
