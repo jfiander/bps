@@ -29,7 +29,7 @@ gem 'recaptcha'
 
 # Model Behavior
 gem 'kt-paperclip',        '~> 7.2'
-gem 'paper_trail',         '~> 15.1'
+gem 'paper_trail',         '~> 17.0'
 gem 'paranoia',            '~> 3.0'
 
 # APIs and External Services
