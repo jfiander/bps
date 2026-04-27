@@ -11,8 +11,8 @@ class DmarcReport < ApplicationRecord
 
   validate :check_report_uniqueness
 
-  serialize :proto, Dmarc::Feedback
-  serialize :sources_proto, Dmarc::SourcesSummary
+  serialize :proto, coder: Dmarc::Feedback
+  serialize :sources_proto, coder: Dmarc::SourcesSummary
 
   def identifier
     [proto.report_metadata.org_name, proto.report_metadata.report_id]

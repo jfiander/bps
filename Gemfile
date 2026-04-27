@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails',               '~> 7.1.5'
+gem 'rails',               '~> 7.2.2'
 
 gem 'puma',                '~> 5.6'
 
@@ -30,7 +30,7 @@ gem 'recaptcha'
 # Model Behavior
 gem 'kt-paperclip',        '~> 7.2'
 gem 'paper_trail',         '~> 15.1'
-gem 'paranoia',            '~> 2.6'
+gem 'paranoia',            '~> 3.0'
 
 # APIs and External Services
 gem 'aws-sdk-cloudfront', '~> 1.61'

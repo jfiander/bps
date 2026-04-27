@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ImportLog < ApplicationRecord
-  serialize :proto, BPS::Update::UserDataImport
+  serialize :proto, coder: BPS::Update::UserDataImport
 
   def self.latest
     all.order(:created_at).last
