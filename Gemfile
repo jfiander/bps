@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails',               '~> 6.1.7'
+gem 'rails',               '~> 7.0.8'
 
 gem 'puma',                '~> 5.6'
 
@@ -20,8 +20,8 @@ gem 'jbuilder',            '~> 2.5'
 gem 'jquery-rails',        '~> 4.3'
 gem 'jquery-ui-rails',     '~> 6.0'
 gem 'rack-cors',           '~> 1.0'
-gem 'sass-rails',          '~> 5.0'
-gem 'uglifier',            '~> 4.1'
+gem 'sass-rails',          '~> 6.0'
+gem 'terser',              '~> 1.2'
 
 gem 'figaro',              '~> 1.2.0'
 
@@ -29,12 +29,12 @@ gem 'recaptcha'
 
 # Model Behavior
 gem 'kt-paperclip',        '~> 7.2'
-gem 'paper_trail',         '~> 11.0'
-gem 'paranoia',            '~> 2.4.1'
+gem 'paper_trail',         '~> 12.3'
+gem 'paranoia',            '~> 2.6'
 
 # APIs and External Services
 gem 'aws-sdk-cloudfront', '~> 1.61'
-gem 'aws-sdk-rails',       '~> 3.6'
+gem 'aws-sdk-rails',       '~> 4.1.0'
 gem 'aws-sdk-s3',          '~> 1.111'
 gem 'aws-sdk-ses',         '~> 1.45'
 gem 'aws-sdk-sns',         '~> 1.50'
@@ -84,8 +84,7 @@ gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
 gem 'fileutils',           '~> 1.4.1'
-gem 'loofah',              '~> 2.19.1'
-gem 'mimemagic',           '>= 0.3.6'
+gem 'loofah',              '>= 2.21'
 gem 'nokogiri',            '>= 1.14.3'
 gem 'rubyzip',             '>= 1.3.0'
 gem 'sinatra',             '~> 2.2.3'

@@ -20,6 +20,14 @@ module BPS
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.load_defaults 6.1
+
+    # Mailer previews live under app/mailers/previews and would be picked up
+    # by zeitwerk's eager-load. Tell rails the preview path explicitly and
+    # ignore it for autoloading.
+    config.action_mailer.preview_path = "#{root}/app/mailers/previews"
+    Rails.autoloaders.main.ignore("#{root}/app/mailers/previews")
+
     config.exceptions_app = routes
 
     config.middleware.use Rack::Deflater
