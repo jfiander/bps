@@ -10,6 +10,8 @@ set :environment, 'production'
 set :rails_env, 'production'
 set :branch, ENV.fetch('BRANCH', 'master')
 
+set :bundle_jobs, 1
+
 set :ssh_options, {
   keys: %w(~/.ssh/bpsd9-jfiander.pem ~/.ssh/bpsd9.pem),
   forward_agent: false,
