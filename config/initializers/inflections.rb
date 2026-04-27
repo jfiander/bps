@@ -18,7 +18,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'BPS'
   inflect.acronym 'ABC'
   inflect.acronym 'GLYC'
-  inflect.acronym 'ExCom'
   inflect.acronym 'VSC'
   inflect.acronym 'GPS'
   inflect.acronym 'VHF'
@@ -29,4 +28,9 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'CPR AED'
   inflect.acronym 'OTW'
   inflect.acronym 'BOC'
+  inflect.acronym 'JWT'
+  inflect.acronym 'HTTP'
+  inflect.acronym 'SMS'
+  inflect.acronym 'PDF'
+  inflect.acronym 'CSV'
 end
