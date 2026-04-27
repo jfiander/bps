@@ -1,7 +1,5 @@
 production_green_instance = 'green.production.internal.bpsd9.org'
 
-set :rvm_ruby_version, '2.7.4'
-
 role :app, "deploy@#{production_green_instance}"
 role :web, "deploy@#{production_green_instance}"
 role :db,  "deploy@#{production_green_instance}"
