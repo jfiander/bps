@@ -2,9 +2,9 @@
 
 # Internal API for accessing Braintree payments.
 class Payment < ApplicationRecord
-  include Concerns::Payment::ModelConfigs
-  include Concerns::Payment::BraintreeMethods
-  include Concerns::Payment::PromoCodes
+  include Payment::ModelConfigs
+  include Payment::BraintreeMethods
+  include Payment::PromoCodes
   include ActionView::Helpers::NumberHelper
 
   belongs_to :parent, polymorphic: true

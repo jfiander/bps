@@ -4,7 +4,7 @@ class BridgeController < ApplicationController
   include User::Load
   include ApplicationHelper
   include BridgeHelper
-  include Concerns::Application::RedirectWithStatus
+  include Application::RedirectWithStatus
 
   secure!(:users, except: :list)
 

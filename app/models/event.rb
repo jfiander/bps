@@ -3,12 +3,12 @@
 class Event < ApplicationRecord
   COURSE_CATEGORIES = %w[public advanced_grade elective].freeze
 
-  include Concerns::Event::Calendar
-  include Concerns::Event::Category
-  include Concerns::Event::Flyer
-  include Concerns::Event::Boolean
-  include Concerns::Event::Cost
-  include Concerns::Event::Actions
+  include Event::Calendar
+  include Event::Category
+  include Event::Flyer
+  include Event::Boolean
+  include Event::Cost
+  include Event::Actions
 
   belongs_to :event_type
   has_many   :course_topics,   foreign_key: :course_id, inverse_of: :course

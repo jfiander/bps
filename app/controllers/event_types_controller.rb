@@ -2,7 +2,7 @@
 
 class EventTypesController < ApplicationController
   include EventTypes::Refresh
-  include Concerns::Application::RedirectWithStatus
+  include Application::RedirectWithStatus
 
   secure!(:admin, strict: true)
 

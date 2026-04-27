@@ -12,7 +12,7 @@ class EventController < ApplicationController
   include Events::Preload
   include Events::Edit
   include Events::Update
-  include Concerns::Application::RedirectWithStatus
+  include Application::RedirectWithStatus
   include Api::V1::JWT::Encode
 
   before_action :prepare_lists, only: %i[schedule catalog registrations]
