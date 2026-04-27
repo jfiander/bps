@@ -47,7 +47,8 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
 
 set :use_sudo, true
 
-set :rbenv_type, :user
+set :rbenv_type, :system
+set :rbenv_path, '/opt/rbenv'
 set :rbenv_ruby, '3.3.11'
 set :rbenv_prefix, "RAILS_ENV=#{fetch(:stage)} RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w[rake gem bundle ruby rails]
