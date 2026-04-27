@@ -12,7 +12,7 @@ module Public
       bilge = pick_bilge
       return bilge_not_found if bilge.blank?
 
-      redirect_to(bilge.link)
+      redirect_to_trusted_url(bilge.link)
     end
 
   private

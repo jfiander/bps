@@ -14,7 +14,7 @@ module Members
       minute = find_minutes_issue
       return minute_not_found if minute.blank?
 
-      redirect_to(minute.link)
+      redirect_to_trusted_url(minute.link)
     end
 
     def upload_minutes

@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include Menu::MenuHelper
 
+  TRUSTED_REDIRECT_HOST = /\A([a-z0-9-]+\.)*bpsd9\.org\z/i
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :load_layout_images
   before_action :meta_tags
@@ -43,6 +45,15 @@ class ApplicationController < ActionController::Base
     nil
   end
   helper_method :event_type_param
+
+  # Wraps `redirect_to` for signed CloudFront URLs we generate ourselves.
+  # Rails 7's `raise_on_open_redirects` default rejects any cross-host
+  # redirect; this helper opts in only when the target is on bpsd9.org.
+  def redirect_to_trusted_url(url, **)
+    host = URI.parse(url).host
+
+    redirect_to(url, allow_other_host: host&.match?(TRUSTED_REDIRECT_HOST), **)
+  end
 
 private
 
