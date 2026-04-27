@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails',               '~> 7.0.8'
+gem 'rails',               '~> 7.1.5'
 
 gem 'puma',                '~> 5.6'
 
@@ -29,12 +29,12 @@ gem 'recaptcha'
 
 # Model Behavior
 gem 'kt-paperclip',        '~> 7.2'
-gem 'paper_trail',         '~> 12.3'
+gem 'paper_trail',         '~> 15.1'
 gem 'paranoia',            '~> 2.6'
 
 # APIs and External Services
 gem 'aws-sdk-cloudfront', '~> 1.61'
-gem 'aws-sdk-rails',       '~> 4.1.0'
+gem 'aws-sdk-rails',       '~> 4.1'
 gem 'aws-sdk-s3',          '~> 1.111'
 gem 'aws-sdk-ses',         '~> 1.45'
 gem 'aws-sdk-sns',         '~> 1.50'
@@ -112,10 +112,10 @@ group :development do
 end
 
 group :development, :test do
-  gem 'dotenv',                   '~> 2.7.6'
+  gem 'dotenv', '~> 2.7.6'
 
   # Specs
-  gem 'database_cleaner',         '~> 1'
+  gem 'database_cleaner-active_record', '~> 2.2'
   gem 'factory_bot_rails',        '~> 6.2'
   gem 'fuubar',                   '~> 2'
   gem 'rails-controller-testing', '~> 1'

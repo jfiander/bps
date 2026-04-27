@@ -10,15 +10,6 @@
 # As well as all educational columns. You can also add a manual 'Rank' column.
 #
 module ImportUsers
-  require 'import_users/import'
-  require 'import_users/parse_csv'
-  require 'import_users/parse_row'
-  require 'import_users/clean_date'
-  require 'import_users/course_completions'
-  require 'import_users/set_parents'
-  require 'import_users/lock_users'
-  require 'import_users/hash'
-
   FIELDS = YAML.safe_load(Rails.root.join('app/services/import_users/fields.yml').read)
   IMPORTED_FIELDS = ImportUsers::FIELDS['import'].freeze
   IGNORED_FIELDS = ImportUsers::FIELDS['ignore'].freeze
