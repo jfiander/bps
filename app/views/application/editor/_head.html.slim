@@ -1,4 +1,4 @@
-script = render('application/show_editor.js', page_name: partial)
-script = render('application/hide_editor.js', page_name: partial)
+script = render(partial: 'application/show_editor', formats: :js, locals: { page_name: partial })
+script = render(partial: 'application/hide_editor', formats: :js, locals: { page_name: partial })
 
-noscript: style = render('application/editor/noscript_style.css')
+noscript: style = render(partial: 'application/editor/noscript_style', formats: :css)
