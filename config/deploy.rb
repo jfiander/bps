@@ -54,3 +54,8 @@ set :rbenv_prefix, "RAILS_ENV=#{fetch(:stage)} RBENV_ROOT=#{fetch(:rbenv_path)} 
 set :rbenv_map_bins, %w[rake gem bundle ruby rails]
 set :rbenv_roles, :all
 set :passenger_restart_with_touch, true
+
+# Drop bundler's default `--quiet` when BUNDLE_VERBOSE is set, so
+# `BUNDLE_VERBOSE=1 cap STAGE deploy` produces full `bundle install`
+# output without a permanent config change.
+set :bundle_flags, ENV['BUNDLE_VERBOSE'] ? '' : '--quiet'
