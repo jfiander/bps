@@ -160,7 +160,8 @@ GEM
       builder (>= 3.2.4)
       rexml (>= 3.1.9)
     brakeman (4.10.1)
-    bugsnag (6.1.1)
+    bugsnag (6.30.0)
+      concurrent-ruby (~> 1.0)
     builder (3.3.0)
     capistrano (3.16.0)
       airbrussh (>= 1.0.0)
@@ -670,7 +671,7 @@ DEPENDENCIES
   bps-google-api (~> 0.7.0)
   braintree (~> 4.26)
   brakeman (~> 4.3)
-  bugsnag (~> 6.1.0)
+  bugsnag (~> 6.30)
   capistrano (~> 3.16.0)
   capistrano-bundler (~> 2.0.1)
   capistrano-figaro-yml!

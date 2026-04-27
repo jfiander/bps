@@ -2,5 +2,5 @@
 
 Bugsnag.configure do |config|
   config.api_key = ENV['BUGSNAG_KEY']
-  config.notify_release_stages = %w[production staging]
+  config.enabled_release_stages = %w[production staging]
 end

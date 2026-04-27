@@ -76,7 +76,7 @@ gem 'usps_flags-burgees',  '~> 0.2.0'
 gem 'usps_flags-grades',   '~> 0.2.0'
 
 # Logging
-gem 'bugsnag',             '~> 6.1.0'
+gem 'bugsnag',             '~> 6.30'
 
 # Inspection
 gem 'awesome_print',       '~> 1.8.0'
