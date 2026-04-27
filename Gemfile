@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails',               '~> 7.2.2'
+gem 'rails',               '~> 8.0.0'
 
 gem 'puma',                '~> 5.6'
 
@@ -16,7 +16,7 @@ gem 'mysql2',              '~> 0.5.6'
 
 # Rails Plugins
 gem 'coffee-rails',        '~> 4.2'
-gem 'jbuilder',            '~> 2.5'
+gem 'jbuilder',            '~> 2.13'
 gem 'jquery-rails',        '~> 4.3'
 gem 'jquery-ui-rails',     '~> 6.0'
 gem 'rack-cors',           '~> 1.0'

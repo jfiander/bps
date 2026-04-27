@@ -20,9 +20,9 @@ module BPS
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
-    # 7.1+ defaults that must be set in application.rb (not in an initializer):
+    # Defaults that must be set in application.rb (not in an initializer):
     config.active_support.cache_format_version = 7.1
     config.add_autoload_paths_to_load_path = false
 
