@@ -20,12 +20,7 @@ module BPS
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    config.load_defaults 6.1
-
-    # Rails 7.0 defaults that must be set in application.rb (not in the
-    # new_framework_defaults_7_0 initializer):
-    config.active_support.cache_format_version = 7.0
-    config.active_support.disable_to_s_conversion = true
+    config.load_defaults 7.0
 
     # Mailer previews live under app/mailers/previews and would be picked up
     # by zeitwerk's eager-load. Tell rails the preview path explicitly and
