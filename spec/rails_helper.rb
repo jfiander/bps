@@ -91,6 +91,13 @@ RSpec.configure do |config|
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
+
+  # The Application::RateLimit concern persists per-namespace counters in
+  # tmp/rate_limits/*.log. Clear them at suite start so back-to-back spec
+  # runs within the rate-limit window don't tip over the limit.
+  config.before(:suite) do
+    FileUtils.rm_rf(Rails.root.join('tmp/rate_limits'))
+  end
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
