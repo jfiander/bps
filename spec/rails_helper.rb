@@ -41,6 +41,22 @@ ActiveRecord::Migration.maintain_test_schema!
 
 require_relative('aws_stub_responses')
 
+# Stub BPS::SMS#create_topic for specs. Reference the constant first so
+# zeitwerk loads the real class before we reopen it — under zeitwerk,
+# `class BPS::SMS` (reopening a not-yet-loaded class) creates a fresh
+# stub class without triggering autoload of the real definition.
+BPS::SMS
+
+module BPS
+  class SMS
+    def create_topic(*, **)
+      MockTopicResponse.new(SecureRandom.hex(16))
+    end
+
+    MockTopicResponse = Struct.new(:topic_arn)
+  end
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = Rails.root.join('spec/fixtures')

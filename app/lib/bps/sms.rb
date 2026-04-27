@@ -7,22 +7,22 @@ module BPS
   class SMS
     ALLOWED_TYPES = %i[promotional transactional].freeze
 
+    # Allow the public API to be called directly on the class
+    API_METHODS = %i[
+      publish broadcast opt_in! create_topic delete_topic
+      subscribe confirm_subscription unsubscribe
+    ].freeze
     class << self
-      # Allow the public API to be called directly on the class
-      API_METHODS = %w[
-        publish broadcast opt_in! create_topic delete_topic
-        subscribe confirm_subscription unsubscribe
-      ].freeze
       delegate(*API_METHODS, to: :new)
+    end
 
-      # Ensure US/Canada country code
-      def validate_number(number)
-        pattern = /^(?:\+?1[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/
+    # Ensure US/Canada country code
+    def self.validate_number(number)
+      pattern = /^(?:\+?1[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/
 
-        raise "Invalid phone number to subscribe: #{number}" unless (match = number&.match(pattern))
+      raise "Invalid phone number to subscribe: #{number}" unless (match = number&.match(pattern))
 
-        "+1#{match[1]}#{match[2]}#{match[3]}"
-      end
+      "+1#{match[1]}#{match[2]}#{match[3]}"
     end
 
     # Send a message

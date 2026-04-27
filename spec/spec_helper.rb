@@ -112,16 +112,6 @@ end
 
 GoogleAPI.mock!
 
-module BPS
-  class SMS
-    def create_topic
-      MockTopicResponse.new(SecureRandom.hex(16))
-    end
-
-    MockTopicResponse = Struct.new(:topic_arn)
-  end
-end
-
 RSpec::Matchers.define :contain_and_match do |*expected|
   match do |actual|
     expected.all? do |pattern|
