@@ -30,7 +30,7 @@ class BridgeController < ApplicationController
     ) do
       @bridge_office.update(user_id: clean_params[:user_id])
       NotificationsMailer.bridge(
-        @bridge_office, { by: current_user, previous: previous }
+        @bridge_office, by: current_user, previous: previous
       ).deliver
       bridge_slack_notification(@bridge_office, current_user, previous)
     end

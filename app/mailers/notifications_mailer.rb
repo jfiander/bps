@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class NotificationsMailer < ApplicationMailer
-  def bridge(bridge_office, options = {})
+  def bridge(bridge_office, by: nil, previous: nil)
     @bridge_office = bridge_office
-    @by = options[:by]
-    @previous = options[:previous]
+    @by = by
+    @previous = previous
     @to_list = ['dev@bpsd9.org']
 
     mail(to: @to_list, subject: 'Bridge Office Updated')
@@ -16,10 +16,10 @@ class NotificationsMailer < ApplicationMailer
     mail(to: @to_list, subject: 'Float Plan Submitted')
   end
 
-  def bilge(emails, options)
+  def bilge(emails, year:, month:)
     @to_list = emails.empty? ? ['dev@bpsd9.org'] : emails
-    @year = options[:year].to_i
-    @month = options[:month].to_i
+    @year = year.to_i
+    @month = month.to_i
 
     mail(to: @to_list, subject: 'Bilge Chatter Posted')
   end

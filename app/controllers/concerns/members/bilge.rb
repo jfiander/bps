@@ -51,8 +51,7 @@ module Members
       month = bilge_params[:issue]['date(2i)']
 
       NotificationsMailer.bilge(
-        editor.or(membership).or(web).map { |c| c.user.email }.compact,
-        { year: year, month: month }
+        editor.or(membership).or(web).map { |c| c.user.email }.compact, year: year, month: month
       ).deliver
 
       bilge_slack_notification(year, month)
