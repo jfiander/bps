@@ -7,8 +7,10 @@ module Members
     ].freeze
 
     def roster
+      return redirect_to(root_path) unless roster_filename
+
       respond_to do |format|
-        format.html { roster_filename }
+        format.html
         format.pdf do
           roster_file = BPS::S3.new(:files).download("roster/#{roster_filename}")
           send_data(roster_file, filename: roster_filename.dup.tr('_', ' '), disposition: :inline)
@@ -48,19 +50,18 @@ module Members
       redirect_to update_roster_path
     end
 
-    # Always returns the most recent already-existing roster filename
+    # Returns the most recent already-existing roster filename, looking
+    # back up to three years; nil if none of those years has an upload.
     def roster_filename
       return @roster_filename if @roster_filename
 
-      @year ||= Time.zone.today.strftime('%Y').to_i
+      current_year = Time.zone.today.strftime('%Y').to_i
+      current_year.downto(current_year - 3).each do |year|
+        filename = "Birmingham_Power_Squadron_-_#{year}_Roster.pdf"
+        return @roster_filename = filename if BPS::S3.new(:files).has?("roster/#{filename}")
+      end
 
-      filename = "Birmingham_Power_Squadron_-_#{@year}_Roster.pdf"
-      return filename if BPS::S3.new(:files).has?("roster/#{filename}")
-
-      @year -= 1
-      redirect_to root_path if @year < Time.zone.today.strftime('%Y').to_i - 3
-
-      @roster_filename = roster_filename
+      nil
     end
 
     def roster_params
