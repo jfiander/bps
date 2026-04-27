@@ -92,7 +92,9 @@ gem 'sinatra',             '~> 2.2.3'
 group :development do
   gem 'capistrano',            '~> 3.16.0'
   gem 'capistrano-bundler',    '~> 2.0.1'
-  gem 'capistrano-figaro-yml', '~> 1.0.5'
+  # Upstream is unmaintained on rubygems; pin to chouandy's fork commit
+  # that exams uses, which works against modern Capistrano + figaro.
+  gem 'capistrano-figaro-yml', github: 'chouandy/capistrano-figaro-yml', ref: 'f43cf2238343d93bfda7526b28268908ea895c1f'
   gem 'capistrano-passenger',  '~> 0.2.0'
   gem 'capistrano-rails',      '~> 1.6.1'
   gem 'capistrano-rbenv',      '~> 2.2'

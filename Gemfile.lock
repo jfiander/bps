@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/chouandy/capistrano-figaro-yml.git
+  revision: f43cf2238343d93bfda7526b28268908ea895c1f
+  ref: f43cf2238343d93bfda7526b28268908ea895c1f
+  specs:
+    capistrano-figaro-yml (1.0.6)
+      capistrano (~> 3.1)
+      sshkit (~> 1.2, >= 1.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -160,9 +169,6 @@ GEM
       sshkit (>= 1.9.0)
     capistrano-bundler (2.0.1)
       capistrano (~> 3.1)
-    capistrano-figaro-yml (1.0.5)
-      capistrano (~> 3.1)
-      sshkit (~> 1.2, >= 1.2.0)
     capistrano-passenger (0.2.1)
       capistrano (~> 3.0)
     capistrano-rails (1.6.3)
@@ -635,7 +641,7 @@ DEPENDENCIES
   bugsnag (~> 6.1.0)
   capistrano (~> 3.16.0)
   capistrano-bundler (~> 2.0.1)
-  capistrano-figaro-yml (~> 1.0.5)
+  capistrano-figaro-yml!
   capistrano-passenger (~> 0.2.0)
   capistrano-rails (~> 1.6.1)
   capistrano-rbenv (~> 2.2)
