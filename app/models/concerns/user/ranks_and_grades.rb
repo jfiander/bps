@@ -30,7 +30,7 @@ class User
           highest_rank(*r)
         end
 
-      rank&.gsub('/', '')&.gsub(/1(st)?Lt/, 'FirstLt')&.downcase
+      rank&.gsub('/', '')&.gsub(/1(st)?Lt/, '1Lt')
     end
 
     def flag_rank
@@ -49,16 +49,12 @@ class User
     end
 
     def first_stripe_class
-      case stripe_rank
-      when User::Stripes::NATIONAL
-        :national
-      when User::Stripes::DISTRICT
-        :district
-      when User::Stripes::SQUADRON
-        :squadron
-      else
-        :hide
-      end
+      r = stripe_rank&.upcase
+      return :national if User::Stripes::Ranks::NATIONAL.include?(r)
+      return :district if User::Stripes::Ranks::DISTRICT.include?(r)
+      return :squadron if User::Stripes::Ranks::SQUADRON.include?(r)
+
+      :hide
     end
 
     def ranks(html: true)

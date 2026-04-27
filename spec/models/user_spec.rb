@@ -83,13 +83,13 @@ RSpec.describe User do
       it 'returns the correct rank, properly formatted' do
         allow(user).to receive(:ranks).and_return(['R/C', 'Lt/C', 'D/Lt'])
 
-        expect(user.stripe_rank).to eq('rc')
+        expect(user.stripe_rank).to eq('RC')
       end
 
       it 'includes GB Emeritus' do
         allow(user).to receive_messages(ranks: ['Lt/C', 'D/Lt'], mm: 50)
 
-        expect(user.stripe_rank).to eq('stfc')
+        expect(user.stripe_rank).to eq('StfC')
       end
 
       it 'allows a manual override' do
@@ -98,69 +98,70 @@ RSpec.describe User do
           preferred_stripe_rank: 'P/R/C'
         )
 
-        expect(user.stripe_rank).to eq('prc')
+        expect(user.stripe_rank).to eq('PRC')
       end
 
-      describe 'regexes' do
-        let(:narrow) { User::Stripes::NARROW }
-        let(:two)    { User::Stripes::TWO }
-        let(:three)  { User::Stripes::THREE }
-        let(:four)   { User::Stripes::FOUR }
-        let(:levels) { %i[NATIONAL DISTRICT SQUADRON].map { |l| User::Stripes.const_get(l) } }
+      describe 'stripe classification' do
+        let(:narrow) { User::Stripes::Style::NARROW }
+        let(:two)    { User::Stripes::Style::TWO }
+        let(:three)  { User::Stripes::Style::THREE }
+        let(:four)   { User::Stripes::Style::FOUR }
+        let(:levels) { %i[NATIONAL DISTRICT SQUADRON].map { |l| User::Stripes::Ranks.const_get(l) } }
+        let(:upcased) { rank&.upcase }
 
         shared_examples 'has four stripes with' do |level|
-          it('has the correct main stripe') { expect(rank).to match(level) }
-          it('has a second stripe')         { expect(rank).to match(two) }
-          it('has a third stripe')          { expect(rank).to match(three) }
-          it('has a fourth stripe')         { expect(rank).to match(four) }
+          it('has the correct main stripe') { expect(level).to include(upcased) }
+          it('has a second stripe')         { expect(two).to include(upcased) }
+          it('has a third stripe')          { expect(three).to include(upcased) }
+          it('has a fourth stripe')         { expect(four).to include(upcased) }
 
           it 'does not have the incorrect stripes', :aggregate_failures do
-            (levels - [level]).each { |l| expect(rank).not_to match(l) }
+            (levels - [level]).each { |l| expect(l).not_to include(upcased) }
           end
         end
 
         shared_examples 'has three stripes with' do |level|
-          it('has the correct main stripe')   { expect(rank).to match(level) }
-          it('has a second stripe')           { expect(rank).to match(two) }
-          it('has a third stripe')            { expect(rank).to match(three) }
-          it('does not have a fourth stripe') { expect(rank).not_to match(four) }
+          it('has the correct main stripe')   { expect(level).to include(upcased) }
+          it('has a second stripe')           { expect(two).to include(upcased) }
+          it('has a third stripe')            { expect(three).to include(upcased) }
+          it('does not have a fourth stripe') { expect(four).not_to include(upcased) }
 
           it 'does not have the incorrect stripes', :aggregate_failures do
-            (levels - [level]).each { |l| expect(rank).not_to match(l) }
+            (levels - [level]).each { |l| expect(l).not_to include(upcased) }
           end
         end
 
         shared_examples 'has two stripes with' do |level|
-          it('has the correct main stripe')   { expect(rank).to match(level) }
-          it('has a second stripe')           { expect(rank).to match(two) }
-          it('does not have a third stripe')  { expect(rank).not_to match(three) }
-          it('does not have a fourth stripe') { expect(rank).not_to match(four) }
+          it('has the correct main stripe')   { expect(level).to include(upcased) }
+          it('has a second stripe')           { expect(two).to include(upcased) }
+          it('does not have a third stripe')  { expect(three).not_to include(upcased) }
+          it('does not have a fourth stripe') { expect(four).not_to include(upcased) }
 
           it 'does not have the incorrect stripes', :aggregate_failures do
-            (levels - [level]).each { |l| expect(rank).not_to match(l) }
+            (levels - [level]).each { |l| expect(l).not_to include(upcased) }
           end
         end
 
         shared_examples 'has one stripe with' do |level|
-          it('has the correct main stripe')   { expect(rank).to match(level) }
-          it('does not have a second stripe') { expect(rank).not_to match(two) }
-          it('does not have a third stripe')  { expect(rank).not_to match(three) }
-          it('does not have a fourth stripe') { expect(rank).not_to match(four) }
+          it('has the correct main stripe')   { expect(level).to include(upcased) }
+          it('does not have a second stripe') { expect(two).not_to include(upcased) }
+          it('does not have a third stripe')  { expect(three).not_to include(upcased) }
+          it('does not have a fourth stripe') { expect(four).not_to include(upcased) }
 
           it 'does not have the incorrect stripes', :aggregate_failures do
-            (levels - [level]).each { |l| expect(rank).not_to match(l) }
+            (levels - [level]).each { |l| expect(l).not_to include(upcased) }
           end
         end
 
         describe 'no rank' do
           let(:rank) { nil }
 
-          it('does not have a second stripe') { expect(rank).not_to match(two) }
-          it('does not have a third stripe')  { expect(rank).not_to match(three) }
-          it('does not have a fourth stripe') { expect(rank).not_to match(four) }
+          it('does not have a second stripe') { expect(two).not_to include(upcased) }
+          it('does not have a third stripe')  { expect(three).not_to include(upcased) }
+          it('does not have a fourth stripe') { expect(four).not_to include(upcased) }
 
           it 'does not have a main stripe', :aggregate_failures do
-            levels.each { |l| expect(rank).not_to match(l) }
+            levels.each { |l| expect(l).not_to include(upcased) }
           end
         end
 
@@ -169,7 +170,7 @@ RSpec.describe User do
             %w[cc pcc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has four stripes with', User::Stripes::NATIONAL
+              include_examples 'has four stripes with', User::Stripes::Ranks::NATIONAL
               it('is narrow-spaced') { expect(rank).to match(narrow) }
             end
           end
@@ -178,7 +179,7 @@ RSpec.describe User do
             %w[vc pvc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has three stripes with', User::Stripes::NATIONAL
+              include_examples 'has three stripes with', User::Stripes::Ranks::NATIONAL
             end
           end
 
@@ -186,7 +187,7 @@ RSpec.describe User do
             %w[rc prc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has two stripes with', User::Stripes::NATIONAL
+              include_examples 'has two stripes with', User::Stripes::Ranks::NATIONAL
             end
           end
 
@@ -194,7 +195,7 @@ RSpec.describe User do
             %w[stfc pstfc nflt pnflt naide].each do |r|
               let(:rank) { r }
 
-              include_examples 'has one stripe with', User::Stripes::NATIONAL
+              include_examples 'has one stripe with', User::Stripes::Ranks::NATIONAL
             end
           end
         end
@@ -204,7 +205,7 @@ RSpec.describe User do
             %w[dc pdc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has four stripes with', User::Stripes::DISTRICT
+              include_examples 'has four stripes with', User::Stripes::Ranks::DISTRICT
               it('is narrow-spaced') { expect(rank).to match(narrow) }
             end
           end
@@ -213,15 +214,15 @@ RSpec.describe User do
             %w[dltc pdltc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has three stripes with', User::Stripes::DISTRICT
+              include_examples 'has three stripes with', User::Stripes::Ranks::DISTRICT
             end
           end
 
           context 'with d1lt' do
-            %w[dfirstlt].each do |r|
+            %w[d1lt].each do |r|
               let(:rank) { r }
 
-              include_examples 'has two stripes with', User::Stripes::DISTRICT
+              include_examples 'has two stripes with', User::Stripes::Ranks::DISTRICT
             end
           end
 
@@ -229,7 +230,7 @@ RSpec.describe User do
             %w[dlt dflt daide].each do |r|
               let(:rank) { r }
 
-              include_examples 'has one stripe with', User::Stripes::DISTRICT
+              include_examples 'has one stripe with', User::Stripes::Ranks::DISTRICT
             end
           end
         end
@@ -239,7 +240,7 @@ RSpec.describe User do
             %w[cdr pc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has four stripes with', User::Stripes::SQUADRON
+              include_examples 'has four stripes with', User::Stripes::Ranks::SQUADRON
               it('is not narrow-spaced') { expect(rank).not_to match(narrow) }
             end
           end
@@ -248,15 +249,15 @@ RSpec.describe User do
             %w[ltc pltc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has three stripes with', User::Stripes::SQUADRON
+              include_examples 'has three stripes with', User::Stripes::Ranks::SQUADRON
             end
           end
 
           context 'with 1lt' do
-            %w[firstlt].each do |r|
+            %w[1lt].each do |r|
               let(:rank) { r }
 
-              include_examples 'has two stripes with', User::Stripes::SQUADRON
+              include_examples 'has two stripes with', User::Stripes::Ranks::SQUADRON
             end
           end
 
@@ -264,7 +265,7 @@ RSpec.describe User do
             %w[lt flt].each do |r|
               let(:rank) { r }
 
-              include_examples 'has one stripe with', User::Stripes::SQUADRON
+              include_examples 'has one stripe with', User::Stripes::Ranks::SQUADRON
             end
           end
         end
