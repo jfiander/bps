@@ -83,7 +83,11 @@ gem 'awesome_print',       '~> 1.8.0'
 gem 'differ',              '~> 0.1.2'
 
 # Manual Upgrades
-gem 'fileutils',           '~> 1.4.1'
+# fileutils is a Ruby default gem (3.3 ships 1.7.2). Don't pin it — an
+# explicit `~> 1.4.1` here forces bundler to activate the older copy and
+# clashes with the preloaded default at app boot under Passenger.
+# Transitive constraints (bps-google-api, encrypted-keystore) are
+# satisfied by anything in the 1.x line.
 gem 'loofah',              '>= 2.21'
 gem 'nokogiri',            '>= 1.14.3'
 gem 'rubyzip',             '>= 1.3.0'
