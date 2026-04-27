@@ -45,7 +45,7 @@ require_relative('aws_stub_responses')
 # zeitwerk loads the real class before we reopen it — under zeitwerk,
 # `class BPS::SMS` (reopening a not-yet-loaded class) creates a fresh
 # stub class without triggering autoload of the real definition.
-BPS::SMS
+BPS::SMS # rubocop:disable Lint/Void
 
 module BPS
   class SMS
