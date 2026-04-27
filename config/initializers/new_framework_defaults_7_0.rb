@@ -58,19 +58,16 @@ Rails.application.config.action_dispatch.cookies_serializer = :hybrid
 # `ActionDispatch::Request#content_type` returns the raw header value.
 Rails.application.config.action_dispatch.return_only_request_media_type_on_content_type = false
 
-# --- Deferred (require coordination) -----------------------------------------
-#
-# These changes invalidate persisted state (encrypted cookies / cache entries /
-# Etags). Each needs a planned rotation or cache flush before flipping. Leave
-# them commented until ready, and address them before removing this file.
-#
-# Rails.application.config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA256
-# Rails.application.config.active_support.hash_digest_class = OpenSSL::Digest::SHA256
-# Rails.application.config.active_support.remove_deprecated_time_with_zone_name = true
-# Rails.application.config.active_storage.variant_processor = :vips  # comes with Phase 2
-# Rails.application.config.active_storage.multiple_file_field_include_hidden = true  # Phase 2
-# Rails.application.config.active_storage.video_preview_arguments = ...  # Phase 2
-#
-# These two must live in config/application.rb (not here):
-#   config.active_support.cache_format_version = 7.0  # plan a cache flush
-#   config.active_support.disable_to_s_conversion = true
+# SHA256 digests for key generator and hash digests. These invalidate
+# encrypted cookies, signed messages, Etags, and cache keys — accepted here
+# since cache rotation and session loss are tolerable for this app.
+Rails.application.config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA256
+Rails.application.config.active_support.hash_digest_class = OpenSSL::Digest::SHA256
+
+# Use Ruby's default TimeWithZone#name implementation.
+Rails.application.config.active_support.remove_deprecated_time_with_zone_name = true
+
+# --- Deferred (Phase 2: ActiveStorage) ---------------------------------------
+# Rails.application.config.active_storage.variant_processor = :vips
+# Rails.application.config.active_storage.multiple_file_field_include_hidden = true
+# Rails.application.config.active_storage.video_preview_arguments = ...
