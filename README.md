@@ -42,6 +42,25 @@ Run the server:
 rails s
 ```
 
+### Nginx
+
+The deploy host runs nginx in front of Passenger. The site configuration file
+needs at least:
+
+```nginx
+server {
+  # ...
+  client_max_body_size 20m;  # match validates_attachment_size limits
+  # ...
+}
+```
+
+After editing, reload nginx:
+
+```sh
+sudo nginx -t && sudo systemctl reload nginx
+```
+
 ## Upgrading Ruby
 
 To upgrade the deployed Ruby version, make sure to update the following locations:

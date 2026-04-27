@@ -65,6 +65,7 @@ class User < ApplicationRecord
   validate :valid_rank, :valid_grade, :valid_phone_c
   validates_attachment_content_type :profile_photo, content_type: %r{\Aimage/}
   validates_attachment_file_name :profile_photo, matches: /(\.png|\.jpe?g)\z/i
+  validates_attachment_size :profile_photo, less_than: 20.megabytes
   validates :certificate, uniqueness: true, allow_nil: true
 
   scope :locked, -> { where.not(locked_at: nil) }
