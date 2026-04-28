@@ -34,7 +34,7 @@ gem 'paranoia',            '~> 3.0'
 
 # APIs and External Services
 gem 'aws-sdk-cloudfront', '~> 1.61'
-gem 'aws-sdk-rails',       '~> 4.1'
+gem 'aws-sdk-rails',       '~> 4.2'
 gem 'aws-sdk-s3',          '~> 1.111'
 gem 'aws-sdk-ses',         '~> 1.45'
 gem 'aws-sdk-sns',         '~> 1.50'
@@ -42,7 +42,7 @@ gem 'bps-google-api',      '~> 0.7.0'
 gem 'braintree',           '~> 4.26'
 gem 'geocoder',            '~> 1.6.1'
 gem 'rushover',            '~> 0.3.0'
-gem 'sendgrid-ruby',       '~> 5.2'
+gem 'sendgrid-ruby',       '~> 6.7'
 gem 'slack-notifier',      '~> 2.3'
 
 gem 'slack-notification',  '~> 0.1.11'
@@ -91,7 +91,7 @@ gem 'differ',              '~> 0.1.2'
 gem 'loofah',              '>= 2.21'
 gem 'nokogiri',            '>= 1.14.3'
 gem 'rubyzip',             '>= 1.3.0'
-gem 'sinatra',             '~> 2.2.3'
+gem 'sinatra',             '~> 4.2.1'
 
 group :development do
   gem 'capistrano',            '~> 3.16.0'
@@ -116,7 +116,7 @@ group :development, :test do
 
   # Specs
   gem 'database_cleaner-active_record', '~> 2.2'
-  gem 'factory_bot_rails',        '~> 6.2'
+  gem 'factory_bot_rails',        '~> 6.5'
   gem 'fuubar',                   '~> 2'
   gem 'rails-controller-testing', '~> 1'
   gem 'rspec-rails',              '~> 6.1'
