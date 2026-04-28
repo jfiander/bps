@@ -35,7 +35,7 @@ gem 'paranoia',            '~> 3.0'
 # APIs and External Services
 gem 'aws-sdk-cloudfront', '~> 1.61'
 gem 'aws-sdk-rails',       '~> 4.1'
-gem 'aws-sdk-s3',          '~> 1.111'
+gem 'aws-sdk-s3',          '~> 1.208'
 gem 'aws-sdk-ses',         '~> 1.45'
 gem 'aws-sdk-sns',         '~> 1.50'
 gem 'bps-google-api',      '~> 0.7.0'
