@@ -31,7 +31,7 @@ class ApplicationRecord < ActiveRecord::Base
 
 private
 
-  def sanitize(text)
-    ActionController::Base.helpers.sanitize text
+  def sanitize(text, options = {})
+    ActionController::Base.helpers.sanitize(text, options)
   end
 end

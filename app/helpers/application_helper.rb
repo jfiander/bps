@@ -41,8 +41,8 @@ module ApplicationHelper
     end
   end
 
-  def sanitize(text)
-    ActionController::Base.helpers.sanitize text
+  def sanitize(text, options = {})
+    ActionController::Base.helpers.sanitize(text, options)
   end
 
   def switch_box(f, field, color, description, **options)
