@@ -55,7 +55,7 @@ RSpec.describe PublicController do
 
         post :register, params: params(@event)
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(flash[:alert]).to eql('You are already registered.')
       end
     end

@@ -10,7 +10,7 @@ end
 
 gem 'rails',               '~> 8.1.0'
 
-gem 'puma',                '~> 5.6'
+gem 'puma',                '~> 6.0'
 
 gem 'mysql2',              '~> 0.5.6'
 
@@ -125,7 +125,7 @@ group :development, :test do
   # Rubocop
   gem 'rubocop',                  '>= 1.48'
   gem 'rubocop-rails',            '~> 2.18'
-  gem 'rubocop-rspec',            '~> 2.19'
+  gem 'rubocop-rspec',            '~> 3.0'
 
   gem 'brakeman',                 '~> 4.3'
 
