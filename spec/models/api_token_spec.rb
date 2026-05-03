@@ -39,11 +39,11 @@ RSpec.describe ApiToken do
   describe '#match?' do
     it 'matches with the correct token' do
       t = token.new_token
-      expect(described_class.find(token.id)).to match(t)
+      expect(described_class.find(token.id).match?(t)).to be(true)
     end
 
     it 'does not match with an invalid token' do
-      expect(described_class.find(token.id)).not_to match('invalid')
+      expect(described_class.find(token.id).match?('invalid')).to be(false)
     end
   end
 end
