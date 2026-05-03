@@ -29,8 +29,7 @@ module Application
       end
 
       # Check if log is in limit state
-      log = File.open(log_path, 'r')
-      timestamp, count = log.read.chomp.split
+      timestamp, count = File.read(log_path).chomp.split
       time = DateTime.parse(timestamp, '%Y-%m-%dT%H:%M:%S%Z')
       count = count.to_i
 

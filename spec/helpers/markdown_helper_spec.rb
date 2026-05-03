@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe MarkdownHelper do
   it 'defines a constant of available views' do
     expect(MarkdownHelper::VIEWS).to be_a(Hash)
-    expect(MarkdownHelper::VIEWS.keys.all? { |l| l.is_a?(String) }).to be(true)
-    expect(MarkdownHelper::VIEWS.values.all? { |l| l.is_a?(Array) }).to be(true)
+    expect(MarkdownHelper::VIEWS.keys.all?(String)).to be(true)
+    expect(MarkdownHelper::VIEWS.values.all?(Array)).to be(true)
   end
 
   it 'raises an ArgumentError if not given a name or raw markdown' do

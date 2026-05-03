@@ -58,7 +58,7 @@ private
   end
 
   def update_file(model)
-    if send("#{model}_params")["#{model}_remove".to_sym].present?
+    if send("#{model}_params")[:"#{model}_remove"].present?
       send("remove_#{model}")
       'removed'
     elsif (file = send("find_#{model}_issue")).present?

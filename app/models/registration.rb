@@ -94,11 +94,11 @@ class Registration < ApplicationRecord
   #
   # :nocov:
   def available_options
-    event.event_selections.each_with_object({}) do |event_selection, hash|
-      hash[event_selection.description] =
-        event_selection.event_options.each_with_object({}) do |option, h|
-          h[option.name] = option.id
-        end
+    event.event_selections.to_h do |event_selection|
+      [
+        event_selection.description,
+        event_selection.event_options.to_h { |option| [option.name, option.id] }
+      ]
     end
   end
 

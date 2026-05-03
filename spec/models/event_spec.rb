@@ -9,7 +9,7 @@ require 'rails_helper'
 #   skip 'Exceeded rate limit. Skipping spec.'
 # end
 
-RSpec.describe Event, slow: true do
+RSpec.describe Event, :slow do
   before { generic_seo_and_ao }
 
   describe 'scopes' do
@@ -559,11 +559,12 @@ RSpec.describe Event, slow: true do
 
       it 'generates the correct flyer link' do
         event_type = create(:event_type, event_category: 'meeting')
-        flyer = File.open(test_image(250, 500), 'r')
-        event = create(:event, event_type: event_type, flyer: flyer)
-        expect(event.pick_flyer).to match(
-          %r{https://files.development.bpsd9.org/event_flyers/#{event.id}/test_image.jpg\?[^ ]*?}
-        )
+        File.open(test_image(250, 500), 'r') do |flyer|
+          event = create(:event, event_type: event_type, flyer: flyer)
+          expect(event.pick_flyer).to match(
+            %r{https://files.development.bpsd9.org/event_flyers/#{event.id}/test_image.jpg\?[^ ]*?}
+          )
+        end
       end
     end
   end

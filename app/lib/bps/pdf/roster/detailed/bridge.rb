@@ -49,7 +49,7 @@ module BPS
             bounding_box([0, y_pos], width: 175, height: 40) do
               formatted_text(
                 [{ text: "#{bridge_office&.title}\n", styles: [:bold] }] +
-                format_name((bridge_office&.user&.full_name(html: false) || 'TBD')),
+                format_name(bridge_office&.user&.full_name(html: false) || 'TBD'),
                 size: BPS::PDF::Roster::Detailed::SECTION_TITLE_SIZE, align: :left, valign: :center
               )
             end

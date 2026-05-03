@@ -169,7 +169,7 @@ RSpec.describe User do
             %w[cc pcc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has four stripes with', User::Stripes::NATIONAL
+              it_behaves_like 'has four stripes with', User::Stripes::NATIONAL
               it('is narrow-spaced') { expect(rank).to match(narrow) }
             end
           end
@@ -178,7 +178,7 @@ RSpec.describe User do
             %w[vc pvc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has three stripes with', User::Stripes::NATIONAL
+              it_behaves_like 'has three stripes with', User::Stripes::NATIONAL
             end
           end
 
@@ -186,7 +186,7 @@ RSpec.describe User do
             %w[rc prc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has two stripes with', User::Stripes::NATIONAL
+              it_behaves_like 'has two stripes with', User::Stripes::NATIONAL
             end
           end
 
@@ -194,7 +194,7 @@ RSpec.describe User do
             %w[stfc pstfc nflt pnflt naide].each do |r|
               let(:rank) { r }
 
-              include_examples 'has one stripe with', User::Stripes::NATIONAL
+              it_behaves_like 'has one stripe with', User::Stripes::NATIONAL
             end
           end
         end
@@ -204,7 +204,7 @@ RSpec.describe User do
             %w[dc pdc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has four stripes with', User::Stripes::DISTRICT
+              it_behaves_like 'has four stripes with', User::Stripes::DISTRICT
               it('is narrow-spaced') { expect(rank).to match(narrow) }
             end
           end
@@ -213,7 +213,7 @@ RSpec.describe User do
             %w[dltc pdltc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has three stripes with', User::Stripes::DISTRICT
+              it_behaves_like 'has three stripes with', User::Stripes::DISTRICT
             end
           end
 
@@ -221,7 +221,7 @@ RSpec.describe User do
             %w[dfirstlt].each do |r|
               let(:rank) { r }
 
-              include_examples 'has two stripes with', User::Stripes::DISTRICT
+              it_behaves_like 'has two stripes with', User::Stripes::DISTRICT
             end
           end
 
@@ -229,7 +229,7 @@ RSpec.describe User do
             %w[dlt dflt daide].each do |r|
               let(:rank) { r }
 
-              include_examples 'has one stripe with', User::Stripes::DISTRICT
+              it_behaves_like 'has one stripe with', User::Stripes::DISTRICT
             end
           end
         end
@@ -239,7 +239,7 @@ RSpec.describe User do
             %w[cdr pc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has four stripes with', User::Stripes::SQUADRON
+              it_behaves_like 'has four stripes with', User::Stripes::SQUADRON
               it('is not narrow-spaced') { expect(rank).not_to match(narrow) }
             end
           end
@@ -248,7 +248,7 @@ RSpec.describe User do
             %w[ltc pltc].each do |r|
               let(:rank) { r }
 
-              include_examples 'has three stripes with', User::Stripes::SQUADRON
+              it_behaves_like 'has three stripes with', User::Stripes::SQUADRON
             end
           end
 
@@ -256,7 +256,7 @@ RSpec.describe User do
             %w[firstlt].each do |r|
               let(:rank) { r }
 
-              include_examples 'has two stripes with', User::Stripes::SQUADRON
+              it_behaves_like 'has two stripes with', User::Stripes::SQUADRON
             end
           end
 
@@ -264,7 +264,7 @@ RSpec.describe User do
             %w[lt flt].each do |r|
               let(:rank) { r }
 
-              include_examples 'has one stripe with', User::Stripes::SQUADRON
+              it_behaves_like 'has one stripe with', User::Stripes::SQUADRON
             end
           end
         end

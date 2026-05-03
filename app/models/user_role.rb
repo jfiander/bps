@@ -7,7 +7,7 @@ class UserRole < ApplicationRecord
   validates :role, uniqueness: { scope: :user }
 
   def self.preload
-    roles = Role.all.each_with_object({}) { |r, h| h[r.id] = r.name.to_sym }
+    roles = Role.all.to_h { |r| [r.id, r.name.to_sym] }
     all.each_with_object({}) do |user_role, hash|
       hash[user_role.user_id] ||= []
       hash[user_role.user_id] << roles[user_role.role_id]

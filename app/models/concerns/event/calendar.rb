@@ -119,7 +119,7 @@ class Event
 
     def calculate_end_date
       hours = length&.strftime('%H')&.to_i || 1
-      minutes = length&.strftime('%M')&.to_i || 0
+      minutes = length&.strftime('%M').to_i
 
       start_at.to_datetime + hours.hours + minutes.minutes
     end

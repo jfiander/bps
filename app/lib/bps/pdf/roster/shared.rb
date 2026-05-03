@@ -20,7 +20,7 @@ module BPS
         end
 
         def format_name(name)
-          if name.to_s&.match?(%r{1st/Lt})
+          if name.to_s.match?(%r{1st/Lt})
             pre, name = name.split('1st/Lt')
             [{ text: "#{pre}1" }, { text: 'st', styles: [:superscript] }, { text: "/Lt#{name}" }]
           else

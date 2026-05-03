@@ -185,7 +185,7 @@ private
     c = child(node, name)
     return c.value if c.respond_to?(:value)
 
-    c&.children&.first&.to_s
+    c&.children&.first.to_s
   end
 
   def integer(node, name)

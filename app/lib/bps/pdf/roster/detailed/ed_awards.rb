@@ -86,7 +86,7 @@ module BPS
 
           def ed_award_image(award, x_pos)
             svg(
-              ed_award_svg(ed_award_grade(award), (award == :EdPro)),
+              ed_award_svg(ed_award_grade(award), award == :EdPro),
               width: 1350, at: [x_pos, cursor + 5]
             )
           end
@@ -137,7 +137,7 @@ module BPS
 
           def ed_award_body_proud(key)
             text(
-              config_text[:education]["#{key} proud".to_sym],
+              config_text[:education][:"#{key} proud"],
               size: BPS::PDF::Roster::Detailed::BODY_REG_SIZE, align: :justify, inline_format: true
             )
           end

@@ -26,7 +26,7 @@ module UserHelper
     class_list = class_list(key, highlight, header: true)
     default_label = key.is_a?(Array) ? key.first : key
 
-    content_tag(:div, (label || default_label), class: class_list.join(' '))
+    content_tag(:div, label || default_label, class: class_list.join(' '))
   end
 
   def instructor_row(key, highlight, completions, grade: nil, cpr: nil)

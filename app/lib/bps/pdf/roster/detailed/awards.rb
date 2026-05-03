@@ -99,9 +99,11 @@ module BPS
 
           def load_award_images
             ::Roster::AwardRecipient.current.each do |award|
-              next unless award&.photo&.path && BPS::S3.new(:files)&.has?(award&.photo&.path)
+              path = award&.photo&.path
+              s3 = BPS::S3.new(:files)
+              next unless path && s3.has?(path)
 
-              photo = BPS::S3.new(:files)&.download(award&.photo&.path)
+              photo = s3.download(path)
               File.write("tmp/run/#{award.award_name}.png", photo)
             end
           end

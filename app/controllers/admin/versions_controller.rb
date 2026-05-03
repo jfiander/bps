@@ -62,7 +62,8 @@ module Admin
     def load_versions
       @model = clean_params[:model]
       @id = clean_params[:id]
-      @versions = model_class&.find_by(id: @id)&.versions&.to_a&.sort_by(&:id)&.reverse
+      record = model_class&.find_by(id: @id)
+      @versions = record.versions.sort_by(&:id).reverse if record
     end
 
     def clean_params

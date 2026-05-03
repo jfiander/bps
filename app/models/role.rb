@@ -13,7 +13,7 @@ class Role < ApplicationRecord
   validates :name, uniqueness: true
 
   def self.icons
-    regular = all.each_with_object({}) { |role, hash| hash[role.name.to_sym] = role.icon }
+    regular = all.to_h { |role| [role.name.to_sym, role.icon] }
     regular.merge(all: 'globe', excom: 'chevron-circle-down')
   end
 

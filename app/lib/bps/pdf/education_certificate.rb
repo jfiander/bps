@@ -50,7 +50,7 @@ module BPS
 
       def completed_rectangle(color)
         fill_color(color)
-        fill_rectangle([1, (ROW_HEIGHT - 3)], (COLUMN_WIDTH - 4), (ROW_HEIGHT - 4))
+        fill_rectangle([1, (ROW_HEIGHT - 3)], COLUMN_WIDTH - 4, ROW_HEIGHT - 4)
         configure_colors
       end
     end

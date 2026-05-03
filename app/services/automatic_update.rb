@@ -94,7 +94,7 @@ module AutomaticUpdate
       CSV.open(OUTPUT_PATH, 'w+') do |f|
         f << headers
         main_tsv.each do |row|
-          next if skip(row)
+          next if skip?(row)
 
           new_row = normalize_row(row)
 
@@ -129,7 +129,7 @@ module AutomaticUpdate
       end
     end
 
-    def skip(row)
+    def skip?(row)
       row['Member Type'] == 'HR' # Honorary Member
     end
 

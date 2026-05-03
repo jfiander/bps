@@ -30,12 +30,12 @@ module BridgeHelper
   end
 
   def assemble_departments
-    BridgeOffice.departments.each_with_object({}) do |dept, hash|
-      hash[dept.to_sym] = {
+    BridgeOffice.departments.to_h do |dept|
+      [dept.to_sym, {
         head: generate_officer_hash(head(dept)),
         assistant: generate_officer_hash(asst(dept)),
         committees: generate_committees(dept)
-      }
+      }]
     end
   end
 

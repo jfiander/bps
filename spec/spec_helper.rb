@@ -162,7 +162,7 @@ end
 
 def run_brakeman
   example_group = RSpec.describe('Brakeman Issues')
-  puts "\n\nBrakeman report available here: ./tmp/brakeman.html"
+
   example = brakeman_example(example_group)
   example_group.run
   return if example.execution_result.status == :passed
@@ -174,13 +174,12 @@ def brakeman_example(example_group)
   example_group.example('must have 0 Critical Security Issues') do
     result = Brakeman.run app_path: Rails.root.to_s, output_files: ['tmp/brakeman.html']
     serious = result.warnings.count { |w| w.confidence == 0 }
-    puts "\nBrakeman Result:\n  Critical Security Issues = #{serious}"
+
     expect(serious).to eq 0
   end
 end
 
 def clear_test_calendar
-  puts "\n\n*** Specs complete! Clearing test calendar..."
   GoogleAPI::Calendar.new.clear_test_calendar
 rescue Google::Apis::ClientError
   nil

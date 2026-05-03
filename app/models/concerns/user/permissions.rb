@@ -92,7 +92,9 @@ class User
     end
 
     def permitted_roles_from_committee
-      implicit_permissions['committee']&.select { |k, _| k.in?(committee_names) }&.values&.flatten
+      return unless (committee = implicit_permissions['committee'])
+
+      committee.slice(*committee_names).values.flatten
     end
   end
 end

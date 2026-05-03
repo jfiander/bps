@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe BPS::PDF::EducationCertificate, slow: true, type: :lib do
+RSpec.describe BPS::PDF::EducationCertificate, :slow, type: :lib do
   let(:user) { create(:user, grade: 'N') }
 
   context 'with a default user' do

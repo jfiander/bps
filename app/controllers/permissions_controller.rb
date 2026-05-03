@@ -110,18 +110,18 @@ private
 
   def restricted_permission?(role)
     return true if role == 'admin'
-    return true if restricted_education(role)
-    return true if restricted_admin(role)
+    return true if restricted_education?(role)
+    return true if restricted_admin?(role)
 
     false
   end
 
-  def restricted_education(role)
+  def restricted_education?(role)
     role.in?(%w[education course seminar]) &&
       !current_user&.permitted?(:education)
   end
 
-  def restricted_admin(role)
+  def restricted_admin?(role)
     role.in?(%w[users]) && !current_user&.permitted?(:admin, strict: true)
   end
 

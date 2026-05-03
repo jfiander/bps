@@ -122,7 +122,7 @@ private
   end
 
   def save_registration_options
-    params.permit(event_selections: {})[:event_selections].each do |_selection, option_id|
+    params.permit(event_selections: {})[:event_selections].each_value do |option_id|
       @registration.registration_options.create!(event_option_id: option_id)
     end
   end

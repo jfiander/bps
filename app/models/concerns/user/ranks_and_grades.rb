@@ -30,7 +30,7 @@ class User
           highest_rank(*r)
         end
 
-      rank&.gsub('/', '')&.gsub(/1(st)?Lt/, 'FirstLt')&.downcase
+      rank.gsub('/', '').gsub(/1(st)?Lt/, 'FirstLt').downcase unless rank.nil?
     end
 
     def flag_rank
@@ -141,7 +141,7 @@ class User
 
     def highest_rank(*ranks)
       rp = ranks.map do |r|
-        { r => (rank_priority[r] || 100) }
+        { r => rank_priority[r] || 100 }
       end
 
       rp.reduce({}, :merge).min_by { |_, p| p }&.first

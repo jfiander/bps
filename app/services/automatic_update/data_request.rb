@@ -28,7 +28,7 @@ module AutomaticUpdate
     end
 
     def request_data_ignored
-      self.class::FIELDS_TO_IGNORE.times.each_with_object({}) { |i, h| h["fld#{i + 1}"] = 'N' }
+      self.class::FIELDS_TO_IGNORE.times.to_h { |i| ["fld#{i + 1}", 'N'] }
     end
 
     def request_data_main

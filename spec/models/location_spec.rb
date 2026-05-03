@@ -11,7 +11,7 @@ RSpec.describe Location do
     end
 
     it 'has integer keys' do
-      expect(described_class.searchable.keys.all? { |k| k.is_a?(Integer) }).to be(true)
+      expect(described_class.searchable.keys.all?(Integer)).to be(true)
     end
   end
 

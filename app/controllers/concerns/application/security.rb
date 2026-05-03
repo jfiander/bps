@@ -30,8 +30,8 @@ module Application
       redirect_to root_path
     end
 
-    def authenticate_user!(*args)
-      return super(*args) if user_signed_in?
+    def authenticate_user!(*)
+      return super if user_signed_in?
 
       flash[:referrer] = request.original_fullpath
       flash[:notice] = 'You must login to continue.'

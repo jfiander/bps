@@ -78,7 +78,7 @@ module BPS
               config_text[:merit][description_key],
               size: BPS::PDF::Roster::Detailed::BODY_REG_SIZE, align: :justify
             )
-            collection_body(title, collection, honor, mm) if collection.count.positive?
+            collection_body(title, collection, honor, mm) if collection.any?
           end
 
           def collection_body(title, collection, honor, mm)

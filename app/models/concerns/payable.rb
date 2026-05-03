@@ -18,9 +18,9 @@ module Payable
   end
 
   def paid?
-    return unless self&.class&.payable? # rubocop:disable Style/ReturnNilInPredicateMethodDefinition
+    return unless self.class&.payable? # rubocop:disable Style/ReturnNilInPredicateMethodDefinition
 
-    self&.payment&.paid
+    payment&.paid
   end
 
   def payment_amount

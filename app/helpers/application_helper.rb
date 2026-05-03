@@ -6,7 +6,7 @@ module ApplicationHelper
   def formatted_error_flash(error)
     if error.present? && error.is_a?(String)
       error
-    elsif error.present? && error&.count == 1
+    elsif error.present? && error&.one?
       error.first
     elsif error.present?
       errors = safe_join(error&.map { |e| content_tag(:li, e) })

@@ -17,7 +17,7 @@ private
     self.expires_at = nil unless persisted?
   end
 
-  def validate_expiration
+  def validate_expiration # rubocop:disable Naming/PredicateMethod
     true # Ignore parent validation -- nil is acceptable here
   end
 end

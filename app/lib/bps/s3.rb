@@ -33,9 +33,9 @@ module BPS
     end
 
     def upload(file:, key:, content_type: nil)
-      file = File.open(file, 'rb') if file.is_a?(String) || file.is_a?(Pathname)
+      path = file.is_a?(String) || file.is_a?(Pathname) ? file.to_s : file.path
 
-      object(key).upload_file(file.path, content_type: content_type)
+      object(key).upload_file(path, content_type: content_type)
     end
 
     def move(key, new_key)

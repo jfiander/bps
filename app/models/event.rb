@@ -98,7 +98,7 @@ class Event < ApplicationRecord
 
     # Group by course category, and ensure all categories exist, in the correct order.
     grouped = events.group_by { |e| e.event_type.event_category }
-    COURSE_CATEGORIES.each_with_object({}) { |k, h| h[k.to_sym] = grouped[k] || [] }
+    COURSE_CATEGORIES.to_h { |k| [k.to_sym, grouped[k] || []] }
   end
 
   def self.query_category(category)
@@ -183,11 +183,11 @@ private
   def validate_dates
     return if start_at.blank?
 
-    self.cutoff_at = start_at if cutoff_at.blank? || out_of_date(:cutoff_at)
-    self.expires_at = start_at + 1.week if expires_at.blank? || out_of_date(:expires_at)
+    self.cutoff_at = start_at if cutoff_at.blank? || out_of_date?(:cutoff_at)
+    self.expires_at = start_at + 1.week if expires_at.blank? || out_of_date?(:expires_at)
   end
 
-  def out_of_date(field)
+  def out_of_date?(field)
     start_at_changed? && !send("#{field}_changed?")
   end
 

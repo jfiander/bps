@@ -24,7 +24,7 @@ class FloatPlan
     end
 
     def boat_type_display
-      "#{boat_type}#{subtype.present? ? " (#{subtype})" : ''}"
+      "#{boat_type}#{" (#{subtype})" if subtype.present?}"
     end
 
     def radio_bands

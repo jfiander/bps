@@ -26,7 +26,7 @@ module Menu
     end
 
     def any_admin_links?
-      admin_menu_yaml.each do |_menu, data|
+      admin_menu_yaml.each_value do |data|
         data[:items].each do |d|
           if d.key?(:children)
             d[:children].each do |child|

@@ -24,7 +24,7 @@ module Admin
       }
     end
 
-    def validate_logo
+    def valid_logo?
       logo_params[:orientation].in?(%w[Short Long]) &&
         logo_params[:type].in?(%w[PNG SVG]) &&
         logo_params[:background].in?(%w[Transparent White]) &&
@@ -32,10 +32,10 @@ module Admin
     end
 
     def validate_size
-      (logo_params[:size].to_i.positive? && !oversize_logo) || logo_params[:size] == 'Full'
+      (logo_params[:size].to_i.positive? && !oversize_logo?) || logo_params[:size] == 'Full'
     end
 
-    def oversize_logo
+    def oversize_logo?
       logo_params[:size].to_i > max_size
     end
 
@@ -59,7 +59,7 @@ module Admin
     end
 
     def size
-      if oversize_logo
+      if oversize_logo?
         @logo_params[:size] = max_size
       else
         logo_params[:size] == 'Full' ? 'Full' : logo_params[:size].to_i.floor(-2)
@@ -83,7 +83,7 @@ module Admin
     end
 
     def find_logo
-      return invalid_logo unless validate_logo
+      return invalid_logo unless valid_logo?
       return @logo = BPS::S3.new(:static).link(logo_key) if BPS::S3.new(:static).has?(logo_key)
 
       attempt_to_generate

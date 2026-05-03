@@ -37,6 +37,6 @@ private
     return link_to(send(path, event), **options) { icon } if path.present? && path.match?(/_path/)
     return link_to(path, **options) { icon } if path.present?
 
-    link_to('#', **options.merge(class: "#{options[:class]} unclickable")) { icon }
+    link_to('#', **options, class: "#{options[:class]} unclickable") { icon }
   end
 end

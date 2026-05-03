@@ -33,6 +33,6 @@ private
   end
 
   def float_plan_to_list
-    (float_plan_monitor_emails.presence || ['"No Monitors" <dev@bpsd9.org>'])
+    float_plan_monitor_emails.presence || ['"No Monitors" <dev@bpsd9.org>']
   end
 end
