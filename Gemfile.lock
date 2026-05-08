@@ -85,8 +85,8 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.8.5)
-      public_suffix (>= 2.0.2, < 6.0)
+    addressable (2.9.0)
+      public_suffix (>= 2.0.2, < 8.0)
     afm (0.2.2)
     airbrussh (1.4.2)
       sshkit (>= 1.6.1, != 1.7.0)
@@ -444,7 +444,7 @@ GEM
     psych (5.3.1)
       date
       stringio
-    public_suffix (5.0.3)
+    public_suffix (7.0.5)
     puma (6.6.1)
       nio4r (~> 2.0)
     racc (1.8.1)
@@ -678,6 +678,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  addressable (>= 2.9.0)
   awesome_print (~> 1.8.0)
   aws-sdk-cloudfront (~> 1.61)
   aws-sdk-rails (~> 4.2)

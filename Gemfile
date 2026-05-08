@@ -88,6 +88,7 @@ gem 'differ',              '~> 0.1.2'
 # clashes with the preloaded default at app boot under Passenger.
 # Transitive constraints (bps-google-api, encrypted-keystore) are
 # satisfied by anything in the 1.x line.
+gem 'addressable',         '>= 2.9.0'
 gem 'loofah',              '>= 2.21'
 gem 'nokogiri',            '>= 1.14.3'
 gem 'rubyzip',             '>= 1.3.0'
