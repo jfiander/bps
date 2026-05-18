@@ -335,7 +335,8 @@ GEM
     jquery-ui-rails (8.0.0)
       railties (>= 3.2.16)
     json (2.19.5)
-    jwt (2.2.3)
+    jwt (3.2.0)
+      base64
     kt-paperclip (7.3.0)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
@@ -718,7 +719,7 @@ DEPENDENCIES
   jbuilder (~> 2.13)
   jquery-rails (~> 4.3)
   jquery-ui-rails (~> 8.0)
-  jwt (~> 2.2.3)
+  jwt (~> 3.2.0)
   kt-paperclip (~> 7.2)
   listen (~> 3.8)
   lograge
