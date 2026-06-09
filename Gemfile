@@ -10,7 +10,7 @@ end
 
 gem 'rails',               '~> 8.1.0'
 
-gem 'puma',                '~> 6.0'
+gem 'puma',                '~> 7.2'
 
 gem 'mysql2',              '~> 0.5.6'
 

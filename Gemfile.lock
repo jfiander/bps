@@ -446,7 +446,7 @@ GEM
       date
       stringio
     public_suffix (7.0.5)
-    puma (6.6.1)
+    puma (7.2.1)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.6)
@@ -732,7 +732,7 @@ DEPENDENCIES
   pdf-reader (~> 2.10.0)
   prawn (~> 2.5)
   prawn-svg (~> 0.28.0)
-  puma (~> 6.0)
+  puma (~> 7.2)
   rack-cors (~> 1.0)
   rails (~> 8.1.0)
   rails-controller-testing (~> 1)
