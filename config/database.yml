@@ -1,7 +1,7 @@
 default: &default
   adapter: mysql2
   pool: 5
-  timeout: 5000
+  connect_timeout: 5
 
 rds: &rds
   <<: *default
