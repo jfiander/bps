@@ -64,11 +64,11 @@ class GalleryController < ApplicationController
 private
 
   def album_params
-    params.require(:album).permit(:name)
+    params.expect(album: [:name])
   end
 
   def photo_params
-    params.require(:photo).permit(:album_id, photo_file: [])
+    params.expect(photo: [:album_id, { photo_file: [] }])
   end
 
   def clean_params

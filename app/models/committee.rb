@@ -22,7 +22,7 @@ class Committee < ApplicationRecord
   end
 
   def self.sorted
-    all.order(:name).group_by(&:department).map do |dept, coms|
+    order(:name).group_by(&:department).map do |dept, coms|
       {
         dept => coms.sort_by do |c|
           c.name.downcase.gsub(

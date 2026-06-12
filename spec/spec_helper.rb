@@ -201,7 +201,7 @@ RSpec.configure do |config|
     run_brakeman if ENV['RUN_BRAKEMAN'] == 'true'
 
     DatabaseCleaner.clean_with(:truncation)
-    Dir[Rails.root.join('tmp/run/**/*')].each { |file| File.delete(file) }
+    Rails.root.glob('tmp/run/**/*').each { |file| File.delete(file) }
 
     # clear_test_calendar if ENV['AUTO_CLEAR_CALENDAR'] == 'true'
 

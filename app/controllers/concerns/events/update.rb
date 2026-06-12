@@ -99,7 +99,7 @@ module Events
       ATTACHMENTS.each do |attachment|
         attachment[:model].constantize.where(
           attachment[:parent] => attachment_target(attachment[:parent])
-        ).where('updated_at < ?', clear_before_time).destroy_all
+        ).where(updated_at: ...clear_before_time).destroy_all
       end
     end
   end

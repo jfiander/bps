@@ -30,7 +30,7 @@ module Admin
   private
 
     def generic_payment_params
-      params.require(:generic_payment).permit(:description, :amount, :user_id, :email)
+      params.expect(generic_payment: %i[description amount user_id email])
     end
 
     def users

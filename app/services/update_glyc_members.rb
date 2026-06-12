@@ -29,7 +29,7 @@ private
   def update_members
     GLYCMember.where.not(email: @all_emails).destroy_all
 
-    new_emails = @all_emails.reject { |e| e.in? GLYCMember.all.pluck(:email) }
+    new_emails = @all_emails.reject { |e| e.in? GLYCMember.pluck(:email) }
     GLYCMember.create(new_emails.map { |e| { email: e } })
   end
 end

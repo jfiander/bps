@@ -78,7 +78,7 @@ class User < ApplicationRecord
     includes(:course_completions).where(course_completions: { course_key: 'VSC_01' })
   end)
   scope :include_positions, -> { includes(position_associations) }
-  scope :recent_mm, -> { where('last_mm_year >= ?', Time.zone.today.beginning_of_year - 6.months) }
+  scope :recent_mm, -> { where(last_mm_year: (Time.zone.today.beginning_of_year - 6.months)..) }
 
   def self.invitable_from(*user_ids)
     where(id: user_ids).where(invitation_sent_at: nil).invitable

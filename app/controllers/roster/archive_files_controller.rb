@@ -21,7 +21,7 @@ module Roster
     end
 
     def clean_params
-      params.require(:roster_archive_file).permit(:id)
+      params.expect(roster_archive_file: [:id])
     end
   end
 end

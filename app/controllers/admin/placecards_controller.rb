@@ -17,7 +17,7 @@ module Admin
   private
 
     def prepare_data
-      csv = CSV.read(params[:csv].path, headers: true)
+      csv = CSV.read(params.expect(:csv).path, headers: true)
 
       @data = csv.reject { |person| person['name'].blank? }.sort_by { |person| sort_names(person) }
     end

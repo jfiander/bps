@@ -3,7 +3,7 @@
 class User
   module Lock
     def lock
-      user = User.find(params[:id])
+      user = User.find(params.expect(:id))
 
       if user.permitted?(:admin)
         redirect_to(

@@ -4,7 +4,7 @@ class ImportLog < ApplicationRecord
   serialize :proto, coder: BPS::Update::UserDataImport
 
   def self.latest
-    all.order(:created_at).last
+    order(:created_at).last
   end
 
   # :nocov:

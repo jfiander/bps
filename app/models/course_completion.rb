@@ -11,7 +11,7 @@ class CourseCompletion < ApplicationRecord
   scope :with_users, -> { includes(user: User.position_associations) }
 
   def self.for_year(year)
-    where('date >= ?', "#{year}0101").where('date < ?', "#{year.to_i + 1}0101")
+    where(date: "#{year}0101"..).where(date: ..."#{year.to_i + 1}0101")
   end
 
   def to_h

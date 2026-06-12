@@ -20,7 +20,7 @@ module Members
   private
 
     def static_page_params
-      params.require(:static_page).permit(:name, :markdown)
+      params.expect(static_page: %i[name markdown])
     end
 
     def save_markdown

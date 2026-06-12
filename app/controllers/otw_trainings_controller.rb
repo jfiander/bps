@@ -76,7 +76,7 @@ private
   end
 
   def otw_training_params
-    params.require(:otw_training).permit(:name, :description, :course_key, :boc_level)
+    params.expect(otw_training: %i[name description course_key boc_level])
   end
 
   def load_otw_training

@@ -22,8 +22,8 @@ module Roster
     end
 
     def clean_params
-      params.require(:roster_award_recipient).permit(
-        :id, :award_name, :user_id, :additional_user_id, :name, :year, :photo
+      params.expect(
+        roster_award_recipient: %i[id award_name user_id additional_user_id name year photo]
       )
     end
   end

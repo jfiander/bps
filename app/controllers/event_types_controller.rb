@@ -63,7 +63,7 @@ class EventTypesController < ApplicationController
 private
 
   def event_type_params
-    params.require(:event_type).permit(:event_category, :title)
+    params.expect(event_type: %i[event_category title])
   end
 
   def update_params

@@ -60,13 +60,13 @@ module Admin
     end
 
     def promo_params
-      params.require(:promo_code).permit(
-        :code, :valid_at, :expires_at, :discount_type, :discount_amount
+      params.expect(
+        promo_code: %i[code valid_at expires_at discount_type discount_amount]
       )
     end
 
     def event_params
-      params.require(:promo_code).permit(event_ids: [])
+      params.expect(promo_code: [{ event_ids: [] }])
     end
 
     def clean_params

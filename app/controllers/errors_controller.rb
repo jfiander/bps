@@ -38,6 +38,6 @@ class ErrorsController < ApplicationController
 private
 
   def default_format
-    request.format = params[:format].in?(%w[json js]) ? 'json' : 'html'
+    request.format = params.expect(:format).in?(%w[json js]) ? 'json' : 'html'
   end
 end

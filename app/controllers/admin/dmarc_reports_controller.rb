@@ -19,12 +19,12 @@ module Admin
         @page = 1
       end
 
-      @reports = DmarcReport.limit(PAGE_SIZE).offset(offset).order('created_at DESC')
+      @reports = DmarcReport.limit(PAGE_SIZE).offset(offset).order(created_at: :desc)
       @new_report = DmarcReport.new
     end
 
     def show
-      @report = DmarcReport.find(params[:id])
+      @report = DmarcReport.find(params.expect(:id))
 
       respond_to do |format|
         format.html
@@ -78,7 +78,7 @@ module Admin
     # rubocop:enable Metrics/MethodLength
 
     def dmarc_report_params
-      params.require(:dmarc_report).permit(:xml)
+      params.expect(dmarc_report: [:xml])
     end
 
     def extract_zip(xml)

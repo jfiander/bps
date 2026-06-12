@@ -12,8 +12,8 @@ module Roster
     end
 
     def clean_params
-      params.require(:roster_past_commander).permit(
-        :id, :user_id, :name, :year, :deceased
+      params.expect(
+        roster_past_commander: %i[id user_id name year deceased]
       )
     end
   end

@@ -50,9 +50,8 @@ class LocationsController < ApplicationController
 private
 
   def location_params
-    params.require(:location).permit(
-      :address, :map_link, :details, :favorite, :virtual, :price_comment, :picture,
-      :delete_attachment
+    params.expect(
+      location: %i[address map_link details favorite virtual price_comment picturedelete_attachment]
     )
   end
 

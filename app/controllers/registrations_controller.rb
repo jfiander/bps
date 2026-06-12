@@ -8,13 +8,13 @@ class RegistrationsController < ApplicationController
   before_action :redirect_if_existing, only: %i[new create]
 
   def show
-    @registration = Registration.find(params[:id])
+    @registration = Registration.find(params.expect(:id))
     @event = @registration.event
   end
 
   def new
     @registration = Registration.new(event_id: params[:event_id])
-    @event = Event.find(params[:event_id])
+    @event = Event.find(params.expect(:event_id))
   end
 
   def create
@@ -36,7 +36,7 @@ class RegistrationsController < ApplicationController
   end
 
   def destroy
-    registration = Registration.find(params[:id])
+    registration = Registration.find(params.expect(:id))
 
     text = registration.additional_registrations.any? ? 'these registrations' : 'this registration'
 
@@ -53,7 +53,7 @@ class RegistrationsController < ApplicationController
 private
 
   def registration_params
-    params.require(:registration).permit(:event_id, :name, :email, :phone)
+    params.expect(registration: %i[event_id name email phone])
   end
 
   def registration_options_params

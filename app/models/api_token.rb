@@ -12,7 +12,7 @@ class ApiToken < ApplicationRecord
   attr_reader :new_token
 
   scope :current, -> { where('expires_at > ?', Time.zone.now) }
-  scope :expired, -> { where('expires_at <= ?', Time.zone.now) }
+  scope :expired, -> { where(expires_at: ..Time.zone.now) }
 
   before_validation :set_expiration
   before_create :encrypt_token

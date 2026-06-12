@@ -36,7 +36,7 @@ private
   end
 
   def register_params
-    params.require(:registration).permit(:event_id, :name, :email, :phone)
+    params.expect(registration: %i[event_id name email phone])
   end
 
   def registration_attributes

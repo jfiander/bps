@@ -27,7 +27,7 @@ class Event < ApplicationRecord
   scope :by_date, -> { order(:start_at) }
   scope :displayable, -> { where(archived_at: nil).where('start_at > ?', Event.auto_archive) }
   scope :current, -> { where('expires_at > ?', Time.zone.now) }
-  scope :expired, -> { where('expires_at <= ?', Time.zone.now) }
+  scope :expired, -> { where(expires_at: ..Time.zone.now) }
   scope :visible, -> { where(visible: true, quiet: false) }
   scope :accessible, -> { where(visible: true) }
   scope(:activity_feed, lambda do

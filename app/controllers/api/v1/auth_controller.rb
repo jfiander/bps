@@ -18,7 +18,9 @@ module Api
       end
 
       def user
-        @user ||= User.find_by(email: clean_params[:email])
+        return @user if defined?(@user)
+
+        @user = User.find_by(email: clean_params[:email])
       end
 
       def with_valid_user
@@ -73,7 +75,7 @@ module Api
       end
 
       def verify_all_controllers
-        controllers = Dir[Rails.root.join('app/controllers/api/v1/*_controller.rb')].map do |path|
+        controllers = Rails.root.glob('app/controllers/api/v1/*_controller.rb').map do |path|
           path.match(/(\w+)_controller.rb/)[1]
         end.compact - %w[auth application]
 

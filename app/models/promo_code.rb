@@ -5,7 +5,7 @@ class PromoCode < ApplicationRecord
   has_many :event_promo_codes
   has_many :events, through: :event_promo_codes
 
-  scope :expired, -> { where('expires_at < ?', Time.zone.now) }
+  scope :expired, -> { where(expires_at: ...Time.zone.now) }
   scope :current, (lambda do
     where('valid_at < ? AND (expires_at > ? OR expires_at IS NULL)', Time.zone.now, Time.zone.now)
   end)

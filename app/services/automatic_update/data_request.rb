@@ -46,7 +46,7 @@ module AutomaticUpdate
     end
 
     def before_submit
-      puts "\nDownloading #{self.class.name.demodulize}..."
+      Rails.logger.debug { "\nDownloading #{self.class.name.demodulize}..." }
     end
   end
 end

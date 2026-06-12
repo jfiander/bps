@@ -23,7 +23,7 @@ class FileController < ApplicationController
 
   def new_header
     @header = HeaderImage.new
-    @headers = HeaderImage.all.order(:created_at)
+    @headers = HeaderImage.order(:created_at)
   end
 
   def create_header
@@ -37,11 +37,11 @@ class FileController < ApplicationController
 private
 
   def file_params
-    params.require(:markdown_file).permit(:file)
+    params.expect(markdown_file: [:file])
   end
 
   def header_params
-    params.require(:header_image).permit(:file)
+    params.expect(header_image: [:file])
   end
 
   def destroy_params

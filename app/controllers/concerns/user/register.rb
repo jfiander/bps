@@ -75,7 +75,7 @@ class User
     end
 
     def reg_params
-      params.require(:registration).permit(:override_cost, :override_comment)
+      params.expect(registration: %i[override_cost override_comment])
     end
 
     def set_flash

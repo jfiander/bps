@@ -23,7 +23,9 @@ module Members
     end
 
     def registration
-      @registration ||= Registration.find_by(id: subscriptions_params[:id])
+      return @registration if defined?(@registration)
+
+      @registration = Registration.find_by(id: subscriptions_params[:id])
     end
 
     def require_registered_user
