@@ -11,14 +11,14 @@ RSpec.describe PublicController do
     get :home
     expect(response).to have_http_status(:ok)
 
-    expect(response.body).to match(/For Boaters, By Boaters/)
+    expect(response.body).to include('For Boaters, By Boaters')
   end
 
   describe 'META tags' do
     it 'renders the title tag' do
       get :home
 
-      expect(response.body).to match(%r{<title>America&#39;s Boating Club – Birmingham Squadron</title>})
+      expect(response.body).to include('<title>America&#39;s Boating Club – Birmingham Squadron</title>')
     end
 
     it 'renders the description tag' do

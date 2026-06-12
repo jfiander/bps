@@ -112,7 +112,7 @@ private
   def user_request_failed(otw_request)
     flash[:alert] = 'Unable to request training.'
     flash[:alert] = otw_request.errors.full_messages
-    render status: :unprocessable_entity
+    render status: :unprocessable_content
   end
 
   def slack_notification(name, user)

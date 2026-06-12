@@ -27,7 +27,7 @@ RSpec.describe RegistrationHelper do
 
     it 'generates a valid cancel link' do
       expect(link).to match(%r{/register/#{registration.id}})
-      expect(link).to match(/method="delete"/)
+      expect(link).to include('method="delete"')
     end
 
     it 'does not generate a link for a paid registration' do

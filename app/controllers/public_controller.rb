@@ -84,13 +84,13 @@ private
   def register_js
     if @registration.persisted?
       flash[:alert] = 'You are already registered.'
-      render status: :unprocessable_entity
+      render status: :unprocessable_content
     elsif verify_recaptcha(model: @registration) && @registration.save
       flash[:success] = 'You have successfully registered!'
       send_registered_emails
     else
       flash[:alert] = 'We are unable to register you at this time.'
-      render status: :unprocessable_entity
+      render status: :unprocessable_content
     end
   end
 

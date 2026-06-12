@@ -68,6 +68,6 @@ private
   end
 
   def unprocessable!
-    render('errors/unprocessable_entity', status: :unprocessable_entity)
+    render('errors/unprocessable_entity', status: :unprocessable_content)
   end
 end

@@ -16,7 +16,7 @@ module Api
         else
           render(
             json: { error: 'Automatic update failed.', message: result.message },
-            status: :unprocessable_entity
+            status: :unprocessable_content
           )
         end
       end

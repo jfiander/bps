@@ -90,7 +90,7 @@ class User
       return false if @event.allow_member_registrations
 
       flash.now[:alert] = 'This course is not accepting member registrations.'
-      render status: :unprocessable_entity
+      render status: :unprocessable_content
       true
     end
 
@@ -98,7 +98,7 @@ class User
       return false if @event.registerable?
 
       flash.now[:alert] = 'This course is no longer accepting registrations.'
-      render status: :unprocessable_entity
+      render status: :unprocessable_content
       true
     end
 
@@ -126,14 +126,14 @@ class User
 
     def unable_to_register
       flash.now[:alert] = 'We are unable to register you at this time.'
-      render status: :unprocessable_entity
+      render status: :unprocessable_content
     end
 
     def can_cancel_registration?
       return true if allowed_to_cancel?
 
       flash[:alert] = 'You are not allowed to cancel that registration.'
-      redirect_to root_path, status: :unprocessable_entity
+      redirect_to root_path, status: :unprocessable_content
       false
     end
 
@@ -152,12 +152,12 @@ class User
 
     def unable_to_cancel
       flash.now[:alert] = 'We are unable to cancel your registration.'
-      render status: :unprocessable_entity
+      render status: :unprocessable_content
     end
 
     def cannot_cancel_paid
       flash[:alert] = 'That registration has been paid, and cannot be cancelled.'
-      render status: :unprocessable_entity
+      render status: :unprocessable_content
     end
 
     def registered_slack_notification
