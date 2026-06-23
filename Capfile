@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# Capistrano 3.16's Git SCM references StringIO without requiring it; load it
+# explicitly so `Capistrano::SCM::Git::StringIO` resolves under Ruby 3.x.
+require 'stringio'
+
 # Load DSL and set up stages
 require 'capistrano/setup'
 
