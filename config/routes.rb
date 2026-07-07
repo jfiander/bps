@@ -350,6 +350,7 @@ Rails.application.routes.draw do
   get     '.well-known/apple-developer-merchantid-domain-association', to: 'verification#applepay'
 
   ### Error codes
+  match   '/400', to: 'errors#bad_request',           via: :all
   match   '/404', to: 'errors#not_found',             via: :all
   match   '/406', to: 'errors#not_acceptable',        via: :all
   match   '/422', to: 'errors#unprocessable_entity',  via: :all

@@ -3,6 +3,13 @@
 class ErrorsController < ApplicationController
   before_action :default_format
 
+  def bad_request
+    respond_to do |format|
+      format.html { render(status: :bad_request) }
+      format.json { render(json: { error: 'Bad request.' }, status: :bad_request) }
+    end
+  end
+
   def not_found
     respond_to do |format|
       format.html { render(status: :not_found) }

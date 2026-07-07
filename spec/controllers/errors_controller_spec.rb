@@ -5,6 +5,15 @@ require 'rails_helper'
 RSpec.describe ErrorsController do
   render_views
 
+  describe '#bad_request' do
+    it 'renders the bad_request template' do
+      get :bad_request
+      expect(response).to have_http_status(:bad_request)
+
+      expect(response.body).to include("your request couldn't be understood")
+    end
+  end
+
   describe '#not_found' do
     it 'renders the not_found template' do
       get :not_found
