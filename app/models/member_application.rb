@@ -20,10 +20,10 @@ class MemberApplication < ApplicationRecord
   end
 
   def payment_amount
-    return 139 + additional.count if additional.present?
+    return 159 + additional.count if additional.present?
     return 12 if primary.member_type == 'Apprentice'
 
-    93
+    103
   end
 
   def approve!(approving_user)

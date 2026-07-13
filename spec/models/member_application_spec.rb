@@ -13,7 +13,7 @@ RSpec.describe MemberApplication do
     end
 
     it 'has the single member cost' do
-      expect(single_application.payment_amount).to be(93)
+      expect(single_application.payment_amount).to be(103)
     end
 
     it 'has the apprentice member cost' do
@@ -27,7 +27,7 @@ RSpec.describe MemberApplication do
     end
 
     it 'has the family member cost' do
-      expect(family_application.payment_amount).to be(140)
+      expect(family_application.payment_amount).to be(160)
     end
   end
 
