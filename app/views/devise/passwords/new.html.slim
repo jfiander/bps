@@ -8,6 +8,8 @@ h1 Forgot your password?
     .right = f.email_field :email, autofocus: true
     br.clear
 
+    .flexible.center = recaptcha_tags
+
     .center = f.submit "Reset my password", class: 'big'
     br.clear
     .center = render "devise/shared/links"

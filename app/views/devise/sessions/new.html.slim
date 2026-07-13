@@ -11,6 +11,8 @@ h1 Member Login
     .right = f.password_field :password, autocomplete: "off"
     br.clear
 
+    .flexible.center = recaptcha_tags
+
     .center = f.submit "Login", class: 'big'
     br.clear
     .center = render "devise/shared/links"

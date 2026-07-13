@@ -28,6 +28,8 @@ class RegistrationsController < ApplicationController
 
     process_additional_registrations(@registration, additional_registrations)
 
+    return registration_rejected unless human?
+
     @registration.save!
 
     successfully_registered
@@ -51,6 +53,19 @@ class RegistrationsController < ApplicationController
   end
 
 private
+
+  # Signed-in members have already authenticated, so only anonymous submissions
+  # need to prove they are human.
+  def human?
+    user_signed_in? || verify_recaptcha(model: @registration)
+  end
+
+  def registration_rejected
+    @event = @registration.event
+    flash.now[:alert] = 'We are unable to register you at this time.'
+
+    render(:new, status: :unprocessable_content)
+  end
 
   def registration_params
     params.expect(registration: %i[event_id name email phone])

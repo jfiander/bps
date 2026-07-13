@@ -2,6 +2,11 @@
 
 module Users
   class SessionsController < ::Devise::SessionsController
+    # Must be prepended: ApplicationController's `set_paper_trail_whodunnit`
+    # calls `current_user`, and Warden authenticates lazily, so an ordinary
+    # before_action would run after the params have already been used to sign in.
+    prepend_before_action :verify_human!, only: :create
+
     def after_sign_in_path_for(resource)
       return welcome_path if resource.sign_in_count == 1
       return referrer_params[:user][:referrer] if valid_referrer?
@@ -10,6 +15,18 @@ module Users
     end
 
   private
+
+    def verify_human!
+      return if verify_recaptcha
+
+      # Nothing downstream can authenticate from these params, even if a future filter asks for `current_user`.
+      request.env['devise.allow_params_authentication'] = false
+      flash[:alert] = 'Please confirm that you are not a robot.'
+
+      # Redirects rather than re-rendering, because prepended filters run ahead
+      # of the before_action that loads the layout's images.
+      redirect_to(new_user_session_path)
+    end
 
     def valid_referrer?
       valid_pattern = %r{\A/?(?!login)(#{referrer_paths.join('|')})\z}
