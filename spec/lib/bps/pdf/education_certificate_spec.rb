@@ -84,4 +84,20 @@ RSpec.describe BPS::PDF::EducationCertificate, :slow, type: :lib do
     user = create(:user, ed_ach: Time.zone.today)
     expect { described_class.for(user) }.not_to raise_error
   end
+
+  describe 'with membership details' do
+    let(:membership_date) { '2011-02-03' }
+    let(:last_mm) { '2015' }
+    let(:certificate) { described_class.for(user, membership_date:, last_mm:) }
+    let(:certificate_text) { PDF::Reader.new(certificate).pages.first.text }
+
+    it 'successfully generates a certificate' do
+      expect { certificate }.not_to raise_error
+    end
+
+    it 'renders the membership date and last merit mark year', :aggregate_failures do
+      expect(certificate_text).to include(membership_date)
+      expect(certificate_text).to include(last_mm)
+    end
+  end
 end
