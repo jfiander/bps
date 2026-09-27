@@ -71,7 +71,7 @@ gem 'inline_svg',          '~> 1.7.2'
 gem 'nested_form_fields',  '~> 0.8.2'
 gem 'redcarpet',           '~> 3.5.1'
 gem 'slim',                '~> 3.0.6'
-gem 'usps_flags',          '~> 0.7.1'
+gem 'usps_flags',          '~> 0.8.0'
 gem 'usps_flags-burgees',  '~> 0.2.0'
 gem 'usps_flags-grades',   '~> 0.2.0'
 
@@ -91,7 +91,7 @@ gem 'differ',              '~> 0.1.2'
 gem 'addressable',         '>= 2.9.0'
 gem 'loofah',              '>= 2.21'
 gem 'nokogiri',            '>= 1.14.3'
-gem 'rubyzip',             '>= 1.3.0'
+gem 'rubyzip',             '>= 3.4.0'
 gem 'sinatra',             '~> 4.2.1'
 
 group :development do
