@@ -123,7 +123,7 @@ jobs:
         env:
           RAILS_ENV: test
       - name: Install ImageMagick
-        run: sudo apt-get install -y imagemagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
       - name: Run Rspec
         run: bundle exec rspec --format progress --order rand --color --tty
       - name: Store Coverage
