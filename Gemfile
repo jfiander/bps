@@ -65,6 +65,7 @@ gem 'sanitize_email',      '~> 1.2'
 # gem 'redis',             '~> 3.0'
 # 7.3.10 is the first release that rejects connection_pool 3, which kills the scheduler thread on boot.
 gem 'sidekiq',             '~> 7.3.10'
+gem 'sidekiq-scheduler',   '~> 6.0'
 
 # View Management
 gem 'fa_rails',            '~> 0.2.0'
