@@ -23,6 +23,10 @@ RSpec.describe BPS::S3, type: :lib do
     it 'generates the correct float plans bucket name' do
       expect(described_class.new(:floatplans).full_bucket).to eql('bps-development-floatplans')
     end
+
+    it 'generates the correct DMARC reports bucket name' do
+      expect(described_class.new(:dmarc_reports).full_bucket).to eql('bps-dmarc-reports')
+    end
   end
 
   describe 'behaviors' do

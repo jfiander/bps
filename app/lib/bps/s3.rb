@@ -3,8 +3,8 @@
 # Helper for accessing environmented S3 buckets and CloudFront links
 module BPS
   class S3
-    VALID_BUCKETS = %i[files photos bilge static seo floatplans automatic_updates].freeze
-    GLOBAL_BUCKETS = %i[seo automatic_updates].freeze
+    VALID_BUCKETS = %i[files photos bilge static seo floatplans automatic_updates dmarc_reports].freeze
+    GLOBAL_BUCKETS = %i[seo automatic_updates dmarc_reports].freeze
 
     attr_reader :bucket
 
