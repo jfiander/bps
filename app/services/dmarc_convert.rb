@@ -19,8 +19,12 @@ class DmarcConvert
       policy_published: policy_published(feedback),
       records: records(feedback)
     )
-  rescue StandardError
-    # Error logged; skip further processing
+  rescue StandardError => e
+    # Surface the failure: set @error so #success? returns false, and log it
+    # since these were previously swallowed silently.
+    @error ||= { type: 'parse', message: e.message }
+    Rails.logger.error("DMARC conversion failed: #{e.class}: #{e.message}")
+    nil
   end
 
   # :nocov:
@@ -183,9 +187,10 @@ private
 
   def string(node, name)
     c = child(node, name)
+    return if c.nil?
     return c.value if c.respond_to?(:value)
 
-    c&.children&.first.to_s
+    c.children&.first&.to_s
   end
 
   def integer(node, name)
