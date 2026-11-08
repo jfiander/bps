@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_03_14_203534) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_07_235848) do
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "cover_id"
     t.datetime "created_at", precision: nil, null: false
@@ -128,6 +128,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_03_14_203534) do
   end
 
   create_table "dmarc_reports", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.boolean "auto", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "deleted_at", precision: nil
     t.string "filename"
