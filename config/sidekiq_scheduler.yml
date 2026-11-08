@@ -1,0 +1,3 @@
+DmarcReportIngestJob:
+  cron: '0 6 * * *'
+  description: 'Ingest DMARC reports validated and stored on S3 by the Lambda'
