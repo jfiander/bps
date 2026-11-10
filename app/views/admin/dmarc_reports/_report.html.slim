@@ -4,7 +4,10 @@
   .table-row
     .report.table-cell title=(proto.report_metadata.report_id)
       - if index.zero?
-        .org_name = proto.report_metadata.org_name
+        .org_name
+          - if report.auto
+            => FA::Icon.p('calendar-clock', style: :duotone, css: 'purple', title: 'Processed automatically')
+          = proto.report_metadata.org_name
         .source_domain = source_domain if source_domain && source_domain != proto.report_metadata.org_name
         .report_id.mobile: small: nolink = proto.report_metadata.report_id
     .dates.table-cell
