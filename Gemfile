@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '3.3.13'
+ruby '4.0.9'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -71,7 +71,7 @@ gem 'sidekiq-scheduler',   '~> 6.0'
 gem 'fa_rails',            '~> 0.2.0'
 gem 'inline_svg',          '~> 1.7.2'
 gem 'nested_form_fields',  '~> 0.8.2'
-gem 'redcarpet',           '~> 3.5.1'
+gem 'redcarpet',           '~> 3.6'
 gem 'slim',                '~> 3.0.6'
 gem 'usps_flags',          '~> 0.8.0'
 gem 'usps_flags-burgees',  '~> 0.2.0'
@@ -95,6 +95,12 @@ gem 'loofah',              '>= 2.21'
 gem 'nokogiri',            '>= 1.14.3'
 gem 'rubyzip',             '>= 3.4.0'
 gem 'sinatra',             '~> 4.2.1'
+
+# Former Ruby default gems, which must now be declared to be loadable:
+# csv (bundled since Ruby 3.4) is required by config/application.rb;
+# benchmark (bundled since Ruby 4.0) is required by mini_magick.
+gem 'benchmark',           '~> 0.5'
+gem 'csv',                 '~> 3.3'
 
 group :development do
   gem 'capistrano',            '~> 3.16.0'

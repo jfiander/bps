@@ -35,6 +35,16 @@ RSpec.describe DmarcReport do
         )
       )
     end
+
+    context 'with an unrecognized sender' do
+      let(:dns) { 'mail.example.com' }
+
+      it 'records the sender as unknown' do
+        report.save!
+
+        expect(report.sources_proto.sources.first.sender).to eq(:UNKNOWN_SENDER)
+      end
+    end
   end
 
   context 'with a passing report' do

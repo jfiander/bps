@@ -12,11 +12,11 @@ module BPS
 
       MODULES.each { |c| include "BPS::PDF::EducationCertificate::#{c}".constantize }
 
-      def self.for(user, **options)
+      def self.for(user, **)
         path = BPS::PDF::EducationCertificate.generate('Education_Certificate') do
           specify_font
           configure_colors
-          MODULES.each { |m| send(m.underscore, user, **options) }
+          MODULES.each { |m| send(m.underscore, user, **) }
         end
 
         File.open(path, 'r+')

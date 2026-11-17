@@ -165,7 +165,7 @@ GEM
     base64 (0.3.0)
     bcrypt (3.1.22)
     bcrypt_pbkdf (1.1.2)
-    bcrypt_pbkdf (1.1.2-arm64-darwin)
+    benchmark (0.5.0)
     bigdecimal (3.3.1)
     bps-google-api (0.7.0)
       exp_retry (~> 0.0.13)
@@ -210,6 +210,7 @@ GEM
     crass (1.0.8)
     css_parser (1.22.0)
       addressable
+    csv (3.3.7)
     database_cleaner-active_record (2.2.2)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0)
@@ -290,8 +291,7 @@ GEM
       base64 (~> 0.2)
       faraday (>= 1.0, < 3.a)
     google-logging-utils (0.2.0)
-    google-protobuf (3.25.8-arm64-darwin)
-    google-protobuf (3.25.8-x86_64-linux)
+    google-protobuf (3.25.8)
     googleauth (1.17.0)
       faraday (>= 1.0, < 3.a)
       google-cloud-env (~> 2.2)
@@ -523,7 +523,7 @@ GEM
       rbs (>= 4.0.0)
       tsort
     recaptcha (5.21.2)
-    redcarpet (3.5.1)
+    redcarpet (3.6.1)
     redis-client (0.31.0)
       connection_pool
     regexp_parser (2.12.0)
@@ -712,6 +712,7 @@ DEPENDENCIES
   aws-sdk-ses (~> 1.45)
   aws-sdk-sns (~> 1.50)
   bcrypt_pbkdf
+  benchmark (~> 0.5)
   bps-google-api (~> 0.7.0)
   braintree (~> 4.26)
   brakeman (~> 4.3)
@@ -723,6 +724,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.6.1)
   capistrano-rbenv (~> 2.2)
   coffee-rails (~> 4.2)
+  csv (~> 3.3)
   database_cleaner-active_record (~> 2.2)
   devise (~> 5.0)
   devise_invitable (~> 2.0, >= 2.0.9)
@@ -762,7 +764,7 @@ DEPENDENCIES
   rails (~> 8.1.0)
   rails-controller-testing (~> 1)
   recaptcha
-  redcarpet (~> 3.5.1)
+  redcarpet (~> 3.6)
   rspec-rails (~> 6.1)
   rubocop (>= 1.48)
   rubocop-rails (~> 2.18)
@@ -786,7 +788,7 @@ DEPENDENCIES
   usps_flags-grades (~> 0.2.0)
 
 RUBY VERSION
-   ruby 3.3.13p207
+   ruby 4.0.9p0
 
 BUNDLED WITH
-   2.5.22
+   4.0.20

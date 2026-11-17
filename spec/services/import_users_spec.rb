@@ -110,6 +110,12 @@ RSpec.describe ImportUsers, type: :service do
     end
   end
 
+  describe ImportUsers::Hash do
+    it 'leaves the rank blank when the row has no rank' do
+      expect(described_class.new({ 'Certificate' => 'E000001' }).update_user[:rank]).to be_nil
+    end
+  end
+
   describe 'jobcodes' do
     let(:user) { create(:user) }
     let!(:job_a) { create(:jobcode, user_id: user.id, code: '31098', year: 2023, description: 'A') }
