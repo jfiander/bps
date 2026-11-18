@@ -291,7 +291,12 @@ GEM
       base64 (~> 0.2)
       faraday (>= 1.0, < 3.a)
     google-logging-utils (0.2.0)
-    google-protobuf (3.25.8)
+    google-protobuf (4.36.2-arm64-darwin)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.2-x86_64-linux-gnu)
+      bigdecimal
+      rake (~> 13.3)
     googleauth (1.17.0)
       faraday (>= 1.0, < 3.a)
       google-cloud-env (~> 2.2)
@@ -738,7 +743,7 @@ DEPENDENCIES
   figaro (~> 1.2.0)
   fuubar (~> 2)
   geocoder (~> 1.6.1)
-  google-protobuf (~> 3.25)
+  google-protobuf (~> 4.36)
   guard (~> 2.18)
   guard-rspec (~> 4.7)
   guard-rubocop (~> 1.5)
@@ -788,7 +793,7 @@ DEPENDENCIES
   usps_flags-grades (~> 0.2.0)
 
 RUBY VERSION
-   ruby 4.0.9p0
+  ruby 4.0.9p0
 
 BUNDLED WITH
-   4.0.20
+  4.0.20
