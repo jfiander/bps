@@ -22,7 +22,6 @@
   $(document).ready(function () {
     $('#show-sidenav').click(function () {
       openNav();
-      $('#modal').fadeIn('fast');
       $('body').addClass('no-scroll');
     });
   });
@@ -30,7 +29,6 @@
   $(document).ready(function () {
     $('#hide-sidenav').click(function () {
       closeAllNav();
-      $('#modal').fadeOut('fast');
       $('body').removeClass('no-scroll');
     });
   });
@@ -44,14 +42,6 @@
   $(document).ready(function () {
     $('.show-sub-menu').click(function () {
       openSubNav($(this).attr('id').substr(5));
-    });
-  });
-
-  $(document).ready(function () {
-    $('#modal').click(function () {
-      closeAllNav();
-      $('#modal').fadeOut('fast');
-      $('body').removeClass('no-scroll');
     });
   });
 })();
