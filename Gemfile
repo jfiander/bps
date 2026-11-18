@@ -15,6 +15,8 @@ gem 'puma',                '~> 7.2'
 gem 'mysql2',              '~> 0.5.6'
 
 # Rails Plugins
+# The app has no CoffeeScript of its own; this only compiles the
+# nested_form_fields asset, which the gem ships as CoffeeScript.
 gem 'coffee-rails',        '~> 4.2'
 gem 'jbuilder',            '~> 2.13'
 gem 'jquery-rails',        '~> 4.3'
