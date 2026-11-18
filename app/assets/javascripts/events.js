@@ -26,7 +26,6 @@
   $(document).ready(function () {
     $('#event_online').change(function () {
       $('#online_details').toggle();
-      console.log($(this), $(this).is(':checked'));
       $('#online_details #event_conference_id_cache').prop('disabled', !$(this).is(':checked'));
       $('#online_details #event_link_override').prop('disabled', !$(this).is(':checked'));
     });
