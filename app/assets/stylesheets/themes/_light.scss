@@ -251,24 +251,6 @@
     a.admin li { @include blue-button(0.5em, $purple); }
   }
 
-  div#modal {
-    background-color: $modal-background;
-
-    div#modal-box {
-      background-color: $background-blue;
-      border-color: $background-darken-10;
-      div#modal-header {
-        background-color: $background-darken-8;
-        border-color: $background-darken-10;
-      }
-
-      div#modal-footer {
-        background-color: $background-darken-8;
-        border-color: $background-darken-10;
-      }
-    }
-  }
-
   div#login {
     div#show-change-password a { color: $old-glory-red; }
     div#change-password {

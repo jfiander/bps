@@ -15,6 +15,12 @@ module ApplicationHelper
   end
   # rubocop:enable Rails/OutputSafety
 
+  # Google rejects localhost for the site key, so development renders no widget
+  # (and the Recaptcha initializer skips verification there).
+  def recaptcha_tags(options = {})
+    super unless Rails.env.development?
+  end
+
   def get_user(id)
     user = @users.find_all { |u| u.id == id }.first
     return user.bridge_hash if user.present?

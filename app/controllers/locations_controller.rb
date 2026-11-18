@@ -51,7 +51,7 @@ private
 
   def location_params
     params.expect(
-      location: %i[address map_link details favorite virtual price_comment picturedelete_attachment]
+      location: %i[address map_link details favorite virtual price_comment picture delete_attachment]
     )
   end
 

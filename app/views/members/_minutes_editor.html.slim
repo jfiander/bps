@@ -5,7 +5,7 @@ hr
   = summer_months(date_select(:issue, :date, start_year: 2014, discard_day: true, required: true), mode: :summer)
   br
   = switch_box(nil, :minutes_excom, 'lightblue-darkblue', 'committee excom')
-  = switch_box(nil, :minutes_remove, 'lightblue-red', 'upload remove')
+  = switch_box(nil, :minutes_remove, 'lightblue-red', 'upload remove', id: 'minutes_remove')
   br
   = spinner_button(button_text: "Submit", css: 'big')
 small Uploading to an issue that has already been uploaded will overwrite the previous version.
